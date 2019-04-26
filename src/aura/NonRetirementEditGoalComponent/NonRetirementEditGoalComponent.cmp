@@ -1,0 +1,96 @@
+<aura:component controller="Nonretirementgoalapexcontroller"
+                implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>      
+	<aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+    <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name = "balance" type = "Integer"/>
+    <aura:attribute name = "contribution" type = "Integer"/>
+    <aura:attribute name = "tarDate" type = "String"/>
+    <aura:attribute name = "currentBal" type = "double"/>
+    <aura:attribute name = "actualbalance" type = "Double"/>
+    <aura:attribute name = "actualEmi" type = "Double"/>
+    <aura:attribute name = "goalPriority" type = "Integer" default = "1" />
+    <aura:attribute name = "initialAmount" type = "Integer"/>
+    <aura:attribute name = "newTarDate" type = "String"/>
+    <aura:attribute name = "tarAmt" type = "Double"/>
+    <aura:attribute name = "buttonDisplay" type = "boolean" default = "false"/>
+    <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "setMsg" type = "String"/>
+    <aura:attribute name = "goalId" type = "String"/>
+   
+    <div class="slds-align_absolute-center">
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">                        
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>Edit Goal</b></h2>                           
+                            <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>Finacast will help you plan your Goal</b>
+                                <br/>                     
+                            </h3>
+                        </header>
+                        <lightning:recordEditForm                                                  
+                                                  recordId = "{!v.goalId}"
+                                                  objectApiName="FinServ__FinancialGoal__c" 
+                                                  onsubmit = "{!c.handleSubmit}"
+                                                  onsuccess="{!c.onSuccessCall}"
+                                                  >
+                            
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                
+                                <div class="slds-gutters" style="border: none;">
+                                    <div class="slds-box1">
+                                        
+                                        <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                           
+                                                <span class = "highlight">* </span>Primary Owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c"   /><br/>
+                                            
+                                            <span class = "highlight">* </span>Financial Goal Name<lightning:inputField aura:id = "name" fieldName="Name" required = "true"/><br/>
+                                            <span class = "highlight">* </span>How much do you want to save? ($)<lightning:inputField fieldName="FinServ__TargetValue__c" aura:id = "amount"  onchange = "{!c.getChangeMonthlyConti}" ></lightning:inputField><br/>
+                                            <span class = "highlight">* </span>When are you planning?<lightning:inputField aura:id = "tarDate" fieldName="FinServ__TargetDate__c"  onchange = "{!c.getChangeMonthlyConti}"></lightning:inputField>
+                                            <br/>
+                                        </div>
+                                        <div class="slds-col   slds-size_1-of-2" style="color:grey;">
+                                            <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "associateAcc" fieldName="Associated_Account__c"  onchange="{!c.getCurrentAmt}" /><br/>
+                                            
+                                            <span class = "highlight">* </span>Current goal amount ($)<lightning:inputField fieldName="Start_Value__c"  onchange = "{!c.getChangeMonthlyConti}" aura:id="strtvalue"></lightning:inputField><br/>
+                                            <span class = "highlight">* </span>Goal Priority<lightning:inputField fieldName="Goal_Priority__c" aura:id = "priority"  value = "{!v.goalPriority}"  /><br/>
+                                            <span class = "highlight">* </span>How much are you willing to contribute per month? ($)<lightning:inputField fieldName="Required_Monthly_Saving__c"   value = "{!v.contribution}" aura:id = "goalContri" onchange = "{!c.handleChangeMonthlyContribution}" ></lightning:inputField>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue ="{!v.buttonDisplay}">
+                                    <span class = "slds-text-font_Arial,sans-serif slds-m-left--large" ><b>Oh no, You will not reach your target either increase your monthly contribution to {!v.actualEmi} or move target date to {!v.newTarDate}
+                                        <br/>
+                                        <br/>
+                                        <lightning:button class = "buttonClass slds-m-left--large slds-button_outline-brand" label = "Change Monthly Contribution" variant ="neutral" onclick = "{!c.handleMonthlyContribution}" /> &nbsp; Change monthly contribution to {!v.actualEmi} 
+                                        <br/>
+                                        <br/>
+                                        <lightning:button class = "buttonClass slds-m-left--large slds-button_outline-brand" label = "Move Target Date" variant ="neutral" onclick = "{!c.handleTargetDate}" /> &nbsp; Change target date to {!v.newTarDate}
+                                        </b></span>
+                                </aura:if>
+                                <aura:if isTrue ="{!(v.buttonDisplay == false)}">
+                                    <span class = "slds-text-font_Arial,sans-serif slds-m-left--large" ><b>
+                                        {!v.setMsg}</b></span>
+                                </aura:if>  
+                                
+                            </div>
+                            
+                            <footer class="slds-modal__footer">
+                                <div class="button" align ="right">
+                                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>                                
+                                    <lightning:button variant="brand" label="Save" type="submit"/>
+                                </div>
+                            </footer>
+                        </lightning:recordEditForm>
+                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+                
+                
+            </div>
+       
+    </div>
+</aura:component>

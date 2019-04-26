@@ -1,0 +1,8 @@
+<aura:component controller="TransactionGraphsApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <ltng:require scripts="{!$Resource.ChartJs}" afterScriptsLoaded="{!c.doInit}"/>
+    <br/><br/><br/>
+    <div class="chart-container">
+        <canvas aura:id="transactionGraph"  style="height:40vh; width:50vw"></canvas> 
+    </div>
+</aura:component>

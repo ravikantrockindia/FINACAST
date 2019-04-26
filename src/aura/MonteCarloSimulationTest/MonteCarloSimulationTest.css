@@ -1,0 +1,187 @@
+.THIS .graphBoxnew1 {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 215px;
+    left: 42px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxnew1:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .graphBoxnew2 {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 188px;
+     left: 146px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxnew2:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .graphBoxMeanNew {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -4px;
+     left: 364px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxMeanNew:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .graphBoxnew3 {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 81px;
+     left: 253px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxnew3:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .graphBoxnew4 {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 82px;
+     left: 474px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxnew4:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .graphBoxnew5 {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 191px;
+     left: 579px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxnew5:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .graphBoxnew6 {
+   position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 215px;
+    left: 680px;
+    background: orange;
+    border-radius: 10px;
+}
+.THIS .graphBoxnew6:hover .coupontooltip{
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: block;
+}
+.THIS .coupontooltip {
+    background: #e6e6e6;
+    left: -50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    top: -41px;
+    display: none;
+}
+.THIS .coupontooltip:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #e6e6e6 transparent transparent transparent;
+      top: 30px;
+      left: 45px;
+}
+.THIS .graphWrapper{
+    position: relative;
+    width: 735px;
+    margin: 0 auto;
+}
+.THIS .monte_carlo-1 .slds-size_6-of-12 {
+    float: left;
+    padding: 0 15px;
+}
+.THIS .simulateButton {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0 0;
+}
+.THIS .monte_carlo-1 {
+    padding: 0 5px;
+}
+.THIS .monte_carlo-1 .slds-box1 {
+    box-shadow: 0 2px 4px 4px rgba(0,0,0,.16);
+    border-radius: .25rem;
+    padding: 15px 0;
+}
+.THIS .slds-tabs_default__item .slds-tabs_default__link {
+    font-size: 1rem; 
+}

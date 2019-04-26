@@ -1,0 +1,9 @@
+.THIS .forceListViewManagerHeader.slds-page-header--object-home {
+    padding-top: .5rem;
+    padding-right: .75rem;
+    padding-bottom: .5rem;
+    padding-left: .75rem;
+}
+.THIS .forceListViewManager {
+    height: 100%;
+}

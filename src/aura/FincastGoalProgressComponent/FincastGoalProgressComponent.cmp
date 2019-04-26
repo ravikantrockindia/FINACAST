@@ -1,0 +1,20 @@
+<aura:component controller="GoalPerformanceApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                                                 access="global">
+    
+    <ltng:require scripts="{!$Resource.ChartJs}" afterScriptsLoaded="{!c.generateChart}"/>
+    
+    <div class="GoalDetailCard">
+        <lightning:card  variant="Narrow" iconName="standard:account" footer="Card Footer" title="Goal Details">
+        <aura:set attribute="actions">
+            <lightning:button label="Delete"/>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            Card Body (custom component)
+        </p>
+    </lightning:card>
+    </div>
+    <div class="slds-box" style="position: relative; height:40vh; width:40vw">
+		<canvas aura:id="mychart"></canvas>
+    </div>	
+    
+</aura:component>

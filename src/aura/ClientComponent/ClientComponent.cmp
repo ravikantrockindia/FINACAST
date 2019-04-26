@@ -1,0 +1,85 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <aura:attribute name="ClientDetails" type="Account[]" />
+    <aura:attribute name="param" type="string"/>
+    <aura:attribute Name="selItem2" type="object"  access="public" />    
+     <aura:attribute name="showModal" type="Boolean" />
+    <aura:attribute name="showModal2" type="Boolean" />
+    <br/>
+   <div class="test-listViewManager slds-grid slds-grid--vertical forceListViewManager" data-aura-rendered-by="258:0" data-aura-class="forceListViewManager">
+    <div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader" role="banner" data-aura-rendered-by="264:0" data-aura-class="forceListViewManagerHeader">
+        <div class="slds-col chng-client-btn-div" align="right">
+             <lightning:button variant="brand" label="Create Client" onclick="{!c.onClickCreate }" />
+        </div></div>
+ 
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Email">Email</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Phone">Phone</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Action">Action</div>
+                </th>
+            </tr>
+        </thead>       
+        <tbody>
+            <aura:iteration items="{!v.ClientDetails}" var="Cdetails">
+                <tr class="slds-hint-parent">
+                    <th data-label=" Name" scope="row"> 
+                        <div class="slds-truncate" title="Name"><a href="{! '/'+ Cdetails.Id}" tabindex="-1">{!Cdetails.Name}</a></div>
+                    </th>
+                    <td data-label="Target Amount">
+                        <div class="slds-truncate" title="Email">{! Cdetails.Email__c}</div>
+                    </td>
+                    <td data-label="Target Date">
+                        <div class="slds-truncate" title="Phone">{! Cdetails.Phone}</div>
+                    </td>
+                    <td data-label="Action">
+                        <div class="slds-truncate" title="Action">
+                            
+                          <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Cdetails.Id}" onclick="{!c.onClickEdit}"/>            
+                            &nbsp;
+                            <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Cdetails.Id}" onclick="{!c.onClickDelete}"/>  
+                                             <c:CustomModalComponent title="Create Client" isActive="{!v.showModal}">
+          <lightning:recordEditForm 
+                                    onload="{!c.handleLoad}"
+            onsubmit="{!c.handleSubmit}"
+            onsuccess="{!c.handleSuccess}"
+            recordId="{!Cdetails.Id}"
+            objectApiName="Account">
+              <div class="slds-grid">
+              <div class="slds-col">
+              <lightning:inputField fieldName="Name" />
+               <lightning:inputField fieldName="OwnerId" />
+                  <div class="slds-col">
+               <lightning:inputField fieldName="Date_of_Birth__c" />
+               <lightning:inputField fieldName="ParentId" />
+              </div>
+                  &nbsp; &nbsp; &nbsp; &nbsp;
+              
+               <!--lightning:inputField fieldName="FinServ__TotalInvestments__c" />
+               <lightning:inputField fieldName="FinServ__TotalBankDeposits__c" />
+               <lightning:inputField fieldName="FinServ__TotalInsurance__c" />
+               <lightning:inputField fieldName="FinServ__TotalFinancialAccounts__c" /-->
+              </div>
+              </div>                                                         
+              <div class="slds-m-top_medium">
+                <lightning:button  variant="brand" type="submit" name="save" label="Save" />
+            </div>
+         </lightning:recordEditForm>        
+    </c:CustomModalComponent>
+                        </div>
+                    </td>
+                </tr>  
+            </aura:iteration>
+        </tbody>
+    </table>
+    </div>
+</aura:component>
