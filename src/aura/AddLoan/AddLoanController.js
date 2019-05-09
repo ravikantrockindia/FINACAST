@@ -82,6 +82,29 @@
             
             component.set("v.isMonthly",false);
         }
-    }, 
+    },
+        recordLoaded: function(component,event,helper){
+        var recUi = event.getParam("recordUi");
+        console.log(recUi);
+        var taxDeduction=recUi.record.fields["Do_you_get_tax_benefit_from_interest_pay__c"].value;
+        console.log(taxDeduction)
+        if (taxDeduction){
+            component.set("v.isTaxDeduction",true);
+            component.set("v.getYes",true);
+        }
+        else{
+            component.set("v.getNo",true);
+            
+        }
+        var ismonthly=recUi.record.fields["Do_tax_benefits_realize_monthly__c"].value;
+        console.log(ismonthly)
+        if (ismonthly){
+            component.set("v.isMonthly",true);
+        }
+        else{
+            component.set("v.isMonthly",false);
+            
+        }
+    } 
         
 })
