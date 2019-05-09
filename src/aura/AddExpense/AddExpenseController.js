@@ -114,4 +114,27 @@
             component.set("v.isMonthly",false);
         }
     },
+     recordLoaded: function(component,event,helper){
+        var recUi = event.getParam("recordUi");
+        console.log(recUi);
+        var taxDeduction=recUi.record.fields["Does_contribution_bring_tax_benifit__c"].value;
+        console.log(taxDeduction)
+        if (taxDeduction){
+            component.set("v.isTaxDeduction",true);
+            component.set("v.getYes",true);
+        }
+        else{
+            component.set("v.getNo",true);
+            
+        }
+        var ismonthly=recUi.record.fields["Does_tax_benifit_realize_really__c"].value;
+        console.log(ismonthly)
+        if (ismonthly){
+            component.set("v.isMonthly",true);
+        }
+        else{
+            component.set("v.isMonthly",false);
+            
+        }
+    }
 })
