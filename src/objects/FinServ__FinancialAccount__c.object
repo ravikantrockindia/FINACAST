@@ -181,6 +181,24 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Do_tax_benefits_realize_monthly__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Do tax benefits realize monthly?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Do_you_get_tax_benefit_from_interest_pay__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Do you get tax benefit from interest pay</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>FinServ__APY__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -2027,6 +2045,17 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>What_of_contribution_bring_tax_benefit__c</fullName>
+        <externalId>false</externalId>
+        <label>What % of contribution bring tax benefit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
     </fields>
     <label>Financial Account</label>
     <listViews>
