@@ -58,6 +58,30 @@
         {
             status3 = 1;
         }
+    },
+        handleRadio: function(component, event) {
+        // component.set("v.displaySection" ,  true);
+        
+        console.log('handle')
+        if(event.target.id=="yesCheck"){
+            component.set("v.isTaxDeduction",true);
+            
+        }
+        else if(event.target.id=="noCheck"){
+            component.set("v.isTaxDeduction",false);
+        }
+    },
+    handleIsMonthly: function(component, event){
+        
+        if(event.target.id=="yesMonthly"){
+            
+            component.set("v.isMonthly",true);
+            
+        }
+        else if(event.target.id=="noMonthly"){
+            
+            component.set("v.isMonthly",false);
+        }
     }, 
         
 })
