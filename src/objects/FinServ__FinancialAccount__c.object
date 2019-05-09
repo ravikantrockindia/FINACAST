@@ -1138,14 +1138,16 @@
                     <label>Quaterly</label>
                 </value>
                 <value>
-                    <fullName>Semiannual</fullName>
-                    <default>false</default>
-                    <label>Semiannual</label>
-                </value>
-                <value>
                     <fullName>Annual</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>Annual</label>
+                </value>
+                <value>
+                    <fullName>Semiannual</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Semiannual</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1949,6 +1951,17 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Max_yearly_tax_deduction_allowed__c</fullName>
+        <externalId>false</externalId>
+        <label>Max yearly tax deduction allowed ($ )?</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>Risk_Profile__c</fullName>
         <externalId>false</externalId>
         <label>Risk Profile</label>
@@ -2261,10 +2274,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -2274,10 +2283,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2781,10 +2786,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -2794,10 +2795,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3249,10 +3246,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -3262,10 +3255,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3677,10 +3666,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -3690,10 +3675,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4177,10 +4158,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -4190,10 +4167,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4645,10 +4618,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -4658,10 +4627,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5165,10 +5130,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -5178,10 +5139,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5593,10 +5550,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -5606,10 +5559,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6057,10 +6006,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -6070,10 +6015,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6481,10 +6422,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -6494,10 +6431,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6993,10 +6926,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -7006,10 +6935,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7501,10 +7426,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -7514,10 +7435,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7969,10 +7886,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -7982,10 +7895,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8560,10 +8469,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -8573,10 +8478,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9151,10 +9052,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -9164,10 +9061,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9718,10 +9611,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -9731,10 +9620,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
