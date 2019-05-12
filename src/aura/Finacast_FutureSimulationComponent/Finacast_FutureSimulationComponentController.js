@@ -231,8 +231,22 @@
     component.set("v.helpBox",false);
 },
     openSeeHow:function(component,event,helper){
+        var data=new Object();
+        component.set('v.defaultAlertData',data);
+        component.set('v.interestAlertData',data);
         console.log('open See How');
         component.set("v.seeHowBox",true);
-    }
+        var type=event.target.id;
+        if(type=='default'){
+            helper.showDefaultAlertTable(component,event);
+        }
+        else if(type='interest'){
+            helper.showInterestAlertTable(component,event);
+            
+        }
+    },
+    closeSeeHow:function(component,event,helper){
+        component.set("v.seeHowBox",false);
+    },
     
 })
