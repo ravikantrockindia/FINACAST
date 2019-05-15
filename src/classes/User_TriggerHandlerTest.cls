@@ -20,7 +20,6 @@ public class User_TriggerHandlerTest {
         
     {
         
-        Userrole us = [SELECT id from userrole where name = 'Karan Individual Nov 28 Customer User'];
         User commUser = new User();
         commUser.FirstName = 'test user';
         commUser.LastName = 'test User';

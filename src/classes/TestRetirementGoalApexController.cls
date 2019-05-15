@@ -28,6 +28,9 @@ public class TestRetirementGoalApexController {
         goal.Required_Monthly_Saving__c = 5000;
         goal.Start_Date__c = date.today();
         goal.Start_Value__c = 500;
+         
+        goal.Goal_Priority__c = 'Priority 2';
+        goal.FinServ__TargetDate__c=Date.newInstance(2020, 12, 9);
         insert goal;
     }
     
@@ -51,6 +54,8 @@ public class TestRetirementGoalApexController {
         DateTime birth = date.today();
         String birthDate = birth.format('YYYY-MM-dd');
         String current = String.valueOf(fGoal.Start_Value__c);
+        Double DD1 = double.valueOf('3.14159');
+        String priority = String.valueOf(600);
         
         test.startTest();
         RetirementGoalApexController.getAmountMonth(500, 3, 6,'10','60', birthDate);
@@ -59,7 +64,7 @@ public class TestRetirementGoalApexController {
         RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,current);
         RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,null);        
        
-        RetirementGoalApexController.saveData(String.valueOf((accId.id)),'test save goal', String.valueOf(date.today()), '30','3', '60' , '500','6', '5200',String.valueOf(fGoal.Associated_Account__c) , '1', '500', tDate, '300');
+        RetirementGoalApexController.saveData(String.valueOf((accId.id)),'test save goal', String.valueOf(date.today()), '30','3', '60' , '500','6', '5200',String.valueOf(fGoal.Associated_Account__c) , priority, '500', tDate, '300','24','68',DD1,'24');
         // RetirementGoalApexController.getGoalData(fAccId.id);
         test.stopTest();
         System.assertEquals('1','1');
