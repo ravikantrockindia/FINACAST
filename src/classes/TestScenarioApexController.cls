@@ -199,8 +199,6 @@ public class TestScenarioApexController {
         card2.APR__c = 2;
         card2.FinServ__FinancialAccountType__c ='Credit Card'; 
         card2.Account_Type__c = 'Credit Card';
-        card2.FinServ__Balance__c=1000;
-        
         insert card2;
     }
     

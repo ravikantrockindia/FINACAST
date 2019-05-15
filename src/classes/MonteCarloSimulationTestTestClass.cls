@@ -56,22 +56,9 @@ public class MonteCarloSimulationTestTestClass {
         String accRecType =Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
         a.RecordTypeId = accRecType;
         insert a;
-        FinServ__FinancialAccount__c fa = new FinServ__FinancialAccount__c(Name='SahilTest',FinServ__PrimaryOwner__c=a.Id);
-        insert fa;
-        
         FinServ__FinancialGoal__c goal = new FinServ__FinancialGoal__c();
         goal.Name = 'test goal';
         goal.FinServ__PrimaryOwner__c = a.id;
-                 
-        
-        
-        goal.Required_Monthly_Saving__c = 5000;
-        goal.Start_Date__c = date.today();
-        goal.Start_Value__c = 500;
-         
-        goal.Goal_Priority__c = 'Priority 2';
-        goal.Associated_Account__c=fa.Id;
-        goal.FinServ__TargetDate__c=Date.newInstance(2020, 12, 9);
         insert goal;
         FinServ__FinancialGoal__c f = [select id from FinServ__FinancialGoal__c  where name = 'test goal'];
         List<FinServ__FinancialGoal__c> goalDetails = MonteCarloSimulationTest.Pageinit(f.Id).goalInitialValues;

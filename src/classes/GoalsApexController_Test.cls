@@ -9,7 +9,7 @@ public class GoalsApexController_Test {
         
         list<RecordType> rcc1 =[Select Id From RecordType Where SobjectType='Account' And Name='Individual' limit 1];
         if(rcc1.size()>0){
-            acc1.RecordTypeId = rcc1[0].Id;
+            acc1.RecordTypeId = rcc1[0].Id;          
         }
         insert acc1;       
         
@@ -36,7 +36,7 @@ public class GoalsApexController_Test {
      
         goal1.FinServ__TargetDate__c = System.today()+90;
         goal1.FinServ__PrimaryOwner__c=acc1.Id;
-        goal1.Goal_Priority__c = 'Priority 2';
+       
         Flist.add(goal1);
         insert goal1;
         
