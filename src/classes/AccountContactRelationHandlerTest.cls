@@ -45,7 +45,7 @@ public class AccountContactRelationHandlerTest {
         
         {
         
-        Userrole us = [SELECT id from userrole where name = 'Karan Individual Nov 28 Customer User'];
+       // Userrole us = [SELECT id from userrole where name = 'Karan Individual Nov 28 Customer User'];
         User commUsers = new User();
         commUsers.FirstName = 'testusers2';
         commUsers.LastName = 'testusers2';
