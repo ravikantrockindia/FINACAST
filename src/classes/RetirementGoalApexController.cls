@@ -95,7 +95,6 @@ public class RetirementGoalApexController {
     @auraEnabled
     public static AmtAndContriWrapper getAmtAndContri(String accId, String tillRetirement, String interest, String targetAmt, String retireDate, String current)
     {
-        System.debug(accId);
         Double interestRate = Double.valueOf(interest);
         Double currentAmount = 0;
         
@@ -105,17 +104,15 @@ public class RetirementGoalApexController {
         {
             FinServ__FinancialAccount__c acc = [select FinServ__Balance__c,id from FinServ__FinancialAccount__c where id = :accId];
             Double bal = acc.FinServ__Balance__c;
-            System.debug(bal);
             
             list<FinServ__FinancialGoal__c> allAssocGoals = [select Associated_Account__c,Required_Monthly_Saving__c, Start_Date__c, Start_Value__c from FinServ__FinancialGoal__c where Associated_Account__c = :accId];
             
             Double totalEstimated = 0;
             Decimal remainingAmount = 0;
-            Decimal growth=0;
+            
             for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
             {
-                System.debug(relgoal);
-                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
+                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today())).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
             }
             remainingAmount = bal - totalEstimated;
             double curr = Math.ceil( remainingAmount);       
@@ -138,7 +135,6 @@ public class RetirementGoalApexController {
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
-        System.debug(wrapper);
         return wrapper;
         
     }
@@ -190,7 +186,7 @@ public class RetirementGoalApexController {
     @auraEnabled
     public static Id saveData(String owner,String name, String dob, String years,String inflationRate, String retireAge , String income,
                               String returnRate, String amount, String associatedAccount, String priority, String sValue, String tDate,
-                              String contribution,String isTaxDeduction, String taxPercentageContribution, Double maxDeduction, String isMonthly)
+                              String contribution)
     {
         FinServ__FinancialGoal__c goal = new FinServ__FinancialGoal__c();
         try{
@@ -216,10 +212,6 @@ public class RetirementGoalApexController {
             goal.FinServ__TargetDate__c = t; 
             Double c = Double.valueOf(contribution);
             goal.Required_Monthly_Saving__c = Math.ceil(c);
-            goal.Does_the_contribution_bring_tax_benefit__c=Boolean.valueOf(isTaxDeduction);
-            goal.What_of_contribution_bring_tax_benefit__c=Double.valueOf(taxPercentageContribution);
-            goal.Max_yearly_tax_deduction_allowed__c=maxDeduction;
-            goal.Do_tax_benefits_realize_monthly__c=Boolean.valueOf(isMonthly);
             
             insert(goal); 
             
