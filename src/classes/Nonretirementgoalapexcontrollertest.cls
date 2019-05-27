@@ -44,6 +44,7 @@ public class Nonretirementgoalapexcontrollertest {
         goal1.Start_Value__c = 456700;
         goal1.FinServ__TargetDate__c = date.today()+90;
         goal1.FinServ__PrimaryOwner__c=acc.Id;
+          goal1.Goal_Priority__c = 'Priority 2';
         insert goal1;
         
          FinServ__FinancialGoal__c goal2 = new FinServ__FinancialGoal__c();
@@ -54,6 +55,7 @@ public class Nonretirementgoalapexcontrollertest {
         goal2.Start_Value__c = 4567;
         goal2.FinServ__TargetDate__c = date.today()+90;
         goal2.FinServ__PrimaryOwner__c=acco.Id;
+          goal2.Goal_Priority__c = 'Priority 2';
         insert goal2;
     }
     

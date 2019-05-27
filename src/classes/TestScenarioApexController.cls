@@ -51,7 +51,7 @@ public class TestScenarioApexController {
         income1.Primary_Owner__c = acc.id;
         income1.RecordTypeId = incomeRecId;
         income1.Scenario_Id__c = scene.Id;
-        income1.Amount__c = 12345678;
+        income1.Amount__c = 178;
         insert income1;
         
         Budget__c income2 = new Budget__c();
@@ -199,6 +199,8 @@ public class TestScenarioApexController {
         card2.APR__c = 2;
         card2.FinServ__FinancialAccountType__c ='Credit Card'; 
         card2.Account_Type__c = 'Credit Card';
+        card2.FinServ__Balance__c=1000;
+        
         insert card2;
     }
     

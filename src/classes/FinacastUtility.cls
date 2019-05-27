@@ -2,7 +2,7 @@ public class FinacastUtility {
     
     public static Id getRecordTypeId(String objectAPIName , String recordTypeName)
     {
-        return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectAPIName'  ).id;
+        return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectAPIName ' ).id;
         
     }
     

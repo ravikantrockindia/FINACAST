@@ -10,6 +10,7 @@
         saveIncomeEvent.fire();
        },
     
+    
     showAlertEmptyInvalidVal : function(component,msg)
     {
         var toastEvent = $A.get("e.force:showToast");

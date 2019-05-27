@@ -37,7 +37,7 @@ public class Lookup {
     }
     
     public class ResultWrapper{
-        public String objName {get;set;}
+        public  String objName {get;set;}
         public String text{get;set;}
         public String val{get;set;}
     }

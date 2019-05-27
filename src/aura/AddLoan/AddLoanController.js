@@ -42,6 +42,7 @@
         var amon = component.find("amount").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
         var pf = component.find("payfreq").get("v.value");
+          
     /*  console.log(priowner);
         console.log(ap);
         console.log(amon);
@@ -54,10 +55,92 @@
             msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);       
         }
+             else if (amon <0 ){
+                status3 =0;
+                 event.preventDefault();
+                msg = "Payment Amount cannot be negative."
+                helper.showAlertEmptyInvalidVal(component,msg);
+            }
+        else if (amn <0 ){
+                status3 =0;
+                 event.preventDefault();
+                msg = "Loan Amount cannot be negative."
+                helper.showAlertEmptyInvalidVal(component,msg);
+            }
+          else if (ap <0 ){
+                status3 =0;
+                 event.preventDefault();
+                msg = "APR cannot be negative."
+                helper.showAlertEmptyInvalidVal(component,msg);
+            }
+        if (component.get("v.isTaxDeduction")){
+           if(component.find("taxbenfit").get("v.value") < 0){
+            status3 = 0;
+            event.preventDefault();
+            msg= "What % of contribution bring tax benefits? canot is negative"
+            helper.showAlertEmptyInvalidVal(component,msg);    
+        }
+             else if(component.find("deducationtax").get("v.value") < 0){
+            status3= 0;
+            event.preventDefault();
+            msg = "Max yearly tax deduction allowed ($ )? canot is negative"
+            helper.showAlertEmptyInvalidVal(component,msg);    
+        }
+        }
+        
+        
         else
         {
             status3 = 1;
         }
     }, 
+    handleRadio: function(component, event) {
+        // component.set("v.displaySection" ,  true);
+        
+        console.log('handle')
+        if(event.target.id=="yesCheck"){
+            component.set("v.isTaxDeduction",true);
+            
+        }
+        else if(event.target.id=="noCheck"){
+            component.set("v.isTaxDeduction",false);
+        }
+    },
+    handleIsMonthly: function(component, event){
+        
+        if(event.target.id=="yesMonthly"){
+            
+            component.set("v.isMonthly",true);
+            
+        }
+        else if(event.target.id=="noMonthly"){
+            
+            component.set("v.isMonthly",false);
+        }
+    },
+    recordLoaded: function(component,event,helper){
+        debugger;
+        var recUi = event.getParam("recordUi");
+        console.log(recUi);
+        var taxDeduction=recUi.record.fields["Do_you_get_tax_benefit_from_interest_pay__c"].value;
+        console.log(taxDeduction)
+        if (taxDeduction){
+            component.set("v.isTaxDeduction",true);
+            component.set("v.getYes",true);
+        }
+        else{
+            component.set("v.getNo",true);
+            
+        }
+        var ismonthly=recUi.record.fields["Do_tax_benefits_realize_monthly__c"].value;
+        console.log(ismonthly)
+        if (ismonthly){
+            component.set("v.isMonthly",true);
+        }
+        else{
+            component.set("v.isMonthly",false);
+            
+        }
+    }
         
 })

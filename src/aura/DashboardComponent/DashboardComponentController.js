@@ -10,7 +10,8 @@
             id: 'init'
         });
         action.setCallback(this, function(response){
-            var g = response.getReturnValue();
+            try{
+                var g = response.getReturnValue();
             console.log('Response in Dashboard in init: ' + JSON.stringify(g));
             console.log("Name:" + g.firstClient);
             console.log(g.responseData);
@@ -20,7 +21,9 @@
                 
                 //check for client
                 if(!($A.util.isUndefinedOrNull(g.firstClient))) {
-                    component.set("v.client.Name", g.firstClient); }
+                    component.set("v.client.Name", g.firstClient); 
+                    component.set("v.selectedClient",g.clientid); 
+                }
                 
                 //set saving, credit, loan, networth
                 component.set('v.saving', g.financialAccountList['0']);
@@ -47,9 +50,22 @@
             }
             else {
                 alert("Create Data"); }
-        })//end set callback
-        
-        $A.enqueueAction(action);        
+            } 
+            //end set callback
+         catch(e)
+            {
+                console.log(e);
+                var event = $A.get("e.force:showToast");
+                                            event.setParams({
+                                                "type" : "Warnning",
+                                                "title" : "Info !",
+                                                "message" : "No Data for client Available"
+                                            });
+                                            event.fire();
+            }
+              
+        });
+         $A.enqueueAction(action); 
     },
     
     //change client method
@@ -57,12 +73,14 @@
         
         helper.indicatorColorRemove(component);
         var jsonResponseJs;
-        var selectedClient =  component.get("v.selectedLookUpRecord");  
-        component.set("v.client", selectedClient);
+        var selectedClient =   component.find("inf1").get("v.value");
+        //component.set("v.client", selectedClient); 
+         if(!$A.util.isEmpty(selectedClient))
+         {
         var action = component.get("c.getData");
-        console.log('client id: '+ selectedClient.Id);
+        console.log('client id: '+ selectedClient.Id); 
         action.setParams({
-            id: selectedClient.Id
+            id: selectedClient.toString()
         });
         action.setCallback(this, function(response) {
             var g = response.getReturnValue();
@@ -97,6 +115,7 @@
             else { helper.showToast(component, selectedClient.Name);} 
         })
         $A.enqueueAction(action);
+         }
     },
     
     
@@ -112,7 +131,11 @@
     //method to open pop up 
     showDetails: function(component, event, helper) {
         component.set("v.showModal", true);
+    },
+     changeClientName :function(component,event,helper){
+        console.log(component.find("inf1").get("v.value"));
     }
+
     
     
     /* getHealthScore: function(component, event, helper) {

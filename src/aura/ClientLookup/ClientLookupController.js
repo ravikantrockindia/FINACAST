@@ -7,6 +7,8 @@
         // Get Default 5 Records order by createdDate DESC  
          var getInputkeyWord = '';
          helper.searchHelper(component,event,getInputkeyWord);
+       
+       
     },
     onblur : function(component,event,helper){       
         component.set("v.listOfSearchRecords", null );

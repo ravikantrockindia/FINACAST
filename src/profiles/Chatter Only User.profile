@@ -118,11 +118,31 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountsControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AddIncomeController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AddIncomeControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Afford_JsonParser</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Afford_JsonParserTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AffordabilityController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AffordabilityControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1434,6 +1454,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Future_Simulation_VFPage_ApexControllerT</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Future_VFPage_ApexControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GoalPerformanceApex</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1459,6 +1487,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IndividualAccount_TriggerHandler2</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IndividualAccount_TriggerHandler2test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1490,6 +1522,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LookupTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MonteCarloSimulationTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1515,6 +1551,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RetirementGoalApexController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RiskProfileController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1555,6 +1595,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestScenarioApexController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestUser_Trigger</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Testclientcontroller</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2009,6 +2057,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Json__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.NaicsCode</field>
         <readable>true</readable>
@@ -2166,6 +2219,66 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.StartDate</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Are_tax_benefit_realized_monthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Cost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.End_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Future_monthly_payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Is_there_a_payment_plan_for_this_item__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Maximum_yearly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Payment_due_this_month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Rainy_Day_Fund_in_month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Start_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Tax_benefit_with_intrest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.What_do_you_want_to_purchase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.What_of_contribution_bring_tax_benifit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3929,6 +4042,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.Do_tax_benefits_realize_monthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.Do_you_get_tax_benefit_from_interest_pay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>FinServ__FinancialAccount__c.FinServ__APY__c</field>
         <readable>false</readable>
@@ -4385,6 +4508,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.Max_yearly_tax_deduction_allowed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FinServ__FinancialAccount__c.Risk_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4399,13 +4527,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Annual_Growth_Rate__c</field>
+        <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.What_of_contribution_bring_tax_benefit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Associated_Account__c</field>
+        <editable>false</editable>
+        <field>FinServ__FinancialGoal__c.Annual_Growth_Rate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4426,6 +4554,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>FinServ__FinancialGoal__c.Desired_Annual_Income_For_Retirement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialGoal__c.Do_tax_benefits_realize_monthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialGoal__c.Does_the_contribution_bring_tax_benefit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4490,17 +4628,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Goal_Priority__c</field>
+        <field>FinServ__FinancialGoal__c.Max_yearly_tax_deduction_allowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>FinServ__FinancialGoal__c.Rate_Of_Return_After_Retirement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Required_Monthly_Saving__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4525,7 +4658,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Start_Value__c</field>
+        <field>FinServ__FinancialGoal__c.What_of_contribution_bring_tax_benefit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5830,6 +5963,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Tax_Benefit__mdt.isTaxDeduction__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.FinServ__ReferrerScore__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5848,6 +5986,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountTeamMember-Account Team Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Affordability__c-Affordability Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Asset-Asset Layout</layout>
@@ -6083,6 +6224,9 @@
     <layoutAssignments>
         <layout>Task-Task Layout</layout>
         <recordType>Task.FinServ__ClientAssociateTask</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Tax_Benefit__mdt-Tax Benefit Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>User-User Layout</layout>
@@ -6531,6 +6675,10 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>Affordability</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Budget</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -6624,6 +6772,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Future_Simulation_Container</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Risk_Assessment</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

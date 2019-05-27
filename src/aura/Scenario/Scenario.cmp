@@ -30,8 +30,8 @@ to add or create goal on scenario
     <aura:attribute name = "client" type="Account"/>
     <aura:handler name = "init" value = "{!this}" action = "{!c.doInit}" />
     <aura:attribute name = "scene" type = "String" />
-    <aura:method name = "changeFieldsValue" action = "{!c.changeFieldsValue}" > 			<!-- get change value of income,goal etc on changing client -->
-        <aura:attribute name = "changeClient" type = "account" />
+   <aura:method name = "changeFieldsValue" action = "{!c.changeFieldsValue}" >			<!-- get change value of income,goal etc on changing client -->
+       <aura:attribute name = "changeClient" type = "account" />
         <aura:attribute name = "sceneId" type = "String" />
     </aura:method>		
     <aura:attribute name = "editStatus" type = "boolean" default = "false" />				<!-- if edit button is clicked for any record -->
@@ -52,182 +52,194 @@ to add or create goal on scenario
     <ltng:require styles="{!$Resource.multilinetoast}" />
     
     <div class = " slds-p-left_medium slds-p-right_medium ">
-        <div class="slds-grid slds-gutters">
+        <div class="scenario_mir">
             <div class="slds-col">
-                
-                <!-- slider for income -->
-                <div class="slds-box slds-theme_default">
-                    <div class="slds-box slds-theme_default">
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> INCOME </b> 
-                            </div>
-                            <div class="slds-col" align ="right" >
-                                <b> {!v.incomeAmount} </b>   
-                            </div>
-                        </div>
-                    </div>   
-                    <div class="slds-box slds-theme_default">
-                        <aura:iteration items = "{!v.income}" var = "incomeVar" >
-                            <div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <div class = "income-slider" >
-                                        <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="medium" max = "{!v.incomeLimit}" onchange = "{!c.getIncomeSliderValue}"/>
+                <div class="slds-page-header__row">
+                    <div class="slds-size_6-of-12 scenarios_edit">
+                        <!-- slider for income -->
+                        <div class="slds-box slds-theme_default">
+                            <div class="slds-box slds-theme_default">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <b> INCOME </b> 
+                                    </div>
+                                    <div class="slds-col" align ="right" >
+                                        <b> {!v.incomeAmount} </b>   
                                     </div>
                                 </div>
-                                <div class="slds-col" align = "right" >
-                                    
-                                    <lightning:buttonicon variant="bare" iconName="utility:save" size="medium" title="Save" aura:id = "incSlider" value = "{!incomeVar.Id}" name = "income save" onclick="{!c.onClickSaveIcon}"/>  
-                                </div>
-                            </div>
-                            <br/>
-                        </aura:iteration> 
-                    </div>
-                </div>
-                
-                <!-- slider for expense -->
-                <div class="slds-box slds-theme_default">
-                    <div class="slds-box slds-theme_default">
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> EXPENSE </b> 
-                            </div>
-                            <div class="slds-col" align ="right" >
-                                <b> {!v.expenseAmount} </b>   
+                            </div>   
+                            <div class="slds-box slds-theme_default">
+                                <aura:iteration items = "{!v.income}" var = "incomeVar" >
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <div class = "income-slider" >
+                                                <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="medium" max = "{!v.incomeLimit}" onchange = "{!c.getIncomeSliderValue}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col" align = "right" style="margin-top: 10px;">
+                                            <lightning:buttonicon variant="bare" iconName="utility:save" size="medium" title="Save" aura:id = "incSlider" value = "{!incomeVar.Id}" name = "income save" onclick="{!c.onClickSaveIcon}"/>  
+                                        </div>
+                                    </div>
+                                    <br/>
+                                </aura:iteration> 
                             </div>
                         </div>
-                    </div>       
-                    <div class="slds-box slds-theme_default">
-                        <aura:iteration items = "{!v.expense}" var = "expenseVar" >
-                            <div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <div class = "expense-slider" >
-                                        <lightning:slider label="{!expenseVar.Name}" aura:id ="incomeSlider" value="{!expenseVar.Amount__c}" size="medium" max = "{!v.expenseLimit}" onchange = "{!c.getExpenseSliderValue}"/>
+                        <!-- slider for expense -->
+                        <div class="slds-box slds-theme_default">
+                            <div class="slds-box slds-theme_default">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <b> EXPENSE </b> 
+                                    </div>
+                                    <div class="slds-col" align ="right" >
+                                        <b> {!v.expenseAmount} </b>   
                                     </div>
                                 </div>
-                                <div class="slds-col" align = "right" >
-                                    <lightning:buttonicon variant="bare" iconName="utility:save" size="medium" title="Save" value = "{!expenseVar.Id}" name = "expense save" onclick="{!c.onClickSaveIcon}"/>  
+                            </div>       
+                            <div class="slds-box slds-theme_default">
+                                <aura:iteration items = "{!v.expense}" var = "expenseVar" >
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <div class = "expense-slider" >
+                                                <lightning:slider label="{!expenseVar.Name}" aura:id ="incomeSlider" value="{!expenseVar.Amount__c}" size="medium" max = "{!v.expenseLimit}" onchange = "{!c.getExpenseSliderValue}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col" align = "right" style="margin-top: 10px;">
+                                            <lightning:buttonicon variant="bare" iconName="utility:save" size="medium" title="Save" value = "{!expenseVar.Id}" name = "expense save" onclick="{!c.onClickSaveIcon}"/>  
+                                        </div>
+                                    </div>
+                                    <br/>
+                                </aura:iteration> 
+                            </div>
+                        </div>
+                        <!-- slider for goal -->
+                        <div class="slds-box slds-theme_default">       
+                            <div class="slds-box slds-theme_default">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <b> GOALS </b> 
+                                    </div>
+                                    <div class="slds-col" align = "right">
+                                        <b> {!v.goalAmount} </b>
+                                    </div>
                                 </div>
                             </div>
-                            <br/>
-                        </aura:iteration> 
-                    </div>
-                </div>
-                
-                <!-- slider for goal -->
-                <div class="slds-box slds-theme_default">       
-                    <div class="slds-box slds-theme_default">
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> GOALS </b> 
+                            <div class="slds-box slds-theme_default">            
+                                <aura:iteration items = "{!v.goal}" var = "goalList" >
+                                    <div class = "goal-slider" >
+                                        <lightning:slider label="{!goalList.Name}" value="{!goalList.FinServ__TargetValue__c}" size="small" max = "{!v.goalAmount}"/>
+                                    </div>
+                                    <div class="slds-page-header__row" style="margin-top: 5px;">
+                                        <div class="slds-size_6-of-12">
+                                            <lightning:button label = "Edit" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    		<lightning:button label = "Delete" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                        </div>
+                                        <div class="slds-size_6-of-12" style="text-align: right;">
+                                            <lightning:button label = "Add New Goal" name = "goal button" variant = "base" onclick = "{!c.addGoalButton}"/>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
                             </div>
-                            <div class="slds-col" align = "right" >
-                                <b> {!v.goalAmount} </b>
+                        </div>
+                        <!-- slider for loans -->
+                        <div class="slds-box slds-theme_default">       
+                            <div class="slds-box slds-theme_default">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <b> LOANS </b> 
+                                    </div>
+                                    <div class="slds-col" align = "right" >
+                                        <b> {!v.loanAmount} </b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-box slds-theme_default">   
+                                <aura:iteration items = "{!v.loan}" var = "loanVar" >
+                                    <div class = "loan-slider" >
+                                        <lightning:slider label="{!loanVar.Name}" value="{!loanVar.FinServ__PaymentAmount__c}" size="small" max = "{!v.loanLimit}"/>
+                                    </div>
+                                    <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!loanVar.APR__c}" size="x-small" max = "100"/>
+                                    <div class="slds-page-header__row" style="margin-top: 5px;">
+                                        <div class="slds-size_6-of-12">
+                                            <lightning:button label = "Edit" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    		<lightning:button label = "Delete" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                        </div>
+                                        <div class="slds-size_6-of-12" style="text-align: right;">
+                                            <lightning:button label = "Add New Loan" name = "loan button" variant = "base" onclick = "{!c.addLoanButton}"/>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <!-- slider for credit cards -->
+                        <div class="slds-box slds-theme_default">
+                            <div class="slds-box slds-theme_default"> 
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <b> SAVINGS </b> 
+                                    </div>
+                                    <div class="slds-col" align = "right" >
+                                        <b> {!v.savingsAmount} </b> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-box slds-theme_default">
+                                <aura:iteration items = "{!v.savings}" var = "savingList" >
+                                    <div class = "saving-slider" >
+                                        <lightning:slider label="{!savingList.Name}" value="{!savingList.FinServ__Balance__c}" size="small" max = "{!v.savingLimit}"/>
+                                    </div>
+                                    <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!v.savingList.FinServ__APY__c}" size="x-small" max = "100"/>
+                                    <div class="slds-page-header__row" style="margin-top: 5px;">
+                                        <div class="slds-size_6-of-12">
+                                            <lightning:button label = "Edit" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
+                                    		<lightning:button label = "Delete" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                        </div>
+                                        <div class="slds-size_6-of-12" style="text-align: right;">
+                                            <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" />
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <!-- slider for savings -->
+                        <div class="slds-box slds-theme_default">
+                            <div class="slds-box slds-theme_default"> 
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <b> SAVINGS </b> 
+                                    </div>
+                                    <div class="slds-col" align = "right" >
+                                        <b> {!v.savingsAmount} </b> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-box slds-theme_default">
+                                <aura:iteration items = "{!v.savings}" var = "savingList" >
+                                    <div class = "saving-slider" >
+                                        <lightning:slider label="{!savingList.Name}" value="{!savingList.FinServ__Balance__c}" size="small" max = "{!v.savingLimit}"/>
+                                    </div>
+                                    <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!v.savingList.FinServ__APY__c}" size="x-small" max = "100"/>
+                                    <div class="slds-page-header__row" style="margin-top: 5px;">
+                                        <div class="slds-size_6-of-12">
+                                    		<lightning:button label = "Edit" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
+                                    		<lightning:button label = "Delete" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                    	</div>
+                                        <div class="slds-size_6-of-12" style="text-align: right;">
+                                            <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" />
+                                        </div>
+                                    </div>
+                                </aura:iteration>
                             </div>
                         </div>
                     </div>
-                    <div class="slds-box slds-theme_default">            
-                        <aura:iteration items = "{!v.goal}" var = "goalList" >
-                            <div class = "goal-slider" >
-                                <lightning:slider label="{!goalList.Name}" value="{!goalList.FinServ__TargetValue__c}" size="small" max = "{!v.goalAmount}"/>
-                            </div>
-                            <lightning:button label = "Edit" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
-                            <lightning:button label = "Delete" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
-                            <br/>
-                            <br/>
-                        </aura:iteration>
-                    </div>
-                    <div class="slds-box slds-theme_default" align ="right">
-                        <lightning:button label = "Add New Goal" name = "goal button" variant = "base" onclick = "{!c.addGoalButton}"/>                      
-                    </div>
-                    <br/>
-                </div>
-                
-                <!-- slider for loans --> 
-                <div class="slds-box slds-theme_default">       
-                    <div class="slds-box slds-theme_default">
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> LOANS </b> 
-                            </div>
-                            <div class="slds-col" align = "right" >
-                                <b> {!v.loanAmount} </b>
-                            </div>
+                    <div class="slds-size_6-of-12 scenario_mir1">
+                        <div class = "slds-col" >
+                            <c:ScenarioSimulationContainer aura:id = "child" client = "{!v.client}" scene = "{!v.scene}" />
                         </div>
-                    </div>
-                    <div class="slds-box slds-theme_default">   
-                        <aura:iteration items = "{!v.loan}" var = "loanVar" >
-                            <div class = "loan-slider" >
-                                <lightning:slider label="{!loanVar.Name}" value="{!loanVar.FinServ__PaymentAmount__c}" size="small" max = "{!v.loanLimit}"/>
-                            </div>
-                            <lightning:slider label="Interest Rate" value="{!loanVar.APR__c}" size="x-small" max = "100"/>
-                            <lightning:button label = "Edit" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
-                            <lightning:button label = "Delete" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
-                            <br/>
-                        </aura:iteration>
-                    </div>
-                    <div class="slds-box slds-theme_default" align ="right">
-                        <lightning:button label = "Add New Loan" name = "loan button" variant = "base" onclick = "{!c.addLoanButton}"/>                      
                     </div>
                 </div>
                 
-                <!-- slider for credit cards -->
-                <div class="slds-box slds-theme_default">       
-                    <div class="slds-box slds-theme_default">
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> CREDIT CARDS </b>  
-                            </div>
-                            <div class="slds-col" align = "right" >
-                                <b> {!v.cardAmount} </b>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-box slds-theme_default">   
-                        <aura:iteration items = "{!v.creditcard}" var = "cardVar" >
-                            <div class = "card-slider" >
-                                <lightning:slider label="{!cardVar.Name}" value="{!cardVar.FinServ__LoanAmount__c}" size="small" max = "{!v.creditCardLimit}"/>
-                            </div>
-                            <lightning:slider label="Interest Rate" value="{!cardVar.APR__c}" size="x-small" max = "100"/>
-                            <lightning:button label = "Edit" name = "credit card button" value = "{!cardVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
-                            <lightning:button label = "Delete" name = "credit card button" value = "{!cardVar.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
-                            <br/>
-                        </aura:iteration>
-                    </div>
-                    <div class="slds-box slds-theme_default" align ="right">
-                        <lightning:button label = "Add New Credit Card" name = "credit card button" variant = "base" onclick = "{!c.addCardButton}"/>                      
-                    </div>
-                </div>                             
-                
-                <!-- slider for savings -->
-                <div class="slds-box slds-theme_default">
-                    <div class="slds-box slds-theme_default"> 
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> SAVINGS </b> 
-                            </div>
-                            <div class="slds-col" align = "right" >
-                                <b> {!v.savingsAmount} </b> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-box slds-theme_default">
-                        <aura:iteration items = "{!v.savings}" var = "savingList" >
-                            <div class = "saving-slider" >
-                                <lightning:slider label="{!savingList.Name}" value="{!savingList.FinServ__Balance__c}" size="small" max = "{!v.savingLimit}"/>
-                            </div>
-                            <lightning:slider label="Interest Rate" value="{!v.savingList.FinServ__APY__c}" size="x-small" max = "100"/>
-                            <lightning:button label = "Edit" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
-                            <lightning:button label = "Delete" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
-                            <br/>
-                        </aura:iteration>
-                    </div>
-                    <div class="slds-box slds-theme_default" align = "right" >
-                        <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" />
-                    </div>
-                </div>
-                
-                
+               
                 <!-- GOAL FORM displayed when user clicked on add new goal, set goalButtonStatus attribute to true -->  
                 <div class = "form-label">
                     <aura:if isTrue = "{!v.goalButtonStatus}">
@@ -427,11 +439,7 @@ to add or create goal on scenario
                 </div>
                 
             </div>
-            <div class = "slds-col" >
-                
-            <c:ScenarioSimulationContainer aura:id = "child" client = "{!v.client}" scene = "{!v.scene}" />
-                  
-            </div>
+            
         </div>
     </div>
 </aura:component>

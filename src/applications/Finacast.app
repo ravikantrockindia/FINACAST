@@ -22,14 +22,15 @@
     <navType>Standard</navType>
     <tabs>standard-Account</tabs>
     <tabs>FinServ__FinancialAccount__c</tabs>
-    <tabs>FinServ__FinancialGoal__c</tabs>
-    <tabs>standard-Contact</tabs>
     <tabs>Future_Simulation_Container</tabs>
+    <tabs>FinServ__FinancialGoal__c</tabs>
     <tabs>Budget__c</tabs>
     <tabs>Scenario__c</tabs>
     <tabs>Dashboard</tabs>
     <tabs>FinServ__FinancialAccountTransaction__c</tabs>
     <tabs>Exception_Details__c</tabs>
+    <tabs>Affordability</tabs>
+    <tabs>Risk_Assessment</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Finacast_UtilityBar</utilityBar>
 </CustomApplication>

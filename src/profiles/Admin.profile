@@ -118,11 +118,31 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountsControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AddIncomeController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AddIncomeControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Afford_JsonParser</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Afford_JsonParserTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AffordabilityController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AffordabilityControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1434,6 +1454,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Future_Simulation_VFPage_ApexControllerT</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Future_VFPage_ApexControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GoalPerformanceApex</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1459,6 +1487,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IndividualAccount_TriggerHandler2</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IndividualAccount_TriggerHandler2test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1490,6 +1522,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LookupTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MonteCarloSimulationTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1515,6 +1551,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RetirementGoalApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RiskProfileController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1555,6 +1595,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestScenarioApexController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestUser_Trigger</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Testclientcontroller</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1624,7 +1672,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__AUM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1744,7 +1792,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__LastTransactionDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1754,7 +1802,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__LengthOfRelationship__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1864,7 +1912,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalBankDeposits__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1879,7 +1927,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalFinancialAccounts__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1904,7 +1952,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalInsurance__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1919,7 +1967,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalInvestments__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1934,7 +1982,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalLiabilities__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1949,7 +1997,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalNonfinancialAssets__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1964,7 +2012,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalNumberOfFinAccounts__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1979,7 +2027,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__TotalOutstandingCredit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1994,7 +2042,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.FinServ__WalletShare__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2006,6 +2054,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Jigsaw</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Json__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2166,6 +2219,66 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.StartDate</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Are_tax_benefit_realized_monthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Cost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.End_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Future_monthly_payment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Is_there_a_payment_plan_for_this_item__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Maximum_yearly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Payment_due_this_month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Rainy_Day_Fund_in_month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Start_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.Tax_benefit_with_intrest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.What_do_you_want_to_purchase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Affordability__c.What_of_contribution_bring_tax_benifit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2739,12 +2852,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__AgeAsText__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2754,7 +2867,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__BillingAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2834,7 +2947,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__IndividualId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2859,7 +2972,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__MailingAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2909,7 +3022,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__OtherAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2974,7 +3087,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FinServ__ShippingAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3930,6 +4043,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.Do_tax_benefits_realize_monthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.Do_you_get_tax_benefit_from_interest_pay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FinServ__FinancialAccount__c.FinServ__APY__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4385,6 +4508,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.Max_yearly_tax_deduction_allowed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FinServ__FinancialAccount__c.Risk_Profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4399,13 +4527,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Annual_Growth_Rate__c</field>
+        <editable>true</editable>
+        <field>FinServ__FinancialAccount__c.What_of_contribution_bring_tax_benefit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Associated_Account__c</field>
+        <editable>false</editable>
+        <field>FinServ__FinancialGoal__c.Annual_Growth_Rate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4426,6 +4554,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>FinServ__FinancialGoal__c.Desired_Annual_Income_For_Retirement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialGoal__c.Do_tax_benefits_realize_monthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FinServ__FinancialGoal__c.Does_the_contribution_bring_tax_benefit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4490,17 +4628,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Goal_Priority__c</field>
+        <field>FinServ__FinancialGoal__c.Max_yearly_tax_deduction_allowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>FinServ__FinancialGoal__c.Rate_Of_Return_After_Retirement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Required_Monthly_Saving__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4525,7 +4658,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>FinServ__FinancialGoal__c.Start_Value__c</field>
+        <field>FinServ__FinancialGoal__c.What_of_contribution_bring_tax_benefit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5829,6 +5962,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Tax_Benefit__mdt.isTaxDeduction__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.FinServ__ReferrerScore__c</field>
         <readable>true</readable>
@@ -5848,6 +5986,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountTeamMember-Account Team Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Affordability__c-Affordability Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Asset-Asset Layout</layout>
@@ -6081,6 +6222,9 @@
         <recordType>Task.FinServ__ClientAssociateTask</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Tax_Benefit__mdt-Tax Benefit Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>User-User Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -6118,6 +6262,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>AccountBrand</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Affordability__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -6779,15 +6932,16 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.CommonRecordType</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.FinServ__IndustriesBusiness</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.FinServ__IndustriesHousehold</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -6799,7 +6953,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.FinServ__IndustriesInstitution</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -6823,6 +6977,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.FinServ__IndustriesBusiness</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -7064,6 +7219,10 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>Affordability</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Budget</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -7160,6 +7319,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Risk_Assessment</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Scenario_Debt__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -7217,7 +7380,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Contact</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-ContactRequest</tab>

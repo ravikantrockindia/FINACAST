@@ -17,9 +17,17 @@
             <componentName>cooper:companyInsightTeaserCard</componentName>
         </componentInstances>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>displayOption</name>
+                <value>BOTH</value>
+            </componentInstanceProperties>
             <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
         </componentInstances>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>relatedListComponentOverride</name>
+                <value>NONE</value>
+            </componentInstanceProperties>
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
         <mode>Replace</mode>
@@ -50,37 +58,6 @@
             <componentName>FinServ:relationshipMembers</componentName>
         </componentInstances>
         <name>Facet-430a3ad2-558a-4d5c-a692-2c89da146203</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentName>FinServ:goalDetailList</componentName>
-        </componentInstances>
-        <name>Facet-b83318b0-7d15-4c33-852f-8d96ef495e57</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>fieldSet</name>
-                <value>WM_Client_Profile_Fin_Acct_Summary</value>
-            </componentInstanceProperties>
-            <componentName>FinServ:financialSummary</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>FinServ:investmentAccount</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>FinServ:bankAccount</componentName>
-        </componentInstances>
-        <name>Facet-8719c0a5-7139-4afa-80b1-94705d43eca5</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentName>Finacast_FutureSimulationComponent</componentName>
-        </componentInstances>
-        <name>Facet-84122611-b522-4a5d-bfb7-e922c339650b</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -118,39 +95,6 @@
             <componentInstanceProperties>
                 <name>title</name>
                 <value>Financial Relationships</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-b83318b0-7d15-4c33-852f-8d96ef495e57</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Financial Goals</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-8719c0a5-7139-4afa-80b1-94705d43eca5</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Financial Accounts</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-84122611-b522-4a5d-bfb7-e922c339650b</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Future Simulation</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>

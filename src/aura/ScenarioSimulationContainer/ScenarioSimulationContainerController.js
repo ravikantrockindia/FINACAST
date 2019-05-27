@@ -6,7 +6,13 @@
         console.log("secene in charts: ",  component.get("v.scene"));
         helper.showChartData(component);
     },*/
+    doInit : function(component, event, helper) {
+        console.log("client in charts: ",  component.get("v.client"));
+        console.log("secene in charts: ",  component.get("v.scene"));
+        console.log('Inside SimulationSimulationContainer Component');
+    },
     changeClient : function(component, event, helper) {
+        console.log('sscenrio simulation container');
         var params = event.getParam('arguments');
         if(params) {
             component.set("v.client", params.clientId);
@@ -21,7 +27,7 @@
             console.log("sceneId", component.get("v.scene"));
             console.log("scene werftghjuygtfrds",params.sceneId);
             component.set("v.data",response.getReturnValue().response);
-            //console.log('resp: ',response.getReturnValue().response);
+            console.log('resp in setcallback of SSCC: ',JSON.stringify(response.getReturnValue().response));
             console.log("data in parent: ", component.get("v.data"));
             component.set("v.parentInitialised", true);
             component.find("child").changeClientData(response.getReturnValue().response);

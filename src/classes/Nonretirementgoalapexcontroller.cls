@@ -14,10 +14,21 @@ public class Nonretirementgoalapexcontroller {
         return allGoals ;
     }
     
+    @auraEnabled   
+    public static List<FinServ__FinancialAccount__c> sample(String clientId){
+        System.debug('clientId--->'+clientId);
+        List<FinServ__FinancialAccount__c> accountList=new List<FinServ__FinancialAccount__c>();
+        List<FinServ__FinancialAccount__c> a = [select Id, Name from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c = :clientId];
+        System.debug('a-->'+a);
+        accountList.addAll(a);
+         System.debug('accountList--->>'+accountList);
+        return accountList;
+    }
     @auraEnabled
     public static getDataWrapper getCurrentAmount(String accId, String targetDate, String targetAmt, String currentAmount)
     {
         
+        System.debug(currentAmount);
         Double interestRate = 0;
         getDataWrapper wrapper = new getDataWrapper();
         wrapper.currentAmt = 0;
@@ -26,7 +37,7 @@ public class Nonretirementgoalapexcontroller {
         
         system.debug('gaccid'+accId );
         try{
-            if(accId != null)
+            if(accId != null&& accId !='')
             {
                 FinServ__FinancialAccount__c acc = [select FinServ__Balance__c,APR__c, FinServ__APY__c, id from FinServ__FinancialAccount__c where id = :accId];
                 system.debug('aa'+acc);
@@ -47,11 +58,11 @@ public class Nonretirementgoalapexcontroller {
                 
                 Double totalEstimated = 0;
                 Double remainingAmount = 0;
-                
+                Decimal growth=0;                
                 for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
                 {
                     
-                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today())).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
+                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
                     
                 }
                 
@@ -61,14 +72,16 @@ public class Nonretirementgoalapexcontroller {
                 }
                 
                 Double currAmt = 0;
-                if(currentAmount != null)
+                currAmt = Double.valueOf(remainingAmount);
+               /* if(currentAmount != null)
                 {
                     currAmt = Double.valueOf(currentAmount);
                 }
                 else
                 { 
+                    System.debug(remainingAmount);
                     currAmt = remainingAmount;
-                }
+                }*/
                 wrapper.currentAmt = Math.ceil(currAmt);
                 if(targetDate != null && targetAmt != null)
                 {
@@ -90,12 +103,14 @@ public class Nonretirementgoalapexcontroller {
             
             else
             {
-                wrapper.currentAmt = 0;
+                System.debug('hello');
+                wrapper.currentAmt = null;
             }
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
+        system.debug('aaaa'+ wrapper.currentAmt);
         return wrapper;
         
     }

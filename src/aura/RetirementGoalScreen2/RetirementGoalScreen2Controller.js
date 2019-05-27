@@ -11,6 +11,30 @@
         console.log("interest",interest);
         var after = component.get("v.yearsAfterRetirement");
         console.log("after",after);
+                var recUi = event.getParam("recordUi");
+        console.log(recUi);
+        var taxDeduction=recUi.record.fields["Does_the_contribution_bring_tax_benefit__c"].value;
+        console.log("associated account",recUi.record.fields["Associated_Account__c"].value);
+        console.log("current amount",recUi.record.fields["Start_Value__c"].value);
+        console.log(taxDeduction)
+        
+        if (taxDeduction){
+            component.set("v.isTaxDeduction",true);
+            component.set("v.getYes",true);
+        }
+        else{
+            component.set("v.getNo",true);
+            
+        }
+        var ismonthly=recUi.record.fields["Do_tax_benefits_realize_monthly__c"].value;
+        console.log(ismonthly)
+        if (ismonthly){
+            component.set("v.isMonthly",true);
+        }
+        else{
+            component.set("v.isMonthly",false);
+            
+        }
         
         var action = component.get("c.getAmountMonth");
         action.setParams({
@@ -21,7 +45,6 @@
             retireAge : retirementYear.toString(),
             birth : birthDate
         });
-        
         action.setCallback(this, function(response) {
             component.set("v.amtMonth",response.getReturnValue());
             console.log("value: ",response.getReturnValue());
@@ -43,9 +66,10 @@
         console.log("years",years);
         console.log("target",target);
         var action = component.get("c.getAmtAndContri");  
+        console.log(associated[0]);
         action.setParams
         ({
-            "accId" : associated[0],
+            "accId" : associated,
             tillRetirement : years.toString(),
             interest : interestRate.toString(),
             targetAmt : target.toString(),
@@ -53,6 +77,10 @@
             current :  curAmt
         });
         action.setCallback(this, function(response) {
+            
+                component.find("currVal").set("v.value", response.getReturnValue().currentAmt);
+           component.find("goalContri").set("v.value", response.getReturnValue().monthlyContri);
+
             component.set("v.currAndContri", response.getReturnValue());
             component.set("v.contribution", response.getReturnValue().monthlyContri);
             component.set("v.initialAmount", response.getReturnValue().currentAmt);
@@ -129,7 +157,8 @@
                 Retiring :component.get("v.retirementAge"),
                 DesiredAnnualIncome :component.get("v.retirementAnnualIncome"),
                 RateofReturnAfterRetirement :component.get("v.roi"),
-                household : component.get("v.household")                
+                household : component.get("v.household"), 
+                retirementGoalId:component.get("v.recordId")
             }
         });
         
@@ -156,11 +185,16 @@
         }
     },
     
-    
+    nextButton:function(component,event,helper){
+        
+    },
     
     saveButton : function(component, event, helper) {
+        var recordId=component.get("v.recordId");
+        console.log("record Id", recordId);
         var own = component.get("v.owner");
-        console.log("own", own, typeof own);
+        console.log("own", own[0], typeof own);
+        
         
         var n = component.get("v.name");
         console.log("name", n, typeof n);
@@ -199,11 +233,29 @@
         console.log("start", start, typeof start);
         
         var tar = component.find("rDate").get("v.value");
-        console.log("tar", tar, typeof tar);
+        console.log("tar", tar, typeof tar); 
+        
+        var isTaxDeduction=component.get("v.isTaxDeduction");
+        console.log("isTaxDeduction",isTaxDeduction, typeof isTaxDeduction);
+        var taxcontri=0;
+        var maxdeduction=0;
+        var ismonthly=true;
+        if(isTaxDeduction){
+           var ele = component.find("taxcontri")
+           taxcontri = ele.get("v.value");
+            console.log("taxcontri",taxcontri,typeof taxcontri);
+                    var maxDeduction=component.find("maxdeduction").get("v.value");
+        console.log("maxdeduction",maxDeduction)
+        
+        var ismonthly=component.get("v.isMonthly")
+        }
+        
+
+        
         
         var msg = "Please fill mandatory fields"
         if ($A.util.isUndefinedOrNull(acc) || acc == "" || $A.util.isUndefinedOrNull(amt) || amt == "" || 
-            ((start == "" || $A.util.isUndefinedOrNull(start)) && start != 0)|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "")
+            ((start == "" || $A.util.isUndefinedOrNull(start)) && start != 0)|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
         {
             
             helper.currentAmtError(component, event, helper,msg);
@@ -215,7 +267,8 @@
             var action = component.get("c.saveData");
             action.setParams
             ({ 
-                owner : own[0],
+                recordId:recordId,
+                owner : own,
                 name : n,
                 dob : birth,
                 years : retire.toString(),
@@ -224,11 +277,17 @@
                 income : retireIncome,
                 returnRate : rateInterest,
                 amount : amt.toString(),
-                associatedAccount : acc[0],
+                associatedAccount : acc,
                 priority : pri.toString(),
                 sValue : start.toString(),
                 tDate : tar.toString(),
-                contribution : contri.toString()
+                contribution : contri.toString(),
+                isTaxDeduction: isTaxDeduction.toString(),
+              	taxPercentageContribution: taxcontri.toString(),
+                maxDeduction:maxDeduction,
+                isMonthly: ismonthly.toString()
+                
+                
                 
             });
             action.setCallback(this, function(response) {
@@ -237,6 +296,7 @@
                 if (state == "SUCCESS") {
                     component.set("v.saveStatus",true);
                     var resp = response.getReturnValue();
+                   
                     var navEvt = $A.get("e.force:navigateToSObject");
                     navEvt.setParams({
                         "recordId": resp
@@ -325,5 +385,29 @@
         component.set("v.buttonDisplay",false);
         component.set('v.setMsg','You will reach your goal on time');
         
-    }
+    },
+        handleRadio: function(component, event) {
+        // component.set("v.displaySection" ,  true);
+        
+        console.log('handle')
+        if(event.target.id=="yesCheck"){
+            component.set("v.isTaxDeduction",true);
+            
+        }
+        else if(event.target.id=="noCheck"){
+            component.set("v.isTaxDeduction",false);
+        }
+    },
+    handleIsMonthly: function(component, event){
+        
+        if(event.target.id=="yesMonthly"){
+            
+            component.set("v.isMonthly",true);
+            
+        }
+        else if(event.target.id=="noMonthly"){
+            
+            component.set("v.isMonthly",false);
+        }
+    },
 })

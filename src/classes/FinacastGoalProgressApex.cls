@@ -6,13 +6,14 @@ public with sharing class FinacastGoalProgressApex{
     {
         goalId = gId; 
     }
-    public static double curentgoalestimation(double emi, Date startDate, Date todaydate ){
+    public static double curentgoalestimation(double emi, Date startDate, Date todaydate,decimal growth ){
         double result = 0;
         Integer months = 0;
         try{
             months = NumberOfMonths(startDate, todaydate);
             if(months >= 1){
-                result = months*emi;
+                result = months*emi*(Math.pow((double)(1+growth), months));
+                system.debug('result'+ result+ 'gr'+growth );
             }
         }
         catch(Exception e){
@@ -104,7 +105,24 @@ public with sharing class FinacastGoalProgressApex{
             retgoal = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Associated_Account__r.Account_Type__c, Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, Goal_Priority_Number__c,FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where id=:fingoalId];
             List<FinServ__FinancialGoal__c> allAssocGoals = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where Associated_Account__c=: retgoal.Associated_Account__c and id !=: retgoal.id and Goal_Priority_Number__c <=: retgoal.Goal_Priority_Number__c];
             
-            ffa = [select name, Account_Type__c from FinServ__FinancialAccount__c where id=:retgoal.Associated_Account__c];
+            ffa = [select name, Account_Type__c,aPR__c, FinServ__APY__c from FinServ__FinancialAccount__c where id=:retgoal.Associated_Account__c];
+            Double interestRate ;
+            if(ffa.FinServ__APY__c != null)
+                {
+                    interestRate = ffa.FinServ__APY__c;
+                }
+                if(ffa.APR__c != null)
+                {
+                    interestRate =  ffa.APR__c;
+                }
+            else{
+                interestRate = 0;
+            }
+            
+                
+            Decimal growth =((Decimal) ((Math.pow((1 + (interestRate/100)),1)- 1))).setScale(5);
+           
+            system.debug('in'+interestRate + 'gr'+growth);
             if(ffa.Account_Type__c == 'IRA' || ffa.Account_Type__c == 'Roth IRA' || ffa.Account_Type__c == '529 Account' || ffa.Account_Type__c == 'Retail Brokerage' ){
                 isMonteCarloSimulation = true;
             }
@@ -114,16 +132,16 @@ public with sharing class FinacastGoalProgressApex{
                 SavingError = true;
             }
             if((retgoal.Required_Monthly_Saving__c != 0) && (retgoal.FinServ__TargetValue__c != 0)){
-                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today())).setScale(2,                                                                                                                                            RoundingMode.HALF_UP) + retgoal.Start_Value__c;
+                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today(),growth)).setScale(2,                                                                                                                                            RoundingMode.HALF_UP) + retgoal.Start_Value__c;
             }else{
-                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today())).setScale(2,                                                                                                                                            RoundingMode.HALF_UP);
+                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today(),growth)).setScale(2,                                                                                                                                            RoundingMode.HALF_UP);
             }
             
             
             totalEstimated = 0;
             for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
             {
-                totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today())).setScale(2,                                                                                                                                                                RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,                                                                                                                                                                RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
             }
             
             if(goalstatus > retgoal.Associated_Account__r.FinServ__Balance__c - totalEstimated){
@@ -151,16 +169,16 @@ public with sharing class FinacastGoalProgressApex{
                     chartValueList+= '{';
                     chartValueList+= '"date":"'+date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year()+'",';
                     if((retgoal.Required_Monthly_Saving__c != 0) && (retgoal.FinServ__TargetValue__c != 0)){
-                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                               RoundingMode.HALF_UP)+ retgoal.Start_Value__c; 
                     }else{
                         
-                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                               RoundingMode.HALF_UP); 
                     }  totalEstimated = 0;
                     for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
                     {
-                        totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                        totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                                                     RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
                     }
                     chartValueList+= '"estimated":"'+expected+'",';
@@ -183,7 +201,7 @@ public with sharing class FinacastGoalProgressApex{
                         for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
                         {
                             system.debug('name'+ relgoal.name);
-                            totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                            totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                                                         RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
                         }
                         system.debug('vdrrdrgr'+totalEstimated);
@@ -210,17 +228,17 @@ public with sharing class FinacastGoalProgressApex{
                         chartValueList+= '{';
                         chartValueList+= '"date":"'+date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year()+'",';
                         if((retgoal.Required_Monthly_Saving__c != 0) && (retgoal.FinServ__TargetValue__c != 0)){
-                            expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                            expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                                   RoundingMode.HALF_UP)+ retgoal.Start_Value__c; 
                         }else{
-                            expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                            expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                                   RoundingMode.HALF_UP); 
                         }     
                         totalEstimated = 0;
                         for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
                         {
                             
-                            totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i))).setScale(2, 
+                            totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
                                                                                                                                                                                                         RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
                         }
                         system.debug('vdrrdrgr'+totalEstimated);
@@ -242,10 +260,10 @@ public with sharing class FinacastGoalProgressApex{
                     chartValueList+= '{';
                     chartValueList+= '"date":"'+date.today().addMonths(+j).month()+'-'+date.today().addMonths(+j).year()+'",';
                     if((retgoal.Required_Monthly_Saving__c != 0) && (retgoal.FinServ__TargetValue__c != 0)){
-                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(+j))).setScale(2, 
+                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
                                                                                                                                                                               RoundingMode.HALF_UP)+ retgoal.Start_Value__c; 
                     }else{
-                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(+j))).setScale(2, 
+                        expected =  ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
                                                                                                                                                                               RoundingMode.HALF_UP); 
                     }                
                     chartValueList+= '"estimated":"'+expected+'",';

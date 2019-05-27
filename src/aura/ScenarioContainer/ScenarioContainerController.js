@@ -4,6 +4,7 @@
 
 ({
     doInit : function(component,event, helper) {
+        console.log('Inside ScenarioContainerComponent')
         component.set('v.tabSelected', 'scenario');
         helper.initialData(component);
     },
@@ -27,6 +28,8 @@
     
     scenarioTab :function(component) { 
         component.set('v.tabSelected', 'scenario');
+        console.log('client scenario' ,component.get("v.client"));
+        
     },
     currentStateTab :function(component) { 
         component.set('v.tabSelected', 'current state');
@@ -107,7 +110,10 @@
         component.set("v.addScenarioButtonStatus", true);
         component.set("v.isAddScenarioActive", false);			//to disable add another scenario button and after click save icon enable it 
     },
-    
+    changeClientName :function(component,event,helper){
+        console.log(component.find("inf1").get("v.value"));
+    },
+
     /***
      * close manage scenario popup
      * **/
@@ -127,5 +133,11 @@
         if(component.get("v.tabSelected") == "current state") {
             component.find("currentStateScenario").changeClient(component.get("v.client"),component.get("v.sceneID"));
         }
+    },
+    changeClientDatascenario : function(component,event,helper) {
+         
+            component.find("currentStateScenario").changeClient(component.get("v.client"),component.get("v.sceneID"));
+        console.log(component.get("v.changeData"));
+        
     }
 })

@@ -4,6 +4,7 @@
 
 ({
     doInit : function(component,event,helper) {
+        console.log('Inside Scenario Component');
         helper.showFieldsValue(component); 
     },
     
@@ -20,7 +21,7 @@
             helper.showFieldsValue(component);
             console.log('scene  in  change field : ',component.get("v.scene"));
         }
-        //helper.showFieldsValue(component);
+        helper.showFieldsValue(component);
     },
     
     hideExampleModal : function(component, event, helper) {

@@ -41,6 +41,7 @@
     <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
     <aura:attribute name="editrecid" type="String"/>
     <aura:attribute name="editrecidExpense" type="String"/>
+    <aura:attribute name="editRecNameExpense" type="String"/>
     <aura:attribute name="editrecidLoan" type="String"/>
     <aura:attribute name="editrecidGoal" type="String"/>
     <aura:attribute name="editrecidTransaction" type="String"/>
@@ -58,8 +59,8 @@
     <aura:attribute name= "expenseTransaction" type="string"/>
     <aura:attribute name= "loanTransaction" type="string"/>
     <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
-    <aura:attribute name="isRetirement" type="Boolean" />
-    <aura:attribute name="isNonRetirement" type="Boolean" />
+    <aura:attribute name="isRetirement" type="Boolean" default="false"/>
+   <!-- <aura:attribute name="isNonRetirement" type="Boolean" default="false" />-->
     <aura:attribute name = "heading" type = "String"/>
     <aura:attribute name = "subheading" type = "String"/>   
     <aura:attribute name="isPortalUser" type="Boolean" />
@@ -72,18 +73,29 @@
     <aura:attribute name = "SumOfIncomeTrans"  type = "String"/>
     <aura:attribute name = "SumOfExpenseTrans"  type = "String"/>
     <aura:attribute name = "SumOfLoanTrans"  type = "String"/>
+     <aura:method name = "changeClientData" action = "{!c.changeClientData}" >
+        <aura:attribute name = "changeData" type = "Object" />
+      
+        
+        
+    </aura:method> 
+    <aura:attribute name = "selectedClient" type = "String" />
+     
     
     <!-- Change Client Card -->
     <aura:if isTrue="{!not(v.isPortalUser)}">
-        <lightning:card  title="">           
-            <div class="slds-text-heading_medium" style="padding: 0 15px;">Current Client: {!v.client.Name}</div>
-            <div class="slds-col slds-page-header__row" style="padding: 0 15px;">
-                <div class="slds-size_6-of-12">
-                	<c:ClientLookup objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Client Name" SearchKeyWord = "{!v.clientName.Name}" />
+        <lightning:card  title="">
+            <div class="slds-col slds-page-header__row" style="">
+            	<div class="slds-text-heading_medium slds-size_3-of-12" style="">Current Client: </div>
+                <div class="slds-size_4-of-12 label_none">
+                	<lightning:recordEditForm objectApiName="FinServ__FinancialGoal__c">
+                     <lightning:inputField fieldName="FinServ__PrimaryOwner__c" value="{! v.selectedClient}" onchange="{! c.changeClient }"  aura:id="inf1"/> 
+                    </lightning:recordEditForm>
+                  <!--  <c:ClientLookup objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Client Name" SearchKeyWord = "{!v.clientName.Name}" /> -->
                 </div>
-                <div class="slds-size_6-of-12" style="padding: 25px 0 0 25px;">
+               <!-- <div class="slds-size_6-of-12" style="padding: 25px 0 0 25px;">
                 	<lightning:button variant="brand" label="Change Client" title="Change Client" onclick="{! c.changeClient }"/>
-                </div>
+                </div> -->
                 
                 
             </div>
@@ -591,7 +603,7 @@
         
         <!--edit modal for expense starts-->        
         <aura:if isTrue="{!v.showModalExpense}">
-            <c:AddExpense Expense = "{!v.recordTypeId}" expId = "{!v.editrecidExpense}" title = "Edit Expense"  isActive = "{!v.activeModal}" client="{!v.client}"/>           
+            <c:AddExpense Expense = "{!v.recordTypeId}" expId = "{!v.editrecidExpense}" selectedValue="{!v.editRecNameExpense}" title = "Edit Expense"  isActive = "{!v.activeModal}" client="{!v.client}"/>           
         </aura:if>
         <!--Edit modal for expense ends-->
         <!--Add expense Transaction modal-->
@@ -864,7 +876,7 @@
             <aura:if isTrue="{!v.isRetirement}">       
                 <c:RetirementGoal retirementGoalId ="{!v.editrecidGoal}" client = "{!v.client}"/>  
             </aura:if>
-            <aura:if isTrue="{!v.isNonRetirement}">   
+            <aura:if isTrue="{!!v.isRetirement}">   
                 <c:NonRetirementgoal  goalId = "{!v.editrecidGoal}" client = "{!v.client}" />
             </aura:if>
             

@@ -1,6 +1,7 @@
 //-----------------Works on component initialization  --------------------------------------//
 ({
     getmonthlybudget : function(component, event, helper) {
+        console.log('inside init')
         helper.removeBackgroundColor(component, helper);
         var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
                           "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ];
@@ -45,23 +46,26 @@
         
         if($A.util.isUndefinedOrNull(clnt) ){
             clntId = "init";
+            
         }
         else
         {
             clntId = clnt.Id;
         }
         console.log("sss"+clntId);
+        
         var action = component.get("c.getBudget");
         action.setParams({
             clientId : clntId,
             
         });
         action.setCallback(this, function(response) {
-            var state = response.getState();
+            try {
+                var state = response.getState();
             if (state === "SUCCESS") {
                 var data = response.getReturnValue();
-                //console.log("--->"+JSON.stringify(data));
-                
+                console.log("--->"+JSON.stringify(data));
+                component.set("v.selectedClient" , data.client.Id);
                 for(var e in data.expenseRecList){
                     data.expenseRecList[e]["showSection"]=false;
                     data.expenseRecList[e]["iconName"]="utility:right";
@@ -99,7 +103,7 @@
                     data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c;
                     
                     console.log('loan amount' + data.loanRecList[e].FinServ__PaymentAmount__c*2);
-            		if (data.loanRecList[e].FinServ__PaymentFrequency__c=="Quaterly"){
+            		if (data.loanRecList[e].FinServ__PaymentFrequency__c=="Semi Monthly"){
 					data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c*2;
             		}
                     else if(data.loanRecList[e].FinServ__PaymentFrequency__c=="Biweekly"){
@@ -129,6 +133,20 @@
                 component.set("v.SumOfExpenseTrans" , data.TransSumValExp);
                 component.set("v.SumOfLoanTrans" , data.TransSumValLoan);
               
+            }
+            }
+            catch(e){
+                                console.log(e);
+                
+                var event = $A.get("e.force:showToast");
+                                            event.setParams({
+                                                "type" : "Warnning",
+                                                "title" : "Info !",
+                                                "message" : "No Data for client Available"
+                                            });
+                                            event.fire();
+                
+                
             }
         });
         $A.enqueueAction(action); 
@@ -262,7 +280,15 @@
     //----------------------Method to Edit Expense records-----------------------------//
     onClickEditExpense : function(component,event,helper) {
         component.set("v.showModalExpense",true);
-        component.set("v.editrecidExpense",event.getSource().get("v.value"));
+        var expId = event.getSource().get("v.value");
+        component.set("v.editrecidExpense", expId);
+        var expenseList = component.get("v.IncomeRecord.expenseRecList");
+        for(var i in expenseList){
+            if(expenseList[i].Id = expId){
+                component.set("v.editRecNameExpense", expenseList[i].Name);
+                break;
+            }
+        }
     },
     
     //----------------------Method to Edit Loan records-----------------------------//
@@ -304,6 +330,7 @@
             
             
             var recordTypeName = response.getReturnValue();
+            console.log("record type",recordTypeName);
             
             if(recordTypeName == "RetirementRecordType")
             {
@@ -311,7 +338,9 @@
             }
             else
             {
-                component.set("v.isNonRetirement",true); 
+               // component.set("v.isNonRetirement",true); 
+               component.set("v.isRetirement",false);
+
             }  
             component.set("v.editrecidGoal",event.getSource().get("v.value"));            
         });             
@@ -472,7 +501,7 @@
                      data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c;
                     
                     console.log('income amount' + data.loanRecList[e].FinServ__PaymentAmount__c*2);
-            		if (data.loanRecList[e].FinServ__PaymentFrequency__c=="Quaterly"){
+            		if (data.loanRecList[e].FinServ__PaymentFrequency__c=="Semi Monthly"){
 					data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c*2;
             		}
                     else if(data.loanRecList[e].FinServ__PaymentFrequency__c=="Biweekly"){
@@ -504,23 +533,19 @@
         helper.removeBackgroundColor(component, helper);
         var abc = component.get("v.client");
         console.log('the selected client is' , JSON.stringify(abc));
-        var selectedClient =  component.get("v.selectedLookUpRecord");
-        //console.log('the selected client is' , JSON.stringify(selectedClient));
-        if($A.util.isEmpty(selectedClient)){
-            alert("Please enter a valid Client");
-            
-        }
-        
-        // component.set("v.clientName", selectedClient);
+        var selectedClient =  component.get("v.selectedClient");
+        console.log('the selected client is' , JSON.stringify(selectedClient));
+        if(!$A.util.isEmpty(selectedClient)){
+          // component.set("v.clientName", selectedClient);
         var action = component.get("c.getBudget");
         action.setParams({
-            clientId : selectedClient.Id
+            clientId : selectedClient.toString()
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {        
                 var data = response.getReturnValue();
-                //  console.log('grgrg',data);
+              //  console.log('grgrg',data);
                 
                 for(var e in data.expenseRecList){
                     data.expenseRecList[e]["showSection"]=false;
@@ -557,7 +582,7 @@
                                         data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c;
                     
                     console.log('income amount' + data.loanRecList[e].FinServ__PaymentAmount__c*2);
-            		if (data.loanRecList[e].FinServ__PaymentFrequency__c=="Quaterly"){
+            		if (data.loanRecList[e].FinServ__PaymentFrequency__c=="Semi Monthly"){
 					data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c*2;
             		}
                     else if(data.loanRecList[e].FinServ__PaymentFrequency__c=="Biweekly"){
@@ -585,6 +610,7 @@
             }
         })
         $A.enqueueAction(action);
+        }
     },
     //-------------------------------Method for Income Subsection------------------------------//
     handleClickExpand: function (cmp, event) {
@@ -655,6 +681,9 @@
         }
         cmp.set("v.LoanRecord",loans); 
         cmp.set("v.getLoanId",recId);
+    },
+    changeClientName :function(component,event,helper){
+        console.log(component.find("inf1").get("v.value"));
     }
     
 })

@@ -437,6 +437,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Json__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NaicsCode</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -593,6 +598,66 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AccountContactRelation.StartDate</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Are_tax_benefit_realized_monthly__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Cost__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.End_date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Future_monthly_payment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Is_there_a_payment_plan_for_this_item__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Maximum_yearly__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Payment_due_this_month__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Rainy_Day_Fund_in_month__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Start_date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.Tax_benefit_with_intrest__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.What_do_you_want_to_purchase__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Affordability__c.What_of_contribution_bring_tax_benifit__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2282,6 +2347,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FinServ__FinancialAccount__c.Do_tax_benefits_realize_monthly__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FinServ__FinancialAccount__c.Do_you_get_tax_benefit_from_interest_pay__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FinServ__FinancialAccount__c.FinServ__APY__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2737,6 +2812,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FinServ__FinancialAccount__c.Max_yearly_tax_deduction_allowed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>FinServ__FinancialAccount__c.Risk_Profile__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2752,12 +2832,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Annual_Growth_Rate__c</field>
+        <field>FinServ__FinancialAccount__c.What_of_contribution_bring_tax_benefit__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Associated_Account__c</field>
+        <field>FinServ__FinancialGoal__c.Annual_Growth_Rate__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2778,6 +2858,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>FinServ__FinancialGoal__c.Desired_Annual_Income_For_Retirement__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FinServ__FinancialGoal__c.Do_tax_benefits_realize_monthly__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FinServ__FinancialGoal__c.Does_the_contribution_bring_tax_benefit__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2842,17 +2932,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Goal_Priority__c</field>
+        <field>FinServ__FinancialGoal__c.Max_yearly_tax_deduction_allowed__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>FinServ__FinancialGoal__c.Rate_Of_Return_After_Retirement__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Required_Monthly_Saving__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2877,7 +2962,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FinServ__FinancialGoal__c.Start_Value__c</field>
+        <field>FinServ__FinancialGoal__c.What_of_contribution_bring_tax_benefit__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

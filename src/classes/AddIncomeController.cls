@@ -113,7 +113,9 @@ public with sharing class AddIncomeController {
         try{
             if(us.contactid == null){
                 if(clientId == 'init') {
+                    System.debug('client id =init');
                     acc  = [select id,name,recordtype.developername from account where ownerid =: UserInfo.getUserId() order by name  limit 1 ];
+                     System.debug('client id =init'+acc.id);
                 }       
                 else {
                     acc = [Select id,name ,recordtype.developername from account where id=: clientId];
@@ -156,6 +158,7 @@ public with sharing class AddIncomeController {
             } 
             else
             {
+                System.debug('aa');
                 budgetList=[select id,Primary_Owner__c,Name,Frequency__c,Primary_Owner__r.name,recordTypeId,recordtype.developername,Yearly_growth__c,Income_End_Date__c,Amount__c,Income_Start_Date__c,Tax_Rate__c,Month__c ,Priority__c,
                             (Select id , FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c, 
                              Budget_Category__r.Amount__c
@@ -184,8 +187,7 @@ public with sharing class AddIncomeController {
                 {
                     expenseRecord.add(getRecords);                
                 }            
-            }
-            
+            }            
             for ( Budget__c tIncome  : IncomeRecord){
                 if (tIncome.Frequency__c=='Monthly'){
                     sum = sum + tIncome.Amount__c ; 
@@ -213,7 +215,7 @@ public with sharing class AddIncomeController {
                     sumLoan = sumLoan + tLoan.FinServ__PaymentAmount__c ;  
                     
                 }  
-                else if (tLoan.FinServ__PaymentFrequency__c=='Quaterly'){
+                else if (tLoan.FinServ__PaymentFrequency__c=='Semi Monthly'){
                     sumLoan = sumLoan + (tLoan.FinServ__PaymentAmount__c*2) ;  
                     
                 }
@@ -230,6 +232,7 @@ public with sharing class AddIncomeController {
                 sumGoal = sumGoal + tGoal.Required_Monthly_Saving__c ; 
                 goalSum = '$' + sumGoal.format();
             }
+            System.debug('aaaaa');
             Double valTrans = 0 ;
             Map<Id ,Double> getTransactionAmount = new Map<Id, Double>();
             Map<Id ,String> getTransactionAmountIncome = new Map<Id, String>();
@@ -311,7 +314,7 @@ public with sharing class AddIncomeController {
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
                     System.debug(sumTransaction);
                 }  
-                else if (tAmount.FinServ__PaymentFrequency__c=='Quaterly'&& sumLoanTransaction!=0){
+                else if (tAmount.FinServ__PaymentFrequency__c=='Semi Monthly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage / (sumLoanTransaction*2)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
                     System.debug(sumTransaction);
@@ -335,14 +338,19 @@ public with sharing class AddIncomeController {
                 System.debug('the map key and value for loan are:'+ getTransactionAmountTotalLoan );
             }
             String vLoan =  valTransLoan.format();
+            System.debug('aaaa');
             wrapobj= new wrapIncome(IncomeRecord,num,expenseRecord ,expenseSum ,goalRecord, goalSum , loanRecord , loanSum, acc,isportalEnabled ,
                                     sumTransaction , getTransactionAmount ,getTransactionAmountExpense,getTransactionAmountLoan,
                                     getTransactionAmountIncome,getTransactionAmountTotalExpense,getTransactionAmountTotalLoan,
-                                    vInc , vExp , vLoan);    
+                                    vInc , vExp , vLoan);  
+                    System.debug('1'+wrapobj);
+
         }
         catch(Exception e){
+            System.debug(e.getStackTraceString());
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
+        System.debug('2'+wrapobj);
         return wrapobj;
         
     }
@@ -459,7 +467,7 @@ public with sharing class AddIncomeController {
                     sumLoan = sumLoan + tLoan.FinServ__PaymentAmount__c ;  
                     
                 }  
-                else if (tLoan.FinServ__PaymentFrequency__c=='Quaterly'){
+                else if (tLoan.FinServ__PaymentFrequency__c=='Semi Monthly'){
                     sumLoan = sumLoan + (tLoan.FinServ__PaymentAmount__c*2) ;  
                     
                 }
@@ -546,7 +554,7 @@ public with sharing class AddIncomeController {
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
                     System.debug(sumTransaction);
                 }  
-                else if (tAmount.FinServ__PaymentFrequency__c=='Quaterly'&& sumLoanTransaction!=0){
+                else if (tAmount.FinServ__PaymentFrequency__c=='Semi Monthly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage / (sumLoanTransaction*2)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
                     System.debug(sumTransaction);

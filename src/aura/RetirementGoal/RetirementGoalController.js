@@ -3,14 +3,39 @@
     doInit : function(component,event,helper)
     {
         var gId = component.get("v.retirementGoalId");
-         console.log("dgd");
+        console.log("dgd");
+        if(component.get("v.birthDate")!=null){
+            console.log("birth date",component.get("v.birthDate"));
+            component.find("birth").set("v.value",component.get("v.birthDate") ); }
+        if(component.get("v.PrimaryOwner")!=null)
+            component.find("owner").set("v.value",component.get("v.PrimaryOwner" ));
+        if(component.get("v.DesiredAnnualIncome")!=null)
+            component.find("annualIncome").set("v.value",component.get("v.DesiredAnnualIncome"));
+        if(component.get("v.RateofReturnAfterRetirement")!=null)
+            component.find("rateReturn").set("v.value",component.get("v.RateofReturnAfterRetirement"));
+        if(component.get("v.GoalName")!=null)
+            component.find("name").set("v.value",component.get("v.GoalName"));
+        if(component.get("v.YearsLivingAfterRetirement")!=null)
+            component.find("afterRetirement").set("v.value",component.get("v.YearsLivingAfterRetirement"));
+        if(component.get("v.ExpectedInflationRate")!=null)
+            component.find("Rate").set("v.value",component.get("v.ExpectedInflationRate"));
+        if(component.get("v.Retiring")!=null)
+            component.find("retireAge").set("v.value",component.get("v.Retiring"));
+        
+        
+        
+        
+        
+        
         if(!($A.util.isUndefinedOrNull(gId) || gId == ""))
         {
-        var action = component.get("c.getGoalData");
-        action.setParams({
-            goalId : component.get("v.retirementGoalId")
-        });
-        action.setCallback(this, function(response) {
+            var action = component.get("c.getGoalData");
+            action.setParams({
+                goalId : component.get("v.retirementGoalId")
+            });
+            
+            
+            /* action.setCallback(this, function(response) {
             console.log("dgd",JSON.stringify(response.getReturnValue()));
             component.set("v.birthDate",response.getReturnValue().Date_Of_Birth__c);
 			component.find("birth").set("v.value",response.getReturnValue().Date_Of_Birth__c.toString() );
@@ -26,7 +51,7 @@
             
             
         });
-         $A.enqueueAction(action);
+         $A.enqueueAction(action);*/
         }
         
         
@@ -34,6 +59,11 @@
     },
     getDateofBirth : function(component, event, helper)
     {	console.log('inside getDateofBirth()');
+     // console.log(recUi.record.fields["Date_Of_Birth__c"].value);
+     
+     /* var dob=recUi.record.fields["Date_Of_Birth__c"].value;
+         
+     
         var cId = component.find("owner").get("v.value");
         console.log('cID: ',cId);
         console.log('cID[0]: ',cId[0]);
@@ -46,11 +76,11 @@
             console.log('birthdate',component.get("v.birthDate"));
             console.log('resp: ',response.getReturnValue());
         });
-        $A.enqueueAction(action);
+        $A.enqueueAction(action);*/
     },
     
     cancelButton : function(component, event, helper) {   
-       if(window.location.pathname.includes("Budget")){
+        if(window.location.pathname.includes("Budget")){
             var cmpTarget = component.find('exampleModal');
             console.log('the cross is : '+ cmpTarget );
             $A.util.addClass(cmpTarget, 'hideDiv');
@@ -82,12 +112,18 @@
         var status9 = 0;
         var priowner = component.find("owner").get("v.value");
         var n = component.find("name").get("v.value");
+        console.log("name",n);
         var dateofbirth = component.find("birth").get("v.value");
+        console.log("birth",dateofbirth);
         var afterRetire = component.find("afterRetirement").get("v.value");
+        console.log("after retirement", afterRetire);
         var iRate = component.find("Rate").get("v.value");
         var rAge = component.find("retireAge").get("v.value");
+        console.log("retire age",rAge);
         var retireincome = component.find("annualIncome").get("v.value");
+        console.log("retirement income",retireincome)
         var rateofreturn = component.find("rateReturn").get("v.value");
+        console.log("rate of return",rateofreturn);
         var msg = "";
         console.log("irate", iRate);
         
@@ -126,17 +162,17 @@
                     status3 = 0;
                     msg = msg + "•Inflation rate cannot be of more than 2 digits before decimal or negative\n";
                 }
-                 else
-            {
-                status3 = 1;
+                else
+                {
+                    status3 = 1;
+                }
             }
-            }
-              else
+            else
             {
                 status3 = 1;
             }
             
-           
+            
             if(iRateSplit.length == 2 )
             {
                 if(iRateSplit[0].length > 2 || iRateSplit[0] < 0 || iRateSplit[1].length > 2 )
@@ -146,9 +182,9 @@
                     msg = msg + "•Inflation rate cannot be of more than 2 digits before and after decimal or negative\n";
                 }
                 else
-            {
-                status4 = 1;
-            }
+                {
+                    status4 = 1;
+                }
             }
             
             
@@ -183,35 +219,35 @@
                 { 
                     console.log("status 7 inside if",status7);
                     status7 = 0;
-                 
-                 msg = msg + "•Rate of return cannot exceed 2 digits before decimal or negative\n";
+                    
+                    msg = msg + "•Rate of return cannot exceed 2 digits before decimal or negative\n";
                 }
-                 else
-            {
-                console.log("status7", status7);
-                status7 = 1;
+                else
+                {
+                    console.log("status7", status7);
+                    status7 = 1;
+                }
             }
-            }
-           
+            
             
             if(roiSplit.length == 2)
             {
                 if(roiSplit[0].length > 2 || roiSplit[0] < 0 || roiSplit[1].length > 2 )
                 {
                     status8 = 0;
-                 
-                 msg = msg + "•Rate of return cannot exceed 2 digits before and after decimal or negative\n";
+                    
+                    msg = msg + "•Rate of return cannot exceed 2 digits before and after decimal or negative\n";
                 }
-                 else
+                else
+                {
+                    status8 = 1;
+                }
+            }
+            else
             {
                 status8 = 1;
             }
-            }
-             else
-            {
-                status8 = 1;
-            }
-           
+            
             
             helper.showAlertEmptyVal(component, event, helper,msg);
         }
@@ -221,18 +257,22 @@
             status9 = 0;
             
             msg =  "•Please fill mandatory fields!!";
-          
+            
             helper.showAlertEmptyVal(component, event, helper,msg);
         }
         else
         {
             status9 = 1;
         }
+        if($A.util.isUndefinedOrNull(priowner) || priowner == "" ){
+            console.log("null value present owner")
+        }
+        
         
         console.log(status1,status2,status3,status4,status5,status6,status7,status8,status9);
         if(status1 == 1 && status2 == 1 && status3 == 1 && status4 == 1 && status5 == 1 && status6 == 1 && status7 == 1 && status8 == 1 && status9 == 1)
         {
-           
+            
             var getDate = [];
             var birthDate = component.find("birth").get("v.value");
             getDate = birthDate.split("-");
@@ -242,7 +282,7 @@
             getDate[1]=getDate[1].length==1?"0"+getDate[1]:getDate[1];        
             var d = rYear+"-"+getDate[1]+"-01";
             var today = new Date();
-            
+            var recordId=component.get("v.retirementGoalId");
             if(rYear == (today.getFullYear()))
             {
                 helper.showAlertEqualDate();
@@ -267,7 +307,8 @@
                         retirementAge :rAge,
                         retirementAnnualIncome :retireincome,
                         roi :rateofreturn,
-                        tarDate : d
+                        tarDate : d,
+                        recordId:recordId
                         
                     }
                 });

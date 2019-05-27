@@ -181,6 +181,24 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Do_tax_benefits_realize_monthly__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Do tax benefits realize monthly?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Do_you_get_tax_benefit_from_interest_pay__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Do you get tax benefit from interest pay</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>FinServ__APY__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -570,11 +588,6 @@
                     <fullName>Savings</fullName>
                     <default>false</default>
                     <label>Savings</label>
-                </value>
-                <value>
-                    <fullName>Mutual Fund</fullName>
-                    <default>false</default>
-                    <label>Mutual Fund</label>
                 </value>
                 <value>
                     <fullName>Fixed Annuity</fullName>
@@ -1138,14 +1151,19 @@
                     <label>Quaterly</label>
                 </value>
                 <value>
+                    <fullName>Annual</fullName>
+                    <default>false</default>
+                    <label>Annual</label>
+                </value>
+                <value>
                     <fullName>Semiannual</fullName>
                     <default>false</default>
                     <label>Semiannual</label>
                 </value>
                 <value>
-                    <fullName>Annual</fullName>
+                    <fullName>Semi Monthly</fullName>
                     <default>false</default>
-                    <label>Annual</label>
+                    <label>Semi Monthly</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1949,6 +1967,17 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Max_yearly_tax_deduction_allowed__c</fullName>
+        <externalId>false</externalId>
+        <label>Max yearly tax deduction allowed ($ )?</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>Risk_Profile__c</fullName>
         <externalId>false</externalId>
         <label>Risk Profile</label>
@@ -2015,6 +2044,17 @@
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
+    <fields>
+        <fullName>What_of_contribution_bring_tax_benefit__c</fullName>
+        <externalId>false</externalId>
+        <label>What % of contribution bring tax benefit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
     <label>Financial Account</label>
     <listViews>
         <fullName>FinServ__All</fullName>
@@ -2042,6 +2082,11 @@
             <field>RECORDTYPE</field>
             <operation>notEqual</operation>
             <value>FinServ__FinancialAccount__c.Scenario_Credit_Cards_Record_Type,FinServ__FinancialAccount__c.Scenario_Loans_Record_Type,FinServ__FinancialAccount__c.Scenario_Savings_Record_Type</value>
+        </filters>
+        <filters>
+            <field>FinServ__PrimaryOwner__c</field>
+            <operation>contains</operation>
+            <value>demo</value>
         </filters>
         <label>Financial Accounts</label>
     </listViews>
@@ -2169,10 +2214,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -2261,10 +2302,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -2274,10 +2311,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2689,10 +2722,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -2781,10 +2810,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -2794,10 +2819,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3249,10 +3270,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -3262,10 +3279,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3677,10 +3690,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -3690,10 +3699,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4081,10 +4086,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Roth IRA</fullName>
                 <default>false</default>
             </values>
@@ -4177,10 +4178,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -4190,10 +4187,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4553,10 +4546,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -4645,10 +4634,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -4658,10 +4643,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5073,10 +5054,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -5165,10 +5142,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -5178,10 +5151,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5593,10 +5562,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -5606,10 +5571,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5977,10 +5938,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Roth IRA</fullName>
                 <default>false</default>
             </values>
@@ -6057,10 +6014,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -6070,10 +6023,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6389,10 +6338,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -6481,10 +6426,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -6493,11 +6434,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
+                <fullName>Semi Monthly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6901,10 +6838,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -6993,10 +6926,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -7006,10 +6935,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7409,10 +7334,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -7501,10 +7422,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -7514,10 +7431,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7877,10 +7790,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Savings</fullName>
                 <default>false</default>
             </values>
@@ -7969,10 +7878,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -7982,10 +7887,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8464,10 +8365,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Roth IRA</fullName>
                 <default>false</default>
             </values>
@@ -8560,10 +8457,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -8573,10 +8466,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9055,10 +8944,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mutual Fund</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Roth IRA</fullName>
                 <default>false</default>
             </values>
@@ -9151,10 +9036,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -9164,10 +9045,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9718,10 +9595,6 @@
         <picklistValues>
             <picklist>FinServ__PaymentFrequency__c</picklist>
             <values>
-                <fullName>Annual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Biweekly</fullName>
                 <default>false</default>
             </values>
@@ -9731,10 +9604,6 @@
             </values>
             <values>
                 <fullName>Quaterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Semiannual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10110,6 +9979,12 @@
         <errorMessage>Only Credit Card Type Allowed</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Credit_Card_Balance_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(RecordType.DeveloperName = &apos;CreditCard&apos;,  ISBLANK(FinServ__Balance__c),false)</errorConditionFormula>
+        <errorMessage>Credit Card Balance is Mandatory Field.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>FinServ__ManagedAndHeldAwayCannotBeBothSelected</fullName>
         <active>true</active>
         <errorConditionFormula>AND(FinServ__Managed__c, FinServ__HeldAway__c)</errorConditionFormula>
@@ -10124,7 +9999,7 @@
     </validationRules>
     <validationRules>
         <fullName>FinServ__PrimaryAndJointOwnerCannotBeSame</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Check to see if Primary Owner and the Joint Owner are the same person</description>
         <errorConditionFormula>FinServ__PrimaryOwner__c = FinServ__JointOwner__c</errorConditionFormula>
         <errorMessage>The primary and joint owner must be different.</errorMessage>

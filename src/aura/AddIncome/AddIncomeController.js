@@ -36,6 +36,7 @@
         var freqcy = component.find("freq").get("v.value");
         var growth = component.find("yeargrowth").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
+       
         var grate = component.find("rate").get("v.value");
         var sDate = component.find("stDate").get("v.value");
         var eDate = component.find("endDate").get("v.value");
@@ -52,12 +53,31 @@
             msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);       
         }
-        else if(eDate < sDate){
+        else if(eDate < sDate ){
             status3 = 0;
             event.preventDefault();
             msg = "	End Date cannot be less than the Start Date"
             helper.showAlertEmptyInvalidVal(component,msg);    
         }
+            else if (amn <0 ){
+                status3 =0;
+                 event.preventDefault();
+                msg = " Amount after tax per pay check($) cannot be negative."
+                helper.showAlertEmptyInvalidVal(component,msg);
+            }
+        else if ( growth <0 ){
+                status3 =0;
+                 event.preventDefault();
+                msg = " Yearly growth (%) cannot be negative."
+                helper.showAlertEmptyInvalidVal(component,msg);
+            }
+        else if ( grate <0 ){
+                status3 =0;
+                 event.preventDefault();
+                msg = " Approximate total income tax rate (%) cannot be negative."
+                helper.showAlertEmptyInvalidVal(component,msg);
+            }
+        
         
         else
         {

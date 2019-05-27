@@ -44,54 +44,57 @@ public class ScenarioContainerApexController {
 * ***/ 
     
     @AuraEnabled
-    public static  UserAndScenarios getUserScenarios( String clientId, String sceneId) {
-        List<sobject> emptyList;              							// if no scenario exist return empty list
+    public static  UserAndScenarios getUserScenarios(String clientId, String sceneId) {
+        system.debug('clientId: '+clientId);
+        system.debug('sceneId: '+sceneId);
+        List<sobject> emptyList = new List<sObject>();              							// if no scenario exist return empty list
         Integer hhStatus = 0;
         UserAndScenarios wrapper = new UserAndScenarios();
         try{
             List<Account> accList  = new List<Account>();
-            Account ac  = new Account();
-            
-            //initially set the client
-            
-            
+            //Aman Singh - removed new account initialization for null check later on
+            //Account ac  = new Account();
+            Account ac;
             if(clientId == 'init') {
                 accList  = [select id,RecordTypeId,name from account where ownerid =: UserInfo.getUserId() order by createddate desc ];
                 if(accList.size()> 0) {
                     ac = accList.get(0);   
                 }
             }
-            
             else {
+                
                 ac = [select id,RecordTypeId,name from account where id=: clientId];
-            }        
-            wrapper.userNameId = ac;            //return client id and name
+            }
             
-            if(sceneId == 'init' || sceneId == '') {
-                List<Scenario__c> sceneList = [select Name, Id from Scenario__c where Client_Id__c = :ac.Id order by createddate desc];
-                if(sceneList.size()> 0) {
+            //Aman Singh - If no account is found for the logged in user
+            if(ac!=null){
+                wrapper.userNameId = ac;
+            }
+            else{
+                //Aman Singh - Add some handling to return empty response as no account exists for the logged in user
+            }
+            
+            List<Scenario__c> sceneList = new List<Scenario__c>();
+            if(sceneId == 'init' || String.isEmpty(sceneId) || String.isBlank(sceneId)) {
+                sceneList = [select Name, Id from Scenario__c where Client_Id__c = :ac.Id order by createddate desc];
+                if(sceneList!=null && sceneList.size()> 0) {
                     sceneId = sceneList.get(0).Id;  
                     wrapper.scenarioId = sceneId;
-                    
-                    
-                    
                 }
                 else {
-                    sceneId = 'No Scenario';   
-                    
+                    sceneId = 'No Scenario';  
                     wrapper.scenarioId = '';
                 }
             }
-            Account acc = [select id, RecordTypeId from Account where id = :ac.Id];
+            
+            //Aman Singh - No sure why this was queried again. RecordTypeId is already fetched in previous queries
+            //Account acc = [select id, RecordTypeId from Account where id = :ac.Id];
             //modified by Kishan
-            if(acc.RecordTypeId == houseHoldRecId) {
+            if(ac.RecordTypeId == houseHoldRecId) {
                 list<AccountContactRelation> acr  = [Select id,ContactId, Account.Id from AccountContactRelation where AccountId = :ac.Id AND FinServ__Primary__c = true ]; 
-                for(AccountContactRelation c :acr)
-                {
+                for(AccountContactRelation c :acr){
                     id acrCon = c.ContactId;
-                    
                     Account accPrimaryOwn = [select id from Account where FinServ__PrimaryContact__c = :acrCon];
-                    
                     wrapper.primaryOwner = accPrimaryOwn.Id;
                 }
             }
@@ -101,9 +104,8 @@ public class ScenarioContainerApexController {
             //search scenario income and calculate total income amount
             if(sceneId != 'No Scenario' && sceneId != null) {
                 Decimal totalAmount = 0;
-                List<Budget__c> sceneIncomeList;
-                sceneIncomeList = [select Id, Name, Amount__c from Budget__c where Scenario_Id__c = :sceneId AND RecordTypeId = :incomeRecId];  
-                if(sceneIncomeList.size() > 0) {
+                List<Budget__c> sceneIncomeList = [select Id, Name, Amount__c from Budget__c where Scenario_Id__c = :sceneId AND RecordTypeId = :incomeRecId];  
+                if(sceneIncomeList != null && sceneIncomeList.size() > 0) {
                     totalAmount = 0;
                     wrapper.userScenarioIncome = sceneIncomeList;
                     for(Budget__c incomeAmt : sceneIncomeList) {
@@ -126,9 +128,8 @@ public class ScenarioContainerApexController {
                 }
                 
                 //search scenario expense and calculate total expense amount
-                List<Budget__c> sceneExpenseList;
-                sceneExpenseList = [select Id, Name, Amount__c from Budget__c where Scenario_Id__c = :sceneId AND RecordTypeId = :expenseRecId ];
-                if(sceneExpenseList.size() > 0) {
+                List<Budget__c> sceneExpenseList = [select Id, Name, Amount__c from Budget__c where Scenario_Id__c = :sceneId AND RecordTypeId = :expenseRecId ];
+                if(sceneExpenseList !=null && sceneExpenseList.size() > 0) {
                     totalAmount = 0;
                     wrapper.userScenarioExpense = sceneExpenseList;
                     for(Budget__c expenseAmt : sceneExpenseList) {
@@ -152,7 +153,7 @@ public class ScenarioContainerApexController {
                 
                 //search scenario goals and calculate total goal amount
                 List <FinServ__FinancialGoal__c> sceneGoal = [select name, FinServ__TargetValue__c from FinServ__FinancialGoal__c where Scenario_Id__c = :sceneId AND RecordTypeId = :goalsRecId];
-                if(sceneGoal.size() > 0)   {
+                if(sceneGoal != null && sceneGoal.size() > 0)   {
                     totalAmount = 0;
                     wrapper.userScenarioGoal = sceneGoal; 
                     for(FinServ__FinancialGoal__c goalAmt : sceneGoal){
@@ -168,7 +169,7 @@ public class ScenarioContainerApexController {
                 
                 //search scenario loans and calculate total loan amount
                 List <FinServ__FinancialAccount__c> sceneLoan = [select Name, FinServ__LoanAmount__c,FinServ__PaymentAmount__c, APR__c,FinServ__PaymentFrequency__c from FinServ__FinancialAccount__c where Scenario_Id__c = :sceneId AND RecordTypeId = :loansRecId];
-                if(sceneLoan.size() > 0)   {
+                if(sceneLoan != null && sceneLoan.size() > 0)   {
                     totalAmount = 0;
                     wrapper.userScenarioLoan = sceneLoan; 
                     for(FinServ__FinancialAccount__c loanAmt : sceneLoan){
@@ -184,7 +185,7 @@ public class ScenarioContainerApexController {
                 
                 //search scenario credit card and calculate total credit card amount
                 List <FinServ__FinancialAccount__c> sceneCard = [select Name, FinServ__LoanAmount__c, APR__c from FinServ__FinancialAccount__c where Scenario_Id__c = :sceneId AND RecordTypeId = :cardRecId];
-                if(sceneCard.size() > 0 )   {
+                if(sceneCard != null && sceneCard.size() > 0 )   {
                     totalAmount = 0;
                     wrapper.userScenarioCard = sceneCard; 
                     for(FinServ__FinancialAccount__c cardAmt : sceneCard) {
@@ -200,7 +201,7 @@ public class ScenarioContainerApexController {
                 
                 //search scenario savinngs and calculate total saving amount
                 List <FinServ__FinancialAccount__c> sceneSaveList = [select name, FinServ__Balance__c, FinServ__APY__c from FinServ__FinancialAccount__c where Scenario_Id__c = :sceneId AND RecordTypeId = :savingsRecId];
-                if(sceneSaveList.size() > 0) {
+                if(sceneSaveList != null && sceneSaveList.size() > 0) {
                     totalAmount = 0;
                     wrapper.userSceneSave = sceneSaveList;
                     for(FinServ__FinancialAccount__c saveAmt : sceneSaveList) {
@@ -214,8 +215,9 @@ public class ScenarioContainerApexController {
                     wrapper.totalSaveAmount = totalAmount;
                 }
                 
-                //search for scenario
-                List<Scenario__c> sceneList = [select Name,id from Scenario__c where Client_Id__c = :ac.Id];
+                
+                //search for scenario - Aman Singh - Not Sure Why
+              // List<Scenario__c> sceneList = [select Name,id from Scenario__c where Client_Id__c = :ac.Id];
                 if(sceneList.size() > 0) {
                     wrapper.userScenario = sceneList;
                 }
@@ -417,7 +419,9 @@ public class ScenarioContainerApexController {
                     //insert credit cards
                     List<FinServ__FinancialAccount__c> scCard;
                     List<FinServ__FinancialAccount__c> newCardList = new  List<FinServ__FinancialAccount__c> ();
+                    
                     if(hhStatus == false) {
+                        
                         scCard = [select Name, FinServ__LoanAmount__c, APR__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c = :clientId AND RecordTypeId = :recIdCard AND Scenario_Id__c = null ];
                         primaryOwner = clientId;
                     }
@@ -634,9 +638,10 @@ ScenarioController.js, function : onDeleteButton()
                 
                 Double totalEstimated = 0;
                 Decimal remainingAmount = 0;
+                Decimal growth=0;
                 
                 for(FinServ__FinancialGoal__c relgoal : allAssocGoals ) {
-                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today())).setScale(2,RoundingMode.HALF_UP)+ relgoal.FinServ__TargetValue__c;
+                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.FinServ__TargetValue__c;
                 }
                 
                 remainingAmount = bal - totalEstimated;
@@ -687,21 +692,21 @@ ScenarioController.js, function : onDeleteButton()
         system.debug('tarAmt'+tarAmt);
         system.debug('currentAmount'+currentAmount);
         system.debug('months'+months);
-      
-            If (tarAmt > (currentAmount * (Math.pow((1 + growth),months))))
-            { 
-                If (growth > 0) {
-                    installment = ((tarAmt - currentAmount * (Math.pow((1 + growth), months))) * growth) / ((Math.pow((1 + growth), months)) - 1);
-                } 
-                Else {
-                    installment = (tarAmt - currentAmount) / months;
-                }
-                monContri = installment;
-            }
+        
+        If (tarAmt > (currentAmount * (Math.pow((1 + growth),months))))
+        { 
+            If (growth > 0) {
+                installment = ((tarAmt - currentAmount * (Math.pow((1 + growth), months))) * growth) / ((Math.pow((1 + growth), months)) - 1);
+            } 
             Else {
-                monContri = installment;
+                installment = (tarAmt - currentAmount) / months;
             }
-       
+            monContri = installment;
+        }
+        Else {
+            monContri = installment;
+        }
+        
         return Math.ceil(monContri);   
     }
     
@@ -711,19 +716,19 @@ ScenarioController.js, function : onDeleteButton()
     public static String getRecordTypeId(String recName){
         String recId;
         
-            if(recName == 'goal button') {
-                recId = goalsRecId;
-            }
-            if(recName == 'loan button') {
-                recId = loansRecId;
-            }
-            if(recName == 'saving button') {
-                recId = savingsRecId;
-            }
-            if(recName == 'credit card button') {
-                recId = cardRecId;
-            }
-               
+        if(recName == 'goal button') {
+            recId = goalsRecId;
+        }
+        if(recName == 'loan button') {
+            recId = loansRecId;
+        }
+        if(recName == 'saving button') {
+            recId = savingsRecId;
+        }
+        if(recName == 'credit card button') {
+            recId = cardRecId;
+        }
+        
         return recId;
     }
     
@@ -743,734 +748,734 @@ ScenarioController.js, function : onDeleteButton()
     public static String getRequestData(List<Budget__c> incomeList1, List<Budget__c> expenseList1
                                         , List<FinServ__FinancialAccount__c> fAccList1, List<FinServ__FinancialAccount__c> debtAccList1
                                         , List<FinServ__FinancialGoal__c> goalList1, String sceneId, String clientId) {
-        
-        System.debug('inside Method create Client');      
-        Boolean showClientLookup = false;
-        Boolean fadeOut = false; 
-        Boolean isSelected =false;
-        Boolean cashFlowPopup;
-        String setData;
-        Map<string, String> accountNameMap = new  Map<string, String>();
-        Map<string, String> categoryNameMap = new Map<string, String>();
-        Map<string, String> CategoryMap2 = new Map<string, String>();
-        List<Budget__c> incmeList = new List<Budget__c>();
-        List<Budget__c> expList = new List<Budget__c>();
-        
-        //Store Household status here
-        Boolean isHousehold = false;
-        Account a = [select id, Name, RecordType.DeveloperName from Account where id =: clientId];
-        if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
-            isHousehold = true;
-        }
-        
-        /************ For Household Accounts ********/
-        if(isHousehold){            
-            List<account> householdMembersList = new List<Account>();
-            //householdMembersList = [select id, name from FinServ__AccountAccountRelation__c where FinServ__RelatedAccount__c =: clientId];           
-            system.debug('Inside Household');       
-            String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
-            
-            if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) {                 
-                isSelected = false;
-                cashFlowPopup = false;
-                List<FinServ__FinancialAccount__c> FFDAList = new List<FinServ__FinancialAccount__c>();
-                List<FinServ__FinancialAccount__c> FFAList = new List<FinServ__FinancialAccount__c>();
-                
-                try {               
-                    System.debug('Inside try');
-                    setData = '{"key":"'+FSK+'","formParams":"[';
-                    
-                    //double monthlyIncome = 0;                   
-                    incmeList = [Select id, Name, Amount__c,Income_Start_Date__c,Income_End_Date__c,Frequency__c from Budget__c where HouseHold__c =: clientId 
-                                 and recordType.developerName = 'Income_Record_Type' and Scenario_Id__c = :sceneId ];
-                    
-                    System.debug('client Id: '+ clientId);
-                    System.debug('Income List: ' + incmeList);
-                    
-                    //Create Income List
-                    if(incmeList!=null && incmeList.size() > 0){
-                        Integer i = 1;
-                        for(Budget__c inc: incmeList) {
-                            Double incomeAmount = 0;
-                            Double incomeFrequency = 1;
-                            switch on inc.Frequency__c {
-                                when 'Monthly' {
-                                    incomeFrequency = 1;
-                                }	
-                                when 'Semi Monthly' {
-                                    incomeFrequency = 2;
-                                }
-                                when 'Bi-Weekly' {
-                                    incomeFrequency = 2;
-                                }
-                                when 'Weekly' {
-                                    incomeFrequency = 4;
-                                }
-                                when else {
-                                    incomeFrequency = 1;
-                                }
-                            }
-                            if(inc.Amount__c != Null){
-                                incomeAmount = inc.Amount__c.round();
-                            }
-                            else {
-                                incomeAmount = 0;
-                            }
-                            setData +='{';
-                            setData +='\'id\':\'' + i + '\',';
-                            setData +='\'type\':\'income\',';
-                            setData +='\'name\':\''+inc.Name+'\',';
-                            setData +='\'amount\':'+incomeAmount+',';
-                            setData +='\'incomepopuppretax\':'+incomeAmount+',';
-                            setData +='\'incomepopupfrequency\':\'' + incomeFrequency + '\',';
-                            setData +='\'incomepopupgrowthrate\':\'0\',';
-                            setData +='\'startdate\':\'' + inc.Income_Start_Date__c.month() + '/' + inc.Income_Start_Date__c.year() + '\',';
-                            setData +='\'enddate\':\'' + inc.Income_End_Date__c.month() + '/' + inc.Income_End_Date__c.year() + '\'';
-                            setData +='},';
-                            CategoryMap2.put(inc.id, inc.Name.toUppercase());
-                            categoryNameMap.put(inc.id, inc.Name);
-                            ++i;
-                        }//end of for
-                    }//end of if
-                    else {
-                        String startdate = '1/2018';
-                        String enddate = '12/2100';
-                        setData +='{';
-                        setData +='\'id\':\'1\',';
-                        setData +='\'type\':\'income\',';
-                        setData +='\'name\':\'income\',';
-                        setData +='\'amount\':0,';
-                        setData +='\'incomepopuppretax\':0,';
-                        setData +='\'incomepopupfrequency\':\'1\',';
-                        setData +='\'incomepopupgrowthrate\':\'0\',';
-                        setData +='\'startdate\':\'' + startdate + '\',';
-                        setData +='\'enddate\':\'' + enddate + '\'';
-                        setData +='},';
-                    }
-                    
-                    
-                    System.debug('income here: ' + setData);
-                    Integer flag = 0; 
-                    Map<id, integer> FFAMap = new Map<id, integer>();
-                    
-                    //non Loan and Non credit accouts, i.e., savings and investment
-                    FFAList = [Select id, Name, 
-                               //Current_Value__c, 
-                               FinServ__Balance__c, FinServ__APY__c from FinServ__FinancialAccount__c where
-                               Account_Type__c != 'Loan' and Account_Type__c !='Credit Card' and
-                               RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                               RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                               RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                               FinServ__Household__c =: clientId and Scenario_Id__c = :sceneId
-                               limit 1000];
-                    
-                    System.debug('FFA List: '+FFAList.size());
-                    
-                    if(FFAList.size() > 0){
-                        for(FinServ__FinancialAccount__c FFA : FFAList){
-                            accountNameMap.put(FFA.Id, FFA.Name);
-                            flag++;
-                            FFAMap.put(FFA.Id, flag);
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            setData +='\'accountype\':\'3\',';
-                            setData +='\'name\':\''+FFA.Name+'\',';
-                            if(FFA.FinServ__Balance__c == null){
-                                FFA.FinServ__Balance__c = 0;
-                            }
-                            setData +='\'amount\':'+FFA.FinServ__Balance__c+',';
-                            if(FFA.FinServ__APY__c == null){
-                                FFA.FinServ__APY__c = 0;
-                            }
-                            setData +='\'APR\':'+FFA.FinServ__APY__c;
-                            setData +='},';
-                        }
-                    }
-                    
-                    // Loan and debt accounts
-                    System.debug('above');
-                    FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c, FinServ__PaymentAmount__c
-                                from FinServ__FinancialAccount__c where
-                                (Account_Type__c = 'Loan' or
-                                 Account_Type__c = 'Credit Card') AND
-                                RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                                RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                                RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                                FinServ__Household__c =: clientId and Scenario_Id__c = :sceneId
-                                limit 1000];
-                    
-                    /*********** NOTE: Outstanding Payment and Loan End Date *********/
-                    
-                    
-                    System.debug('Debt Accounts: ' + FFDAList.size());
-                    if(FFDAList.size() > 0){
-                        for(FinServ__FinancialAccount__c FFDA : FFDAList){
-                            accountNameMap.put(FFDA.Id, FFDA.Name);
-                            flag++;
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            
-                            //term Loan
-                            if(FFDA.Account_Type__c == 'Credit Card'){
-                                setData +='\'accountype\':\'account_creditcard\',';
-                                setData +='\'name\':\''+FFDA.Name+'\',';
-                                
-                                //fill which ever is not empty
-                                if(FFDA.FinServ__LoanAmount__c != Null){
-                                    setData +='\'amount\':'+FFDA.FinServ__LoanAmount__c+',';
-                                }else {
-                                    setData +='\'amount\':'+FFDA.FinServ__Balance__c+',';
-                                }
-                                
-                            }else if(FFDA.Account_Type__c == 'Loan'){
-                                setData +='\'accountype\':\'account_loan\',';
-                                setData +='\'name\':\''+FFDA.Name+'\',';
-                                setData +='\'amount\':'+FFDA.FinServ__PaymentAmount__c+',';
-                                
-                                setData +='\'endDate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
-                                setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
-                            }
-                            else{}
-                            setData +='\'APR\':'+FFDA.APR__c;
-                            setData +='},';
-                        }
-                    }
-                    //Goals Data
-                    
-                    List<FinServ__FinancialGoal__c> goalList = [select Start_Value__c,
-                                                                //Account_Value__c, 
-                                                                Name, 
-                                                                Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                                Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c 
-                                                                from FinServ__FinancialGoal__c where
-                                                                RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
-                                                                FinServ__Household__c =: clientId and Scenario_Id__c = :sceneId
-                                                                limit 1000];
-                    System.debug('Goal List: ' + goalList);
-                    if(goalList.size() > 0){
-                        for(FinServ__FinancialGoal__c goal : goalList){
-                            
-                            flag++;
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'goals\',';
-                            Decimal getcurrentEstimation = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
-                            //System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
-                            setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
-                            setData +='\'name\':\''+goal.Name+'\',';
-                            setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
-                            setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
-                            setData +='\'targetamount\':'+goal.FinServ__TargetValue__c+',';
-                            setData +='\'priority\':'+goal.Goal_Priority__c+',';
-                            setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
-                            setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
-                            setData +='\'savingid\':\''+FFAMap.get(goal.Associated_Account__c)+'\',';
-                            setData +='\'startvalue\':\''+goal.Start_Value__c+'\'';
-                            setData +='},';
-                        }                   
-                    } //end of if
-                    
-                    
-                    //Create Expense Data
-                    expList = [Select id, Name, Amount__c ,Income_Start_Date__c, Income_End_Date__c, Expense_Start_Date__c,Expense_End_Date__c from Budget__c where HouseHold__c =: clientId 
-                               and recordType.developerName = 'Expense_Record_Type' and Scenario_Id__c = :sceneId]; 
-                    System.debug('Expense List: ' + expList);
-                    double monthlyExpenses = 0;
-                    //set expenses here    
-                    if(expList!=null && expList.size() > 0){
-                        Integer j=1;
-                        for(Budget__c e: expList) {
-                            if(e.Amount__c != Null){
-                                monthlyExpenses+= e.Amount__c;
-                            } 
-                            else {
-                                monthlyExpenses += 0; 
-                            }
-                            setData +='{';
-                            setData +='\'id\':\''+j+'\',';
-                            setData +='\'type\':\''+e.Name+'\',';
-                            if(monthlyExpenses != null){
-                                setData +='\'amount\':'+monthlyExpenses+',';
-                            }else{
-                                setData +='\'amount\':0,';
-                            }
-                            setData +='\'startdate\':\'' + e.Income_Start_Date__c.month() + '/' + e.Income_Start_Date__c.year() + '\',';
-                            setData +='\'enddate\':\'' + e.Income_End_Date__c.month() + '/' + e.Income_End_Date__c.year() + '\'';
-                            setData +='}';
-                            ++j;
-                        }//end for
-                    }//end if
-                    else {
-                        String startdate = '1/2018';
-                        String enddate = '12/2100';
-                        setData +='{';
-                        setData +='\'id\':\'1\',';
-                        setData +='\'type\':\'expenses\',';
-                        setData +='\'amount\':0,';
-                        setData +='\'startdate\':\'' + startdate + '\',';
-                        setData +='\'enddate\':\'' + enddate + '\'';
-                        setData +='}';
-                    }
-                    setData += ']"}';
-                    
-                    //clientData = setData;
-                    System.debug('Client Data from Future Simulation: ' + setData);
-                } //end of try            
-                catch(Exception e){
-                    System.debug('Exception' + e.getStackTraceString());
-                    FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-                }
-            }
-            System.debug('HouseHold Request Data:' + setData);
-            return setData;                                
-        }
-        //end of Household  
-        
-        
-        
-        /******** Normal non - Household Code goes here *******/
-        else {            	
-            String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
-            
-            if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) { 
-                
-                isSelected = false;
-                cashFlowPopup = false;
-                List<FinServ__FinancialAccount__c> FFDAList = new List<FinServ__FinancialAccount__c>();
-                List<FinServ__FinancialAccount__c> FFAList = new List<FinServ__FinancialAccount__c>();
-                
-                try {                
-                    System.debug('Inside try');
-                    setData = '{"key":"'+FSK+'","formParams":"[';
-                    
-                    incmeList = [Select id, Name, Amount__c,Income_Start_Date__c,Income_End_Date__c,Frequency__c from Budget__c where Primary_Owner__c =: clientId 
-                                 and recordType.developerName = 'Income_Record_Type'  and Scenario_Id__c = :sceneId]; 
-                    System.debug('client Id: '+ clientId);
-                    System.debug('Income List: ' + incmeList);
-                    
-                    //set monthly income here 
-                    //Create Income List
-                    if(incmeList!=null && incmeList.size() > 0){
-                        Integer i = 1;
-                        for(Budget__c inc: incmeList) {
-                            Double incomeAmount = 0;
-                            Double incomeFrequency = 1;
-                            switch on inc.Frequency__c {
-                                when 'Monthly' {
-                                    incomeFrequency = 1;
-                                }	
-                                when 'Semi Monthly' {
-                                    incomeFrequency = 2;
-                                }
-                                when 'Bi-Weekly' {
-                                    incomeFrequency = 2;
-                                }
-                                when 'Weekly' {
-                                    incomeFrequency = 4;
-                                }
-                                when else {
-                                    incomeFrequency = 1;
-                                }
-                            }
-                            if(inc.Amount__c != Null){
-                                incomeAmount = inc.Amount__c.round();
-                            }
-                            else {
-                                incomeAmount = 0;
-                            }
-                            setData +='{';
-                            setData +='\'id\':\'' + i + '\',';
-                            setData +='\'type\':\'income\',';
-                            setData +='\'name\':\''+inc.Name+'\',';
-                            setData +='\'amount\':'+incomeAmount+',';
-                            setData +='\'incomepopuppretax\':'+incomeAmount+',';
-                            setData +='\'incomepopupfrequency\':\'' + incomeFrequency + '\',';
-                            setData +='\'incomepopupgrowthrate\':\'0\',';
-                            setData +='\'startdate\':\'' + inc.Income_Start_Date__c.month() + '/' + inc.Income_Start_Date__c.year() + '\',';
-                            setData +='\'enddate\':\'' + inc.Income_End_Date__c.month() + '/' + inc.Income_End_Date__c.year() + '\'';
-                            setData +='},';
-                            CategoryMap2.put(inc.id, inc.Name.toUppercase());
-                            categoryNameMap.put(inc.id, inc.Name);
-                            ++i;
-                        }//end of for
-                    }//end of if
-                    else {
-                        String startdate = '1/2018';
-                        String enddate = '12/2100';
-                        setData +='{';
-                        setData +='\'id\':\'1\',';
-                        setData +='\'type\':\'income\',';
-                        setData +='\'name\':\'income\',';
-                        setData +='\'amount\':0,';
-                        setData +='\'incomepopuppretax\':0,';
-                        setData +='\'incomepopupfrequency\':\'1\',';
-                        setData +='\'incomepopupgrowthrate\':\'0\',';
-                        setData +='\'startdate\':\'' + startdate + '\',';
-                        setData +='\'enddate\':\'' + enddate + '\'';
-                        setData +='},';
-                    }
-                    
-                    System.debug('income here: ' + setData);
-                    Integer flag = 0; 
-                    Map<id, integer> FFAMap = new Map<id, integer>();
-                    
-                    //non Loan and Non credit accouts, i.e., savings and investment
-                    FFAList = [Select id, Name, 
-                               //Current_Value__c, 
-                               FinServ__Balance__c, FinServ__APY__c from FinServ__FinancialAccount__c where
-                               Account_Type__c != 'Loan' and Account_Type__c !='Credit Card' and
-                               RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                               RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                               RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                               FinServ__PrimaryOwner__c =: clientId  and Scenario_Id__c = :sceneId
-                               limit 1000];
-                    
-                    System.debug('FFA List: '+FFAList.size());
-                    
-                    if(FFAList.size() > 0){
-                        for(FinServ__FinancialAccount__c FFA : FFAList){
-                            accountNameMap.put(FFA.Id, FFA.Name);
-                            flag++;
-                            FFAMap.put(FFA.Id, flag);
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            setData +='\'accountype\':\'3\',';
-                            setData +='\'name\':\''+FFA.Name+'\',';
-                            if(FFA.FinServ__Balance__c == null){
-                                FFA.FinServ__Balance__c = 0;
-                            }
-                            setData +='\'amount\':'+FFA.FinServ__Balance__c+',';
-                            if(FFA.FinServ__APY__c == null){
-                                FFA.FinServ__APY__c = 0;
-                            }
-                            setData +='\'APR\':'+FFA.FinServ__APY__c;
-                            setData +='},';
-                        }
-                    }
-                    
-                    // Loan and debt accounts
-                    System.debug('above');
-                    FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c, FinServ__PaymentAmount__c
-                                //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
-                                from FinServ__FinancialAccount__c where
-                                (Account_Type__c = 'Loan' or
-                                 Account_Type__c = 'Credit Card') AND
-                                RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                                RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                                RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                                FinServ__PrimaryOwner__c =: clientId  and Scenario_Id__c = :sceneId
-                                limit 1000];
-                    
-                    /*********** NOTE: Outstanding Payment and Loan End Date *********/
-                    
-                    System.debug('Debt Accounts: ' + FFDAList.size());
-                    if(FFDAList.size() > 0){
-                        for(FinServ__FinancialAccount__c FFDA : FFDAList){
-                            accountNameMap.put(FFDA.Id, FFDA.Name);
-                            flag++;
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            
-                            //term Loan
-                            if(FFDA.Account_Type__c == 'Credit Card'){
-                                setData +='\'accountype\':\'account_creditcard\',';
-                                setData +='\'name\':\''+FFDA.Name+'\',';
-                                
-                                //fill which ever is not empty
-                                if(FFDA.FinServ__LoanAmount__c != Null){
-                                    setData +='\'amount\':'+FFDA.FinServ__LoanAmount__c+',';
-                                }else {
-                                    setData +='\'amount\':'+FFDA.FinServ__Balance__c+',';
-                                }
-                                
-                            }else if(FFDA.Account_Type__c == 'Loan'){
-                                setData +='\'accountype\':\'account_loan\',';
-                                setData +='\'name\':\''+FFDA.Name+'\',';
-                                setData +='\'amount\':'+FFDA.FinServ__PaymentAmount__c+',';
-                                
-                                setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
-                                setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
-                            }
-                            else{}
-                            setData +='\'APR\':'+FFDA.APR__c;
-                            setData +='},';
-                        }
-                    }
-                    //Goals Data
-                    
-                    List<FinServ__FinancialGoal__c> goalList = [select Start_Value__c,
-                                                                //Account_Value__c, 
-                                                                Name, 
-                                                                Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                                Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c
-                                                                from FinServ__FinancialGoal__c where
-                                                                RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
-                                                                FinServ__PrimaryOwner__c =: clientId and Scenario_Id__c = :sceneId
-                                                                limit 1000];
-                    System.debug('Goal List: ' + goalList);
-                    if(goalList.size() > 0){
-                        for(FinServ__FinancialGoal__c goal : goalList){
-                            
-                            flag++;
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'goals\',';
-                            Decimal getcurrentEstimation = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
-                            //System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
-                            setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
-                            setData +='\'name\':\''+goal.Name+'\',';
-                            setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
-                            setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
-                            setData +='\'targetamount\':'+goal.FinServ__TargetValue__c+',';
-                            setData +='\'priority\':'+goal.Goal_Priority__c+',';
-                            setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
-                            setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
-                            setData +='\'savingid\':\''+FFAMap.get(goal.Associated_Account__c)+'\',';
-                            setData +='\'startvalue\':\''+goal.Start_Value__c+'\'';
-                            setData +='},';
-                        }                   
-                    } //end of if
-                    
-                    expList = [Select id, Name, Amount__c, Income_Start_Date__c, Income_End_Date__c, Expense_Start_Date__c,Expense_End_Date__c from Budget__c where Primary_Owner__c =: clientId 
-                               and recordType.developerName = 'Expense_Record_Type' and Scenario_Id__c = :sceneId]; 
-                    //set expenses here    
-                    System.debug('Expense List: ' + expList);
-                    double monthlyExpenses = 0;
-                    //set expenses here    
-                    if(expList!=null && expList.size() > 0){
-                        Integer j=1;
-                        for(Budget__c e: expList) {
-                            if(e.Amount__c != Null){
-                                monthlyExpenses+= e.Amount__c;
-                            } 
-                            else {
-                                monthlyExpenses += 0; 
-                            }
-                            setData +='{';
-                            setData +='\'id\':\''+j+'\',';
-                            setData +='\'type\':\''+e.Name+'\',';
-                            if(monthlyExpenses != null){
-                                setData +='\'amount\':'+monthlyExpenses + ',';
-                            }else{
-                                setData +='\'amount\':0,';
-                            }
-                            setData +='\'startdate\':\'' + e.Income_Start_Date__c.month() + '/' + e.Income_Start_Date__c.year() + '\',';
-                            setData +='\'enddate\':\'' + e.Income_End_Date__c.month() + '/' + e.Income_End_Date__c.year() + '\'';
-                            setData +='}';
-                            ++j;
-                        }//end for
-                    }//end if
-                    else {
-                        String startdate = '1/2018';
-                        String enddate = '12/2100';
-                        setData +='{';
-                        setData +='\'id\':\'1\',';
-                        setData +='\'type\':\'expenses\',';
-                        setData +='\'amount\':0,';
-                        setData +='\'startdate\':\'' + startdate + '\',';
-                        setData +='\'enddate\':\'' + enddate + '\'';
-                        setData +='}';
-                    }
-                    
-                    setData += ']"}';
-                    //clientData = setData;
-                    System.debug('Client Data from Future Simulation: ' + setData);
-                } //end of try            
-                catch(Exception e){
-                    System.debug('Exception' + e.getStackTraceString());
-                    FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-                }
-            }
-            System.debug('Non-HouseHold Request Data:' + setData);
-            return setData;
-        }
-    } 
+                                            
+                                            System.debug('inside Method create Client');      
+                                            Boolean showClientLookup = false;
+                                            Boolean fadeOut = false; 
+                                            Boolean isSelected =false;
+                                            Boolean cashFlowPopup;
+                                            String setData;
+                                            Map<string, String> accountNameMap = new  Map<string, String>();
+                                            Map<string, String> categoryNameMap = new Map<string, String>();
+                                            Map<string, String> CategoryMap2 = new Map<string, String>();
+                                            List<Budget__c> incmeList = new List<Budget__c>();
+                                            List<Budget__c> expList = new List<Budget__c>();
+                                            
+                                            //Store Household status here
+                                            Boolean isHousehold = false;
+                                            Account a = [select id, Name, RecordType.DeveloperName from Account where id =: clientId];
+                                            if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
+                                                isHousehold = true;
+                                            }
+                                            
+                                            /************ For Household Accounts ********/
+                                            if(isHousehold){            
+                                                List<account> householdMembersList = new List<Account>();
+                                                //householdMembersList = [select id, name from FinServ__AccountAccountRelation__c where FinServ__RelatedAccount__c =: clientId];           
+                                                system.debug('Inside Household');       
+                                                String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
+                                                
+                                                if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) {                 
+                                                    isSelected = false;
+                                                    cashFlowPopup = false;
+                                                    List<FinServ__FinancialAccount__c> FFDAList = new List<FinServ__FinancialAccount__c>();
+                                                    List<FinServ__FinancialAccount__c> FFAList = new List<FinServ__FinancialAccount__c>();
+                                                    
+                                                    try {               
+                                                        System.debug('Inside try');
+                                                        setData = '{"key":"'+FSK+'","formParams":"[';
+                                                        
+                                                        //double monthlyIncome = 0;                   
+                                                        incmeList = [Select id, Name, Amount__c,Income_Start_Date__c,Income_End_Date__c,Frequency__c from Budget__c where HouseHold__c =: clientId 
+                                                                     and recordType.developerName = 'Income_Record_Type' and Scenario_Id__c = :sceneId ];
+                                                        
+                                                        System.debug('client Id: '+ clientId);
+                                                        System.debug('Income List: ' + incmeList);
+                                                        
+                                                        //Create Income List
+                                                        if(incmeList!=null && incmeList.size() > 0){
+                                                            Integer i = 1;
+                                                            for(Budget__c inc: incmeList) {
+                                                                Double incomeAmount = 0;
+                                                                Double incomeFrequency = 1;
+                                                                switch on inc.Frequency__c {
+                                                                    when 'Monthly' {
+                                                                        incomeFrequency = 1;
+                                                                    }	
+                                                                    when 'Semi Monthly' {
+                                                                        incomeFrequency = 2;
+                                                                    }
+                                                                    when 'Bi-Weekly' {
+                                                                        incomeFrequency = 2;
+                                                                    }
+                                                                    when 'Weekly' {
+                                                                        incomeFrequency = 4;
+                                                                    }
+                                                                    when else {
+                                                                        incomeFrequency = 1;
+                                                                    }
+                                                                }
+                                                                if(inc.Amount__c != Null){
+                                                                    incomeAmount = inc.Amount__c.round();
+                                                                }
+                                                                else {
+                                                                    incomeAmount = 0;
+                                                                }
+                                                                setData +='{';
+                                                                setData +='\'id\':\'' + i + '\',';
+                                                                setData +='\'type\':\'income\',';
+                                                                setData +='\'name\':\''+inc.Name+'\',';
+                                                                setData +='\'amount\':'+incomeAmount+',';
+                                                                setData +='\'incomepopuppretax\':'+incomeAmount+',';
+                                                                setData +='\'incomepopupfrequency\':\'' + incomeFrequency + '\',';
+                                                                setData +='\'incomepopupgrowthrate\':\'0\',';
+                                                                setData +='\'startdate\':\'' + inc.Income_Start_Date__c.month() + '/' + inc.Income_Start_Date__c.year() + '\',';
+                                                                setData +='\'enddate\':\'' + inc.Income_End_Date__c.month() + '/' + inc.Income_End_Date__c.year() + '\'';
+                                                                setData +='},';
+                                                                CategoryMap2.put(inc.id, inc.Name.toUppercase());
+                                                                categoryNameMap.put(inc.id, inc.Name);
+                                                                ++i;
+                                                            }//end of for
+                                                        }//end of if
+                                                        else {
+                                                            String startdate = '1/2018';
+                                                            String enddate = '12/2100';
+                                                            setData +='{';
+                                                            setData +='\'id\':\'1\',';
+                                                            setData +='\'type\':\'income\',';
+                                                            setData +='\'name\':\'income\',';
+                                                            setData +='\'amount\':0,';
+                                                            setData +='\'incomepopuppretax\':0,';
+                                                            setData +='\'incomepopupfrequency\':\'1\',';
+                                                            setData +='\'incomepopupgrowthrate\':\'0\',';
+                                                            setData +='\'startdate\':\'' + startdate + '\',';
+                                                            setData +='\'enddate\':\'' + enddate + '\'';
+                                                            setData +='},';
+                                                        }
+                                                        
+                                                        
+                                                        System.debug('income here: ' + setData);
+                                                        Integer flag = 0; 
+                                                        Map<id, integer> FFAMap = new Map<id, integer>();
+                                                        
+                                                        //non Loan and Non credit accouts, i.e., savings and investment
+                                                        FFAList = [Select id, Name, 
+                                                                   //Current_Value__c, 
+                                                                   FinServ__Balance__c, FinServ__APY__c from FinServ__FinancialAccount__c where
+                                                                   Account_Type__c != 'Loan' and Account_Type__c !='Credit Card' and
+                                                                   RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
+                                                                   RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
+                                                                   RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
+                                                                   FinServ__Household__c =: clientId and Scenario_Id__c = :sceneId
+                                                                   limit 1000];
+                                                        
+                                                        System.debug('FFA List: '+FFAList.size());
+                                                        
+                                                        if(FFAList.size() > 0){
+                                                            for(FinServ__FinancialAccount__c FFA : FFAList){
+                                                                accountNameMap.put(FFA.Id, FFA.Name);
+                                                                flag++;
+                                                                FFAMap.put(FFA.Id, flag);
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+flag+'\',';
+                                                                setData +='\'type\':\'account\',';
+                                                                setData +='\'accountype\':\'3\',';
+                                                                setData +='\'name\':\''+FFA.Name+'\',';
+                                                                if(FFA.FinServ__Balance__c == null){
+                                                                    FFA.FinServ__Balance__c = 0;
+                                                                }
+                                                                setData +='\'amount\':'+FFA.FinServ__Balance__c+',';
+                                                                if(FFA.FinServ__APY__c == null){
+                                                                    FFA.FinServ__APY__c = 0;
+                                                                }
+                                                                setData +='\'APR\':'+FFA.FinServ__APY__c;
+                                                                setData +='},';
+                                                            }
+                                                        }
+                                                        
+                                                        // Loan and debt accounts
+                                                        System.debug('above');
+                                                        FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c, FinServ__PaymentAmount__c
+                                                                    from FinServ__FinancialAccount__c where
+                                                                    (Account_Type__c = 'Loan' or
+                                                                     Account_Type__c = 'Credit Card') AND
+                                                                    RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
+                                                                    RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
+                                                                    RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
+                                                                    FinServ__Household__c =: clientId and Scenario_Id__c = :sceneId
+                                                                    limit 1000];
+                                                        
+                                                        /*********** NOTE: Outstanding Payment and Loan End Date *********/
+                                                        
+                                                        
+                                                        System.debug('Debt Accounts: ' + FFDAList.size());
+                                                        if(FFDAList.size() > 0){
+                                                            for(FinServ__FinancialAccount__c FFDA : FFDAList){
+                                                                accountNameMap.put(FFDA.Id, FFDA.Name);
+                                                                flag++;
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+flag+'\',';
+                                                                setData +='\'type\':\'account\',';
+                                                                
+                                                                //term Loan
+                                                                if(FFDA.Account_Type__c == 'Credit Card'){
+                                                                    setData +='\'accountype\':\'account_creditcard\',';
+                                                                    setData +='\'name\':\''+FFDA.Name+'\',';
+                                                                    
+                                                                    //fill which ever is not empty
+                                                                    if(FFDA.FinServ__LoanAmount__c != Null){
+                                                                        setData +='\'amount\':'+FFDA.FinServ__LoanAmount__c+',';
+                                                                    }else {
+                                                                        setData +='\'amount\':'+FFDA.FinServ__Balance__c+',';
+                                                                    }
+                                                                    
+                                                                }else if(FFDA.Account_Type__c == 'Loan'){
+                                                                    setData +='\'accountype\':\'account_loan\',';
+                                                                    setData +='\'name\':\''+FFDA.Name+'\',';
+                                                                    setData +='\'amount\':'+FFDA.FinServ__PaymentAmount__c+',';
+                                                                    
+                                                                    setData +='\'endDate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
+                                                                    setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
+                                                                }
+                                                                else{}
+                                                                setData +='\'APR\':'+FFDA.APR__c;
+                                                                setData +='},';
+                                                            }
+                                                        }
+                                                        //Goals Data
+                                                        
+                                                        List<FinServ__FinancialGoal__c> goalList = [select Start_Value__c,
+                                                                                                    //Account_Value__c, 
+                                                                                                    Name, 
+                                                                                                    Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
+                                                                                                    Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c 
+                                                                                                    from FinServ__FinancialGoal__c where
+                                                                                                    RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
+                                                                                                    FinServ__Household__c =: clientId and Scenario_Id__c = :sceneId
+                                                                                                    limit 1000];
+                                                        System.debug('Goal List: ' + goalList);
+                                                        if(goalList.size() > 0){
+                                                            for(FinServ__FinancialGoal__c goal : goalList){
+                                                                Decimal growth=0;
+                                                                flag++;
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+flag+'\',';
+                                                                setData +='\'type\':\'goals\',';
+                                                                Decimal getcurrentEstimation = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
+                                                                //System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
+                                                                setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
+                                                                setData +='\'name\':\''+goal.Name+'\',';
+                                                                setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
+                                                                setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
+                                                                setData +='\'targetamount\':'+goal.FinServ__TargetValue__c+',';
+                                                                setData +='\'priority\':'+goal.Goal_Priority__c+',';
+                                                                setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
+                                                                setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
+                                                                setData +='\'savingid\':\''+FFAMap.get(goal.Associated_Account__c)+'\',';
+                                                                setData +='\'startvalue\':\''+goal.Start_Value__c+'\'';
+                                                                setData +='},';
+                                                            }                   
+                                                        } //end of if
+                                                        
+                                                        
+                                                        //Create Expense Data
+                                                        expList = [Select id, Name, Amount__c ,Income_Start_Date__c, Income_End_Date__c, Expense_Start_Date__c,Expense_End_Date__c from Budget__c where HouseHold__c =: clientId 
+                                                                   and recordType.developerName = 'Expense_Record_Type' and Scenario_Id__c = :sceneId]; 
+                                                        System.debug('Expense List: ' + expList);
+                                                        double monthlyExpenses = 0;
+                                                        //set expenses here    
+                                                        if(expList!=null && expList.size() > 0){
+                                                            Integer j=1;
+                                                            for(Budget__c e: expList) {
+                                                                if(e.Amount__c != Null){
+                                                                    monthlyExpenses+= e.Amount__c;
+                                                                } 
+                                                                else {
+                                                                    monthlyExpenses += 0; 
+                                                                }
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+j+'\',';
+                                                                setData +='\'type\':\''+e.Name+'\',';
+                                                                if(monthlyExpenses != null){
+                                                                    setData +='\'amount\':'+monthlyExpenses+',';
+                                                                }else{
+                                                                    setData +='\'amount\':0,';
+                                                                }
+                                                                setData +='\'startdate\':\'' + e.Income_Start_Date__c.month() + '/' + e.Income_Start_Date__c.year() + '\',';
+                                                                setData +='\'enddate\':\'' + e.Income_End_Date__c.month() + '/' + e.Income_End_Date__c.year() + '\'';
+                                                                setData +='}';
+                                                                ++j;
+                                                            }//end for
+                                                        }//end if
+                                                        else {
+                                                            String startdate = '1/2018';
+                                                            String enddate = '12/2100';
+                                                            setData +='{';
+                                                            setData +='\'id\':\'1\',';
+                                                            setData +='\'type\':\'expenses\',';
+                                                            setData +='\'amount\':0,';
+                                                            setData +='\'startdate\':\'' + startdate + '\',';
+                                                            setData +='\'enddate\':\'' + enddate + '\'';
+                                                            setData +='}';
+                                                        }
+                                                        setData += ']"}';
+                                                        
+                                                        //clientData = setData;
+                                                        System.debug('Client Data from Future Simulation: ' + setData);
+                                                    } //end of try            
+                                                    catch(Exception e){
+                                                        System.debug('Exception' + e.getStackTraceString());
+                                                        FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+                                                    }
+                                                }
+                                                System.debug('HouseHold Request Data:' + setData);
+                                                return setData;                                
+                                            }
+                                            //end of Household  
+                                            
+                                            
+                                            
+                                            /******** Normal non - Household Code goes here *******/
+                                            else {            	
+                                                String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
+                                                
+                                                if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) { 
+                                                    
+                                                    isSelected = false;
+                                                    cashFlowPopup = false;
+                                                    List<FinServ__FinancialAccount__c> FFDAList = new List<FinServ__FinancialAccount__c>();
+                                                    List<FinServ__FinancialAccount__c> FFAList = new List<FinServ__FinancialAccount__c>();
+                                                    
+                                                    try {                
+                                                        System.debug('Inside try');
+                                                        setData = '{"key":"'+FSK+'","formParams":"[';
+                                                        
+                                                        incmeList = [Select id, Name, Amount__c,Income_Start_Date__c,Income_End_Date__c,Frequency__c from Budget__c where Primary_Owner__c =: clientId 
+                                                                     and recordType.developerName = 'Income_Record_Type'  and Scenario_Id__c = :sceneId]; 
+                                                        System.debug('client Id: '+ clientId);
+                                                        System.debug('Income List: ' + incmeList);
+                                                        
+                                                        //set monthly income here 
+                                                        //Create Income List
+                                                        if(incmeList!=null && incmeList.size() > 0){
+                                                            Integer i = 1;
+                                                            for(Budget__c inc: incmeList) {
+                                                                Double incomeAmount = 0;
+                                                                Double incomeFrequency = 1;
+                                                                switch on inc.Frequency__c {
+                                                                    when 'Monthly' {
+                                                                        incomeFrequency = 1;
+                                                                    }	
+                                                                    when 'Semi Monthly' {
+                                                                        incomeFrequency = 2;
+                                                                    }
+                                                                    when 'Bi-Weekly' {
+                                                                        incomeFrequency = 2;
+                                                                    }
+                                                                    when 'Weekly' {
+                                                                        incomeFrequency = 4;
+                                                                    }
+                                                                    when else {
+                                                                        incomeFrequency = 1;
+                                                                    }
+                                                                }
+                                                                if(inc.Amount__c != Null){
+                                                                    incomeAmount = inc.Amount__c.round();
+                                                                }
+                                                                else {
+                                                                    incomeAmount = 0;
+                                                                }
+                                                                setData +='{';
+                                                                setData +='\'id\':\'' + i + '\',';
+                                                                setData +='\'type\':\'income\',';
+                                                                setData +='\'name\':\''+inc.Name+'\',';
+                                                                setData +='\'amount\':'+incomeAmount+',';
+                                                                setData +='\'incomepopuppretax\':'+incomeAmount+',';
+                                                                setData +='\'incomepopupfrequency\':\'' + incomeFrequency + '\',';
+                                                                setData +='\'incomepopupgrowthrate\':\'0\',';
+                                                                setData +='\'startdate\':\'' + inc.Income_Start_Date__c.month() + '/' + inc.Income_Start_Date__c.year() + '\',';
+                                                                setData +='\'enddate\':\'' + inc.Income_End_Date__c.month() + '/' + inc.Income_End_Date__c.year() + '\'';
+                                                                setData +='},';
+                                                                CategoryMap2.put(inc.id, inc.Name.toUppercase());
+                                                                categoryNameMap.put(inc.id, inc.Name);
+                                                                ++i;
+                                                            }//end of for
+                                                        }//end of if
+                                                        else {
+                                                            String startdate = '1/2018';
+                                                            String enddate = '12/2100';
+                                                            setData +='{';
+                                                            setData +='\'id\':\'1\',';
+                                                            setData +='\'type\':\'income\',';
+                                                            setData +='\'name\':\'income\',';
+                                                            setData +='\'amount\':0,';
+                                                            setData +='\'incomepopuppretax\':0,';
+                                                            setData +='\'incomepopupfrequency\':\'1\',';
+                                                            setData +='\'incomepopupgrowthrate\':\'0\',';
+                                                            setData +='\'startdate\':\'' + startdate + '\',';
+                                                            setData +='\'enddate\':\'' + enddate + '\'';
+                                                            setData +='},';
+                                                        }
+                                                        
+                                                        System.debug('income here: ' + setData);
+                                                        Integer flag = 0; 
+                                                        Map<id, integer> FFAMap = new Map<id, integer>();
+                                                        
+                                                        //non Loan and Non credit accouts, i.e., savings and investment
+                                                        FFAList = [Select id, Name, 
+                                                                   //Current_Value__c, 
+                                                                   FinServ__Balance__c, FinServ__APY__c from FinServ__FinancialAccount__c where
+                                                                   Account_Type__c != 'Loan' and Account_Type__c !='Credit Card' and
+                                                                   RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
+                                                                   RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
+                                                                   RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
+                                                                   FinServ__PrimaryOwner__c =: clientId  and Scenario_Id__c = :sceneId
+                                                                   limit 1000];
+                                                        
+                                                        System.debug('FFA List: '+FFAList.size());
+                                                        
+                                                        if(FFAList.size() > 0){
+                                                            for(FinServ__FinancialAccount__c FFA : FFAList){
+                                                                accountNameMap.put(FFA.Id, FFA.Name);
+                                                                flag++;
+                                                                FFAMap.put(FFA.Id, flag);
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+flag+'\',';
+                                                                setData +='\'type\':\'account\',';
+                                                                setData +='\'accountype\':\'3\',';
+                                                                setData +='\'name\':\''+FFA.Name+'\',';
+                                                                if(FFA.FinServ__Balance__c == null){
+                                                                    FFA.FinServ__Balance__c = 0;
+                                                                }
+                                                                setData +='\'amount\':'+FFA.FinServ__Balance__c+',';
+                                                                if(FFA.FinServ__APY__c == null){
+                                                                    FFA.FinServ__APY__c = 0;
+                                                                }
+                                                                setData +='\'APR\':'+FFA.FinServ__APY__c;
+                                                                setData +='},';
+                                                            }
+                                                        }
+                                                        
+                                                        // Loan and debt accounts
+                                                        System.debug('above');
+                                                        FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c, FinServ__PaymentAmount__c
+                                                                    //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
+                                                                    from FinServ__FinancialAccount__c where
+                                                                    (Account_Type__c = 'Loan' or
+                                                                     Account_Type__c = 'Credit Card') AND
+                                                                    RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
+                                                                    RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
+                                                                    RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
+                                                                    FinServ__PrimaryOwner__c =: clientId  and Scenario_Id__c = :sceneId
+                                                                    limit 1000];
+                                                        
+                                                        /*********** NOTE: Outstanding Payment and Loan End Date *********/
+                                                        
+                                                        System.debug('Debt Accounts: ' + FFDAList.size());
+                                                        if(FFDAList.size() > 0){
+                                                            for(FinServ__FinancialAccount__c FFDA : FFDAList){
+                                                                accountNameMap.put(FFDA.Id, FFDA.Name);
+                                                                flag++;
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+flag+'\',';
+                                                                setData +='\'type\':\'account\',';
+                                                                
+                                                                //term Loan
+                                                                if(FFDA.Account_Type__c == 'Credit Card'){
+                                                                    setData +='\'accountype\':\'account_creditcard\',';
+                                                                    setData +='\'name\':\''+FFDA.Name+'\',';
+                                                                    
+                                                                    //fill which ever is not empty
+                                                                    if(FFDA.FinServ__LoanAmount__c != Null){
+                                                                        setData +='\'amount\':'+FFDA.FinServ__LoanAmount__c+',';
+                                                                    }else {
+                                                                        setData +='\'amount\':'+FFDA.FinServ__Balance__c+',';
+                                                                    }
+                                                                    
+                                                                }else if(FFDA.Account_Type__c == 'Loan'){
+                                                                    setData +='\'accountype\':\'account_loan\',';
+                                                                    setData +='\'name\':\''+FFDA.Name+'\',';
+                                                                    setData +='\'amount\':'+FFDA.FinServ__PaymentAmount__c+',';
+                                                                    
+                                                                    setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
+                                                                    setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
+                                                                }
+                                                                else{}
+                                                                setData +='\'APR\':'+FFDA.APR__c;
+                                                                setData +='},';
+                                                            }
+                                                        }
+                                                        //Goals Data
+                                                        
+                                                        List<FinServ__FinancialGoal__c> goalList = [select Start_Value__c,
+                                                                                                    //Account_Value__c, 
+                                                                                                    Name, 
+                                                                                                    Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
+                                                                                                    Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c
+                                                                                                    from FinServ__FinancialGoal__c where
+                                                                                                    RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
+                                                                                                    FinServ__PrimaryOwner__c =: clientId and Scenario_Id__c = :sceneId
+                                                                                                    limit 1000];
+                                                        System.debug('Goal List: ' + goalList);
+                                                        if(goalList.size() > 0){
+                                                            for(FinServ__FinancialGoal__c goal : goalList){
+                                                                Decimal growth=0;
+                                                                flag++;
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+flag+'\',';
+                                                                setData +='\'type\':\'goals\',';
+                                                                Decimal getcurrentEstimation = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
+                                                                //System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
+                                                                setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
+                                                                setData +='\'name\':\''+goal.Name+'\',';
+                                                                setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
+                                                                setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
+                                                                setData +='\'targetamount\':'+goal.FinServ__TargetValue__c+',';
+                                                                setData +='\'priority\':'+goal.Goal_Priority__c+',';
+                                                                setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
+                                                                setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
+                                                                setData +='\'savingid\':\''+FFAMap.get(goal.Associated_Account__c)+'\',';
+                                                                setData +='\'startvalue\':\''+goal.Start_Value__c+'\'';
+                                                                setData +='},';
+                                                            }                   
+                                                        } //end of if
+                                                        
+                                                        expList = [Select id, Name, Amount__c, Income_Start_Date__c, Income_End_Date__c, Expense_Start_Date__c,Expense_End_Date__c from Budget__c where Primary_Owner__c =: clientId 
+                                                                   and recordType.developerName = 'Expense_Record_Type' and Scenario_Id__c = :sceneId]; 
+                                                        //set expenses here    
+                                                        System.debug('Expense List: ' + expList);
+                                                        double monthlyExpenses = 0;
+                                                        //set expenses here    
+                                                        if(expList!=null && expList.size() > 0){
+                                                            Integer j=1;
+                                                            for(Budget__c e: expList) {
+                                                                if(e.Amount__c != Null){
+                                                                    monthlyExpenses+= e.Amount__c;
+                                                                } 
+                                                                else {
+                                                                    monthlyExpenses += 0; 
+                                                                }
+                                                                setData +='{';
+                                                                setData +='\'id\':\''+j+'\',';
+                                                                setData +='\'type\':\''+e.Name+'\',';
+                                                                if(monthlyExpenses != null){
+                                                                    setData +='\'amount\':'+monthlyExpenses + ',';
+                                                                }else{
+                                                                    setData +='\'amount\':0,';
+                                                                }
+                                                                setData +='\'startdate\':\'' + e.Income_Start_Date__c.month() + '/' + e.Income_Start_Date__c.year() + '\',';
+                                                                setData +='\'enddate\':\'' + e.Income_End_Date__c.month() + '/' + e.Income_End_Date__c.year() + '\'';
+                                                                setData +='}';
+                                                                ++j;
+                                                            }//end for
+                                                        }//end if
+                                                        else {
+                                                            String startdate = '1/2018';
+                                                            String enddate = '12/2100';
+                                                            setData +='{';
+                                                            setData +='\'id\':\'1\',';
+                                                            setData +='\'type\':\'expenses\',';
+                                                            setData +='\'amount\':0,';
+                                                            setData +='\'startdate\':\'' + startdate + '\',';
+                                                            setData +='\'enddate\':\'' + enddate + '\'';
+                                                            setData +='}';
+                                                        }
+                                                        
+                                                        setData += ']"}';
+                                                        //clientData = setData;
+                                                        System.debug('Client Data from Future Simulation: ' + setData);
+                                                    } //end of try            
+                                                    catch(Exception e){
+                                                        System.debug('Exception' + e.getStackTraceString());
+                                                        FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+                                                    }
+                                                }
+                                                System.debug('Non-HouseHold Request Data:' + setData);
+                                                return setData;
+                                            }
+                                        } 
     
     /*public static String getRequestData_bak(List<Budget__c> incomeList, List<Budget__c> expenseList, List<FinServ__FinancialAccount__c> fAccList, List<FinServ__FinancialAccount__c> debtAccList, List<FinServ__FinancialGoal__c> goalList) {
-        String response;
-        String setData;
-        System.debug('setdata 1: '+setData);
-        String FSK = 'a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89a';
-        try{
-            if(FSK.length() != 0 && FSK != Null){    
-                try {
-                    setData = '{"key":"'+ FSK + '","formParams":"[';
-                    setData +='{';
-                    System.debug('setdata 2: '+setData);
-                    double monthlyIncome;
-                    double monthlyExpenses;
-                    if(incomeList.size() > 0 && incomeList[0].Amount__c != Null) {
-                        monthlyIncome =  incomeList[0].Amount__c;
-                    }
-                    else {
-                        monthlyIncome = 0; 
-                    }
-                    if(expenseList.size() > 0 && expenseList[0].Amount__c != Null) {
-                        monthlyExpenses = expenseList[0].Amount__c;
-                    }
-                    else {
-                        monthlyExpenses=0;
-                    }
-                    monthlyIncome = monthlyIncome.round();
-                    setData +='\'id\':\'1\',';
-                    setData +='\'type\':\'income\',';
-                    setData +='\'name\':\'income\',';
-                    setData +='\'amount\':'+monthlyIncome+',';
-                    setData +='\'incomepopuppretax\':7000,';
-                    setData +='\'incomepopupfrequency\':\'1\',';
-                    setData +='\'incomepopupgrowthrate\':\'0\'';
-                    setData +='},';
-                    System.debug('setdata 3: '+setData);
-                    Integer flag = 0; 
-                    Map<id, integer> fAccMap = new Map<id, integer>();
-                    
-                    if(fAccList.size() > 0 ){
-                        for(FinServ__FinancialAccount__c fAcc : fAccList){
-                            flag++;
-                            fAccMap.put(fAcc.Id, flag);
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            setData +='\'accountype\':\'1\',';
-                            if(fAcc.Name == Null) {
-                                fAcc.Name = '';
-                            }
-                            setData +='\'name\':\''+fAcc.Name+'\',';
-                            if(fAcc.FinServ__Balance__c == null){
-                                fAcc.FinServ__Balance__c = 0;
-                            }
-                            setData +='\'amount\':'+ fAcc.FinServ__Balance__c + ',';
-                            if(fAcc.APR__c == null){
-                                fAcc.APR__c = 0;
-                            }
-                            setData +='\'APR\':'+fAcc.APR__c;
-                            setData +='},';
-                        }
-                    }
-                    System.debug('setdata 4: '+setData);
-                    if(debtAccList.size() > 0){
-                        for(FinServ__FinancialAccount__c debt : debtAccList) {
-                            flag++;
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            System.debug('setdata credit card: '+setData);
-                            if(debt.RecordTypeId == cardRecId) {
-                                setData +='\'accountype\':\'account_creditcard\',';
-                                if(debt.Name == Null) {
-                                    debt.Name = '';
-                                }
-                                setData +='\'name\':\''+debt.Name+'\',';
-                                if(debt.FinServ__LoanAmount__c == Null) {
-                                    debt.FinServ__LoanAmount__c = 0;
-                                }
-                                setData +='\'amount\':'+debt.FinServ__LoanAmount__c+',';
-                            }
-                            
-                            else if(debt.RecordTypeId == loansRecId) {
-                                setData +='\'accountype\':\'account_loan\',';
-                                if(debt.Name == Null) {
-                                    debt.Name = '';
-                                }
-                                setData +='\'name\':\''+debt.Name+'\',';
-                                if(debt.FinServ__PaymentAmount__c == Null) {
-                                    debt.FinServ__PaymentAmount__c = 0;
-                                }
-                                setData +='\'amount\':'+debt.FinServ__PaymentAmount__c+',';
-                                setData +='\'endDate\':\''+Date.today().addYears(2).month()+'/'+Date.today().addYears(2).year()+'\',';
-                                if(debt.FinServ__LoanAmount__c == Null) {
-                                    debt.FinServ__LoanAmount__c = 0;
-                                }
-                                setData +='\'outstandingamt\':'+debt.FinServ__LoanAmount__c+',';
-                            }
-                            System.debug('setdata 5: '+setData);
-                            setData +='\'APR\':'+debt.APR__c;
-                            
-                            setData +='},';
-                        }
-                    }
-                    System.debug('setdata 6: '+setData);
-                    if(goalList.size() > 0){
-                        for(FinServ__FinancialGoal__c goal : goalList){
-                            if(goal.Associated_Account__c != null && fAccMap.containsKey(goal.Associated_Account__c)){
-                                flag++;
-                                setData +='{';
-                                setData +='\'id\':\''+flag+'\',';
-                                setData +='\'type\':\'goals\',';
-                                Decimal getcurrentEstimation = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
-                                if(getcurrentEstimation == Null) {
-                                    getcurrentEstimation = 0;
-                                }
-                                setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
-                                if(goal.Name == Null) {
-                                    goal.Name = '';
-                                }
-                                setData +='\'name\':\''+goal.Name+'\',';
-                                if(goal.Required_Monthly_Saving__c == Null) {
-                                    goal.Required_Monthly_Saving__c = 0;
-                                }
-                                setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
-                                if(goal.Start_Date__c == Null) {
-                                    goal.Start_Date__c = date.today();
-                                }
-                                setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
-                                if(goal.FinServ__TargetValue__c == Null) {
-                                    goal.FinServ__TargetValue__c = 0;
-                                }
-                                setData +='\'targetamount\':'+goal.FinServ__TargetValue__c+',';
-                                if(goal.Goal_Priority__c == Null) {
-                                    goal.Goal_Priority__c = '1';
-                                }
-                                setData +='\'priority\':'+goal.Goal_Priority__c+',';
-                                
-                                setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
-                                if(goal.FinServ__TargetDate__c == Null) {
-                                    goal.FinServ__TargetDate__c = date.today();
-                                }
-                                setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
-                                setData +='\'savingid\':\''+fAccMap.get(goal.Associated_Account__c)+'\',';
-                                
-                                if(goal.Start_Value__c == Null) {
-                                    goal.Start_Value__c =0;
-                                }
-                                setData +='\'startvalue\':\''+goal.Start_Value__c+'\'';
-                                //setData +='\'priority\':\''+goal.Goal_Priority__c+'\'';
-                                setData +='},';
-                            }
-                        }
-                    }
-                    System.debug('setdata 7: '+setData);
-                    setData +='{';
-                    setData +='\'id\':\'1\',';
-                    setData +='\'type\':\'expenses\',';
-                    if(monthlyExpenses != null){
-                        setData +='\'amount\':'+monthlyExpenses;
-                    }
-                    else{
-                        setData +='\'amount\':0';
-                    }
-                    System.debug('setdata 8: '+setData);
-                    setData +='}';
-                    setData += ']"}'; 
-                    System.debug('setdata 9: '+setData);
-                    response = FinacastUtility.getCalloutResponseContents('https://mytafi.herokuapp.com/rest/service/getFutureSimulationsNew', 'POST', setData);
-                }
-                catch(Exception ee)
-                {
-                    System.debug(ee.getStackTraceString());
-                }
-            }
-        }
-        catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-        }
-        System.debug('setdata 10: '+setData);
-        System.debug('response: '+response);
-        return response;
-    } */
+String response;
+String setData;
+System.debug('setdata 1: '+setData);
+String FSK = 'a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89a';
+try{
+if(FSK.length() != 0 && FSK != Null){    
+try {
+setData = '{"key":"'+ FSK + '","formParams":"[';
+setData +='{';
+System.debug('setdata 2: '+setData);
+double monthlyIncome;
+double monthlyExpenses;
+if(incomeList.size() > 0 && incomeList[0].Amount__c != Null) {
+monthlyIncome =  incomeList[0].Amount__c;
+}
+else {
+monthlyIncome = 0; 
+}
+if(expenseList.size() > 0 && expenseList[0].Amount__c != Null) {
+monthlyExpenses = expenseList[0].Amount__c;
+}
+else {
+monthlyExpenses=0;
+}
+monthlyIncome = monthlyIncome.round();
+setData +='\'id\':\'1\',';
+setData +='\'type\':\'income\',';
+setData +='\'name\':\'income\',';
+setData +='\'amount\':'+monthlyIncome+',';
+setData +='\'incomepopuppretax\':7000,';
+setData +='\'incomepopupfrequency\':\'1\',';
+setData +='\'incomepopupgrowthrate\':\'0\'';
+setData +='},';
+System.debug('setdata 3: '+setData);
+Integer flag = 0; 
+Map<id, integer> fAccMap = new Map<id, integer>();
+
+if(fAccList.size() > 0 ){
+for(FinServ__FinancialAccount__c fAcc : fAccList){
+flag++;
+fAccMap.put(fAcc.Id, flag);
+setData +='{';
+setData +='\'id\':\''+flag+'\',';
+setData +='\'type\':\'account\',';
+setData +='\'accountype\':\'1\',';
+if(fAcc.Name == Null) {
+fAcc.Name = '';
+}
+setData +='\'name\':\''+fAcc.Name+'\',';
+if(fAcc.FinServ__Balance__c == null){
+fAcc.FinServ__Balance__c = 0;
+}
+setData +='\'amount\':'+ fAcc.FinServ__Balance__c + ',';
+if(fAcc.APR__c == null){
+fAcc.APR__c = 0;
+}
+setData +='\'APR\':'+fAcc.APR__c;
+setData +='},';
+}
+}
+System.debug('setdata 4: '+setData);
+if(debtAccList.size() > 0){
+for(FinServ__FinancialAccount__c debt : debtAccList) {
+flag++;
+setData +='{';
+setData +='\'id\':\''+flag+'\',';
+setData +='\'type\':\'account\',';
+System.debug('setdata credit card: '+setData);
+if(debt.RecordTypeId == cardRecId) {
+setData +='\'accountype\':\'account_creditcard\',';
+if(debt.Name == Null) {
+debt.Name = '';
+}
+setData +='\'name\':\''+debt.Name+'\',';
+if(debt.FinServ__LoanAmount__c == Null) {
+debt.FinServ__LoanAmount__c = 0;
+}
+setData +='\'amount\':'+debt.FinServ__LoanAmount__c+',';
+}
+
+else if(debt.RecordTypeId == loansRecId) {
+setData +='\'accountype\':\'account_loan\',';
+if(debt.Name == Null) {
+debt.Name = '';
+}
+setData +='\'name\':\''+debt.Name+'\',';
+if(debt.FinServ__PaymentAmount__c == Null) {
+debt.FinServ__PaymentAmount__c = 0;
+}
+setData +='\'amount\':'+debt.FinServ__PaymentAmount__c+',';
+setData +='\'endDate\':\''+Date.today().addYears(2).month()+'/'+Date.today().addYears(2).year()+'\',';
+if(debt.FinServ__LoanAmount__c == Null) {
+debt.FinServ__LoanAmount__c = 0;
+}
+setData +='\'outstandingamt\':'+debt.FinServ__LoanAmount__c+',';
+}
+System.debug('setdata 5: '+setData);
+setData +='\'APR\':'+debt.APR__c;
+
+setData +='},';
+}
+}
+System.debug('setdata 6: '+setData);
+if(goalList.size() > 0){
+for(FinServ__FinancialGoal__c goal : goalList){
+if(goal.Associated_Account__c != null && fAccMap.containsKey(goal.Associated_Account__c)){
+flag++;
+setData +='{';
+setData +='\'id\':\''+flag+'\',';
+setData +='\'type\':\'goals\',';
+Decimal getcurrentEstimation = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
+if(getcurrentEstimation == Null) {
+getcurrentEstimation = 0;
+}
+setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
+if(goal.Name == Null) {
+goal.Name = '';
+}
+setData +='\'name\':\''+goal.Name+'\',';
+if(goal.Required_Monthly_Saving__c == Null) {
+goal.Required_Monthly_Saving__c = 0;
+}
+setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
+if(goal.Start_Date__c == Null) {
+goal.Start_Date__c = date.today();
+}
+setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
+if(goal.FinServ__TargetValue__c == Null) {
+goal.FinServ__TargetValue__c = 0;
+}
+setData +='\'targetamount\':'+goal.FinServ__TargetValue__c+',';
+if(goal.Goal_Priority__c == Null) {
+goal.Goal_Priority__c = '1';
+}
+setData +='\'priority\':'+goal.Goal_Priority__c+',';
+
+setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
+if(goal.FinServ__TargetDate__c == Null) {
+goal.FinServ__TargetDate__c = date.today();
+}
+setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
+setData +='\'savingid\':\''+fAccMap.get(goal.Associated_Account__c)+'\',';
+
+if(goal.Start_Value__c == Null) {
+goal.Start_Value__c =0;
+}
+setData +='\'startvalue\':\''+goal.Start_Value__c+'\'';
+//setData +='\'priority\':\''+goal.Goal_Priority__c+'\'';
+setData +='},';
+}
+}
+}
+System.debug('setdata 7: '+setData);
+setData +='{';
+setData +='\'id\':\'1\',';
+setData +='\'type\':\'expenses\',';
+if(monthlyExpenses != null){
+setData +='\'amount\':'+monthlyExpenses;
+}
+else{
+setData +='\'amount\':0';
+}
+System.debug('setdata 8: '+setData);
+setData +='}';
+setData += ']"}'; 
+System.debug('setdata 9: '+setData);
+response = FinacastUtility.getCalloutResponseContents('https://mytafi.herokuapp.com/rest/service/getFutureSimulationsNew', 'POST', setData);
+}
+catch(Exception ee)
+{
+System.debug(ee.getStackTraceString());
+}
+}
+}
+catch(Exception e){
+FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+}
+System.debug('setdata 10: '+setData);
+System.debug('response: '+response);
+return response;
+} */
     
 }

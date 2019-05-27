@@ -39,12 +39,13 @@ public class AccountContactRelationHandlerTest {
        System.assertEquals(1, 1);
     }
     
+    
     @future
     public static void testcreateUser(Id contId , Id profileId,String username  )   
         
         {
         
-        Userrole us = [SELECT id from userrole where name = 'Karan Individual Nov 28 Customer User'];
+       // Userrole us = [SELECT id from userrole where name = 'Karan Individual Nov 28 Customer User'];
         User commUsers = new User();
         commUsers.FirstName = 'testusers2';
         commUsers.LastName = 'testusers2';

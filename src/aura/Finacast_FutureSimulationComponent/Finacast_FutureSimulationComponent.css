@@ -57,40 +57,8 @@
 .THIS .f_f-simulation {
    background-color: #ff00ff;
 }
-.THIS .slds-tabs_default__nav {
-    padding: 0 15px;
-} 
-.THIS .slds-tabs_default__item {
-    padding: 0;
-    margin: 10px 5px 0 5px;
-}
-.THIS .slds-tabs_default__link {
-    font-size: 16px;
-    padding: 0 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px 10px 0 0;
-    border-bottom: none; 
-    transition: all 100ms;
-}
 .THIS .slds-tabs_default__item:after {
     display: none;
-}
-.THIS .slds-is-active {
-    color: #fff;
-}
-.THIS .slds-is-active a {
-    background-color: #2877d5;
-    color: #fff;
-    border: 1px solid #afd699;
-    border-radius: 10px 10px 0 0;
-    border-bottom: none;
-    font-weight: normal !important;
-    transition: all 500ms;
-    -moz-transition: all 500ms;
-    -webkit-transition: all 500ms;
-}
-.THIS .slds-is-active a:hover {
-    color: #fff;
 }
 .THIS .slds-tabs_default__link[tabindex="0"]:focus {
     text-decoration:none;
@@ -98,11 +66,6 @@
 .THIS .charts-child {
     width: 50%;
     margin: 0 auto;
-}
-.THIS .chart1 {
-    width: 625px; 
-    height: auto; 
-    margin-left: 300px;
 }
 .THIS .chart1-child {
     width: 100%;
@@ -157,6 +120,124 @@
 .THIS .simulation-pop-up .slds-grid .slds-col {
     background-color: #f1f1f1;
 }
+/*=======29-24-2019======*/
+.THIS .slds-card__body {
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .slds-tabs_default__nav {
+    padding: 0;
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .chart1 {
+    width: 625px; 
+    height: auto;
+}
+.THIS .slds-tabs_default__link {
+    font-size: 14px;
+    padding: 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none; 
+    transition: all 100ms;
+}
+.THIS .slds-is-active a {
+    color: #000;
+    font-weight: 700;
+    border-radius: 5px 5px 0 0;
+    font-weight: normal !important;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .slds-tabs_default__item.slds-is-active::after {
+    background-color: rgba(0, 112, 210, 1);
+    height: .1875rem;
+    display: block;
+    content: '';
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+.THIS .slds-tabs_default__item {
+    padding: 0;
+    margin: 10px 5px 0 0px;
+}
+.THIS .financial_table {
+    margin: 15px 0 0;
+}
+.THIS .financial_table td {
+    white-space: normal;
+    padding: 7px;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+.THIS .financial_table tr:first-child td {
+    border-top: 1px solid #ddd;
+}
+.THIS .financial_table th {
+    padding: 7px;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-right: none;
+}
+.THIS .financial_table tr:first-child th {
+    border-top: 1px solid #ddd;
+}
+.THIS .slds-text-heading_small {
+    font-size: 12px;
+}
+.THIS .f-health-help {
+    position: absolute;
+    top: -30px;
+    right: 10%;
+}
+.THIS .slds-tabs_default__content {
+    padding: 0;
+}
+.THIS .financial_table tr:nth-child(odd) th {
+    background-color: #f1f2f3;
+}
+.THIS .financial_table tr:nth-child(odd) td {
+    background-color: #f1f2f3;
+}
+/*02-05-2019*/
+.THIS .label_none .slds-form-element__label {
+    display: none;
+}
+/*06-05-2019*/ 
+.THIS .debt_forecast-model .slds-modal__header {
+    background-color: rgb(250, 250, 249);
+    padding: 5px;
+}
+.THIS .debt_forecast-model .slds-modal__header .slds-table {
+    border: none;
+}
+.THIS .debt_forecast-model .slds-modal__header .slds-table thead th {
+    /*background-color: #2D4A7D;
+    color: #fff;*/
+    text-align: center;
+    width: 33%;
+}
+.THIS .debt_forecast-model .slds-modal__header .slds-table thead th:first-child {
+    padding-left: 0;
+}
+.THIS .debt_forecast-model .slds-modal__content .slds-table {
+    margin-top: -30px;
+}
+.THIS .debt_forecast-model .slds-modal__content .slds-table tbody th {
+    text-align: center;
+    width: 33%;
+}
+.THIS .debt_forecast-model .slds-modal__content .slds-table tbody td {
+    text-align: center;
+    width: 33%;
+}
+/*.THIS .debt_forecast-model .slds-modal__content .slds-table tbody tr:nth-child(even) td {
+    background-color: #d1f2f1;
+}*/
 @media (max-width: 1200px) {
     .THIS .chart1 {
         margin-left: 100px;

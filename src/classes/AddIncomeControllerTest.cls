@@ -61,7 +61,8 @@ public class AddIncomeControllerTest {
         bg1.Amount__c = 1000;
         bg1.Primary_Owner__c= acc1.Id;
         insert bg1;
-        
+           FinServ__FinancialAccount__c fa = new FinServ__FinancialAccount__c(Name='SahilTest',FinServ__PrimaryOwner__c=acc1.Id);
+        insert fa;
         FinServ__FinancialGoal__c goal1 = new FinServ__FinancialGoal__c();
         goal1.Name = 'test goal 1';
         goal1.Required_Monthly_Saving__c = 5000;
@@ -70,6 +71,8 @@ public class AddIncomeControllerTest {
         goal1.FinServ__TargetDate__c = date.today()+90;
         goal1.FinServ__PrimaryOwner__c=acc1.Id;
         goal1.Required_Monthly_Saving__c = 4500;
+        goal1.Goal_Priority__c='Priority 2';
+        goal1.Associated_Account__c=fa.Id;
         insert goal1;
         
         

@@ -1,0 +1,146 @@
+<aura:component controller="RiskProfileController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Strongly Agree', 'value': 'option1'},
+                                                        {'label': 'Agree', 'value': 'option2'},
+                                                        {'label': 'No strong Opinion', 'value': 'option3'},    
+                                                        {'label': 'Disagree', 'value': 'option4'},   
+                                                        {'label': 'Strongly Disagree', 'value': 'option5'}
+                                                        ]"/>
+    <aura:attribute name="value1" type="String"/>
+    <aura:attribute name="value2" type="String"/>
+    <aura:attribute name="value3" type="String"/>
+    <aura:attribute name="value4" type="String"/>
+    <aura:attribute name="value5" type="String"/>
+    <aura:attribute name="value6" type="String"/>
+    <aura:attribute name="value7" type="String"/>
+    <aura:attribute name="value8" type="String"/>
+    <aura:attribute name="value9" type="String"/>
+    <aura:attribute name="value10" type="String"/>
+    <aura:attribute name="value11" type="String"/>
+    <aura:attribute name="value12" type="String"/>
+    <aura:attribute name="showResult" type="Boolean" default="false"/>
+   
+    
+ <lightning:card>
+        <aura:set attribute="title">
+            <div class="slds-text-heading_large slds-text-align_center"> Risk Assessment Questionnaire</div>
+        </aura:set>
+        <div class="slds-box" style="padding: 30px">
+            <div>
+                1.	Do people who know you would describe you as a cautious person?<br/>
+                <lightning:radioGroup name="radioGroup1"
+                                      options="{! v.options }"
+                                      value="{! v.value1 }"
+                                      type="radio"/>
+            </div>
+            <div>
+                2.	Do you feel comfortable investing in the stock market?<br/>
+                <lightning:radioGroup name="radioGroup2"
+                                      options="{! v.options }"
+                                      value="{! v.value2 }"
+                                      type="radio"/>
+            </div>        
+            <div>
+                3.	Do you generally look for the safest type of investment, even if that means lower returns?<br/>
+                <lightning:radioGroup name="radioGroup3"
+                                      options="{! v.options }"
+                                      value="{! v.value3 }"
+                                      type="radio"/>
+            </div>
+            <div>
+                4.	Does it usually take a long time to make up your mind on financial matters?<br/>
+                <lightning:radioGroup name="radioGroup4"
+                                      options="{! v.options }"
+                                      value="{! v.value4 }"
+                                      type="radio"/>
+            </div>        
+            <div>
+                5.	Do you associate the word ‘risk’ with the idea of ‘opportunity’?<br/>
+                <lightning:radioGroup name="radioGroup5"
+                                      options="{! v.options }"
+                                      value="{! v.value5 }"
+                                      type="radio"/>
+            </div>        
+            <div>
+                6.	Do you prefer safety of keeping your money in the bank?<br/>
+                <lightning:radioGroup name="radioGroup6"
+                                      options="{! v.options }"
+                                      value="{! v.value6 }"
+                                      type="radio"/>
+            </div>        
+            <div>
+                7.	Do you find investment and other financial matters easy to understand?<br/>
+                <lightning:radioGroup name="radioGroup7"
+                                      options="{! v.options }"
+                                      value="{! v.value7 }"
+                                      type="radio"/>
+            </div>        
+            <div>
+                8.	Are you willing to take substantial financial risk to earn substantial returns?<br/>
+                <lightning:radioGroup name="radioGroup8"
+                                      options="{! v.options }"
+                                      value="{! v.value8 }"
+                                      type="radio"/>
+            </div>       
+            <div>
+                9.	Do you have prior experience of investing in stocks and shares?<br/>
+                <lightning:radioGroup name="radioGroup9"
+                                      options="{! v.options }"
+                                      value="{! v.value9 }"
+                                      type="radio"/>
+            </div>       
+            <div>
+                10.	Would you be rather safe than sorry when it comes to investment?<br/>
+                <lightning:radioGroup name="radioGroup10"
+                                      options="{! v.options }"
+                                      value="{! v.value10 }"
+                                      type="radio"/>
+            </div>       
+            <div>
+                11.	Are you open to take chances with high risk / high return investments than having to increase the amount that you are saving?<br/>
+                <lightning:radioGroup name="radioGroup11"
+                                      options="{! v.options }"
+                                      value="{! v.value11 }"
+                                      type="radio"/>
+            </div>       
+            <div>
+                12.	Are you concerned by the uncertainty of stock market investment?<br/>
+                <lightning:radioGroup name="radioGroup12"
+                                      options="{! v.options }"
+                                      value="{! v.value12 }"
+                                      type="radio"/>
+            </div>       
+     </div>
+        <div class="slds-clearfix">
+            <div class="slds-align_absolute-center" style="padding: 20px">
+                <lightning:button onclick="{!c.calculationRisk}">Calculate Risk
+                </lightning:button>
+            </div>
+        </div>
+        
+    </lightning:card>
+    <aura:if isTrue="{!v.showResult}">
+            <div class="demo-only"  style="height: 100%;">
+            <section  class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                                                    <header class="slds-modal__header slds-modal__header_empty">
+                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closePopup}">
+                                            <lightning:icon iconName="utility:close" size="small" variant="bare"/>
+                                            <span class="slds-assistive-text">Close</span>
+                                        </button>
+                                        
+                                    </header>
+     
+                    <div class="slds-modal__content slds-text-heading_large slds-text-align_center" style="padding: 20px" > 
+                       Very Aggressive Profile 
+                    </div>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+      
+    
+</aura:component>

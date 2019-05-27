@@ -27,7 +27,9 @@
                                                   recordId = "{!v.incmeId}"
                                                   objectApiName="Budget__c"  onsuccess="{!c.saveAndCloseBtn}"
                                                    onsubmit = "{!c.handleSubmit}"
+                                                  onload="{!c.handleonloan}"
                                                >
+                            
                         
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                                 
@@ -36,16 +38,17 @@
                                         
                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                           <span class = "highlight">* </span>  Nick Name<lightning:inputField  fieldName="Name" aura:id = "owner"/><br/>
-                                            End month/year (mm/yyyy)<lightning:inputField  fieldName="Income_End_Date__c" aura:id="endDate" ></lightning:inputField>
+                                            Start month/year (mm/yyyy)	<lightning:inputField fieldName="Income_Start_Date__c" aura:id="stDate" ></lightning:inputField>
+                                            
                                           <br/>
-                                           <span class = "highlight">* </span> Yearly growth (%)<lightning:inputField fieldName="Yearly_growth__c" aura:id = "yeargrowth"></lightning:inputField><br/>
+                                           <span class = "highlight">* </span> Yearly growth (%)<lightning:inputField fieldName="Yearly_growth__c" aura:id = "yeargrowth" > </lightning:inputField><br/>
                                             <span class = "highlight">* </span>  Frequency<lightning:inputField  fieldName="Frequency__c" aura:id = "freq" />
                                             <br/>
                                         </div>
                                         <div class="slds-col   slds-size_1-of-2" style="color:grey;">
                                          <span class = "highlight">* </span>   Amount after tax per pay check($)<lightning:inputField fieldName="Amount__c" aura:id="inQuantity" /><br/>
-                                            
-                                           Start month/year (mm/yyyy)	<lightning:inputField fieldName="Income_Start_Date__c" aura:id="stDate" ></lightning:inputField><br/>
+                                           End month/year (mm/yyyy)<lightning:inputField  fieldName="Income_End_Date__c" aura:id="endDate" ></lightning:inputField> 
+                                           <br/>
                                            <span class = "highlight">* </span> Approximate total income tax rate (%)<lightning:inputField fieldName="Tax_Rate__c" aura:id = "rate" /><br/>
                                             
 

@@ -27,14 +27,14 @@
     <actionOverrides>
         <actionName>New</actionName>
         <content>GoalTypeSelectionComponent</content>
-        <formFactor>Small</formFactor>
+        <formFactor>Large</formFactor>
         <skipRecordTypeSelect>true</skipRecordTypeSelect>
         <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
         <content>GoalTypeSelectionComponent</content>
-        <formFactor>Large</formFactor>
+        <formFactor>Small</formFactor>
         <skipRecordTypeSelect>true</skipRecordTypeSelect>
         <type>LightningComponent</type>
     </actionOverrides>
@@ -82,12 +82,13 @@
     </fields>
     <fields>
         <fullName>Associated_Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>Associated Account</label>
         <lookupFilter>
             <active>true</active>
-            <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+            <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+            <errorMessage>Value does not exist or does not match filter criteria.</errorMessage>
             <filterItems>
                 <field>FinServ__FinancialAccount__c.RecordType.DeveloperName</field>
                 <operation>notEqual</operation>
@@ -114,7 +115,7 @@
         <referenceTo>FinServ__FinancialAccount__c</referenceTo>
         <relationshipLabel>Financial Goals</relationshipLabel>
         <relationshipName>Financial_Goals</relationshipName>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -156,6 +157,22 @@
         <scale>2</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Do_tax_benefits_realize_monthly__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Do tax benefits realize monthly?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Does_the_contribution_bring_tax_benefit__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Does the contribution bring tax benefit?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Expected_Inflation_Rate__c</fullName>
@@ -376,11 +393,10 @@
         <fullName>Goal_Priority__c</fullName>
         <externalId>false</externalId>
         <label>Goal Priority</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
-            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
@@ -402,6 +418,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Max_yearly_tax_deduction_allowed__c</fullName>
+        <externalId>false</externalId>
+        <label>Max yearly tax deduction allowed ($ )?</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>Rate_Of_Return_After_Retirement__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Rate of return after retirement(%)</inlineHelpText>
@@ -418,7 +444,7 @@
         <externalId>false</externalId>
         <label>Required Monthly Saving</label>
         <precision>18</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
@@ -513,10 +539,20 @@
         <externalId>false</externalId>
         <label>Start Value</label>
         <precision>8</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>What_of_contribution_bring_tax_benefit__c</fullName>
+        <externalId>false</externalId>
+        <label>What % of contribution bring tax benefit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
     </fields>
     <fields>
         <fullName>Years_Of_Living_After_Retirement__c</fullName>
@@ -1390,6 +1426,12 @@
         <errorConditionFormula>ISBLANK(FinServ__Household__c)</errorConditionFormula>
         <errorDisplayField>FinServ__Household__c</errorDisplayField>
         <errorMessage>House hold field  is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Target_Date_Mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISBLANK(FinServ__TargetDate__c)</errorConditionFormula>
+        <errorMessage>Goal Target Date can&apos;t be blank.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>checkTargetDate</fullName>

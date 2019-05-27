@@ -15,6 +15,8 @@
     <aura:attribute name = "tarMonth" type = "String"/>
     <aura:attribute name = "goalPriority" type = "Integer" />
     <aura:attribute name = "accAssociated" type = "String"/>
+        <aura:attribute name = "recordId" type = "String"/>
+
     <aura:attribute name = "buttonDisplay" type = "boolean" default = "false"/>
     <aura:attribute name = "initialEmi" type = "Integer"/>
     
@@ -23,7 +25,11 @@
     <aura:attribute name = "initialAmount" type = "Integer"/>
     <aura:attribute name = "newTarDate" type = "String"/>
     <aura:attribute name = "setMsg" type = "String"/>
-    <aura:attribute name = "saveStatus" type = "boolean" default ="false" />    
+    <aura:attribute name = "saveStatus" type = "boolean" default ="false" />  
+    <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>    
+    <aura:attribute name="getNo" type="Boolean" default = "False"/>
+    <aura:attribute name="getYes" type="Boolean" default = "False"/>
+    <aura:attribute name="isMonthly" type="Boolean" default = "true"/>
 	<aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>     
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     
@@ -41,35 +47,56 @@
                                           
                                           recordTypeId="{!v.retirement}"
                                           objectApiName="FinServ__FinancialGoal__c"
+                                          recordId = "{!v.recordId}"
+
                                           onload = "{!c.handleLoad}">
                     
                     <lightning:messages />
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <div class="slds-box slds-gutters" style="border: none;">
-                            <div class="slds-box1">
+                        <div class="slds-box1">
+                        <div class="slds-grid">
+                            
                                 <div  class="slds-col slds-size_1-of-2" style="color:grey;">
                                     
                                     <span class = "highlight">* </span>Amount You Want To Save For Retirement ($)<lightning:inputField aura:id = "amount" fieldName="FinServ__TargetValue__c"  value = "{!v.amtMonth.retirementAmount}" />
                                     <br/>     
-                                    <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "associateAcc" fieldName="Associated_Account__c" value = "{!v.accAssociated}" onchange="{!c.amtAndContri}" />
+                                  <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "associateAcc" fieldName="Associated_Account__c" onchange="{!c.amtAndContri}" />
+                                <!-- <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "associateAcc" fieldName="Associated_Account__c" />-->
+
                                     <br/>
                                     
                                     
-                                    <span class = "highlight">* </span>Current Amount<lightning:inputField aura:id = "currVal" fieldName="Start_Value__c" value = "{!v.currAndContri.currentAmt}" onchange = "{!c.getChangeMonthlyConti}"/>
+                                   
+                                    <span class = "highlight">* </span>Current Amount<lightning:inputField aura:id = "currVal" fieldName="Start_Value__c" onchange = "{!c.getChangeMonthlyConti}"/>
+                                     Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"/><br/>
+                                        <lightning:inputField fieldName ="Does_the_contribution_bring_tax_benefit__c" value="{!v.isTaxDeduction}" class="slds-hidden"/> 
                                     
                                     <br/>
                                 </div>
                                 <div class="slds-col slds-size_1-of-2" style="color:grey;">
                                     Retirement Date<lightning:inputField aura:id = "rDate" fieldName = "FinServ__TargetDate__c" value = "{!v.tarDate}" disabled = "true"/>
                                     <br/>
-                                    <span class = "highlight">* </span>Goal Priority<lightning:inputField aura:id = "priority" fieldName="Goal_Priority__c" value = "{!v.goalPriority}"   />
+                                    <span class = "highlight">* </span>Goal Priority<lightning:inputField aura:id = "priority" fieldName="Goal_Priority__c"   />
                                     <br/>
                                     
-                                    <span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="Required_Monthly_Saving__c" value = "{!v.contribution}" onchange = "{!c.changeMonthlyContribution}"/>
+                                    <span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="Required_Monthly_Saving__c" onchange = "{!c.changeMonthlyContribution}"/>
                                     
                                 </div>
-                                <div style="clear: both;"></div>
                             </div>
+                            <aura:if isTrue="{!v.isTaxDeduction}">
+                                    <div class="slds-grid">
+                                        <div class="slds-col  slds-size_1-of-2" style="color:grey;"> 
+                                            <span class = "highlight">* </span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="What_of_contribution_bring_tax_benefit__c" aura:id="taxcontri"/><br/>
+                                            Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
+                                            <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" value="{!v.isMonthly}" class="slds-hidden"/>     <br/>
+                                        </div>
+                                        <div class="slds-col   slds-size_1-of-2" style="color:grey;">
+                                            Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="Max_yearly_tax_deduction_allowed__c" aura:id="maxdeduction" />
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <div style="clear: both;"></div>
+                            
                         </div>
                         <aura:if isTrue ="{!v.buttonDisplay}">
                             <span class = "slds-text-font_Arial,sans-serif slds-m-left--large" ><b>Oh no, You will not reach your target either increase your monthly contribution to {!v.initialEmi} or move retirement date to {!v.newTarDate}
@@ -91,9 +118,10 @@
                     
                     <footer class="slds-modal__footer">
                         <div class="button" align="right">
+                          <!-- <lightning:button variant="neutral" label="Next" onclick="{!c.nextButton}"/>-->
                             <lightning:button variant="neutral" label="Back" onclick="{!c.backButton}"/>
                             <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancelButton}"/>                            
-                            <lightning:button variant="brand" label="Save" onclick="{!c.saveButton}" disabled = "{!v.saveStatus}" />
+                           <lightning:button variant="brand" label="Save" onclick="{!c.saveButton}" disabled = "{!v.saveStatus}" />
                         </div>
                     </footer>
                 </lightning:recordEditForm>

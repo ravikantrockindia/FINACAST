@@ -2,9 +2,9 @@
 <ApexTrigger xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>44.0</apiVersion>
     <packageVersions>
-        <majorNumber>216</majorNumber>
-        <minorNumber>2</minorNumber>
+        <majorNumber>218</majorNumber>
+        <minorNumber>5</minorNumber>
         <namespace>FinServ</namespace>
     </packageVersions>
-    <status>Active</status>
+    <status>Inactive</status>
 </ApexTrigger>

@@ -5,15 +5,34 @@
             clId: "init"
         });
         action.setCallback(this, function(response) {
-            component.set("v.data",response.getReturnValue().response);
+            try {
+            var data = response.getReturnValue().response;
+            if($A.util.isUndefinedOrNull(data)){
+                component.set("v.data",{});
+                helper.showtoast(component,event,helper);
+            }
+            else{
+                component.set("v.data",data);
+            }
+            component.set("v.client",response.getReturnValue().clientAcc);
             console.log("data in parent: ", component.get("v.data"));
-            component.set("v.parentInitialised", true);
+                component.set("v.parentInitialised", true);
+            
+            }
+        catch(e)
+            {
+                console.log(e);
+                
+                 component.set("v.parentInitialised", true);
+                
+            }       
         });
         $A.enqueueAction(action);
     },
     
     //added by avneet kaur
     changeClient : function(component, event, helper) {
+        console.log('Change Client on Future Simulation Controller called.');
         var params = event.getParam('arguments');
         if(params) {
             console.log('params in future simulation: ',params.clientId);

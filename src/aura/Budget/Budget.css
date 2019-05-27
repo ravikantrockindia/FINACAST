@@ -107,8 +107,8 @@
     padding-left: 30px;
 }
 .THIS .slds-table thead th {
-    background-color: #2D4A7D;
-    padding: 15px 0 15px 30px;
+    background-color: #4c9bdf;
+    padding: 7px 0 7px 30px;
     font-weight: 700;
     color: #fff;
     text-transform: capitalize;
@@ -199,6 +199,10 @@
 }
 .THIS .slds-tabs_default__link[tabindex="0"]:focus {
     text-decoration: none;
+}
+/*02-05-2019*/
+.THIS .label_none .slds-form-element__label {
+    display: none;
 }
 @media (max-width: 992px) {
     .THIS .bud-months .slds-size_1-of-12 {

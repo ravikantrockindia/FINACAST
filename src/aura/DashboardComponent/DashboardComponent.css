@@ -1,7 +1,7 @@
 .THIS .bar{
     width: 100%;
     height: auto;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 .THIS .slds-slider__range{
     background:linear-gradient(to left, rgb(45, 226, 84) 0%, rgb(229, 152, 43) 33%, rgb(255, 20, 20) 75%, rgb(255, 20, 20) 100%) !important;
@@ -27,10 +27,10 @@
 } 
 
 .THIS .slds-slider-label__range {
-    visibility: hidden;
+    display: none;
 }
 .THIS .slds-slider-label__label {
-    visibility: hidden;
+    display: none;
 }
 
 .THIS .alertMessage div{
@@ -89,7 +89,7 @@
     border: none;
 }
 .THIS .slds-card__header {
-    background-color: #004487;
+    background-color: #2D4A7d;
     padding: 5px 15px;
     color: #fff;
 }
@@ -100,9 +100,7 @@
 .THIS .slds-table thead th {
     background-color: #4C9BDF;
     color: #fff;
-}
-.THIS .slds-card__body {
-    padding: 0 15px 15px;
+    text-transform: capitalize;
 }
 .THIS .fh-button {
     position: absolute;
@@ -114,23 +112,17 @@
     line-height: 24px;
 }
 .THIS .information {
-    background: -moz-linear-gradient(360deg, #1B5F9E 0%, #fff 100%); /* ff3.6+ */
-	background: -webkit-gradient(360deg, #1B5F9E 0%, #fff 100%); /* safari4+,chrome */
-	background: -webkit-linear-gradient(360deg, #1B5F9E 0%, #fff 100%); /* safari5.1+,chrome10+ */
-	background: -o-linear-gradient(360deg, #1B5F9E 0%, #fff 100%); /* opera 11.10+ */
-	background: -ms-linear-gradient(360deg, #1B5F9E 0%, #fff 100%); /* ie10+ */
-	background: linear-gradient(360deg, #1B5F9E 0%, #fff 100%); /* w3c */
+    /*background: -moz-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  ff3.6+ */
+	/*background: -webkit-gradient(360deg, #1B5F9E 0%, #fff 100%);  safari4+,chrome */
+	/*background: -webkit-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  safari5.1+,chrome10+ */
+	/*background: -o-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  opera 11.10+ */
+	/*background: -ms-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  ie10+ */
+	/*background: linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  w3c */
     margin: 0;
-}
-.THIS .bBody {
-    color: #fff;
-}
-.THIS .bBody h4 {
-    color: rgba(0, 68, 135, 1.0);
-    text-shadow: 1px 1px 5px #666;
+    background-color: #fff;
 } 
 .THIS ul.indicators {
-    margin-top: 25px;
+    margin-top: 5px;
 }
 .THIS ul.indicators li:last-child {
     margin-left: 5px;
@@ -146,6 +138,61 @@
 }
 .THIS .slds-table_cell-buffer tr>td:last-child {
     padding-right: 0px;
+}
+/*26-04-1990*/
+.THIS .dashboard_header .slds-form-element__control {
+    width: 100%;
+}
+.THIS .slds-card__body {
+    padding: 15px 0;
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .my_balance-sheets .slds-card__body {
+    padding: 0;
+    width: 100%;
+}
+.THIS .slds-text-title_caps {
+    text-transform: capitalize;
+}
+.THIS .budget-brand .slds-button {
+    background-color: #71ba3d;
+    border: 1px solid #71ba3d;
+    color: #fff;
+}
+.THIS .slds-modal__header {
+    background-color: #004487;
+    color: #fff;
+}
+.THIS .slds-modal__header h2 {
+    font-weight: 700;
+}
+.THIS .slds-modal__content .bBody h4 {
+    background-color: #4c9bdf;
+    color: #fff;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+.THIS .slds-modal__content .information {
+    padding: 0;
+}
+.THIS .slds-modal__content .bBody {
+    overflow: visible;
+}
+/*02-05-2019*/
+.THIS .label_none .slds-form-element__label {
+    display: none;
+}
+/*03-05-2019*/
+.THIS .months .information {
+    background-color: #A61A14;
+    color: #fff;
+}
+.THIS .months .information.bg-green {
+    background-color: #57D14B;
+}
+.THIS .slds-text-title--caps .slds-text-title_caps:last-child {
+    padding-left: 10px;
 }
 @media (max-width: 992px) {
     .THIS .slds-page-header__row {
