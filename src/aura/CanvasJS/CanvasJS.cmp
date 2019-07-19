@@ -1,3 +1,0 @@
-<aura:component >
-    <ltng:require scripts="{!$Resource.ChartJs}" afterScriptsLoaded="{!c.generateChart}"/>   
-</aura:component>
