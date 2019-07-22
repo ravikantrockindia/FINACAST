@@ -59,7 +59,7 @@ public class AffordabilityControllerTest {
         savings1.FinServ__PrimaryOwner__c = ac.Id;
         savings1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'SavingsAccount');
         savings1.Name = 'Test Savings 1';
-        savings1.FinServ__Balance__c = 0;
+		savings1.FinServ__Balance__c = 0;
         savings1.FinServ__APY__c = 3;   
         savings1.FinServ__LoanEndDate__c = Date.today();
         savings1.FinServ__FinancialAccountType__c = 'Savings';
@@ -136,7 +136,7 @@ public class AffordabilityControllerTest {
         savings2.Name = 'Test Savings 1';
         savings2.FinServ__Balance__c = 98765;
         savings2.FinServ__Household__c = hac.id;
-        //savings2.FinServ__APY__c = 0;   
+        savings2.FinServ__APY__c = 0;   
         savings2.FinServ__LoanEndDate__c = Date.today();
         savings2.FinServ__FinancialAccountType__c = 'Savings';
         insert savings2;
@@ -163,6 +163,7 @@ public class AffordabilityControllerTest {
         goals2.Start_Value__c = 2000;
         goals2.FinServ__Household__c = hac.id;
         goals2.Goal_Priority__c = '1';
+        goals2.Max_yearly_tax_deduction_allowed__c=5;
         goals2.Required_Monthly_Saving__c = 2000;
         goals2.Associated_Account__c = savings1.Id;
         goals4.add(goals2);
