@@ -1242,14 +1242,14 @@ setData +='\'endDate\':\''+Date.today().addYears(1).month()+'/'+Date.today().add
             isHousehold = true;
         }
         
-        wrapperObj.financialAccountList = DashboardComponentApex.getAccounts(initialClientId);
-        wrapperObj.financialGoalList = DashboardComponentApex.getGoals(initialClientId);
+        wrapperObj.financialAccountList = ClientDetailApex.getAccounts(initialClientId);
+        wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
         wrapperObj.balanceList = tempList;
         wrapperObj.isportalUser = isportalEnabled;
         wrapperObj.firstClient = initialClient;
         wrapperObj.clientid = initialClientId;
         System.debug('Wrapper: ' + initialClientId);
-        DashboardComponentApex.createClientData(initialClientId);
+        ClientDetailApex.createClientData(initialClientId);
         if(!test.isRunningTest()){
         wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
         }

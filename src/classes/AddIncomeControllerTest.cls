@@ -10,8 +10,8 @@ public class AddIncomeControllerTest {
         acc1.OwnerId = UserInfo.getUserId();
         Account acc2 = new Account();
         acc2.Name = 'Test Account2';
-       
-      
+        
+        
         list<RecordType> rcc1 =[Select Id From RecordType Where SobjectType='Account' And Name='Individual' limit 1];
         if(rcc1.size()>0){
             acc1.RecordTypeId = rcc1[0].Id;          
@@ -61,7 +61,7 @@ public class AddIncomeControllerTest {
         bg1.Amount__c = 1000;
         bg1.Primary_Owner__c= acc1.Id;
         insert bg1;
-           FinServ__FinancialAccount__c fa = new FinServ__FinancialAccount__c(Name='SahilTest',FinServ__PrimaryOwner__c=acc1.Id);
+        FinServ__FinancialAccount__c fa = new FinServ__FinancialAccount__c(Name='SahilTest',FinServ__PrimaryOwner__c=acc1.Id);
         insert fa;
         FinServ__FinancialGoal__c goal1 = new FinServ__FinancialGoal__c();
         goal1.Name = 'test goal 1';
@@ -102,13 +102,13 @@ public class AddIncomeControllerTest {
         AddIncomeController.deleteGoals(fGoal1.id);
         AddIncomeController.deleteLoan(fAcc1.id);
         AddIncomeController.deleteTransaction(ftrans1.id);
-        GoalsApexController.getGoals();
+       // GoalsApexController.getGoals();
         List<Budget__c> bd = [select id from Budget__c];
         Set<Id> bdId = new Set<Id>();
         for(Budget__c b : bd) {
             bdId.add(b.Id);
         }
-         FinacastBudgetHelper.shareBudget(bdId);
+        FinacastBudgetHelper.shareBudget(bdId);
         System.assertEquals('1', '1');
     }
     
