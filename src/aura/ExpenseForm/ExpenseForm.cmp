@@ -1,0 +1,162 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="Expense" type="String"/> 
+    <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "expId" type = "String"/>
+    <aura:attribute name = "title" type = "String"/>
+    <aura:attribute name = "client" type = "Account" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+    <aura:attribute name = "accExpenseRecType"  type = "String"/>
+    <aura:attribute name="options1" type="List" />
+    <aura:attribute name="selectedValue" type="String" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />
+    <aura:attribute name="value" type="String" default=""/>
+    <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>    
+    <aura:attribute name="getNo" type="Boolean" default = "False"/>
+    <aura:attribute name="getYes" type="Boolean" default = "False"/>
+    <aura:attribute name="isMonthly" type="Boolean" default = "false"/>
+        <lightning:recordEditForm 
+                                              recordTypeId="{!v.Expense}"
+                                              recordId = "{!v.expId}"
+                                              objectApiName="Budget__c"  onsuccess="{!c.saveAndCloseBtn}"
+                                             onsubmit = "{!c.handleSubmit}"                                           
+                                              onload="{!c.recordLoaded}"
+                                              >
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            
+                            <div class="slds-gutters" style="border: none;">
+                                <div class="slds-box1">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-size_1-of-2">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <span class = "highlight">* </span> Expense Name
+                                                        <lightning:select name="Expense" label="Select a color:" aura:id="mySelect" value="{!v.selectedValue}" >
+                                                            <aura:iteration items="{!v.options1}" var="item">
+                                                                <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/> 
+             
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                       
+                                                        <lightning:inputField fieldName ="Name" value="{!v.selectedValue}" class="slds-hidden" aura:id = "owner"/>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-size_1-of-2">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <span class = "highlight">* </span> Priority<lightning:inputField  fieldName="Priority__c" aura:id = "freq" /><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-size_1-of-2">  
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <span class = "highlight">* </span> Amount after tax per pay check($)<lightning:inputField fieldName="Amount__c" aura:id="inQuantity" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-size_1-of-2">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <span class = "highlight">* </span> Yearly growth (%)<lightning:inputField fieldName="Yearly_growth__c" aura:id = "yeargrowth" ></lightning:inputField><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-size_1-of-2">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        Start month/year (mm/yyyy)	<lightning:inputField fieldName="Start_Date__c" aura:id="stDate" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-size_1-of-2">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        End month/year (mm/yyyy)<lightning:inputField  fieldName="End_Date__c" aura:id="endDate"></lightning:inputField><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-size_1-of-2">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        Does the contribution bring tax benefit ? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"/><br/>
+                                                    </div>
+                                                   <lightning:inputField fieldName ="Does_contribution_bring_tax_benifit__c" value="{!v.isTaxDeduction}" class="slds-hidden"/> 
+                                                </div>
+                                            </div>
+                                                                                                                                 
+                                            <div class="slds-size_1-of-2">                                 
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <aura:if isTrue="{!v.accExpenseRecType == 'IndustriesIndividual'}">
+                                                            <lightning:inputField fieldName ="Primary_Owner__c" value="{!v.client.Id}" class="slds-hidden" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!v.accExpenseRecType == 'IndustriesHousehold'}">
+                                                            Primary Owner<lightning:inputField fieldName ="Primary_Owner__c"  />
+                                                        </aura:if>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+ 
+                                    <aura:if isTrue="{!v.isTaxDeduction}">
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-size_1-of-2">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control"> What % of contribution bring tax benefits? <lightning:inputField fieldName ="What_of_contribution_bring_tax_benifit__c" aura:id = "taxbenfit"/></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-size_1-of-2">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="May_yearly_tax_deduction_allowed__c" aura:id = "deducationtax"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-size_1-of-2">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
+                                                                    
+                                                                </div>
+                                                                <lightning:inputField fieldName ="Does_tax_benifit_realize_really__c" value="{!v.isMonthly}" class="slds-hidden"/>
+                                                            </div>                                                                                                                      
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aura:if>                                           
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <footer class="slds-modal__footer">
+                            <div class="button" align ="right">
+                                <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                                <lightning:button variant="brand" label="Save" type="submit"  />
+                                
+                            </div>
+                        </footer>
+                    </lightning:recordEditForm>
+</aura:component>

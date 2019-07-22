@@ -1,0 +1,135 @@
+<aura:component  controller="AddIncomeController"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.getmonthlybudget}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>   
+    <aura:attribute name = "data" type = "Object"/>
+    <aura:attribute name="cid" type="String"/>
+    <aura:attribute name="recordId" type="Id"/>
+     <aura:attribute name = "client" type="Account"/>
+     <aura:attribute name="addTransaction" type="Boolean"/> 
+     <aura:attribute name="isPortalUser" type="Boolean" />
+    <aura:attribute name = "activeModal" type="Boolean" default = "True"/>
+    <aura:attribute name="addExpenseTransaction" type="Boolean"/> 
+    <aura:attribute name="addLoanTransaction" type="Boolean"/> 
+    <aura:attribute name="addTrans" type="FinServ__FinancialAccountTransaction__c[]"/> 
+    <aura:attribute name="addExpenseTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
+    <aura:attribute name="addLoanTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
+  <aura:attribute name="showModalIncomeTransaction" type="Boolean" />
+    <aura:attribute name="showModalExpenseTransaction" type="Boolean" />
+    <aura:attribute name="showModalLoanTransaction" type="Boolean" />
+    <aura:attribute name="editrecidTransaction" type="String"/>
+    <aura:attribute name="editrecidTransactionExpense" type="String"/>
+    <aura:attribute name="editrecidTransactionLoan" type="String"/>
+    <aura:attribute name= "Transaction" type="string"/>
+    <aura:attribute name= "expenseTransaction" type="string"/>
+    <aura:attribute name= "loanTransaction" type="string"/>
+     <aura:attribute name = "selectedClient" type = "String" />
+    
+       <div class="slds-box slds-theme_default clients_panel cBudget slds-show">
+        <div class="slds-page-header__row">
+            <div class="slds-size_6-of-12">
+                <h2>Transaction History</h2>
+            </div>
+            <div class="slds-size_6-of-12 slds-align-right btn">
+                 <lightning:button class="slds-button slds-button_brand budget-brand " value="" label="Add Transaction + " title="Add Transaction +" onclick="{!c.createTransactionRecord}"/>   
+              
+       <ui:inputSelect aura:id="categoryPicklist"   label="Filter By" change="{!c.onChange}" required="true">
+           
+            <option>All</option>
+            <aura:iteration items="{!v.optionCategories}" var="category" indexVar="index">
+                <option>{!category.label}</option>
+                </aura:iteration>
+           <!--    <option value="">choose one...</option>
+        <option value="1">Income(s)</option>
+        <option value="2">Expense(s)</option>
+        <option value="3">Saving(s)</option>
+           <option value="4">Debt(s)</option> -->
+                
+                </ui:inputSelect>                                   
+            </div>
+
+            
+        </div>
+           <div class="slds-col">
+              <lightning:card>
+                           <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                                            <thead>
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Transaction Date"> &nbsp;&nbsp; Transaction Date</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Transaction Name">Transaction Name</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Description">Description</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Category">Category</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Amount">Amount</div>
+                                                                    </th>
+                                                                    <th class="slds-text-title_caps" scope="col">
+                                                                        <div class="slds-truncate" title="Action">Action</div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <aura:iteration items="{!v.addTrans}" var="Tdetails">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <th data-label="Transaction Date" scope="row">
+                                                                            <div class="slds-truncate" title="Transaction Date" style="color:black;">&nbsp;&nbsp;
+                                                                             <ui:outputDate value="{! Tdetails.FinServ__TransactionDate__c}"/>
+                                                                            </div>
+                                                                        </th>
+                                                                        <td data-label="Transaction Name">
+                                                                            <div class="slds-truncate" title="Transaction Name" style="color:black;">{! Tdetails.TransactionName__c}
+                                                                                </div>
+                                                                        </td>
+                                                                        <td data-label="Description">
+                                                                            <div class="slds-truncate" title="Description" style="color:black;">{! Tdetails.FinServ__Description__c}</div>
+                                                                        </td>
+                                                                        <td data-label="Category">
+                                                                            <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails.Destination_Financial_Account__r.Name}</div>
+                                                                        </td>
+                                                                        <td data-label="Amount">
+                                                                            <div class="slds-truncate" title="Amount" style="color:black;">$ {! - Tdetails.FinServ__Amount__c}</div>
+                                                                        </td>
+                                                                        <td data-label="Action">
+                                                                            <div class="slds-truncate" title="Action">
+                                                                                &nbsp; <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Tdetails.Id}" onclick="{!c.onClickEditIncomeTransaction}"/>                       
+                                                                                
+                                                                                &nbsp;
+                                                                                <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Tdetails.Id}" onclick="{!c.onClickDeleteTransaction}"/>                                   
+                                                                            </div>
+                                                                        </td>
+                  
+                                                                    </tr>
+                 </aura:iteration>
+                                                                
+                   </tbody>        
+                         </table>
+                   
+               </lightning:card>
+           
+      </div>
+           
+           
+           
+           
+            </div>
+    
+            <aura:if isTrue="{!v.addTransaction}">
+            
+            <c:AddTransaction Transaction = "{!v.Transaction}" client="{!v.client}" cid="{!v.cid}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
+            
+        </aura:if>
+  
+        <aura:if isTrue="{!v.showModalIncomeTransaction}">
+            
+            <c:AddTransaction  title = "Edit Transaction" isActive = "{!v.activeModal}" trId = "{!v.editrecidTransaction}"/>
+            
+        </aura:if>
+   
+</aura:component>

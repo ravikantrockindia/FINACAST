@@ -1,0 +1,123 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes"  access="global" controller="AccountController">
+    <lightning:workspaceAPI aura:id="workspace"/>   
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="listDetails" type="Account[]" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="SearchText" type="String"/>
+    <aura:attribute name="allData" type="Object"/>
+    <aura:attribute name="allData1" type="Object"/>
+    <aura:attribute name="packageName" type="String"/>
+    <aura:attribute name="mycolumns" type="List"/>  
+    <aura:attribute name="myColumnsDisplay" type="List"/>   
+    <aura:attribute name="selectedValues" type="List"  default="['CreatedDate','LastModifiedDate','OwnerName','LastModifiedByName']" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="offset" type="Integer"  default="0"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String" default=""/>
+    <aura:attribute name="flag" type="Boolean" default="true"/>
+    <aura:attribute name="col" type="Boolean"/>
+    <aura:handler name="saveListEvent" event="c:SaveListEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="CancelEvent" event="c:CreateNewClientEvent" action="{!c.doInit}"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="c:Fina_HideFilterEvent" action="{!c.addFilter}"/>
+    <aura:handler event="c:Fina_FilterInformationEvent" action="{!c.handleFilterEvent}"/>
+    <div class="slds-box slds-theme_default clients_panel cBudget slds-show">
+        <div class="slds-page-header__row">
+            <div class="slds-size_6-of-12">
+                <h2>My Clients</h2>
+            </div>
+            <div class="slds-size_6-of-12 slds-align-right btn">
+                <lightning:button class="btn" onclick="{!c.addclient}">Add New Client</lightning:button>
+            </div>
+        </div>
+        
+        <div class="search_panel">
+            <div class="slds-page-header__row">
+                <div class="slds-size_9-of-12"></div>
+                <div class="slds-size_2-of-12">
+                    <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                            <Lightning:input name="input1" placeholder="Search Clients..." value="{!v.SearchText}"  type="search" variant="label-hidden" onchange="{!c.SearchClient}" />
+                            <!--            <input id="lookup-01" class="slds-lookup__search-input slds-input" type="text" value="{!v.SearchText}" onchange="{!c.SearchClient}" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" placeholder="Search Accounts" />  -->
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-size_1-of-12" style="text-align: right; margin-bottom: 10px;">
+                    <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class=" inline-buttons left-margin"/>
+                    <lightning:buttonicon iconName="utility:filterList" size="medium" alternativeText="filterList" onclick="{!c.addFilter}"  class="inline-buttons "/>
+                    <lightning:buttonIcon size="large"  iconName="utility:matrix" onclick="{!c.addColumns}" title="manage table columns" alternativeText="Settings" iconClass="dark" class=" inline-buttons"/>
+                </div>
+            </div>
+        </div>
+        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />  
+        <aura:if isTrue="{!v.col}">     
+            <c:Fina_Columns_Configurable isOpen = "{!v.col}"  
+                                         allCol = "{!v.mycolumns}" 
+                                         allColDisplay="{!v.myColumnsDisplay}" 
+                                         selectedValues="{!v.selectedValues}"
+                                         packageName= "{!v.packageName}"/>
+        </aura:if>
+        <div>
+            <div class="slds-grid">
+                <div aura:id="dataTable" class="slds-col">
+                    <lightning:datatable
+                                         aura:id="accountDataTable"
+                                         columns="{! v.myColumnsDisplay }"
+                                         data="{! v.listDetails }"
+                                         keyField="Id"
+                                         showRowNumberColumn="true"
+                                         rowNumberOffset="{!v.offset}"
+                                         sortedBy="{!v.sortBy}"
+                                         sortedDirection="{!v.sortDirection}"
+                                         onsort="{!c.handleSort}"
+                                         hideCheckboxColumn="true"/>
+                </div>
+                <!-- adding filter component-->
+                <div aura:id="filterList"  class="slds-hide">
+                    <c:MyClientFilter sObjectName="account"
+                                      editMode="true" 
+                                      viewName="listPage" />
+                </div>
+            </div>      
+        </div>
+        <aura:if isTrue="{!v.totalPages >1}">
+            <lightning:layoutItem padding="around-small" flexibility="auto">
+                <lightning:button label="First" iconName="utility:left" iconPosition="left"
+                                  onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                  onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                <span class="slds-p-horizontal_x-small">
+                    <a onclick="{!c.processMe}" name="1" 
+                       class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
+                </span>
+                <span class="slds-p-horizontal_xxx-small">
+                    <a>...</a>
+                </span>
+                
+                <aura:iteration items="{!v.pageList}" var="item">
+                    <span class="slds-p-horizontal_x-small">
+                        <a onclick="{!c.processMe}" name="{!item}"
+                           class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                    </span>
+                </aura:iteration>
+                
+                <span class="slds-p-horizontal_xxx-small">
+                    <a>...</a>
+                </span>
+                <span class="slds-p-horizontal_x-small">
+                    <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                       class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+                </span>
+                <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                <lightning:button label="Last" iconName="utility:right" iconPosition="right" 
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+            </lightning:layoutItem>
+        </aura:if>
+        
+    </div>
+</aura:component>

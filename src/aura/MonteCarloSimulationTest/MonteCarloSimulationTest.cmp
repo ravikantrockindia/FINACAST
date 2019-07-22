@@ -1,0 +1,125 @@
+<aura:component controller = "MonteCarloSimulationTest">
+    <ltng:require scripts="{!$Resource.CanvasJS}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--<aura:handler name="change" value="{!v.standardDeviationValueMap}" action="{!c.generateChart}"/>-->
+    <aura:attribute name="childgid" type="String"/>
+    <aura:attribute name="percentage" type="String[]" default="[]"/>
+    <aura:attribute name="standardDeviationValueMap" type="Object" />
+    <aura:attribute name="IA" type="Integer"/>
+    <aura:attribute name="AS" type="Integer"/>
+    <aura:attribute name="TA" type="Integer"/>
+    <aura:attribute name="TD" type="Date"/>
+    <aura:attribute name="Vol" type="Double"/>
+    <aura:attribute name="picklistValues" type="String[]" />
+    
+    <div class="slds-form slds-form_stacked">
+        <div class="slds-form-element monte_carlo-1">  
+            <div class="row">
+                <div class="slds-box" style="border: none;">
+                    <div class="slds-box1">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:input type="number" name="input1" label="Initial Amount " aura:id="initialAmount" value="{!v.IA}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:input type="number" name="input2" label="Annual Saving" aura:id="annualSaving" value="{!v.AS}"/>
+                        </div>
+                        
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:input type="number" name="input3" label="Target Amount" aura:id="targetAmount" value="{!v.TA}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:input type="number" name="input4" label="Volatility" aura:id="volatility" value="4.0"/>
+                        </div>
+                        
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:input type="date" name="input5" label="Target Date" aura:id="targetDate" value="{!v.TD}"/>
+                        </div>                   
+                        <div class="slds-col slds-size_6-of-12">
+                            
+                            <lightning:select label="Risk Profile" aura:id="riskProfile" required="true">       
+                                <option value="">Choose one</option> 
+                                <aura:iteration items="{!v.picklistValues}" var="item">
+                                    <option value="{!item.value}">
+                                        {!item}
+                                    </option>
+                                </aura:iteration>
+                            </lightning:select>  
+                                                      
+                        </div>                
+                        <div class="slds-clearfix"></div>
+                        <div class="simulateButton">
+                            <lightning:button variant="brand" label="Simulate" title="Simulate" onclick="{!c.simulate}"/>
+                        </div>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+    <div class="slds-box" style="border: none; padding-left: 25px;">       
+        <aura:if isTrue="{!(v.standardDeviationValueMap==null)}">
+            Know the Confidence Values  
+            <aura:set attribute="else">      
+                <div class="graphWrapper">
+                    <img src="{!$Resource.simulation_chart}"/>
+                    <div class="graphBoxnew1">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[3]}" format="$##,##,###,###.00"/>
+                            <!--{!v.standardDeviationValueMap[3]} -->
+                        </span>
+                    </div>
+                    <div class="graphBoxnew2">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[2]}" format="$##,##,###,###.00"/>
+                            <!--{!v.standardDeviationValueMap[2]} -->
+                        </span>
+                    </div> 
+                    <div class="graphBoxnew3">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[1]}" format="$##,##,###,###.00"/>
+                            <!-- {!v.standardDeviationValueMap[1]} -->
+                        </span>
+                    </div> 
+                    <div class="graphBoxMeanNew">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[0]}" format="$##,##,###,###.00"/>
+                            <!--{!v.standardDeviationValueMap[0]}-->     
+                        </span>           
+                    </div>
+                    <div class="graphBoxnew4">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[11]}" format="$##,##,###,###.00"/>
+                            <!--{!v.standardDeviationValueMap[11]}-->  
+                        </span>
+                    </div>
+                    <div class="graphBoxnew5">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[12]}" format="$##,##,###,###.00"/>
+                            <!-- {!v.standardDeviationValueMap[12]} -->
+                        </span>
+                    </div>  
+                    <div class="graphBoxnew6">
+                        <span class="coupontooltip">
+                            <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[13]}" format="$##,##,###,###.00"/>
+                            <!--{!v.standardDeviationValueMap[13]}-->   
+                        </span>
+                    </div> 
+                </div>  
+                <div class="confirm uiMessage">
+                    <div class="bBody">
+                        <div class=""><h4>Alert</h4></div>
+                        68% confidence level: You will have atleast
+                        <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[1]}" format="$##,##,###,###.00"/>
+                        for your goal.<br/>
+                        95% confidence level: You will have atleast 
+                        <ui:outputCurrency aura:id="curr" value="{!v.standardDeviationValueMap[2]}" format="$##,##,###,###.00"/>
+                        for your goal.
+                    </div>
+                </div>
+                
+                <!-- <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/>        
+                  <div id="chartContainer" style="height: 300px; width: 50%;"></div> -->
+                
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

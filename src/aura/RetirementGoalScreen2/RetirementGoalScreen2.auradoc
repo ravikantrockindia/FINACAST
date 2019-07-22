@@ -1,0 +1,48 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+	</aura:example>
+</aura:documentation>
+
+<!--
+component.set("v.rerender", true);
+         component.set("v.re", false);
+         // console.log("goal contri old",component.find("goalContri").get("v.value"));
+        var emi = component.get("v.initialEmi");
+        //component.set("v.contribution", Math.floor(component.get("v.initialEmi")));
+       // console.log("goal contri after set",component.find("goalContri").get("v.value"));
+        console.log("dssdgsgsg");
+        component.find("goalContriRender").set("v.fieldName","Required_Monthly_Saving__c");
+       component.find("goalContriRender").set("v.value", "234567");
+        //component.find("goalContri").set("v.fieldName","Required_Monthly_Saving__c");
+      // component.find("goalContri").set("v.value", emi);
+       // var conti = component.get("v.contribution");
+       // console.log("conti"+ conti);
+       // console.log("goalContri new",component.find("goalContri").get("v.value") )
+       // helper.setNewValue(component);
+
+
+
+
+bhaggo : function(component, event, helper)
+    {
+        component.set("v.rerender",false);
+         component.set("v.re", true);
+    }
+
+
+
+<aura:if isTrue = "{!v.rerender}">
+                                       
+                                    <span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContriRender" fieldName="Required_Monthly_Saving__c" value = "{!v.initialEmi}" onclick = "{!c.bhaggo}"/>
+                                   
+                                    </aura:if>
+                                  
+                                    <aura:if isTrue = "{!v.re}">
+                                       
+                                       <span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="Required_Monthly_Saving__c" value = "{!v.contribution}" onchange = "{!c.changeMonthlyContribution}" onclick = "{!c.bhaggo}"/>
+                                        
+                                        </aura:if>
+
+-->

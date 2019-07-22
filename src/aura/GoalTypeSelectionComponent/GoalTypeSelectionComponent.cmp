@@ -1,0 +1,147 @@
+<aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" controller="GoalTypeSelectionController"><br/><br/><br/><br/>   
+     <aura:handler name="init" value="{!this}" action="{!c.init}"/>   
+    <aura:attribute name="client" type="Account"/>    
+    <aura:attribute name="showModalwedding" type="Boolean" default="false" />
+    <aura:attribute name="showModaleducation" type="Boolean" default="false" />
+    <aura:attribute name="car" type="String" access="global" />
+    <aura:attribute name="showModalvacation" type="Boolean" default="false" />
+    <aura:attribute name="showModalothergoals" type="Boolean" default="false" />
+    <aura:attribute name="showModalhomeimprovement" type="Boolean" default="false" />
+    <aura:attribute name="showModalhome" type="Boolean" default="false" />
+   
+    <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
+    
+    <aura:attribute name = "heading" type = "String"/>
+    <aura:attribute name = "subheading" type = "String"/>
+    <aura:attribute name = "isRetirement" type = "Boolean" default = "False"/>
+    <aura:attribute name = "isNonRetirement" type = "Boolean" default = "False"/>
+     <aura:attribute name="recordTypeId" type="String"/>
+    
+    
+    
+     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
+    
+    <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+        <div class="slds-modal__container">
+            
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.closePopUp}">
+                    <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select a Type of Goal</h2></header>
+            
+            <div class = "images">
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-parent">
+                        <div class="slds-col slds-col1">
+                            <span>
+                                <lightning:button class="slds-button" name="RetirementRecordType" onclick="{!c.onGoalClick}">
+                                    <img src="{!$Resource.RetirementIcon}"  height="200" width="300" title="Retirement"/>
+                                    <div class = "slds-col1-cover" >
+                                        <h5>Retirement</h5>
+                                    </div>        
+                                </lightning:button>
+                            </span>
+                            
+                        </div>
+                        <div class="slds-col slds-col1">       
+                            <span>
+                                <lightning:button class="slds-button" name="CarRecordType" onclick="{!c.onGoalClick}"  >
+                                    <img src="{!$Resource.CarIcon}" height="200" width="300" title="Car"/>
+                                    <div  class = "slds-col1-cover" >
+                                        <h5>Car</h5>
+                                    </div>  
+                                </lightning:button>
+                            </span>
+                            
+                            
+                        </div>
+                        <div class="slds-col slds-col1">
+                            
+                            
+                            <lightning:button class="slds-button" name="WeddingRecordType" onclick="{!c.onGoalClick}">
+                                <img src="{!$Resource.WeddingIcon}" height="200" width="300" title="Wedding"/>
+                                <div class = "slds-col1-cover" >
+                                    <h5>Wedding</h5>
+                                </div>
+                            </lightning:button>
+                            
+                        </div>
+                        <div class="slds-col slds-col1">
+                            <span>
+                                
+                                <lightning:button class="slds-button" name="VacationRecordType" onclick="{!c.onGoalClick}">
+                                    <img src="{!$Resource.VacationIcon}" height="200" width="300" title="Vacation"/>
+                                    <div class = "slds-col1-cover" >
+                                        <h5>Vacation</h5>
+                                    </div>
+                                </lightning:button>
+                            </span>
+                            
+                        </div>
+                        
+                        <div class="slds-col slds-col1">       
+                            <span>
+                                <lightning:button class="slds-button" name="EducationRecordType" onclick="{!c.onGoalClick}">
+                                    <img src="{!$Resource.EducationIcon}" height="200" width="300" title="Education"/>
+                                    <div class = "slds-col1-cover" >
+                                        <h5>Education</h5>
+                                    </div>
+                                </lightning:button></span>
+                        </div>
+                        
+                        <div class="slds-col slds-col1">
+                            <span>
+                                <lightning:button class="slds-button" name="HomeRecordType" onclick="{!c.onGoalClick}">
+                                    <img src="{!$Resource.HomeIcon}" height="200" width="300" title="Home"/>
+                                    <div class = "slds-col1-cover" >
+                                        <h5>Home</h5>
+                                    </div>
+                                </lightning:button>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-col1">         
+                            <span>
+                                <lightning:button class="slds-button" name="HomeImprovementRecordType" onclick="{!c.onGoalClick}">
+                                    <img src="{!$Resource.HomeImprovementIcon}" height="200" width="300" title="Home Improvement"/>
+                                    <div class = "slds-col1-cover" >
+                                        <h5>Home Improvement</h5>
+                                    </div>
+                                </lightning:button>
+                            </span>
+                        </div>
+                        
+                        <div class="slds-col slds-col1">
+                            <span>
+                                <lightning:button class="slds-button" name="OtherGoalsRecordType" onclick="{!c.onGoalClick}">
+                                    <img src="{!$Resource.OtherGoalsIcon}" height="200" width="300" title="Other Goals"/>
+                                    <div class = "slds-col1-cover" >
+                                        <h5>Other Goals</h5>
+                                    </div>
+                                </lightning:button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="slds-modal__footer">
+                <div class="button" align ="right">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closePopUp}" />
+                </div>
+            </footer>
+        </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+    
+    <aura:if isTrue="{!v.isRetirement}">
+                 <c:GoalformRetirement PrimaryOwner = "{!v.client.Id}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" />               
+            </aura:if>
+    
+    <aura:if isTrue="{!v.isNonRetirement}">
+                 <c:Goalform client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" />               
+            </aura:if>
+    
+    
+    
+    
+</aura:component>

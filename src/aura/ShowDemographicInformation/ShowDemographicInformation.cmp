@@ -1,0 +1,168 @@
+<aura:component controller="insertImage" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="disabled" type="boolean" default="false"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute type="id" name="recordId" default=""/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <!--aura:attribute name="saveImage" type="Object"/--> 
+    <aura:attribute name="contents" type="List" default="[]"/>
+    <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!--aura:handler name="change" value="{!v.contents}" action="{!c.handleChange}"/-->
+    
+    <div class="slds-p-around_large budget_personal-info">
+        <div class="slds-grid slds-gutters" style="margin-bottom: 20px;">
+            <div class="slds-col slds-size_5-of-12">
+                <aura:if isTrue="{!(v.contents.length > 0 )}">
+                    <aura:iteration items="{!v.contents}" var="content">
+                        <!--aura:if isTrue="{!not(empty(v.contents))}"-->
+                        
+                        <img src="{!v.prefixURL + content.Id}" alt="Image"/>
+                        
+                    </aura:iteration>
+                    <aura:set attribute="else">      
+                        <img src="https://finacastpackage-dev-ed--c.na40.visual.force.com/resource/1561979409000/staticImage" width="100" height="100" alt="Image"/>
+                    </aura:set>
+                </aura:if>
+            </div>
+            <div class="slds-col slds-size_7-of-12">
+                <!--<aura:handler name="change" value="{!v.contents}" action="{!c.doInit}"/>-->
+                <force:recordData aura:id="record"
+                                  layoutType="FULL"
+                                  recordId="{!v.recordId}"
+                                  targetError="{!v.recordError}"
+                                  targetFields ="{!v.simpleRecord}"
+                                  mode="VIEW"/>    
+                
+                <!-- <lightning:avatar size="large" src="https://finacastpackage-dev-ed.my.salesforce.com/sfc/servlet.shepherd/version/download/06946000004R5b8AAC" initials="IL" fallbackIconName="standard:person_account" alternativeText="Image Load"/-->
+                <!--img src="https://finacastpackage-dev-ed.my.salesforce.com/servlet/servlet.FileDownload?file=06946000004R5b8AAC"/-->
+                <h4>{!v.simpleRecord.Name} </h4>
+                <div>
+                    <lightning:button variant=""                    	  
+                                      label="Edit Profile"
+                                      title="Edit Demographic Details"
+                                      onclick="{! c.openModel }" />
+                    <aura:if isTrue="{!v.isModalOpen}">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close"
+                                                          onclick="{! c.closeModel }"
+                                                          alternativeText="close"
+                                                          variant="bare-inverse"
+                                                          class="slds-modal__close"/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Demographic Details</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    
+                                    <!--<c:DemographicInformation  recordId="{!v.recordId}" isTrue="false" aura:id="childCmp" />-->
+                                    <lightning:recordEditForm
+                                                              aura:id="form"
+                                                              recordTypeId="{!v.recordTypeId}"
+                                                              onsubmit="{!c.handleSubmit}"
+                                                              recordId="{!v.recordId}"
+                                                              onsuccess="{!c.handleSuccess}"
+                                                              objectApiName="Account">
+                                        
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Name} <span class = "highlight" style="color: red">* </span><lightning:inputField fieldName="Name" class="label-hidden" variant="label-hidden" aura:id="name"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Category} <span class = "highlight"  style="color: red">* </span><lightning:inputField fieldName="FinServ__ClientCategory__c" class="label-hidden" variant="label-hidden" aura:id="category"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Address_Street} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden textarea_custom" fieldName="BillingStreet" aura:id="street" variant="label-hidden"/>
+                                            </div>                        
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Address_City}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingCity" aura:id="city" variant="label-hidden"/>
+                                            </div>
+                                        </div> 
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Address_State} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingState" aura:id="state" variant="label-hidden"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Address_Zip_Postal_Code} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingPostalCode" aura:id="code" variant="label-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Date_Of_Birth__c" aura:id="dob" variant="label-hidden" dateStyle="short"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="Risk_Profile__c" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Time_Horizon} <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <div class="slds-clearfix ">
+                                                    
+                                                    <div class="slds-float_right">
+                                                        <lightning:button variant="neutral" name="cancel" label="Cancel" onclick="{!c.handleCancel}" />
+                                                        <lightning:button  variant="brand" type="submit" name="save" label="Save"/>
+                                                        
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning:recordEditForm>
+                                    
+                                </div>
+                                
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </aura:if>
+                </div>
+                <div class="file_upload">
+                    <lightning:fileUpload name="fileUploader" multiple="false" accept=".jpg, .png"
+                                          recordId="{!v.recordId}" onuploadfinished="{!c.handleUploadFinished}" />
+                    <div class="upload-flie">Upload Image</div>
+                </div>  
+            </div>
+        </div>
+        <hr/>
+        <div class="slds-gutters individual-information">
+            <div class="slds-col slds-size_12-of-12">
+                <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Account">  
+                    <h2> {!v.simpleRecord.Name}'s Personal Information</h2>
+                    <lightning:outputField fieldName="Date_Of_Birth__c"/>
+                    <hr/>
+                    <lightning:outputField fieldName="BillingState"/>
+                    <hr/>
+                    <lightning:outputField fieldName="FinServ__InvestmentExperience__c"/>
+                    <hr/>
+                    <lightning:outputField fieldName="Risk_Profile__c"/>
+                    <hr/>
+                </lightning:recordViewForm> 
+                <div class="slds-col slds-size_2-of-2" style="padding:0 6px;" > 
+              	   <h2 style="color:#000 ;margin: 7px 0 5px">Additional Information</h2>
+                    <!--lightning:button label="Additional Information" variant=""  /--> 
+                </div>
+                
+                <div class="slds-col slds-size_2-of-2 " style="padding:0 6px">
+                    <p style="font-size:12px;color:#4c4c4c ;margin: 7px 0 5px">Last Interaction</p>  
+                    <!--lightning:button label="Last Interaction" variant=""  /-->
+                </div>
+                
+                <div class="slds-col slds-size_2-of-2" style="padding:0 6px"> 
+                    <p style="font-size:12px;color:#4c4c4c; margin: 7px 0 5px">Associated household</p>
+                    <!--lightning:button label="Associated household" variant=""  /-->
+                </div>
+                 <hr/>
+            </div>
+            
+        </div>
+    </div>                     
+</aura:component>

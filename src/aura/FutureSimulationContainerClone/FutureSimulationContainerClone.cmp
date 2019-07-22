@@ -1,0 +1,13 @@
+<!-- edited by avneet kaur-->
+<aura:component controller = "Finacast_FutureSimulationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name = "init" value = "{!this}" action = "{!c.doInit}" />
+    <aura:attribute name = "data" type = "Object"/>
+    <aura:attribute name = "client" type= "Account" />
+    <aura:attribute name = "parentInitialised" type = "boolean" default = "false" />
+    <aura:if isTrue = "{!v.parentInitialised}" >
+        <c:Finacast_FutureSimulationComponent data = "{!v.data}" aura:id = "futureSimulation" client = "{!v.client}"/>
+    </aura:if>
+    <aura:method name = "changeClient" action = "{!c.changeClient}" >
+        <aura:attribute name = "clientId" type = "account" />
+    </aura:method>
+</aura:component>

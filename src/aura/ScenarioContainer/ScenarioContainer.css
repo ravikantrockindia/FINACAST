@@ -1,0 +1,85 @@
+.THIS .scenarioLabel .form-label-class label.slds-form-element__label{
+    display: none !important;
+}
+
+.THIS .chngClientbtn {
+   padding: 0.25rem 1rem 0.25rem 1rem;
+}
+
+.THIS .chng-client-btn-div{
+    width: 13%;
+    height:-2.9rem;
+}
+.THIS .slds{
+        width: 106%;
+}
+.THIS .clnt-chng-button{
+    padding: 0.25rem rem 0.25rem 1rem;
+    margin-top: -27%;
+    margin-right: -192%;
+     margin-bottom : -155%;
+     margin-left : 5%;   
+}
+.THIS .slds-grid {
+    
+    display: -webkit-inline-box;
+   
+}
+.THIS .manageScenarioPos {
+}
+.THIS .viewScenarioPos {
+}
+.THIS .pos {
+}
+.THIS .pos .slds-page-header__row .slds-size_6-of-12 {
+    padding: 0 15px;
+}
+.THIS .f_f-simulation {
+   background-color: #ff00ff;
+}
+.THIS .slds-tabs_default__item {
+    padding: 0;
+    margin: 10px 5px 0 0px;
+    border-radius: 5px 5px 0 0;
+    border: 1px solid #ccc;
+}
+.THIS .slds-tabs_default__link {
+    font-size: 16px;
+    padding: 0 15px; 
+    color: #000;
+}
+.THIS .slds-is-active {
+    color: #000;
+}
+.THIS .slds-is-active a {
+    font-weight: normal !important;
+}
+.THIS .slds-is-active a:hover {
+    color: #000;
+}
+.THIS .slds-tabs_default__link[tabindex="0"]:focus {
+    text-decoration:none;
+}
+.THIS .slds-button_icon-bare{
+    color: rgb(222, 19, 19)!important;
+}
+.THIS .slds-save-icon .slds-button_icon-bare{
+    color: rgb(25, 61, 197)!important;
+}
+.THIS.slds-tabs_default {
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .slds-p-left_medium {
+	padding-left: 0;
+    padding-right: 0;
+}
+.THIS .label_none .slds-form-element__label {
+    display: none;
+}
+@media(max-width: 576px) {
+    .THIS .slds-tabs_default__link {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+}

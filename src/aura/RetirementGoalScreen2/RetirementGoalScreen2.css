@@ -1,0 +1,61 @@
+.THIS label.slds-form-element__label{
+    display: none !important ;  
+}
+.THIS .slds-box1 .slds-size_1-of-2 {
+    float : left;
+    padding : 0 15px;
+}
+.THIS.hideDiv {
+    display: none;
+}
+.THIS .slds-modal__container {
+    width: 70%;
+    max-width: 70%;
+    margin: 0 auto;
+}
+@media (max-width: 767px) {
+    .THIS .slds-box1 {
+        height: 380px;
+        overflow-Y: scroll;
+    }
+	.THIS .slds-box1 .slds-size_1-of-2 {
+        width: 100%;
+    }
+    .THIS .slds-modal__container {
+        width: 80%;
+        max-width: 80%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-text-heading_medium {
+        font-size: 1rem;
+    }
+    .THIS h3#modal-heading-01 {
+        display: none;
+    }
+    .THIS .slds-p-around_medium {
+        padding: 0 1rem;
+    }
+}
+@media (max-height: 600px) {
+    .THIS .slds-box1 {
+        height: 300px;
+        overflow-Y: scroll;
+    }
+}
+@media (max-height: 500px) {
+    .THIS .slds-box1 {
+        height: 250px;
+        overflow-Y: scroll;
+    }
+}
+
+.THIS .highlight
+{
+   color: red;
+}
+
+.THIS .buttonClass
+{
+    width : 30%
+}

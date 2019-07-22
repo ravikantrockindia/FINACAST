@@ -1,0 +1,56 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global" >
+    <aura:attribute name = "retirement" type = "String"/>
+    <div class="slds-align_absolute-center">
+    <div class="slds-container--center slds-container--large custom-background">
+     <div class="slds-box slds-theme_default">
+         
+
+    <div class="slds-text-heading--large">RETIREMENT - STEP 1</div>
+         Entering this information will help us understand if you are on track for retirement and 
+         <br/>
+         help us recommend steps to keep you on track for retirement.
+         <br/>
+         
+    <div class="slds-p-bottom_large slds-p-centre_large" style="width:500px">
+        
+        <lightning:recordEditForm
+                                  
+                                  recordTypeId="{!v.retirement}"
+                                  objectApiName="FinServ__FinancialGoal__c">
+            
+            <lightning:messages />
+          <div class="slds-grid slds-gutters">
+               <div class="slds-align_absolute-center">
+            <div class="slds-col">
+                
+            <lightning:inputField fieldName="Client__c" />
+            <lightning:inputField fieldName="Name" />
+            <lightning:inputField fieldName="FinServ__PrimaryOwner__c" />
+            <lightning:inputField fieldName="Date_Of_Birth__c" />
+                <lightning:inputField fieldName="Years_Of_Living_After_Retirement__c"/>
+            </div>
+                   <div class="slds-col"></div>
+            <div class="slds-col">
+            
+            <lightning:inputField fieldName="Expected_Inflation_Rate__c" />
+            <lightning:inputField fieldName="Retirement_Age__c"/>
+            <lightning:inputField fieldName="Desired_Annual_Income_For_Retirement__c"/>
+            <lightning:inputField fieldName="Rate_Of_Return_After_Retirement__c"/>
+            </div>
+              </div>
+            </div>
+            <div class="slds-border--right">
+                <lightning:button variant="brand" label="Cancel" onclick="{!cancelButton}"/>
+            </div>
+            <div class="slds-border--right">
+                <lightning:button variant="brand" label="Next" onclick="{!nextButton}"/>
+            </div>
+            
+        </lightning:recordEditForm>
+    </div>
+         </div>
+        </div>
+    </div>
+    
+    
+</aura:component>

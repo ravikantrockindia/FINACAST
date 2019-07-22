@@ -1,0 +1,119 @@
+<aura:component controller="CreateNewClient">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="IncomeList" type="List" default='[]'/>
+    <aura:attribute name="LastKey" type="Integer" default="0"/>
+    <aura:attribute name="currentStep" type="String"/>
+    <aura:attribute name="disabled" type="boolean" default="false"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="todayDate" type="Date"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:card>  
+                     <lightning:spinner aura:id="mySpinner" alternativeText="Loading" size="medium"/>
+
+        <div class="slds-m-around_x-small">
+            <div class="custom_card slds-gutters">
+                <div class="slds-col">
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+                            <lightning:button variant="brand" label="Add Income" title="Add Income" onclick="{! c.addIncome }" />
+                        </div>
+                    </div>
+                    <table class=" slds-m-top_medium slds-table slds-table_bordered slds-table_col-bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <!-- <th class="" scope="col">
+                            <div class=" " title="Opportunity Name">Index</div>
+                        </th>-->
+                                <th class="" scope="col">
+                                    <span class = "highlight"  style="color: red">* </span>Income
+                                </th>
+                                <th class="" scope="col">
+                                    <span class = "highlight"  style="color: red">* </span>  Amount after tax per pay check($)
+                                </th>
+                                <th class="" scope="col">
+                                    <span class = "highlight"  style="color: red">* </span>Frequency
+                                </th>
+                                <th class="" scope="col">
+                                    Start Date
+                                </th>
+                                <th class="" scope="col">
+                                    <span class = "highlight"  style="color: red">* </span> End Date
+                                </th>
+                                <th class="" scope="col">
+                                    <span class = "highlight"  style="color: red">* </span>Yearly growth (%)
+                                </th>
+                                <th class="" scope="col">
+                                    <span class = "highlight"  style="color: red">* </span>  Approximate total income tax rate (%)
+                                </th>
+                                
+                                <th class="" scope="col">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <aura:iteration items="{!v.IncomeList}" var="i" indexVar="index">
+                            
+                            <tbody>
+                                <tr class="slds-hint-parent">
+                                    <!-- <td data-label="Account Name">
+                                 
+                                <div class=" " title="Cloudhub"><lightning:input value="{!i.index}" disabled="{!i.disabled}" aura:id="inQuantity" /></div>
+                            </td>-->
+                                    <td >
+                                        <lightning:input value="{!i.income.Name}" disabled="{!i.disabled}" required="true" messageWhenValueMissing	="Complete this field" aura:id = "fields"/>
+                                        
+                                    </td>
+                                    <td>
+                                        <lightning:input value="{!i.income.Amount__c}" type="number" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/>
+                                    </td>
+                                    <td>
+                                        <lightning:select aura:id="fields" name="frequency" value="{!i.income.Frequency__c}" required="true" disabled="{!i.disabled}" variant="label-hidden" messageWhenValueMissing="Select a value" class="label-hidden">
+                                            <option value="">--None--</option>
+                                            <option value="Weekly">Weekly</option>
+                                            <option value="Bi-Weekly">Bi-Weekly</option>
+                                            <option value="Semi Monthly">Semi Monthly</option>
+                                            <option value="Monthly">Monthly</option>
+                                            
+                                        </lightning:select>
+                                    </td>
+                                    <td>
+                                        <lightning:input type="date" name="{!'row_'+index+'_startdate'}" disabled="{!i.disabled}"  value="{!i.income.Start_Date__c}" aura:id="startdate" variant="label-hidden" onblur="{!c.onblur}"/>
+                                    </td>
+                                    <td>
+                                        <lightning:input type="date" disabled="{!i.disabled}"  name="{!'row_'+index+'_enddate'}" required="true" value="{!i.income.End_Date__c}" messageWhenBadInput="End Date should be greater or equal to start date" messageWhenValueMissing="Complete this field" aura:id="enddate" variant="label-hidden" onblur="{!c.onblur}"/>
+                                    </td>
+                                    <td>
+                                        <lightning:input value="{!i.income.Yearly_growth__c}" type="number" required="true" disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" step="0.01" formatter="percent-fixed" aura:id = "fields" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
+                                    </td>
+                                    <td>
+                                        <lightning:input aura:id="fields" disabled="{!i.disabled}" type="number" required="true"  formatter="percent-fixed" messageWhenValueMissing="Complete this field" step="0.01" value="{!i.income.Tax_Rate__c}" min="0" messageWhenRangeUnderflow="Income tax rate cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
+                                    </td>
+                                    
+                                    <td>
+                                        <lightning:buttonIcon iconName="utility:edit" alternativeText="Edit" size="small" disabled="{!!i.disabled}" onclick="{!c.editRow}" value="{!index}"/>
+                                        <lightning:buttonIcon iconName="utility:delete" alternativeText="Delete" size="small" onclick="{!c.deleteRow}" value="{!index}"/>                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </aura:iteration>
+                    </table>
+                    <div class="slds-m-top_medium slds-clearfix ">
+                        <div class="slds-float_right">
+                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" class="mlr" />
+                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" onclick="{!c.saveIncomes}" disabled="{!v.disabled}" class="mlr" />
+                            <lightning:button  variant="brand" aura:id="skipNextButton" label="{!$Label.c.Skip}" onclick="{!c.skipButton}"/>
+                            
+                        </div>
+                        <div class="slds-float_left">
+                            <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </lightning:card>
+</aura:component>

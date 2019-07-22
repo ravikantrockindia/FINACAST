@@ -1,0 +1,37 @@
+.THIS #nav li{
+    border-width:0px 0px 0px 0px;
+    border-style:none;
+    position: relative;
+    }
+.THIS .bigIcons{
+    width:11.5%;
+    
+}
+.THIS .smallIcons{
+  width:8%;  
+}
+.THIS .mediumIcons{
+  width:9.5%; 
+}
+.THIS ul{
+    padding:0px;
+    border-width:0px 0px 0px 0px;
+    border-style:none;
+    border: 0px;  
+    }
+
+.THIS #nav li a{
+    color: rgb(107, 109, 112);
+}
+
+.THIS #nav2 li{
+    background-color:rgb(216, 237, 255);
+    color: black;
+}
+.THIS #nav2 li:hover a{
+	background: #eef2f6;
+    color: black;  
+}
+.THIS .demo{
+     background-color:#eef2f6;
+}

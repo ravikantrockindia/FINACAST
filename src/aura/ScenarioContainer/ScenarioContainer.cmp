@@ -1,0 +1,164 @@
+<!-- created by avneet kaur
+ contain two tabs 
+1. scenarios
+2. compare to current state
+
+
+scenarios tab call to scenario.cmp 
+-->
+
+
+
+<aura:component controller = "ScenarioContainerApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >
+    <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "manageScenarioStatus" type = "boolean" default = "false"/> 				<!-- to check if manage scenario button is clicked -->
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>  						<!-- for change client button-->
+    <aura:attribute name = "client" type="Account"/>    											<!-- to set a client initially -->
+    <aura:attribute name = "scenario" type="Scenario__c[]"/> 										<!-- contains the list of scenario for client -->
+    <aura:attribute name = "addScenarioButtonStatus" type = "boolean" default ="false"/>			<!-- check if add another scenario button on manage scenerio popup is clicked -->
+    <aura:attribute name = "parentInitialize" type = "boolean" default = "false" />					<!-- check if parent cmp init is called -->
+    <aura:attribute name = "addScenarioStatus" type = "boolean" default ="false"/>					<!-- check if save icon is clicked -->
+    <aura:attribute name = "isAddScenarioActive" type = "boolean" default = "true" /> 				<!-- to disable/enable add another scenario button -->
+    <aura:handler name = "init" value = "{!this}" action = "{!c.doInit}" />
+    <aura:attribute name = "changeClientStatus" type = "boolean" default = "false" />
+    <aura:attribute name = "sceneID" type = "String" />												<!-- contains scenario id, to load income of scenario -->
+    <aura:attribute name = "tabSelected" type = "String" />		
+    <aura:method name = "changeClientDatascenario" action = "{!c.changeClientDatascenario}" >
+        <aura:attribute name = "changeData" type = "Object" />
+    </aura:method> 
+    <aura:attribute name = "selectedClient" type = "String" />
+    <!-- set attribute value to scenario if scenario tab is selected and current state if current state tab is selected -->
+    <!-- change client functionality -->
+    <div style="background-color: #FFF; padding: 0 10%;" >
+        <lightning:card  title="">
+            <div class="slds-col slds-page-header__row" style="">
+                <div class="slds-text-heading_medium slds-size_3-of-12" style="">Current Client: </div>
+                <div class="slds-size_4-of-12 label_none">
+                    <lightning:recordEditForm objectApiName="FinServ__FinancialGoal__c">
+                        <lightning:inputField fieldName="FinServ__PrimaryOwner__c" value="{! v.selectedClient}" onchange="{! c.changeClientButton}"  aura:id="inf1"/> 
+                    </lightning:recordEditForm>
+                    <!--  <c:ClientLookup objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Client Name" SearchKeyWord = "{!v.clientName.Name}" /> -->
+                </div>
+            </div>
+            
+            
+            <!--  </div>
+        <div class="slds-text-heading_large" style="padding: 0 15px;">
+            Current Client: {!v.client.Name}	
+        </div>
+        <div class="slds-col" style="padding: 0 15px;">
+            <c:ClientLookup objectAPIName="account" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Client Name"/>
+        </div>
+        <div class="slds-col chng-client-btn-div" style="margin-left: 15px;">
+            <lightning:button variant="brand" label="Change Client" title="Change Client" onclick="{!c.changeClientButton}" class="slds-float_right clnt-chng-button"/>
+        </div> -->
+            <br/>  
+        </lightning:card>
+        
+        <!-- contains 'manage scenario' button, 'scenario' tab and 'Compare To Current State' tab -->
+        
+        <lightning:tabset onselect="{!c.tabSelected}" >
+            <div class ="pos">  
+                <div class="slds-page-header__row">
+                    <div class="slds-col slds-size_3-of-12" align = "right" style="padding-top: 25px;">
+                        <label>Viewing Scenario:</label>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class = "scenarioListPos" align = "right">
+                            <lightning:select aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" >
+                                <aura:iteration items="{!v.scenario}" var = "sceneItems"  >
+                                    <option text="{!sceneItems.Name}"  value = "{!sceneItems.Id}" ></option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12" style="padding-top: 20px;">
+                        <div class = "manageScenarioPos " >
+                            <lightning:button label = "Manage Scenarios" variant = "base" onclick = "{!c.manageScenarioButton}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <lightning:tab label="Scenarios"  onactive="{!c.scenarioTab}" >
+                <aura:if isTrue = "{!v.parentInitialize}">
+                    <c:Scenario client = "{!v.client}" scene = "{!v.sceneID}"  aura:id = "child"/>
+                </aura:if>
+            </lightning:tab>
+            
+        <lightning:tab label="Compare To Current State" onactive="{!c.currentStateTab}" >
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2" >
+                        <c:ScenarioSimulationContainer client = "{!v.client}" scene = "{!v.sceneID}"  aura:id = "currentStateScenario"  />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" >
+                        <!--<c:FutureSimulationContainer client = "{!v.client.Id}"  aura:id = "currentStateFutureSim"  />-->
+                        <c:FutureSimulationContainer client = "{!v.client}"  aura:id = "currentStateFutureSim"  />
+                    </div>
+                </div>
+            </lightning:tab> 
+        </lightning:tabset>
+        
+        
+        <!-- if manage scenario button is clicked manageScenarioButton is set true -->
+        
+        <aura:if isTrue = "{!v.manageScenarioStatus}" >
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Manage Scenarios</b>
+                            </h2>   
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <b> Scenario Name </b>
+                            <aura:iteration items="{!v.scenario}" var="sceneItems">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col" >
+                                        {!sceneItems.Name}
+                                    </div>
+                                    <div class="slds-col" >
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value = "{!sceneItems.Id}" onclick="{!c.onScenarioDeleteIcon}"/>  
+                                    </div>
+                                </div>
+                            </aura:iteration>
+                            
+                            <div class = "scenarioLabel">
+                                
+                                <aura:if isTrue = "{!v.addScenarioButtonStatus}">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col" >
+                                            <lightning:input aura:id = "sceneName" />
+                                        </div>
+                                        <div class="slds-col" >
+                                            <div class = "slds-save-icon" >
+                                                <lightning:buttonicon variant="bare" iconName="utility:save" size="medium" title="Save" onclick="{!c.onScenarioSaveIcon}"/>    
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </aura:if>
+                                
+                                <lightning:button label = "Add Another Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" onclick="{!c.onScenarioAddButton}"/>
+                            </div>
+                        </div>
+                        
+                        <footer class="slds-modal__footer">
+                            <div class="button" align ="right"> 
+                                <lightning:button label ="Done" variant ="neutral"  onclick = "{!c.onDoneScenarioButton}"/>   
+                            </div>
+                        </footer>  
+                        
+                    </div>
+                </div>
+                <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}">
+                </div>
+            </div>
+        </aura:if>
+    </div> 
+</aura:component>

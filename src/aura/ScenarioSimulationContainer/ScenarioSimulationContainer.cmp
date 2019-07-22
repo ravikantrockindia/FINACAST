@@ -1,0 +1,14 @@
+<aura:component controller = "ScenarioContainerApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name = "client" type = "account" />
+    <aura:attribute name = "scene" type = "String" />
+    <aura:handler name = "init" value = "{!this}" action = "{!c.doInit}" />
+    <aura:attribute name = "data" type = "Object"/>
+    <aura:attribute name = "parentInitialised" type = "boolean" default = "false" />
+    <aura:method name = "changeClient" action = "{!c.changeClient}" >
+        <aura:attribute name = "clientId" type = "account" />
+        <aura:attribute name = "sceneId" type = "String" />
+    </aura:method>
+    <aura:if isTrue = "{!v.parentInitialised}" >
+        <c:Finacast_FutureSimulationComponent  data = "{!v.data}" client="{!v.client}" aura:id = "child" />
+    </aura:if>
+</aura:component>

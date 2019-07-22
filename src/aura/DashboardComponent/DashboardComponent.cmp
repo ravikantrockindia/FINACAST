@@ -1,0 +1,432 @@
+<!--        Component Designed By: Aditya Kaushal Winter 18        -->
+
+<aura:component controller="DashboardComponentApex" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">   
+    
+    <!--Attributes List-->
+    <aura:attribute name= "score" type="Double" default ="5"/>
+    <aura:attribute name="GoalsList" type="String"/>
+    <aura:attribute name="financialAccountList" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>  
+    <aura:attribute name="client" type="String" />
+    <aura:attribute name="showModal" type="Boolean"/>
+    <aura:attribute name="text" type="String"/>
+    <aura:attribute name="showAlert" type="boolean" default="false"/>
+    <aura:attribute name="alertMessages" type="String[]"/>
+    <aura:attribute name="jsonResponse" type="String"/>
+    <aura:attribute name="months" type="String"/>
+    <aura:attribute name="saving" type="String[]" default="0"/>
+    <aura:attribute name="credit" type="String[]" default="0"/>
+    <aura:attribute name="loan" type="String[]" default="0"/>
+    <aura:attribute name="netWorth" type="Double"/>
+    <aura:attribute name="isPortalUser" type="Boolean" />
+      <aura:method name = "changeClientData" action = "{!c.changeClientData}" >
+        <aura:attribute name = "changeData" type = "Object" />
+      
+        
+        
+    </aura:method> 
+    <aura:attribute name = "selectedClient" type = "String" />
+    <!--End Attribute List-->
+    
+    
+    <!-- Change Client Card -->
+    <aura:if isTrue="{!not(v.isPortalUser)}">
+        <article class="slds-card">
+            <div class="slds-card__body slds-card__body_inner "> 
+                <div class="slds-col slds-page-header__row" style="">
+                <div class="slds-text-heading_medium slds-size_3-of-12" style="">Current Client:</div>
+                
+                    <div class="slds-col slds-size_4-of-12  label_none" >
+                 <lightning:recordEditForm objectApiName="FinServ__FinancialGoal__c">
+                     <lightning:inputField fieldName="FinServ__PrimaryOwner__c" value="{!v.selectedClient}" onchange="{! c.changeClient }"  aura:id="inf1"/> 
+                    </lightning:recordEditForm>
+                 <!--    <div class="slds-col slds-size_2-of-12" style="padding: 21px 0 0 25px;">
+                        <lightning:button variant="brand" label="Change Client" 
+                                          title="Change Client" onclick="{! c.changeClient }"/>
+                    </div> -->
+                </div>  
+                </div>
+                
+            </div>
+        </article>
+    </aura:if>
+    <!--End Change Client-->
+     
+    <article class="slds-card">
+            <div class="slds-card__body slds-card__body_inner ">
+    			<div class="slds-gutters">
+        <div class="slds-page-header__row">
+            
+            <div class="slds-col slds-size_1-of-3 dashboard-parant my_balance-sheets">
+                
+                <!-- Financial Accounts -->   
+                <lightning:card title="My Balance Sheet">
+                    
+                    <!--Networth-->
+                    <div>
+                        <table class=" income-tab slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table--striped slds-table_resizable-cols">
+                            <caption class="slds-text-title_caps slds-text-align-center">Networth</caption>
+                            <thead>
+                                <tr class="slds-line-height_reset slds-text-title--caps">
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Goal Name">Total Networth</div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Goal Name">{!v.netWorth}</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!--NetWorth End-->
+                    
+                    <br/>
+                    
+                    <!--Savings Accounts-->
+                    <div>
+                        <table class=" income-tab slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table--striped slds-table_resizable-cols">
+                            <caption class="slds-text-title_caps slds-text-align-center">Saving Accounts</caption>
+                            <thead>
+                                <tr class="slds-line-height_reset slds-text-title--caps">
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Financial Account Name">Name</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Type">Type</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Balance">Balance</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Interest">Interest</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody class="slds-align-center">
+                                <aura:iteration items="{!v.saving}" var="s">
+                                    <tr class="slds-hint-parent slds-border_top">
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!s.Name}">
+                                                <a href="{!'/' + s.Id}">{!s.Name}</a>
+                                            </div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!s.FinServ__FinancialAccountType__c}">{!s.FinServ__FinancialAccountType__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!s.FinServ__Balance__c}">{!s.FinServ__Balance__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="Name">{!s.FinServ__APY__c}{!s.APR__c}%</div>
+                                        </th>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>   
+                    <!--Saving Accounts End-->
+                    
+                    <br/>
+                    
+                    <!--Credit Card-->
+                    <div>
+                        <table class=" income-tab slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table--striped slds-table_resizable-cols">
+                            <caption class="slds-text-title_caps slds-text-align-center">Credit Accounts</caption>
+                            <thead>
+                                <tr class="slds-line-height_reset slds-text-title--caps">
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Financial Account Name">Name</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Type">Type</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Balance">Balance</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Interest">Interest</div>
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            
+                            <tbody class="slds-align-center">
+                                <aura:iteration items="{!v.credit}" var="c">
+                                    <tr class="slds-hint-parent slds-border_top">
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!c.Name}">
+                                                <a href="{!'/' + c.Id}">{!c.Name}</a>
+                                            </div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!c.FinServ__FinancialAccountType__c}">{!c.FinServ__FinancialAccountType__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!c.FinServ__Balance__c}">{!c.FinServ__Balance__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="Name">{!c.FinServ__APY__c}{!c.APR__c}%</div>
+                                        </th>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>   
+                    <!--Credit Card Ends-->
+                    
+                    <br/>
+                    
+                    <!--Loan Accounts-->
+                    <div>
+                        <table class=" income-tab slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table--striped slds-table_resizable-cols">
+                            <caption class="slds-text-title_caps slds-text-align-center">Loan Accounts</caption>
+                            <thead>
+                                <tr class="slds-line-height_reset slds-text-title--caps">
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Financial Account Name">Name</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Type">Type</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Balance">Loan Amount</div>
+                                    </th>
+                                    
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate" title="Interest">Interest</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody class="slds-align-center">
+                                <aura:iteration items="{!v.loan}" var="l">
+                                    <tr class="slds-hint-parent slds-border_top">
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!l.Name}">
+                                                <a href="{!'/' + l.Id}">{!l.Name}</a>
+                                            </div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!l.FinServ__FinancialAccountType__c}">{!l.Account_Type__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!l.FinServ__LoanAmount__c}">{!l.FinServ__LoanAmount__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="Name">{!l.FinServ__APY__c}{!l.APR__c}%</div>
+                                        </th>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>  
+                    <!--Loan Accounts End-->
+                    
+                </lightning:card>  
+                <!--Financial Accounts End-->
+            </div>
+            
+            <div class="slds-col slds-size_2-of-3 dashboard-parant my_balance-sheets">
+                <div class="slds-grid slds-wrap">
+                    <div style="width: 100%;">
+                        <!-- Financial Health -->
+                        <lightning:card title="My Financial Health" class="myFinancialHealth">
+                            
+                            <div class="fh-button budget-brand">
+                                <lightning:button variant="neutral" label="What is this?" onclick="{!c.showDetails}"/>
+                            </div>
+                            
+                            <!-- Indicators-->
+                            <div class="slds-page-header__row payment-goals">
+                                
+                                
+                                <div class=" slds-size_4-of-12">
+                                    <ul class="indicators">
+                                        <li><div aura:id="he1" class="defaultRedIndicators"></div></li>
+                                        <li><div aura:id="he2" class="defaultOrangeIndicators"></div></li>
+                                        <li><div aura:id="he3" class="defaultGreenIndicators"></div></li>
+                                        <li>Household Expenses</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class=" slds-size_3-of-12">
+                                    <ul class="indicators">
+                                        <li><div aura:id="cc1" class="defaultRedIndicators"></div></li>
+                                        <li><div aura:id="cc2" class="defaultOrangeIndicators"></div></li>
+                                        <li><div aura:id="cc3" class="defaultGreenIndicators"></div></li>
+                                        <li>Credit Payments</li> 
+                                    </ul>
+                                </div>
+                                
+                                <div class=" slds-size_3-of-12">
+                                    <ul class="indicators">
+                                        <li><div aura:id="lp1" class="defaultRedIndicators"></div></li>
+                                        <li><div aura:id="lp2" class="defaultOrangeIndicators"></div></li>
+                                        <li><div aura:id="lp3" class="defaultGreenIndicators"></div></li>
+                                        <li>Loan Payment</li> 
+                                    </ul>
+                                </div> 
+                                
+                                <div class=" slds-size_2-of-12">
+                                    <ul class="indicators">
+                                        <li><div aura:id="g1" class="defaultRedIndicators"></div></li>
+                                        <li><div aura:id="g2" class="defaultOrangeIndicators"></div></li>
+                                        <li><div aura:id="g3" class="defaultGreenIndicators"></div></li>
+                                        <li>Goal</li> 
+                                    </ul>
+                                </div> 
+                            </div>
+                            <!--Indiactors End-->
+                            
+                            <!--Modal Start-->
+                            <aura:if isTrue="{!v.showModal}">
+                                <c:CustomModalComponent isActive="{!v.showModal}" title="Your Financial Health">
+                                    <div>
+                                        <p class="slds-text-longform"><ui:message class="modalCss" title="Status" severity="information" closable="false">
+                                            <div style="padding: 0px 10px;">
+                                                Your financial score is an indicator of how likely you are to meet your current financial commitments like:<br/>
+                                                <ul>
+                                                    <li>Your expenses for the next month </li>
+                                                    <li>Your immediate credit card dues</li>
+                                                    <li>Your immediate loan payments </li>
+                                                    <li>Immediate savings needed for your financial goals </li>                   
+                                                </ul>
+                                                The score is graded between 0 and 10, depending on your likelihood of meeting the above financial commitments. In addition, this score also takes into account the number
+                                                of months that you can survive without an income.       
+                                                The green, orange and red color indicators for each of the sections tells you if your expenses, loans and credit card payments are likely to be met fully or partially in the next month.
+                                            </div>
+                                            <br/>
+                                            <div class="bBody"><h4>Score Key</h4></div>
+                                            <div style="padding: 0px 10px 10px;">
+                                                Below 1:	You are unlikely to meet your everyday expenses in the next month<br/>
+                                                Between 1 and 4:	You are likely to meet your everyday expenses but not meet your debt commitments<br/>
+                                                Between 4 and 5:	You will meet your expenses, and debt commitments but may not have enough to save for other financial goals<br/>
+                                                Above 5:	You will meet your immediate expenses, debt commitments and save for other goals. You are also likely to have enough to live for a few days without an income<br/>
+                                            </div>
+                                            </ui:message></p>
+                                    </div>
+                                </c:CustomModalComponent>
+                            </aura:if>
+                            <!--Modal End-->
+                            
+                            <!--Score Bar Start-->
+                            <span>
+                                <div class="bar" style="">
+                                    <lightning:slider label="Score" min="0" max = "10" 
+                                                      value="{!v.score}" disabled="true" size="x-large"/>
+                                    <div style="float: left;"><b>Poor</b></div>
+                                    <div style="float: right;"><b>Excellent</b></div>
+                                </div>
+                            </span>
+                            <!--Score Bar End-->
+                            
+                            <div class="months">
+                                <p>
+                                    <ui:message title="Status" severity="information" closable="false">
+                                        {!v.months} months you can sustain without income
+                                    </ui:message>
+                                </p>
+                            </div>
+                            
+                            <!-- Alert Section-->
+                            <div class="Alert">
+                                <!--<button class="slds-button slds-button_destructive"
+                                        onclick="{!c.showAlert}">
+                                    Alert</button>-->
+                                
+                                <aura:if isTrue="{!v.showAlert}">
+                                    
+                                    <aura:if isTrue="{!not(empty(v.alertMessages[0]))}">
+                                        <ui:message class="alertMessage" title="" severity="error" closable="false">
+                                            {!v.alertMessages[0]} </ui:message>
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!not(empty(v.alertMessages[1]))}">
+                                        <ui:message class="alertMessage" title="" severity="error" closable="false">
+                                            {!v.alertMessages[1]} </ui:message>                          
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!not(empty(v.alertMessages[2]))}">
+                                        <ui:message class="alertMessage" title="" severity="error" closable="false">
+                                            {!v.alertMessages[2]} </ui:message>                               
+                                    </aura:if>
+                                    
+                                </aura:if>
+                            </div>
+                            <!--Alert Section End-->
+                            
+                        </lightning:card>
+                        <!--End Financial Card-->
+                        <br/>
+                    </div>
+                    
+                    <br/>
+                    <div style="width: 100%;">
+                        <!-- Financial Goals -->
+                        <lightning:card title="My Financial Goals">
+                            <div>
+                                <table class=" income-tab slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table--striped slds-table_resizable-cols">
+                                    <caption class="slds-text-title_caps slds-text-align-center">My Goals</caption>
+                                    <thead>
+                                        <tr class="slds-line-height_reset slds-text-title--caps">
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="Goal Name">Goal Name</div>
+                                            </th>
+                                            
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="Current Amount">Current Amount</div>
+                                            </th>
+                                            
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="Target Date">Target Date</div>
+                                            </th>
+                                            
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="Status">Status</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody class="slds-align-center">
+                                        <aura:iteration items="{!v.GoalsList}" var="goal">
+                                            <tr class="slds-hint-parent slds-border_top">
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="Name">
+                                                        <a href="{!'/' + goal.Id}">{!goal.Name}</a></div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="Name">{!goal.Start_Value__c}</div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="Name">{!goal.FinServ__TargetDate__c}</div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="Name">OnTrack</div>
+                                                </th>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>                
+                        </lightning:card>  
+                        <!--Financial Goals End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        	</div>
+    </article>
+    
+</aura:component>

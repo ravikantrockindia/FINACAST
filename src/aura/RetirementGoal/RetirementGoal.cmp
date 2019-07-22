@@ -1,0 +1,89 @@
+<aura:component controller="RetirementGoalApexController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global" >
+    <aura:attribute name = "retirement" type = "String"/>
+    <aura:attribute name = "birthDate" type ="Date"/>
+    <aura:attribute name = "sp" type ="boolean"/>
+    <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name = "PrimaryOwner" type = "String"/>
+    <aura:attribute name = "GoalName" type = "String"/>
+    <aura:attribute name = "DateOfBirth" type = "String"/>
+    <aura:attribute name = "YearsLivingAfterRetirement" type = "Integer" default = "35"/>
+    <aura:attribute name = "ExpectedInflationRate" type = "String" default = "3.1"/>
+    <aura:attribute name = "Retiring" type = "String" default = "65"/>
+    <aura:attribute name = "DesiredAnnualIncome" type = "String"/> 
+    <aura:attribute name = "RateofReturnAfterRetirement" type = "String"/> 
+    <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "retirementGoalId" type="String"/>   
+     <aura:attribute name = "heading" type = "String"/>
+    <aura:attribute name = "subheading" type = "String"/>
+     <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="Acclist" type="List"/>
+	<aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+ <ltng:require styles="{!$Resource.multilinetoast}" />    
+    <div class="slds-align_absolute-center">
+    <div class="slds-m-around_xx-large">
+        <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+            <div class="slds-modal__container">   
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                        <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>Retirement - Step 1</b></h2>
+                    <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black" > 
+                        <b>Entering this information will help us understand if you are on track for retirement and help us recommend steps to keep you on track for retirement.</b>
+                    </h3>
+                </header>
+                
+                <lightning:recordEditForm         
+                                          recordTypeId = "{!v.retirement}"
+                                          objectApiName = "FinServ__FinancialGoal__c"
+                                          recordId = "{!v.retirementGoalId}"                          
+                                          > 
+                   
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class=" slds-gutters" style="border: none;">
+                            <div class="slds-box1">
+                                <div class="slds-col slds-size_1-of-2" style="color:grey;">
+                                    <span class = "highlight">* </span>Primary owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c"  onchange = "{!c.Acclist}"/>
+                                <!--    <span class = "highlight">* </span>Primary owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c"  onchange = "{!c.getDateofBirth}" value = "{!v.PrimaryOwner}"/>-->
+
+                                    <br/> 
+                                   <!-- <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name" value = "{!v.GoalName}"/>-->
+                                    <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name"/>
+                                    <br/>
+                                    <span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "Date_Of_Birth__c"  />
+                                     <!--<span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "Date_Of_Birth__c"  value = "{!v.birthDate}" />-->
+
+                                    <br/> 
+                                    <span class = "highlight">* </span>Years of Living After Retirement<lightning:inputField aura:id = "afterRetirement"  fieldName="Years_Of_Living_After_Retirement__c"  value = "{!v.YearsLivingAfterRetirement}"/><br/>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2" style="color:grey;">
+                                    <span class = "highlight">* </span>Expected Inflation Rate<lightning:inputField aura:id = "Rate" fieldName="Expected_Inflation_Rate__c" value = "{!v.ExpectedInflationRate}"/>
+                                    <br/>
+                                    <span class = "highlight">* </span>Retirement Age<lightning:inputField aura:id = "retireAge" fieldName="Retirement_Age__c"  value="{!v.Retiring}"/>
+                                    <br/>
+                                   <!-- <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="Desired_Annual_Income_For_Retirement__c" value = "{!v.DesiredAnnualIncome}"/>-->
+                                    <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="Desired_Annual_Income_For_Retirement__c"/>
+                                                                                                                                                  <br/>
+                                    <!--<span class = "highlight">* </span>Rate of Return After Retirement(%)<lightning:inputField aura:id = "rateReturn" fieldName="Rate_Of_Return_After_Retirement__c" value = "{!v.RateofReturnAfterRetirement}"/>  -->  
+                                    <span class = "highlight">* </span>Rate of Return After Retirement(%)<lightning:inputField aura:id = "rateReturn" fieldName="Rate_Of_Return_After_Retirement__c"/>
+                                                                                                                           </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <div class="button" align ="rionght">
+                            
+                            <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                            <lightning:button variant="brand"  label="Next" onclick = "{!c.nextButton}"/>
+                        </div>
+                    </footer>      
+                </lightning:recordEditForm>
+                   <aura:if isTrue="{!v.sp}">
+                       <c:RetirementGoalScreen2  owner = "{!v.PrimaryOwner}" name = "{!v.GoalName}" dob = "{!v.GoalName}" yearsAfterRetirement = "{!v.GoalName}" inflationRate = "{!v.GoalName}" retirementAge = "{!v.GoalName}" retirementAnnualIncome = "{!v.GoalName}" roi = "{!v.GoalName}" tarDate = "{!v.GoalName}" recordId = "{!v.recordId}" accountList = "{!v.accountList}" />
+                </aura:if>
+            </div></div>
+        <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+        </div></div>
+</aura:component>

@@ -1,0 +1,136 @@
+<aura:component controller="AddIncomeController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name = "getBudgetId" type="String"/>
+    <aura:attribute name="addTrans" type="FinServ__FinancialAccountTransaction__c[]"/> 
+    <lightning:tabset selectedTabId="one">
+        
+        <lightning:tab class="subsection" label="SUMMARY" id="one" onactive="{!c.handleComponentEvent}">
+            <div class="slds-grid slds-gutters tax-amount-table">
+                <div class="slds-col " style="width: 550px; padding: 40px;height:400px;">                                                         
+                    <aura:if isTrue = "{!v.parentInitialised}" >
+                        <c:BudgetSummaryCashFlowImpact dataset = "{!v.data}"                                                           
+                                                       tansactionId ="{!v.getBudgetId}"/>
+                    </aura:if></div>
+                <div class="slds-col">
+                    <lightning:card>
+                        <div>
+                            <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                
+                                <tr>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection" title="Amount After Tax"><b>Amount After Tax  </b> </div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection" title="Amount After Tax"><b>{!rec.Amount__c}</b> </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection1" title="Frequency"><b>Frequency</b></div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection1" title="Frequency"><b>{!rec.Frequency__c} </b></div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection" title="Yearly Growth"><b>Yearly Growth (%)</b> </div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection" title="Yearly Growth"><b>{!rec.Yearly_growth__c}</b> </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection1" title="Income Tax Rate"><b>Income Tax Rate (%) </b> </div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection1" title="Income Tax Rate"><b>{!rec.Tax_Rate__c}</b> </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection" title="Start Date"><b>Start Date</b></div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection" title="Start Date"><b>{!rec.Start_Date__c}</b></div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection1" title="End Date"><b>End Date </b></div>
+                                    </th>
+                                    <th class="slds-text-title_caps" scope="col">
+                                        <div class="slds-truncate summarysection1" title="End Date"><b>{!rec.End_Date__c} </b></div>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div><br></br>                                                                   
+                    </lightning:card>
+                </div></div>
+        </lightning:tab>
+        <lightning:tab class="subsection" label="TRANSACTION" id="two" onactive="{!c.handleComponentEvent}">
+            
+            <header style="text-align:center; margin-bottom: 8px; color: black;"><span class="slds-page-header__title slds-truncate" title="transaction"><h2>Transactions</h2></span></header>
+            <lightning:button class="slds-button slds-button_brand budget-brand " value="{!rec.Id}" label="Add Transaction + " title="Add Transaction +" onclick="{!c.createTransactionRecord}"/>   
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Transaction Date"> &nbsp;&nbsp; Transaction Date</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Transaction Name">Transaction Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Description">Description</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Category">Category</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Amount">Amount</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Action">Action</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.addTrans}" var="Tdetails">
+                        <tr class="slds-hint-parent">
+                            <th data-label="Transaction Date" scope="row">
+                                <div class="slds-truncate" title="Transaction Date" style="color:black;">&nbsp;&nbsp;
+                                    <ui:outputDate value="{! Tdetails.FinServ__TransactionDate__c}"/>
+                                </div>
+                            </th>
+                            <td data-label="Transaction Name">
+                                <div class="slds-truncate" title="Transaction Name" style="color:black;">{! Tdetails.TransactionName__c}
+                                </div>
+                            </td>
+                            <td data-label="Description">
+                                <div class="slds-truncate" title="Description" style="color:black;">{! Tdetails.FinServ__Description__c}</div>
+                            </td>
+                            <td data-label="Category">
+                                <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails.Destination_Financial_Account__r.Name}</div>
+                            </td>
+                            <td data-label="Amount">
+                                <div class="slds-truncate" title="Amount" style="color:black;">$ {! - Tdetails.FinServ__Amount__c}</div>
+                            </td>
+                            <td data-label="Action">
+                                <div class="slds-truncate" title="Action">
+                                    &nbsp; <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Tdetails.Id}" onclick="{!c.onClickEditIncomeTransaction}"/>                       
+                                    
+                                    &nbsp;
+                                    <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Tdetails.Id}" onclick="{!c.onClickDeleteTransaction}"/>                                   
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                    
+                </tbody>        
+            </table>
+        </lightning:tab>
+    </lightning:tabset>                              
+                                   
+</aura:component>

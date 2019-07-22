@@ -1,0 +1,107 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride" access="global" >	
+    <!-- <aura:handler name="init" action="{!c.createclient}" value="{!this}"/>-->
+    <aura:attribute name="recordId" type="string" /> 
+    <aura:attribute name="client" type="String" />
+    <aura:attribute name="name" type="String" />
+    <aura:attribute name="firstname" type="String" />
+    <aura:attribute name="lastname" type="String" />
+    <aura:attribute name="email" type="String" />
+     <div align="right">
+    <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancelButton}"/> &nbsp;&nbsp;
+                                     <lightning:button variant="neutral" label="Save" onclick="{!c.saveButton}"/></div>
+    
+    <div class="slds-box slds-theme_default" style="height:210%;" >
+              <div class="slds-page-header" style="height:40px" >
+                  <div class="slds-text-heading--medium"><b>Client Information</b></div>
+                  </div>
+                    <div class="slds-p-bottom_large slds-p-centre_large" style="width:700px ; height:330px">
+                        <lightning:recordEditForm
+                                                  objectApiName="Account">
+                            <lightning:messages />
+                            <div class="slds-grid slds-gutters">
+                                    <div class="slds-col  slds-size_1-of-2" style="color:black;">
+                                        <lightning:inputField fieldName="Name" value="{!v.name}"/>
+                                        <lightning:inputField fieldName="First_name__c" value="{!v.firstname}"/>
+                                        <lightning:inputField fieldName="Last_name__c" value="{!v.lastname}"></lightning:inputField>
+                                         <lightning:inputField fieldName="Mailing_Street__c" ></lightning:inputField>
+                                        <lightning:inputField fieldName="Mailing_City__c" ></lightning:inputField>
+                                        <lightning:inputField fieldName="Mailing_State__c" ></lightning:inputField></div>
+                                        <div class="slds-col   slds-size_1-of-2" style="color:grey;">
+                                         <lightning:inputField fieldName="Mailing_Zip__c" ></lightning:inputField>
+                                         <lightning:inputField fieldName="Mailing_Country__c" ></lightning:inputField>
+                                            <lightning:inputField fieldName="Date_of_Birth__c" ></lightning:inputField><br/>
+                                            <lightning:inputField fieldName="Retired__c" ></lightning:inputField><br/>
+                                         <lightning:inputField fieldName="FinServ__RiskTolerance__c" ></lightning:inputField>
+                                         <lightning:inputField fieldName="Active__c" ></lightning:inputField>
+                                            
+                                    </div>
+                                    
+                                     
+                                </div>
+                            
+        
+                        </lightning:recordEditForm>
+         </div>
+    
+              <div class="slds-page-header" style="height:40px ">
+                    <div class="slds-text-heading--medium"><b>Contact Information</b></div>
+                  </div>
+                    <div class="slds-p-bottom_large slds-p-centre_large" style="width:700px ; height:295px">
+                        <lightning:recordEditForm
+                                                  objectApiName="Account">
+                            <lightning:messages />
+                            <div class="slds-grid slds-gutters">
+                                    <div class="slds-col  slds-size_1-of-2" style="color:black;">
+                                        <lightning:inputField fieldName="Home_Phone__c" />
+                                        <lightning:inputField fieldName="Cell_Phone__c" />
+                                        <lightning:inputField fieldName="Business_Fax__c" ></lightning:inputField>
+                                         <lightning:inputField fieldName="Prefered_Call_Time__c" ></lightning:inputField>
+                                <lightning:inputField fieldName="Fax" ></lightning:inputField>
+                                </div>
+                                <div class="slds-col  slds-size_1-of-2" style="color:black;">
+                                    
+                                    <lightning:inputField fieldName="Email__c" value="{!v.email}" ></lightning:inputField><br/>
+                                    <lightning:inputField fieldName="Do_not_call__c" ></lightning:inputField><br/>
+                                    <lightning:inputField fieldName="Date_entered__c" ></lightning:inputField><br/><br/>
+                                         <lightning:inputField fieldName="Email_opt_out__c" ></lightning:inputField>
+                                         
+                                    </div>
+                                    
+                               
+                            </div>
+        
+                        </lightning:recordEditForm>
+         </div>
+              <div class="slds-page-header"  style="height:40px">
+                    <div class="slds-text-heading--medium"><b>Personal Information</b></div>
+                  </div>
+                    <div class="slds-p-bottom_large slds-p-centre_large" style="width:700px ; height:350px">
+                        <lightning:recordEditForm
+                                                  objectApiName="Account">
+                            <lightning:messages />
+                            <div class="slds-grid slds-gutters">
+                                    <div class="slds-col  slds-size_1-of-2" style="color:black;">
+                                        <lightning:inputField fieldName="Primary__c" />
+                                        <lightning:inputField fieldName="Occupation__c" />
+                                        <lightning:inputField fieldName="Employer__c" ></lightning:inputField>
+                                         <lightning:inputField fieldName="Marital_Status__c" ></lightning:inputField>
+                                         <lightning:inputField fieldName="Gender__c" ></lightning:inputField>
+                                         <lightning:inputField fieldName="Country_of_citizen__c" ></lightning:inputField>
+                                          <lightning:inputField fieldName="Language__c" ></lightning:inputField>
+                                </div>
+                                        <div class="slds-col  slds-size_1-of-2" style="color:black;">
+                                        <lightning:inputField fieldName="No_of_dependents__c" ></lightning:inputField>
+                                        <lightning:inputField fieldName=" Anniversary_Date__c" ></lightning:inputField>
+                                            <lightning:inputField fieldName="Retirement_Date__c" ></lightning:inputField><br/>
+                                            <lightning:inputField fieldName="Online_Access__c" ></lightning:inputField><br/><br/>
+                                            <lightning:inputField fieldName="Executive_of_company__c" ></lightning:inputField><br/><br/>
+                                            <lightning:inputField fieldName="Head_of_household__c" ></lightning:inputField><br/>
+                                            <lightning:inputField fieldName="Description__c" ></lightning:inputField>
+                                    </div>
+                                    
+                               
+                            </div>
+        
+                        </lightning:recordEditForm>
+         </div></div>
+</aura:component>

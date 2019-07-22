@@ -1,0 +1,5 @@
+<aura:component >
+	<ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
+    
+    <div id="chartContainer" style="height: 300px; width: 50%;"></div>
+</aura:component>

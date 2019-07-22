@@ -1,0 +1,139 @@
+<aura:component controller = "GoalsApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <aura:attribute name="showgoalModal" type="Boolean" default="false" />
+    <aura:attribute name="GoalDetails" type="FinServ__FinancialGoal__c[]" />
+    <aura:registerEvent name="GoalButtonEvent" type="c:GoalPerformanceEvent"/>
+    <aura:attribute name="param" type="string"/>
+    <aura:attribute name="clientId" type="string"/>
+    <aura:attribute name="clientName" type="String" />
+    <aura:attribute Name="selItem2" type="object"  access="public" />    
+     <aura:attribute name="showModal" type="Boolean" />
+    <aura:attribute name="editrecid" type="String"/>
+    <br/><br/><br/>
+    
+    <lightning:card  title="">
+        <div class="slds-text-heading_large">Current Client: {!v.clientName}</div><br/>
+        <div class="slds-col">
+            <c:Lookup objectName="Account"
+                      field_API_text="Name"
+                      field_API_val="Id"
+                      limit="4"
+                      field_API_search="Name"
+                      lookupIcon="standard:account" 
+                      selItem="{!v.selItem2}" 
+                      placeholder="Enter space after text to search Accounts"
+                      aura:id = "selectClient"	
+                      />  
+        </div>
+        <div class="slds-col chng-client-btn-div">
+            <lightning:button variant="brand" label="Change Client" title="Change Client" onclick="{! c.loadClientGoals }" class="slds-float_right clnt-chng-button"/>
+        </div>
+    </lightning:card>
+    <br/>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Goal Name">Goal Name</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Target Amount">Target Amount</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Target Date">Target Date</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Current Amount">Current Amount</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Status">Status</div>
+                </th>
+                <th class="slds-text-title_caps" scope="col">
+                    <div class="slds-truncate" title="Action">Action</div>
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <aura:iteration items="{!v.GoalDetails}" var="Gdetails">
+                <tr class="slds-hint-parent">
+                    <th data-label="Goal Name" scope="row">
+                        <div class="slds-truncate" title="Goal Name"><a href="{! '/'+ Gdetails.Id}" tabindex="-1">{!Gdetails.Name}</a></div>
+                    </th>
+                    <td data-label="Target Amount">
+                        <div class="slds-truncate" title="Target Amount">{! Gdetails.FinServ__TargetValue__c}</div>
+                    </td>
+                    <td data-label="Target Date">
+                        <div class="slds-truncate" title="Target Date">{! Gdetails.FinServ__TargetDate__c}</div>
+                    </td>
+                    <td data-label="Current Amount">
+                        <div class="slds-truncate" title="Current Amount">{! Gdetails.Start_Date__c}</div>
+                    </td>
+                    <td data-label="Status">
+                        <div class="slds-truncate" title="Status">{! Gdetails.FinServ__Status__c}</div>
+                    </td>
+                    <td data-label="Action">
+                        <div class="slds-truncate" title="Action">
+                            
+                            <lightning:buttonIcon
+                                                  iconName="utility:preview"
+                                                  variant="bare"
+                                                  size="medium"
+                                                  value="{!Gdetails.Id}"
+                                                  onclick="{! c.NavigateToGoalPerformance }" 
+                                                  alternativeText="Goal Performance"/>
+                            
+                            
+                            &nbsp; <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Gdetails.Id}" onclick="{!c.onClickEdit}"/>
+            
+                            &nbsp;
+                            <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Gdetails.Id}" onclick="{!c.onClickDelete}"/>  
+                                             
+                        </div>
+                    </td>
+                </tr>  
+            </aura:iteration>
+        </tbody>
+    </table>
+    <c:CustomModalComponent title="Create Goal" isActive="{!v.showModal}">
+          <lightning:recordEditForm 
+                                    onload="{!c.handleLoad}"
+            onsubmit="{!c.handleSubmit}"
+            onsuccess="{!c.handleSuccess}"
+            recordId="{!v.editrecid}"
+            objectApiName="FinServ__FinancialGoal__c">
+              <div class="slds-grid">
+              <div class="slds-col">
+              <lightning:inputField fieldName="Name" />
+               <lightning:inputField fieldName="FinServ__TargetValue__c" />
+               <lightning:inputField fieldName="Start_Value__c" />
+               <lightning:inputField fieldName="Goal_Priority__c" />
+              </div>
+                  &nbsp; &nbsp; &nbsp; &nbsp;
+              <div class="slds-col">
+               <lightning:inputField fieldName="Start_Date__c" />
+               <lightning:inputField fieldName="Associated_Account__c" />
+               <lightning:inputField fieldName="FinServ__TargetDate__c" />
+               <lightning:inputField fieldName="Required_Monthly_Saving__c" />
+              </div>
+              </div>                                                         
+              <div class="slds-m-top_medium">
+                <lightning:button  variant="brand" type="submit" name="save" label="Save" />
+            </div>
+         </lightning:recordEditForm>
+         
+         
+         
+    </c:CustomModalComponent>
+    
+    <br/><br/>
+    <div class="slds-align_absolute-center slds-text-heading_medium"> 
+        Add Goal &nbsp;<lightning:buttonIcon
+                                             iconName="utility:add"
+                                             variant="bare"
+                                             size="large"
+                                             onclick="{! c.handleClick }" 
+                                             alternativeText="Add new Goal"/>
+    </div>
+</aura:component>

@@ -1,0 +1,65 @@
+<aura:component>
+    <lightning:card >
+        <!--<aura:set attribute="footer">
+            <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+        </aura:set>-->
+        <div class="slds-m-around_x-small">
+            <lightning:recordEditForm
+                                      
+                                      onsubmit="{!c.handleSubmit}"
+                                      onsuccess="{!c.handleSuccess}"
+                                      objectApiName="Account">
+                <!-- the messages component is for error messages -->
+                <lightning:messages />
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <span class = "highlight" style="color: red">* </span>  {!$Label.c.Name} <lightning:inputField fieldName="Name" class="label-hidden" variant="label-hidden"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <span class = "highlight"  style="color: red">* </span> {!$Label.c.Client_Category} <lightning:inputField fieldName="FinServ__ClientCategory__c" class="label-hidden" variant="label-hidden"/>
+                    </div>
+                    
+                </div>
+                
+                <div class="slds-grid slds-gutters">
+                    
+                    <div class="slds-col slds-size_2-of-2">
+                        <span class = "highlight"  style="color: red">* </span> {!$Label.c.Client_Address_Street}<lightning:inputField class="label-hidden" fieldName="BillingStreet" variant="label-hidden"/>
+                    </div>
+                </div> 
+                
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <span class = "highlight"  style="color: red">* </span>{!$Label.c.Client_Address_City}  <lightning:inputField class="label-hidden" fieldName="BillingCity" variant="label-hidden"/><br/>
+                        <span class = "highlight"  style="color: red">* </span> {!$Label.c.Address_Zip_Postal_Code} <lightning:inputField class="label-hidden" fieldName="BillingPostalCode" variant="label-hidden"/><br/>
+                        {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/><br/>
+                        
+                        
+                        
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <span class = "highlight"  style="color: red">* </span> {!$Label.c.Client_Address_State} <lightning:inputField class="label-hidden" fieldName="BillingState" variant="label-hidden"/><br/>
+                        <span class = "highlight"  style="color: red">* </span> {!$Label.c.Client_Date_Of_Birth} <lightning:inputField class="label-hidden" fieldName="Date_Of_Birth__c" variant="label-hidden"/><br/>
+                        {!$Label.c.Client_Time_Horizon} <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden"/><br/>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <!--<lightning:inputField fieldName="BillingAddress" />
+             <lightning:inputField fieldName="Weakness__c" />
+            <lightning:inputField fieldName="Weakness__c" />
+            <lightning:inputField fieldName="Birthday__c" />
+            <lightning:inputField fieldName="Email_Address__c" />-->
+                <div class="slds-m-top_medium slds-clearfix ">
+                    <div class="slds-float_right">
+                        <lightning:button variant="neutral" label="{!$Label.FinServ.Button_Label_Cancel}" />
+                        <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.FinServ.Button_Label_SaveAndNew}" />
+
+                        
+                    </div>                    
+                </div>
+            </lightning:recordEditForm>
+        </div>
+    </lightning:card>
+</aura:component>

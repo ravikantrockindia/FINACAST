@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event carries the WHERE clause created by the filter" >
+    <aura:attribute name="whereClause" type="String"/>
+</aura:event>

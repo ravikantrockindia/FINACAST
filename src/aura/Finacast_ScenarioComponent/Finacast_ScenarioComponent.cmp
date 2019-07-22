@@ -1,0 +1,643 @@
+<aura:component controller="NewScenarioApex">
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <!-- attributes list -->
+    <aura:attribute name="tabName" type="String" default=" Scenario"/>
+    <aura:attribute name = "cid" type="String" default="0014600001eRaJoAAK"/>
+    <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "manageScenarioStatus" type = "boolean" default = "false"/> 
+    <aura:attribute name = "addScenarioButtonStatus" type = "boolean" default ="false"/>
+    <aura:attribute name = "data2" type="Object"/>
+    <aura:attribute name = "scenarioList" type="Scenario__c[]"/>
+    
+    <aura:attribute name = "scene" type = "String" default="init"/>
+    <!--aura:attribute name = "scene" type = "String" default="a0Z46000004nfpNEAQ"/-->
+    <aura:attribute name = "editStatus" type = "boolean" default = "false" />
+    <aura:attribute name = "displayInterest" type = "boolean" default = "false" />
+    <aura:attribute name = "primaryOwner" type = "String" />
+    
+    <aura:attribute name = "client" type="Account"/>
+    <!--aura:attribute name = "clientId" type="String" default="0014600001eRaJoAAK"/-->
+    <aura:attribute name = "recordTypeId" type = "String" />
+    <aura:attribute name = "recordName" type = "String" />	
+    <aura:attribute name = "recordId" type = "String" />
+    <aura:attribute name = "goalButtonStatus" type = "Boolean" default = "false"/> 
+    <aura:attribute name = "debtButtonStatus" type = "boolean" default = "false" />
+    <aura:attribute name = "isLoan" type = "boolean" default = "false" />
+    <aura:attribute name = "savingButtonStatus" type = "boolean" default = "false" /> 	
+    <aura:attribute name = "changeClient" type = "account" />
+    <aura:attribute name = "balance" type = "decimal" default="0"/>			
+    <aura:attribute name = "contribution" type = "decimal" />
+    <aura:attribute name = "displayMaturityDate" type = "boolean" default = "false" />
+    
+    <!-- Income attribute list -->
+    <aura:attribute name = "incomeSlider" type = "Integer" />
+    <aura:attribute name = "incomeLimit" type = "Integer" />
+    <aura:attribute name="income" type="Budget__c[]" default="[{'Name': 'Income 1', 'Amount' : '0'}]" />
+    <aura:attribute name = "incomeAmount" type = "Integer" />
+    
+    <!-- Expense attribute list -->
+    <aura:attribute name = "expenseSlider" type = "Integer" />
+    <aura:attribute name = "expenseLimit" type = "Integer" />
+    <aura:attribute name="expense" type="Budget__c[]" default="[{'Name': 'Expense 1', 'Amount' : '0'}]"/>
+    <aura:attribute name = "expenseAmount" type = "Integer" />
+    
+    <!-- Goal attribute list -->
+    <aura:attribute name = "goalLimit" type = "Integer" />	
+    <aura:attribute name="goal" type="FinServ__FinancialGoal__c[]" default="[{'Name': 'Goal 1', 'Amount' : '0'}]" />
+    <aura:attribute name="goalAmount" type="Decimal" default = "0"/>
+    
+    <!-- Loan attribute list -->
+    <aura:attribute name = "loanLimit" type = "Integer" />
+    <aura:attribute name="loan" type="FinServ__FinancialAccount__c[]" default="[{'Name': 'Loan', 'Amount' : '0', 'APR__c': '0'}]"/>
+    <aura:attribute name="loanAmount" type="Decimal" default = "0"/>
+    
+    <!-- Credit attribute list -->
+    <aura:attribute name = "creditCardLimit" type ="Integer" />
+    <aura:attribute name="creditcard" type="FinServ__FinancialAccount__c[]" default="[{'Name': 'Credit Card', 'Amount' : '0'}]"/>
+    <aura:attribute name="cardAmount" type="Decimal" default = "0"/>
+    
+    <!-- Saving attribute list -->
+    <aura:attribute name="savings" type="FinServ__FinancialAccount__c[]" default="[{'Name': 'Saving', 'Amount' : '0'}]" /> 
+    <aura:attribute name="savingsAmount" type="Integer" default = "0"/> 
+    <aura:attribute name = "savingLimit" type = "Integer" default = "0" />
+    
+    <!--handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--aura:handler name="change" value="{! v.scene}" action="{!c.doInit}"/-->
+    
+    <!--Resources-->
+    <ltng:require styles="{!$Resource.multilinetoast}" />
+    <ltng:require scripts="{!$Resource.ChartJs}"/>
+
+    
+    <!-- **********************************************  Component Markup Starts Here  ******************************************* -->
+    
+    
+    <!--loading spinner start -->
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Loading spinner end-->
+    
+    <div class ="pos">  
+        <div class="slds-page-header__row">
+            <div class="slds-col slds-size_3-of-12" align = "right" style="padding-top: 25px;">
+                <label>Viewing Scenario:</label>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <div class = "scenarioListPos" align = "right">
+                    <lightning:select aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}">
+                        <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
+                            <option text="{!sceneItems.Name}"  value = "{!sceneItems.Id}" ></option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-col slds-size_3-of-12" style="padding-top: 20px;">
+                <div class = "manageScenarioPos " >
+                    <lightning:button label = "Manage Scenarios" variant = "base" onclick = "{!c.manageScenarioButton}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    
+    <!--Page Grid-->
+    <div class="slds-grid slds-gutters">
+        
+        <div class="slds-col slds-size_10-of-12">
+            <span>
+                
+                <!-- 1. slider for income -->
+                <div class="slds-box slds-theme_default">
+                    <div class="slds-box slds-theme_default">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <b> INCOME </b> 
+                            </div>
+                            <div class="slds-col" align ="right" >
+                                <b> {!v.incomeAmount} </b>   
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="slds-box slds-theme_default">
+                        <aura:iteration items = "{!v.income}" var = "incomeVar" >
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <div class = "income-slider" >
+                                        <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="Medium" max = "{!v.incomeLimit}" onchange = "{!c.getIncomeSliderValue}"/>
+                                    </div>
+                                </div>
+                                <div class="slds-col" align = "right" style="margin-top: 10px;">
+                                    <lightning:buttonicon variant="bare" iconName="utility:save" size="Medium" title="Save" aura:id = "incSlider" value = "{!incomeVar.Id}" name = "income save" onclick="{!c.onClickSaveIcon}"/>  
+                                </div>
+                            </div>
+                            <br/>
+                        </aura:iteration> 
+                    </div>
+                </div>
+                
+                <!-- 2. slider for expense -->
+                <div class="slds-box slds-theme_default">
+                    <div class="slds-box slds-theme_default">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <b> EXPENSE </b> 
+                            </div>
+                            <div class="slds-col" align ="right" >
+                                <b> {!v.expenseAmount} </b>   
+                            </div>
+                        </div>
+                    </div>       
+                    <div class="slds-box slds-theme_default">
+                        <aura:iteration items = "{!v.expense}" var = "expenseVar" >
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <div class = "expense-slider" >
+                                        <lightning:slider label="{!expenseVar.Name}" aura:id ="expenseSlider" value="{!expenseVar.Amount__c}" size="Medium" max = "{!v.expenseLimit}" onchange = "{!c.getExpenseSliderValue}"/>
+                                    </div>
+                                </div>
+                                <div class="slds-col" align = "right" style="margin-top: 10px;">
+                                    <lightning:buttonicon variant="bare" iconName="utility:save" size="Medium" title="Save" value = "{!expenseVar.Id}" name = "expense save" onclick="{!c.onClickSaveIcon}"/>  
+                                </div>
+                            </div>
+                            <br/>
+                        </aura:iteration> 
+                    </div>
+                </div>
+                
+                
+                <!-- 3. slider for goal -->
+                <div class="slds-box slds-theme_default">       
+                    <div class="slds-box slds-theme_default">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <b> GOALS </b> 
+                            </div>
+                            <div class="slds-col" align = "right">
+                                <b> {!v.goalAmount} </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-box slds-theme_default">            
+                        <aura:iteration items = "{!v.goal}" var = "goalList" >
+                            <div class = "goal-slider" >
+                                <lightning:slider label="{!goalList.Name}" value="{!goalList.FinServ__TargetValue__c}" size="Medium" max = "{!v.goalAmount}"/>
+                            </div>
+                            <div class="slds-page-header__row" style="margin-top: 5px;">
+                                <div class="slds-size_6-of-12">
+                                    <lightning:button label = "Edit" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    <lightning:button label = "Delete" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                </div>
+                                <div class="slds-size_6-of-12" style="text-align: right;">
+                                    <lightning:button label = "Add New Goal" name = "goal button" variant = "base" onclick = "{!c.addGoalButton}"/>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+                
+                
+                <!-- 4. slider for loans -->
+                <div class="slds-box slds-theme_default">       
+                    <div class="slds-box slds-theme_default">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <b> LOANS </b> 
+                            </div>
+                            <div class="slds-col" align = "right" >
+                                <b> {!v.loanAmount} </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-box slds-theme_default">   
+                        <aura:iteration items = "{!v.loan}" var = "loanVar" >
+                            <div class = "loan-slider" >
+                                <lightning:slider label="{!loanVar.Name}" value="{!loanVar.FinServ__PaymentAmount__c}" size="Medium" max = "{!v.loanLimit}"/>
+                            </div>
+                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!loanVar.APR__c}" size="medium" max = "100"/>
+                            <div class="slds-page-header__row" style="margin-top: 5px;">
+                                <div class="slds-size_6-of-12">
+                                    <lightning:button label = "Edit" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    <lightning:button label = "Delete" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                </div>
+                                <div class="slds-size_6-of-12" style="text-align: right;">
+                                    <lightning:button label = "Add New Loan" name = "loan button" variant = "base" onclick = "{!c.addLoanButton}"/>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+                
+                
+                <!-- 5. slider for credit cards -->
+                <!-- div class="slds-box slds-theme_default">
+                    <div class="slds-box slds-theme_default"> 
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <b> CREDIT CARD </b> 
+                            </div>
+                            <div class="slds-col" align = "right" >
+                                <b> {!v.savingsAmount} </b> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-box slds-theme_default">
+                        <aura:iteration items = "{!v.savings}" var = "savingList" >
+                            <div class = "saving-slider" >
+                                <lightning:slider label="{!savingList.Name}" value="{!savingList.FinServ__Balance__c}" size="small" max = "{!v.savingLimit}"/>
+                            </div>
+                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!v.savingList.FinServ__APY__c}" size="x-small" max = "100"/>
+                            <div class="slds-page-header__row" style="margin-top: 5px;">
+                                <div class="slds-size_6-of-12">
+                                    <lightning:button label = "Edit" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
+                                    <lightning:button label = "Delete" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                </div>
+                                <div class="slds-size_6-of-12" style="text-align: right;">
+                                    <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" />
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div -->
+                
+                
+                <!-- 6. slider for savings -->
+                <div class="slds-box slds-theme_default">
+                    <div class="slds-box slds-theme_default"> 
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <b> SAVINGS </b> 
+                            </div>
+                            <div class="slds-col" align = "right" >
+                                <b> {!v.savingsAmount} </b> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-box slds-theme_default">
+                        <aura:iteration items = "{!v.savings}" var = "savingList" >
+                            <div class = "saving-slider" >
+                                <lightning:slider label="{!savingList.Name}" value="{!savingList.FinServ__Balance__c}" size="Medium" max = "{!v.savingLimit}"/>
+                            </div>
+                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{! savingList.FinServ__APY__c}" size="medium" max = "100"/>
+                            <div class="slds-page-header__row" style="margin-top: 5px;">
+                                <div class="slds-size_6-of-12">
+                                    <lightning:button label = "Edit" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
+                                    <lightning:button label = "Delete" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                </div>
+                                <div class="slds-size_6-of-12" style="text-align: right;">
+                                    <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" />
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+            </span>
+        </div>
+        
+        <!--div class="slds-col slds-size_6-of-12">
+            <span>
+                
+            </span>
+        </div-->
+    </div>
+    
+    <!-- pop utilities here-->
+    <!-- GOAL FORM displayed when user clicked on add new goal, set goalButtonStatus attribute to true -->  
+    <div class = "form-label">
+        <aura:if isTrue = "{!v.goalButtonStatus}">
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Add/Update Avatar Goal</b>
+                            </h2>   
+                        </header> 
+                        <lightning:recordEditForm         
+                                                  objectApiName = "Scenario_Goal__c"
+                                                  onsubmit = "{!c.handleSubmit}"
+                                                  onsuccess = "{!c.handleSuccess}"
+                                                  recordId = "{!v.recordId}"
+                                                  
+                                                  > 
+                            <lightning:messages/>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <span class = "highlight">* </span>Primary owner<lightning:inputField aura:id = "owner" fieldName="Client_Id__c" value = "{!v.primaryOwner}" disabled ="true" variant="label-hidden"/>
+                                        <br/> 
+                                        <span class = "highlight">* </span>Goal Type<lightning:inputField aura:id = "goalType" fieldName = "Scenario_Goal_Type__c" variant="label-hidden"/>
+                                        <br/> 
+                                        <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "goalName" fieldName="Name" variant="label-hidden"/>
+                                        <br/>                                   
+                                        <span class = "highlight">* </span>Amount That Need To Be Reached ($)<lightning:inputField aura:id = "targetAmount"  fieldName="Scenario_Target_Amount__c" variant="label-hidden"  onchange = "{!c.onClickAssociatedAcc}"  />
+                                        <br/>
+                                        <span class = "highlight">* </span>Target Date<lightning:inputField aura:id = "targetDate"  fieldName="Scenario_Target_Date__c" variant="label-hidden" onchange = "{!c.onClickAssociatedAcc}" />
+                                        <br/>
+                                    </div>
+                                    
+                                    <div class="slds-col">
+                                        <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "bankAccount" fieldName="Associated_Account__c" variant="label-hidden" onchange = "{!c.onClickAssociatedAcc}" />
+                                        <br/>
+                                        <span class = "highlight">* </span>Current Amount <lightning:inputField aura:id = "currentAmount" fieldName="Scenario_Current_Amount__c" variant="label-hidden" value = "{!v.balance}" onchange = "{!c.onClickAssociatedAcc}" />
+                                        <br/>
+                                        <span class = "highlight">* </span>Goal Priority<lightning:inputField aura:id = "goalPriority" fieldName="Scenario_Goal_Priority__c" variant="label-hidden"/>
+                                        <br/>
+                                        <span class = "highlight">* </span>Desired Monthly Contribution<lightning:inputField aura:id = "contri" fieldName="Scenario_Monthly_Contribution__c" value = "{!v.contribution}" variant="label-hidden"/>  
+                                        <br/>
+                                        <div class = "slds-hidden" >
+                                            <lightning:inputField aura:id = "scene" value = "{!v.scene}" fieldName = "Scenario__c" variant="label-hidden" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <footer class="slds-modal__footer">
+                                <div class="button" align ="right">
+                                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                                    <lightning:button variant="brand"  value = "goalForm" label="Save" type = "submit" />
+                                </div>
+                            </footer>      
+                        </lightning:recordEditForm>
+                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+            </div>
+        </aura:if>  
+    </div>
+    
+    <!--div class = "form-label">
+        <aura:if isTrue = "{!v.goalButtonStatus}">
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button-icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Add/Update Avatar Goal</b>
+                            </h2>   
+                        </header> 
+                        <lightning:recordEditForm         
+                                                  objectApiName = "FinServ__FinancialGoal__c"
+                                                  onsubmit = "{!c.handleSubmit}"
+                                                  onsuccess = "{!c.handleSuccess}"
+                                                  recordId = "{!v.recordId}"
+                                                  recordTypeId = "{!v.recordTypeId}"
+                                                  > 
+                            <lightning:messages/>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <span class = "highlight">* </span>Primary owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c" value = "{!v.primaryOwner}" disabled ="true" />
+                                        <br/> 
+                                        <span class = "highlight">* </span>Goal Type<lightning:inputField aura:id = "goalType" fieldName = "Scenario_Goal_Type__c" />
+                                        <br/> 
+                                        <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "goalName" fieldName="Name" />
+                                        <br/>                                   
+                                        <span class = "highlight">* </span>Amount That Need To Be Reached ($)<lightning:inputField aura:id = "targetAmount"  fieldName="FinServ__TargetValue__c" onchange = "{!c.onClickAssociatedAcc}"  />
+                                        <br/>
+                                        <span class = "highlight">* </span>Target Date<lightning:inputField aura:id = "targetDate"  fieldName="FinServ__TargetDate__c" onchange = "{!c.onClickAssociatedAcc}" />
+                                        <br/>
+                                    </div>
+                                    
+                                    <div class="slds-col">
+                                        <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "bankAccount" fieldName="Associated_Account__c" onchange = "{!c.onClickAssociatedAcc}" />
+                                        <br/>
+                                        <span class = "highlight">* </span>Current Amount <lightning:inputField aura:id = "currentAmount" fieldName="Start_Value__c"  value = "{!v.balance}" onchange = "{!c.onClickAssociatedAcc}" />
+                                        <br/>
+                                        <span class = "highlight">* </span>Goal Priority<lightning:inputField aura:id = "goalPriority" fieldName="Goal_Priority__c" />
+                                        <br/>
+                                        <span class = "highlight">* </span>Desired Monthly Contribution<lightning:inputField aura:id = "contri" fieldName="Required_Monthly_Saving__c" value = "{!v.contribution}"/>  
+                                        <br/>
+                                        <div class = "slds-hidden" >
+                                            <lightning:inputField aura:id = "scene" value = "{!v.scene}" fieldName = "Scenario_Id__c" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <footer class="slds-modal__footer">
+                                <div class="button" align ="right">
+                                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                                    <lightning:button variant="brand"  value = "goalForm" label="Save" type = "submit" />
+                                </div>
+                            </footer>      
+                        </lightning:recordEditForm>
+                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+            </div>
+        </aura:if>  
+    </div-->
+    
+    <!-- LOAN FORM, set debtButtonStatus true when user click on add new Loan or add new credit card-->
+    <div class = "form-label">
+        <aura:if isTrue = "{!v.debtButtonStatus}">
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal1" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-2"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Add/Update Avatar Debt</b>
+                            </h2>   
+                        </header> 
+                        <lightning:recordEditForm         
+                                                  objectApiName = "Scenario_Debt__c"
+                                                  onsubmit = "{!c.handleSubmit}"
+                                                  onsuccess = "{!c.handleSuccess}"
+                                                  recordId = "{!v.recordId}"
+                                                 
+                                                  > 
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">                                                 
+                                        <span class = "highlight">* </span>Name<lightning:inputField aura:id = "debtName" fieldName="Name" variant="label-hidden"  />
+                                        <br/>  
+                                        <span class = "highlight">* </span>Total Debt Amount ($)<lightning:inputField aura:id = "debtAmount" fieldName = "Current_Value__c" variant="label-hidden"  />
+                                        <br/> 
+                                        <span class = "highlight">* </span> APR (%) <lightning:inputField aura:id = "debtInterest" fieldName="APR__c" variant="label-hidden"  />
+                                        <br/>
+                                    </div>
+                                    
+                                    <div class="slds-col">   
+                                        <aura:if isTrue = "{!v.isLoan}" >
+                                            <span class = "highlight">* </span> Payment Amount ($) <lightning:inputField aura:id = "debtPayment" fieldName="Payment_Amount__c" variant="label-hidden"  />
+                                            <br/>
+                                            <span class = "highlight">* </span> Frequency <lightning:inputField aura:id = "debtFrequency" fieldName="Frequency__c" variant="label-hidden"  />
+                                            <br/>
+                                        </aura:if>                
+                                        <div class = "slds-hidden"> 
+                                            <lightning:inputField aura:id = "debtScene" value = "{!v.scene}" fieldName = "Scenario_Id__c" />
+                                        </div>
+                                        <div class = "slds-hidden">
+                                            <lightning:inputField aura:id = "debtClient" value = "{!v.primaryOwner}" fieldName = "Client_Id__c" />
+                                        </div>                                                                       
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <footer class="slds-modal__footer">
+                                <div class="button" align ="right">
+                                    <lightning:button variant ="neutral" name = "debt button" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                                    <lightning:button variant="brand"  name = "debt button" label="Save" type = "submit" />
+                                </div>
+                            </footer>      
+                        </lightning:recordEditForm>
+                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+            </div>
+        </aura:if>   
+    </div>
+    
+    
+    <!-- SAVING FORM, set savingButtonStatus true when usr click on add another saving -->
+    <div class = "form-label">
+        <aura:if isTrue = "{!v.savingButtonStatus}" >
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal1" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-2"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Add/Update Avatar Saving</b>
+                            </h2>   
+                        </header> 
+                        <lightning:recordEditForm         
+                                                  objectApiName = "Scenario_Savings__c"
+                                                  onsubmit = "{!c.handleSubmit}"
+                                                  onsuccess = "{!c.handleSuccess}"
+                                                  recordId = "{!v.recordId}"
+                                                 
+                                                  > 
+                            <lightning:messages />
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <span class = "highlight">* </span>Name<lightning:inputField aura:id = "savingName" fieldName="Name"  />
+                                        <br/> 
+                                        <span class = "highlight">* </span>Type of Account<lightning:inputField aura:id = "savingType" fieldName = "Type__c" onchange = "{!c.clickSavingTypeofAccount}"/>
+                                        <br/> 
+                                        <span class = "highlight">* </span>Current Value ($)<lightning:inputField aura:id = "currentAmount" fieldName="Current_Value__c"  />
+                                        <br/>                                  
+                                    </div>
+                                    
+                                    <div class="slds-col">
+                                        <aura:if isTrue = "{!v.displayInterest}">
+                                            <span class = "highlight">* </span>Annual Interest Rate<lightning:inputField aura:id = "interestRate" fieldName="APY__c" />
+                                            <br/>
+                                        </aura:if>
+                                        <aura:if isTrue = "{!v.displayMaturityDate}" >
+                                            <span class = "highlight">* </span>Maturity Date<lightning:inputField aura:id = "maturityDate" fieldName="End_Date__c"  />
+                                            <br/>
+                                        </aura:if>
+                                        <div class = "slds-hidden" ><lightning:inputField aura:id = "savingScene" value = "{!v.scene}" fieldName = "Scenario__c" /></div>
+                                        <div class = "slds-hidden" ><lightning:inputField aura:id = "savingClient" value = "{!v.primaryOwner}" fieldName = "Client_Id__c" /></div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <footer class="slds-modal__footer">
+                                <div class="button" align ="right">
+                                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                                    <lightning:button variant="brand"  name = "savingForm" label="Save" type = "submit" />
+                                </div>
+                            </footer>      
+                        </lightning:recordEditForm>
+                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+            </div>
+        </aura:if>   
+    </div>
+
+    <aura:if isTrue = "{!v.manageScenarioStatus}" >
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Manage Scenarios</b>
+                            </h2>   
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <b> Scenario Name </b>
+                            <aura:iteration items="{!v.scenario}" var="sceneItems">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col" >
+                                        {!sceneItems.Name}
+                                    </div>
+                                    <div class="slds-col" >
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" 
+                                                              title="Delete" value = "{!sceneItems.Id}" 
+                                                              onclick="{!c.onScenarioDeleteIcon}"/>  
+                                    </div>
+                                </div>
+                            </aura:iteration>
+                            
+                            <div class = "scenarioLabel">
+                                
+                                <aura:if isTrue = "{!v.addScenarioButtonStatus}">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col" >
+                                            <lightning:input aura:id = "sceneName" />
+                                        </div>
+                                        <div class="slds-col" >
+                                            <div class = "slds-save-icon" >
+                                                <lightning:buttonicon variant="bare" iconName="utility:save" size="large" 
+                                                                      title="Save"
+                                                                      onclick="{!c.onScenarioSaveIcon}"/>    
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </aura:if>
+                                
+                                <lightning:button label = "Add Another Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" 
+                                                  onclick="{!c.onScenarioAddButton}"/>
+                            </div>
+                        </div>
+                        
+                        <footer class="slds-modal__footer">
+                            <div class="button" align ="right"> 
+                                <lightning:button label ="Done" variant ="neutral"  onclick = "{!c.onDoneScenarioButton}"/>   
+                            </div>
+                        </footer>  
+                        
+                    </div>
+                </div>
+                <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}">
+                </div>
+            </div>
+        </aura:if>
+    
+</aura:component>

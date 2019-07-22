@@ -1,0 +1,6 @@
+<aura:component controller="AddIncomeController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name ="loanId" type="String"/>
+    <aura:attribute name="dataset" type="String" default="1"  description="Which set of data to display in the chart.  Will be either 1 or 2"/>
+    <ltng:require scripts="{!$Resource.ChartJs}" afterScriptsLoaded="{!c.doInit}"/>  
+        <canvas aura:id="transactionGraph" style="width:150px;"/>
+</aura:component>

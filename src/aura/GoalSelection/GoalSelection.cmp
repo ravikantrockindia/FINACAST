@@ -1,0 +1,39 @@
+<aura:component  controller="GoalTypeSelectionController" access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" ><br/><br/><br/><br/>   
+     <aura:handler name="init" value="{!this}" action="{!c.init}"/>  
+    <aura:attribute name="financialGoal" type="FinServ__FinancialGoal__c"/>
+    <aura:attribute name="showInModal" type="boolean"/>
+    <aura:attribute name="client" type="Account"/>  
+    <aura:attribute name="showModalRetirement" type="Boolean" default="false" />
+    <aura:attribute name="showModalNonRetirement" type="Boolean" default="false" />
+    <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
+     <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name = "heading" type = "String"/>
+
+    <aura:attribute name = "isRetirement" type = "Boolean" default = "False"/>
+    <aura:attribute name = "isNonRetirement" type = "Boolean" default = "False"/>
+     <aura:attribute name="recordTypeId" type="String"/>
+    
+    
+    
+    <!-- <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>--> 
+     
+ 
+    
+            
+             
+   
+   <ui:inputRadio aura:id="r0" name="NonRetirementRecordType" label="Non-Retirement Goal" change="{!c.onGoalClick}"/>
+   <ui:inputRadio aura:id="r1" name="RetirementRecordType" label="Retirement Goal" change="{!c.onGoalClick}" />
+    
+    <aura:if isTrue="{!v.isRetirement}">
+                 <c:RetirementGoal PrimaryOwner = "{!v.client.Id}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}"  />               
+            </aura:if>
+    
+    <aura:if isTrue="{!v.isNonRetirement}">
+                 <c:Goalform client = "{!v.client}" recordTypeId = "{!v.recordId}" heading = "{!v.heading}"  />               
+            </aura:if>
+    
+    
+      
+     
+</aura:component>

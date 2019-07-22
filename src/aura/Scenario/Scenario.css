@@ -1,0 +1,80 @@
+.THIS .form-label label.slds-form-element__label{
+    display: none !important;
+}
+
+.THIS .highlight
+{
+   color: red;
+}
+
+.THIS .slds-slider-label__range {
+    visibility: hidden;
+}
+.THIS .income-slider .slds-slider__range{
+   background: linear-gradient(rgba(20, 199, 58, 0.95) 100%,rgba(20, 199, 58, 0.95) 0%)!important;
+}
+.THIS .expense-slider .slds-slider__range{
+   background: linear-gradient(rgb(222, 19, 19) 100%,rgb(45, 226, 84) 0%)!important;
+}
+.THIS .goal-slider .slds-slider__range{
+   background: linear-gradient(rgb(79, 53, 222) 100%,rgb(79, 53, 222) 0%)!important;
+}
+.THIS .loan-slider .slds-slider__range{
+   background: linear-gradient(rgb(243, 220, 61) 100%,rgb(243, 220, 61) 0%)!important;
+}
+.THIS .card-slider .slds-slider__range{
+   background: linear-gradient(rgb(243, 220, 61) 100%,rgb(243, 220, 61) 0%)!important;
+}
+.THIS .saving-slider .slds-slider__range{
+   background: linear-gradient(rgb(105, 104, 197) 100%,rgb(105, 104, 197) 0%)!important;
+}
+
+.THIS .slds-button_icon-bare{
+    color: rgb(25, 61, 197)!important;
+}
+
+.THIS .save-icon-pos{
+    
+}
+.THIS .slds-modal__content {
+        overflow: inherit;
+}
+/*03-05-2019*/
+.THIS.slds-tabs_default {
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .scenario_mir > .slds-size_6-of-12 {
+    padding: 15px;
+}
+.THIS .slds-p-left_medium {
+	padding-left: 0;
+    padding-right: 0;
+}
+/*====-09-05-2019-====*/
+.THIS .slds-page-header__row .slds-size_6-of-12 > .slds-theme_default {
+    margin: 0px 0 10px;
+}
+.THIS .slds-page-header__row .slds-size_6-of-12 .slds-box {
+ 	padding: 0px;
+    border: none;
+}
+.THIS .slds-page-header__row .slds-size_6-of-12 > .slds-box {
+   padding: 10px;
+   border: 1px solid #ccc;
+}
+.THIS .scenarios_edit .slds-form-element__label {
+    display: none;
+}
+.THIS .scenarios_edit .slds-form-element__control {
+    margin-top: 10px;
+}
+.THIS .slds-page-header__row .slds-size_6-of-12 .slds-button {
+   line-height: 0;
+}
+.THIS .scenario_mir .scenario_mir1 .slds-size_6-of-12 {
+    width: 100%;
+}
+.THIS .value-boxes {
+    min-height: 22px;
+}

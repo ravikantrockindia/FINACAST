@@ -1,0 +1,6 @@
+<!--c:BudgetEvent-->
+<aura:event type="COMPONENT">
+    <!-- Add aura:attribute tags to define event shape.
+         One sample attribute here. -->
+    <aura:attribute name="BudgetFromEvent" type="Budget__c"/>
+</aura:event>

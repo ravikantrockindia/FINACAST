@@ -1,0 +1,85 @@
+<!-- Created by: Megha Goel-->
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="accountRecordId" type="String"/>
+    <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c"/>
+    <aura:attribute name="showInModal" type="boolean"/>
+    <aura:attribute name="accountType" type="String" default="Credit Card"/>
+    <aura:registerEvent name="submitDebtForm" type="c:CreateNewClientEvent"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="isFixedTerm"  type="Boolean" default="false"/>
+    <aura:attribute name="isTaxBenefit" type="Boolean" default="false"/>
+    <aura:attribute name="isMonthly" type="Boolean" default="true"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+
+    <aura:method name="saveDebtAccount" action="{!c.createDebtAccount}" access="PUBLIC"/>
+    
+    
+    <lightning:recordEditForm
+                              aura:id="form"
+                              onsubmit="{!c.handleSubmit}"
+                              recordId="{!v.financialAccount.Id}"
+                              onsuccess="{!c.handleSuccess}"
+                              objectApiName="FinServ__FinancialAccount__c">
+        
+        <div class="custom_card slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+                {!$Label.c.Name}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Name" aura:id="name" variant="label-hidden"/>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+            	Current Debt Value <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__LoanAmount__c"  aura:id="loanamt" variant="label-hidden"/>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+            	 {!$Label.c.Primary_Owner} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__PrimaryOwner__c" aura:id="owner" value="{!v.accountRecordId}" variant="label-hidden" disabled="true"/>
+            </div>
+            <div class="slds-col slds-size_1-of-2">                
+                APR<lightning:inputField class="label-hidden" fieldName="APR__c" variant="label-hidden" aura:id="apr"/>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <div class="mb-10">
+            		Is it a fixed term loan with monthly installment?<span class = "highlight"  style="color: red">* </span> Yes <ui:inputRadio class="ml-10" name="FixTerm" value="{!v.isFixedTerm}" change="{!c.handleFixTerm}"/> No <ui:inputRadio class="ml-10" name="NonFixTerm" value="{!!v.isFixedTerm}" change="{!c.handleFixTerm}"/>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <aura:if isTrue="{!v.isFixedTerm}">
+            <div class="custom_card slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    Payment Amount <span class = "highlight" style="color: red">* </span><lightning:inputField fieldName="FinServ__PaymentAmount__c" aura:id="pymamt" variant="label-hidden" ></lightning:inputField>
+                    <div class="mb-10">Do you get tax benefit from interest payment? Yes <ui:inputRadio class="ml-10" name="TaxBenefit" value="{!v.isTaxBenefit}" change="{!c.handleTaxBenefit}"/> No <ui:inputRadio class="ml-10" name="NoTaxBenefit" value="{!!v.isTaxBenefit}" change="{!c.handleTaxBenefit}"/></div>
+                    <lightning:inputField fieldName ="Do_you_get_tax_benefit_from_interest_pay__c" value="{!v.isTaxBenefit}" class="slds-hide"/> 
+                </div>
+                <div class="slds-col slds-size_1-of-2"> 
+                    <span class = "highlight" style="color: red">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c"  variant="label-hidden" aura:id = "payfreq" ></lightning:inputField>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <aura:if isTrue="{!v.isTaxBenefit}">
+                <div class="custom_card slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        What % of contribution bring tax benefits? <span class = "highlight" style="color: red">*</span><lightning:inputField fieldName ="What_of_contribution_bring_tax_benefit__c" variant="label-hidden" aura:id = "taxbenfit" />
+                        <div class="mb-10">Do tax benefits realize monthly? Yes <ui:inputRadio class="ml-10" name="Monthly" value="{!v.isMonthly}" change="{!c.handleMonthly}"/> No <ui:inputRadio name="NotMonthly" class="ml-10" value="{!!v.isMonthly}" change="{!c.handleMonthly}"/></div>
+                        <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" value="{!v.isMonthly}" class="slds-hide" />     
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="Max_yearly_tax_deduction_allowed__c" variant="label-hide" aura:id = "deducationtax" />
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </aura:if>
+        </aura:if>
+        <lightning:inputField fieldName ="Account_Type__c" value="{!v.accountType}" aura:id="accountType" class="slds-hide"/> 
+		<div class="custom_card slds-gutters">
+            <div class="slds-col slds-size_1-of-1">
+            <div class="slds-m-top_medium slds-clearfix ">
+                <div class="slds-float_right">                   
+                        <aura:if isTrue="{!v.showInModal}">
+                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr"/>
+                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" />
+                        </aura:if>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    </lightning:recordEditForm>
+</aura:component>

@@ -1,0 +1,11 @@
+.THIS .custom_card {
+    width: 94%;
+    margin: 0 3%;
+}
+.THIS .custom_card .slds-table thead th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.THIS .mlr {
+    margin: 0 0.25rem;
+}
