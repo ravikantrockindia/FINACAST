@@ -175,7 +175,6 @@ public class AffordabilityControllerTest {
         Account acc = [select id from Account where name = 'Test'];
         Account acc2 = [select id from Account where name ='Test2'];
         test.startTest();
-        AffordabilityController.ShowAffordabilityResult(acc.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.ShowAffordabilityResult(acc2.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.getData(acc.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.NumberOfMonths(system.today(), system.today());
