@@ -64,7 +64,8 @@ public class TestRetirementGoalApexController {
         RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,current);
         RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,null);        
        
-        RetirementGoalApexController.saveData(String.valueOf((accId.id)),'test save goal', String.valueOf(date.today()), '30','3', '60' , '500','69','6', '5200',String.valueOf(fGoal.Associated_Account__c) , priority, '500', tDate, '300','24','68',DD1,'24');
+        RetirementGoalApexController.saveData(String.valueOf((fGoal.id)),Userinfo.getUserId() ,'sahil123', birthDate, '30' ,'6', '35' , '65588',
+                              '12', '54655', String.valueOf(fGoal.Associated_Account__c) ,priority, '500', tDate,'34534','46','56',DD1,'true');
         //RetirementGoalApexController.getGoalData(fAccId.id);
         test.stopTest();
         System.assertEquals('1','1');
