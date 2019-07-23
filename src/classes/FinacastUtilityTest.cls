@@ -3,7 +3,7 @@ public class FinacastUtilityTest {
     @testsetup
     public static void data(){
         String cId = 'init';
-        
+        String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
         
         Account ac = new Account();
         ac.name = 'Test';
@@ -13,6 +13,8 @@ public class FinacastUtilityTest {
         
         Scenario__c sc=new Scenario__c();
         sc.Client_Id__c=ac.Id;
+        insert sc;
+        
         Account hac = new Account();
         hac.name = 'Test2';
         hac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
@@ -185,6 +187,7 @@ public class FinacastUtilityTest {
         list<FinServ__FinancialAccount__c> debt = [select id from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c =: acc.id];
         list<FinServ__FinancialGoal__c> goals4 = [select id from FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: acc.id];
         FinacastUtility.buildScenarioRequestData(income, expense, savings2, debt, goals4, sc.id, acc.id);
+        FinacastUtility.ExceptionHandle(10,'Message Error' , 'StackTrace');
         
     }
     
