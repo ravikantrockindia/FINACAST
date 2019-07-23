@@ -1135,7 +1135,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
             
             System.debug(clId);
             wrap.clientAcc =  acc;
-            Finacast_FutureSimulationController.createClientData(clId);
+            Finacast_FS_ParentApex.createClientData(clId);
             System.debug('aaa');
             System.debug(clientData);
             wrap.response = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
