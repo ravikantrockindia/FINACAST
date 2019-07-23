@@ -103,12 +103,12 @@ public class AddIncomeControllerTest {
         AddIncomeController.deleteLoan(fAcc1.id);
         AddIncomeController.deleteTransaction(ftrans1.id);
        // GoalsApexController.getGoals();
-        List<Budget__c> bd = [select id from Budget__c];
+        /*List<Budget__c> bd = [select id from Budget__c];
         Set<Id> bdId = new Set<Id>();
         for(Budget__c b : bd) {
             bdId.add(b.Id);
         }
-        FinacastBudgetHelper.shareBudget(bdId);
+        FinacastBudgetHelper.shareBudget(bdId);*/
         System.assertEquals('1', '1');
     }
     
