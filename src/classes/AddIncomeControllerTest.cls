@@ -31,16 +31,39 @@ public class AddIncomeControllerTest {
         financial1.FinServ__Balance__c = 5000;
         financial1.FinServ__PrimaryOwner__c= acc1.Id;
         financial1.FinServ__APY__c = 4;
+        financial1.FinServ__PaymentFrequency__c='Monthly';
         insert financial1;
+
+         financial1 = new FinServ__FinancialAccount__c();
+        financial1.Name = 'Test Financial Account 1';
+        rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
+        financial1.RecordtypeId = rcc[0].Id;
+        financial1.FinServ__Balance__c = 5000;
+        financial1.FinServ__PrimaryOwner__c= acc1.Id;
+        financial1.FinServ__APY__c = 4;
+        financial1.FinServ__PaymentFrequency__c='Semi Monthly';
+        insert financial1;  
+                 financial1 = new FinServ__FinancialAccount__c();
+        financial1.Name = 'Test Financial Account 1';
+        rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
+        financial1.RecordtypeId = rcc[0].Id;
+        financial1.FinServ__Balance__c = 5000;
+        financial1.FinServ__PrimaryOwner__c= acc1.Id;
+        financial1.FinServ__APY__c = 4;
+        financial1.FinServ__PaymentFrequency__c='Biweekly';
+        insert financial1; 
         
-        FinServ__FinancialAccountTransaction__c transaction1 = new FinServ__FinancialAccountTransaction__c();
-        //transaction1.Name = 'Test transcation Account 1';
-        //list<RecordType> rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
-        //financial1.RecordtypeId = rcc[0].Id;
-        transaction1.FinServ__TransactionDate__c = date.newInstance(2019, 1, 1);
-        //transaction.FinServ__PrimaryOwner__c= acc1.Id;
-        transaction1.FinServ__Amount__c = 4000;
-        insert transaction1;
+                 financial1 = new FinServ__FinancialAccount__c();
+        financial1.Name = 'Test Financial Account 1';
+        rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
+        financial1.RecordtypeId = rcc[0].Id;
+        financial1.FinServ__Balance__c = 5000;
+        financial1.FinServ__PrimaryOwner__c= acc1.Id;
+        financial1.FinServ__APY__c = 4;
+        financial1.FinServ__PaymentFrequency__c='Weekly';
+        insert financial1; 
+        
+       
         
         Budget__c bg = new Budget__c();
         bg.name = 'Test';
@@ -50,7 +73,32 @@ public class AddIncomeControllerTest {
         bg.End_Date__c = date.newInstance(2019, 31, 1);
         bg.Amount__c = 1000;
         bg.Primary_Owner__c= acc1.Id;
+        bg.Frequency__c='Monthly';
         insert bg;
+        
+        bg = new Budget__c();
+        bg.name = 'Test';
+        rcc2 =[Select Id From RecordType Where SobjectType='Budget__c' And DeveloperName = 'Income_Record_Type' limit 1];
+        bg.RecordtypeId = rcc2[0].Id;
+        bg.Start_Date__c = date.newInstance(2019, 1, 1);
+        bg.End_Date__c = date.newInstance(2019, 31, 1);
+        bg.Amount__c = 1000;
+        bg.Primary_Owner__c= acc1.Id;
+        bg.Frequency__c='Semi Monthly';
+        insert bg;
+        bg = new Budget__c();
+        bg.name = 'Test';
+        rcc2 =[Select Id From RecordType Where SobjectType='Budget__c' And DeveloperName = 'Income_Record_Type' limit 1];
+        bg.RecordtypeId = rcc2[0].Id;
+        bg.Start_Date__c = date.newInstance(2019, 1, 1);
+        bg.End_Date__c = date.newInstance(2019, 31, 1);
+        bg.Amount__c = 1000;
+        bg.Primary_Owner__c= acc1.Id;
+        bg.Frequency__c='Bi-Weekly';
+        insert bg;
+
+        
+        
         
         Budget__c bg1 = new Budget__c();
         bg1.name = 'Test1';
@@ -61,6 +109,17 @@ public class AddIncomeControllerTest {
         bg1.Amount__c = 1000;
         bg1.Primary_Owner__c= acc1.Id;
         insert bg1;
+        
+         FinServ__FinancialAccountTransaction__c transaction1 = new FinServ__FinancialAccountTransaction__c();
+        //transaction1.Name = 'Test transcation Account 1';
+        //list<RecordType> rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
+        //financial1.RecordtypeId = rcc[0].Id;
+        transaction1.FinServ__TransactionDate__c = date.newInstance(2019, 1, 1);
+        transaction1.OwnerId= acc1.OwnerId;
+        transaction1.Budget_Category__c=bg1.id;
+        transaction1.FinServ__Amount__c = 4000;
+        insert transaction1;
+        
         FinServ__FinancialAccount__c fa = new FinServ__FinancialAccount__c(Name='SahilTest',FinServ__PrimaryOwner__c=acc1.Id);
         insert fa;
         FinServ__FinancialGoal__c goal1 = new FinServ__FinancialGoal__c();
@@ -77,8 +136,8 @@ public class AddIncomeControllerTest {
         
         
         // ----- Test Class ---------------------------------------------//  
-        bg = [select id ,Primary_Owner__c,Amount__c from Budget__C where name = 'Test'];
-        FinServ__FinancialAccount__c fAcc1 = [select id  from FinServ__FinancialAccount__c where name = 'Test Financial Account 1'];
+        bg = [select id ,Primary_Owner__c,Amount__c from Budget__C where name = 'Test' limit 1];
+        FinServ__FinancialAccount__c fAcc1 = [select id  from FinServ__FinancialAccount__c where name = 'Test Financial Account 1' limit 1];
         FinServ__FinancialGoal__c fGoal1 = [select FinServ__TargetDate__c,Start_Value__c,Required_Monthly_Saving__c ,FinServ__PrimaryOwner__c  from FinServ__FinancialGoal__c where name = 'test goal 1' ];
         FinServ__FinancialAccountTransaction__c ftrans1 = [Select id, FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__Amount__c = 4000];
         DateTime d = fGoal1.FinServ__TargetDate__c;
@@ -102,14 +161,14 @@ public class AddIncomeControllerTest {
         AddIncomeController.deleteGoals(fGoal1.id);
         AddIncomeController.deleteLoan(fAcc1.id);
         AddIncomeController.deleteTransaction(ftrans1.id);
-       // GoalsApexController.getGoals();
+        // GoalsApexController.getGoals();
         /*List<Budget__c> bd = [select id from Budget__c];
-        Set<Id> bdId = new Set<Id>();
-        for(Budget__c b : bd) {
-            bdId.add(b.Id);
-        }
-        FinacastBudgetHelper.shareBudget(bdId);*/
-         SummaryCashFlowController.getMonth('JAN');
+Set<Id> bdId = new Set<Id>();
+for(Budget__c b : bd) {
+bdId.add(b.Id);
+}
+FinacastBudgetHelper.shareBudget(bdId);*/
+        SummaryCashFlowController.getMonth('JAN');
         System.assertEquals('1', '1');
     }
     

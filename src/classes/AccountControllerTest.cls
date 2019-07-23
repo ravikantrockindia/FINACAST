@@ -8,7 +8,9 @@ public class AccountControllerTest
         AccountController.getDisplayColumns();
         AccountController.getLimitedAccounts('s');
         AccountController.ColumnSet1(' Where createdById=:currentuser');
+        
         AccountController.saveColumns('name');
+        AccountController.saveColumns('');
         
     }
 
