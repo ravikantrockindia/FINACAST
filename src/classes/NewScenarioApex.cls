@@ -750,7 +750,7 @@ public class NewScenarioApex {
             loan.Client_Id__c = clientID;
             loan.Scenario_Id__c = sceneId;                 
             loan.Name = 'Loan 1';
-            loan.APR__c = 7;
+            loan.APR__c = 3;
             loan.Current_Value__c = 500000;
             loan.Frequency__c = 'Monthly';
             loan.Start_Date__c = startDate;

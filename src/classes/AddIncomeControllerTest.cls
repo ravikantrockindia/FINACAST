@@ -109,6 +109,7 @@ public class AddIncomeControllerTest {
             bdId.add(b.Id);
         }
         FinacastBudgetHelper.shareBudget(bdId);*/
+         SummaryCashFlowController.getMonth('JAN');
         System.assertEquals('1', '1');
     }
     

@@ -62,7 +62,7 @@ public with sharing class AddIncomeController {
         List<FinServ__FinancialAccountTransaction__c> transactionList = new List<FinServ__FinancialAccountTransaction__c>();
         
             transactionList = [Select id , FinServ__TransactionDate__c, FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where Budget_Category__c =: bg.id AND FinServ__TransactionDate__c <= :startDate AND FinServ__TransactionDate__c >= LAST_N_MONTHS:5];
-            System.debug('transaction detail'+transactionList);
+           
         return transactionList;
     }
    
@@ -87,7 +87,7 @@ public with sharing class AddIncomeController {
     // On init method to get the records on Budget Screen
     @AuraEnabled
     public static wrapIncome getBudget(String clientId ){
-        System.debug(clientId);
+      //  System.debug(clientId);
         Double sum = 0 ; 
         Boolean isportalEnabled = false;
         Double sumExpense = 0;
