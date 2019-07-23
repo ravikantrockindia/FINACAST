@@ -61,6 +61,8 @@ public class Nonretirementgoalapexcontrollertest {
     
     static testMethod void nonretirementtestapex()
     {  
+        Account a=[select id  from Account where name = 'test account 1'];
+        
         FinServ__FinancialAccount__c fAcc1 = [select id  from FinServ__FinancialAccount__c where name = 'test financial account 1'];
         FinServ__FinancialGoal__c fGoal1 = [select FinServ__TargetDate__c,Start_Value__c,Required_Monthly_Saving__c from FinServ__FinancialGoal__c where name = 'test goal 1' ];
         DateTime d = fGoal1.FinServ__TargetDate__c;
@@ -76,6 +78,8 @@ public class Nonretirementgoalapexcontrollertest {
         String currAmount  = String.valueOf(fGoal2.Start_Value__c);
         
         Test.startTest();
+        Nonretirementgoalapexcontroller.dample(a.Id);
+Nonretirementgoalapexcontroller.getNonRetirementGoalRecord(fGoal2.Id)     ;   
         Nonretirementgoalapexcontroller.getCurrentAmount(fAcc1.id ,targetDate, targetAmt,currentAmount );
         Nonretirementgoalapexcontroller.getCurrentAmount(fAcc2.id ,tarDate, tarAmt,currAmount );
         Nonretirementgoalapexcontroller.getCurrentAmount(fAcc2.id ,tarDate, tarAmt,'0');
