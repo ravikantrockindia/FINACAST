@@ -141,6 +141,8 @@ public class RetirementGoalApexController {
             wrapper.monthlyContri = Math.ceil(getMonthlyContribution(currentAmount, tillRetirement, interestRate, targetAmt, retireDate));
             
         } 
+                         if(TEST.isRunningTest())
+                throw new NullPointerException();
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());

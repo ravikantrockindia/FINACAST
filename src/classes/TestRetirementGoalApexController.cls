@@ -50,7 +50,7 @@ public class TestRetirementGoalApexController {
         System.debug('target: '+target);
         System.debug('tDate: '+tDate);
         
-        FinServ__FinancialGoal__c fGoal = [select Associated_Account__c, Start_Value__c from FinServ__FinancialGoal__c where name = 'test goal' ];
+        FinServ__FinancialGoal__c fGoal = [select Id,Associated_Account__c, Start_Value__c from FinServ__FinancialGoal__c where name = 'test goal' ];
         DateTime birth = date.today();
         String birthDate = birth.format('YYYY-MM-dd');
         String current = String.valueOf(fGoal.Start_Value__c);
@@ -58,6 +58,8 @@ public class TestRetirementGoalApexController {
         String priority = String.valueOf(600);
         
         test.startTest();
+        RetirementGoalApexController.dample(accId.Id);
+        RetirementGoalApexController.getGoalData(fGoal.Id);
         RetirementGoalApexController.getAmountMonth(500, 3, 6,'10','60', birthDate);
         RetirementGoalApexController.getAmountMonth(500, 0, 0,'10','60', birthDate);  
         RetirementGoalApexController.getAmountMonth(500, 3, 3,'10','60', birthDate);
