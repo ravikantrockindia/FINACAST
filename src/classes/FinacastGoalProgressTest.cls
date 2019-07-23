@@ -25,6 +25,7 @@ public class FinacastGoalProgressTest {
         goal.Required_Monthly_Saving__c = 1000;
         
         insert goal;
+        new FinacastGoalProgressApex(goal.Id);
         FinacastGoalProgressApex.goalStatus(goal.id);
         
         FinServ__FinancialGoal__c goal1 = new FinServ__FinancialGoal__c();
