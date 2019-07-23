@@ -91,6 +91,7 @@ public class Finacast_FS_ParentApexTest {
         goals1.FinServ__TargetValue__c = 10000;
         goals1.FinServ__TargetDate__c = Date.today()+900;
         goals1.Start_Value__c = 2000;
+        goals1.Start_Date__c = system.today();
         goals1.Goal_Priority__c = '1';
         goals1.Required_Monthly_Saving__c = 2000;
         goals1.Associated_Account__c = savings1.Id;
@@ -164,6 +165,7 @@ public class Finacast_FS_ParentApexTest {
         goals2.Start_Value__c = 2000;
         goals2.FinServ__Household__c = hac.id;
         goals2.Goal_Priority__c = '1';
+        goals2.Start_Date__c = system.today();
         goals2.Max_yearly_tax_deduction_allowed__c=5;
         goals2.Required_Monthly_Saving__c = 2000;
         goals2.Associated_Account__c = savings1.Id;
