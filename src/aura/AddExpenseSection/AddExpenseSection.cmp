@@ -1,0 +1,166 @@
+<aura:component controller="CreateNewClient" access="global">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="ExpenseList" type="List" default='[]'/>
+    <aura:attribute name="currentStep" type="String"/>
+    <aura:attribute name="disabled" type="boolean" default="false"/>
+    <aura:attribute name="isTaxBenefit" type="boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="options1" type="List" />
+    <aura:attribute name="recordTypeId" type="String"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <lightning:navigation aura:id="navService"/>
+    
+    <lightning:card>  
+         <lightning:spinner aura:id="mySpinner" alternativeText="Loading" size="medium"/>
+        <div class="slds-m-around_x-small">
+            <div class="custom_card slds-gutters">
+                <div class="slds-col slds-size_1-of-1">
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+                            <lightning:button variant="brand" label="Add Expense" title="Add Expense" onclick="{! c.addExpense }" />
+                        </div>
+                    </div>
+                    <table class="slds-m-top_medium slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <!-- <th class="" scope="col">
+                            <div class="slds-truncate" title="Opportunity Name">Index</div>
+                        </th>-->
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Expense Name"><span class = "highlight"  style="color: red">* </span>Expense Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Budget($)"><span class = "highlight"  style="color: red">* </span>Budget($)</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Priority"><span class = "highlight"  style="color: red">* </span>Priority</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Yearly inflation (%)"><span class = "highlight"  style="color: red">* </span>Yearly inflation (%)</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Start Date">Start Date</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="End Date"><span class = "highlight"  style="color: red">* </span>End Date</div>
+                                </th>
+                                
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Does the contribution bring tax benefit?">Tax benefit?</div>
+                                </th>
+                                
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <aura:iteration items="{!v.ExpenseList}" var="i" indexVar="index">
+                                
+                                <tr class="slds-hint-parent">
+                                    <!-- <td data-label="Account Name">
+                                 
+                                <div class="slds-truncate" title="Cloudhub"><lightning:input value="{!i.index}" disabled="{!i.disabled}" aura:id="inQuantity" /></div>
+                            </td>-->
+                                    <td >
+                                        <div class="slds-truncate"><lightning:select aura:id="fields" name="select1" value="{!i.expense.Name}" disabled="{!i.disabled}" variant="label-hidden" class="label-hidden" required="true" messageWhenValueMissing="Select a value">
+                                            <aura:iteration items="{!v.options1}" var="item">
+                                                <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/> 
+                                                
+                                            </aura:iteration>
+                                            
+                                            </lightning:select></div>
+                                        
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" ><lightning:input type="number" value="{!i.expense.Amount__c}" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/></div>
+                                    </td>
+                                    <td >
+                                        <div class="slds-truncate" ><lightning:select aura:id="fields" name="select1" value="{!i.expense.Priority__c}" disabled="{!i.disabled}" variant="label-hidden" class="label-hidden" required="true" messageWhenValueMissing="Select a value">
+                                            <option value="">--None--</option>
+                                            <option value="Priority 1 - Must Have">Priority 1 - Must Have</option>
+                                            <option value="Priority 2">Priority 2</option>
+                                            <option value="Priority 3">Priority 3</option>
+                                            
+                                            </lightning:select></div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate"><lightning:input type="number" value="{!i.expense.Yearly_growth__c}" disabled="{!i.disabled}" aura:id = "fields" required="true"  formatter="percent-fixed" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Income tax rate cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" /> </div>
+                                    </td>
+                                    <td >
+                                        <div class="slds-truncate"><lightning:input type="date" disabled="{!i.disabled}" value="{!i.expense.Start_Date__c}" aura:id="startdate" name="{!'row_'+index+'_sdate'}" variant="label-hidden" onblur="{!c.onblur}"/></div>
+                                    </td>
+                                    <td >
+                                        <div class="slds-truncate"><lightning:input type="date" disabled="{!i.disabled}" value="{!i.expense.End_Date__c}"  messageWhenValueMissing="Complete this field" aura:id="enddate" required="true" name="{!'row_'+index+'_edate'}"  onblur="{!c.onblur}" variant="label-hidden"/></div>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="slds-truncate" ><lightning:input type="checkbox" checked="{!i.expense.Does_contribution_bring_tax_benifit__c}" disabled="{!i.disabled}" value="{!index}" onchange="{!c.taxBenefitSection}" /></div> 
+                                    </td>
+                                    
+                                    <td >
+                                        <div class="slds-truncate">
+                                            <lightning:buttonIcon iconName="utility:contract_alt" aura:id="a"   alternativeText="Tax Benefit" size="small" onclick="{!c.sectionButton}" value="{!index}" disabled="{!!i.expense.Does_contribution_bring_tax_benifit__c}" />
+                                            
+                                            <lightning:buttonIcon iconName="utility:edit" alternativeText="Edit" size="small" onclick="{!c.editRow}" value="{!index}" disabled="{!!i.disabled}" />
+                                            <lightning:buttonIcon iconName="utility:delete" alternativeText="Delete" size="small" onclick="{!c.deleteRow}" value="{!index}"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <aura:if isTrue="{!i.showSection}">
+                                    <tr class="slds-hint-parent hidden-hint-parant">
+                                        <!--<td >
+                                            <div class="slds-truncate">What % of contribution bring tax benefits? <span class = "highlight" style="color: red">*</span><lightning:input type="number" value="{!i.expense.What_of_contribution_bring_tax_benifit__c}"  disabled="{!i.disabled}" aura:id = "taxbenfit" />
+                                            </div> 
+                                        </td>
+                                        <td class="slds-col slds-size_1-of-2">
+                                            <div class="slds-truncate"> 
+                                                Max yearly tax deduction allowed ($ )?  <lightning:input type="number" value="{!i.expense.May_yearly_tax_deduction_allowed__c}" disabled="{!i.disabled}" aura:id = "deducationtax" />
+                                            </div> 
+                                        </td>
+                                        
+                                        <td>
+                                            <div class="slds-truncate"> 
+                                                Does tax benefit realize really? <lightning:input type="checkbox" checked="{!i.expense.Does_tax_benifit_realize_really__c}" disabled="{!i.disabled}" aura:id = "deducationtax" />
+                                            </div> 
+                                        </td>-->
+                                        <td colspan="10">
+                                            <div class="slds-grid slds-gutters">
+                                                <div  class="slds-col slds-size_1-of-12"></div>
+                                                <div  class="slds-col slds-size_4-of-12">
+                                                    <span class = "highlight" style="color: red">*</span> What % of contribution bring tax benefits? <lightning:input type="number" value="{!i.expense.What_of_contribution_bring_tax_benifit__c}"  disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" aura:id="taxbenefit" name="{!'taxbenefit'+index}" required="true"  step="0.01" formatter="percent-fixed" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
+                                                </div>
+                                                <div  class="slds-col slds-size_4-of-12">
+                                                    Max yearly tax deduction allowed ($ )?  <lightning:input type="number" step="0.01"  formatter="currency" value="{!i.expense.May_yearly_tax_deduction_allowed__c}" disabled="{!i.disabled}" aura:id = "deducationtax" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" />
+                                                </div>
+                                                <div  class="slds-col slds-size_2-of-12">
+                                                    Does tax benefit realize really? <lightning:input type="checkbox" checked="{!i.expense.Does_tax_benifit_realize_really__c}" disabled="{!i.disabled}" aura:id = "deducationtax" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                            </aura:iteration>
+                        </tbody>
+                        
+                    </table>
+                    <div class="slds-m-top_medium slds-clearfix ">
+                        <div class="slds-float_right">
+                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" class="mlr" />
+                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" onclick="{!c.saveExpenses}" disabled="{!v.disabled}" class="mlr" />
+                            <lightning:button  variant="brand" aura:id="skipNextButton" label="Done" onclick="{!c.skipButton}"/>
+                            
+                        </div>
+                        <div class="slds-float_left">
+                            <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </lightning:card>
+</aura:component>

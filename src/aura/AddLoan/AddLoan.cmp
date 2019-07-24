@@ -1,0 +1,101 @@
+<aura:component controller="AddIncomeController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" > 
+    <aura:attribute name="Loan" type="String"/> 
+    <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "loanId" type = "String"/>
+    <aura:attribute name = "title" type = "String"/>
+    <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>    
+    <aura:attribute name="getNo" type="Boolean" default = "False"/>
+    <aura:attribute name="getYes" type="Boolean" default = "False"/>
+    <aura:attribute name="isMonthly" type="Boolean" default = "false"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name = "accLoanRecType"  type = "String"/>    
+    <div class="slds-align_absolute-center">
+        <div class="slds-m-around_xx-large">
+            <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                <div class="slds-modal__container">                        
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                            <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.title}</h2>                            
+                        <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate">A debt is money that you owe to someone. At the top level, Finacast divides your debts into term debts and non-term debts.
+                            <br/>                     
+                        </h3>
+                    </header>
+                    <lightning:recordEditForm 
+                                              recordTypeId="{!v.Loan}"
+                                              recordId = "{!v.loanId}"
+                                              objectApiName="FinServ__FinancialAccount__c"  onsuccess="{!c.saveAndCloseBtn}"
+                                              onsubmit = "{!c.handleSubmit}"
+                                              onload="{!c.recordLoaded}"
+                                              >
+                        <lightning:messages />
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div class="slds-box1">
+                                <div class="slds-gutters">  
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >                 
+                                        <span class = "highlight">* </span> Name<lightning:inputField  fieldName="Name" aura:id = "owner" variant="label-hidden"  />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 add_loan-pop-up add_loan-pop-up-sticker" >
+                                        <span class = "highlight">* </span> Current Loan Amount<lightning:inputField fieldName="FinServ__LoanAmount__c" variant="label-hidden" aura:id="inQuantity" />
+                                    </div>
+                                    <div style="clear:both;"></div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	<span class = "highlight">* </span>APR<lightning:inputField fieldName="APR__c" aura:id = "apr" variant="label-hidden"/>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	<span class = "highlight">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c" aura:id = "payfreq" variant="label-hidden"></lightning:inputField>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	<span class = "highlight">* </span> Payment Amount<lightning:inputField fieldName="FinServ__PaymentAmount__c" variant="label-hidden" aura:id = "amount" ></lightning:inputField>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	<aura:if isTrue="{!v.accLoanRecType == 'IndustriesIndividual'}">
+                                            <lightning:inputField fieldName ="FinServ__PrimaryOwner__c" value="{!v.client.Id}" class="slds-hide" />
+                                        </aura:if>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"/>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	<aura:if isTrue="{!v.accLoanRecType == 'IndustriesHousehold'}">
+                                            Primary Owner<lightning:inputField  variant="label-hidden" fieldName ="FinServ__PrimaryOwner__c"  />
+                                        </aura:if>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                    	<lightning:inputField fieldName ="Do_you_get_tax_benefit_from_interest_pay__c" value="{!v.isTaxDeduction}" class="slds-hide"/>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                                </div>
+                                <aura:if isTrue="{!v.isTaxDeduction}">
+                                    <div class="slds-gutters">
+                                        <div class="slds-col  slds-size_1-of-2" > 
+                                            <span class = "highlight">*</span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="What_of_contribution_bring_tax_benefit__c" variant="label-hidden" aura:id = "taxbenfit" />
+                                            Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
+                                            <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" variant="label-hidden" value="{!v.isMonthly}" class="slds-hidden" />    
+                                        </div>
+                                        <div class="slds-col   slds-size_1-of-2" >
+                                            Max yearly tax deduction allowed ($ )?  <lightning:inputField variant="label-hidden" fieldName ="Max_yearly_tax_deduction_allowed__c" aura:id = "deducationtax" />
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <div style="clear: both;"></div> 
+                            </div>                        
+                        </div>                        
+                        <footer class="slds-modal__footer">
+                            <div class="button" align ="right">
+                                <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                                <lightning:button variant="brand" label="Save" type="submit" />
+                            </div>
+                        </footer>
+                    </lightning:recordEditForm>
+                </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>            
+        </div>
+    </div>
+</aura:component>

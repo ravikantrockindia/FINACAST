@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" >
+    <aura:attribute name="idclient" type="String" />
+     <aura:attribute name="ViewName" type="String" />
+</aura:event>

@@ -1,0 +1,168 @@
+<aura:component controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <!--on component load call doInit javaScript function and fetch records from server-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="saving" type="String[]" />
+    <aura:attribute name="credit" type="String[]" default="0"/>
+    <aura:attribute name="loan" type="String[]" default="0"/>
+    <aura:attribute name="netWorth" type="Double" default="0"/> 
+    <aura:attribute name="client" type="String" />
+    <aura:attribute name="ids" type="String" />
+    <aura:attribute type="id" name="recordId"/>
+    <aura:attribute name = "selectedClientchild" type = "String"/>
+    <aura:attribute name = "col" type="Boolean" default="False"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isTab" type="boolean" default="False"/>
+    <aura:attribute name="isCSS" type="boolean" default="False"/> 
+    <aura:attribute name="NemeofSaving" type="String" />
+     
+    <aura:attribute name="Tid" type="String"/>
+    <aura:registerEvent name="rTid" type="c:AccountReport"/>
+    <aura:handler name="change" value="{!v.isModalOpen}" action="{!c.doInit}"/>
+    <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>
+     
+    <!-- <lightning:recordEditForm objectApiName="FinServ__FinancialGoal__c">
+        <lightning:inputField fieldName="FinServ__PrimaryOwner__c" value="{!v.selectedClient}" onchange="{! c.changeClient }"   aura:id="inf1"/> 
+    </lightning:recordEditForm>-->
+       
+    <div class="slds-col slds-size_1-of-1 dashboard-parant my_balance-sheets" >   
+        
+        <div>
+            <div class="leftColumnTab">
+                <h2 class="tabHeading">My Balance Sheet</h2>
+            </div>
+            <div class="netAmount">
+                <div class ="netheadingtotal" >   <span class="netTotalHeading">Net Total</span> 
+                </div>
+                <div class ="netheadingworth" >
+                    <span class="netTotalValue" id="netTotalBal">${!v.netWorth}</span>
+                </div>
+            </div>
+        </div> <br/>
+        <br/>
+        <div>
+            
+            <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
+                <lightning:accordionSection name="A" class="accord balance-sheet" label="Saving">
+                    <aura:if isTrue="{!v.isTab}">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">
+                                <lightning:button label="Add Manual Account" variant="" onclick="{! c.openModel }"/>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.isModalOpen}">
+                            
+                            <c:BankAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}"/>
+                            
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!not(empty(v.saving))}" >
+                        <aura:iteration items="{!v.saving}" var="s" >
+                            <lightning:card title="" aura:id="" >
+                                 
+                                <lightning:button variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }"/><p ><span class="loanrate">@{!s.FinServ__APY__c}{!s.APR__c}%</span>
+                                <span class="balance">${!s.FinServ__Balance__c}</span>
+                                
+                                </p>
+                                    
+                                <br/>
+                                   
+                            </lightning:card>
+                        </aura:iteration> 
+                        <aura:set attribute="else">
+                            <lightning:card title=""> No Value Present </lightning:card>
+                        </aura:set>
+                    </aura:if>
+                    
+                </lightning:accordionSection>
+            </lightning:accordion>
+            
+            
+            
+            
+        </div>   
+        <br/>
+        <div>
+            
+            <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
+                <lightning:accordionSection name="B" class="balance-sheet" label="Credit">
+                    <aura:if isTrue="{!v.isTab}">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">
+                                <lightning:button label="Add credit Account" variant="" onclick="{! c.openModel }"/>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.isModalOpen}">
+                            
+                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}"/>
+                            
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!not(empty(v.credit))}">
+                        <aura:iteration items="{!v.credit}" var="c">
+                            <lightning:card title="">{!c.Name}<p ><span class="loanrate">@{!c.FinServ__APY__c}{!c.APR__c}%</span>
+                                <span class="balance">${!c.FinServ__Balance__c}</span> 
+                                
+                                </p>
+                                <br/>
+                            </lightning:card>
+                            
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <lightning:card title=""> No Value Present </lightning:card>
+                        </aura:set>
+                    </aura:if>
+                </lightning:accordionSection>
+            </lightning:accordion>
+            
+        </div>                      
+        <br/>
+        <div>
+            
+            <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
+                <lightning:accordionSection name="C" class="balance-sheet" label="Loan Account">
+                    <aura:if isTrue="{!v.isTab}">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">
+                                <lightning:button label="Add Manual Account" variant="" onclick="{! c.openModel }"/>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.isModalOpen}">
+                            
+                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}"/>
+                            
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!not(empty(v.loan))}">
+                        <aura:iteration items="{!v.loan}" var="l">
+                            <lightning:card title="">{!l.Name} <p ><span class="loanrate">@{!l.FinServ__APY__c}{!l.APR__c}%</span>
+                                <span class="balance">${!l.FinServ__LoanAmount__c}</span>
+                                
+                                </p>
+                                <br/>
+                            </lightning:card>
+                            
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <lightning:card title=""> No Value Present </lightning:card>
+                        </aura:set>
+                    </aura:if>
+                </lightning:accordionSection>
+            </lightning:accordion>
+            <aura:set attribute="else">
+                <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
+                    <lightning:accordionSection name="C" class="accord" label="novalue">
+                        <lightning:card title=""> No Value Present
+                        </lightning:card>
+                    </lightning:accordionSection>
+                </lightning:accordion> 
+            </aura:set>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+</aura:component>

@@ -1,0 +1,88 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute type="id" name="recordId"/>
+    <aura:attribute name="accessibilityMap" type="Map"/>
+    <aura:attribute name="licenseAvailable" type="boolean" default="true"/>
+    <aura:attribute name="oppId" type="Id"/>
+    <aura:attribute name="ccid" type="Id"/>
+    <aura:attribute name="simpleRecord" type="Object" />
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="showNursing" type="boolean"/>
+    <aura:attribute name = "visible"  type="boolean"/>
+     <aura:registerEvent type="c:ClientIdentifier" name="transferCLiientId"/>
+    <aura:attribute name="flag" type="boolean" default="false"/>
+    <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <div class="slds-tabs_scoped" id="navDiv">
+        <aura:if isTrue="{!v.licenseAvailable}">
+            <ul class="slds-tabs_scoped__nav" role="tablist" id="nav">
+                <li class="bigIcons slds-context-bar__item_tab slds-shrink-none" aura:id="articleOne" title="Admission Forms" role="presentation" style="width:15%;">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Financial Relationship Forms" onclick="{!c.sectionOne}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left">
+                            <lightning:icon class="" aura:id="articleOne" size="x-small"  iconName="utility:down" />
+                        </div>Financial Relationship</a>
+                     <div id="slds-tabs_scoped" aura:id="articleOne" style="max-width:1000px;padding:0px;" class="slds-tabs_scoped__content slds-hide slds-dropdown slds-dropdown_left" role="tabpanel" aria-labelledby="tab-scoped-1__item"><ul class="slds-tabs_scoped__nav slds-dropdown__list" role="tablist" id="nav2">    
+                        
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Download Forms" role="presentation"><a class="slds-tabs_scoped__link " target="_blank" href="" onclick="{!c.AdmissionFormHandler1}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Household</a>
+                        </li>
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Upload Signed Forms" role="presentation"><a class="slds-tabs_scoped__link" href="javascript:void(0);" onclick="{!c.uploadForms}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Related Contacts</a>
+                        </li>
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Inventory" role="presentation"><a class="slds-tabs_scoped__link" href="{!'/lightning/r/'+v.recordId+'/related/Elixir_SC__Inventory__r/view'}" onclick="{!c.sectionFive}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Related Accounts</a></li>      
+                        </ul></div>
+                </li>               
+                <li class="bigIcons slds-context-bar__item_tab slds-shrink-none" aura:id="articleTwo" title="Admission Forms" role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Report " onclick="{!c.sectionTwo}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left">
+                            <lightning:icon class="" aura:id="articleTwo" size="x-small"  iconName="utility:down" />
+                        </div>Report</a>
+                     <div id="slds-tabs_scoped" aura:id="articleTwo" style="max-width:1000px;padding:0px;" class="slds-tabs_scoped__content slds-hide slds-dropdown slds-dropdown_left" role="tabpanel" aria-labelledby="tab-scoped-1__item"><ul class="slds-tabs_scoped__nav slds-dropdown__list" role="tablist" id="nav2">    
+                        
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Download Forms" role="presentation"><a class="slds-tabs_scoped__link " target="_blank" href="" onclick="{!c.AdmissionFormHandler1}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Spending Report</a>
+                        </li>
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Upload Signed Forms" role="presentation"><a class="slds-tabs_scoped__link" href="" onclick="{!c.transactionHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Transctions</a>
+                        </li>
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Inventory" role="presentation"><a class="slds-tabs_scoped__link"  onclick="{!c.AccountHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Accounts</a></li>      
+                        </ul></div>                   
+                </li>
+                <li class="bigIcons slds-context-bar__item_tab slds-shrink-none" aura:id="articleThree" title="Plan" role="presentation">
+                <a class="slds-tabs_scoped__link " href="" onclick="{!c.sectionThree}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                    <div class="slds-float_left ">
+                        <lightning:icon class="" aura:id="articleThree" iconName="utility:down" size="x-small" />
+                    </div>Plan</a>
+                <div id="slds-tabs_scoped" aura:id="articleThree" style="max-width:1000px;padding:0px;" class="slds-tabs_scoped__content slds-hide slds-dropdown slds-dropdown_left" role="tabpanel" aria-labelledby="tab-scoped-1__item">
+                    <ul class="slds-tabs_scoped__nav slds-dropdown__list" role="tablist" id="nav2">    
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Lab Results" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.BudgetHandler}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Budget</a></li>
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Other Test Results" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.GoalHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Goals</a></li>
+                    </ul>
+                </div>
+                </li>                
+                <li class="slds-context-bar__item_tab slds-shrink-none" aura:id="articleFour" title="Forecast" role="presentation">
+                    <a class="slds-tabs_scoped__link " href="" onclick="{!c.sectionFour}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleFour" size="x-small" iconName="utility:down" />
+                        </div>Forecast</a>
+                    <div id="slds-tabs_scoped" aura:id="articleFour" style="max-width:1000px;padding:0px;" class="slds-tabs_scoped__content slds-hide slds-dropdown slds-dropdown_left" role="tabpanel" aria-labelledby="tab-scoped-1__item"><ul class="slds-tabs_scoped__nav slds-dropdown__list" role="tablist" id="nav2">    
+                        
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Master Problem List" role="presentation"><a class="slds-tabs_scoped__link "  onclick="{!c.FutureHandler}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Future Simulation</a></li>
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Master DX List" role="presentation"><a class="slds-tabs_scoped__link" target="_blank" onclick="{!c.ScenarioHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Scenario</a></li>
+                        </ul></div> 
+                </li>               
+                <li class="bigIcons slds-context-bar__item_tab slds-shrink-none" aura:id="articleFive" title="Advise " role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Advise " onclick="{!c.sectionFive}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left">
+                            <lightning:icon class="" aura:id="articleFive" size="x-small"  iconName="utility:down" />
+                        </div>Advise</a>
+                     <div id="slds-tabs_scoped" aura:id="articleFive" style="max-width:1000px;padding:0px;" class="slds-tabs_scoped__content slds-hide slds-dropdown slds-dropdown_left" role="tabpanel" aria-labelledby="tab-scoped-1__item"><ul class="slds-tabs_scoped__nav slds-dropdown__list" role="tablist" id="nav2">    
+                        
+                        <li class="slds-tabs_scoped__item slds-dropdown__item" title="Master Problem List" role="presentation"><a class="slds-tabs_scoped__link " target="_blank" onclick="{!c.AffordHandler}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Affordablity</a></li>
+                       
+                        </ul></div>
+                </li>
+            </ul>
+            <aura:set attribute="else">
+                <div style="color:blue;font-weight:bold" aura:id="licensecheck">
+                    <p>This functionality is part of EMR. Please get in touch with Mirketa if you are interested in EMR.</p>
+                </div>
+            </aura:set>
+        </aura:if> </div> 
+</aura:component>

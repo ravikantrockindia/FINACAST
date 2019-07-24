@@ -1,0 +1,18 @@
+.THIS {
+}
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+.THIS.future_simulation .slds-card {
+    height: 100%;
+}
+.THIS .help_link {
+    position: absolute;
+    z-index: 1;
+    top: 7px;
+    right: 12px;
+}
+.THIS .slds-card {
+    height: 100%;
+}

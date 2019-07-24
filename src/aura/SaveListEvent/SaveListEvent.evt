@@ -1,0 +1,9 @@
+<aura:event type="COMPONENT">
+    <!-- Add aura:attribute tags to define event shape.
+         One sample attribute here. -->
+    <aura:attribute name="listName" type="String"/>
+    <aura:attribute name="lid" type="String"/>
+    <aura:attribute name="listObjectName" type="String"/>
+    <aura:attribute name="listType" type="String"/>
+    <aura:attribute name="listStatus" type="String"/>
+</aura:event>

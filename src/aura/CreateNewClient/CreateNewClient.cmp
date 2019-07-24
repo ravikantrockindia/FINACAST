@@ -1,0 +1,45 @@
+<!-- Created by: Megha Goel-->
+
+<aura:component  controller="CreateNewClient" implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:isUrlAddressable" access="global">
+    <aura:attribute name="accountRecordId" type="String"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="tabName" type="String" default="New Client"/>
+    <aura:handler name="change" value="{!v.tabName}" action="{!c.changeTabName}"/>
+    <aura:attribute name="accountRecordTypeId" type="String"/>
+    <aura:attribute name="financialAccountRecordTypeId" type="List" default="[]"/>
+    <aura:attribute name="incomeRecordType" type="String"/>
+    <aura:attribute name="expenseRecordType" type="String"/>    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="currentStep" type="String" default="1"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base" >
+        <lightning:progressStep aura:id="step1" label="{!$Label.c.Demographic_Information}" value="1" onclick="{!c.selectStep1}"/>
+        <lightning:progressStep aura:id="step2" label="{!$Label.c.Bank_Accounts}" value="2"  onclick="{!c.selectStep2}"/>
+        <lightning:progressStep aura:id="step3" label="{!$Label.c.Debt_Accounts_Credit_Loan}" value="3" onclick="{!c.selectStep3}"/>
+        <lightning:progressStep aura:id="step4" label="Income" value="4" onclick="{!c.selectStep4}"/>
+        <lightning:progressStep aura:id="step5" label="Expense" value="5" onclick="{!c.selectStep5}"/>
+        
+    </lightning:progressIndicator>
+    
+    <div class="custom_card">
+        <aura:if isTrue="{!v.currentStep=='1'}">
+            <c:DemographicInformation recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" tabName="{!v.tabName}" recordTypeId="{!v.accountRecordTypeId}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.currentStep=='2'}">
+            <c:AddBankAccount recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}"  recordTypeIds="{!v.financialAccountRecordTypeId}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.currentStep=='3'}">
+            <c:LoanAccount currentStep="{!v.currentStep}" recordId="{!v.accountRecordId}" recordTypeIds="{!v.financialAccountRecordTypeId}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.currentStep=='4'}" >
+            <c:AddIncomeSection recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" recordTypeId="{#v.incomeRecordType}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.currentStep=='5'}" >
+            <c:AddExpenseSection recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" recordTypeId="{#v.expenseRecordType}" />
+        </aura:if>
+        <!--<aura:if isTrue="{!v.currentStep=='6'}" >
+            <c:Goalfinal recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}"/>
+        </aura:if> -->
+    </div>
+</aura:component>

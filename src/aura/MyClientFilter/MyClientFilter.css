@@ -1,0 +1,24 @@
+.THIS .custom-bottom_align {
+    padding-top: 29px;
+}
+
+.THIS .custom-button_bottom_align {
+    padding-top: 23px;
+}
+
+.THIS .custom_stretch-button{
+    width:100%;
+    bottom:   0px;
+}
+.THIS .custom-stretch_div{
+    width: 50%;
+}
+.THIS .custom-z-index{
+    z-index: 1;
+}
+.THIS .slds-card__body{
+    margin-bottom : 0px;
+}
+.THIS .slds-form-element__label{
+        padding-right: 20.5rem;
+}

@@ -1,0 +1,73 @@
+.THIS label.slds-form-element__label{
+    display: none!important ;     
+}
+.THIS .slds-modal__content{
+    overflow:inherit;
+}
+.THIS .slds-modal__container {
+    width: 70%;
+    max-width: 70%;
+    
+}
+.THIS.slds-form-element__control .customRadioCls{
+        display: -webkit-inline-box;
+}
+.THIS .hideDiv {
+    display: none;
+}
+.THIS .slds-box1 .slds-size_1-of-2 {
+    float : left;
+    margin-bottom: 5px;
+}
+.THIS .slds-box1 .slds-size_1-of-2 input {
+    margin-top: 2px;
+}
+.THIS .slds-box1 .slds-size_1-of-2 select {
+    margin-top: 2px;
+}
+.THIS .slds-text-heading_small {
+    font-weight: 300;
+}
+.THIS .slds-form-element__control {
+    padding-left: 0;
+}
+.THIS .slds-form-element_horizontal:not(.slds-is-editing) {
+    padding: 0;
+}
+@media (max-width: 767px) {
+    .THIS .slds-box1 {
+        height: 380px;
+        overflow-Y: scroll;
+    }
+	.THIS .slds-box1 .slds-size_1-of-2 {
+        width: 100%;
+    }  
+   
+}
+@media (max-width: 576px) {
+    .THIS .slds-text-heading_medium {
+        font-size: 1rem;
+    }
+    .THIS h3#modal-heading-01 {
+        display: none;
+    }
+    .THIS .slds-p-around_medium {
+        padding: 0 1rem;
+    }
+}
+@media (max-height: 600px) {
+    .THIS .slds-box1 {
+        height: 300px;
+        overflow-Y: scroll;
+    }
+}
+@media (max-height: 500px) {
+    .THIS .slds-box1 {
+        height: 250px;
+        overflow-Y: scroll;
+    }
+}
+.THIS .highlight
+{
+   color: red;
+}

@@ -1,0 +1,114 @@
+<aura:component  controller="AddIncomeController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="tabName" type="String" default=" Goals"/>
+    <aura:attribute name="financialGoal" type="FinServ__FinancialGoal__c"/>
+    
+    <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
+    <aura:attribute name="isRetirement" type="Boolean" default="false"/>
+    <aura:attribute name="isNonRetirement" type="Boolean" default="false" />
+    <aura:attribute name = "CancelCut" type="String"/>
+    <aura:attribute name="editrecidGoal" type="String"/>
+    <aura:attribute name="addGoals" type="Boolean" default=""/>
+    
+    <aura:attribute name="recordTypeId" type="String"/> 
+    <aura:attribute name="cid" type="Id"/>
+    <aura:attribute name="recordId" type="String"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:attribute name = "clientName" type="Account"/>
+    <aura:attribute name = "activeModal" type="Boolean" default = "True"/>
+    <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>  
+    <!--  <aura:handler  event="c:changeclientevent" action="{!c.doInit}"/> -->
+    
+    
+    <lightning:card >
+        <div class="slds-m-around_x-small">
+            <div class="slds-m-top_medium slds-clearfix ">
+                <div class="slds-float_right">
+                    <lightning:button class="slds-button slds-button_brand budget-brand" label="Add Goal" title="Add Goal" onclick="{!c.createGoal}"/>
+                </div>
+            </div>
+            <br/>
+            <aura:if isTrue="{!v.addGoals}">
+                
+                <c:GoalModal client = "{!v.cid}" />
+            </aura:if> 
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="padding: 0;">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Goal Name"> &nbsp;&nbsp;Goal Name</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Target Amount">Monthly Goal Saving</div>
+                        </th>  
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Current Amount">Current Goal Amount</div>
+                        </th> 
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Action">Action</div>
+                        </th>
+                    </tr>
+                </thead>               
+                <tbody>
+                    <aura:iteration items="{!v.addGoal}" var="Gdetails">
+                        <tr class="slds-hint-parent">
+                            <th data-label="Goal Name" scope="row">
+                                <div class="slds-truncate" title="Goal Name"><a href="{! '/'+ Gdetails.Id}" tabindex="-1"> &nbsp;&nbsp;{!Gdetails.Name}</a></div>
+                            </th>
+                            <td data-label="Expected Amount">
+                                <div class="slds-truncate" title="Expected Amount" style="color:black;">$ {! Gdetails.Required_Monthly_Saving__c}</div>
+                            </td>
+                            <td data-label="Current Amount">
+                                <div class="slds-truncate" title="Current Amount" style="color:black;">$ {! Gdetails.Start_Value__c}</div>
+                            </td>
+                            <td data-label="Action">
+                                <div class="slds-truncate" title="Action">
+                                    &nbsp; <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Gdetails.Id}" onclick="{!c.onClickEditGoals}"/>                       
+                                    
+                                    &nbsp;
+                                    <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Gdetails.Id}" onclick="{!c.onClickDeletegoals}"/>                                   
+                                </div>
+                            </td>
+                        </tr>  
+                    </aura:iteration>
+                    
+                </tbody>
+            </table>
+            <!-- </aura:set>
+            </aura:if> -->
+            
+            
+            <!-- <div class="slds-m-top_medium slds-clearfix ">
+                <div class="slds-float_right">
+                    <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" />
+                    
+                    <aura:if isTrue="{!empty(v.financialGoalList)}">
+                        <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" />                      
+                       <lightning:button  variant="brand" label="{!$Label.c.Skip}" onclick="{!c.skipButton}"/>
+                        <aura:set attribute="else">
+                            <lightning:button  variant="brand" label="{!$Label.c.Next}" onclick="{!c.skipButton}"/>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <div class="slds-float_left">
+                    <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
+                </div>
+            </div> -->
+        </div>
+        
+        
+    </lightning:card>
+    <aura:if isTrue="{!v.showModalGoal}">
+        <aura:if isTrue="{!v.isRetirement}">       
+            <c:GoalformRetirement retirementGoalId ="{!v.editrecidGoal}"  client = "{!v.cid}"/>  
+        </aura:if>
+        <aura:if isTrue="{!v.isNonRetirement}">   
+            <c:Goalform  goalId = "{!v.editrecidGoal}" client = "{!v.cid}" />
+        </aura:if>
+        
+    </aura:if> 
+    
+</aura:component>
