@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -13,7 +33,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -21,7 +61,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -29,15 +89,60 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>SaveEdit</actionName>
         <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>GoalsComponent</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Financial_Account_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
@@ -54,608 +159,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <fieldSets>
-        <fullName>FSC_Client_AutoLoan</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Auto Loan Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Client_CheckingAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Checking Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Client_CreditCard</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Credit Card Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Client_HELOC</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>HELOC Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Client_LoanAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Loan Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Client_MortgageAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Mortgage Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Client_SavingsAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Savings Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_AutoLoan</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Auto Loan Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_CheckingAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Checking Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_CreditCard</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Credit Card Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_HELOC</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>HELOC Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_LoanAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Loan Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_MortgageAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Mortgage Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>FSC_Group_SavingsAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Savings Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_BankingAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Banking Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_InsuranceAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__InsuredAmount__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Premium__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Insurance Policy</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_InvestmentAccount</fullName>
-        <description>Client profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Investment Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Household_BankingAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Banking Account</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Household_InsuranceAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__InsuredAmount__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Premium__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Insurance Policy</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Household_InvestmentAccount</fullName>
-        <description>Household profile&apos;s Financials tab.</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__FinancialAccountType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OpenDate__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Balance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Investment Account</label>
-    </fieldSets>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>APR__c</fullName>
+        <defaultValue>0</defaultValue>
         <externalId>false</externalId>
         <label>APR</label>
         <precision>5</precision>
@@ -2730,23 +2237,6 @@
         <type>Date</type>
     </fields>
     <label>Financial Account</label>
-    <listViews>
-        <fullName>FinServ__All</fullName>
-        <columns>NAME</columns>
-        <columns>FinServ__Status__c</columns>
-        <columns>FinServ__FinancialAccountNumber__c</columns>
-        <columns>FinServ__Balance__c</columns>
-        <columns>FinServ__InsuredAmount__c</columns>
-        <columns>FinServ__OpenDate__c</columns>
-        <columns>FinServ__PrimaryOwner__c</columns>
-        <columns>Scenario_Id__c</columns>
-        <columns>Account_Type__c</columns>
-        <columns>FinServ__LoanAmount__c</columns>
-        <columns>APR__c</columns>
-        <columns>FinServ__APY__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <listViews>
         <fullName>Financial_Accounts</fullName>
         <columns>NAME</columns>
@@ -11008,6 +10498,25 @@
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
+        <fullName>Checking_Account</fullName>
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;CheckingAccount&apos; &amp;&amp;
+ TEXT(FinServ__FinancialAccountType__c) != &apos;Checking&apos;</errorConditionFormula>
+        <errorMessage>Checking is the only Valid Type</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card</fullName>
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;CreditCard&apos; &amp;&amp;  TEXT(FinServ__FinancialAccountType__c) != &apos;Credit Card&apos;</errorConditionFormula>
+        <errorMessage>Only Credit Card Type Allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Balance_Mandatory</fullName>
+        <active>false</active>
+        <errorConditionFormula>IF(RecordType.DeveloperName = &apos;CreditCard&apos;,  ISBLANK(FinServ__Balance__c),false)</errorConditionFormula>
+        <errorMessage>Credit Card Balance is Mandatory Field.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>FinServ__ManagedAndHeldAwayCannotBeBothSelected</fullName>
         <active>true</active>
         <errorConditionFormula>AND(FinServ__Managed__c, FinServ__HeldAway__c)</errorConditionFormula>
@@ -11022,10 +10531,17 @@
     </validationRules>
     <validationRules>
         <fullName>FinServ__PrimaryAndJointOwnerCannotBeSame</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Check to see if Primary Owner and the Joint Owner are the same person</description>
         <errorConditionFormula>FinServ__PrimaryOwner__c = FinServ__JointOwner__c</errorConditionFormula>
         <errorMessage>The primary and joint owner must be different.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Saving_Account</fullName>
+        <active>false</active>
+        <errorConditionFormula>RecordType.DeveloperName  = &apos;SavingsAccount&apos; &amp;&amp;
+TEXT(FinServ__FinancialAccountType__c) != &apos;Savings&apos;</errorConditionFormula>
+        <errorMessage>Only Savings is a valid Type</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
