@@ -58,7 +58,7 @@
     },
     handleSuccess: function(component, event, helper){
         //alert('success')
-        //var spinner = component.find("mySpinner");
+        var spinner = component.find("mySpinner");
         
         $A.util.removeClass(spinner, "slds-show");
         

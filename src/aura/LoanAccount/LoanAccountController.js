@@ -45,6 +45,8 @@
                         "title": "Success!",
                         "message": "The record has been deleted successfully."
                     });
+                            component.set("v.disabled",false)
+
                 }
                 else if (state === "ERROR") {
                     var spinner = component.find("mySpinner");

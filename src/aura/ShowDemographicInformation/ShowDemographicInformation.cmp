@@ -7,7 +7,6 @@
     <aura:attribute name="contents" type="List" default="[]"/>
     <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
     
-    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <!--aura:handler name="change" value="{!v.contents}" action="{!c.handleChange}"/-->
     
@@ -22,7 +21,7 @@
                         
                     </aura:iteration>
                     <aura:set attribute="else">      
-                        <img src="https://finacastpackage-dev-ed--c.na40.visual.force.com/resource/1561979409000/staticImage" width="100" height="100" alt="Image"/>
+                       <img src="{!$Resource.staticImage1}" width="100" height="100" alt="Image"/>
                     </aura:set>
                 </aura:if>
             </div>
