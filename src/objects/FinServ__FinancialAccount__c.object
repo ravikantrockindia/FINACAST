@@ -114,27 +114,12 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
-        <content>GoalsComponent</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>LightningComponent</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>Tab</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
         <formFactor>Large</formFactor>
         <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Financial_Account_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -10497,51 +10482,5 @@
         <searchResultsAdditionalFields>FinServ__PrimaryOwner__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
-    <validationRules>
-        <fullName>Checking_Account</fullName>
-        <active>false</active>
-        <errorConditionFormula>RecordType.DeveloperName = &apos;CheckingAccount&apos; &amp;&amp;
- TEXT(FinServ__FinancialAccountType__c) != &apos;Checking&apos;</errorConditionFormula>
-        <errorMessage>Checking is the only Valid Type</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Credit_Card</fullName>
-        <active>false</active>
-        <errorConditionFormula>RecordType.DeveloperName = &apos;CreditCard&apos; &amp;&amp;  TEXT(FinServ__FinancialAccountType__c) != &apos;Credit Card&apos;</errorConditionFormula>
-        <errorMessage>Only Credit Card Type Allowed</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Credit_Card_Balance_Mandatory</fullName>
-        <active>false</active>
-        <errorConditionFormula>IF(RecordType.DeveloperName = &apos;CreditCard&apos;,  ISBLANK(FinServ__Balance__c),false)</errorConditionFormula>
-        <errorMessage>Credit Card Balance is Mandatory Field.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>FinServ__ManagedAndHeldAwayCannotBeBothSelected</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(FinServ__Managed__c, FinServ__HeldAway__c)</errorConditionFormula>
-        <errorMessage>Select either Managed or Held Away for this Financial Account.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>FinServ__NoJointOwnerForIndividualAccounts</fullName>
-        <active>true</active>
-        <description>Error message when a joint owner is entered for an individually owned account.</description>
-        <errorConditionFormula>AND(ISPICKVAL(FinServ__Ownership__c , &quot;Individual&quot;), NOT(ISBLANK(FinServ__JointOwner__c)))</errorConditionFormula>
-        <errorMessage>Individually owned accounts can&apos;t have a joint owner.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>FinServ__PrimaryAndJointOwnerCannotBeSame</fullName>
-        <active>false</active>
-        <description>Check to see if Primary Owner and the Joint Owner are the same person</description>
-        <errorConditionFormula>FinServ__PrimaryOwner__c = FinServ__JointOwner__c</errorConditionFormula>
-        <errorMessage>The primary and joint owner must be different.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Saving_Account</fullName>
-        <active>false</active>
-        <errorConditionFormula>RecordType.DeveloperName  = &apos;SavingsAccount&apos; &amp;&amp;
-TEXT(FinServ__FinancialAccountType__c) != &apos;Savings&apos;</errorConditionFormula>
-        <errorMessage>Only Savings is a valid Type</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
