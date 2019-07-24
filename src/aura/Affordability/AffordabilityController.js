@@ -1,17 +1,31 @@
 ({
-    
-    
     handleRadio: function yesnoCheck(component, event) {                
         component.set("v.displaySection" ,  true);        
     },
     
+    doInit: function yesnoCheck(component, event) { 
+    	var workspaceAPI = component.find("workspace");
+        var tab=component.get("v.tabName")
+        console.log('tab',tab)
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            var focusedTabId = response.tabId;
+            console.log('tab id',focusedTabId )
+            workspaceAPI.setTabLabel({
+                label: tab
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+    ,
     
     handleRadio1: function yesnoCheck(component, event) {                
         component.set("v.displaySection" ,  false);        
     },
     
     handleRadio2: function yesnoCheck(component, event) {
-       component.set("v.displaySection1", true);
+        component.set("v.displaySection1", true);
         
     },
     handleRadio3: function yesnoCheck(component, event) 
@@ -79,17 +93,17 @@
                 component.set("v.buynowMsg",tabledata.buynowMsg);
                 component.set("v.notAbleToPayMsg",tabledata.notAbleToPayMsg);
             }
-           // if(tabledata.topMessage != null){
+            // if(tabledata.topMessage != null){
             if(tabledata.topMessage != null && tabledata.success ==false && tabledata.futureFlag ==true)
             {
-              // alert('hey1');
+                // alert('hey1');
                 component.set("v.topMessage3",tabledata.topMessage3);
                 component.set("v.afford1",true);
                 component.set("v.afford2",false); 
             }
             else if(tabledata.topMessage != null && tabledata.success ==false && tabledata.futureFlag ==false)
             {
-               // alert('hey00');
+                // alert('hey00');
                 component.set("v.afford2",true); 
                 component.set("v.afford1",false);
                 console.log('sssa'+component.get("v.afford2"));

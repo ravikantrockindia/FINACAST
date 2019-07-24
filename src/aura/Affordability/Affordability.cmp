@@ -1,4 +1,6 @@
 <aura:component controller="AffordabilityController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="tabName" type="String" default="Affordability"/>
     <aura:attribute type="String" name="Name" />
     <aura:attribute type="Double" name="totalAmount" />
     <aura:attribute name= "score" type="Double"/>
@@ -59,7 +61,7 @@
     <aura:attribute name="afford2" type="boolean" default="false"/>
     <aura:attribute name="afford1" type="boolean" default="false"/>
     <aura:attribute type="String" name="displaySection" default = "false" />
-    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <ltng:require scripts="{!$Resource.ChartJs}" />
     <lightning:card  title="">
         <div class="slds-page-header__name-title bud-months" >
@@ -137,9 +139,10 @@
                                 <h2>Affordability Result</h2>
                                 <p>After completing the form on the left and selecting the Check Affordability button, the affordability result will be displayed below.</p>
                             </div>
-                            <div class="unkown_aff">
-                                <h2>UNKNOWN</h2>
-                                <h4>There is currently not enough information to process this prospective purchase.</h4>
+                            <div class="container">                               
+                                <img src="{!$Resource.help}"/>
+                                <div class="centered"><h1>UNKNOWN</h1></div>
+                                <div class="bottom-left"><h4>There is currently not enough information to process this prospective purchase.</h4></div>                               
                             </div>
                         </aura:if>
                         <aura:if isTrue="{!v.istrue3}">
@@ -147,9 +150,10 @@
                                 <h2>Affordability Result</h2>
                                 <p>We have analyzed your affordablity on based on the likelyhood of you meeting your expense, debts and goal commitments. </p>
                             </div>
-                            <div class="yes_aff">
-                                <h2>YES</h2>
-                                <h4>{!v.topmsg}</h4>
+                            <div class="container1">
+                                 <img src="{!$Resource.yes}"/>
+                                <div class="centered"><h2>YES</h2></div>
+                                <div class="bottom-left"><h4>{!v.topmsg}</h4></div>
                             </div>
                         </aura:if>
                         <aura:if isTrue="{!v.istrue4}">
@@ -157,9 +161,10 @@
                                 <h2>Affordability Result</h2>
                                 <p>We have analyzed your affordablity on based on the likelyhood of you meeting your expense, debts and goal commitments. </p>
                             </div>
-                            <div class="no_aff">
-                                <h2>NO</h2>
-                                <h4>{!v.topMessage}</h4>
+                            <div class="container1">
+                                <img src="{!$Resource.no}"/>
+                                <div class="centered"><h2>NO</h2></div>
+                                <div class="bottom-left"><h4>{!v.topMessage}</h4></div>
                             </div>
                         </aura:if>
                         <hr/>
@@ -497,8 +502,7 @@
                         
                     </aura:if>
                 </div>
-                <lightning:card class="chart">
-                    
+                <lightning:card class="chart">                   
                     <div class="slds-page-header__row">
                         <div class="slds-size_2-of-12"></div>
                         <div class="slds-size_8-of-12">
@@ -508,10 +512,8 @@
                                         <canvas aura:id="financialHealthGraph"></canvas>
                                     </div>
                                 </div> 
-                            </span>
-                            
-                        </div>
-                        
+                            </span>                            
+                        </div>                        
                         <div class="slds-size_2-of-12">
                             <span>
                                 <div class="bar">
@@ -519,8 +521,7 @@
                                                       value="{!v.score}" disabled="true" size="small"/>
                                 </div>
                             </span>
-                        </div>
-                        
+                        </div>                        
                     </div>
                     <div class="slds-text-align_center label-font" style="margin: 0px 0;">
                         <span>Select a year to view that years forecast</span>
@@ -549,7 +550,7 @@
                         </ui:message>
                     </div>                  
                 </lightning:card>
-            </lightning:tab>
+            </lightning:tab >
         </lightning:tabset>
     </lightning:card>
     
