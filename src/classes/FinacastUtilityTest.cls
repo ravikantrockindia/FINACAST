@@ -31,49 +31,50 @@ public class FinacastUtilityTest {
         String cId2 = hac.id;
         
         
-        Budget__c income = new Budget__c();
+        Scenario_Income__c income = new Scenario_Income__c();
         income.Name = 'test income';
         
         income.Amount__c = 1234;
-        income.Primary_Owner__c = ac.Id; income.Start_Date__c = system.today();
+        income.client_ID__c=ac.Id;
+        income.Start_Date__c = system.today();
         income.End_Date__c = system.today();
-        income.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Income_Record_Type');
+        //income.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Income_Record_Type');
         insert income;
         
-        Budget__c expense = new Budget__c();
+        Scenario_Expense__c expense = new Scenario_Expense__c();
         expense.Name = 'test expense';
         expense.Amount__c = 1234;
         expense.Start_Date__c = system.today();
         expense.End_Date__c = system.today();
-        expense.Primary_Owner__c = ac.Id;
-        expense.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Expense_Record_Type');
+        expense.client_Id__c = ac.Id;
+       //xpense.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Expense_Record_Type');
         insert expense;
         
-        FinServ__FinancialAccount__c financial1 = new FinServ__FinancialAccount__c();
+        Scenario_Debt__c financial1 = new Scenario_Debt__c();
         financial1.Name = 'Test Financial Account 1';
-        financial1.FinServ__PaymentAmount__c = 5000;
-        financial1.FinServ__PrimaryOwner__c= ac.Id;
-        financial1.FinServ__LoanAmount__c = 5000;
+        financial1.Payment_Amount__c = 5000;
+        financial1.Client_Id__c= ac.Id;
+        financial1.Current_Value__c = 5000;
         financial1.APR__c = 4;
-        financial1.Max_yearly_tax_deduction_allowed__c =10;
-        financial1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
-        financial1.Account_Type__c = 'Loan';
+        //financial1.Max_yearly_tax_deduction_allowed__c =10;
+        //financial1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
+      //  financial1.Account_Type__c = 'Loan';
         insert financial1;
-        system.debug('typefin1'+financial1.Account_Type__c);
+      //  system.debug('typefin1'+financial1.Account_Type__c);
         
-        FinServ__FinancialAccount__c savings1 = new FinServ__FinancialAccount__c();
-        savings1.FinServ__PrimaryOwner__c = ac.Id;
-        savings1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'SavingsAccount');
+        Scenario_Savings__c savings1 = new Scenario_Savings__c();
+        savings1.Client_Id__c = ac.Id;
+       //savings1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'SavingsAccount');
         savings1.Name = 'Test Savings 1';
-        savings1.FinServ__Balance__c = 0;
-        savings1.FinServ__APY__c = 3;   
-        savings1.FinServ__LoanEndDate__c = Date.today();
-        savings1.FinServ__FinancialAccountType__c = 'Savings';
-        savings1.Account_Type__c = 'Savings';
-        savings1.Max_yearly_tax_deduction_allowed__c =10;
+        savings1.Current_Value__c = 0;
+        savings1.APY__c = 3;   
+        //savings1.FinServ__LoanEndDate__c = Date.today();
+        //savings1.FinServ__FinancialAccountType__c = 'Savings';
+       // savings1.Account_Type__c = 'Savings';
+       // savings1.Max_yearly_tax_deduction_allowed__c =10;
         insert savings1;
         update savings1;
-        system.debug('typefin1'+savings1.RecordTypeId);
+      //  system.debug('typefin1'+savings1.RecordTypeId);
         
         FinServ__FinancialAccount__c card = new FinServ__FinancialAccount__c();
         card.Name = 'Test Credit Card 1';
@@ -89,16 +90,16 @@ public class FinacastUtilityTest {
         insert card;
         
         system.debug('typefin1'+card.Account_Type__c);
-        FinServ__FinancialGoal__c goals1 = new  FinServ__FinancialGoal__c();
-        goals1.FinServ__PrimaryOwner__c = ac.Id;
-        goals1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
+        Scenario_Goal__c goals1 = new  Scenario_Goal__c();
+        goals1.Client_Id__c = ac.Id;
+      //  goals1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
         goals1.Name = 'Test Goal 1';
-        goals1.FinServ__TargetValue__c = 10000;
-        goals1.FinServ__TargetDate__c = Date.today()+900;
-        goals1.Start_Value__c = 2000;
-        goals1.Start_Date__c = system.today();
-        goals1.Goal_Priority__c = '1';
-        goals1.Required_Monthly_Saving__c = 2000;
+        goals1.Scenario_Target_Amount__c = 10000;
+        goals1.Scenario_Target_Date__c = Date.today()+900;
+        goals1.Scenario_Current_Amount__c = 2000;
+        goals1.Scenario_Start_Date__c = system.today();
+        //goals1.Scenario_Goal_Priority__c = '1';
+        goals1.Scenario_Monthly_Contribution__c = 2000;
         goals1.Associated_Account__c = savings1.Id;
         insert goals1;
         
@@ -175,19 +176,21 @@ public class FinacastUtilityTest {
         goals2.Required_Monthly_Saving__c = 2000;
         goals2.Associated_Account__c = savings1.Id;
         goals4.add(goals2);
-        insert goals4;
+       // insert goals4;
     }
     @istest
     public static void TestUtility() {
         Account acc = [select id from Account where name = 'Test'];
+       
         Scenario__c sc = [select id from Scenario__c where Client_Id__c =: acc.id];
-        list<Budget__c> income =  [select id from Budget__c where Primary_Owner__c =: acc.id];
-        list<Budget__c> expense = [select id from Budget__c where Primary_Owner__c =: acc.id];
-        list<FinServ__FinancialAccount__c> savings2 = [select id from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c =: acc.id];
-        list<FinServ__FinancialAccount__c> debt = [select id from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c =: acc.id];
-        list<FinServ__FinancialGoal__c> goals4 = [select id from FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: acc.id];
-        FinacastUtility.buildScenarioRequestData(income, expense, savings2, debt, goals4, sc.id, acc.id);
-        FinacastUtility.ExceptionHandle(10,'Message Error' , 'StackTrace');
+        list<Scenario_Income__c> income =  [select id from Scenario_Income__c where client_ID__c =: acc.id];
+        list<Scenario_Expense__c> expense = [select id from Scenario_Expense__c where client_Id__c =: acc.id];
+        System.debug(expense);
+        list<Scenario_Savings__c> savings2 = [select id from Scenario_Savings__c where client_Id__c =: acc.id];
+        list<Scenario_Debt__c> debt = [select id from Scenario_Debt__c where client_Id__c =: acc.id];
+        list<Scenario_Goal__c> goals4 = [select id from Scenario_Goal__c where client_Id__c =: acc.id];
+       FinacastUtility.buildScenarioRequestData2(income, expense, savings2, debt, goals4, sc.id, acc.id);
+       FinacastUtility.ExceptionHandle(10,'Message Error' , 'StackTrace');
         
     }
     

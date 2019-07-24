@@ -1230,7 +1230,11 @@ setData +='\'endDate\':\''+Date.today().addYears(1).month()+'/'+Date.today().add
             initialClient = acc.Name;
             initialClientId = acc.id;
         }else{
-            initialClientId = id;
+            Account acc = [Select id, Name from account where id=:id  limit 1];
+            initialClient = acc.Name;
+            initialClientId = acc.id;
+           
+            
         }
         
         //Store Household status here        
