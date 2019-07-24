@@ -3,7 +3,6 @@
         var chartDataArray = [];
         var chartLabelArray = [];
         component.get("v.transactionId");
-        alert("Transaction Id " +component.get("v.transactionId"))
         var action = component.get("c.getCashSummary");
         
         action.setParams({

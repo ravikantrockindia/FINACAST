@@ -21,7 +21,7 @@
                         
                     </aura:iteration>
                     <aura:set attribute="else">      
-                       <img src="{!$Resource.staticImage1}" width="100" height="100" alt="Image"/>
+                       <img src="{!$Resource.staticImageUser}" width="100" height="100" alt="Image"/>
                     </aura:set>
                 </aura:if>
             </div>
