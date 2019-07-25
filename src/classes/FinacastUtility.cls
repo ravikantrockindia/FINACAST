@@ -617,7 +617,7 @@ public class FinacastUtility {
         if(finsolCustomSetting[0].Namespace__c!=null)
             namespace=finsolCustomSetting[0].Namespace__c+'__';
         }*/
-        return 'Finsol';
+        return 'Finsol__';
     }
     
     
