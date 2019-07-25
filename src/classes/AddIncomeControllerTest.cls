@@ -5,6 +5,7 @@ public class AddIncomeControllerTest {
     
     @isTest
     public static void AddIncomeapex(){
+        String namespace= FinacastUtility.returnNamespace();
         Account acc1 = new Account();
         acc1.Name= 'Test Account1';  
         acc1.OwnerId = UserInfo.getUserId();
@@ -34,7 +35,7 @@ public class AddIncomeControllerTest {
         financial1.FinServ__PaymentFrequency__c='Monthly';
         insert financial1;
 
-         financial1 = new FinServ__FinancialAccount__c();
+        financial1 = new FinServ__FinancialAccount__c();
         financial1.Name = 'Test Financial Account 1';
         rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
         financial1.RecordtypeId = rcc[0].Id;
@@ -43,7 +44,8 @@ public class AddIncomeControllerTest {
         financial1.FinServ__APY__c = 4;
         financial1.FinServ__PaymentFrequency__c='Semi Monthly';
         insert financial1;  
-                 financial1 = new FinServ__FinancialAccount__c();
+        
+        financial1 = new FinServ__FinancialAccount__c();
         financial1.Name = 'Test Financial Account 1';
         rcc =[Select Id From RecordType Where SobjectType='FinServ__FinancialAccount__c' And Name='Loan Account' limit 1];
         financial1.RecordtypeId = rcc[0].Id;
@@ -64,10 +66,11 @@ public class AddIncomeControllerTest {
         insert financial1; 
         
        
-        
+        String sObject1=namespace+'Budget__c';
+        String sObject2=namespace+'Income_Record_Type';
         Budget__c bg = new Budget__c();
         bg.name = 'Test';
-        list<RecordType> rcc2 =[Select Id From RecordType Where SobjectType='Budget__c' And DeveloperName = 'Income_Record_Type' limit 1];
+        list<RecordType> rcc2 =[Select Id From RecordType Where SobjectType=:sObject1 And DeveloperName =:sObject2 limit 1];
         bg.RecordtypeId = rcc2[0].Id;
         bg.Start_Date__c = date.newInstance(2019, 1, 1);
         bg.End_Date__c = date.newInstance(2019, 31, 1);
@@ -78,7 +81,7 @@ public class AddIncomeControllerTest {
         
         bg = new Budget__c();
         bg.name = 'Test';
-        rcc2 =[Select Id From RecordType Where SobjectType='Budget__c' And DeveloperName = 'Income_Record_Type' limit 1];
+        rcc2 =[Select Id From RecordType Where SobjectType=:sObject1  And DeveloperName =:sObject2 limit 1];
         bg.RecordtypeId = rcc2[0].Id;
         bg.Start_Date__c = date.newInstance(2019, 1, 1);
         bg.End_Date__c = date.newInstance(2019, 31, 1);
@@ -88,7 +91,7 @@ public class AddIncomeControllerTest {
         insert bg;
         bg = new Budget__c();
         bg.name = 'Test';
-        rcc2 =[Select Id From RecordType Where SobjectType='Budget__c' And DeveloperName = 'Income_Record_Type' limit 1];
+        rcc2 =[Select Id From RecordType Where SobjectType=:sObject1 And DeveloperName =:sObject2 limit 1];
         bg.RecordtypeId = rcc2[0].Id;
         bg.Start_Date__c = date.newInstance(2019, 1, 1);
         bg.End_Date__c = date.newInstance(2019, 31, 1);
@@ -99,10 +102,10 @@ public class AddIncomeControllerTest {
 
         
         
-        
+        String sObject3=namespace+'Expense_Record_Type';
         Budget__c bg1 = new Budget__c();
         bg1.name = 'Test1';
-        list<RecordType> rcc3 =[Select Id From RecordType Where SobjectType='Budget__c' And DeveloperName = 'Expense_Record_Type' limit 1];
+        list<RecordType> rcc3 =[Select Id From RecordType Where SobjectType=:sObject1 And DeveloperName =:sObject3 limit 1];
         bg1.RecordtypeId = rcc3[0].Id;
         bg1.Start_Date__c = date.newInstance(2019, 1, 1);
         bg1.End_Date__c = date.newInstance(2019, 31, 1);

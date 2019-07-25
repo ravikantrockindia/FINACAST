@@ -2,6 +2,11 @@
 public class AffordabilityControllerTest {
     @testsetup
     public static void data(){
+        String namespace= FinacastUtility.returnNamespace();
+        String sObject1=namespace+'Budget__c';
+        String sObject2=namespace+'Income_Record_Type';
+        String sObject3=namespace+'Expense_Record_Type';
+        
         String cId = 'init';
         Account ac = new Account();
         ac.name = 'Test';
@@ -43,7 +48,7 @@ public class AffordabilityControllerTest {
         income.Amount__c = 1234;
         income.Primary_Owner__c = ac.Id; income.Start_Date__c = system.today();
         income.End_Date__c = system.today();
-        income.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Income_Record_Type');
+        income.RecordTypeId = FinacastUtility.getRecordTypeId(sObject1, sObject2);
         insert income;
         
         Budget__c expense = new Budget__c();
@@ -52,7 +57,7 @@ public class AffordabilityControllerTest {
         expense.Start_Date__c = system.today();
         expense.End_Date__c = system.today();
         expense.Primary_Owner__c = ac.Id;
-        expense.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Expense_Record_Type');
+        expense.RecordTypeId = FinacastUtility.getRecordTypeId(sObject1, sObject3);
         insert expense;
         
         FinServ__FinancialAccount__c financial1 = new FinServ__FinancialAccount__c();
@@ -119,7 +124,7 @@ public class AffordabilityControllerTest {
         income2.Amount__c = 4234;
         income2.Primary_Owner__c = ac.Id;
         income2.HouseHold__c = hac.id;
-        income2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Income_Record_Type');
+        income2.RecordTypeId = FinacastUtility.getRecordTypeId(sObject1, sObject2);
         insert income2;
         
         Budget__c expense2 = new Budget__c();
@@ -129,7 +134,7 @@ public class AffordabilityControllerTest {
         expense2.Amount__c = 1234;
         expense2.Primary_Owner__c = ac.Id;
         expense2.HouseHold__c = hac.id;
-        expense2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Expense_Record_Type');
+        expense2.RecordTypeId = FinacastUtility.getRecordTypeId(sObject1, sObject2);
         insert expense2;
         
         FinServ__FinancialAccount__c financial2 = new FinServ__FinancialAccount__c();

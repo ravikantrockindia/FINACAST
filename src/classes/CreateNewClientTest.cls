@@ -11,7 +11,7 @@ public class CreateNewClientTest {
         //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Expense_Record_Type').getRecordTypeId();
                      recordType=namespace+'Expense_Record_Type';
 
-        Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType='Budget__c' AND DeveloperName=:recordType].Id;
+        Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName=:recordType].Id;
         Account a=new Account(Name='test', RecordTypeId=devRecordTypeId);
         insert a;
         List<FinServ__FinancialAccount__c> fa=new List<FinServ__FinancialAccount__c>();
