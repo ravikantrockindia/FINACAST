@@ -11,7 +11,7 @@
 .THIS .slds-form-element {
     display: inline;
 }
-.cGoalformRetirement .slds-modal__content {
+.THIS.cGoalformRetirement .slds-modal__content {
     height: 350px;
 }
 .THIS.hideDiv {
@@ -30,6 +30,15 @@
     max-width: 70%;
     margin: 0 auto;
 }
+
+.THIS.hideDiv {
+    display: none;
+}
+.THIS .slds-modal__container {
+    width: 70%;
+    max-width: 70%;
+    margin: 0 auto;
+}
 @media (max-width: 767px) {
     .THIS .slds-box1 {
         height: 380px;
@@ -37,13 +46,10 @@
     }
 	.THIS .slds-box1 .slds-size_1-of-2 {
         width: 100%;
-    }  
+    }
     .THIS .slds-modal__container {
         width: 80%;
         max-width: 80%;
-    }
-    .THIS h3#modal-heading-01 {
-        display: none;
     }
 }
 @media (max-width: 576px) {
@@ -73,4 +79,9 @@
 .THIS .highlight
 {
    color: red;
+}
+
+.THIS .buttonClass
+{
+    width : 30%
 }

@@ -2,15 +2,14 @@
     Acclist : function(component, event, helper) {
         
         var action = component.get("c.dample"); 
-        // method name i.e. getEntity should be same as defined in apex class
-        // params name i.e. entityType should be same as defined in getEntity method
         var clientId=component.find("owner").get("v.value");
         console.log('ssDD'+clientId);
         action.setParams({
             clientId : clientId
         });
         action.setCallback(this, function(a){
-            var state = a.getState(); // get the response state
+            var state = a.getState();
+            // get the response state
             console.log(state);
             if(state == 'SUCCESS') {
                 
@@ -29,27 +28,18 @@
         console.log('id'+clientId);
         component.find("owner").set("v.value",clientId);
         var getName = component.get("v.FinServ__PrimaryOwner__r.Name");
-        console.log('xxxxxx'+getName);
-          component.set("v.isMonthly",false);
+        component.set("v.isMonthly",false);
         var gId = component.get("v.retirementGoalId");
         console.log("dgd");
-
-    
-        
-   
-   
-        if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
+       if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
         {
-            
-            
-            console.log("the value is name" + clientId);
+         console.log("the value is name" + clientId);
             var action = component.get("c.dample");
-                var associated = component.find("associateAcc").get("v.value");
+            var associated = component.find("associateAcc").get("v.value");
         console.log('saanjfnjnjnj'+associated);
             action.setParams({
                 clientId : clientId
-                
-            });
+              });
             
             action.setCallback(this, function(a) {
                 var state  = a.getState();
@@ -59,15 +49,9 @@
                 component.set("v.accountList",goals);
             }); 
             $A.enqueueAction(action); 
-            
-            
-        }
+             }
 			
-			        
-        
-     
-        
-      if(!($A.util.isUndefinedOrNull(gId) || gId == ""))
+        if(!($A.util.isUndefinedOrNull(gId) || gId == ""))
         {
             var action = component.get("c.getGoalData");
             action.setParams({
@@ -79,11 +63,7 @@
                 var state  = a.getState();
                 console.log('state',state);
                 var goals=a.getReturnValue();
-              
-                
-               //component.set("v.accountList",goals);
-           
-            // console.log('goals-------------'+goals);
+             
             }); 
             $A.enqueueAction(action); 
 
@@ -99,10 +79,7 @@
             console.log('resp: ',response.getReturnValue());
         });
         $A.enqueueAction(action); 
-        
- 
-     
-    },
+        },
     
     
     
@@ -327,7 +304,7 @@
                 
             
                 
-             var birthDate =component.find("birth").get("v.value");
+        var birthDate =component.find("birth").get("v.value");
         var retirementYear = component.find("retireAge").get("v.value");
         var income = component.find("annualIncome").get("v.value");
         console.log("income",income);
