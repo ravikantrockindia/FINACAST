@@ -6,7 +6,7 @@ public class NamespaceUtility {
         if(finsolCustomSetting[0].Namespace__c!=null)
             namespace=finsolCustomSetting[0].Namespace__c+'__';
         }*/
-        return '';
+        return 'Finsol__';
     }
 
 }
