@@ -1,7 +1,7 @@
 public class CreateNewClient {
     @AuraEnabled 
     public static WrapRecordTypeIds getRecordTypeIds(){
-        String namespace=FinacastUtility.returnNamespace();
+        String namespace=NamespaceUtility.returnNamespace();
         WrapRecordTypeIds recordTypeIds;  
         try{
             
@@ -10,11 +10,11 @@ public class CreateNewClient {
             List<RecordType> recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
             
             String objectName=namespace+'Budget__c';
-            String recordType=namespace+'Income_Record_Type';
-            Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName=:recordType].Id;
+            //String recordType=namespace+'Income_Record_Type';
+            Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
             //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Expense_Record_Type').getRecordTypeId();
-             recordType=namespace+'Expense_Record_Type';
-            Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType='Budget__c' AND DeveloperName='Expense_Record_Type'].Id;
+             //recordType=namespace+'Expense_Record_Type';
+            Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
             //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Income_Record_Type').getRecordTypeId();
             recordTypeIds= new WrapRecordTypeIds(devRecordTypeId,recordTypes,incomeRecordTypeId,expenseRecordTypeId);
             System.debug(recordTypeIds);

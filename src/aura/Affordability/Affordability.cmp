@@ -19,7 +19,9 @@
     <aura:attribute name = "installment" type="list" default="0"/>
     <aura:attribute name = "yearlyList" type="list"/>
     <aura:attribute name = "networthAnalysisList" type="list"/>
-    <aura:attribute name = "topmsg" type="String"/>   
+    <aura:attribute name = "selectedYear" type="String"/>  
+    <aura:attribute name = "FutureTableselectedYear" type="String"/>
+    <aura:attribute name = "topmsg" type="String"/>
     <aura:attribute name = "topMessage" type="String"/>
     <aura:attribute name = "topMessage3" type="String"/>
     <aura:attribute name = "buynowMsg" type="String"/>
@@ -81,17 +83,17 @@
                         <a href="#" >Show more</a>
                     </div>
                     <div class="slds-col slds-size_7-of-12">
-                        <lightning:recordEditForm objectApiName="Affordability__c">
+                        
                             <div class="aff-data-box">
-                                <lightning:inputField  fieldName="What_do_you_want_to_purchase__c"  value="{!v.Name}"/>
+                               <label>What do you want to purchase?</label> <lightning:input required="true" messageWhenValueMissing="Please enter a name" aura:id="fields" value="{!v.Name}"/>
                                 <p>Name this Affordability Scenario</p>
                             </div>
                             <div class="aff-data-box">
-                                <lightning:inputField  fieldName="Cost__c" value="{!v.totalAmount}" />
+                                <label> Cost</label><lightning:input  value="{!v.totalAmount}" required="true" messageWhenValueMissing="Please enter an amount" aura:id="fields" />
                                 <p>What is the price of the item in the Affordability Scenario</p>
                             </div>
                             <div class="aff-data-box">
-                                <lightning:inputField  fieldName="Rainy_Day_Fund_in_month__c" value="{!v.rainyDayMonths}"/>
+                                <label>Rainy Day Fund (in month)</label><lightning:input   value="{!v.rainyDayMonths}"/>
                                 <p>This represents savings for an emergency</p>
                             </div>
                             <div class="aff-data-box">
@@ -102,28 +104,28 @@
                                     <div id="ifYes" >
                                         <div class="slds-form-element__row">
                                             <div class="slds-size_1-of-2"> 
-                                                <lightning:inputField  fieldName="Payment_due_this_month__c" value="{!v.downPayment}" />
+                                                <label>Payment due this month</label> <lightning:input  value="{!v.downPayment}" />
                                             </div>
                                             <div class="slds-size_1-of-2"> 
-                                                <lightning:inputField  fieldName="Future_monthly_payment__c" value="{!v.installments}"/>
+                                                <label>Future monthly payment</label><lightning:input   value="{!v.installments}"/>
                                             </div>
                                             <div class="slds-size_1-of-2"> 
-                                                <lightning:inputField  fieldName="Start_date__c" value="{!v.startDate}" />
+                                                <label>Start date</label> <lightning:input  value="{!v.startDate}" />
                                             </div>
                                             <div class="slds-size_1-of-2"> 
-                                                <lightning:inputField  fieldName="End_date__c" value="{!v.endDate}" />
+                                                <label>End date</label><lightning:input  value="{!v.endDate}" />
                                             </div>
                                         </div>
                                         
                                         <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with intrest</label>   <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="yesCheck2" value="{!v.isTaxBenefit}"/> Yes <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="noCheck"/> No
                                         <div id="ifYes1" style="visibility:hidden"> 
                                             
-                                            <lightning:inputField  fieldName="What_of_contribution_bring_tax_benifit__c" />
+                                            <label>What %of contribution bring tax benefit?</label><lightning:input   />
                                         </div>  
                                         <label style="float: left; display: block; width: 100%; margin-top: 5px;">Are tax benefit realized monthly</label>   <input type="radio" onclick = "{!c.handleRadio3}" name="yesno" id="yesCheck6" /> Yes <input type="radio" onclick = "{!c.handleRadio3}"  name="yesno" id="noCheck"/> No
                                         <div id="ifYes5" style="visibility:hidden"> 
                                             
-                                            <lightning:inputField  fieldName="Maximum_yearly__c" />
+                                            <label>Maximum yearly tax deduction allowed</label><lightning:input   />
                                         </div>
                                     </div>
                                 </aura:if>
@@ -131,7 +133,7 @@
                             <div class="check-affordability">
                                 <lightning:button  label="Check Affordability" onclick="{!c.showResult}" />        
                             </div>
-                        </lightning:recordEditForm>
+                        
                     </div>
                     <div class="slds-col slds-size_5-of-12">
                         <aura:if isTrue="{!v.istrue2}">
@@ -208,9 +210,9 @@
                                             <lightning:buttonIcon iconName="utility:close"  onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse"
                                                                   class="slds-modal__close"/> 
                                             <div class="select_year">
-                                                <lightning:select name="select1">
-                                                    <aura:iteration items="{!v.yearlyList}" var="element">
-                                                        <option value="">{!element}</option>
+                                                <lightning:select name="select1" aura:id="selectYear" value="{!v.selectedYear}" onchange="{!c.YearlyData}">
+                                                    <aura:iteration items="{!v.yearlyList}" var="element" >
+                                                       <option label="{!element}" value="{!element}" selected="{!element==v.selectedYear}"/> 
                                                     </aura:iteration>
                                                 </lightning:select>
                                             </div>
@@ -323,9 +325,9 @@
                                             <lightning:buttonIcon iconName="utility:close"  onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse"
                                                                   class="slds-modal__close"/> 
                                             <div class="select_year">
-                                                <lightning:select name="select1">
+                                                <lightning:select name="select1" aura:id="selectYear" value="{!v.FutureTableselectedYear}" onchange="{!c.YearlyData}">
                                                     <aura:iteration items="{!v.yearlyListRec}" var="element">
-                                                        <option value="">{!element}</option>
+                                                        <option label="{!element}" value="{!element}" selected="{!element==v.FutureTableselectedYear}"/> 
                                                     </aura:iteration>
                                                 </lightning:select>
                                             </div>                                          

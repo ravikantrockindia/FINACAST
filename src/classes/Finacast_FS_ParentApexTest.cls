@@ -1,7 +1,9 @@
 @isTest
 public class Finacast_FS_ParentApexTest {
+    
     @testsetup
     public static void data(){
+        String namespace= NamespaceUtility.returnNamespace();
         String cId = 'init';
         Account ac = new Account();
         ac.name = 'Test';

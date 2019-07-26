@@ -1,12 +1,14 @@
 /******* Developer Name: Aditya Kaushal
-       * Updated on July 5'19
- * *******************************/
+* Updated on July 5'19
+* *******************************/
 public class FinacastUtility {
-  
+    
     public static Id getRecordTypeId(String objectAPIName , String recordTypeName)
         
     {
-        return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectAPIName ' ).id;
+        String namespace=NamespaceUtility.returnNamespace();
+        String objectName=namespace+objectAPIName;
+        return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectname ' ).id;
     }
     
     // Pass in the endpoint to be used using the string url, request Type, and post data in any else pass 0
@@ -488,43 +490,43 @@ public class FinacastUtility {
                             setData +='{';
                             setData +='\'id\':\''+flag+'\',';
                             setData +='\'type\':\'account\',';
-                           setData +='\'isTaxBenefit\':'+'false'+','; 
+                            setData +='\'isTaxBenefit\':'+'false'+','; 
                             //term Loan
                             
-                         /*   if(FFDA.Account_Type__c == 'Credit Card'){
-                                setData +='\'accountype\':\'account_creditcard\',';
-                                setData +='\'name\':\''+FFDA.Name+'\',';
-                                
-                                //fill which ever is not empty
-                                if(FFDA.FinServ__LoanAmount__c != Null){
-                                    setData +='\'amount\':'+FFDA.FinServ__LoanAmount__c+',';
-                                }else {
-                                    setData +='\'amount\':'+FFDA.FinServ__Balance__c+',';
-                                }
-                                
-                            }else if(FFDA.Account_Type__c == 'Loan'){ */
+                            /*   if(FFDA.Account_Type__c == 'Credit Card'){
+setData +='\'accountype\':\'account_creditcard\',';
+setData +='\'name\':\''+FFDA.Name+'\',';
+
+//fill which ever is not empty
+if(FFDA.FinServ__LoanAmount__c != Null){
+setData +='\'amount\':'+FFDA.FinServ__LoanAmount__c+',';
+}else {
+setData +='\'amount\':'+FFDA.FinServ__Balance__c+',';
+}
+
+}else if(FFDA.Account_Type__c == 'Loan'){ */
                             
-                                setData +='\'accountype\':\'account_loan\',';
-                                setData +='\'name\':\''+FFDA.Name+'\',';
-                                setData +='\'amount\':'+FFDA.Payment_Amount__c+',';
-                                
-                                setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
-                                setData +='\'outstandingamt\':'+FFDA.Current_Value__c+',';
-                          //  }
-                           // else{}
+                            setData +='\'accountype\':\'account_loan\',';
+                            setData +='\'name\':\''+FFDA.Name+'\',';
+                            setData +='\'amount\':'+FFDA.Payment_Amount__c+',';
+                            
+                            setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
+                            setData +='\'outstandingamt\':'+FFDA.Current_Value__c+',';
+                            //  }
+                            // else{}
                             setData +='\'APR\':'+FFDA.APR__c;
                             setData +='},';
                         }
                     }
                     
                     //----------->   Goals Data
-                  
+                    
                     List<Scenario_Goal__c> goalList = [select Name, Associated_Account__c,
-                                                                Scenario_Monthly_Contribution__c, Scenario_Start_Date__c, Scenario_Target_Amount__c,
-                                                                  Scenario_Current_Amount__c,Scenario_Goal_Priority__c,Scenario_Target_Date__c 
-                                                                from Scenario_Goal__c where
-                                                                Client_Id__c =: clientId and Scenario__c = :sceneId
-                                                                limit 1000];
+                                                       Scenario_Monthly_Contribution__c, Scenario_Start_Date__c, Scenario_Target_Amount__c,
+                                                       Scenario_Current_Amount__c,Scenario_Goal_Priority__c,Scenario_Target_Date__c 
+                                                       from Scenario_Goal__c where
+                                                       Client_Id__c =: clientId and Scenario__c = :sceneId
+                                                       limit 1000];
                     System.debug('Goal List: ' + goalList);
                     if(goalList.size() > 0){
                         for(Scenario_Goal__c goal : goalList){
@@ -610,15 +612,7 @@ public class FinacastUtility {
             return setData;
         }
     }
-    public static String returnNamespace(){
-        /*string namespace='';
-      List<Finsol_Custom_Setting__c> finsolCustomSetting= [SELECT Namespace__c FROM Finsol_Custom_Setting__c where Name='Finsol' limit 1];
-        if(!finsolCustomSetting.isEmpty()){
-        if(finsolCustomSetting[0].Namespace__c!=null)
-            namespace=finsolCustomSetting[0].Namespace__c+'__';
-        }*/
-        return 'Finsol__';
-    }
+    
     
     
 }

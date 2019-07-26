@@ -1,17 +1,17 @@
 @isTest
 public class CreateNewClientTest {
     @testSetup static void setup() {
-                String namespace=FinacastUtility.returnNamespace();
+                String namespace= NamespaceUtility.returnNamespace();
 
         // Create common test accounts
         Id devRecordTypeId = [select Id,DeveloperName  from RecordType where sObjectType='Account' AND DeveloperName='IndustriesIndividual'].Id;
                     String objectName=namespace+'Budget__c';
-            String recordType=namespace+'Income_Record_Type';
-        Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName=:recordType].Id;
+           // String recordType=namespace+'Income_Record_Type';
+        Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
         //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Expense_Record_Type').getRecordTypeId();
-                     recordType=namespace+'Expense_Record_Type';
+                    // recordType=namespace+'Expense_Record_Type';
 
-        Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName=:recordType].Id;
+        Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
         Account a=new Account(Name='test', RecordTypeId=devRecordTypeId);
         insert a;
         List<FinServ__FinancialAccount__c> fa=new List<FinServ__FinancialAccount__c>();
@@ -31,9 +31,12 @@ public class CreateNewClientTest {
         Id devRecordTypeId = [select Id,DeveloperName  from RecordType where sObjectType='Account' AND DeveloperName='IndustriesIndividual'].Id;
         //Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Individual').getRecordTypeId();
         List<RecordType> recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
-        Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType='Budget__c' AND DeveloperName='Income_Record_Type'].Id;
+                        String namespace=NamespaceUtility.returnNamespace();
+                    String objectName=namespace+'Budget__c';
+
+        Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
         //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Expense_Record_Type').getRecordTypeId();
-        Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType='Budget__c' AND DeveloperName='Expense_Record_Type'].Id;
+        Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
         
         Test.startTest();
         CreateNewClient.WrapRecordTypeIds Ids=CreateNewClient.getRecordTypeIds();  
