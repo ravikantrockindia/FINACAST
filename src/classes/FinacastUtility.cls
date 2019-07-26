@@ -6,10 +6,12 @@ public class FinacastUtility {
     public static Id getRecordTypeId(String objectAPIName , String recordTypeName)
         
     {
+        if(objectAPIName.split('__').size()>2){
         String namespace=NamespaceUtility.returnNamespace();
-        String objectName=namespace+objectAPIName;
-        system.debug('objectName'+objectName);
-        return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectname ' ).id;
+        objectAPIName=namespace+objectAPIName;
+        }
+        //system.debug('objectName'+objectName);
+        return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectAPIName ' ).id;
     }
     
     // Pass in the endpoint to be used using the string url, request Type, and post data in any else pass 0
