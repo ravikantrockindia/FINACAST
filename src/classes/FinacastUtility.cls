@@ -6,7 +6,7 @@ public class FinacastUtility {
     public static Id getRecordTypeId(String objectAPIName , String recordTypeName)
         
     {
-        if(objectAPIName.split('__').size()>2){
+        if(objectAPIName.split('__').size()==2){
         String namespace=NamespaceUtility.returnNamespace();
         objectAPIName=namespace+objectAPIName;
         }
