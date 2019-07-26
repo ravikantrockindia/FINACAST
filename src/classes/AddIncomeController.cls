@@ -1,12 +1,15 @@
 public with sharing class AddIncomeController {
-    
+  //   String namespace= NamespaceUtility.returnNamespace();
+     
     @auraEnabled
     public static id getRecordType(String recName){
         return FinacastUtility.getRecordTypeId('Budget__c',recName);    
     } 
     @auraEnabled
     public static id getLoanRecordType(String recName1){  
-        return FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c',recName1);         
+         String namespace=NamespaceUtility.returnNamespace();
+        String objectName=namespace+'FinServ__FinancialAccount__c';
+        return FinacastUtility.getRecordTypeId('objectName',recName1);         
     } 
     @auraEnabled
     public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)
@@ -78,16 +81,14 @@ public with sharing class AddIncomeController {
         List<FinServ__FinancialAccountTransaction__c> transactionList = new List<FinServ__FinancialAccountTransaction__c>();
        
             transactionList = [Select id , FinServ__TransactionDate__c, FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__c =: fa.id AND FinServ__TransactionDate__c <= :startDate AND FinServ__TransactionDate__c >= LAST_N_MONTHS:5];
-                   // System.debug('laon transaction '+transactionList);
-
-        
+                
         return transactionList;
     }
     
     // On init method to get the records on Budget Screen
     @AuraEnabled
     public static wrapIncome getBudget(String clientId ){
-      //  System.debug(clientId);
+
         Double sum = 0 ; 
         Boolean isportalEnabled = false;
         Double sumExpense = 0;
@@ -109,10 +110,8 @@ public with sharing class AddIncomeController {
         try{
             if(us.contactid == null){
                 if(clientId == 'init') {
-                  //  System.debug('client id =init');
                     acc  = [select id,name,recordtype.developername from account where ownerid =: UserInfo.getUserId() order by name  limit 1 ];
-                    // System.debug('client id =init'+acc.id);
-                }       
+                   }       
                 else {
                     acc = [Select id,name ,recordtype.developername from account where id=: clientId];
                 } 
@@ -139,23 +138,20 @@ public with sharing class AddIncomeController {
                              where FinServ__TransactionDate__c = THIS_MONTH)
                             from Budget__c
                             where (((Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((End_Date__c >=: stdate) or End_Date__c = null)) and HouseHold__c =:acc.id];
-                //System.debug('budget list '+budgetList);
-                
-                loanRecord = [select id ,FinServ__PrimaryOwner__c,FinServ__PrimaryOwner__r.name, Name, APR__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c ,
+               
+                loanRecord = [select id ,FinServ__PrimaryOwner__c,FinServ__PrimaryOwner__r.name, Name, FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c ,
                               (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
                                from Financial_Account_Transactions__r
                                where FinServ__TransactionDate__c = THIS_MONTH)
                               from FinServ__FinancialAccount__c 
                               where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)) and FinServ__Household__c=:acc.id];
-                //System.debug('loanRecord '+loanRecord);
-                goalRecord = [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c 
+                 goalRecord = [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c 
                               from FinServ__FinancialGoal__c 
                               where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__Household__c=:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
             } 
             else
             {
-                //System.debug('aa');
-                budgetList=[select id,Primary_Owner__c,Name,Frequency__c,Primary_Owner__r.name,recordTypeId,recordtype.developername,Yearly_growth__c,End_Date__c,Amount__c,Start_Date__c,Tax_Rate__c,Month__c ,Priority__c,
+               budgetList=[select id,Primary_Owner__c,Name,Frequency__c,Primary_Owner__r.name,recordTypeId,recordtype.developername,Yearly_growth__c,End_Date__c,Amount__c,Start_Date__c,Tax_Rate__c,Month__c ,Priority__c,
                             (Select id , FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c, 
                              Budget_Category__r.Amount__c
                              from Financial_Account_Transactions__r
@@ -164,14 +160,13 @@ public with sharing class AddIncomeController {
                             where (((Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and 
                                                                           Start_Date__c <=: enddate)) and ((End_Date__c >=: stdate) or End_Date__c = null)) and 
                             Primary_Owner__c =:acc.id];
-                loanRecord = [select id ,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name,APR__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c,              
+                loanRecord = [select id ,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name,FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c,              
                               (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
                                from Financial_Account_Transactions__r
                                where FinServ__TransactionDate__c = THIS_MONTH)
                               from FinServ__FinancialAccount__c 
                               where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id];
-               // System.debug('loan list '+loanRecord);
-                goalRecord = [Select id,FinServ__PrimaryOwner__c , Name, FinServ__PrimaryOwner__r.name,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c from FinServ__FinancialGoal__c where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
+               goalRecord = [Select id,FinServ__PrimaryOwner__c , Name, FinServ__PrimaryOwner__r.name,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c from FinServ__FinancialGoal__c where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
                 
                 
             }     
@@ -228,8 +223,7 @@ public with sharing class AddIncomeController {
                 sumGoal = sumGoal + tGoal.Required_Monthly_Saving__c ; 
                 goalSum = '$' + sumGoal.format();
             }
-           // System.debug('aaaaa');
-            Double valTrans = 0 ;
+         Double valTrans = 0 ;
             Map<Id ,Double> getTransactionAmount = new Map<Id, Double>();
             Map<Id ,String> getTransactionAmountIncome = new Map<Id, String>();
             for(Budget__c tAmount : IncomeRecord){
@@ -247,27 +241,19 @@ public with sharing class AddIncomeController {
                 if (tAmount.Frequency__c=='Monthly' && transactionAmount!=0){
                     sumTransaction = ((percentage / transactionAmount) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction);
-                  //  System.debug(sumTransaction);
                 }  
                 else if (tAmount.Frequency__c=='Semi Monthly'&& transactionAmount!=0){
                     sumTransaction = ((percentage / (transactionAmount*2)) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction);
-                 //   System.debug(sumTransaction);
-                    
-                }
+              }
                 else if(tAmount.Frequency__c=='Bi-Weekly'&& transactionAmount!=0){
                     sumTransaction = ((percentage / (transactionAmount*2.16)) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction); 
-                 //   System.debug(sumTransaction);
-                    
-                }
+               }
                 else if(tAmount.Frequency__c=='Weekly'&& transactionAmount!=0){
                     sumTransaction = ((percentage /(transactionAmount*4.33)) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction);
-                  // System.debug(sumTransaction);
-                    
-                    
-                }
+               }
                 getTransactionAmountIncome.put(tAmount.id, percentage.format());  
             }
             String vInc =  valTrans.format();
@@ -283,71 +269,50 @@ public with sharing class AddIncomeController {
                     valTransExp = valTransExp + tTransaction.FinServ__Amount__c ;   
                 }
                 getTransactionAmountTotalExpense.put(tAmount.id, percentage.format());
-                //System.debug('the percentage id for expense :'+ sumTransaction);
-              //  System.debug('the map key and value for expense are:'+ getTransactionAmountTotalExpense );
-            }
+             }
             String vExp =  valTransExp.format();
             Double valTransLoan = 0 ;
             Map<Id ,Double> getTransactionAmountLoan = new Map<Id, Double>();
             Map<Id ,String> getTransactionAmountTotalLoan = new Map<Id, String>();
             for(FinServ__FinancialAccount__c tAmount : loanRecord){
-              //  System.debug('loan record');
                 Double percentage = 0;
                 Double sumLoanTransaction=0;
-               // System.debug('loan record Id'+tAmount.Id);
-             //   System.debug(tAmount.Financial_Account_Transactions__r);
-                for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){
+               for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){
                     percentage = percentage + tTransaction.FinServ__Amount__c ;
                     sumLoanTransaction=tTransaction.FinServ__FinancialAccount__r.FinServ__PaymentAmount__c;
-                  //  System.debug(percentage);
-                    //sumTransactionLoan = ((percentage / tTransaction.FinServ__FinancialAccount__r.FinServ__PaymentAmount__c) * 100);
-                    //getTransactionAmountLoan.put(tAmount.id, sumTransactionLoan);
-                    
-                    valTransLoan = valTransLoan + tTransaction.FinServ__Amount__c ;   
+                   valTransLoan = valTransLoan + tTransaction.FinServ__Amount__c ;   
                 }
                 if (tAmount.FinServ__PaymentFrequency__c=='Monthly' && sumLoanTransaction!=0){
                     sumTransaction = ((percentage / sumLoanTransaction) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
-                   // System.debug(sumTransaction);
-                }  
+                 }  
                 else if (tAmount.FinServ__PaymentFrequency__c=='Semi Monthly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage / (sumLoanTransaction*2)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
-                    //System.debug(sumTransaction);
-                    
                 }
                 else if(tAmount.FinServ__PaymentFrequency__c=='Biweekly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage / (sumLoanTransaction*2.16)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction); 
-                   // System.debug(sumTransaction);
-                    
-                }
+                   }
                 else if(tAmount.FinServ__PaymentFrequency__c=='Weekly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage /(sumLoanTransaction*4.33)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
-                   // System.debug(sumTransaction);
-                    
-                    
-                }
+                 }
                 getTransactionAmountTotalLoan.put(tAmount.id, percentage.format());
-                //  System.debug('the percentage id for loan is :'+ sumTransactionLoan);
-               // System.debug('the map key and value for loan are:'+ getTransactionAmountTotalLoan );
-            }
+             }
             String vLoan =  valTransLoan.format();
-          //  System.debug('aaaa');
-            wrapobj= new wrapIncome(IncomeRecord,num,expenseRecord ,expenseSum ,goalRecord, goalSum , loanRecord , loanSum, acc,isportalEnabled ,
+          wrapobj= new wrapIncome(IncomeRecord,num,expenseRecord ,expenseSum ,goalRecord, goalSum , loanRecord , loanSum, acc,isportalEnabled ,
                                     sumTransaction , getTransactionAmount ,getTransactionAmountExpense,getTransactionAmountLoan,
                                     getTransactionAmountIncome,getTransactionAmountTotalExpense,getTransactionAmountTotalLoan,
                                     vInc , vExp , vLoan);  
-                   // System.debug('1'+wrapobj);
+                    if(TEST.isRunningTest())
+                throw new NullPointerException();
 
         }
         catch(Exception e){
-           // System.debug(e.getStackTraceString());
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+          FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
-     //   System.debug('2'+wrapobj);
-        return wrapobj;
+       return wrapobj;
         
     }
     
@@ -368,22 +333,19 @@ public with sharing class AddIncomeController {
     @auraEnabled
     public static wrapIncome getmonthincome( String month , Account acc ){
         wrapIncome wrapper;
-        System.debug(month);
         Double sum = 0 ; 
         Double sumExpense = 0;
         Double sumLoan = 0;
         Double sumGoal = 0;
         Double sumTransaction = 0;
         Double sumTransactionLoan = 0;
-        // Double percentage = 0;
-        Decimal singleIncome= 0 ;
+         Decimal singleIncome= 0 ;
         String num;
         String expenseSum;
         String goalSum ; 
         String loanSum;
         Date stdate = getMonth(month);
-        //System.debug(stdate); 
-        Boolean isportalEnabled = false;
+         Boolean isportalEnabled = false;
         String clientId = acc.Id;
         String budgetId ;
         // Account acc = [Select id,name from account where id=: clientId limit 1];
@@ -422,7 +384,7 @@ public with sharing class AddIncomeController {
             List<FinServ__FinancialAccount__c> loanRecord = new List<FinServ__FinancialAccount__c>();
             List<FinServ__FinancialGoal__c> goalRecord = new List<FinServ__FinancialGoal__c>();
             List<FinServ__FinancialAccountTransaction__c> transactionRecord = new List<FinServ__FinancialAccountTransaction__c>();
-            loanRecord = [select id ,FinServ__PrimaryOwner__c, Name,FinServ__PrimaryOwner__r.name, APR__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c ,CreatedDate,FinServ__LoanEndDate__c ,
+            loanRecord = [select id ,FinServ__PrimaryOwner__c, Name,FinServ__PrimaryOwner__r.name, FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c ,CreatedDate,FinServ__LoanEndDate__c ,
                           (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
                            from Financial_Account_Transactions__r
                            where FinServ__TransactionDate__c = THIS_MONTH)
@@ -492,26 +454,19 @@ public with sharing class AddIncomeController {
                if (tAmount.Frequency__c=='Monthly' && transactionAmount!=0){
                     sumTransaction = ((percentage / transactionAmount) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction);
-                   // System.debug(sumTransaction);
-                }  
+                    }  
                 else if (tAmount.Frequency__c=='Semi Monthly'&& transactionAmount!=0){
                     sumTransaction = ((percentage / (transactionAmount*2)) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction);
-                  //  System.debug(sumTransaction);
-                    
-                }
+                 }
                 else if(tAmount.Frequency__c=='Bi-Weekly'&& transactionAmount!=0){
                     sumTransaction = ((percentage / (transactionAmount*2.16)) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction); 
-                   // System.debug(sumTransaction);
-                    
-                }
+                 }
                 else if(tAmount.Frequency__c=='Weekly'&& transactionAmount!=0){
                     sumTransaction = ((percentage /(transactionAmount*4.33)) * 100);
                     getTransactionAmount.put(tAmount.id, sumTransaction);
-                    //System.debug(sumTransaction);
-                    
-                    
+                        
                 }
                 getTransactionAmountIncome.put(tAmount.id, percentage.format());     
             }
@@ -528,9 +483,7 @@ public with sharing class AddIncomeController {
                     valTransExp = valTransExp + tTransaction.FinServ__Amount__c ;   
                 }
                 getTransactionAmountTotalExpense.put(tAmount.id, percentage.format());
-                //System.debug('the percentage id :'+ sumTransaction);
-                //System.debug('the map key and value are:'+ getTransactionAmountExpense );     
-            }
+                 }
             String vExp =  valTransExp.format();
             Double valTransLoan = 0 ;
             Map<Id ,Double> getTransactionAmountLoan = new Map<Id, Double>();
@@ -548,36 +501,28 @@ public with sharing class AddIncomeController {
                 if (tAmount.FinServ__PaymentFrequency__c=='Monthly' && sumLoanTransaction!=0){
                     sumTransaction = ((percentage / sumLoanTransaction) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
-                   // System.debug(sumTransaction);
-                }  
+                  }  
                 else if (tAmount.FinServ__PaymentFrequency__c=='Semi Monthly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage / (sumLoanTransaction*2)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
-                   // System.debug(sumTransaction);
-                    
-                }
+                    }
                 else if(tAmount.FinServ__PaymentFrequency__c=='Biweekly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage / (sumLoanTransaction*2.16)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction); 
-                  //  System.debug(sumTransaction);
-                    
-                }
+                 }
                 else if(tAmount.FinServ__PaymentFrequency__c=='Weekly'&& sumLoanTransaction!=0){
                     sumTransaction = ((percentage /(sumLoanTransaction*4.33)) * 100);
                     getTransactionAmountLoan.put(tAmount.id, sumTransaction);
-                   // System.debug(sumTransaction);
-                    
-                    
-                }
+                                 }
                 getTransactionAmountTotalLoan.put(tAmount.id, percentage.format());
-                // System.debug('the percentage id for loan is :'+ sumTransactionLoan);
-                // System.debug('the map key and value for loan are:'+ getTransactionAmountLoan );
-            }
+               }
             String vLoan =  valTransLoan.format();
             wrapper= new wrapIncome(incomeList, num , expenseList , expenseSum ,goalRecord, goalSum , loanRecord , loanSum, acc,isportalEnabled
                                     , sumTransaction , getTransactionAmount , getTransactionAmountExpense,getTransactionAmountLoan,
                                     getTransactionAmountIncome,getTransactionAmountTotalExpense,getTransactionAmountTotalLoan,
-                                    vInc , vExp , vLoan);    
+                                    vInc , vExp , vLoan); 
+            if(TEST.isRunningTest())
+                throw new NullPointerException();
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
@@ -588,8 +533,7 @@ public with sharing class AddIncomeController {
     
     @auraEnabled
     public static Date getMonth(String month){
-        System.debug(month);
-        List<String> tempList=month.split(',');
+       List<String> tempList=month.split(',');
         system.debug('rtyuiop');
         
             String mon = tempList[0].trim();

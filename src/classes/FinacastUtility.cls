@@ -8,6 +8,7 @@ public class FinacastUtility {
     {
         String namespace=NamespaceUtility.returnNamespace();
         String objectName=namespace+objectAPIName;
+        system.debug('objectName'+objectName);
         return database.query('select id from recordtype where recordtype.developername =: recordTypeName and  SobjectType =:objectname ' ).id;
     }
     
@@ -207,7 +208,7 @@ public class FinacastUtility {
                     
                     // Loan and debt accounts
                     System.debug('above');
-                    FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c, FinServ__PaymentAmount__c
+                    FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c, FinServ__PaymentAmount__c
                                 from FinServ__FinancialAccount__c where
                                 (Account_Type__c = 'Loan' or
                                  Account_Type__c = 'Credit Card') AND
@@ -250,7 +251,7 @@ public class FinacastUtility {
                                 setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
                             }
                             else{}
-                            setData +='\'APR\':'+FFDA.APR__c;
+                            setData +='\'APR\':'+FFDA.FinServ__APY__c;
                             setData +='},';
                         }
                     }

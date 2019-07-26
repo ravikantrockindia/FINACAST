@@ -109,15 +109,15 @@ public with sharing class FinacastGoalProgressApex{
             retgoal = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Associated_Account__r.Account_Type__c, Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, Goal_Priority_Number__c,FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where id=:fingoalId];
             List<FinServ__FinancialGoal__c> allAssocGoals = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where Associated_Account__c=: retgoal.Associated_Account__c and id !=: retgoal.id and Goal_Priority_Number__c <=: retgoal.Goal_Priority_Number__c];
             
-            ffa = [select name, Account_Type__c,aPR__c, FinServ__APY__c from FinServ__FinancialAccount__c where id=:retgoal.Associated_Account__c];
+            ffa = [select name, Account_Type__c,FinServ__APY__c, FinServ__APY__c from FinServ__FinancialAccount__c where id=:retgoal.Associated_Account__c];
             Double interestRate ;
             if(ffa.FinServ__APY__c != null)
                 {
                     interestRate = ffa.FinServ__APY__c;
                 }
-                if(ffa.APR__c != null)
+                if(ffa.FinServ__APY__c != null)
                 {
-                    interestRate =  ffa.APR__c;
+                    interestRate =  ffa.FinServ__APY__c;
                 }
             else{
                 interestRate = 0;
