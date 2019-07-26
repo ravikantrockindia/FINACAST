@@ -3,7 +3,8 @@
 * provided new implementation *********/
 
 public class Finacast_FS_ParentApex{
-       
+    
+    
     public static String initialClient = ''; 
     public static String clientData = '';    
     public static String requestEndpoint='https://mytafi.herokuapp.com/rest/service/getFutureSimulationsNew';
@@ -63,7 +64,7 @@ public class Finacast_FS_ParentApex{
                         switch on inc.Frequency__c {
                             when 'Monthly' {
                                 incomeFrequency = 1;
-                            }	
+                            }   
                             when 'Semi Monthly' {
                                 incomeFrequency = 2;
                             }
@@ -156,7 +157,7 @@ public class Finacast_FS_ParentApex{
                 
                 // Loan and debt accounts
                 System.debug('above');
-                FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
+                FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
                             from FinServ__FinancialAccount__c where
                             (Account_Type__c = 'Loan' or
                              Account_Type__c = 'Credit Card') AND
@@ -176,7 +177,7 @@ public class Finacast_FS_ParentApex{
                         switch on FFDA.FinServ__PaymentFrequency__c {
                             when 'Monthly' {
                                 loanFrequency = 1;
-                            }	
+                            }   
                             when 'Semi Monthly' {
                                 loanFrequency = 2;
                             }
@@ -226,7 +227,7 @@ public class Finacast_FS_ParentApex{
                             setData +='\'isMonthly\':'+FFDA.Do_tax_benefits_realize_monthly__c+',';
                         }
                         else{}
-                        setData +='\'APR\':'+FFDA.APR__c;
+                        setData +='\'APR\':'+FFDA.FinServ__APY__c;
                         
                         setData +='},';
                     }
@@ -237,7 +238,7 @@ public class Finacast_FS_ParentApex{
                                                             //Account_Value__c, 
                                                             Name, 
                                                             Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                            Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c	, Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
+                                                            Annual_Growth_Rate__c,  FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c  , Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
                                                             from FinServ__FinancialGoal__c where
                                                             RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                             FinServ__Household__c =: clientId
@@ -343,7 +344,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
         }
         
         /******** Normal non - Household Code goes here *******/
-        else {            	
+        else {              
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
             if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) { 
@@ -372,7 +373,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                         switch on inc.Frequency__c {
                             when 'Monthly' {
                                 incomeFrequency = 1;
-                            }	
+                            }   
                             when 'Semi Monthly' {
                                 incomeFrequency = 2;
                             }
@@ -465,7 +466,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                 
                 // Loan and debt accounts
                 System.debug('above');
-                FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
+                FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
                             Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c,
                             What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c, Do_tax_benefits_realize_monthly__c
                             //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
@@ -518,7 +519,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                             setData +='\'isMonthly\':'+FFDA.Do_tax_benefits_realize_monthly__c+',';
                         }
                         else{}
-                        setData +='\'APR\':'+FFDA.APR__c;
+                        setData +='\'APR\':'+FFDA.FinServ__APY__c;
                         
                         setData +='},';
                     }
@@ -529,7 +530,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                                                             //Account_Value__c, 
                                                             Name, 
                                                             Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                            Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c, Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
+                                                            Annual_Growth_Rate__c,  FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c, Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
                                                             from FinServ__FinancialGoal__c where
                                                             RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                             FinServ__PrimaryOwner__c =: clientId
@@ -762,7 +763,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                     
                     // Loan and debt accounts
                     System.debug('above');
-                    FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c
+                    FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c
                                 //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
                                 from FinServ__FinancialAccount__c where
                                 (Account_Type__c = 'Loan' or
@@ -805,7 +806,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                                 setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
                             }
                             else{}
-                            setData +='\'APR\':'+FFDA.APR__c;
+                            setData +='\'APR\':'+FFDA.FinServ__APY__c;
                             
                             setData +='},';
                         }
@@ -816,7 +817,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                                                                 //Account_Value__c, 
                                                                 Name, 
                                                                 Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                                Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c 
+                                                                Annual_Growth_Rate__c,  FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c 
                                                                 from FinServ__FinancialGoal__c where
                                                                 RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                                 FinServ__Household__c =: clientId
@@ -871,7 +872,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
         
         
         /******** Normal non - Household Code goes here *******/
-        else {            	
+        else {              
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
             if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) { 
@@ -972,7 +973,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                     
                     // Loan and debt accounts
                     System.debug('above');
-                    FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c
+                    FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, Account_Type__c
                                 //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
                                 from FinServ__FinancialAccount__c where
                                 (Account_Type__c = 'Loan' or
@@ -1014,7 +1015,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                                 setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
                             }
                             else{}
-                            setData +='\'APR\':'+FFDA.APR__c;
+                            setData +='\'APR\':'+FFDA.FinServ__APY__c;
                             setData +='},';
                         }
                     }
@@ -1024,7 +1025,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                                                                 //Account_Value__c, 
                                                                 Name, 
                                                                 Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                                Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c
+                                                                Annual_Growth_Rate__c,  FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c
                                                                 from FinServ__FinancialGoal__c where
                                                                 RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                                 FinServ__PrimaryOwner__c =: clientId
@@ -1135,7 +1136,7 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
             
             System.debug(clId);
             wrap.clientAcc =  acc;
-            Finacast_FS_ParentApex.createClientData(clId);
+            createClientData(clId);
             System.debug('aaa');
             System.debug(clientData);
             wrap.response = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);

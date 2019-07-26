@@ -174,7 +174,7 @@ public class AffordabilityController {
                 
                 // Loan and debt accounts
                 System.debug('above');
-                FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
+                FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
                             from FinServ__FinancialAccount__c where
                             (Account_Type__c = 'Loan' or
                              Account_Type__c = 'Credit Card') AND
@@ -244,7 +244,7 @@ public class AffordabilityController {
                             setData +='\'isMonthly\':'+FFDA.Do_tax_benefits_realize_monthly__c+',';
                         }
                         else{}
-                        setData +='\'APR\':'+FFDA.APR__c;
+                        setData +='\'APR\':'+FFDA.FinServ__APY__c;
                         
                         setData +='},';
                     }
@@ -478,7 +478,7 @@ public class AffordabilityController {
                 
                 // Loan and debt accounts
                 System.debug('above');
-                FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
+                FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
                             Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c,
                             What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c, Do_tax_benefits_realize_monthly__c
                             //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
@@ -531,7 +531,7 @@ public class AffordabilityController {
                             setData +='\'isMonthly\':'+FFDA.Do_tax_benefits_realize_monthly__c+',';
                         }
                         else{}
-                        setData +='\'APR\':'+FFDA.APR__c;
+                        setData +='\'APR\':'+FFDA.FinServ__APY__c;
                         
                         setData +='},';
                     }

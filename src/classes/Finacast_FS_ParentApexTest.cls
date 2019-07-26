@@ -51,7 +51,7 @@ public class Finacast_FS_ParentApexTest {
         financial1.FinServ__PaymentAmount__c = 5000;
         financial1.FinServ__PrimaryOwner__c= ac.Id;
         financial1.FinServ__LoanAmount__c = 5000;
-        financial1.APR__c = 4;
+        financial1.FinServ__APY__c = 4;
         financial1.Max_yearly_tax_deduction_allowed__c =10;
         financial1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
         financial1.Account_Type__c = 'Loan';
@@ -78,7 +78,7 @@ public class Finacast_FS_ParentApexTest {
         card.FinServ__PaymentAmount__c = 5000;
         card.FinServ__PrimaryOwner__c= ac.Id;
         card.FinServ__LoanAmount__c = 5000;
-        card.APR__c = 4;
+        card.FinServ__APY__c = 4;
         card.Max_yearly_tax_deduction_allowed__c =10;
         card.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'CreditCard');
         card.FinServ__FinancialAccountType__c  = 'Credit Card';
@@ -128,7 +128,7 @@ public class Finacast_FS_ParentApexTest {
         financial2.FinServ__PaymentAmount__c = 6000;
         financial2.FinServ__PrimaryOwner__c= ac.Id;
         financial2.FinServ__LoanAmount__c = 6000;
-        financial2.APR__c = 4;
+        financial2.FinServ__APY__c = 4;
         financial2.FinServ__Household__c = hac.id;
         financial2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
         financial2.Account_Type__c = 'Loan';
@@ -152,7 +152,7 @@ public class Finacast_FS_ParentApexTest {
         card2.FinServ__PrimaryOwner__c= ac.Id;
         card2.FinServ__LoanAmount__c = 5000;
         card2.FinServ__Household__c = hac.id;
-        card2.APR__c = 4;
+        card2.FinServ__APY__c = 4;
         card2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'CreditCard');
         card2.FinServ__FinancialAccountType__c  = 'Credit Card';
         insert card2;

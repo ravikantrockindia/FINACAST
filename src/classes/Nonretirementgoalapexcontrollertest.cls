@@ -32,7 +32,7 @@ public class Nonretirementgoalapexcontrollertest {
         financial2.RecordtypeId = rcc[0].Id;
         financial2.FinServ__Balance__c = 5627;
         financial2.FinServ__PrimaryOwner__c= acco.Id;
-        financial2.APR__c = 0;
+        financial2.FinServ__APY__c = 0;
         insert financial2;
         
         

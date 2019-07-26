@@ -7,9 +7,7 @@ public with sharing class AddIncomeController {
     } 
     @auraEnabled
     public static id getLoanRecordType(String recName1){  
-         String namespace=NamespaceUtility.returnNamespace();
-        String objectName=namespace+'FinServ__FinancialAccount__c';
-        return FinacastUtility.getRecordTypeId('objectName',recName1);         
+        return FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c',recName1);         
     } 
     @auraEnabled
     public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)

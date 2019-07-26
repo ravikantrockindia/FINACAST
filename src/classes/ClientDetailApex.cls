@@ -160,7 +160,7 @@ public class ClientDetailApex {
                 
                 // Loan and debt accounts
                 System.debug('above');
-                FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
+                FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
                             from FinServ__FinancialAccount__c where
                             (Account_Type__c = 'Loan' or
                              Account_Type__c = 'Credit Card') AND
@@ -230,7 +230,7 @@ public class ClientDetailApex {
                             setData +='\'isMonthly\':'+FFDA.Do_tax_benefits_realize_monthly__c+',';
                         }
                         else{}
-                        setData +='\'APR\':'+FFDA.APR__c;
+                        setData +='\'APR\':'+FFDA.FinServ__APY__c;
                         
                         setData +='},';
                     }
@@ -464,7 +464,7 @@ public class ClientDetailApex {
                 
                 // Loan and debt accounts
                 System.debug('above');
-                FFDAList = [select id, Name, APR__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
+                FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
                             Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c,
                             What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c, Do_tax_benefits_realize_monthly__c
                             //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
@@ -517,7 +517,7 @@ public class ClientDetailApex {
                             setData +='\'isMonthly\':'+FFDA.Do_tax_benefits_realize_monthly__c+',';
                         }
                         else{}
-                        setData +='\'APR\':'+FFDA.APR__c;
+                        setData +='\'APR\':'+FFDA.FinServ__APY__c;
                         
                         setData +='},';
                     }
@@ -732,7 +732,7 @@ public class ClientDetailApex {
                 Account acc = [Select id from account where OwnerId =: UserInfo.getUserId() order by name limit 1];
                 //if household check
                 if(isHousehold){
-                    tempAccountList =[Select id, Name, FinServ__Balance__c, FinServ__LoanAmount__c, Account_Type__c, APR__c, FinServ__APY__c,
+                    tempAccountList =[Select id, Name, FinServ__Balance__c, FinServ__LoanAmount__c, Account_Type__c, FinServ__APY__c,
                                       FinServ__FinancialAccountType__c from FinServ__FinancialAccount__c where 
                                       RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
                                       RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
@@ -741,7 +741,7 @@ public class ClientDetailApex {
                       }
                 //not household
                 else{
-                    tempAccountList =[Select id, Name, FinServ__Balance__c, FinServ__LoanAmount__c, Account_Type__c, APR__c, FinServ__APY__c,
+                    tempAccountList =[Select id, Name, FinServ__Balance__c, FinServ__LoanAmount__c, Account_Type__c, FinServ__APY__c,
                                       FinServ__FinancialAccountType__c from FinServ__FinancialAccount__c where 
                                       RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
                                       RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
@@ -755,7 +755,7 @@ public class ClientDetailApex {
                 //household is true and client is selected
                 if(isHousehold){
                     tempAccountList = [Select id, Name,FinServ__Balance__c,FinServ__LoanAmount__c, FinServ__FinancialAccountType__c, 
-                                       Account_Type__c, FinServ__APY__c, APR__c from  FinServ__FinancialAccount__c where
+                                       Account_Type__c, FinServ__APY__c from  FinServ__FinancialAccount__c where
                                        RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
                                        RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
                                        RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
@@ -764,7 +764,7 @@ public class ClientDetailApex {
                 //for non household Account
                 else{ 
                     tempAccountList = [Select id, Name,FinServ__Balance__c,FinServ__LoanAmount__c, FinServ__FinancialAccountType__c, 
-                                       Account_Type__c, FinServ__APY__c, APR__c from  FinServ__FinancialAccount__c where
+                                       Account_Type__c, FinServ__APY__c from  FinServ__FinancialAccount__c where
                                        RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
                                        RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
                                        RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
@@ -775,7 +775,7 @@ public class ClientDetailApex {
         else{
             isportalEnabled = true;
             tempAccountList = [Select id, Name,FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__FinancialAccountType__c, 
-                               Account_Type__c, FinServ__APY__c, APR__c from  FinServ__FinancialAccount__c where
+                               Account_Type__c, FinServ__APY__c from  FinServ__FinancialAccount__c where
                                RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
                                RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
                                RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND

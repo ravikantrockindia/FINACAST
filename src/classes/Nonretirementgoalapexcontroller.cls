@@ -1,8 +1,13 @@
 public class Nonretirementgoalapexcontroller {
+        public static string namespace{get; set;}
+
     public class getDataWrapper
     {
         @auraEnabled public Decimal currentAmt;
         @auraEnabled public Decimal emi;
+    }
+    Nonretirementgoalapexcontroller(){
+        
     }
     
     @auraEnabled
@@ -13,8 +18,6 @@ public class Nonretirementgoalapexcontroller {
         System.debug('goals are '+allGoals);
         return allGoals ;
     }
-    
-    
     
     @auraEnabled   
     public static List<FinServ__FinancialAccount__c> dample(String clientId){
@@ -38,16 +41,16 @@ public class Nonretirementgoalapexcontroller {
         try{
             if(accId != null&& accId !='')
             {
-                FinServ__FinancialAccount__c acc = [select FinServ__Balance__c,APR__c, FinServ__APY__c, id from FinServ__FinancialAccount__c where id = :accId];
+                FinServ__FinancialAccount__c acc = [select FinServ__Balance__c, FinServ__APY__c, id from FinServ__FinancialAccount__c where id = :accId];
                 system.debug('aa'+acc);
                 Double bal = acc.FinServ__Balance__c;
                 if(acc.FinServ__APY__c != null)
                 {
                     interestRate = acc.FinServ__APY__c;
                 }
-                if(acc.APR__c != null)
+                if(acc.FinServ__APY__c != null)
                 {
-                    interestRate =  acc.APR__c;
+                    interestRate =  acc.FinServ__APY__c;
                 }
                 else 
                     interestRate = 0; 

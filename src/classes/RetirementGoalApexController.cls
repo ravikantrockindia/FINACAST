@@ -17,7 +17,7 @@ public class RetirementGoalApexController {
     
     /*wrapper class 
 * variable "Decimal retirementAmount" : return the target amount for retirement
-* variable " Integer yearsTillRetirement" : return years left until retirement
+* variable " Integer yearsTillRetirement" : return years left until retirementreti
 * **/
     
      @auraEnabled   
