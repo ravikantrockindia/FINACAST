@@ -62,15 +62,7 @@
             }
             }
             catch(e){
-                             /*   console.log(e);
-                
-                var event = $A.get("e.force:showToast");
-                                            event.setParams({
-                                                "type" : "Warnning",
-                                                "title" : "Info !",
-                                                "message" : "No Data for client Available"
-                                            });
-                                            event.fire();*/
+                           
                 
                 
             }
@@ -144,9 +136,5 @@
         $A.enqueueAction(action2);
         
     }, 
-    saveButton: function(component,event,helper){
-        component.set("v.disabled",true)
-        var submitGoal=component.find("submitGoal")
-        submitGoal.saveGoal();
-    }
+    
 })

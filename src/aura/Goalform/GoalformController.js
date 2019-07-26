@@ -1,11 +1,8 @@
 ({
     changeEntity : function(component, event, helper) {
        
-        var action = component.get("c.dample"); 
-        // method name i.e. getEntity should be same as defined in apex class
-        // params name i.e. entityType should be same as defined in getEntity method
+        var action = component.get("c.dample");
          var clientId=component.find("owner").get("v.value");
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'+clientId);
         action.setParams({
             clientId : clientId
         });
@@ -50,16 +47,13 @@
         }
     },
     onload:function(component,event,helper){
-      // debugger;
-      
-         var recUi = event.getParam("recordUi");
+   var recUi = event.getParam("recordUi");
                component.set("v.currentBal", recUi.record.fields["Start_Value__c"].value)
           var selectedAccount=component.get("v.selectedAccount");
         console.log(selectedAccount);
         if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
             		component.set("v.selectedAccount",recUi.record.fields["Associated_Account__c"].value);
             console.log(recUi.record.fields["Associated_Account__c"].value)
-//component.find("associatedAcc").set("v.value",recUi.record.fields["Associated_Account__c"].value);
         }
         console.log(component.get("v.selectedAccount"));
         var targetValue= component.find("amount").get("v.value");
@@ -114,19 +108,7 @@
     
     cancelButton : function(component, event, helper) {
       
-       /*     var homeEvent = $A.get("e.force:navigateToComponent");
-            homeEvent.setParams({
-                componentDef : "c:Goalfinal",
-                componentAttributes: {
-                   cid : component.get("v.cid")
-        }
-                
-            }); 
-            homeEvent.fire(); */
-        
-          helper.hideExampleModal(component);
-         
-        
+   helper.hideExampleModal(component);
     },
     
     getChangeMonthlyConti : function(component, event, helper)
@@ -139,8 +121,7 @@
         
         var current=component.find("strtvalue").get("v.value");
         console.log(current);
-        //var current = component.get("v.currentBal"); 
-       // var target = component.get("v.tarAmt"); 
+       
        var target=component.find("amount").get("v.value");
         console.log('hh'+current);
         var tDate = component.find("tarDate").get("v.value");
@@ -154,9 +135,7 @@
         if(target != null && target <= 0)
         {
            console.log(target); status1 = 0;
-            //return;
-           // msg = "Invalid Target Amount";
-            //helper.currentAmtError(component, event, helper, msg);     
+                
         }
         else
         {
@@ -221,60 +200,22 @@
         
     },
     onSuccessCall:function(component,event,helper){
-       /*  var record = event.getParam("response");
-         var navEvt = $A.get("e.force:navigateToComponent");
-            navEvt.setParams({
-                componentDef : "c:Goalfinal",
-                componentAttributes: {
-                   "recordId": record.id
-        }
-                
-            });
-            navEvt.fire();*/
-        
-          helper.hideExampleModal(component);
-         
-        
-        /*if(window.location.pathname.includes("Budget")){
-            var cmpTarget = component.find('exampleModal');
-            console.log('the cross is : '+ cmpTarget );
-            $A.util.addClass(cmpTarget, 'hideDiv');
-            component.set("v.isActive",false);
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
-            saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            // saveIncomeEvent.setParams("showModalIncome", false);
-            saveIncomeEvent.fire();
-        }
-        else
-        {
-            var record = event.getParam("response");
-           
-            var navEvt = $A.get("e.force:navigateToSObject");
-            navEvt.setParams({
-                "recordId": record.id
-                
-            });
-            navEvt.fire();   
-        }*/
-        //helper.hideExampleModal(component);
+    
+      helper.hideExampleModal(component);
+      
     },
+    
     hideExampleModal : function(component, event, helper) {
         helper.hideExampleModal(component);
     },
     
-      
-    handleSubmit : function(component, event, helper)
+     handleSubmit : function(component, event, helper)
     { 
         var status1 = 0;
         var status2 = 0;
         var status3 = 0;
         
         var msg = "";
-       // var priowner = event.getParam('fields').FinServ__PrimaryOwner__c;
-       // console.log(JSON.stringify(event.getParam('fields')));
-      //  console.log(event.getParam('fields'));
-      //  console.log(component.get("v.client.Id"));
-        //var priowner = component.get("v.client.Id");
         var n = component.find("owner").get("v.value");
         console.log('hey1:-'+n)
         var priowner = component.get("v.client.Id");
@@ -301,8 +242,8 @@
         {
             status3 = 0;
             event.preventDefault();
-            msg = "Please fill mandatory fields."
-            helper.showAlertEmptyInvalidVal(component,msg);       
+            //msg = "Please fill mandatory fields."
+          //  helper.showAlertEmptyInvalidVal(component,msg);       
         }
         else{
             status3 = 1;
@@ -406,7 +347,7 @@
         console.log(event.getParams('error').message);
     },
 
-    changeEntity1 : function(component , event , helper){
+   changeEntity1 : function(component , event , helper){
         console.log('handle change');
         var clientId=component.get("v.client.Id");
         console.log('id'+clientId);
@@ -431,5 +372,5 @@
             $A.enqueueAction(action); 
 
         }
-    }
+    } 
 })

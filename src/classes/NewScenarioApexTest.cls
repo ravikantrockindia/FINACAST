@@ -5,13 +5,13 @@ public class NewScenarioApexTest {
     public static Id savingsRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Savings_Record_Type');
     public static Id goalsRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'Scenario_Goal_Record_Type');
     public static Id loansRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Loans_Record_Type');
-    public static Id cardRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Credit_Cards_Record_Type');
+    //public static Id cardRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Credit_Cards_Record_Type');
     public static Id incomeTypeId = FinacastUtility.getRecordTypeId('Budget__c' , 'Income_Record_Type');
     public static Id expenseTypeId = FinacastUtility.getRecordTypeId('Budget__c' , 'Expense_Record_Type');
     public static Id savingsTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'SavingsAccount');
     public static Id goalsTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
     public static Id loansTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'LoanAccount');
-    public static Id cardTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'CreditCard');
+    //public static Id cardTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'CreditCard');
     public static Id hhTypeId = FinacastUtility.getRecordTypeId('Account' , 'IndustriesHousehold');
     @istest
     public static void TestUtility() {
@@ -108,14 +108,14 @@ public class NewScenarioApexTest {
         scLoan.Scenario_Id__c=sc.Id;
         insert scLoan;
         
-        FinServ__FinancialAccount__c sceneCard=new FinServ__FinancialAccount__c();
+       /* FinServ__FinancialAccount__c sceneCard=new FinServ__FinancialAccount__c();
         sceneCard.Name='SceneCard 1';
         sceneCard.FinServ__LoanAmount__c=200;
         sceneCard.APR__c=2.0;
         sceneCard.Scenario_Id__c=sc.Id;
         sceneCard.FinServ__PrimaryOwner__c=ac.Id;
         insert sceneCard;
-        
+        */
         
         
      /*   Budget__c bg=new Budget__c();
@@ -134,7 +134,7 @@ public class NewScenarioApexTest {
         NewScenarioApex.getRecordTypeId('goal button');
         NewScenarioApex.getRecordTypeId('loan button');
         NewScenarioApex.getRecordTypeId('saving button');
-        NewScenarioApex.getRecordTypeId('credit card button');
+       // NewScenarioApex.getRecordTypeId('credit card button');
         
         NewScenarioApex.getMonthlyContribution(252, 2, system.today(), 1);
         

@@ -8,57 +8,21 @@
     <aura:attribute name="GoalsList" type="String"/>
     <aura:attribute name="IncomesList" type="String"/>
     <aura:attribute name="ExpensesList" type="String"/>
-    
     <aura:attribute name="financialAccountList" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>  
     <aura:attribute name="client" type="String" />
     <aura:attribute name="showModal" type="Boolean"/>
     <aura:attribute name="text" type="String"/>
-     <aura:attribute name="months" type="String" default="0"/>
+    <aura:attribute name="months" type="String" default="0"/>
     <aura:attribute name="showAlert" type="boolean" default="false"/>
     <aura:attribute name="alertMessages" type="String[]"/>
     <aura:attribute name="jsonResponse" type="String"/>
     <aura:attribute name="netWorth" type="Double"/>
     <aura:attribute name="isPortalUser" type="Boolean" />
-     <aura:attribute name = "selectedClient" type = "String" />
-    
-     <!-- <aura:method name = "changeClientData" action = "{!c.changeClientData}" >
-        <aura:attribute name = "changeData" type = "Object" />
-      
-        
-        
-    </aura:method> --> 
+    <aura:attribute name = "selectedClient" type = "String" />
     <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
-    <!--aura:handler name="change" value="{!v.selectedClient}"  action="{!c.changeClient}"/>-->
-   
-
   
-    <!--End Attribute List-->
-    
-    
-    <!-- Change Client Card -->
-  <!--  <aura:if isTrue="{!not(v.isPortalUser)}">
-        <article class="slds-card">
-            <div class="slds-card__body slds-card__body_inner "> 
-                <div class="slds-col slds-size_2-of-12 " >
-                    </div>
-                 <div class="slds-col slds-page-header__row" style="">
-                <div class="slds-text-heading_medium slds-size_3-of-12" style="">Current Client:</div>
-                 
-                        <div class="slds-col slds-size_5-of-12  label_none" >
-                 <lightning:recordEditForm objectApiName="FinServ__FinancialGoal__c">
-                     <lightning:inputField fieldName="FinServ__PrimaryOwner__c" value="{!v.selectedClient}" onchange="{! c.changeClient }"  aura:id="inf1"/> 
-                    </lightning:recordEditForm>
-
-                    </div> 
-                </div>
-               
-            </div>
-        </article>
-    </aura:if> -->
-    <!--End Change Client-->
-     
     <article class="slds-card">
             <div class="slds-card__body slds-card__body_inner ">
     			<div class="slds-gutters">

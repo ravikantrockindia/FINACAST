@@ -2,6 +2,9 @@
 public class ClientDetailApexTest {
      @testsetup
     public static void data(){
+        String namespace= NamespaceUtility.returnNamespace();
+        String sObject1=namespace+'Budget__c';
+            
         String cId = 'init';
         Account ac = new Account();
         ac.name = 'Test';
@@ -9,10 +12,22 @@ public class ClientDetailApexTest {
         insert ac;
         String cId1 = ac.id;
         
+        
+        Account ac2 = new Account();
+        ac2.name = 'Test3';
+        ac2.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
+        insert ac2;
+        
         Account hac = new Account();
         hac.name = 'Test2';
         hac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
         insert hac;
+        
+        
+        Account hac2 = new Account();
+        hac2.name = 'Test4';
+        hac2.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
+        insert hac2;
         
         AccountContactRelation acr = new AccountContactRelation();
         acr.accountid = hac.id;
@@ -27,7 +42,7 @@ public class ClientDetailApexTest {
         
         Budget__c income = new Budget__c();
         income.Name = 'test income';
-       
+        
         income.Amount__c = 1234;
         income.Primary_Owner__c = ac.Id; income.Start_Date__c = system.today();
         income.End_Date__c = system.today();
@@ -37,10 +52,10 @@ public class ClientDetailApexTest {
         Budget__c expense = new Budget__c();
         expense.Name = 'test expense';
         expense.Amount__c = 1234;
-         expense.Start_Date__c = system.today();
+        expense.Start_Date__c = system.today();
         expense.End_Date__c = system.today();
         expense.Primary_Owner__c = ac.Id;
-        expense.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Expense_Record_Type');
+        expense.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Expense_Record_Type');
         insert expense;
         
         FinServ__FinancialAccount__c financial1 = new FinServ__FinancialAccount__c();
@@ -49,10 +64,11 @@ public class ClientDetailApexTest {
         financial1.FinServ__PrimaryOwner__c= ac.Id;
         financial1.FinServ__LoanAmount__c = 5000;
         financial1.APR__c = 4;
+        financial1.Max_yearly_tax_deduction_allowed__c =10;
         financial1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
         financial1.Account_Type__c = 'Loan';
         insert financial1;
-         system.debug('typefin1'+financial1.Account_Type__c);
+        system.debug('typefin1'+financial1.Account_Type__c);
         
         FinServ__FinancialAccount__c savings1 = new FinServ__FinancialAccount__c();
         savings1.FinServ__PrimaryOwner__c = ac.Id;
@@ -63,6 +79,7 @@ public class ClientDetailApexTest {
         savings1.FinServ__LoanEndDate__c = Date.today();
         savings1.FinServ__FinancialAccountType__c = 'Savings';
         savings1.Account_Type__c = 'Savings';
+        savings1.Max_yearly_tax_deduction_allowed__c =10;
         insert savings1;
         update savings1;
         system.debug('typefin1'+savings1.RecordTypeId);
@@ -74,9 +91,10 @@ public class ClientDetailApexTest {
         card.FinServ__PrimaryOwner__c= ac.Id;
         card.FinServ__LoanAmount__c = 5000;
         card.APR__c = 4;
+        card.Max_yearly_tax_deduction_allowed__c =10;
         card.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'CreditCard');
         card.FinServ__FinancialAccountType__c  = 'Credit Card';
-         card.Account_Type__c = 'Credit Card';
+        card.Account_Type__c = 'Credit Card';
         insert card;
         
         system.debug('typefin1'+card.Account_Type__c);
@@ -87,6 +105,7 @@ public class ClientDetailApexTest {
         goals1.FinServ__TargetValue__c = 10000;
         goals1.FinServ__TargetDate__c = Date.today()+900;
         goals1.Start_Value__c = 2000;
+        goals1.Start_Date__c = system.today();
         goals1.Goal_Priority__c = '1';
         goals1.Required_Monthly_Saving__c = 2000;
         goals1.Associated_Account__c = savings1.Id;
@@ -103,7 +122,7 @@ public class ClientDetailApexTest {
         income2.Amount__c = 4234;
         income2.Primary_Owner__c = ac.Id;
         income2.HouseHold__c = hac.id;
-        income2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Income_Record_Type');
+        income2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
         insert income2;
         
         Budget__c expense2 = new Budget__c();
@@ -113,7 +132,7 @@ public class ClientDetailApexTest {
         expense2.Amount__c = 1234;
         expense2.Primary_Owner__c = ac.Id;
         expense2.HouseHold__c = hac.id;
-        expense2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c', 'Expense_Record_Type');
+        expense2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
         insert expense2;
         
         FinServ__FinancialAccount__c financial2 = new FinServ__FinancialAccount__c();
@@ -133,7 +152,7 @@ public class ClientDetailApexTest {
         savings2.Name = 'Test Savings 1';
         savings2.FinServ__Balance__c = 98765;
         savings2.FinServ__Household__c = hac.id;
-        savings2.FinServ__APY__c = 3;   
+        savings2.FinServ__APY__c = 0;   
         savings2.FinServ__LoanEndDate__c = Date.today();
         savings2.FinServ__FinancialAccountType__c = 'Savings';
         insert savings2;
@@ -160,45 +179,36 @@ public class ClientDetailApexTest {
         goals2.Start_Value__c = 2000;
         goals2.FinServ__Household__c = hac.id;
         goals2.Goal_Priority__c = '1';
+        goals2.Start_Date__c = system.today();
+        goals2.Max_yearly_tax_deduction_allowed__c=5;
         goals2.Required_Monthly_Saving__c = 2000;
         goals2.Associated_Account__c = savings1.Id;
         goals4.add(goals2);
         insert goals4;
     }
     
-    static TestMethod void testDashboard() {
+    @istest
+    public static void TestAffordablity() {
         Account acc = [select id from Account where name = 'Test'];
+        Account acc2 = [select id from Account where name ='Test2'];
+        Account acc3 = [select id from Account where name = 'Test3'];
+        Account acc4 = [select id from Account where name = 'Test4'];
+
         test.startTest();
-    
-        ClientDetailApex.createClientData(acc.Id);
-        ClientDetailApex.createClientData_bak('init');
-        ClientDetailApex.createClientData_bak(acc.Id);
+        ClientDetailApex.getGoals(acc2.id );
+       ClientDetailApex.getAccounts(acc3.id);
+         ClientDetailApex.getAccounts(acc4.id);
         ClientDetailApex.getData(acc.id);
-        ClientDetailApex.createClientData('init');
-        ClientDetailApex.NumberOfMonths(system.today(), system.today());
-        ClientDetailApex.curentgoalestimation(500, system.today(), system.today());
-        
-        
-        ClientDetailApex.getGoals(acc.Id);   
-         ClientDetailApex.getAccounts(acc.Id);
         ClientDetailApex.getAccounts('init');
-        ClientDetailApex.getGoals('init');
-        
-        Account acc2 = [select id from Account where name = 'Test2'];
-        ClientDetailApex.createClientData_bak(acc2.Id);
-        ClientDetailApex.getAccounts(acc2.Id);
-        ClientDetailApex.getGoals(acc2.Id);   
-        ClientDetailApex.getData(acc2.id);
+    ClientDetailApex.getGoals('init');
+      
         ClientDetailApex.createClientData(acc2.Id);
         ClientDetailApex.getAccounts(acc2.Id);
         ClientDetailApex.getGoals(acc2.Id);
         ClientDetailApex.isportalEnabled =true;
-        
-
-        //Test.setMock(HttpCalloutMock.class, new FutureSimulationMockHttpResponse());        
-        //ClientDetailApex.WrapperClass res = ClientDetailApex.getData(acc.Id);
-        System.assertEquals(1,1);
+         ClientDetailApex.NumberOfMonths(system.today(), system.today());
+         ClientDetailApex.curentgoalestimation(250, system.today(), system.today()); 
+         System.assertEquals(1,1);
         test.stopTest();
-    } 
-
+    }
 }

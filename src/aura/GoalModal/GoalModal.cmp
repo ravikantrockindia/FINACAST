@@ -1,8 +1,6 @@
 <aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" controller="GoalTypeSelectionController"><br/><br/><br/><br/> 
 
-	
-   
-        <aura:handler name="init" value="{!this}" action="{!c.init}"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/> 
     <aura:attribute name="client" type="String"/>    
     <aura:attribute name="showModalwedding" type="Boolean" default="false" />
     <aura:attribute name="showModaleducation" type="Boolean" default="false" />
@@ -29,7 +27,7 @@
                     <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                     <span class="slds-assistive-text">Close</span>
                 </button>
-                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select a Type of Goal</h2></header>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create a new goal</h2></header>
             
             <div class = "images">
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -37,7 +35,7 @@
                         <div class="slds-col slds-col1">
                             <span>
                                 <lightning:button class="slds-button" name="RetirementRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.RetirementIcon}"  height="200" width="300" title="Retirement"/>
+                                    <img src="{!$Resource.RetirementIcon}"  height="150" width="150" title="Retirement"/>
                                     <div class = "slds-col1-cover" >
                                         <h5>Retirement</h5>
                                     </div>        
@@ -110,8 +108,7 @@
                                     </div>
                                 </lightning:button>
                             </span>
-                        </div>
-                        
+                        </div>                        
                         <div class="slds-col slds-col1">
                             <span>
                                 <lightning:button class="slds-button" name="OtherGoalsRecordType" onclick="{!c.onGoalClick}">
@@ -128,7 +125,7 @@
             
             <footer class="slds-modal__footer">
                 <div class="button" align ="right">
-                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closePopUp}" />
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closePopUp}"/>
                 </div>
             </footer>
         </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>

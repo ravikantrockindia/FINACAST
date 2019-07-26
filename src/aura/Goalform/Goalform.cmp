@@ -64,8 +64,7 @@
                                         
                                         <span class = "highlight">* </span>Primary Owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c" onchange = "{!c.changeEntity}" variant="label-hidden" disabled="true"/><br/>
                                         <span class = "highlight">* </span>Financial Goal Name<lightning:inputField aura:id = "name" fieldName="Name" required = "true"/><br/>
-                                        <!-- <span class = "highlight">* </span>How much do you want to save? ($)<lightning:inputField fieldName="FinServ__TargetValue__c" aura:id = "amount"  onchange = "{!c.getChangeMonthlyConti}" value = "{!v.tarAmt}" ></lightning:inputField><br/>-->
-                                        <!--<span class = "highlight">* </span>How much do you want to save? ($)<lightning:inputField fieldName="FinServ__TargetValue__c" aura:id = "amount"  onchange = "{!c.getChangeMonthlyConti}" ></lightning:inputField><br/>-->
+                    
                                         <span class = "highlight">* </span>How much do you want to save? ($)<lightning:input aura:id = "amount" onchange="{!c.getChangeMonthlyConti}" label="How much do you want to save? ($)" ></lightning:input><br/>
                                         <span class = "highlight">* </span>When are you planning?<lightning:inputField aura:id = "tarDate" fieldName="FinServ__TargetDate__c"   onchange = "{!c.getChangeMonthlyConti}"></lightning:inputField>
                                         <br/>
@@ -80,9 +79,7 @@
              
                                                             </aura:iteration>
                                         </lightning:select><br/>
-                                     <!--   <span class = "highlight">* </span>Associated Account<lightning:inputField aura:id = "associateAcc" fieldName="Associated_Account__c"  onchange="{!c.getCurrentAmt}" /><br/>-->
-                                        
-                                        <!--   <span class = "highlight">* </span>Current goal amount ($)<lightning:inputField fieldName="Start_Value__c"  onchange = "{!c.getChangeMonthlyConti}"  value = "{!v.currentBal}" aura:id="strtvalue"></lightning:inputField><br/>-->
+                                   
                                         <span class = "highlight">* </span>Current goal amount ($)<lightning:inputField fieldName="Start_Value__c"   onchange = "{!c.getChangeMonthlyConti}" aura:id="strtvalue"></lightning:inputField><br/>
                                         <span class = "highlight">* </span>Goal Priority<lightning:inputField fieldName="Goal_Priority__c" aura:id = "priority"    /><br/>
                                         <span class = "highlight">* </span>How much are you willing to contribute per month? ($)<lightning:inputField fieldName="Required_Monthly_Saving__c"   value = "{!v.contribution}" aura:id = "goalContri" onchange = "{!c.handleChangeMonthlyContribution}" ></lightning:inputField>

@@ -21,8 +21,7 @@ public class RetirementGoalApexController {
 * **/
     
      @auraEnabled   
-    public static List<FinServ__FinancialAccount__c> dample(String clientId){
-        System.debug('clientId-sassa-->'+clientId);      
+    public static List<FinServ__FinancialAccount__c> dample(String clientId){     
         List<FinServ__FinancialAccount__c> a = [select Id, Name from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c = :clientId];
         return a;
     }
@@ -82,9 +81,6 @@ public class RetirementGoalApexController {
         return wrapper;
     }
     
-    
-    
-    
     /*wrapper class 
 * variable "Decimal currentAmt" : remaining available balance for goal
 * variable "Decimal monthlyContri" : calculating monthly contribution to fulfil goal
@@ -102,7 +98,6 @@ public class RetirementGoalApexController {
     @auraEnabled
     public static AmtAndContriWrapper getAmtAndContri(String accId, String tillRetirement, String interest, String targetAmt, String retireDate, String current)
     {
-        System.debug(accId);
         Double interestRate = Double.valueOf(interest);
         Double currentAmount = 0;
         
@@ -112,7 +107,6 @@ public class RetirementGoalApexController {
         {
             FinServ__FinancialAccount__c acc = [select FinServ__Balance__c,id from FinServ__FinancialAccount__c where id = :accId];
             Double bal = acc.FinServ__Balance__c;
-            System.debug(bal);
             
             list<FinServ__FinancialGoal__c> allAssocGoals = [select Associated_Account__c,Required_Monthly_Saving__c, Start_Date__c, Start_Value__c from FinServ__FinancialGoal__c where Associated_Account__c = :accId];
             
@@ -121,7 +115,6 @@ public class RetirementGoalApexController {
             Decimal growth=0;
             for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
             {
-                System.debug(relgoal);
                 totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
             }
             remainingAmount = bal - totalEstimated;
@@ -147,7 +140,6 @@ public class RetirementGoalApexController {
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
-        System.debug(wrapper);
         return wrapper;
         
     }
@@ -189,9 +181,6 @@ public class RetirementGoalApexController {
         
     }    
     
-    
-    
-    
     /*** save data for retirement goal
 * RetirementGoalScreen2 controller, function : saveButton
 * **/
@@ -204,9 +193,6 @@ public class RetirementGoalApexController {
         
         FinServ__FinancialGoal__c goal = new FinServ__FinancialGoal__c();
         try{
-            System.debug('apex controller');
-            
-            System.debug(owner);
             goal.Id=recordId;
             goal.FinServ__PrimaryOwner__c = owner;
             
@@ -245,7 +231,7 @@ public class RetirementGoalApexController {
     @AuraEnabled
     public static FinServ__FinancialGoal__c getGoalData(String goalId)
     {
-        return [SELECT Annual_Growth_Rate__c,Associated_Account__c,Current_Goal_Amount__c,Current_Monthly_Income__c,Date_Of_Birth__c,Desired_Annual_Income_For_Retirement__c,Expected_Inflation_Rate__c,FinServ__PrimaryOwner__c,FinServ__TargetDate__c,FinServ__TargetValue__c,Goal_Priority__c,Id,Name,OwnerId,Rate_Of_Return_After_Retirement__c,Required_Monthly_Saving__c,Retirement_Age__c,Start_Date__c,Start_Value__c,Years_Of_Living_After_Retirement__c FROM FinServ__FinancialGoal__c where id =: goalId];
+        return [SELECT Annual_Growth_Rate__c,Associated_Account__c,Current_Goal_Amount__c,Current_Monthly_Income__c,Date_Of_Birth__c,Desired_Annual_Income_For_Retirement__c,Expected_Inflation_Rate__c,FinServ__PrimaryOwner__c,FinServ__TargetDate__c,FinServ__TargetValue__c,Goal_Priority__c,Id,Name,OwnerId,Rate_Of_Return_After_Retirement__c,Required_Monthly_Saving__c,Retirement_Age__c,Start_Date__c,Start_Value__c,Years_Of_Living_After_Retirement__c , What_of_contribution_bring_tax_benefit__c , Max_yearly_tax_deduction_allowed__c , Do_tax_benefits_realize_monthly__c FROM FinServ__FinancialGoal__c where id =: goalId];
     }
     
 }

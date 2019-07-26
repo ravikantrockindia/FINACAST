@@ -337,9 +337,6 @@
         }
      },
     
-    
-  
-    
     amtAndContri : function(component, event, helper)
     {
         var associated = component.find("associateAcc").get("v.value");
@@ -442,10 +439,7 @@
         helper.hideExampleModal(component);
     },
     
-    
-    
-    
-    saveButton : function(component, event, helper) {
+     saveButton : function(component, event, helper) {
         
         var recordId=component.get("v.retirementGoalId");
         console.log("record Id", recordId);
@@ -498,8 +492,6 @@
 
         var maxdeduction=0;
       
-        
-   
         var ismonthly=true;
         console.log("ismonthly",ismonthly, typeof ismonthly);
         if(isTaxDeduction){
@@ -512,8 +504,6 @@
             var ismonthly=component.get("v.isMonthly")
             console.log("ismonthly",ismonthly, typeof ismonthly);
             }
-        
-        
         
         
         var msg = "Please fill mandatory fields"
@@ -584,7 +574,6 @@
         }
         if(event.getSource().get("v.value") < component.get("v.initialEmi") && status == 1 )
         {
-            
             component.set("v.buttonDisplay",true);
             console.log("button status",component.get("v.buttonDisplay"));
             
@@ -634,7 +623,6 @@
     
     handleRetirementDate : function(component, event, helper)
     {
-        
         component.set("v.tarDate",component.get("v.newTarDate"));
         component.set("v.buttonDisplay",false);
         component.set('v.setMsg','You will reach your goal on time');
@@ -665,5 +653,4 @@
         }
     },
    
-    
 })

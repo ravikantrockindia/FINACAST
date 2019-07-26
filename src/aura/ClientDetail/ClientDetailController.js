@@ -2,8 +2,7 @@
     //init method
     doInit : function(component, event, helper) {               
         var jsonResponseJs;      
-      //  var selectedClient =   component.find("inf1").get("v.value");
-          console.log('fgfgyfgfgy---------'+ component.get('v.recordId'));        
+           console.log('fgfgyfgfgy---------'+ component.get('v.recordId'));        
         var eve = $A.get("e.c:changeclientevent");
         eve.setParams({"idclient":component.get('v.recordId')}); 
         eve.fire();
@@ -20,20 +19,18 @@
             console.log(g.responseData);
             
             var state = response.getState();
-            if(state==="SUCCESS" && (!($A.util.isUndefinedOrNull(g)))) {
-                
+            if(state==="SUCCESS"&& (!($A.util.isUndefinedOrNull(g)))) {
+               
                 //check for client
                 if(!($A.util.isUndefinedOrNull(g.firstClient))) {
+                    var s= g.firstClient;
+                    console.log('sssss'+s);
                     component.set("v.client.Name", g.firstClient); 
+                    console.log("rrrrrrrrrrrr"+g.firstClient);
                     component.set("v.selectedClient",g.clientid); 
                 }
                 
-                //set saving, credit, loan, networth
-                component.set('v.saving', g.financialAccountList['0']);
-                component.set('v.credit', g.financialAccountList['1']);
-                component.set('v.loan', g.financialAccountList['2']);
-                var netWorth = g.balanceList['0'] - (g.balanceList['1'] + g.balanceList['2']);
-                component.set('v.netWorth', netWorth);
+              
                 component.set("v.GoalsList", g.financialGoalList);
                 component.set("v.isPortalUser", g.isportalUser); 
                 
@@ -72,7 +69,7 @@
     },
     
     //change client method
-    changeClient: function(component, event, helper) {
+  changeClient: function(component, event, helper) {
         
         helper.indicatorColorRemove(component);
         var jsonResponseJs;
@@ -139,7 +136,7 @@
          }
     },
     
-    
+ 
     //for alert messages open and close
     showAlert: function(component, event, helper) {
         var flag = component.get('v.showAlert');

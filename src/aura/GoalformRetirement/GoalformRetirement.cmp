@@ -18,17 +18,12 @@
     <aura:attribute name = "subheading" type = "String"/>
      <aura:attribute name="recordTypeId" type="String"/>
     <aura:attribute name="Acclist" type="List"/>
-   
     <aura:attribute name = "tarDate" type = "String"/>
     <aura:attribute name="selectedAccount" type="String"/>
-   
     <aura:attribute name = "retirementAnnualIncome" type = "Integer"/>
-  
-    <aura:attribute name = "balance" type = "Integer"/>
+  <aura:attribute name = "balance" type = "Integer"/>
     <aura:attribute name = "amtMonth" type = "String"/>
-       
     <aura:attribute name = "tarAmt" type = "Integer"/>
-    
     <aura:attribute name = "tarMonth" type = "String"/>
     <aura:attribute name = "goalPriority" type = "Integer" />
     <aura:attribute name = "accAssociated" type = "String"/>
@@ -71,8 +66,7 @@
                                           recordTypeId = "{!v.recordTypeId}"
                                           objectApiName = "FinServ__FinancialGoal__c"
                                           recordId = "{!v.retirementGoalId}" 
-                                          
-                                        onsubmit = "{!c.saveButton}"
+                                          onsubmit = "{!c.saveButton}"
                                          
                                           > 
                    
@@ -85,15 +79,12 @@
 
                      <div class="slds-col slds-size_1-of-2" style="color:grey;">
                                     <span class = "highlight">* </span>Primary owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c"  onchange = "{!c.Acclist}" variant="label-hidden" disabled="true"/>
-                                <!--    <span class = "highlight">* </span>Primary owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c"  onchange = "{!c.getDateofBirth}" value = "{!v.PrimaryOwner}"/>-->
-
+                           
                                     <br/> 
-                                   <!-- <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name" value = "{!v.GoalName}"/>-->
                                     <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name" />
                                     <br/>
                                     <span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "Date_Of_Birth__c"  value = "{!v.birthDate}" onchange = "{!c.nextButton}" />
-                                     <!--<span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "Date_Of_Birth__c"  value = "{!v.birthDate}" />-->
-
+                                   
                                     <br/> 
                                     <span class = "highlight">* </span>Years of Living After Retirement<lightning:inputField aura:id = "afterRetirement"  fieldName="Years_Of_Living_After_Retirement__c"  value = "{!v.YearsLivingAfterRetirement}"  onchange = "{!c.nextButton}"/><br/>
                                 </div>
@@ -102,14 +93,11 @@
                                     <br/>
                                     <span class = "highlight">* </span>Retirement Age<lightning:inputField aura:id = "retireAge" fieldName="Retirement_Age__c"  value="{!v.Retiring}" onchange = "{!c.nextButton}"/>
                                     <br/>
-                                   <!-- <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="Desired_Annual_Income_For_Retirement__c" value = "{!v.DesiredAnnualIncome}"/>-->
-                                    <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="Desired_Annual_Income_For_Retirement__c" onchange = "{!c.nextButton}"/>
+                                       <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="Desired_Annual_Income_For_Retirement__c" onchange = "{!c.nextButton}"/>
                                                                                                                                                   <br/>
-                                    <!--<span class = "highlight">* </span>Rate of Return After Retirement(%)<lightning:inputField aura:id = "rateReturn" fieldName="Rate_Of_Return_After_Retirement__c" value = "{!v.RateofReturnAfterRetirement}"/>  -->  
                                     <span class = "highlight">* </span>Rate of Return After Retirement(%)<lightning:inputField aura:id = "rateReturn" fieldName="Rate_Of_Return_After_Retirement__c" onchange = "{!c.nextButton}" />
                                  </div>
                    <div  class="slds-col slds-size_1-of-2" style="color:grey;">
-                                  <!--  value = "{!v.amtMonth.retirementAmount}" -->
                                     <span class = "highlight">* </span>Amount You Want To Save For Retirement ($)<lightning:inputField aura:id = "amount" fieldName="FinServ__TargetValue__c" />
                                     <br/>  
                        Associated Account
@@ -175,7 +163,7 @@
                             
                             <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
                              <lightning:button variant="brand" type="onsubmit" label="Submit"   />
-                            <!-- <lightning:button variant="brand"  label="Next" onclick = "{!c.nextButton}"/> -->
+                            
                         </div>
                     </footer>
                     

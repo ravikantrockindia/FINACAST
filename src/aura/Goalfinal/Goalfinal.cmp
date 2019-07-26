@@ -2,15 +2,13 @@
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default=" Goals"/>
     <aura:attribute name="financialGoal" type="FinServ__FinancialGoal__c"/>
-    
-    <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
+     <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="isRetirement" type="Boolean" default="false"/>
     <aura:attribute name="isNonRetirement" type="Boolean" default="false" />
     <aura:attribute name = "CancelCut" type="String"/>
     <aura:attribute name="editrecidGoal" type="String"/>
     <aura:attribute name="addGoals" type="Boolean" default=""/>
-    
-    <aura:attribute name="recordTypeId" type="String"/> 
+   <aura:attribute name="recordTypeId" type="String"/> 
     <aura:attribute name="cid" type="Id"/>
     <aura:attribute name="recordId" type="String"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
@@ -20,9 +18,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>  
-    <!--  <aura:handler  event="c:changeclientevent" action="{!c.doInit}"/> -->
-    
-    
+  
     <lightning:card >
         <div class="slds-m-around_x-small">
             <div class="slds-m-top_medium slds-clearfix ">
@@ -77,26 +73,7 @@
                     
                 </tbody>
             </table>
-            <!-- </aura:set>
-            </aura:if> -->
-            
-            
-            <!-- <div class="slds-m-top_medium slds-clearfix ">
-                <div class="slds-float_right">
-                    <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" />
-                    
-                    <aura:if isTrue="{!empty(v.financialGoalList)}">
-                        <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" />                      
-                       <lightning:button  variant="brand" label="{!$Label.c.Skip}" onclick="{!c.skipButton}"/>
-                        <aura:set attribute="else">
-                            <lightning:button  variant="brand" label="{!$Label.c.Next}" onclick="{!c.skipButton}"/>
-                        </aura:set>
-                    </aura:if>
-                </div>
-                <div class="slds-float_left">
-                    <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
-                </div>
-            </div> -->
+          
         </div>
         
         
