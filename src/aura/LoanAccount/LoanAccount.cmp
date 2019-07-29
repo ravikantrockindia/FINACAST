@@ -8,6 +8,8 @@
     <aura:attribute name="showInModal" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="recordId" type="String"/>
+        <aura:attribute name="namespace" type="String" default=""/>
+
     <aura:handler name="submitDebtForm" event="c:CreateNewClientEvent" action="{!c.doInit}"/>    
     <lightning:notificationsLibrary aura:id="notifLib"/>
     
@@ -16,7 +18,7 @@
         
         <div class="slds-m-around_x-small">
             <aura:if isTrue="{!empty(v.FinancialAccountList)}">
-                <c:DebtAccountForm aura:id ="debtAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}"/>
+                <c:DebtAccountForm aura:id ="debtAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}" namespace="{!v.namespace}"/>
                 
                 <aura:set attribute="else">
                     <div class="custom_card slds-gutters">
@@ -30,7 +32,7 @@
                     </div>
                     <aura:if isTrue="{!v.showInModal}">
                         
-                        <c:DebtAccountModal accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" showInModal="{!v.showInModal}" recordTypeIds="{!v.recordTypeIds}"/>
+                        <c:DebtAccountModal accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" showInModal="{!v.showInModal}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}"/>
                     </aura:if>
                     <div class="custom_card slds-gutters">
                         <div class="slds-col slds-size_1-of-1">

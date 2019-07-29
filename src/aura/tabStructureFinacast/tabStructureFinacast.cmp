@@ -4,7 +4,7 @@
     <aura:attribute name="licenseAvailable" type="boolean" default="true"/>
     <aura:attribute name="oppId" type="Id"/>
     <aura:attribute name="ccid" type="Id"/>
-    <aura:attribute name="NameSpace" type="string"/>
+    <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="simpleRecord" type="Object" />
     <aura:attribute name="record" type="Object" />
     <aura:attribute name="showNursing" type="boolean"/>

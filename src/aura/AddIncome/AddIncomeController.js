@@ -4,7 +4,7 @@
         var cmpTarget = component.find('exampleModal');
         $A.util.removeClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",true);
-        console.log('NameSpace'+component.get("v.NameSpace"));
+        console.log('NameSpace'+component.get("v.namespace"));
         
     },
     

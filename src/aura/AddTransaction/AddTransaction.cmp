@@ -4,7 +4,7 @@
     <aura:attribute name = "transId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "client" type = "Account"/>
-    <aura:attribute name = "NameSpace" type = "String"/>
+    <aura:attribute name = "namespace" type = "String"/>
     <aura:attribute name = "trId" type = "String"/>
     <aura:attribute name = "cid" type = "String"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 

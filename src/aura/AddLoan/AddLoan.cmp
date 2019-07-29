@@ -4,7 +4,7 @@
     <aura:attribute name = "loanId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "client" type = "Account"/>
-    <aura:attribute name = "NameSpace" type = "String"/>
+    <aura:attribute name = "namespace" type = "String"/>
     <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>    
     <aura:attribute name="getNo" type="Boolean" default = "False"/>
     <aura:attribute name="getYes" type="Boolean" default = "False"/>

@@ -31,7 +31,7 @@
             <c:AddBankAccount recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}"  recordTypeIds="{!v.financialAccountRecordTypeId}" namespace="{!v.namespace}"/>
         </aura:if>
         <aura:if isTrue="{!v.currentStep=='3'}">
-            <c:LoanAccount currentStep="{!v.currentStep}" recordId="{!v.accountRecordId}" recordTypeIds="{!v.financialAccountRecordTypeId}"/>
+            <c:LoanAccount currentStep="{!v.currentStep}" recordId="{!v.accountRecordId}" recordTypeIds="{!v.financialAccountRecordTypeId}" namespace="{!v.namespace}"/>
         </aura:if>
         <aura:if isTrue="{!v.currentStep=='4'}" >
             <c:AddIncomeSection recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" recordTypeId="{#v.incomeRecordType}"/>

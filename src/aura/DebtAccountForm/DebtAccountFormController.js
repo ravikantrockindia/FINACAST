@@ -1,11 +1,14 @@
 ({
     doInit: function(component, event, helper) {
+        var namespace=component.get("v.namespace")
         var spinner = component.find("mySpinner");
         $A.util.removeClass(spinner, "slds-show");
+        
         $A.util.addClass(spinner, "slds-hide");
         // console.log(JSON.stringify(component.get("v.financialAccount")))
         if(component.get("v.financialAccount.Id")!=null){
-            var accountType=component.get("v.financialAccount.Account_Type__c")
+            var field='v.financialAccount.'+namespace+'Account_Type__c'
+            var accountType=component.get(field)
             // alert(accountType)
             if (accountType=='Loan'){
                 component.set("v.isFixedTerm",true)
@@ -18,7 +21,8 @@
                 
             }
             // alert(component.get("v.financialAccount.Do_you_get_tax_benefit_from_interest_pay__c"))
-            if (component.get("v.financialAccount.Do_you_get_tax_benefit_from_interest_pay__c")){
+            field='v.financialAccount.'+namespace+'Do_you_get_tax_benefit_from_interest_pay__c'
+            if (component.get(field)){
                 // alert('yes')
                 component.set("v.isTaxBenefit",true);
                 
@@ -28,7 +32,8 @@
                 component.set("v.isTaxBenefit",false);
                 
             }
-            if(component.get("v.financialAccount.Do_tax_benefits_realize_monthly__c")){
+            field='v.financialAccount.'+namespace+'Do_tax_benefits_realize_monthly__c'
+            if(component.get(field)){
                 component.set("v.isMonthly",true)
             }
             else{

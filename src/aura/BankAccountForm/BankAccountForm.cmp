@@ -51,7 +51,7 @@
                 </lightning:select>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                {!$Label.c.Financial_Institution} <lightning:inputField class="label-hidden textarea_custom" fieldName="Financial_Institution__c" variant="label-hidden"/>
+                {!$Label.c.Financial_Institution} <lightning:inputField class="label-hidden textarea_custom" fieldName="{!v.namespace+'Financial_Institution__c'}" variant="label-hidden"/>
             </div>            
             <div class="slds-col slds-size_1-of-2 apy_hidden-f">
                 <aura:if isTrue="{!v.isAPY}"> {!$Label.c.APY}<lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" aura:id="apy" variant="label-hidden"/>
