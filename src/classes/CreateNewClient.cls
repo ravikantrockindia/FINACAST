@@ -281,6 +281,14 @@ System.debug(JSON.serialize(incomeList));*/
         // System.debug('delete');
         
     }
+    @AuraEnabled 
+    public static String getNamespace(){
+        
+           return NamespaceUtility.returnNamespace();
+        
+        // System.debug('delete');
+        
+    }
     
     
     public class wrapIncome {
