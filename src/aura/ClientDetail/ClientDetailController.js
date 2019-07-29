@@ -1,15 +1,22 @@
 ({
     //init method
-    doInit : function(component, event, helper) {    
-        var action = component.get("c.returnNamespace");
-        action.setCallback(this, function(response){
-             var state = response.getState();
-            if(state=="Sucess"){
-                 var namespace = response.getReturnValue();
-                component.set("v.NameSpace", namespace);
-            }
-            
+    //
+    Initilise : function(component, event, helper) {
+        var action=component.get('c.getNamespace');
+        
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                 debugger;
+                component.set("v.NameSpace", response.getReturnValue());
+                var ab =response.getReturnValue();
+                console.log('MOna'+ab);
+            }           
         });
+        $A.enqueueAction(action);
+    },
+    
+    doInit : function(component, event, helper) {    
         
         var jsonResponseJs;      
         console.log('recordId---------'+ component.get('v.recordId')); 

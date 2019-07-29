@@ -7,7 +7,15 @@ public class ClientDetailApex {
     public static Boolean isHousehold = false;
     public static String clientData = '';
     public static String requestEndpoint='https://mytafi.herokuapp.com/rest/service/getFinacastHealthScoreNew';
-    
+   
+     @AuraEnabled 
+    public static String getNamespace(){
+        
+           return NamespaceUtility.returnNamespace();
+        
+        // System.debug('delete');
+        
+    }
     
     //Create client data
     @auraEnabled

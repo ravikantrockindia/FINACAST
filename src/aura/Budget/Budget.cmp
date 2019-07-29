@@ -348,11 +348,11 @@
                                                                             </div>
                                                                         </th>
                                                                         <td data-label="Transaction Name">
-                                                                            <div class="slds-truncate" title="Transaction Name" style="color:black;">{! Tdetails.TransactionName__c}
+                                                                            <div class="slds-truncate" title="Transaction Name" style="color:black;">{!Tdetails.TransactionName__c}
                                                                                 </div>
                                                                         </td>
                                                                         <td data-label="Description">
-                                                                            <div class="slds-truncate" title="Description" style="color:black;">{! Tdetails.FinServ__Description__c}</div>
+                                                                            <div class="slds-truncate" title="Description" style="color:black;">{!Tdetails.FinServ__Description__c}</div>
                                                                         </td>
                                                                         <td data-label="Category">
                                                                             <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails.Destination_Financial_Account__r.Name}</div>
@@ -680,7 +680,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="APR (%)"><b>APR (%) : </b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="APR (%)"><b>{!rec2.APR__c} </b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="APR (%)"><b>{!rec2.FinServ__APY__c} </b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>

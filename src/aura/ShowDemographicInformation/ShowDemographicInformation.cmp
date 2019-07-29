@@ -91,7 +91,7 @@
                                         </div>
                                         <div class="slds-grid slds-gutters">
                                             <div class="slds-col slds-size_1-of-2">
-                                                {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Date_Of_Birth__c" aura:id="dob" variant="label-hidden" dateStyle="short"/>
+                                                {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" aura:id="dob" variant="label-hidden" dateStyle="short"/>
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
                                                 {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
@@ -99,7 +99,7 @@
                                         </div>
                                         <div class="slds-grid slds-gutters">
                                             <div class="slds-col slds-size_1-of-2">
-                                                {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="Risk_Profile__c" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
+                                                {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Risk_Profile__c'}" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
                                                 {!$Label.c.Client_Time_Horizon} <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden"/>

@@ -1,9 +1,10 @@
-<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+<aura:component   implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
     <aura:attribute type="id" name="recordId"/>
     <aura:attribute name="accessibilityMap" type="Map"/>
     <aura:attribute name="licenseAvailable" type="boolean" default="true"/>
     <aura:attribute name="oppId" type="Id"/>
     <aura:attribute name="ccid" type="Id"/>
+    <aura:attribute name="NameSpace" type="string"/>
     <aura:attribute name="simpleRecord" type="Object" />
     <aura:attribute name="record" type="Object" />
     <aura:attribute name="showNursing" type="boolean"/>
