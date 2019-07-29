@@ -1,6 +1,28 @@
 ({
     doInit:function(component,event,helper){
         try{
+             var action=component.get('c.getNamespace');
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+               component.set("v.namespace", response.getReturnValue())
+                            console.log(component.get("v.namespace"));
+
+                
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message: " + 
+                                    errors[0].message);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action); 
             var workspaceAPI = component.find("workspace");
             var tab=component.get("v.tabName")
             console.log('tab',tab)

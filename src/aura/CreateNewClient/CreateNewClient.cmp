@@ -12,6 +12,7 @@
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:attribute name="currentStep" type="String" default="1"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:attribute name="namespace" type="String" default=""/>
     
     <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base" >
         <lightning:progressStep aura:id="step1" label="{!$Label.c.Demographic_Information}" value="1" onclick="{!c.selectStep1}"/>
@@ -24,10 +25,10 @@
     
     <div class="custom_card">
         <aura:if isTrue="{!v.currentStep=='1'}">
-            <c:DemographicInformation recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" tabName="{!v.tabName}" recordTypeId="{!v.accountRecordTypeId}"/>
+            <c:DemographicInformation recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" tabName="{!v.tabName}" recordTypeId="{!v.accountRecordTypeId}" namespace="{!v.namespace}"/>
         </aura:if>
         <aura:if isTrue="{!v.currentStep=='2'}">
-            <c:AddBankAccount recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}"  recordTypeIds="{!v.financialAccountRecordTypeId}"/>
+            <c:AddBankAccount recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}"  recordTypeIds="{!v.financialAccountRecordTypeId}" namespace="{!v.namespace}"/>
         </aura:if>
         <aura:if isTrue="{!v.currentStep=='3'}">
             <c:LoanAccount currentStep="{!v.currentStep}" recordId="{!v.accountRecordId}" recordTypeIds="{!v.financialAccountRecordTypeId}"/>
