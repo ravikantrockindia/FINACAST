@@ -170,12 +170,14 @@
     BudgetHandler: function(component,event,helper){
      
         var Id= component.get("v.ccid");
-        console.log('id--------------'+Id);
+         var namespace= component.get("v.NameSpace");
+        console.log('id--------------'+namespace);
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:Budget",
             componentAttributes: {
-                cid : Id
+                cid : Id,
+                 NameSpace : namespace
             }
         });
         evt.fire();
@@ -183,55 +185,65 @@
     },
     ScenarioHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
+        var namespace= component.get("v.NameSpace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:Finacast_ScenarioParentComponent",
             componentAttributes: {
-                 cid : Id
+                 cid : Id,
+                 namespace : namespace
             }
         });
         evt.fire();
     },
     GoalHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
+        var namespace= component.get("v.NameSpace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:Goalfinal",
             componentAttributes: {
-                 cid : Id
+                 cid : Id,
+                 NameSpace : namespace
             }
         });
         evt.fire();
     },
     AccountHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
+        var namespace= component.get("v.NameSpace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:AccountTabInReport",
             componentAttributes: {
-                 cid : Id
+                 cid : Id,
+                 NameSpace : namespace
             }
         });
         evt.fire();
     },
     FutureHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
+        var namespace= component.get("v.NameSpace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:Finacast_FS_ParentComponent",
             componentAttributes: {
-                 cid : Id
+                 cid : Id,
+                namespace : namespace
             }
         });
         evt.fire();
     },
      AffordHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
+         var namespace= component.get("v.NameSpace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:Affordability",
             componentAttributes: {
-                 cid : Id
+                 cid : Id,
+                 NameSpace : namespace
             }
         });
         evt.fire();
@@ -240,6 +252,8 @@
     childComponentEvent: function(component,event,helper){
      var id =event.getParam("idclient");
         component.set("v.ccid ", id);
+     var namespace = event.getParam("NameSpace");   
+        component.set("v.NameSpace ", namespace);
         console.log('iiiiiiddddd'+id);
     }
     
