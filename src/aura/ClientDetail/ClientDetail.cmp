@@ -10,6 +10,7 @@
     <aura:attribute name="ExpensesList" type="String"/>
     <aura:attribute name="financialAccountList" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.Initilise}"/>
     <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>  
     <aura:attribute name="client" type="String" />
     <aura:attribute name="showModal" type="Boolean"/>
