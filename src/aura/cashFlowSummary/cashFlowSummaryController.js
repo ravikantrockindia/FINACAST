@@ -1,6 +1,6 @@
 ({
     doInit : function(component, event, helper) {
-         var action = cmp.get("c.getNameSpace");
+         var action = component.get("c.getNameSpace");
          
         action.setCallback(this, function(response) {
             var state = response.getState();
