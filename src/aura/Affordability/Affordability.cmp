@@ -4,6 +4,7 @@
     <aura:attribute type="String" name="Name" />
     <aura:attribute type="Double" name="totalAmount" />
     <aura:attribute name= "score" type="Double"/>
+    <aura:attribute name="NameSpace" type="string" default="Finasol__"/>
     <aura:attribute type="Double" name="downPayment"  default="0"/>
     <aura:attribute name = "Tabledata" type="Object"/>   
     <aura:attribute name = "displayMonthList" type="list"/>   

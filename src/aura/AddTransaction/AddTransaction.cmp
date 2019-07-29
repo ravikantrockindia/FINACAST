@@ -4,6 +4,7 @@
     <aura:attribute name = "transId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name = "NameSpace" type = "String"/>
     <aura:attribute name = "trId" type = "String"/>
     <aura:attribute name = "cid" type = "String"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
@@ -35,7 +36,7 @@
                             <div class="slds-box1">
                                 
                                 <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="TransactionName__c" aura:id = "name" />
+                                    <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name" />
                                    
                                    
                                 </div>
@@ -61,7 +62,7 @@
             									 <option label="{!item.Name}" value="{!item.Id}" selected="{!item.Id==v.selectedValue1}"/> 
                                                             </aura:iteration>
                                                         </lightning:select>
-                                    <lightning:inputField fieldName="Destination_Financial_Account__c" aura:id="dest" class="slds-hide" value="{!v.selectedValue1}"/>
+                                    <lightning:inputField fieldName="{!v.namespace+'Destination_Financial_Account__c'}" aura:id="dest" class="slds-hide" value="{!v.selectedValue1}"/>
                                 </div>
                                   <!--div class="slds-col  slds-size_1-of-2">
                                       <span class = "highlight">* </span>   Category<lightning:inputField fieldName="Destination_Financial_Account__c" aura:id="dest" />
@@ -69,8 +70,8 @@
                                 <div class="slds-col  slds-size_1-of-2" >
                                    
                                     
-                                    <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" />
-                                    <lightning:inputField fieldName ="Budget_Category__c" value="{!v.Transaction}" class="slds-hide" /> 
+                                    <span class = "highlight">* </span> Amount<lightning:inputField fieldName="{!v.namespace+'FinServ__Amount__c'}" aura:id = "amt" />
+                                    <lightning:inputField fieldName ="{!v.namespace+'Budget_Category__c'}" value="{!v.Transaction}" class="slds-hide" /> 
                                 </div>
 
                                 <div style="clear: both;"></div>

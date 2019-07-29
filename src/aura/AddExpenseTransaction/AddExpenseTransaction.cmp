@@ -4,6 +4,7 @@
     <aura:attribute name = "transId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "trExpenseId" type = "String"/>
+    <aura:attribute name = "NameSpace" type = "String"/>
      <aura:attribute name = "client" type = "Account"/>
 	<aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
  
@@ -31,14 +32,14 @@
                                     <div class="slds-box1">
                                         
                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                             <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="TransactionName__c" aura:id = "name" /><br/>
+                                             <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name" /><br/>
                                           <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" /><br/>
                                            Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" /><br/>
 </div>
                                         <div class="slds-col   slds-size_1-of-2" style="color:grey;">
-                                         <span class = "highlight">* </span>   Category<lightning:inputField fieldName="Destination_Financial_Account__c" aura:id="dest" /><br/>
+                                         <span class = "highlight">* </span>   Category<lightning:inputField fieldName="{!v.namespace+'Destination_Financial_Account__c'}" aura:id="dest" /><br/>
                                            <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" /><br/>
-                                        <lightning:inputField fieldName ="Budget_Category__c" value="{!v.expenseTransaction}"  class="slds-hidden"/> 
+                                        <lightning:inputField fieldName ="{!v.namespace+'Budget_Category__c'}" value="{!v.expenseTransaction}"  class="slds-hidden"/> 
                                         </div>
                                         <div style="clear: both;"></div>
                                     </div>

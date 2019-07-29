@@ -1,6 +1,7 @@
 <aura:component controller="Nonretirementgoalapexcontroller"
      implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute name="NameSpace" type="string"/>
     <aura:attribute name = "car" type="String"/>
     <aura:attribute name = "wedding" type="string"/>
     <aura:attribute name = "nonretirement" type="string"/>
@@ -80,9 +81,9 @@
                                                             </aura:iteration>
                                         </lightning:select><br/>
                                    
-                                        <span class = "highlight">* </span>Current goal amount ($)<lightning:inputField fieldName="Start_Value__c"   onchange = "{!c.getChangeMonthlyConti}" aura:id="strtvalue"></lightning:inputField><br/>
-                                        <span class = "highlight">* </span>Goal Priority<lightning:inputField fieldName="Goal_Priority__c" aura:id = "priority"    /><br/>
-                                        <span class = "highlight">* </span>How much are you willing to contribute per month? ($)<lightning:inputField fieldName="Required_Monthly_Saving__c"   value = "{!v.contribution}" aura:id = "goalContri" onchange = "{!c.handleChangeMonthlyContribution}" ></lightning:inputField>
+                                        <span class = "highlight">* </span>Current goal amount ($)<lightning:inputField fieldName="{!v.NameSpace+'Start_Value__c' }"  onchange = "{!c.getChangeMonthlyConti}" aura:id="strtvalue"></lightning:inputField><br/>
+                                        <span class = "highlight">* </span>Goal Priority<lightning:inputField fieldName="{!v.NameSpace+'Goal_Priority__c'}" aura:id = "priority"    /><br/>
+                                        <span class = "highlight">* </span>How much are you willing to contribute per month? ($)<lightning:inputField fieldName="{!v.NameSpace+'Required_Monthly_Saving__c'}"   value = "{!v.contribution}" aura:id = "goalContri" onchange = "{!c.handleChangeMonthlyContribution}" ></lightning:inputField>
                                     </div>
                                     <div style="clear: both;"></div>
                                 </div>

@@ -4,11 +4,12 @@
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>   
     <aura:attribute name = "data" type = "Object"/>
     <aura:attribute name="cid" type="String"/>
-     <lightning:workspaceAPI aura:id="workspace"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default=" Budget"/>
     <aura:attribute name = "parentInitialised" type = "boolean" default = "false" />
     <aura:attribute name="addIncome" type="Boolean"/>
     <aura:attribute name="addExpense" type="Boolean"/>
+    <aura:attribute name = "NameSpace" type = "String"/>
     <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="addGoals" type="Boolean"/> 
     <aura:attribute name="addLoan" type="Boolean"/> 
@@ -392,7 +393,7 @@
         </div>
         <aura:if isTrue="{!v.addIncome}">
             
-            <c:AddIncome Income = "{!v.recordTypeId}" client="{!v.client}"  title = "Add Income" isActive = "{!v.activeModal}" accRecType = "{!v.accountRecTypeName}" />
+            <c:AddIncome NameSpace="{!v.NameSpace}" Income = "{!v.recordTypeId}" client="{!v.client}"  title = "Add Income" isActive = "{!v.activeModal}" accRecType = "{!v.accountRecTypeName}" />
             
         </aura:if>
         <!--Income record ends-->
@@ -401,21 +402,21 @@
         <!--Edit modal for income starts-->
         <aura:if isTrue="{!v.showModalIncome}">
             
-            <c:AddIncome Income = "{!v.recordTypeId}" title = "Edit Income" isActive = "{!v.activeModal}" incmeId = "{!v.editrecid}" client="{!v.client}" />
+            <c:AddIncome Income = "{!v.recordTypeId}" NameSpace="{!v.NameSpace}" title = "Edit Income" isActive = "{!v.activeModal}" incmeId = "{!v.editrecid}" client="{!v.client}" />
             
         </aura:if>
         <!--Edit modal for Income ends-->
         <!--Add Transaction modal-->
         <aura:if isTrue="{!v.addTransaction}">
             
-            <c:AddTransaction Transaction = "{!v.Transaction}" client="{!v.client}" cid="{!v.cid}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
+            <c:AddTransaction NameSpace="{!v.NameSpace}" Transaction = "{!v.Transaction}" client="{!v.client}" cid="{!v.cid}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
             
         </aura:if>
         <!-- Add Transaction Modal Ends-->
         <!--Edit modal for Transaction starts-->
         <aura:if isTrue="{!v.showModalIncomeTransaction}">
             
-            <c:AddTransaction  title = "Edit Transaction" isActive = "{!v.activeModal}" trId = "{!v.editrecidTransaction}"/>
+            <c:AddTransaction  NameSpace="{!v.NameSpace}" title = "Edit Transaction" isActive = "{!v.activeModal}" trId = "{!v.editrecidTransaction}"/>
             
         </aura:if>
         <!--Edit modal for Transaction ends-->
@@ -593,26 +594,26 @@
             </aura:if>
         </div>
         <aura:if isTrue="{!v.addExpense}">
-            <c:AddExpense Expense = "{!v.recordTypeId}" client="{!v.client}"  title="Add Expense" isActive = "{!v.activeModal}" accExpenseRecType = "{!v.accountRecTypeName}"/>
+            <c:AddExpense NameSpace="{!v.NameSpace}" Expense = "{!v.recordTypeId}" client="{!v.client}"  title="Add Expense" isActive = "{!v.activeModal}" accExpenseRecType = "{!v.accountRecTypeName}"/>
             
         </aura:if>
         <!--Expense record type ends-->
         
         <!--edit modal for expense starts-->        
         <aura:if isTrue="{!v.showModalExpense}">
-            <c:AddExpense Expense = "{!v.recordTypeId}" expId = "{!v.editrecidExpense}" selectedValue="{!v.editRecNameExpense}" title = "Edit Expense"  isActive = "{!v.activeModal}" client="{!v.client}"/>           
+            <c:AddExpense NameSpace="{!v.NameSpace}" Expense = "{!v.recordTypeId}" expId = "{!v.editrecidExpense}" selectedValue="{!v.editRecNameExpense}" title = "Edit Expense"  isActive = "{!v.activeModal}" client="{!v.client}"/>           
         </aura:if>
         <!--Edit modal for expense ends-->
         <!--Add expense Transaction modal-->
         <aura:if isTrue="{!v.addExpenseTransaction}">
             
-            <c:AddExpenseTransaction expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
+            <c:AddExpenseTransaction  NameSpace="{!v.NameSpace}" expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
             
         </aura:if>
         <!-- Add expense Transaction Modal Ends-->
         <aura:if isTrue="{!v.showModalExpenseTransaction}">
             
-            <c:AddExpenseTransaction  title = "Edit Transaction" isActive = "{!v.activeModal}" trExpenseId = "{!v.editrecidTransactionExpense}"/>
+            <c:AddExpenseTransaction NameSpace="{!v.NameSpace}"  title = "Edit Transaction" isActive = "{!v.activeModal}" trExpenseId = "{!v.editrecidTransactionExpense}"/>
             
         </aura:if>
         
@@ -776,7 +777,7 @@
             </aura:if>
         </div>
         <aura:if isTrue="{!v.addLoan}">
-            <c:AddLoan Loan = "{!v.recordTypeId}" client="{!v.client}" title="Add Loan" isActive = "{!v.activeModal}" accLoanRecType = "{!v.accountRecTypeName}"/>        
+            <c:AddLoan Loan = "{!v.recordTypeId}" NameSpace="{!v.NameSpace}"  client="{!v.client}" title="Add Loan" isActive = "{!v.activeModal}" accLoanRecType = "{!v.accountRecTypeName}"/>        
             
         </aura:if>
         
@@ -784,19 +785,19 @@
         
         <!--Edit Modal for loan starts-->
         <aura:if isTrue="{!v.showModalLoan}">
-            <c:AddLoan Loan = "{!v.recordTypeId}" loanId = "{!v.editrecidLoan}" title = "Edit Loan" isActive = "{!v.activeModal}" client="{!v.client}"/>           
+            <c:AddLoan Loan = "{!v.recordTypeId}" loanId = "{!v.editrecidLoan}" NameSpace="{!v.NameSpace}"  title = "Edit Loan" isActive = "{!v.activeModal}" client="{!v.client}"/>           
         </aura:if>
         <!--Edit Modal for loan ends-->       
         <!--Add expense Transaction modal-->
         <aura:if isTrue="{!v.addLoanTransaction}">
             
-            <c:AddLoanTransaction loanTransaction = "{!v.loanTransaction}" client="{!v.client}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
+            <c:AddLoanTransaction NameSpace="{!v.NameSpace}"  loanTransaction = "{!v.loanTransaction}" client="{!v.client}" title = "Add Transaction" isActive = "{!v.activeModal}"  />
             
         </aura:if>
         <!-- Add expense Transaction Modal Ends-->
         <aura:if isTrue="{!v.showModalLoanTransaction}">
             
-            <c:AddLoanTransaction  title = "Edit Transaction" isActive = "{!v.activeModal}" trLoanId = "{!v.editrecidTransactionLoan}"/>
+            <c:AddLoanTransaction NameSpace="{!v.NameSpace}"  title = "Edit Transaction" isActive = "{!v.activeModal}" trLoanId = "{!v.editrecidTransactionLoan}"/>
             
         </aura:if>
         
@@ -813,7 +814,7 @@
             
             <!--Add goal button-->
             <aura:if isTrue="{!v.addGoals}">
-                <c:GoalModal client="{!v.cid}" />               
+                <c:GoalModal client="{!v.cid}" NameSpace="{!v.NameSpace}"/>               
             </aura:if>
             <!--Add goal button ends-->
             <aura:if isTrue="{!not(empty(v.addGoal))}">
@@ -871,10 +872,10 @@
         <!--Edit modal for goal starts-->                    
         <aura:if isTrue="{!v.showModalGoal}">
             <aura:if isTrue="{!v.isRetirement}">       
-                <c:GoalformRetirement retirementGoalId ="{!v.editrecidGoal}" client = "{!v.cid}"  selectedAccount="{!v.goalAcc}" />
+                <c:GoalformRetirement NameSpace="{!v.NameSpace}" retirementGoalId ="{!v.editrecidGoal}" client = "{!v.cid}"  selectedAccount="{!v.goalAcc}" />
             </aura:if>
             <aura:if isTrue="{!v.isNonRetirement}">   
-                <c:Goalform  goalId = "{!v.editrecidGoal}" client = "{!v.cid}" /> <!-- orginal component NonRetirementgoal -->
+                <c:Goalform NameSpace="{!v.NameSpace}"  goalId = "{!v.editrecidGoal}" client = "{!v.cid}" /> <!-- orginal component NonRetirementgoal -->
             </aura:if>
             
         </aura:if> 

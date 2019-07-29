@@ -37,14 +37,7 @@
             //end set callback
             catch(e)
             {
-                /* console.log(e);
-                var event = $A.get("e.force:showToast");
-                                            event.setParams({
-                                                "type" : "Warnning",
-                                                "title" : "Info !",
-                                                "message" : "No Data for client Available"
-                                            });
-                                            event.fire();*/
+                
             }
             
             
@@ -102,7 +95,6 @@
         
         var jsonResponseJs;
         var selectedClient =   component.find("inf1").get("v.value")[0];
-        //component.set("v.client", selectedClient); 
         if(!$A.util.isEmpty(selectedClient))
         {
             var action = component.get("c.getData");

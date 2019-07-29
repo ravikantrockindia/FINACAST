@@ -4,6 +4,7 @@
     <aura:attribute name = "incmeId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name = "NameSpace" type = "String"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name = "accRecType"  type = "String"/> 
@@ -25,7 +26,7 @@
                     <lightning:recordEditForm 
                                               recordTypeId="{!v.Income}"
                                               recordId = "{!v.incmeId}"
-                                              objectApiName="Budget__c"  onsuccess="{!c.saveAndCloseBtn}"
+                                              objectApiName="{!v.namespace+'Budget__c'}"  onsuccess="{!c.saveAndCloseBtn}"
                                               onsubmit = "{!c.handleSubmit}"
                                               onload="{!c.handleonloan}"
                                               >                        
@@ -36,30 +37,30 @@
                                         <span class = "highlight">* </span>  Income Name<lightning:inputField  fieldName="Name" aura:id = "owner" variant="label-hidden" />       
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2">
-                                        <span class = "highlight">* </span>   Amount after tax per pay check($)<lightning:inputField fieldName="Amount__c" aura:id="inQuantity" variant="label-hidden"/>
+                                        <span class = "highlight">* </span>   Amount after tax per pay check($)<lightning:inputField fieldName="{!v.namespace+'Amount__c'}" aura:id="inQuantity" variant="label-hidden"/>
                                         
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2">
-                                        <span class = "highlight">* </span> Yearly growth (%)<lightning:inputField fieldName="Yearly_growth__c" aura:id = "yeargrowth" variant="label-hidden" > </lightning:inputField> 
+                                        <span class = "highlight">* </span> Yearly growth (%)<lightning:inputField fieldName="{!v.namespace+'Yearly_growth__c'}" aura:id = "yeargrowth" variant="label-hidden" > </lightning:inputField> 
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2">
-                                        <span class = "highlight">* </span>  Frequency<lightning:inputField  fieldName="Frequency__c" aura:id = "freq" variant="label-hidden" />
+                                        <span class = "highlight">* </span>  Frequency<lightning:inputField  fieldName="{!v.namespace+'Frequency__c'}" aura:id = "freq" variant="label-hidden" />
                                     </div>
                                     <div class="slds-col   slds-size_1-of-2">
-                                        <span class = "highlight">* </span> Start Date	<lightning:inputField fieldName="Start_Date__c" aura:id="stDate" variant="label-hidden" ></lightning:inputField>
+                                        <span class = "highlight">* </span> Start Date	<lightning:inputField fieldName="{!v.namespace+'Start_Date__c'}" aura:id="stDate" variant="label-hidden" ></lightning:inputField>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2">
-                                      <span class = "highlight">* </span>   End Date<lightning:inputField  fieldName="End_Date__c" aura:id="endDate" variant="label-hidden" ></lightning:inputField> 
+                                      <span class = "highlight">* </span>   End Date<lightning:inputField  fieldName="{!v.namespace+'End_Date__c'}" aura:id="endDate" variant="label-hidden" ></lightning:inputField> 
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2">
-                                        <span class = "highlight">* </span> Approximate total income tax rate (%)<lightning:inputField fieldName="Tax_Rate__c" aura:id = "rate" variant="label-hidden" /> 
+                                        <span class = "highlight">* </span> Approximate total income tax rate (%)<lightning:inputField fieldName="{!v.namespace+'Tax_Rate__c'}" aura:id = "rate" variant="label-hidden" /> 
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2">
                                         <aura:if isTrue="{!v.accRecType == 'IndustriesIndividual'}">
-                                            <lightning:inputField fieldName ="Primary_Owner__c" value="{!v.client.Id}" class="slds-hidden" />
+                                            <lightning:inputField fieldName ="{!v.namespace+'Primary_Owner__c'}" value="{!v.client.Id}" class="slds-hidden" />
                                         </aura:if>
                                         <aura:if isTrue="{!v.accRecType == 'IndustriesHousehold'}">
-                                            Primary Owner<lightning:inputField fieldName ="Primary_Owner__c" variant="label-hidden" />
+                                            Primary Owner<lightning:inputField fieldName ="{!v.namespace+'Primary_Owner__c'}" variant="label-hidden" />
                                         </aura:if>
                                     </div>
                                     <div style="clear: both;"></div>

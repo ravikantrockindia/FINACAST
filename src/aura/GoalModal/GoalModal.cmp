@@ -1,5 +1,5 @@
 <aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" controller="GoalTypeSelectionController"><br/><br/><br/><br/> 
-
+	<aura:attribute name = "NameSpace" type = "String"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/> 
     <aura:attribute name="client" type="String"/>    
     <aura:attribute name="showModalwedding" type="Boolean" default="false" />

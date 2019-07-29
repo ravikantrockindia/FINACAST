@@ -1,6 +1,7 @@
 <aura:component  controller="AddIncomeController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default=" Goals"/>
+    <aura:attribute name="NameSpace" type="string"/>
     <aura:attribute name="financialGoal" type="FinServ__FinancialGoal__c"/>
      <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="isRetirement" type="Boolean" default="false"/>

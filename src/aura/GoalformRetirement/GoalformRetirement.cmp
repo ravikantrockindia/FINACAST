@@ -3,6 +3,7 @@
     <aura:attribute name = "retirement" type = "String"/>
     <aura:attribute name = "birthDate" type ="Date"/>
     <aura:attribute name = "sp" type ="boolean"/>
+    <aura:attribute name = "NameSpace" type = "String"/>
     <aura:attribute name = "client" type = "String"/>
     <aura:attribute name = "PrimaryOwner" type = "String"/>
     <aura:attribute name = "GoalName" type = "String"/>
@@ -83,19 +84,19 @@
                                     <br/> 
                                     <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name" />
                                     <br/>
-                                    <span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "Date_Of_Birth__c"  value = "{!v.birthDate}" onchange = "{!c.nextButton}" />
+                                    <span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "{!v.NameSpace+'Date_Of_Birth__c'}"  value = "{!v.birthDate}" onchange = "{!c.nextButton}" />
                                    
                                     <br/> 
-                                    <span class = "highlight">* </span>Years of Living After Retirement<lightning:inputField aura:id = "afterRetirement"  fieldName="Years_Of_Living_After_Retirement__c"  value = "{!v.YearsLivingAfterRetirement}"  onchange = "{!c.nextButton}"/><br/>
+                                    <span class = "highlight">* </span>Years of Living After Retirement<lightning:inputField aura:id = "afterRetirement"  fieldName="{!v.NameSpace+'Years_Of_Living_After_Retirement__c'}"  value = "{!v.YearsLivingAfterRetirement}"  onchange = "{!c.nextButton}"/><br/>
                                 </div>
                     <div class="slds-col slds-size_1-of-2" style="color:grey;">
-                                    <span class = "highlight">* </span>Expected Inflation Rate<lightning:inputField aura:id = "Rate" fieldName="Expected_Inflation_Rate__c" value = "{!v.ExpectedInflationRate}" onchange = "{!c.nextButton}" />
+                                    <span class = "highlight">* </span>Expected Inflation Rate<lightning:inputField aura:id = "Rate" fieldName="{!v.NameSpace+'Expected_Inflation_Rate__c'}" value = "{!v.ExpectedInflationRate}" onchange = "{!c.nextButton}" />
                                     <br/>
-                                    <span class = "highlight">* </span>Retirement Age<lightning:inputField aura:id = "retireAge" fieldName="Retirement_Age__c"  value="{!v.Retiring}" onchange = "{!c.nextButton}"/>
+                                    <span class = "highlight">* </span>Retirement Age<lightning:inputField aura:id = "retireAge" fieldName="{!v.NameSpace+'Retirement_Age__c'}" value="{!v.Retiring}" onchange = "{!c.nextButton}"/>
                                     <br/>
-                                       <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="Desired_Annual_Income_For_Retirement__c" onchange = "{!c.nextButton}"/>
+                                       <span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="{!v.NameSpace+'Desired_Annual_Income_For_Retirement__c'}" onchange = "{!c.nextButton}"/>
                                                                                                                                                   <br/>
-                                    <span class = "highlight">* </span>Rate of Return After Retirement(%)<lightning:inputField aura:id = "rateReturn" fieldName="Rate_Of_Return_After_Retirement__c" onchange = "{!c.nextButton}" />
+                                    <span class = "highlight">* </span>Rate of Return After Retirement(%)<lightning:inputField aura:id = "rateReturn" fieldName="{!v.NameSpace+'Rate_Of_Return_After_Retirement__c'}" onchange = "{!c.nextButton}" />
                                  </div>
                    <div  class="slds-col slds-size_1-of-2" style="color:grey;">
                                     <span class = "highlight">* </span>Amount You Want To Save For Retirement ($)<lightning:inputField aura:id = "amount" fieldName="FinServ__TargetValue__c" />
@@ -111,30 +112,31 @@
                                         </lightning:select>
                        <br/>
                                    
+                       
                                     
-                                    <span class = "highlight">* </span>Current Amount<lightning:inputField aura:id = "currVal" fieldName="Start_Value__c" onchange = "{!c.getChangeMonthlyConti}"/>
+                                    <span class = "highlight">* </span>Current Amount<lightning:inputField aura:id = "currVal" fieldName="{!v.NameSpace+'Start_Value__c'}" onchange = "{!c.getChangeMonthlyConti}"/>
                                     Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"/><br/>
-                                    <lightning:inputField fieldName ="Does_the_contribution_bring_tax_benefit__c" value="{!v.isTaxDeduction}" class="slds-hidden"/> 
+                                    <lightning:inputField fieldName ="{!v.NameSpace+'Does_the_contribution_bring_tax_benefit__c'}" value="{!v.isTaxDeduction}" class="slds-hidden"/> 
                                     
                                     <br/>
                                 </div>
                    <div class="slds-col slds-size_1-of-2" style="color:grey;">
                                     Retirement Date<lightning:inputField aura:id = "rDate" fieldName = "FinServ__TargetDate__c" value = "{!v.tarDate}"  variant="label-hidden" disabled="true"/>
                                     <br/>
-                                    <span class = "highlight">* </span>Goal Priority<lightning:inputField aura:id = "priority" fieldName="Goal_Priority__c"   />
+                                    <span class = "highlight">* </span>Goal Priority<lightning:inputField aura:id = "priority" fieldName="{!v.NameSpace+'Goal_Priority__c'}" />
                                     <br/>                                  
-                                    <span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="Required_Monthly_Saving__c" onchange = "{!c.changeMonthlyContribution}"/>                                    
+                                    <span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="{!v.NameSpace+'Required_Monthly_Saving__c'}" onchange = "{!c.changeMonthlyContribution}"/>                                    
                      </div>
                                 <br/>
                   <aura:if isTrue="{!v.isTaxDeduction}">
                                 
                             <div class="slds-col  slds-size_1-of-2" style="color:grey;"> 
-                                        <span class = "highlight">* </span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="What_of_contribution_bring_tax_benefit__c" aura:id="taxcontri"/><br/>
+                                        <span class = "highlight">* </span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="{!v.NameSpace+'What_of_contribution_bring_tax_benefit__c'}" aura:id="taxcontri"/><br/>
                                         Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!v.isMonthly}"/>
                                         <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" value="{!v.isMonthly}" class="slds-hidden"/>     <br/>
                                     </div>
                           <div class="slds-col   slds-size_1-of-2" style="color:grey;">
-                                        Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="Max_yearly_tax_deduction_allowed__c" aura:id="maxdeduction" />
+                                        Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="{!v.NameSpace+'Max_yearly_tax_deduction_allowed__c'}" aura:id="maxdeduction" />
                                     </div>
                               
                             </aura:if>

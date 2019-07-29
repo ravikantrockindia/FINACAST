@@ -1,9 +1,10 @@
-<aura:component controller="AddIncomeController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" > 
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" > 
     <aura:attribute name="Loan" type="String"/> 
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name = "loanId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name = "NameSpace" type = "String"/>
     <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>    
     <aura:attribute name="getNo" type="Boolean" default = "False"/>
     <aura:attribute name="getYes" type="Boolean" default = "False"/>
@@ -44,7 +45,7 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                    	<span class = "highlight">* </span>APR<lightning:inputField fieldName="APR__c" aura:id = "apr" variant="label-hidden"/>
+                                    	<span class = "highlight">* </span>APR<lightning:inputField fieldName="{!v.namespace+'APR__c'}" aura:id = "apr" variant="label-hidden"/>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                     	<span class = "highlight">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c" aura:id = "payfreq" variant="label-hidden"></lightning:inputField>
@@ -69,19 +70,19 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                    	<lightning:inputField fieldName ="Do_you_get_tax_benefit_from_interest_pay__c" value="{!v.isTaxDeduction}" class="slds-hide"/>
+                                    	<lightning:inputField fieldName ="{!v.namespace+'Do_you_get_tax_benefit_from_interest_pay__c'}" value="{!v.isTaxDeduction}" class="slds-hide"/>
                                     </div>
                                     <div style="clear:both;"></div>
                                 </div>
                                 <aura:if isTrue="{!v.isTaxDeduction}">
                                     <div class="slds-gutters">
                                         <div class="slds-col  slds-size_1-of-2" > 
-                                            <span class = "highlight">*</span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="What_of_contribution_bring_tax_benefit__c" variant="label-hidden" aura:id = "taxbenfit" />
+                                            <span class = "highlight">*</span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="{!v.namespace+'What_of_contribution_bring_tax_benefit__c'}" variant="label-hidden" aura:id = "taxbenfit" />
                                             Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
-                                            <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" variant="label-hidden" value="{!v.isMonthly}" class="slds-hidden" />    
+                                            <lightning:inputField fieldName ="{!v.namespace+'Do_tax_benefits_realize_monthly__c'}" variant="label-hidden" value="{!v.isMonthly}" class="slds-hidden" />    
                                         </div>
                                         <div class="slds-col   slds-size_1-of-2" >
-                                            Max yearly tax deduction allowed ($ )?  <lightning:inputField variant="label-hidden" fieldName ="Max_yearly_tax_deduction_allowed__c" aura:id = "deducationtax" />
+                                            Max yearly tax deduction allowed ($ )?  <lightning:inputField variant="label-hidden" fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" aura:id = "deducationtax" />
                                         </div>
                                     </div>
                                 </aura:if>

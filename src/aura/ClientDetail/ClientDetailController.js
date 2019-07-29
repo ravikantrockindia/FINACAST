@@ -1,10 +1,23 @@
 ({
     //init method
-    doInit : function(component, event, helper) {               
+    doInit : function(component, event, helper) {    
+        var action = component.get("c.returnNamespace");
+        action.setCallback(this, function(response){
+             var state = response.getState();
+            if(state=="Sucess"){
+                 var namespace = response.getReturnValue();
+                component.set("v.NameSpace", namespace);
+            }
+            
+        });
+        
         var jsonResponseJs;      
-           console.log('fgfgyfgfgy---------'+ component.get('v.recordId'));        
+        console.log('recordId---------'+ component.get('v.recordId')); 
+        console.log('NameSpace---------'+ component.get('v.NameSpace'));
         var eve = $A.get("e.c:changeclientevent");
-        eve.setParams({"idclient":component.get('v.recordId')}); 
+        eve.setParams({"idclient":component.get('v.recordId'),
+                       "NameSpace":component.get('v.NameSpace')
+                      }); 
         eve.fire();
         console.log("ee"+component.get('v.recordId'));
         var action = component.get("c.getData");
