@@ -264,7 +264,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Amount After Tax"><b>Amount After Tax  </b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Amount After Tax"><b>{!rec.Amount__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Amount After Tax"><b>{!NameSpace.rec.Amount__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -272,7 +272,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="Frequency"><b>Frequency</b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection1" title="Frequency"><b>{!rec.Frequency__c} </b></div>
+                                                                                    <div class="slds-truncate summarysection1" title="Frequency"><b>{!NameSpace.rec.Frequency__c} </b></div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -280,7 +280,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Yearly Growth"><b>Yearly Growth (%)</b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Yearly Growth"><b>{!rec.Yearly_growth__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Yearly Growth"><b>{!NameSpace.rec.Yearly_growth__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -288,7 +288,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="Income Tax Rate"><b>Income Tax Rate (%) </b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection1" title="Income Tax Rate"><b>{!rec.Tax_Rate__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection1" title="Income Tax Rate"><b>{!NameSpace.rec.Tax_Rate__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -296,7 +296,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Start Date"><b>Start Date</b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Start Date"><b>{!rec.Start_Date__c}</b></div>
+                                                                                    <div class="slds-truncate summarysection" title="Start Date"><b>{!NameSpace.rec.Start_Date__c}</b></div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -304,7 +304,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="End Date"><b>End Date </b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection1" title="End Date"><b>{!rec.End_Date__c} </b></div>
+                                                                                    <div class="slds-truncate summarysection1" title="End Date"><b>{!NameSpace.rec.End_Date__c} </b></div>
                                                                                 </th>
                                                                             </tr>
                                                                         </table>
@@ -348,17 +348,17 @@
                                                                             </div>
                                                                         </th>
                                                                         <td data-label="Transaction Name">
-                                                                            <div class="slds-truncate" title="Transaction Name" style="color:black;">{! Tdetails.TransactionName__c}
+                                                                            <div class="slds-truncate" title="Transaction Name" style="color:black;">{!NameSpace.Tdetails.TransactionName__c}
                                                                                 </div>
                                                                         </td>
                                                                         <td data-label="Description">
-                                                                            <div class="slds-truncate" title="Description" style="color:black;">{! Tdetails.FinServ__Description__c}</div>
+                                                                            <div class="slds-truncate" title="Description" style="color:black;">{!NameSpace.Tdetails.FinServ__Description__c}</div>
                                                                         </td>
                                                                         <td data-label="Category">
-                                                                            <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails.Destination_Financial_Account__r.Name}</div>
+                                                                            <div class="slds-truncate" title="Category" style="color:black;">{!NameSpace.Tdetails.Destination_Financial_Account__r.Name}</div>
                                                                         </td>
                                                                         <td data-label="Amount">
-                                                                            <div class="slds-truncate" title="Amount" style="color:black;">$ {! - Tdetails.FinServ__Amount__c}</div>
+                                                                            <div class="slds-truncate" title="Amount" style="color:black;">$ {! - NameSpace.Tdetails.FinServ__Amount__c}</div>
                                                                         </td>
                                                                         <td data-label="Action">
                                                                             <div class="slds-truncate" title="Action">
@@ -447,7 +447,7 @@
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">                                         
                                             <lightning:buttonIcon iconName="{!rec1.iconName}" variant="bare"  name="{!rec1.Id}" onclick="{!c.handleClickExpandExpense}" />
                                             EXPENSE : {!rec1.Name} OF  {!rec1.Primary_Owner__r.Name}</td> 
-                                        <td style="text-align: right; color:black; font-weight: 700 ">${!rec1.trExpense } of ${!rec1.Amount__c}</td>
+                                        <td style="text-align: right; color:black; font-weight: 700 ">${!rec1.trExpense } of ${!NameSpace.rec1.Amount__c}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
@@ -481,7 +481,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Monthly outflow ( $ )"><b>Monthly outflow ( $ )  :</b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Monthly outflow ( $ )"><b>{!rec1.Amount__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Monthly outflow ( $ )"><b>{!NameSpace.rec1.Amount__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -489,7 +489,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="Priority"><b>Priority : </b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Priority"><b>{!rec1.Priority__c} </b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Priority"><b>{!NameSpace.rec1.Priority__c} </b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -497,7 +497,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Start Date"><b>Start Date : </b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Start Date"><b>{!rec1.Start_Date__c} </b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Start Date"><b>{!NameSpace.rec1.Start_Date__c} </b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -505,7 +505,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="End Date"><b>End Date  :</b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="End Date"><b>{!rec1.End_Date__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="End Date"><b>{!NameSpace.rec1.End_Date__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -513,7 +513,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Expected Yearly Growth (%)"><b>Expected Yearly Growth (%) : </b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Expected Yearly Growth (%)"><b>{!rec1.Yearly_growth__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Expected Yearly Growth (%)"><b>{!NameSpace.rec1.Yearly_growth__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                         </table>
@@ -557,7 +557,7 @@
                                                                             <div class="slds-truncate" title="Description" style="color:black;">{! Tdetails1.FinServ__Description__c}</div>
                                                                         </td>
                                                                         <td data-label="Category">
-                                                                            <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails1.Destination_Financial_Account__r.Name}</div>
+                                                                            <div class="slds-truncate" title="Category" style="color:black;">{!NameSpace.Tdetails1.Destination_Financial_Account__r.Name}</div>
                                                                         </td>
                                                                         <td data-label="Amount">
                                                                             <div class="slds-truncate" title="Amount" style="color:black;">$ {! Tdetails1.FinServ__Amount__c}</div>
@@ -672,7 +672,7 @@
                                                                                     <div class="slds-truncate summarysection" title="Current Debt Value ($)"><b>Current Debt Value ($)  :</b> </div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="Current Debt Value ($)"><b>{!rec2.FinServ__LoanAmount__c}</b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="Current Debt Value ($)"><b>{!NameSpace.rec2.FinServ__LoanAmount__c}</b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -680,7 +680,7 @@
                                                                                     <div class="slds-truncate summarysection1" title="APR (%)"><b>APR (%) : </b></div>
                                                                                 </th>
                                                                                 <th class="slds-text-title_caps" scope="col">
-                                                                                    <div class="slds-truncate summarysection" title="APR (%)"><b>{!rec2.APR__c} </b> </div>
+                                                                                    <div class="slds-truncate summarysection" title="APR (%)"><b>{!rec2.FinServ__APY__c} </b> </div>
                                                                                 </th>
                                                                             </tr>
                                                                             <tr>
@@ -843,10 +843,10 @@
                                     <div class="slds-truncate" title="Goal Name"><a href="{! '/'+ Gdetails.Id}" tabindex="-1"> &nbsp;&nbsp;{!Gdetails.Name}</a></div>
                                 </th>
                                 <td data-label="Expected Amount">
-                                    <div class="slds-truncate" title="Expected Amount" style="color:black;">$ {! Gdetails.Required_Monthly_Saving__c}</div>
+                                    <div class="slds-truncate" title="Expected Amount" style="color:black;">$ {! NameSpace.Gdetails.Required_Monthly_Saving__c}</div>
                                 </td>
                                 <td data-label="Current Amount">
-                                    <div class="slds-truncate" title="Current Amount" style="color:black;">$ {! Gdetails.Start_Value__c}</div>
+                                    <div class="slds-truncate" title="Current Amount" style="color:black;">$ {! NameSpace.Gdetails.Start_Value__c}</div>
                                 </td>
                                 <td data-label="Action">
                                     <div class="slds-truncate" title="Action">
