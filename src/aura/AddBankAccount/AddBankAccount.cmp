@@ -55,7 +55,7 @@
                                                 <div class="slds-truncate" title="Bank Account Name">{!finanAccountDetail.Name}</div>
                                             </th>
                                             <td data-label="Type of Account">
-                                                <div class="slds-truncate" title="Account Type" style="color:black;">{!'finanAccountDetail.'+v.namespace+'Account_Type__c'}</div>
+                                                <div class="slds-truncate" title="Account Type" style="color:black;">{!finanAccountDetail.Account_Type__c}</div>
                                             </td>
                                             <td data-label="Current Balance">
                                                 <div class="slds-truncate" title="Current Balance" style="color:black;"><ui:outputCurrency value="{!finanAccountDetail.FinServ__Balance__c}"/></div>

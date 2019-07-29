@@ -11,8 +11,11 @@
                 $A.util.removeClass(spinner, "slds-show");
                 
                 $A.util.addClass(spinner, "slds-hide");
-                component.set("v.FinancialAccountList",response.getReturnValue())
-                cosnole.log(component.get("v.FinancialAccountList"))
+                var list=JSON.stringify(response.getReturnValue());
+              list.replace("Finsol__","")
+                component.set("v.FinancialAccountList",JSON.parse(list))
+                console.log(JSON.stringify(component.get("v.FinancialAccountList")))
+                
             }
             else if (state === "ERROR") {
                 var spinner = component.find("mySpinner");
