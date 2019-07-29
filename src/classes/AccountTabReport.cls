@@ -15,6 +15,7 @@ public class AccountTabReport {
     }
      @AuraEnabled
     public static String getNameSpace(){
+        //system.debug('namespace'+ NamespaceUtility.returnNamespace());
         return NamespaceUtility.returnNamespace();
     }
     //End ravikant
