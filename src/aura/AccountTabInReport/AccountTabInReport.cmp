@@ -2,6 +2,7 @@
     <aura:attribute name="cid" type="Id"/>
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default=" Account"/>
+    <aura:attribute name="NameSpace" type="string"/>
     <aura:attribute name = "parentInitialised" type = "boolean" default = "false" />
     <aura:attribute name = "data" type = "FinServ__FinancialAccountTransaction__c"/>
     <aura:attribute name = "Tid" type="String"  default="a0F4600000088DYEAY" />
@@ -10,7 +11,7 @@
     
     <div class="slds-grid slds-gutters">
         <div class="slds-col slds-size_3-of-12 dashboard-parant my_balance-sheets">            
-            <span><c:Mybalancesheet recordId="{!v.cid}" isTab="True" isCSS="True"/></span>
+            <span><c:Mybalancesheet NameSpace="{!v.NameSpace}" recordId="{!v.cid}" isTab="True" /></span>
         </div>
         <div class="slds-col slds-size_9-of-12 dashboard-parant my_balance-sheets">
             
@@ -23,7 +24,7 @@
                                         <div class="slds-col chartJs-graph" style="width: 100%; padding: 20px 0;height: 400px;">                                                         
                                             <aura:if isTrue = "{!v.parentInitialised}" >
                                                 
-                                                <c:cashFlowSummary   transactionId="{!v.Tid}"/> 
+                                                <c:cashFlowSummary  NameSpace="{!v.NameSpace}" transactionId="{!v.Tid}"/> 
                                                 
                                             </aura:if>
                                         </div>
@@ -31,7 +32,7 @@
                                     
                                     
                                     
-                                    <div class="slds-col slds-size_4-of-12" style="Padding:20px 0 0 0;">
+                                     <div class="slds-col slds-size_4-of-12" style="Padding:20px 0 0 0;">
                                         <!--aura:if isTrue = "{!v.parentInitialised}" >
                                         {!v.Tid}
                                             <lightning:recordViewForm recordId="a0F4600000088DYEAY" objectApiName="FinServ__FinancialAccountTransaction__c">

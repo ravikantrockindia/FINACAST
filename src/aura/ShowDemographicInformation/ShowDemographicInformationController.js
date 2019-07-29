@@ -41,6 +41,17 @@
     },
     doInit:function(cmp,event,helper){
         console.log('In Do Init!');
+        var action = cmp.get("c.getNameSpace");
+         
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+             
+            if( state === 'SUCCESS') {
+                
+                cmp.set("v.NameSpace", response.getReturnValue());
+            } 
+        });
+        $A.enqueueAction(action);
         helper.fetchImage(cmp,event,helper);
         //var myAttribute = component.get("v.myAttribute");
          /*var action = cmp.get("c.getContents");

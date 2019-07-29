@@ -12,6 +12,10 @@ public class AccountTabReport {
          
                         
         return transactionRecord;
-    }     
+    }
+     @AuraEnabled
+    public static String getNameSpace(){
+        return NamespaceUtility.returnNamespace();
+    }
     //End ravikant
 }

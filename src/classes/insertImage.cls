@@ -15,5 +15,9 @@ public class insertImage {
 */
         return [SELECT Id,Title FROM ContentVersion WHERE ContentDocumentId IN :contentIds ORDER BY LastModifiedDate DESC LIMIT 1];
     }
+    @AuraEnabled
+    public static String getNameSpace(){
+        return NamespaceUtility.returnNamespace();
+    }
    
 }
