@@ -51,7 +51,7 @@
                 cmp.set("v.NameSpace", response.getReturnValue());
             } 
         });
-        console.log(cmp.get("v.NameSpace"));
+        console.log('Namespace of showDemographic'+cmp.get("v.NameSpace"));
 
         $A.enqueueAction(action);
         helper.fetchImage(cmp,event,helper);
