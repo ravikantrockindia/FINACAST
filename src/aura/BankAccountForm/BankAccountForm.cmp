@@ -15,9 +15,10 @@
     <aura:attribute name="isRetailBrokerage" type="boolean" default="false"/>
     <aura:attribute name="is529Account" type="boolean" default="false"/>
     <aura:attribute name="isInvestmentAccount" type="boolean" default="false"/>
+            <aura:attribute name="namespace" type="String" default=""/>
     <aura:registerEvent name="lightningEvent" type="c:CreateNewClientEvent"/>
     <aura:method name="saveBankAccount" action="{!c.createBankAccount}" access="PUBLIC"/>
-        <lightning:notificationsLibrary aura:id="notifLib"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
 
     
     <lightning:recordEditForm
@@ -59,29 +60,29 @@
             <div style="clear:both;"></div>
             <aura:if isTrue="{!v.isInvestmentAccount}">
                 <div class="slds-col slds-size_1-of-2">
-                    {!$Label.c.Risk_Profile}<lightning:inputField class="label-hidden" fieldName="Risk_Profile__c" variant="label-hidden"/><br/>
+                    {!$Label.c.Risk_Profile}<lightning:inputField class="label-hidden" fieldName="FinServ__ModelPortfolio__c" variant="label-hidden"/><br/>
                     
                 </div>
             </aura:if>
             <aura:if isTrue="{!v.is529Account}">
                 <div class="slds-col slds-size_1-of-2">
-                    {!$Label.c.Risk_Profile}<lightning:inputField class="label-hidden" fieldName="Risk_Profile__c" variant="label-hidden"/>
+                    {!$Label.c.Risk_Profile}<lightning:inputField class="label-hidden" fieldName="FinServ__ModelPortfolio__c" variant="label-hidden"/>
                     
                 </div>
             </aura:if>
             <div class="slds-col slds-size_1-of-2">
-                <aura:if isTrue="{!v.isCD}"> {!$Label.c.Maturity_Date} <lightning:inputField class="label-hidden" fieldName="Maturity_Date__c" aura:id="maturity_date" variant="label-hidden"/>
+                <aura:if isTrue="{!v.isCD}"> {!$Label.c.Maturity_Date} <lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Maturity_Date__c'}" aura:id="maturity_date" variant="label-hidden"/>
                 </aura:if>
             </div>           
             <div class="slds-col slds-size_1-of-2">
-                <aura:if isTrue="{!v.isRetailBrokerage}"> {!$Label.c.Cost} <lightning:inputField class="label-hidden" fieldName="Cost__c" aura:id="cost" variant="label-hidden"/>
+                <aura:if isTrue="{!v.isRetailBrokerage}"> {!$Label.c.Cost} <lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Cost__c'}" aura:id="cost" variant="label-hidden"/>
                 </aura:if>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                <lightning:inputField fieldName="Account_Type__c" variant="label-hidden" value="{!v.selectedAccount}" class="slds-hide"/>
+                <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="{!v.selectedAccount}" class="slds-hide"/>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                <aura:if isTrue="{!v.is529Account}"> {!$Label.c.Withdrawl_Start_Date} <lightning:inputField class="label-hidden" aura:id="withdrawldate" fieldName="Withdrawl_Start_Date__c" variant="label-hidden"/><br/>
+                <aura:if isTrue="{!v.is529Account}"> {!$Label.c.Withdrawl_Start_Date} <lightning:inputField class="label-hidden" aura:id="withdrawldate" fieldName="{!v.namespace+'Withdrawl_Start_Date__c'}" variant="label-hidden"/><br/>
                 </aura:if>
             </div>
         </div>

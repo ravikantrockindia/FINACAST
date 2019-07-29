@@ -8,6 +8,7 @@
     <aura:attribute name="FinancialAccountList" type="FinServ__FinancialAccount__c[]"/>
     <aura:attribute name="showInModal" type="Boolean" default="false"/>
     <aura:attribute name="disabled" type="Boolean" default="false"/>
+        <aura:attribute name="namespace" type="String" default=""/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:attribute name="recordTypeIds" type="List" default="[]"/>
@@ -20,7 +21,7 @@
             <div class="custom_card slds-gutters">
                 <div class="slds-col slds-size_1-of-1">
                     <aura:if isTrue="{!empty(v.FinancialAccountList)}">
-                        <c:BankAccountForm aura:id ="bankAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}"/>
+                        <c:BankAccountForm aura:id ="bankAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}" namespace="{!v.namespace}"/>
                         <aura:set attribute="else">
                             <div class="slds-m-top_medium slds-clearfix ">
                                 <div class="slds-float_right">

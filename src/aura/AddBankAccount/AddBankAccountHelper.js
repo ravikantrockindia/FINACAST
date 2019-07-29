@@ -12,6 +12,7 @@
                 
                 $A.util.addClass(spinner, "slds-hide");
                 component.set("v.FinancialAccountList",response.getReturnValue())
+                cosnole.log(component.get("v.FinancialAccountList"))
             }
             else if (state === "ERROR") {
                 var spinner = component.find("mySpinner");

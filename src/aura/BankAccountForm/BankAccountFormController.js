@@ -2,6 +2,7 @@
     
     doInit: function(component,event,helper){
         try{
+            
             var spinner = component.find("mySpinner");
             $A.util.removeClass(spinner, "slds-show");
             $A.util.addClass(spinner, "slds-hide");
