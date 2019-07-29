@@ -13,24 +13,26 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 
-                // alert("From server: " + JSON.stringify(response.getReturnValue()));
-                if(response.getReturnValue().length==0){
+              //  alert("From server: " + JSON.stringify(response.getReturnValue()));
+                if(response.getReturnValue().length==1 && !response.getReturnValue().disabled ){
+                    component.set("v.IncomeList",response.getReturnValue())
+                    
                     //component.set("v.LastKey", 0)
                     //alert(component.get("v.LastKey"))
-                    helper.createIncome(component)
+                    //  helper.createIncome(component)
                     component.find("skipNextButton").set("v.label",'Skip')
                     component.set("v.disabled",false)
                     
                 }
                 else{
                     component.set("v.IncomeList",response.getReturnValue())
-                    // component.set("v.LastKey", response.getReturnValue().length)
+                    console.log(JSON.stringify(response.getReturnValue()))
                     component.find("skipNextButton").set("v.label",'Next')
                     component.set("v.disabled",true)
                     
                     
                 }
-                 $A.util.removeClass(spinner, "slds-show");
+                $A.util.removeClass(spinner, "slds-show");
                 
                 $A.util.addClass(spinner, "slds-hide");
                 /* for(var e in component.get("v.IncomeList")){
@@ -61,7 +63,7 @@
         // $A.enqueueAction adds the server-side action to the queue.
         $A.enqueueAction(action);
     },
-    addIncome: function(component,event,helper){
+    addNewIncome: function(component,event,helper){
         helper.createIncome(component)
         
         
@@ -84,10 +86,10 @@
             //check if the validity condition are met or not.
             return isValidSoFar && inputCmp.checkValidity();
         },true);
-       var isDateValid=helper.validateDate(component)
-       if(!isDateValid){
-           isAllValid=isDateValid
-       }
+        var isDateValid=helper.validateDate(component)
+        if(!isDateValid){
+            isAllValid=isDateValid
+        }
         console.log(isAllValid)
         
         //   allValid.set("v.errors", [{message:"Input not a number: "}]);
@@ -180,7 +182,7 @@
             component.set("v.disabled",false)
         }*/
         //component.set("v.IncomeList",data)
-       // console.log('incomeList',JSON.stringify(component.get("v.IncomeList")))
+        // console.log('incomeList',JSON.stringify(component.get("v.IncomeList")))
         //console.log(JSON.stringify(data))
         /*  if(!isendDateValid){
             console.log("a")
@@ -210,11 +212,11 @@
             for (var e in data ){
                 
                 //data[e]["disabled"]=true;
-               // console.log(data[e]["disabled"]) 
+                // console.log(data[e]["disabled"]) 
                 console.log('dataa',JSON.stringify(data[e]["income"]))
                 incomes.push(data[e]["income"]);
                 
-                }
+            }
             console.log('incomeList',JSON.stringify(component.get("v.IncomeList")))
             console.log(JSON.stringify(data))
             //component.set("v.IncomeList",data)
@@ -229,26 +231,28 @@
                 var state = response.getState();
                 alert(state)
                 if (state === "SUCCESS") {
-                    console.log(response.getReturnValue())
+                    console.log(JSON.stringify(response.getReturnValue()))
                     component.set("v.IncomeList",response.getReturnValue())
-                     $A.util.removeClass(spinner, "slds-show");
-            
-            $A.util.addClass(spinner, "slds-hide");
-                   // component.set("v.LastKey", response.getReturnValue().length)
+                    component.find("skipNextButton").set("v.label",'Next')
+                    
+                    $A.util.removeClass(spinner, "slds-show");
+                    
+                    $A.util.addClass(spinner, "slds-hide");
+                    // component.set("v.LastKey", response.getReturnValue().length)
                     
                 }
                 else if (state === "INCOMPLETE") {
                     // do something
                 }
                     else if (state === "ERROR") {
-                                    component.set("v.disabled",false)
-
+                        component.set("v.disabled",false)
+                        
                         var errors = response.getError();
                         if (errors) {
-                             component.set("v.disabled",false)
-              $A.util.removeClass(spinner, "slds-show");
-            
-            $A.util.addClass(spinner, "slds-hide");
+                            component.set("v.disabled",false)
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
                             if (errors[0] && errors[0].message) {
                                 console.log("Error message: " + 
                                             errors[0].message);
@@ -265,7 +269,7 @@
         }
         else{
             component.set("v.disabled",false)
-              $A.util.removeClass(spinner, "slds-show");
+            $A.util.removeClass(spinner, "slds-show");
             
             $A.util.addClass(spinner, "slds-hide");
             

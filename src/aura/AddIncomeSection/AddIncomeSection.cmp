@@ -18,7 +18,7 @@
                 <div class="slds-col">
                     <div class="slds-clearfix">
                         <div class="slds-float_right">
-                            <lightning:button variant="brand" label="Add Income" title="Add Income" onclick="{! c.addIncome }" />
+                            <lightning:button variant="brand" label="Add Income" title="Add Income" onclick="{! c.addNewIncome }" />
                         </div>
                     </div>
                     <table class=" slds-m-top_medium slds-table slds-table_bordered slds-table_col-bordered">
@@ -63,14 +63,14 @@
                                 <div class=" " title="Cloudhub"><lightning:input value="{!i.index}" disabled="{!i.disabled}" aura:id="inQuantity" /></div>
                             </td>-->
                                     <td >
-                                        <lightning:input value="{!i.income.Name}" disabled="{!i.disabled}" required="true" messageWhenValueMissing	="Complete this field" aura:id = "fields"/>
+                                        <lightning:input value="{!i.income.name}" disabled="{!i.disabled}" required="true" messageWhenValueMissing	="Complete this field" aura:id = "fields"/>
                                         
                                     </td>
                                     <td>
-                                        <lightning:input value="{!i.income.Amount__c}" type="number" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/>
+                                        <lightning:input value="{!i.income.amount}" type="number" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/>
                                     </td>
                                     <td>
-                                        <lightning:select aura:id="fields" name="frequency" value="{!i.income.Frequency__c}" required="true" disabled="{!i.disabled}" variant="label-hidden" messageWhenValueMissing="Select a value" class="label-hidden">
+                                        <lightning:select aura:id="fields" name="frequency" value="{!i.income.frequency}" required="true" disabled="{!i.disabled}" variant="label-hidden" messageWhenValueMissing="Select a value" class="label-hidden">
                                             <option value="">--None--</option>
                                             <option value="Weekly">Weekly</option>
                                             <option value="Bi-Weekly">Bi-Weekly</option>
@@ -80,16 +80,16 @@
                                         </lightning:select>
                                     </td>
                                     <td>
-                                        <lightning:input type="date" name="{!'row_'+index+'_startdate'}" disabled="{!i.disabled}"  value="{!i.income.Start_Date__c}" aura:id="startdate" variant="label-hidden" onblur="{!c.onblur}"/>
+                                        <lightning:input type="date" name="{!'row_'+index+'_startdate'}" disabled="{!i.disabled}"  value="{!i.income.startDate}" aura:id="startdate" variant="label-hidden"/>
                                     </td>
                                     <td>
-                                        <lightning:input type="date" disabled="{!i.disabled}"  name="{!'row_'+index+'_enddate'}" required="true" value="{!i.income.End_Date__c}" messageWhenBadInput="End Date should be greater or equal to start date" messageWhenValueMissing="Complete this field" aura:id="enddate" variant="label-hidden" onblur="{!c.onblur}"/>
+                                        <lightning:input type="date" disabled="{!i.disabled}"  name="{!'row_'+index+'_enddate'}" required="true" value="{!i.income.endDate}" messageWhenBadInput="End Date should be greater or equal to start date" messageWhenValueMissing="Complete this field" aura:id="enddate" variant="label-hidden" onblur="{!c.onblur}"/>
                                     </td>
                                     <td>
-                                        <lightning:input value="{!i.income.Yearly_growth__c}" type="number" required="true" disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" step="0.01" formatter="percent-fixed" aura:id = "fields" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
+                                        <lightning:input value="{!i.income.growthRate}" type="number" required="true" disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" step="0.01" formatter="percent-fixed" aura:id = "fields" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
                                     </td>
                                     <td>
-                                        <lightning:input aura:id="fields" disabled="{!i.disabled}" type="number" required="true"  formatter="percent-fixed" messageWhenValueMissing="Complete this field" step="0.01" value="{!i.income.Tax_Rate__c}" min="0" messageWhenRangeUnderflow="Income tax rate cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
+                                        <lightning:input aura:id="fields" disabled="{!i.disabled}" type="number" required="true"  formatter="percent-fixed" messageWhenValueMissing="Complete this field" step="0.01" value="{!i.income.taxRate}" min="0" messageWhenRangeUnderflow="Income tax rate cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
                                     </td>
                                     
                                     <td>

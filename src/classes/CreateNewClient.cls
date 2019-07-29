@@ -13,7 +13,7 @@ public class CreateNewClient {
             //String recordType=namespace+'Income_Record_Type';
             Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
             //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Expense_Record_Type').getRecordTypeId();
-             //recordType=namespace+'Expense_Record_Type';
+            //recordType=namespace+'Expense_Record_Type';
             Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
             //Schema.SObjectType.Budget__c.getRecordTypeInfosByName().get('Income_Record_Type').getRecordTypeId();
             recordTypeIds= new WrapRecordTypeIds(devRecordTypeId,recordTypes,incomeRecordTypeId,expenseRecordTypeId);
@@ -124,29 +124,76 @@ return devRecordTypeId;
         return debtAccounts;
     }
     //0014600001dieOZAAY 
+    
+    @AuraEnabled
+    public static wrapIncome addIncome(String recordId){
+      //  List<wrapIncome> incomeList=new List<wrapIncome>();
+      
+        wrapIncome wi;
+        try{
+            //Budget__c b=new Budget__c();
+            // Integer index=0;
+           
+                  Budget b=new Budget();
+            b.primaryOwnerId=recordId;
+             wi  =new wrapIncome(b,false);
+               // incomeList.add(wi);
+            
+            if(TEST.isRunningTest())
+                throw new NullPointerException();
+        }catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+        }        
+        //System.debug(JSON.serialize(incomeList));
+        return wi;
+    }
     @AuraEnabled
     public static List<wrapIncome> getincome(String recordId){
         List<wrapIncome> incomeList=new List<wrapIncome>();
         
         try{
-            Budget__c b=new Budget__c();
+            //Budget__c b=new Budget__c();
             // Integer index=0;
-            List<Budget__c> incomel=[select id,Primary_Owner__c,Name,Frequency__c,Primary_Owner__r.Name,recordtype.developername,Yearly_growth__c,End_Date__c,Amount__c,Start_Date__c,Tax_Rate__c 
+            String namespace=NamespaceUtility.returnNamespace();
+            String objectName=namespace+'Budget__c';
+            
+            Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
+            
+            List<Budget__c> incomel=[select id,Primary_Owner__c,Name,Frequency__c,RecordTypeId, Yearly_growth__c,End_Date__c,Amount__c,Start_Date__c,Tax_Rate__c 
                                      from Budget__c where Primary_Owner__c =:recordId AND recordtype.developername='Income_Record_Type'];
-            // System.debug(incomel);
-            if(incomel !=null && incomel.size()>0){
+             System.debug(incomel);
+            
+            if(incomel !=null && incomel.size()>0 ){
                 for(Budget__c income:incomel){
-                    //  System.debug(JSON.serialize(incomel));
-                    wrapIncome wi=new wrapIncome(income);
+                    Budget b=new Budget();
+                    b.Id=income.Id;
+                    b.amount=income.Amount__c;
+                    b.primaryOwnerId=income.Primary_Owner__c;
+                    b.frequency=income.Frequency__c;
+                    b.name=income.Name;
+                    //b.recordTypeId=incomeRecordTypeId;
+                    b.growthRate=income.Yearly_growth__c;
+                    b.endDate=income.End_Date__c;
+                    b.startDate=income.Start_Date__c;
+                    b.taxRate=income.Tax_Rate__c;
+                     System.debug(JSON.serialize(b));
+                    wrapIncome wi=new wrapIncome(b);
                     incomeList.add(wi);
+                    System.debug(JSON.serialize(incomeList));
                 }
                 
-            } 
+            }
+            else{
+                Budget b=new Budget();
+                wrapIncome wi=new wrapIncome(b,false);
+                incomeList.add(wi);
+            }
             if(TEST.isRunningTest())
                 throw new NullPointerException();
         }catch(Exception e){
             new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
-        }        //System.debug(JSON.serialize(incomeList));
+        }        
+        System.debug(JSON.serialize(incomeList));
         return incomeList;
     }
     
@@ -184,14 +231,53 @@ return devRecordTypeId;
         List<wrapIncome> incomeList=new List<wrapIncome>();
         
         try{
+            String namespace=NamespaceUtility.returnNamespace();
+            String objectName=namespace+'Budget__c';
+            Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
             
-            
-            List<Budget__c> incomel = (List<Budget__c>) JSON.deserialize(incomes, List<Budget__c>.class);
-            System.debug('income'+incomel);
-            upsert(incomel);
-            for(Budget__c b: incomel){
+            List<Budget> incomel = (List<Budget>) JSON.deserialize(incomes, List<Budget>.class);
+            List<Budget__c> blist=new List<Budget__c>();
+            for(Budget b:incomel){
+                Budget__c income=new Budget__c();
+                income.Id=b.Id;
+                income.Amount__c=b.amount;
+                income.Name=b.name;
+                 income.Primary_Owner__c= b.primaryOwnerId;
+               // income.Primary_Owner__c='0014o00001fRoXxAAK';
+                income.Frequency__c=b.frequency;
+                income.RecordTypeId=incomeRecordTypeId;
+                income.Yearly_growth__c=b.growthRate;
+                income.End_Date__c=b.endDate;
+                income.Start_Date__c=b.startDate;
+                income.Tax_Rate__c=b.taxRate;
+                blist.add(income);
+                //  System.debug(JSON.serialize(incomel));
+                //wrapIncome wi=new wrapIncome(income);
+                //incomeList.add(wi);
+            }
+            System.debug('income'+blist);
+            upsert(blist);
+            for(Budget__c income: blist){
+                Budget b=new Budget();
+                b.Id=income.Id;
+                b.amount=income.Amount__c;
+                b.name=income.Name;
+                 b.primaryOwnerId=income.Primary_Owner__c;
+               // b.primaryOwnerId='0014o00001fRoXxAAK';
+                b.Name=income.Name;
+                b.frequency=income.Frequency__c;
+                // b.recordTypeId=income.RecordTypeId;
+                b.growthRate=income.Yearly_growth__c;
+                b.endDate=income.End_Date__c;
+                b.startDate=income.Start_Date__c;
+                b.taxRate=income.Tax_Rate__c;
+                //  System.debug(JSON.serialize(incomel));
+                //wrapIncome wi=new wrapIncome(b);
+                // incomeList.add(wi);
                 wrapIncome wi=new wrapIncome(b);
                 incomeList.add(wi);
+                            System.debug(incomeList);
+
             }
             if(TEST.isRunningTest())
                 throw new NullPointerException();
@@ -284,7 +370,7 @@ System.debug(JSON.serialize(incomeList));*/
     @AuraEnabled 
     public static String getNamespace(){
         
-           return NamespaceUtility.returnNamespace();
+        return NamespaceUtility.returnNamespace();
         
         // System.debug('delete');
         
@@ -293,14 +379,19 @@ System.debug(JSON.serialize(incomeList));*/
     
     public class wrapIncome {
         @AuraEnabled
-        public Budget__c income {get; set;}
+        public Budget income {get; set;}
         @AuraEnabled
         public Boolean disabled {get; set;}
         
-        public wrapIncome(Budget__c income) {
+        public wrapIncome(Budget income) {
             
             this.income = income;
             disabled = true;
+        }
+        public wrapIncome(Budget income, Boolean disabled) {
+            
+            this.income = income;
+            this.disabled = disabled;
         }
     }
     

@@ -1,26 +1,62 @@
 ({
     createIncome : function(component) {
         component.set("v.disabled",false)
-        
+        console.log("")
         var primaryOwner=component.get("v.recordId")
-        var recordTypeId=component.get("v.recordTypeId")
-      //  lastKey=lastKey+1;
-        var data=component.get("v.IncomeList")
-   
-        var a= {"income":{"Id":null,"Primary_Owner__c":primaryOwner,"Name":"","Frequency__c":"None","RecordTypeId":recordTypeId,"Yearly_growth__c":"","End_Date__c":"","Amount__c":"","Start_Date__c":"","Tax_Rate__c":""},"disabled":false};
-        var incomeList=component.get("v.IncomeList");
         
-        incomeList.push(a);
-        component.set("v.IncomeList", incomeList);
-        console.log(JSON.stringify(incomeList))
-     //   component.set("v.LastKey", lastKey);
+        // var recordTypeId=component.get("v.recordTypeId")
+        //  lastKey=lastKey+1;
+        // var data=component.get("v.IncomeList")
+        //
+        
+        // Create a callback that is executed after 
+        // the server-side action returns
+        var action=component.get("c.addIncome");
+        action.setParams({ recordId : primaryOwner });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            console.log(state)
+            if (state === "SUCCESS") {
+                var incomeList=component.get("v.IncomeList");
+                
+                var a=response.getReturnValue();
+                
+                
+                incomeList.push(a);
+                component.set("v.IncomeList", incomeList);
+                console.log(JSON.stringify(incomeList))
+                
+                /* for(var e in component.get("v.IncomeList")){
+                    alert(e.index)
+                }*/  
+            }
+            else if (state === "INCOMPLETE") {
+                // do something
+            }
+                else if (state === "ERROR") {
+                    var errors = response.getError();
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + 
+                                        errors[0].message);
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
+                }
+        });
+                $A.enqueueAction(action);
+
+        // var a= {"income":{"Id":null,"Primary_Owner__c":primaryOwner,"Name":"","Frequency__c":"None","RecordTypeId":recordTypeId,"Yearly_growth__c":"","End_Date__c":"","Amount__c":"","Start_Date__c":"","Tax_Rate__c":""},"disabled":false};
+        
+        //   component.set("v.LastKey", lastKey);
         
     },
     validateDate: function(component){
-                var data=component.get("v.IncomeList")
-
+        var data=component.get("v.IncomeList")
+        
         var isAllValid=true;
-         var enddate=component.find('enddate');
+        var enddate=component.find('enddate');
         // var startdate=component.find('startdate');
         if(data.length>1){
             isAllValid = enddate.reduce(function(isValidSoFar, inputCmp){
@@ -45,7 +81,7 @@
             
         }
         for (var e in data ){
-            var startdate=data[e]["income"]["Start_Date__c"]
+            var startdate=data[e]["income"]["startDate"]
             console.log(startdate)
             if($A.util.isUndefinedOrNull(startdate) || startdate==""){
                 
@@ -54,7 +90,7 @@
                 // date.format("yyyy/mm/dd");
                 console.log(date)
                 
-                data[e]["income"]["Start_Date__c"]=date;
+                data[e]["income"]["startDate"]=date;
             }
         }
         component.set("v.IncomeList",data)
@@ -110,5 +146,5 @@
         return isAllValid;
         
         
-}
+    }
 })

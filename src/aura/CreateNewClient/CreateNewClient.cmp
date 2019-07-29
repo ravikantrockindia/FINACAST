@@ -10,7 +10,7 @@
     <aura:attribute name="incomeRecordType" type="String"/>
     <aura:attribute name="expenseRecordType" type="String"/>    
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
-    <aura:attribute name="currentStep" type="String" default="1"/>
+    <aura:attribute name="currentStep" type="String" default="4"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:attribute name="namespace" type="String" default=""/>
     
