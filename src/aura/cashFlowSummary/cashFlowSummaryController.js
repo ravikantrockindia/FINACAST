@@ -7,7 +7,7 @@
              
             if( state === 'SUCCESS') {
                 
-                cmp.set("v.NameSpace", response.getReturnValue());
+                component.set("v.NameSpace", response.getReturnValue());
             } 
         });
         $A.enqueueAction(action);
