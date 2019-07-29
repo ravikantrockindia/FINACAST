@@ -185,6 +185,8 @@ return devRecordTypeId;
             }
             else{
                 Budget b=new Budget();
+                                    b.primaryOwnerId=recordId;
+
                 wrapIncome wi=new wrapIncome(b,false);
                 incomeList.add(wi);
             }
