@@ -51,7 +51,7 @@
                 cmp.set("v.NameSpace", response.getReturnValue());
             } 
         });
-        console.log(component.get("v.NameSpace"));
+        console.log(cmp.get("v.NameSpace"));
 
         $A.enqueueAction(action);
         helper.fetchImage(cmp,event,helper);
