@@ -51,26 +51,11 @@
                 cmp.set("v.NameSpace", response.getReturnValue());
             } 
         });
-        console.log('Namespace of showDemographic'+cmp.get("v.NameSpace"));
+        console.log('Namespace of showDemographic' + cmp.get("v.NameSpace"));
 
         $A.enqueueAction(action);
         helper.fetchImage(cmp,event,helper);
-        //var myAttribute = component.get("v.myAttribute");
-         /*var action = cmp.get("c.getContents");
-         action.setParams({ cid : cmp.get("0014600001eTE2zAAG") });
-
-        action.setCallback(this, function(response) {
-           var state = response.getState();
-           var uploadedFiles = event.getParam("files");
-           var retRes=JSON.stringify(response.getReturnValue()); 
-          // console.log("return Value"+JSON.stringify(response.getReturnValue()));
-           if(cmp.isValid() && state === 'SUCCESS') {
-                
-                cmp.set("v.contents", response.getReturnValue());
-                //console.log('hey this is test msg');
-           } 
-       });
-        $A.enqueueAction(action);*/
+         
     },
     
     handleChange:function(cmp,event,helper){
