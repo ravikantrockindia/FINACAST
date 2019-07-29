@@ -21,6 +21,7 @@
     <aura:attribute name="netWorth" type="Double"/>
     <aura:attribute name="isPortalUser" type="Boolean" />
     <aura:attribute name = "selectedClient" type = "String" />
+    <aura:attribute name="NameSpace" type="string" default="Finasol__"/>
     <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
   
     <article class="slds-card">
