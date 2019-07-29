@@ -41,9 +41,9 @@
                 
                 // alert("From server: " + JSON.stringify(response.getReturnValue()));
                 console.log(JSON.stringify(response.getReturnValue()))
-                if(response.getReturnValue().length==0){
+                if(response.getReturnValue().length==1  && !response.getReturnValue().disabled){
                     //alert(component.get("v.LastKey"))
-                    helper.createIncome(component)
+                    //helper.createIncome(component)
                     // component.find("skipNextButton").set("v.label",'Skip')
                     component.set("v.disabled",false)
                     
@@ -87,8 +87,8 @@
         // $A.enqueueAction adds the server-side action to the queue.
         $A.enqueueAction(action);
     },
-    addExpense: function(component,event,helper){
-        helper.createIncome(component, component.get("v.LastKey"))
+    addNewExpense: function(component,event,helper){
+        helper.createExpense(component, component.get("v.LastKey"))
         
         
     },
@@ -156,7 +156,7 @@
         // var indices=[];
         for (var e in data ){
             console.log('a')
-            if(data[e]["expense"]["Does_contribution_bring_tax_benifit__c"]){
+            if(data[e]["expense"]["isTaxBenefit"]){
                 data[e]["showSection"]=true;
                 var tax=component.find("taxbenefit")
                 //  var taxbenefit=tax.get("v.value")
@@ -520,16 +520,16 @@
         var expenses=component.get("v.ExpenseList")
         if(checked){
             expenses[value]["showSection"]=true;
-            expenses[value]["expense"]["What_of_contribution_bring_tax_benifit__c"]=""
-            expenses[value]["expense"]["May_yearly_tax_deduction_allowed__c"]=""
-            expenses[value]["expense"]["Does_tax_benifit_realize_really__c"]=true
+            expenses[value]["expense"]["percentageContribution"]=""
+            expenses[value]["expense"]["maxDeduction"]=""
+            expenses[value]["expense"]["isMonthly"]=true
             
             
         }
         else{
-            expenses[value]["expense"]["What_of_contribution_bring_tax_benifit__c"]=""
-            expenses[value]["expense"]["May_yearly_tax_deduction_allowed__c"]=""
-            expenses[value]["expense"]["Does_tax_benifit_realize_really__c"]=false
+            expenses[value]["expense"]["percentageContribution"]=""
+            expenses[value]["expense"]["maxDeduction"]=""
+            expenses[value]["expense"]["isMonthly"]=false
             expenses[value]["showSection"]=false;
             
         }

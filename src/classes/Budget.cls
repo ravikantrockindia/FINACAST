@@ -19,5 +19,15 @@ public class Budget {
     public Date endDate{ get; set;}
      @AuraEnabled
     public Decimal taxRate {get; set;}
-   
+    
+    @AuraEnabled
+    public Boolean isTaxBenefit{get;set;}
+   @AuraEnabled
+    public Decimal percentageContribution {get; set;}
+     @AuraEnabled
+    public Decimal maxDeduction {get; set;}
+      @AuraEnabled
+    public String priority {get; set;}
+    @AuraEnabled
+    public Boolean isMonthly{get;set;}
 }

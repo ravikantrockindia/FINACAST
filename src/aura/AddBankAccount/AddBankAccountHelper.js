@@ -12,9 +12,9 @@
                 
                 $A.util.addClass(spinner, "slds-hide");
                 var list=JSON.stringify(response.getReturnValue());
-                console.log(list.search("Finsol__"))
+                console.log(list)
              var list1= list.replace("Finsol__","")
-              console.log(list1)
+            console.log(list1)
                 component.set("v.FinancialAccountList",JSON.parse(list1))
                 console.log(JSON.stringify(component.get("v.FinancialAccountList")))
                 

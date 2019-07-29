@@ -1,18 +1,52 @@
 ({
-    createIncome : function(component) {
+    createExpense : function(component) {
         component.set("v.disabled",false)
         
         
         var primaryOwner=component.get("v.recordId")
         var recordTypeId=component.get("v.recordTypeId")
-        var data=component.get("v.ExpenseList")
-   
-        var a= {"disabled":false,"expense":{"Id":null,"Primary_Owner__c":primaryOwner,"Name":"None","RecordTypeId":recordTypeId,"Yearly_growth__c":"","End_Date__c":"","Start_Date__c":"","Amount__c":"","Does_contribution_bring_tax_benifit__c":false,"Does_tax_benifit_realize_really__c":true,"May_yearly_tax_deduction_allowed__c":"","What_of_contribution_bring_tax_benifit__c":"","Priority__c":"None"},"showSection":false};
-        var expenseList=component.get("v.ExpenseList");
+        var action=component.get("c.addExpense");
+        action.setParams({ recordId : primaryOwner });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            console.log(state)
+            if (state === "SUCCESS") {
+               // var incomeList=component.get("v.IncomeList");
+                
+                var a=response.getReturnValue();
+                
+                
+               var expenseList=component.get("v.ExpenseList");
         
         expenseList.push(a);
         component.set("v.ExpenseList", expenseList);
-        console.log(JSON.stringify(expenseList))
+       console.log(JSON.stringify(expenseList))
+                
+                /* for(var e in component.get("v.IncomeList")){
+                    alert(e.index)
+                }*/  
+            }
+            else if (state === "INCOMPLETE") {
+                // do something
+            }
+                else if (state === "ERROR") {
+                    var errors = response.getError();
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + 
+                                        errors[0].message);
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
+                }
+        });
+                $A.enqueueAction(action);
+
+       // var data=component.get("v.ExpenseList")
+   
+        //var a= {"disabled":false,"expense":{"Id":null,"Primary_Owner__c":primaryOwner,"Name":"None","RecordTypeId":recordTypeId,"Yearly_growth__c":"","End_Date__c":"","Start_Date__c":"","Amount__c":"","Does_contribution_bring_tax_benifit__c":false,"Does_tax_benifit_realize_really__c":true,"May_yearly_tax_deduction_allowed__c":"","What_of_contribution_bring_tax_benifit__c":"","Priority__c":"None"},"showSection":false};
+       // 
         
     },
     validateDate:function(component,event,data){
@@ -69,7 +103,7 @@
             
         }
         for (var e in data ){
-            var startdate=data[e]["expense"]["Start_Date__c"]
+            var startdate=data[e]["expense"]["startDate"]
             console.log(startdate)
             if($A.util.isUndefinedOrNull(startdate) || startdate==""){
                 
@@ -78,7 +112,7 @@
                 // date.format("yyyy/mm/dd");
                 console.log(date)
                 
-                data[e]["expense"]["Start_Date__c"]=date;
+                data[e]["expense"]["startDate"]=date;
             }
         }
         component.set("v.ExpenseList",data)
