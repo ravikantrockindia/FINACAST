@@ -308,12 +308,6 @@
         <trackFeedHistory>false</trackFeedHistory>
     </fields>
     <fields>
-        <fullName>ChannelProgramLevelName</fullName>
-    </fields>
-    <fields>
-        <fullName>ChannelProgramName</fullName>
-    </fields>
-    <fields>
         <fullName>DandbCompanyId</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Lookup</type>
@@ -2172,17 +2166,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
                 <fullName>Excellent</fullName>
@@ -2882,17 +2865,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
             <values>
                 <fullName>Web</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3597,16 +3569,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
@@ -4308,17 +4270,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
                 <fullName>Excellent</fullName>
@@ -5014,17 +4965,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
             <values>
                 <fullName>Web</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
