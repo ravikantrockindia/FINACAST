@@ -148,17 +148,17 @@ return devRecordTypeId;
         return wi;
     }
     @AuraEnabled
-    public static wrapIncome addExpense(String recordId){
+    public static wrapExpense addExpense(String recordId){
         //  List<wrapIncome> incomeList=new List<wrapIncome>();
         
-        wrapIncome wi;
+        wrapExpense wi;
         try{
             //Budget__c b=new Budget__c();
             // Integer index=0;
             
             Budget b=new Budget();
             b.primaryOwnerId=recordId;
-            wi  =new wrapIncome(b,false);
+            wi  =new wrapExpense(b,false);
             // incomeList.add(wi);
             
             if(TEST.isRunningTest())
