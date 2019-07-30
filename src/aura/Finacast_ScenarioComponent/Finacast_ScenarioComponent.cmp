@@ -334,7 +334,7 @@
                                                                                                           fieldName = "{! v.namespace + 'Scenario_Goal_Type__c'}" 
                                                                                                           variant="label-hidden"/>
                                         <br/> 
-                                        <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "goalName" fieldName="{! v.namespace + 'Name'}"
+                                        <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "goalName" fieldName="Name"
                                                                                                           variant="label-hidden"/>
                                         <br/>                                   
                                         <span class = "highlight">* </span>Amount That Need To Be Reached ($)<lightning:inputField aura:id = "targetAmount"
@@ -416,7 +416,7 @@
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col">                                                 
                                         <span class = "highlight">* </span>Name<lightning:inputField aura:id = "debtName" 
-                                                                                                     fieldName="{! v.namespace + 'Name'}"
+                                                                                                     fieldName="Name"
                                                                                                      variant="label-hidden"  />
                                         <br/>  
                                         <span class = "highlight">* </span>Total Debt Amount ($)<lightning:inputField aura:id = "debtAmount"
@@ -490,7 +490,7 @@
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col">
                                         <span class = "highlight">* </span>Name<lightning:inputField aura:id = "savingName" variant="label-hidden"
-                                                                                                     fieldName="{! v.namespace + 'Name'}"/>
+                                                                                                     fieldName="Name"/>
                                         <br/> 
                                         <span class = "highlight">* </span>Type of Account<lightning:inputField aura:id = "savingType"  variant="label-hidden"
                                                                                                                 fieldName = "{! v.namespace + 'Type__c'}" 
