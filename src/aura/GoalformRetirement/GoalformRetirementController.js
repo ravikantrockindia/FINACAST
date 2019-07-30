@@ -23,6 +23,7 @@
     
     doInit : function(component,event,helper)
     {
+         var namespace = component.get("v.namespace");
         var clientId=component.find("owner").get("v.value");
         var clientId=component.get("v.client");
         console.log('id'+clientId);
@@ -617,7 +618,8 @@
     
     handleMonthlyContribution : function(component, event, helper)
     { 
-        component.find("goalContri").set("v.fieldName","Required_Monthly_Saving__c");
+        var namespace = component.get("v.namespace");
+        component.find("goalContri").set("v.fieldName",namespace+"Required_Monthly_Saving__c");
         component.find("goalContri").set("v.value", component.get("v.initialEmi"));
     },
     
