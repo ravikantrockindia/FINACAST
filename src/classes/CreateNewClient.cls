@@ -247,6 +247,7 @@ return devRecordTypeId;
                     b.isMonthly=expense.Does_tax_benifit_realize_really__c;
                     b.maxDeduction=expense.May_yearly_tax_deduction_allowed__c;
                     b.percentageContribution=expense.What_of_contribution_bring_tax_benifit__c;
+                    b.priority=expense.Priority__c;
                     System.debug(JSON.serialize(b));
                     wrapExpense wi=new wrapExpense(b);
                     expenseList.add(wi);
@@ -373,6 +374,7 @@ System.debug(JSON.serialize(incomeList));*/
                     expense.Yearly_growth__c=b.growthRate;
                     expense.End_Date__c=b.endDate;
                     expense.Start_Date__c=b.startDate;
+                    expense.Priority__c=b.priority;
                    System.debug(b.isTaxBenefit);
                     if(b.isTaxBenefit!=null){
                        expense.Does_contribution_bring_tax_benifit__c=b.isTaxBenefit;
@@ -400,6 +402,7 @@ System.debug(JSON.serialize(incomeList));*/
                     b.name=expense.Name;
                     //b.recordTypeId=incomeRecordTypeId;
                     b.growthRate=expense.Yearly_growth__c;
+                b.priority=expense.Priority__c;
                     b.endDate=expense.End_Date__c;
                     b.startDate=expense.Start_Date__c;
                     b.isTaxBenefit=expense.Does_contribution_bring_tax_benifit__c;
