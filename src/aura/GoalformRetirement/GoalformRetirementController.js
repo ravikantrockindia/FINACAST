@@ -24,6 +24,7 @@
     doInit : function(component,event,helper)
     {
          var namespace = component.get("v.namespace");
+        console.log('namespace value'+namespace);
         var clientId=component.find("owner").get("v.value");
         var clientId=component.get("v.client");
         console.log('id'+clientId);

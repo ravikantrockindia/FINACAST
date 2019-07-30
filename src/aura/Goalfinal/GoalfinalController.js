@@ -1,6 +1,8 @@
 ({
 	    doInit: function(component, event, helper){
          var workspaceAPI = component.find("workspace");
+            var namespace = component.get("v.namespace");
+            console.log('namespace value----'+ namespace);
         var tab=component.get("v.tabName")
         console.log('tab',tab)
         workspaceAPI.getFocusedTabInfo().then(function(response) {

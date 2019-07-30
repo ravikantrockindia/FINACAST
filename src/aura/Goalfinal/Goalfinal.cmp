@@ -1,7 +1,7 @@
 <aura:component  controller="AddIncomeController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default=" Goals"/>
-    <aura:attribute name="NameSpace" type="string"/>
+    <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="financialGoal" type="FinServ__FinancialGoal__c"/>
      <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="isRetirement" type="Boolean" default="false"/>
@@ -30,7 +30,7 @@
             <br/>
             <aura:if isTrue="{!v.addGoals}">
                 
-                <c:GoalModal client = "{!v.cid}" />
+                <c:GoalModal   namespace="{!v.namespace}" client = "{!v.cid}" />
             </aura:if> 
             <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="padding: 0;">
                 <thead>
@@ -81,10 +81,10 @@
     </lightning:card>
     <aura:if isTrue="{!v.showModalGoal}">
         <aura:if isTrue="{!v.isRetirement}">       
-            <c:GoalformRetirement retirementGoalId ="{!v.editrecidGoal}"  client = "{!v.cid}"/>  
+            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client = "{!v.cid}"/>  
         </aura:if>
         <aura:if isTrue="{!v.isNonRetirement}">   
-            <c:Goalform  goalId = "{!v.editrecidGoal}" client = "{!v.cid}" />
+            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client = "{!v.cid}" />
         </aura:if>
         
     </aura:if> 

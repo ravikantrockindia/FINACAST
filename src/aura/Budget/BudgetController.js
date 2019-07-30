@@ -1,6 +1,7 @@
 //-----------------Works on component initialization  --------------------------------------//
 ({
     getmonthlybudget : function(component, event, helper) {
+        console.log('SAY'+component.get('v.namespace'));
         var workspaceAPI = component.find("workspace");
         var tab=component.get("v.tabName")
         console.log('tab',tab)
