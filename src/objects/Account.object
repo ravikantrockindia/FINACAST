@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>CallHighlightAction</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CallHighlightAction</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -13,7 +33,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -21,7 +61,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>EmailHighlightAction</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EmailHighlightAction</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>EnableCustomerPortalUser</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EnableCustomerPortalUser</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EnableCustomerPortalUser</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -29,7 +89,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>ListClean</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ListClean</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ListClean</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -37,7 +117,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>RequestUpdate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -45,7 +145,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>SmsHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SmsHighlightAction</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SmsHighlightAction</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -53,7 +173,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -61,7 +201,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>ViewCustomerPortalUser</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewCustomerPortalUser</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>WebsiteHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>WebsiteHighlightAction</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>WebsiteHighlightAction</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
@@ -106,126 +266,7 @@
     </compactLayouts>
     <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
-    <fieldSets>
-        <fullName>FSC_Banker_Profile_Fin_Acct_Summary</fullName>
-        <description>Personal Banker profile&apos;s Financials tab</description>
-        <displayedFields>
-            <field>FinServ__TotalBankDeposits__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__TotalOutstandingCredit__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__TotalNumberOfFinAccounts__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Financial Accounts Summary</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_Profile_Fin_Acct_Summary</fullName>
-        <description>Client profile&apos;s Financials tab</description>
-        <displayedFields>
-            <field>FinServ__TotalInvestments__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__TotalBankDeposits__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__TotalInsurance__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__WalletShare__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Financial Accounts Summary</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_Profile_Relations_HH_Summary</fullName>
-        <description>Client and household profiles&apos; Relationships tabs</description>
-        <displayedFields>
-            <field>FinServ__TotalFinancialAccounts__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__WalletShare__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__LastInteraction__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__NextInteraction__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Household Summary</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_Relationship_Group_Members</fullName>
-        <description>Client profile&apos;s Relationship Groups table</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>RecordType.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__ClientCategory__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__TotalFinancialAccounts__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Relationship Group Members</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Client_Relationship_Groups</fullName>
-        <description>Client profile&apos;s Relationships tab</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>RecordType.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__LastInteraction__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__TotalFinancialAccounts__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Relationship Groups</label>
-    </fieldSets>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>AccountNumber</fullName>
         <trackFeedHistory>false</trackFeedHistory>
@@ -267,32 +308,10 @@
         <trackFeedHistory>false</trackFeedHistory>
     </fields>
     <fields>
-        <fullName>CustomerPriority__c</fullName>
-        <externalId>false</externalId>
-        <label>Customer Priority</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>High</fullName>
-                    <default>false</default>
-                    <label>High</label>
-                </value>
-                <value>
-                    <fullName>Low</fullName>
-                    <default>false</default>
-                    <label>Low</label>
-                </value>
-                <value>
-                    <fullName>Medium</fullName>
-                    <default>false</default>
-                    <label>Medium</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <fullName>ChannelProgramLevelName</fullName>
+    </fields>
+    <fields>
+        <fullName>ChannelProgramName</fullName>
     </fields>
     <fields>
         <fullName>DandbCompanyId</fullName>
@@ -1749,6 +1768,13 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>IsCustomerPortal</fullName>
+    </fields>
+    <fields>
+        <fullName>IsPartner</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
         <fullName>Jigsaw</fullName>
         <trackFeedHistory>false</trackFeedHistory>
     </fields>
@@ -1778,22 +1804,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
         <trackFeedHistory>false</trackFeedHistory>
     </fields>
     <fields>
-        <fullName>NumberofLocations__c</fullName>
-        <externalId>false</externalId>
-        <label>Number of Locations</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>OperatingHoursId</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>OwnerId</fullName>
         <trackFeedHistory>true</trackFeedHistory>
         <type>Lookup</type>
@@ -1807,78 +1817,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
         <fullName>ParentId</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
-    </fields>
-    <fields>
-        <fullName>PersonAssistantName</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonAssistantPhone</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonBirthdate</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonDepartment</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonDoNotCall</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonEmail</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonHasOptedOutOfEmail</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonHasOptedOutOfFax</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonHomePhone</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonIndividualId</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>PersonLastCURequestDate</fullName>
-    </fields>
-    <fields>
-        <fullName>PersonLastCUUpdateDate</fullName>
-    </fields>
-    <fields>
-        <fullName>PersonLeadSource</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>PersonMailingAddress</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonMobilePhone</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonOtherAddress</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonOtherPhone</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-    </fields>
-    <fields>
-        <fullName>PersonTitle</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
     </fields>
     <fields>
         <fullName>Phone</fullName>
@@ -2075,15 +2013,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
         <fullName>YearStarted</fullName>
         <trackFeedHistory>false</trackFeedHistory>
     </fields>
-    <fields>
-        <fullName>image_link__c</fullName>
-        <externalId>false</externalId>
-        <label>image link</label>
-        <length>32768</length>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Html</type>
-        <visibleLines>25</visibleLines>
-    </fields>
     <listViews>
         <fullName>AllAccounts</fullName>
         <columns>ACCOUNT.NAME</columns>
@@ -2223,734 +2152,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
     </listViews>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypes>
-        <fullName>BusinessRT</fullName>
-        <active>true</active>
-        <label>BusinessRT</label>
-        <picklistValues>
-            <picklist>AccountSource</picklist>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Partner Referral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Phone Inquiry</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Purchased List</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Web</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>CustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__BorrowingHistory__c</picklist>
-            <values>
-                <fullName>Excellent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Limited to No History</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Moderate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poor</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__BorrowingPriorities__c</picklist>
-            <values>
-                <fullName>Build Equity</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Consolidation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Investments</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Large Capital Purchases</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Property Purchase</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Renovations</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__ClientCategory__c</picklist>
-            <values>
-                <fullName>Bronze</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Platinum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Silver</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__CreditRating__c</picklist>
-            <values>
-                <fullName>Excellent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fair</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Good</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poor</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__CustomerSegment__c</picklist>
-            <values>
-                <fullName>Borrower</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Long Term Growth</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mass Affluent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mass Market</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Millennial</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transactional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Wealth Accumulation</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__CustomerType__c</picklist>
-            <values>
-                <fullName>Borrower</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Investor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Relational</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transaction</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__FinancialInterests__c</picklist>
-            <values>
-                <fullName>College Planning</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Energy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fixed Income</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Municipal Bonds</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Retirement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technology</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__IndividualType__c</picklist>
-            <values>
-                <fullName>Group</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Individual</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__InvestmentExperience__c</picklist>
-            <values>
-                <fullName>Experienced</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inexperienced</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Moderately Experienced</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Moderately Inexperienced</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__InvestmentObjectives__c</picklist>
-            <values>
-                <fullName>Aggressive Growth</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Balanced</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Conservative Income</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Growth</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Income</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__KYCStatus__c</picklist>
-            <values>
-                <fullName>Completed - Invalid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Completed - Valid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Queue</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Overdue</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Required</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__LastUsedChannel__c</picklist>
-            <values>
-                <fullName>Branch</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Call Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mobile</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Web</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__MarketingSegment__c</picklist>
-            <values>
-                <fullName>Female Investor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>High Net Worth</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mass Affluent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Millennial</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__PersonalInterests__c</picklist>
-            <values>
-                <fullName>Biking</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>College Basketball</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cooking</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Environment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hiking</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Wine</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__ReviewFrequency__c</picklist>
-            <values>
-                <fullName>Annually</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Quarterly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__RiskTolerance__c</picklist>
-            <values>
-                <fullName>Aggressive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Conservative</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Moderate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__ServiceModel__c</picklist>
-            <values>
-                <fullName>Tier 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tier 2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tier 3</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Deceased</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Deliquent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dormant</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Onboarding</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>FinServ__TimeHorizon__c</picklist>
-            <values>
-                <fullName>Long Term</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium Term</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Short Term</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Industry</picklist>
-            <values>
-                <fullName>Agriculture</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Apparel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Banking</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Biotechnology</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Chemicals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Communications</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Construction</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consulting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Electronics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Energy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Engineering</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Entertainment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Environmental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Food %26 Beverage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Government</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Healthcare</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hospitality</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Insurance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Machinery</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Manufacturing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not For Profit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recreation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Retail</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Shipping</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technology</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telecommunications</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transportation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Utilities</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Ownership</picklist>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Private</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Public</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Subsidiary</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Rating</picklist>
-            <values>
-                <fullName>Cold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hot</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Warm</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Risk_Profile__c</picklist>
-            <values>
-                <fullName>Aggressive %289%2E0%25%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Balanced %285%2E0%25%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Conservative %284%2E0%25%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Growth %287%2E0%25%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Short Term %283%2E0%25%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Very Aggressive %2811%2E0%25%29</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SLA__c</picklist>
-            <values>
-                <fullName>Bronze</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Platinum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Silver</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Type</picklist>
-            <values>
-                <fullName>Channel Partner %2F Reseller</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer - Channel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer - Direct</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Installation Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technology Partner</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>UpsellOpportunity__c</picklist>
-            <values>
-                <fullName>Maybe</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
         <fullName>CommonRecordType</fullName>
         <active>true</active>
         <label>Common</label>
@@ -2985,21 +2186,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>CustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3718,21 +2904,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>CustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
                 <fullName>Excellent</fullName>
@@ -4440,21 +3611,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>CustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5170,21 +4326,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>CustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
                 <fullName>Excellent</fullName>
@@ -5895,21 +5036,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>CustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
                 <fullName>Excellent</fullName>
@@ -6590,82 +5716,5 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
         <searchResultsAdditionalFields>ACCOUNT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
-    <validationRules>
-        <fullName>FinServ__NonPortalUserReferrer</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(
-                NOT(ISBLANK(FinServ__ReferredByUser__c)),
-                NOT(ISPICKVAL(FinServ__ReferredByUser__r.UserType, &apos;Standard&apos;))
-            )</errorConditionFormula>
-        <errorDisplayField>FinServ__ReferredByUser__c</errorDisplayField>
-        <errorMessage>Internal referrers must be internal Salesforce users.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>FinServ__NotAllowingConversionFromIndividual</fullName>
-        <active>false</active>
-        <errorConditionFormula>1!=1</errorConditionFormula>
-        <errorMessage>The Individual record type can&apos;t be changed</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>FinServ__NotAllowingConversionToIndividual</fullName>
-        <active>false</active>
-        <description>Not allowing changing the record type of &quot;non-Individual&quot; to &quot;Individual&quot; record type</description>
-        <errorConditionFormula>1!=1</errorConditionFormula>
-        <errorMessage>The record type can&apos;t be changed to Individual.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>FinServ__SingleReferredByEntryByRecord</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND( 
-                ISBLANK(FinServ__ConversionDateTime__c), 
-                AND( 
-                    NOT(ISBLANK(FinServ__ReferredByUser__c)), 
-                    NOT(ISBLANK(FinServ__ReferredByContact__c)) 
-                ) 
-            )</errorConditionFormula>
-        <errorDisplayField>FinServ__ReferredByContact__c</errorDisplayField>
-        <errorMessage>Enter an internal referrer or an external referrer. You can list only one referrer for each referral.</errorMessage>
-    </validationRules>
-    <webLinks>
-        <fullName>Billing</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>true</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>true</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Billing</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>true</showsLocation>
-        <showsStatus>true</showsStatus>
-        <url>http://www.genwatt.com/genwatt/billing.htm?actname={!Account_Name}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>FinServ__AddMember</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Add Member</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/07k/e?retURL=%2F{!Account.Id}&amp;accid={!Account.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>FinServ__AddRelation</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Add Relation</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/a0J/e?retURL=%2F{!Account.Id}</url>
-    </webLinks>
+    <sharingModel>Private</sharingModel>
 </CustomObject>

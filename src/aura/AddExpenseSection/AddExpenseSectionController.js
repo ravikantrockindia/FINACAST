@@ -42,6 +42,8 @@
                 // alert("From server: " + JSON.stringify(response.getReturnValue()));
                 console.log(JSON.stringify(response.getReturnValue()))
                 if(response.getReturnValue().length==1  && !response.getReturnValue().disabled){
+                                        component.set("v.ExpenseList",response.getReturnValue())
+
                     //alert(component.get("v.LastKey"))
                     //helper.createIncome(component)
                     // component.find("skipNextButton").set("v.label",'Skip')
@@ -168,7 +170,7 @@
                             
                             //  tax.setCustomValidity("Complete this field")
                             console.log(e)
-                            isTaxBenefitValid=tax[i].get("v.validity").valid;
+                           var isTaxBenefitValid=tax[i].get("v.validity").valid;
                             if(!isTaxBenefitValid){
                                 isAllValid=isTaxBenefitValid
                                 tax[i].showHelpMessageIfInvalid();
@@ -179,7 +181,7 @@
                     }
                 }
                 else{
-                     isTaxBenefitValid=tax.get("v.validity").valid;
+                   var  isTaxBenefitValid=tax.get("v.validity").valid;
                             if(!isTaxBenefitValid){
                                 isAllValid=isTaxBenefitValid
                                 tax.showHelpMessageIfInvalid();
@@ -266,7 +268,7 @@
                 var state = response.getState();
                 alert(state)
                 if (state === "SUCCESS") {
-                     
+                     console.log(response.getReturnValue())
                     component.set("v.ExpenseList",response.getReturnValue())
                      $A.util.removeClass(spinner, "slds-show");
             

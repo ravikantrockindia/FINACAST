@@ -3,6 +3,7 @@ public with sharing class AddIncomeController {
      
     @auraEnabled
     public static id getRecordType(String recName){
+        
         return FinacastUtility.getRecordTypeId('Budget__c',recName);    
     } 
     @auraEnabled

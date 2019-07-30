@@ -47,7 +47,11 @@
             if (state === "SUCCESS") {
                 var data = response.getReturnValue();
                 console.log("--->"+JSON.stringify(data));
-                   component.set("v.addGoal",data.goalRecList);
+                   //component.set("v.addGoal",data.goalRecList);
+                var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
+                console.log(list)
+                
+                component.set("v.addGoal",JSON.parse(list));
                 component.set("v.GoalDetails", response.getReturnValue()[0]);
                 component.set("v.tGoal" , data.totalGoal);
                 component.set("v.selectedClient" , data.client.Id);

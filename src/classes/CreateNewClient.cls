@@ -373,10 +373,17 @@ System.debug(JSON.serialize(incomeList));*/
                     expense.Yearly_growth__c=b.growthRate;
                     expense.End_Date__c=b.endDate;
                     expense.Start_Date__c=b.startDate;
-                    expense.Does_contribution_bring_tax_benifit__c=b.isTaxBenefit;
-                    expense.Does_tax_benifit_realize_really__c=b.isMonthly;
+                   System.debug(b.isTaxBenefit);
+                    if(b.isTaxBenefit!=null){
+                       expense.Does_contribution_bring_tax_benifit__c=b.isTaxBenefit;
+
+                    expense.What_of_contribution_bring_tax_benifit__c=b.percentageContribution;  
+                        if(b.isMonthly!=null)
+                                            expense.Does_tax_benifit_realize_really__c=b.isMonthly;
+                        if(b.maxDeduction!=null)
                     expense.May_yearly_tax_deduction_allowed__c=b.maxDeduction;
-                    expense.What_of_contribution_bring_tax_benifit__c=b.percentageContribution;
+                    }
+                   
                     System.debug(JSON.serialize(expense));
                   //  wrapExpense wi=new wrapExpense(b);
                     elist.add(expense);

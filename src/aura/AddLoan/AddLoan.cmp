@@ -45,7 +45,7 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                    	<span class = "highlight">* </span>APR<lightning:inputField fieldName="{!v.namespace+'APR__c'}" aura:id = "apr" variant="label-hidden"/>
+                                    	<span class = "highlight">* </span>APR<lightning:inputField fieldName="FinServ__APY__c" aura:id = "apr" variant="label-hidden"/>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                     	<span class = "highlight">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c" aura:id = "payfreq" variant="label-hidden"></lightning:inputField>

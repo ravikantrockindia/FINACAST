@@ -137,6 +137,10 @@
                 component.set("v.tExp",data.totalExpense);
                 component.set("v.tLoan", data.totalLoan);
                 component.set("v.addGoal",data.goalRecList);
+                 var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
+                console.log(list)
+                
+                component.set("v.addGoal",JSON.parse(list));
                 component.set("v.GoalDetails", response.getReturnValue()[0]);
                 component.set("v.tGoal" , data.totalGoal);
                 component.set("v.LoanRecord" , data.loanRecList);
@@ -575,7 +579,10 @@
                 component.set("v.tLoan", data.totalLoan);
                 component.set("v.tGoal" , data.totalGoal);
                 component.set("v.LoanRecord" , data.loanRecList);
-                component.set("v.addGoal",data.goalRecList);
+                //component.set("v.addGoal",data.goalRecList);
+                 var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
+                console.log(list)
+                component.set("v.addGoal",JSON.parse(list));
                 component.set("v.GoalDetails", response.getReturnValue()[0]);
                 component.set("v.client",data.client); 
                 component.set("v.clientName",data.client); 

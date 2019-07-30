@@ -168,6 +168,7 @@
     },
     
     addLoanButton : function(component, event) {
+        console.log(component.get("v.namespace"));
         var action = component.get("c.getRecordTypeId");
         action.setParams ({
             recName : event.getSource().get("v.name")

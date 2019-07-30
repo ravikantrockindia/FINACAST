@@ -11,16 +11,16 @@
             var state = response.getState();
             console.log(state)
             if (state === "SUCCESS") {
-               // var incomeList=component.get("v.IncomeList");
+                // var incomeList=component.get("v.IncomeList");
                 
                 var a=response.getReturnValue();
                 
                 
-               var expenseList=component.get("v.ExpenseList");
-        
-        expenseList.push(a);
-        component.set("v.ExpenseList", expenseList);
-       console.log(JSON.stringify(expenseList))
+                var expenseList=component.get("v.ExpenseList");
+                
+                expenseList.push(a);
+                component.set("v.ExpenseList", expenseList);
+                console.log(JSON.stringify(expenseList))
                 
                 /* for(var e in component.get("v.IncomeList")){
                     alert(e.index)
@@ -41,17 +41,15 @@
                     }
                 }
         });
-                $A.enqueueAction(action);
-
-       // var data=component.get("v.ExpenseList")
-   
+        $A.enqueueAction(action);
+        
+        // var data=component.get("v.ExpenseList")
+        
         //var a= {"disabled":false,"expense":{"Id":null,"Primary_Owner__c":primaryOwner,"Name":"None","RecordTypeId":recordTypeId,"Yearly_growth__c":"","End_Date__c":"","Start_Date__c":"","Amount__c":"","Does_contribution_bring_tax_benifit__c":false,"Does_tax_benifit_realize_really__c":true,"May_yearly_tax_deduction_allowed__c":"","What_of_contribution_bring_tax_benifit__c":"","Priority__c":"None"},"showSection":false};
-       // 
+        // 
         
     },
-    validateDate:function(component,event,data){
-        
-    },
+
     handleShowToast : function(component, event, helper) {
         component.find('notifLib').showToast({
             "title": "Error!",
@@ -62,8 +60,8 @@
     },
     
     showValidationMessage:function(component){
-          var data=component.get("v.ExpenseList")
-       
+        var data=component.get("v.ExpenseList")
+        
         for (var e in data ){
             console.log('a')
             if(data[e]["expense"]["Does_contribution_bring_tax_benifit__c"]){
@@ -75,10 +73,10 @@
         
     },
     validateDate: function(component){
-                var data=component.get("v.ExpenseList")
-
+        var data=component.get("v.ExpenseList")
+        
         var isAllValid=true;
-         var enddate=component.find('enddate');
+        var enddate=component.find('enddate');
         // var startdate=component.find('startdate');
         if(data.length>1){
             isAllValid = enddate.reduce(function(isValidSoFar, inputCmp){
@@ -168,7 +166,7 @@
         return isAllValid;
         
         
-},
-   
-
+    },
+    
+    
 })

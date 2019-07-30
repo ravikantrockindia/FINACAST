@@ -138,11 +138,11 @@
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col">
                                     <div class = "income-slider" >
-                                        <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="large" 
+                                        <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="medium" 
                                                           max = "{!v.incomeLimit}" onchange = "{!c.getIncomeSliderValue}" variant="label-hidden"/>
                                     </div>
                                 </div>
-                                <div class="slds-col" align = "right" style="margin-top: 10px;">
+                                <div class="slds-col" align = "right" style="margin-top: 14px;">
                                     <lightning:buttonicon variant="bare" iconName="utility:save" size="Large" title="Save" aura:id = "incSlider" value = "{!incomeVar.Id}" 
                                                           name = "income save" onclick="{!c.onClickSaveIcon}"/>  
                                 </div>
@@ -170,11 +170,11 @@
                                 <div class="slds-col">
                                     <div class = "expense-slider" >
                                         <lightning:slider label="{!expenseVar.Name}" aura:id ="expenseSlider" value="{!expenseVar.Amount__c}" 
-                                                          size="large" max = "{!v.expenseLimit}" 
+                                                          size="medium" max = "{!v.expenseLimit}" 
                                                           onchange = "{!c.getExpenseSliderValue}" variant="label-hidden"/>
                                     </div>
                                 </div>
-                                <div class="slds-col" align = "right" style="margin-top: 10px;">
+                                <div class="slds-col"  style="margin-top: 14px;">
                                     <lightning:buttonicon variant="bare" iconName="utility:save" size="Large" title="Save" 
                                                           value = "{!expenseVar.Id}" name = "expense save" onclick="{!c.onClickSaveIcon}"/>  
                                 </div>
@@ -201,7 +201,8 @@
                         <aura:iteration items = "{!v.goal}" var = "goalList" >
                             <lightning:card>
                             <div class = "goal-slider" >
-                                <lightning:slider label="{!goalList.Name}" value="{!goalList.Scenario_Target_Amount__c }" size="Large" max = "{!v.goalAmount}" disabled="true"/>
+                                <lightning:slider label="{!goalList.Name}" value="{!goalList.Scenario_Target_Amount__c }" 
+                                                  size="medium" max = "{!v.goalAmount}" disabled="true"/>
                             </div>
                             <div class="slds-page-header__row" style="margin-top: 5px;">
                                 <div class="slds-size_6-of-12">
@@ -234,9 +235,10 @@
                         <aura:iteration items = "{!v.loan}" var = "loanVar" >
                             <lightning:card>
                             <div class = "loan-slider" >
-                                <lightning:slider label="{!loanVar.Name}" value="{!loanVar.Current_Value__c }" size="Large" max = "{!v.loanLimit}" disabled="true"/>
+                                <lightning:slider label="{!loanVar.Name}" value="{!loanVar.Current_Value__c }" size="Medium" 
+                                                  max = "{!v.loanLimit}" disabled="true"/>
                             </div>
-                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!loanVar.APR__c}" size="large" max = "100" disabled="true"/>
+                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!loanVar.APR__c}" size="Medium" max = "100" disabled="true"/>
                             <div class="slds-page-header__row" style="margin-top: 5px;">
                                 <div class="slds-size_6-of-12">
                                     <lightning:button label = "Edit" name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
@@ -269,9 +271,11 @@
                         <aura:iteration items = "{!v.savings}" var = "savingList" >
                             <lightning:card>
                             <div class = "saving-slider" >
-                                <lightning:slider label="{!savingList.Name}" value="{! savingList.Current_Value__c }" size="Large" max = "{!v.savingLimit}" disabled="true"/>
+                                <lightning:slider label="{!savingList.Name}" value="{! savingList.Current_Value__c }" size="Medium" 
+                                                  max = "{!v.savingLimit}" disabled="true"/>
                             </div>
-                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{! savingList.APY__c}" size="Large" max = "100" disabled="true"/>
+                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{! savingList.APY__c}" size="Medium" 
+                                              max = "100" disabled="true"/>
                             <div class="slds-page-header__row" style="margin-top: 5px;">
                                 <div class="slds-size_6-of-12">
                                     <lightning:button label = "Edit" name = "saving button" value = "{! savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
@@ -411,7 +415,9 @@
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col">                                                 
-                                        <span class = "highlight">* </span>Name<lightning:inputField aura:id = "debtName" fieldName="{! v.namespace + 'Name'}" variant="label-hidden"  />
+                                        <span class = "highlight">* </span>Name<lightning:inputField aura:id = "debtName" 
+                                                                                                     fieldName="{! v.namespace + 'Name'}"
+                                                                                                     variant="label-hidden"  />
                                         <br/>  
                                         <span class = "highlight">* </span>Total Debt Amount ($)<lightning:inputField aura:id = "debtAmount"
                                                                                                                       fieldName = "{! v.namespace + 'Current_Value__c'}" 

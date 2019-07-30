@@ -1,6 +1,6 @@
 ({
     doInit : function(component, event, helper) {
-        
+        console.log('namespace', component.get("v.namespace"))
         const defaultData = {"debugObj":[],"offset":2019,"debtAnalysis":{ "debtPayed": [], "debtItems": 0},"financialHealthAnalysis":[{},{}],"yearlySavings":[],"monthlySavingsTrack":[],"years":0,"goalAnalysis":{},"netWorthAnalysis":{},"monthOffset":{}};
         component.set("v.data2", defaultData); 
         component.set("v.data1", defaultData); 
