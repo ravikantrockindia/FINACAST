@@ -306,7 +306,9 @@ public class NewScenarioApex {
         //insert new scenario
         List<Id> client = new List<Id>();
         try{
-            if(recType == 'scenario') {
+            
+            //case 1: if scenario
+          /* if(recType == 'scenario') {
                 List<Scenario__c> sceneList = [select Name, Client_Id__c from Scenario__c];
                 for(Scenario__c s : sceneList){
                     if(s.Name == recName && s.Client_Id__c ==  clientId) {
@@ -317,13 +319,6 @@ public class NewScenarioApex {
                 // status = false i.e scenario doesn't exist, if scenario is saved, clone income -> amount , expense -> , savings, credit card, loan, goals of the user from budget__c
                 if(status == false) {
                     Account acc = [select id, RecordTypeId from Account where id = : clientId];
-                    /*if(acc.RecordTypeId == houseHoldRecId) {
-                        AccountContactRelation acr  = [Select id,ContactId, Account.Id from AccountContactRelation where AccountId = :clientId AND FinServ__Primary__c = true ]; 
-                        id acrCon = acr.ContactId;
-                        accPrimaryOwn = [select id from Account where FinServ__PrimaryContact__c = :acrCon];
-                        hhStatus = true;
-                        system.debug('aa'+acrCon);
-                    }*/
                     Decimal totalIncome = 0;
                     Scenario__c scene = new Scenario__c();
                     scene.Name = recName;
@@ -333,69 +328,7 @@ public class NewScenarioApex {
                         sceneId = scene.Id;
                     }
                     Account clientName = [select name from Account where id = :clientId];
-                    Scenario__c sceneName = [select name from Scenario__c where id = :sceneId];
-                    
-                    //insert income
-                    //Id recIdIncome = FinacastUtility.getRecordTypeId('Budget__c' , 'Income_Record_Type');
-                    //List<Budget__c> scIncome;
-                 /*   if(hhStatus == false) {
-                        scIncome = [select id, Amount__c from Budget__c where Primary_Owner__c = :clientId AND RecordTypeId = :recIdIncome AND Scenario_Id__c = null];
-                        primaryOwner = clientId;
-                    }
-                    else {
-                        scIncome = [select id, Amount__c from Budget__c where HouseHold__c = :clientId AND RecordTypeId = :recIdIncome AND Scenario_Id__c = null];
-                        primaryOwner = accPrimaryOwn.Id;
-                    }
-                    if(scIncome.size() > 0) {
-                        totalIncome = 0;
-                        for(Budget__c b : scIncome) {
-                            if(b.Amount__c != Null) {
-                                totalIncome += b.Amount__c; 
-                            }
-                            else {
-                                totalIncome += 0;
-                            }
-                        }
-                        Budget__c income = new Budget__c();
-                        income.Name = 'Income'+ clientName.Name + sceneName.Name ;
-                        income.Primary_Owner__c = primaryOwner;
-                        income.RecordTypeId = incomeRecId;
-                        income.Scenario_Id__c = sceneId;
-                        income.Amount__c = totalIncome;
-                        //---> problem is here
-                        insert income;
-                    }*/
-                    
-                    //insert expense
-                   /* Id recIdExpense = FinacastUtility.getRecordTypeId('Budget__c' , 'Expense_Record_Type');
-                    List<Budget__c> scExpense;
-                    if(hhStatus == false) {
-                        scExpense = [select Amount__c from Budget__c where Primary_Owner__c = :clientId AND RecordTypeId = :recIdExpense AND Scenario_Id__c = null]; 
-                        primaryOwner = clientId;
-                    }
-                    else {
-                        scExpense = [select id, Amount__c from Budget__c where HouseHold__c = :clientId AND RecordTypeId = :recIdExpense AND Scenario_Id__c = null];
-                        primaryOwner = accPrimaryOwn.Id;
-                    }
-                    if(scExpense.size() > 0) {
-                        totalIncome = 0;
-                        for(Budget__c b : scExpense) {
-                            if(b.Amount__c != Null) {
-                                totalIncome += b.Amount__c; 
-                            }
-                            else {
-                                totalIncome += 0;
-                            }
-                        }
-                        Budget__c expense = new Budget__c();
-                        expense.Name = 'Expense' + clientName.Name + sceneName.Name;
-                        expense.Primary_Owner__c = primaryOwner;
-                        expense.Scenario_Id__c =sceneId;
-                        expense.RecordTypeId = expenseRecId;
-                        expense.Amount__c = totalIncome;
-                        //problem is here--> no start or end date
-                        insert expense;   
-                    }     */           
+                    Scenario__c sceneName = [select name from Scenario__c where id = :sceneId];                  
                     
                     //insert loan
                     List<Scenario_Debt__c> scLoan;
@@ -489,7 +422,7 @@ public class NewScenarioApex {
                 
                 List<Scenario__c> scList = [select id, name from Scenario__c where Client_Id__c = :clientId];
                 recordList = scList;
-            }
+            }  */
             
             //insert/update scenaro income
             if(recType == 'income save') {
@@ -500,8 +433,8 @@ public class NewScenarioApex {
                     System.debug('inceome init');
                     upsert scIncome;
                 }
-                else {   System.debug('new Income');
-                    
+                else {   
+                    System.debug('new Income');
                     Scenario_Income__c scIncome = new Scenario_Income__c ();
                     scIncome.Client_Id__c = clientId ;
                     scIncome.Scenario_Id__c = sceneId;
@@ -668,7 +601,7 @@ public class NewScenarioApex {
             Scenario_Income__c scIncome = new Scenario_Income__c ();
             scIncome.Client_Id__c = clientId ;
             scIncome.Scenario_Id__c = sceneId;
-            scIncome.Name= 'Income 1';
+            scIncome.Name= name + ' Income 1';
             date startDate = date.today();
             date endDate = startDate.addYears(10);
             scIncome.Start_Date__c = startDate;
@@ -678,7 +611,7 @@ public class NewScenarioApex {
             
             //create expense
             Scenario_Expense__c scExpense = new Scenario_Expense__c ();
-            scExpense.Name = 'Expense 1';
+            scExpense.Name = name + ' Expense 1';
             scExpense.Client_Id__c = clientId ;
             scExpense.Scenario_Id__c = sceneId;
             scExpense.Start_Date__c = startDate;
@@ -690,7 +623,7 @@ public class NewScenarioApex {
             Scenario_Savings__c savings = new Scenario_Savings__c();
             savings.Client_Id__c = clientID;
             savings.Scenario__c = sceneId;
-            savings.Name = 'Saving 1';
+            savings.Name = name + ' Saving 1';
             savings.Current_Value__c = 200000;
             savings.APY__c = 6;
             savings.Start_Date__c= startDate;
@@ -702,7 +635,7 @@ public class NewScenarioApex {
             Scenario_Debt__c loan = new Scenario_Debt__c();
             loan.Client_Id__c = clientID;
             loan.Scenario_Id__c = sceneId;                 
-            loan.Name = 'Loan 1';
+            loan.Name = name + ' Loan 1';
             loan.APR__c = 3;
             loan.Current_Value__c = 500000;
             loan.Frequency__c = 'Monthly';
@@ -716,7 +649,7 @@ public class NewScenarioApex {
             sGoal.Scenario_Target_Amount__c = 60000;
             sGoal.Scenario_Current_Amount__c = 10000;
             sGoal.Scenario_Monthly_Contribution__c =500;
-            sGoal.Name = 'Goal 1';
+            sGoal.Name = name + ' Goal 1';
             sGoal.Scenario__c = sceneId;
 			//sGoal.Tax_Benefit__c = 'false';
             sGoal.Scenario_Goal_Type__c = 'Education';

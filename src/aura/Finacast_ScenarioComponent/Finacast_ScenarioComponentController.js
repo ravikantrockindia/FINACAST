@@ -2,11 +2,11 @@
     
 	doInit : function(component, event, helper) {
         var workspaceAPI = component.find("workspace");
-        var tab=component.get("v.tabName")
-        console.log('tab',tab)
+        var tab = component.get("v.tabName")
+       // console.log('tab',tab)
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             var focusedTabId = response.tabId;
-            console.log('tab id',focusedTabId )
+            //console.log('tab id',focusedTabId )
             workspaceAPI.setTabLabel({
                 label: tab
             });
@@ -18,9 +18,11 @@
         const defaultData = {"debugObj":[],"offset":2019,"debtAnalysis":{ "debtPayed": [], "debtItems": 0},"financialHealthAnalysis":[],"yearlySavings":[],"monthlySavingsTrack":[],"years":0,"goalAnalysis":{},"netWorthAnalysis":{},"monthOffset":{}};
         component.set("v.data2", defaultData);
 		helper.showFieldsValue(component); 
+        //console.log('in init : '+component.get('v.selectedValue'));
 	},
     
      handleSuccess : function(component,event,helper) {
+         //console.log('Goal Saved');
         component.set("v.recordName","");
         component.set("v.debtButtonStatus",false);  
         component.set("v.savingButtonStatus",false);
@@ -47,11 +49,11 @@
             component.set("v.recordId",event.getSource().get("v.value"));
             component.set("v.debtButtonStatus",true);
         }
-        if(component.get("v.recordName") == "credit card button") {
+        /*if(component.get("v.recordName") == "credit card button") {
             component.set("v.isLoan",false);
             component.set("v.recordId",event.getSource().get("v.value"));
             component.set("v.debtButtonStatus",true);
-        }
+        }*/
         if(component.get("v.recordName") == "saving button") {
             component.set("v.recordId",event.getSource().get("v.value"));
             component.set("v.savingButtonStatus", true);
@@ -61,30 +63,37 @@
     
     onDeleteButton : function(component,event,helper) {
         component.set("v.recordName", event.getSource().get("v.name"));
+        //console.log('Scene id in delete' + component.get("v.scene"));
+       // console.log('recANem' + event.getSource().get("v.name"));
         var recordId = event.getSource().get('v.value');
         var action = component.get("c.deleteRecord");
         action.setParams({
-            clientId : component.get("v.cid"),
+           // clientId : component.get("v.cid"),
             sceneId : component.get("v.scene"),
             recId : recordId,
-            recType : component.get("v.recordName")
+          //  recType : component.get("v.recordName")
         });
         action.setCallback(this, function(response) {
-            if(component.get("v.recordName") == "goal button") {
-                component.set("v.goal", response.getReturnValue());
+            if(response.getState() == 'SUCCESS'){
+                if(component.get("v.recordName") == "goal button") {
+                    component.set("v.goal", response.getReturnValue());
+                }
+                if(component.get("v.recordName") == "loan button" ) {
+                    component.set("v.loan", response.getReturnValue()); 
+                }
+                /*if(component.get("v.recordName") == "credit card button") {
+                    component.set("v.creditcard", response.getReturnValue()); 
+                }*/
+                if(component.get("v.recordName") == "saving button") {
+                    component.set("v.savings", response.getReturnValue()); 
+                }
             }
-            if(component.get("v.recordName") == "loan button" ) {
-                component.set("v.loan", response.getReturnValue()); 
+            else{
+                console.log('Not Delted');
             }
-            if(component.get("v.recordName") == "credit card button") {
-                component.set("v.creditcard", response.getReturnValue()); 
-            }
-            if(component.get("v.recordName") == "saving button") {
-                component.set("v.savings", response.getReturnValue()); 
-            }
+            helper.showFieldsValue(component);
         });
         $A.enqueueAction(action);
-        helper.showFieldsValue(component)
     },
     
     //to save income, expense, goal target amount, loan, savings, credit card amount on moving slider
@@ -94,7 +103,7 @@
         if($A.util.isUndefinedOrNull(recId)) {
             recId = "init";
         }
-        console.log(component.get("v.expenseSlider"));
+        //console.log(component.get("v.expenseSlider"));
         var action = component.get("c.saveRecord")
         action.setParams({
             clientId : component.get("v.cid"),
@@ -219,7 +228,7 @@
     
     //get current amount and monthly contribution for scenario goal
     onClickAssociatedAcc : function(component) {
-        console.log('account id: ',component.find("bankAccount").get("v.value"));
+        //console.log('account id: ',component.find("bankAccount").get("v.value"));
         if($A.util.isUndefinedOrNull(component.find("bankAccount").get("v.value")) || component.find("bankAccount").get("v.value") == "" ) {
             component.set("v.balance", "0");
             component.set("v.contribution","0");
@@ -266,6 +275,15 @@
             status3 = 0;
             status4 = 0;
             status5 = 0;
+            console.log(component.find("owner").get("v.value"));
+             console.log(component.find("goalType").get("v.value"));
+            console.log(component.find("goalName").get("v.value"));
+            console.log(component.find("targetAmount").get("v.value"));
+            console.log(component.find("targetDate").get("v.value"));
+            console.log(component.find("bankAccount").get("v.value"));
+            console.log(component.find("currentAmount").get("v.value"));
+            console.log(component.find("goalPriority").get("v.value"));
+            console.log(component.find("contri").get("v.value"));
             if($A.util.isUndefinedOrNull(component.find("owner").get("v.value")) || component.find("owner").get("v.value") == "" ||
                $A.util.isUndefinedOrNull(component.find("goalType").get("v.value")) || component.find("goalType").get("v.value") == "" ||
                $A.util.isUndefinedOrNull(component.find("goalName").get("v.value")) || component.find("goalName").get("v.value") == "" ||
@@ -278,7 +296,7 @@
             {
                 status1 = 1;
                 event.preventDefault();
-                msg = "Please fill mandatory fields.";
+                msg = "Please fill mandatory fields.1";
                 helper.showAlertValidation(component,msg);       
             }
             if(status1 != 1 ) {
@@ -317,12 +335,12 @@
                        $A.util.isUndefinedOrNull(component.find("debtFrequency").get("v.value")) || component.find("debtFrequency").get("v.value") == "" )
                         event.preventDefault();
                     status1 = 1;
-                    msg = "Please fill mandatory fields."
+                    msg = "Please fill mandatory fields.2"
                     helper.showAlertValidation(component,msg); 
                 }
                 event.preventDefault();
                 status2 = 1;
-                msg = "Please fill mandatory fields."
+                msg = "Please fill mandatory fields.3"
                 helper.showAlertValidation(component,msg);       
             }
             
@@ -367,7 +385,7 @@
             {
                 status1 = 1;
                 event.preventDefault();
-                msg = "Please fill mandatory fields."
+                msg = "Please fill mandatory fields.4"
                 helper.showAlertValidation(component,msg); 
             }
             if((component.find("savingName").get("v.value")).length > 180 ) {
@@ -388,9 +406,10 @@
     
     onClickChangeScenario : function(component, event, helper) {
         console.log(component.find('scenarioList').get("v.value"));
-        component.set("v.scene", component.find('scenarioList').get("v.value"));
-        helper.showFieldsValue(component);
+        var s = component.find('scenarioList').get("v.value");
         
+        component.set("v.scene", component.find('scenarioList').get("v.value"));
+        helper.showFieldsValue(component,event);  
     },
     
     hideExampleModal : function(component) {
