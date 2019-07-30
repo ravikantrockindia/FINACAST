@@ -8,6 +8,7 @@
             if( state === 'SUCCESS') {
                 
                 component.set("v.NameSpace", response.getReturnValue());
+                console.log('Namespace of showDemographic' + component.get("v.NameSpace"));
             } 
         });
         $A.enqueueAction(action);

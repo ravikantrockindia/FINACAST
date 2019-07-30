@@ -49,12 +49,13 @@
             if( state === 'SUCCESS') {
                 
                 cmp.set("v.NameSpace", response.getReturnValue());
+                console.log('Namespace of showDemographic' + cmp.get("v.NameSpace"));
             } 
         });
-        console.log('Namespace of showDemographic' + cmp.get("v.NameSpace"));
-
+       // console.log('Namespace of showDemographic' + cmp.get("v.NameSpace"));
+		helper.fetchImage(cmp,event,helper);
         $A.enqueueAction(action);
-        helper.fetchImage(cmp,event,helper);
+        
          
     },
     
