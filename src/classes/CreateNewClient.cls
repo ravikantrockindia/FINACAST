@@ -352,13 +352,14 @@ System.debug(JSON.serialize(incomeList));*/
     @AuraEnabled
     public static List<wrapExpense> saveExpense(String expenses){
         List<wrapExpense> expenseList=new List<wrapExpense>();
-        
+        System.debug('expenses'+expenses);
         try{
             String namespace=NamespaceUtility.returnNamespace();
             String objectName=namespace+'Budget__c';
             Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
             
             List<Budget> expensel = (List<Budget>) JSON.deserialize(expenses, List<Budget>.class);
+            System.debug(expensel);
             // System.debug(incomel);
             //upsert(expensel);
                         List<Budget__c> elist=new List<Budget__c>();
@@ -419,6 +420,7 @@ System.debug(JSON.serialize(incomeList));*/
             if(TEST.isRunningTest())
                 throw new NullPointerException();
         }catch(Exception e){
+            System.debug(e.getStackTraceString() + e.getMessage());
             new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
         }
         return expenseList;

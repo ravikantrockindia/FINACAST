@@ -103,7 +103,7 @@
                                     
                                     <td >
                                         <div class="slds-truncate">
-                                            <lightning:buttonIcon iconName="utility:contract_alt" aura:id="a"   alternativeText="Tax Benefit" size="small" onclick="{!c.sectionButton}" value="{!index}" disabled="{!!i.expense.Does_contribution_bring_tax_benifit__c}" />
+                                            <lightning:buttonIcon iconName="utility:contract_alt" aura:id="a"   alternativeText="Tax Benefit" size="small" onclick="{!c.sectionButton}" value="{!index}" disabled="{!!i.expense.isTaxBenefit}" />
                                             
                                             <lightning:buttonIcon iconName="utility:edit" alternativeText="Edit" size="small" onclick="{!c.editRow}" value="{!index}" disabled="{!!i.disabled}" />
                                             <lightning:buttonIcon iconName="utility:delete" alternativeText="Delete" size="small" onclick="{!c.deleteRow}" value="{!index}"/>
