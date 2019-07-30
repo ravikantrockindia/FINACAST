@@ -79,7 +79,8 @@
             try {
                 var state = response.getState();
             if (state === "SUCCESS") {
-                var data = response.getReturnValue();
+                var list=JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,"")
+               var data = JSON.parse(list);
                 console.log("--->"+JSON.stringify(data));
                 component.set("v.selectedClient" , data.client.Id);
                 for(var e in data.expenseRecList){
