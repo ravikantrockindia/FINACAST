@@ -27,11 +27,11 @@
     
     openHelpBox:function(component,event,helper){
         component.set("v.helpBox",true);
-        console.log(component.get("v.helpBox"));
+        //console.log(component.get("v.helpBox"));
     },
     
     closeHelpBox:function(component,event,helper){
-        console.log("close help box");
+       // console.log("close help box");
         component.set("v.helpBox",false);        
     },
 })

@@ -1,4 +1,6 @@
 <aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name = "totalSavings" type = "Double"/>
     <aura:attribute name = "totalDebts" type="Double"/>

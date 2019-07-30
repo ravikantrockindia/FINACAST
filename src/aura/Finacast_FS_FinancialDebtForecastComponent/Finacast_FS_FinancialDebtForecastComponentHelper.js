@@ -34,14 +34,14 @@
         try{
             //intially set the the values
             var data = component.get("v.data");
-            console.log('offset' + data.offset);
+            //console.log('offset' + data.offset);
             if(!$A.util.isUndefinedOrNull(data.offset)){}
             offset = data.offset;
             component.set("v.year", offset);
             var longtermInterest;
             var shorttermInterest;
             var currentDebtsAnalysisYear = component.get("v.year");
-            console.log('currentDebtsAnalysisYear '+ currentDebtsAnalysisYear);
+            //console.log('currentDebtsAnalysisYear '+ currentDebtsAnalysisYear);
             
             if(!$A.util.isUndefinedOrNull(data.debtAnalysis.yearlyData[currentDebtsAnalysisYear-offset].interestOnTermDebt))  
                 longtermInterest = (parseFloat(data.debtAnalysis.yearlyData[currentDebtsAnalysisYear-offset].interestOnTermDebt));
@@ -245,35 +245,35 @@
         var interestAccumulated = 0;
         var selected = 'All';    
         var currSymbol='$';
-        console.log("inside Debt analysis");
+        //console.log("inside Debt analysis");
         if(selected == 'All') {
             shortTermFlag = parseInt(element.shortTermFlag);
             longTermFlag = parseInt(element.longTermFlag);
             if(longTermFlag > 0) {
-                console.log('longTermFlag',longTermFlag);
+                //console.log('longTermFlag',longTermFlag);
                 messages.push({type:"default",termDebt:true, message:"You are likely to default on one or more of your long term loan payments.",showSeeHow:true});
             } else {
                 messages.push({type:"none", termDebt:true, message:"Congratulations! You are likely to pay off your long term loan commitments on time.",showSeeHow:false});
             }
             interestAccumulated = parseFloat(element.interestOnDebt).toFixed(2);
-            console.log('1')
+           // console.log('1')
             if(shortTermFlag == 0){
-                console.log('2')
+               // console.log('2')
                 
                 messages.push({type:"none",termDebt:false, message:"Congratulations! You are likely to meet all your short term loan commitments in the next 10 years and not incur any interest charge",showSeeHow:false});
             } else if(shortTermFlag == 1) {
-                console.log('3')
+               // console.log('3')
                 
                 messages.push({type:"none",termDebt:false, message:"You are likely to meet the minimum payments on your short term loans and  credit cards",showSeeHow:false});
                 messages.push({type:"interest",termDebt:false, message:"You are likely to incur an interest charge on your short term debt payments amounting to "+ currSymbol +interestAccumulated+" in next 10 years.",showSeeHow:true});
             } else {
-                console.log('4')
+              //  console.log('4')
                 
                 messages.push({type:"default",termDebt:false, message:"You are likely to default on one or more of your credit cards in next 10 years.",showSeeHow:true});                                              
                 messages.push({type:"interest",termDebt:false, message:"In addition you are likely to incur an interest charge amounting to "+currSymbol+interestAccumulated+" in next 10 years for non term debts.",showSeeHow:true});
                 
             }
-            console.log('5')
+            //console.log('5')
             
         } else {
             var element2, element3, element4;
@@ -320,13 +320,13 @@
                 }
             }
         }
-        console.log('messages',messages);
+        //console.log('messages',messages);
         component.set("v.debtStatus", messages);
     },
     
     showDefaultAlertTable:function(component,event){
         var data = component.get("v.data");
-        console.log(data.debtAnalysis);
+      ///  console.log(data.debtAnalysis);
         var offset=data.offset;
         var termD=event.target.name;
         var debtData = new Array();
@@ -339,7 +339,7 @@
             for(var j=0; j<data.debtAnalysis.yearlyData[i].monthlyDebts.length; j++){
                 for(var k=0; k<data.debtAnalysis.yearlyData[i].monthlyDebts[j].length; k++){
                     item = data.debtAnalysis.yearlyData[i].monthlyDebts[j][k];
-                    console.log(item.item.termDebt.toString(), termD)
+                   // console.log(item.item.termDebt.toString(), termD)
                     if(item.item.termDebt.toString()== termD){
                         if(item.item.termDebt){
                             paymentOwed += item.item.paymentDue;
@@ -356,7 +356,7 @@
                 // console.log(item.item.difference)
             }
             if(difference > 0){
-                console.log('ddd')
+              
                 debtData.push({scale:(offset+i), owed: paymentOwed.toFixed(2), possible: (paymentOwed-difference).toFixed(2)});
             }
         }
@@ -369,7 +369,7 @@
     showInterestAlertTable: function(component, event){
         
         var diagnosis = component.get("v.data");
-        console.log(diagnosis.debtAnalysis);
+        //console.log(diagnosis.debtAnalysis);
         var offset=diagnosis.offset;
         var termD=event.target.name;
         var data = new Array();

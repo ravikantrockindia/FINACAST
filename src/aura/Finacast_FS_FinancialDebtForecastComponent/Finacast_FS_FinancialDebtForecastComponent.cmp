@@ -1,5 +1,6 @@
 <aura:component>
     
+    <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name = "year" type="Integer" />
     <aura:attribute name = "shortTermYearlyInterest" type="String[]"/>

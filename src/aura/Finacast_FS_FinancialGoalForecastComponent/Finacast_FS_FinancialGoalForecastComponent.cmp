@@ -1,4 +1,6 @@
 <aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name = "helpBox" type="Boolean"/>
     <aura:attribute name = "goalForecastStatus" type="String[]"/>

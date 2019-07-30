@@ -22,17 +22,17 @@
         var savingsArray=new Array();
         var tempArray = new Array();
          try{
-            console.log("diag",diagnosis.netWorthAnalysis.yearlyData.length);
+           // console.log("diag",diagnosis.netWorthAnalysis.yearlyData.length);
             for(var i=0; i<diagnosis.netWorthAnalysis.yearlyData.length; i++){
                 length = diagnosis.netWorthAnalysis.yearlyData[i].length;
-                console.log("len",length);
+                //console.log("len",length);
                 networthArray.push([diagnosis.netWorthAnalysis.yearlyData[i][length-1]]);
                 // d1.push([(offset+i-0.15), diagnosis.netWorthAnalysis.yearlyData[i][length-1]]);
                 d1.push(offset+i);
                 d2.push(Math.floor(diagnosis.netWorthAnalysis.yearlyData[i][length-1]));
             }
-            console.log("d1",d1);
-            console.log("d2",d2);
+            //console.log("d1",d1);
+            //console.log("d2",d2);
             var chartdata = component.get("v.chartDataObject");
             if(chartdata) {
                 chartData.destroy();
@@ -115,7 +115,7 @@
             length = diagnosis.netWorthAnalysis.yearlyData[currentNetWorthYear-offset].length;
             var profileNetWorth = diagnosis.netWorthAnalysis.yearlyData[currentNetWorthYear-offset][length-1];
             var NetworthMessageJS ="Your net worth for the year "+currentNetWorthYear+" is " + Math.ceil((networthArray[0]));
-            console.log("NWM" + NetworthMessageJS);
+            //console.log("NWM" + NetworthMessageJS);
             component.set("v.NetworthMessage", NetworthMessageJS);
          }
          catch(e){

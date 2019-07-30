@@ -72,7 +72,7 @@
                 }
             }
             
-            console.log("dataSeriesGoal" + JSON.stringify(dataSeriesGoal));
+            //console.log("dataSeriesGoal" + JSON.stringify(dataSeriesGoal));
             
             //create Data and Y-axis labels because data is dynamic
             var datasetArray=[];
@@ -103,14 +103,13 @@
                             dataSeriesGoal[kh].data.push([(offset+j), parseInt(0)]);
                         }
                     }
-                    console.log("inside next for");
                 }
             }
             //make chart Label and set points
             chartLabels = labelsArray;
             
-            console.log("Data Set Array: " + JSON.stringify(datasetArray));
-            console.log("Labels Array: " + JSON.stringify(labelsArray));
+            //console.log("Data Set Array: " + JSON.stringify(datasetArray));
+            ///console.log("Labels Array: " + JSON.stringify(labelsArray));
             
             //Lower Comments 
             var flagAllMeet=true;
@@ -145,7 +144,7 @@
             }
             
             if(flagAllMeet) {
-                console.log("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset));
+               // console.log("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset));
                 controllerGoalForecastStatusArray.push("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset) +".");
             } else {
                 var pos = "";
@@ -165,11 +164,11 @@
                     }
                 }
                 if(goalArrPositive.length>0) {
-                    console.log("positiveArray: " + pos +".");
+                    //console.log("positiveArray: " + pos +".");
                     controllerGoalForecastStatusArray.push(pos);
                 }   
                 if(goalArrNegative.length>0) {
-                    console.log("negativeArray: " + neg + " will not be met on time." );
+                  //  console.log("negativeArray: " + neg + " will not be met on time." );
                     controllerGoalForecastStatusArray.push(neg + " will not be met on time.");
                 }
                 component.set("v.goalForecastStatus", controllerGoalForecastStatusArray);

@@ -15,12 +15,10 @@
         helper.showGoalForecast(component);
     },
     openHelpBox:function(component,event,helper){
-        console.log("help");
         component.set("v.helpBox",true);
     },
     
     closeHelpBox:function(component,event,helper){
-        console.log("close help box");
         component.set("v.helpBox",false);        
     },
 })

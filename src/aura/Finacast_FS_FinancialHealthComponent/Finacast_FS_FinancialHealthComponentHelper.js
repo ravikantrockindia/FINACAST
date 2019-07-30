@@ -12,15 +12,15 @@
         var d1 = new Array();
         var chartLabels = new Array();
         var chartDataSet = new Array();
-        console.log("inside child: " + JSON.stringify(component.get("v.data")));
+        //console.log("inside child: " + JSON.stringify(component.get("v.data")));
         try{
-   			console.log('inside try of fh');
+   			//console.log('inside try of fh');
             data= component.get("v.data");
-            console.log(" data.financialHealthAnalysis " +  data.financialHealthAnalysis);
+            //console.log(" data.financialHealthAnalysis " +  data.financialHealthAnalysis);
             //data = JSON.parse(data);
 
             if($A.util.isUndefinedOrNull(data) != true) {
-                console.log("offset in hs: " + data.offset);
+                //console.log("offset in hs: " + data.offset);
                 offset = data.offset;
                 component.set("v.year", offset);
                 var d1 = new Array();
@@ -35,7 +35,7 @@
                 var diagnosis = data;
                 var tafiScore = diagnosis.financialHealthAnalysis[0];
                 var messages = new Array();
-                console.log('tafi health' + tafiScore);
+                //console.log('tafi health' + tafiScore);
                 if(tafiScore.greenMessage != null && tafiScore.greenMessage != undefined){
                     messages.push({type:0, message:tafiScore.greenMessage});
                     if(tafiScore.greenMessage.indexOf("goal")>0){
@@ -158,7 +158,7 @@
         if(currentNetWorthYear<=(offset+9)){
             component.set("v.score",((parseFloat(chartDataSet[currentNetWorthYear-offset]))));
             component.set("v.year", currentNetWorthYear);
-            console.log(messages);
+            //console.log(messages);
             component.set("v.financialHealthMessage", messages);
         }
         else {
