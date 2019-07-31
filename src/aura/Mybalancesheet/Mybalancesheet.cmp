@@ -47,7 +47,7 @@
                         </div>
                         <aura:if isTrue="{!v.isModalOpen}">
                             
-                            <c:BankAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" NameSpace="{!v.NameSpace}" />
+                            <c:BankAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}" />
                             
                         </aura:if>
                     </aura:if>
@@ -89,7 +89,7 @@
                         </div>
                         <aura:if isTrue="{!v.isModalOpen}">
                             
-                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" NameSpace="{!v.NameSpace}"/>
+                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}"/>
                             
                         </aura:if>
                     </aura:if>
@@ -136,7 +136,7 @@
                         </div>
                         <aura:if isTrue="{!v.isModalOpen}">
                             
-                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" NameSpace="{!v.NameSpace}"/>
+                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}"/>
                             
                         </aura:if>
                     </aura:if>
