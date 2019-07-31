@@ -114,6 +114,13 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
+        <content>GoalsComponent</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -145,18 +152,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <fields>
-        <fullName>APR__c</fullName>
-        <defaultValue>0</defaultValue>
-        <externalId>false</externalId>
-        <label>APR</label>
-        <precision>5</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Percent</type>
-    </fields>
     <fields>
         <fullName>Account_Type__c</fullName>
         <externalId>false</externalId>
@@ -2125,6 +2120,7 @@
     </fields>
     <fields>
         <fullName>Max_yearly_tax_deduction_allowed__c</fullName>
+        <defaultValue>0</defaultValue>
         <externalId>false</externalId>
         <label>Max yearly tax deduction allowed ($ )?</label>
         <precision>18</precision>

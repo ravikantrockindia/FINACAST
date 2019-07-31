@@ -1,6 +1,7 @@
 //-----------------Works on component initialization  --------------------------------------//
 ({
     getmonthlybudget : function(component, event, helper) {
+        console.log('SAY'+component.get('v.namespace'));
         var workspaceAPI = component.find("workspace");
         var tab=component.get("v.tabName")
         console.log('tab',tab)
@@ -78,7 +79,8 @@
             try {
                 var state = response.getState();
             if (state === "SUCCESS") {
-                var data = response.getReturnValue();
+                var list=JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,"")
+               var data = JSON.parse(list);
                 console.log("--->"+JSON.stringify(data));
                 component.set("v.selectedClient" , data.client.Id);
                 for(var e in data.expenseRecList){
@@ -136,6 +138,10 @@
                 component.set("v.tExp",data.totalExpense);
                 component.set("v.tLoan", data.totalLoan);
                 component.set("v.addGoal",data.goalRecList);
+                 var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
+                console.log(list)
+                
+                component.set("v.addGoal",JSON.parse(list));
                 component.set("v.GoalDetails", response.getReturnValue()[0]);
                 component.set("v.tGoal" , data.totalGoal);
                 component.set("v.LoanRecord" , data.loanRecList);
@@ -574,7 +580,10 @@
                 component.set("v.tLoan", data.totalLoan);
                 component.set("v.tGoal" , data.totalGoal);
                 component.set("v.LoanRecord" , data.loanRecList);
-                component.set("v.addGoal",data.goalRecList);
+                //component.set("v.addGoal",data.goalRecList);
+                 var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
+                console.log(list)
+                component.set("v.addGoal",JSON.parse(list));
                 component.set("v.GoalDetails", response.getReturnValue()[0]);
                 component.set("v.client",data.client); 
                 component.set("v.clientName",data.client); 

@@ -148,17 +148,17 @@ return devRecordTypeId;
         return wi;
     }
     @AuraEnabled
-    public static wrapIncome addExpense(String recordId){
+    public static wrapExpense addExpense(String recordId){
         //  List<wrapIncome> incomeList=new List<wrapIncome>();
         
-        wrapIncome wi;
+        wrapExpense wi;
         try{
             //Budget__c b=new Budget__c();
             // Integer index=0;
             
             Budget b=new Budget();
             b.primaryOwnerId=recordId;
-            wi  =new wrapIncome(b,false);
+            wi  =new wrapExpense(b,false);
             // incomeList.add(wi);
             
             if(TEST.isRunningTest())
@@ -247,6 +247,7 @@ return devRecordTypeId;
                     b.isMonthly=expense.Does_tax_benifit_realize_really__c;
                     b.maxDeduction=expense.May_yearly_tax_deduction_allowed__c;
                     b.percentageContribution=expense.What_of_contribution_bring_tax_benifit__c;
+                    b.priority=expense.Priority__c;
                     System.debug(JSON.serialize(b));
                     wrapExpense wi=new wrapExpense(b);
                     expenseList.add(wi);
@@ -351,13 +352,14 @@ System.debug(JSON.serialize(incomeList));*/
     @AuraEnabled
     public static List<wrapExpense> saveExpense(String expenses){
         List<wrapExpense> expenseList=new List<wrapExpense>();
-        
+        System.debug('expenses'+expenses);
         try{
             String namespace=NamespaceUtility.returnNamespace();
             String objectName=namespace+'Budget__c';
             Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
             
             List<Budget> expensel = (List<Budget>) JSON.deserialize(expenses, List<Budget>.class);
+            System.debug(expensel);
             // System.debug(incomel);
             //upsert(expensel);
                         List<Budget__c> elist=new List<Budget__c>();
@@ -373,10 +375,18 @@ System.debug(JSON.serialize(incomeList));*/
                     expense.Yearly_growth__c=b.growthRate;
                     expense.End_Date__c=b.endDate;
                     expense.Start_Date__c=b.startDate;
-                    expense.Does_contribution_bring_tax_benifit__c=b.isTaxBenefit;
-                    expense.Does_tax_benifit_realize_really__c=b.isMonthly;
+                    expense.Priority__c=b.priority;
+                   System.debug(b.isTaxBenefit);
+                    if(b.isTaxBenefit!=null){
+                       expense.Does_contribution_bring_tax_benifit__c=b.isTaxBenefit;
+
+                    expense.What_of_contribution_bring_tax_benifit__c=b.percentageContribution;  
+                        if(b.isMonthly!=null)
+                                            expense.Does_tax_benifit_realize_really__c=b.isMonthly;
+                        if(b.maxDeduction!=null)
                     expense.May_yearly_tax_deduction_allowed__c=b.maxDeduction;
-                    expense.What_of_contribution_bring_tax_benifit__c=b.percentageContribution;
+                    }
+                   
                     System.debug(JSON.serialize(expense));
                   //  wrapExpense wi=new wrapExpense(b);
                     elist.add(expense);
@@ -393,6 +403,7 @@ System.debug(JSON.serialize(incomeList));*/
                     b.name=expense.Name;
                     //b.recordTypeId=incomeRecordTypeId;
                     b.growthRate=expense.Yearly_growth__c;
+                b.priority=expense.Priority__c;
                     b.endDate=expense.End_Date__c;
                     b.startDate=expense.Start_Date__c;
                     b.isTaxBenefit=expense.Does_contribution_bring_tax_benifit__c;
@@ -409,6 +420,7 @@ System.debug(JSON.serialize(incomeList));*/
             if(TEST.isRunningTest())
                 throw new NullPointerException();
         }catch(Exception e){
+            System.debug(e.getStackTraceString() + e.getMessage());
             new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
         }
         return expenseList;

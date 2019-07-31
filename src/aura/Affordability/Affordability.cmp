@@ -4,7 +4,7 @@
     <aura:attribute type="String" name="Name" />
     <aura:attribute type="Double" name="totalAmount" />
     <aura:attribute name= "score" type="Double"/>
-    <aura:attribute name="NameSpace" type="string" default="Finasol__"/>
+    <aura:attribute name="NameSpace" type="string" />
     <aura:attribute type="Double" name="downPayment"  default="0"/>
     <aura:attribute name = "Tabledata" type="Object"/>   
     <aura:attribute name = "displayMonthList" type="list"/>   
@@ -111,10 +111,10 @@
                                                 <label>Future monthly payment</label><lightning:input   value="{!v.installments}"/>
                                             </div>
                                             <div class="slds-size_1-of-2"> 
-                                                <label>Start date</label> <lightning:input  value="{!v.startDate}" />
+                                                <label>Start date</label> <lightning:input type="date"  value="{!v.startDate}" />
                                             </div>
                                             <div class="slds-size_1-of-2"> 
-                                                <label>End date</label><lightning:input  value="{!v.endDate}" />
+                                                <label>End date</label><lightning:input type="date"  value="{!v.endDate}" />
                                             </div>
                                         </div>
                                         

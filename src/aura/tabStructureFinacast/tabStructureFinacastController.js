@@ -185,7 +185,7 @@
     },
     ScenarioHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
-        var namespace= component.get("v.NameSpace");
+        var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:Finacast_ScenarioParentComponent",

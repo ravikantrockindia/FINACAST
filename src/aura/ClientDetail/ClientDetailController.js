@@ -1,7 +1,7 @@
 ({
     //init method
     //
-    Initilise : function(component, event, helper) {
+   /* Initilise : function(component, event, helper) {
         var action=component.get('c.getNamespace');
         
         action.setCallback(this, function(response) {
@@ -14,18 +14,30 @@
             }           
         });
         $A.enqueueAction(action);
-    },
+    },*/
     
     doInit : function(component, event, helper) {    
+         var action1=component.get('c.getNamespace');
         
-        var jsonResponseJs;      
-        console.log('recordId---------'+ component.get('v.recordId')); 
-        console.log('NameSpace---------'+ component.get('v.NameSpace'));
-        var eve = $A.get("e.c:changeclientevent");
+        action1.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                 debugger;
+                component.set("v.NameSpace", response.getReturnValue());
+                var ab =response.getReturnValue();
+                console.log('MOna'+ab);
+                var eve = $A.get("e.c:changeclientevent");
         eve.setParams({"idclient":component.get('v.recordId'),
                        "NameSpace":component.get('v.NameSpace')
                       }); 
         eve.fire();
+            }           
+        });
+        $A.enqueueAction(action1);
+        var jsonResponseJs;      
+        console.log('recordId---------'+ component.get('v.recordId')); 
+        console.log('NameSpace---------'+ component.get('v.NameSpace'));
+        
         console.log("ee"+component.get('v.recordId'));
         var action = component.get("c.getData");
         action.setParams({
@@ -95,7 +107,7 @@
         var jsonResponseJs;
            var selectedClient =   component.find("inf1").get("v.value");
             console.log('fgfgyfgfgy'+ selectedClient);        
-          var eve = $A.get("e.c:changeclientevent");
+          var eve = $A.get("e.Finsol:changeclientevent");
       
 
         eve.setParams({"idclient":selectedClient});

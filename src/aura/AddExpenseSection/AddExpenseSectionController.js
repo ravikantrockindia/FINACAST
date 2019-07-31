@@ -42,6 +42,8 @@
                 // alert("From server: " + JSON.stringify(response.getReturnValue()));
                 console.log(JSON.stringify(response.getReturnValue()))
                 if(response.getReturnValue().length==1  && !response.getReturnValue().disabled){
+                    component.set("v.ExpenseList",response.getReturnValue())
+                    
                     //alert(component.get("v.LastKey"))
                     //helper.createIncome(component)
                     // component.find("skipNextButton").set("v.label",'Skip')
@@ -98,8 +100,8 @@
         
         $A.util.addClass(spinner, "slds-show");
         var expenses=new Array();
-                component.set("v.disabled",true);
-
+        component.set("v.disabled",true);
+        
         var data=component.get("v.ExpenseList")
         
         
@@ -158,53 +160,61 @@
             console.log('a')
             if(data[e]["expense"]["isTaxBenefit"]){
                 data[e]["showSection"]=true;
-                var tax=component.find("taxbenefit")
-                //  var taxbenefit=tax.get("v.value")
-                if(tax.length>1)  {
-                    for(var i=0;i<tax.length;i++){
-                        var taxbenefitname=tax[i].get("v.name")
+                var maxDeduction=data[e]["expense"]["maxDeduction"]
+                 if(!$A.util.isUndefinedOrNull(maxDeduction) || maxDeduction==""){
+                data[e]["expense"]["maxDeduction"]=0;
+                 }
+            }
+        }
+        component.set("v.ExpenseList",data)
+        if(!$A.util.isUndefinedOrNull(tax)){
+            var tax=component.find("taxbenefit")
+            //  var taxbenefit=tax.get("v.value")
+            if(tax.length>0)  {
+                for(var i=0;i<tax.length;i++){
+                    var taxbenefitname=tax[i].get("v.name")
+                    
+                    if(taxbenefitname.includes(e.toString())){
                         
-                        if(taxbenefitname.includes(e.toString())){
-                            
-                            //  tax.setCustomValidity("Complete this field")
-                            console.log(e)
-                            isTaxBenefitValid=tax[i].get("v.validity").valid;
-                            if(!isTaxBenefitValid){
-                                isAllValid=isTaxBenefitValid
-                                tax[i].showHelpMessageIfInvalid();
-                            }
-                            
-                            
+                        //  tax.setCustomValidity("Complete this field")
+                        console.log(e)
+                        var isTaxBenefitValid=tax[i].get("v.validity").valid;
+                        if(!isTaxBenefitValid){
+                            isAllValid=isTaxBenefitValid
+                            tax[i].showHelpMessageIfInvalid();
                         }
+                        
+                        
                     }
                 }
-                else{
-                     isTaxBenefitValid=tax.get("v.validity").valid;
-                            if(!isTaxBenefitValid){
-                                isAllValid=isTaxBenefitValid
-                                tax.showHelpMessageIfInvalid();
-                            }
+            }
+            else{
+                var  isTaxBenefitValid=tax.get("v.validity").valid;
+                if(!isTaxBenefitValid){
+                    isAllValid=isTaxBenefitValid
+                    tax.showHelpMessageIfInvalid();
                 }
             }
         }
         
         
-        component.set("v.ExpenseList",data)
+        
+        //  component.set("v.ExpenseList",data)
         
         var isDateValid=helper.validateDate(component)
         if(!isDateValid){
             isAllValid=isDateValid
         }
-          for (var e in data ){
-                //data[e]["disabled"]=true;
-                //console.log(data[e]["disabled"]) 
-                console.log('dataa',JSON.stringify(data[e]["expense"]))
-                expenses.push(data[e]["expense"]);
-                
-            }
-            console.log('expenseList',JSON.stringify(component.get("v.ExpenseList")))
-            console.log(JSON.stringify(data))
-            //component.set("v.ExpenseList",data)
+        for (var e in data ){
+            //data[e]["disabled"]=true;
+            //console.log(data[e]["disabled"]) 
+            console.log('dataa',JSON.stringify(data[e]["expense"]))
+            expenses.push(data[e]["expense"]);
+            
+        }
+        console.log('expenseList',JSON.stringify(component.get("v.ExpenseList")))
+        console.log(JSON.stringify(expenses))
+        //component.set("v.ExpenseList",data)
         /*isAllValid = component.find('taxbenefit').reduce(function(isValidSoFar, inputCmp){
             //display the error messages
             console.log("abc")
@@ -212,8 +222,8 @@
             //check if the validity condition are met or not.
             return isValidSoFar && inputCmp.checkValidity();
         },true);*/
-        
-        /*if(data.length>1){
+            
+            /*if(data.length>1){
             isAllValid = component.find('taxbenefit').reduce(function(isValidSoFar, inputCmp){
                 //display the error messages
                 console.log("abc")
@@ -250,53 +260,53 @@
             
             
         }*/
-        console.log(isAllValid)
-        
-        console.log('valid',isAllValid)
-        if(isAllValid){
-         
-            var action=component.get("c.saveExpense");
-            action.setParams({ expenses : JSON.stringify(expenses)
-                             });
+            console.log(isAllValid)
             
-            // Create a callback that is executed after 
-            // the server-side action returns
-            action.setCallback(this, function(response) {
+            console.log('valid',isAllValid)
+            if(isAllValid){
                 
-                var state = response.getState();
-                alert(state)
-                if (state === "SUCCESS") {
-                     
-                    component.set("v.ExpenseList",response.getReturnValue())
-                     $A.util.removeClass(spinner, "slds-show");
-            
-            $A.util.addClass(spinner, "slds-hide");
+                var action=component.get("c.saveExpense");
+                action.setParams({ expenses : JSON.stringify(expenses)
+                                 });
+                
+                // Create a callback that is executed after 
+                // the server-side action returns
+                action.setCallback(this, function(response) {
                     
-                }
-                else if (state === "INCOMPLETE") {
-                    // do something
-                }
-                    else if (state === "ERROR") {
-                         component.set("v.disabled",false)
-              $A.util.removeClass(spinner, "slds-show");
-            
-            $A.util.addClass(spinner, "slds-hide");
-                        var errors = response.getError();
-                        if (errors) {
-                            if (errors[0] && errors[0].message) {
-                                console.log("Error message: " + 
-                                            errors[0].message);
-                            }
-                        } else {
-                            console.log("Unknown error");
-                        }
+                    var state = response.getState();
+                    alert(state)
+                    if (state === "SUCCESS") {
+                        console.log(response.getReturnValue())
+                        component.set("v.ExpenseList",response.getReturnValue())
+                        $A.util.removeClass(spinner, "slds-show");
+                        
+                        $A.util.addClass(spinner, "slds-hide");
+                        
                     }
-            });
-            $A.enqueueAction(action);
-        }
+                    else if (state === "INCOMPLETE") {
+                        // do something
+                    }
+                        else if (state === "ERROR") {
+                            component.set("v.disabled",false)
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) {
+                                    console.log("Error message: " + 
+                                                errors[0].message);
+                                }
+                            } else {
+                                console.log("Unknown error");
+                            }
+                        }
+                });
+                $A.enqueueAction(action);
+            }
         else{
-                    component.set("v.disabled",true);
-
+            component.set("v.disabled",false);
+            
             $A.util.removeClass(spinner, "slds-show");
             
             $A.util.addClass(spinner, "slds-hide");
@@ -411,7 +421,7 @@
                 component.set("v.ExpenseList",expenses)
                 if(expenses.length==0){
                     //    component.set("v.LastKey",0)
-                    helper.createIncome(component)
+                    helper.createExpense(component)
                     
                     component.find("skipNextButton").set("v.label",'Skip')
                     

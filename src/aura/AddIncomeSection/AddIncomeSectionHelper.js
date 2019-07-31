@@ -57,8 +57,11 @@
         
         var isAllValid=true;
         var enddate=component.find('enddate');
+        console.log(JSON.stringify(enddate))
+        console.log(enddate.length)
+        
         // var startdate=component.find('startdate');
-        if(data.length>1){
+        if(enddate.length>0){
             isAllValid = enddate.reduce(function(isValidSoFar, inputCmp){
                 //display the error messages
                 // console.log("abc")
@@ -98,7 +101,7 @@
         var startdate=component.find('startdate');
         
         
-        if(data.length>1){
+        if(enddate.length>0){
             for(var i=0;i<enddate.length;i++){
                 var edate=enddate[i].get("v.value")
                 var edateName=enddate[i].get("v.name")
