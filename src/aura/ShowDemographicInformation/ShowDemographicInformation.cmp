@@ -137,7 +137,7 @@
         <div class="slds-gutters individual-information">
             <div class="slds-col slds-size_12-of-12">
                 <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Account">  
-                    <h2> {!v.simpleRecord.Name}'s Personal Information {!v.NameSpace}</h2>
+                    <h2> {!v.simpleRecord.Name}'s Personal Information </h2>
                     <lightning:outputField fieldName="{!v.NameSpace+'Date_Of_Birth__c'}"/>
                     <hr/>
                     <lightning:outputField fieldName="BillingState"/>
