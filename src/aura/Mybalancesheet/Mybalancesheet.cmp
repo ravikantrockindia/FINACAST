@@ -12,7 +12,7 @@
     <aura:attribute type="id" name="recordId"/>
     <aura:attribute name = "selectedClientchild" type = "String"/>
     <aura:attribute name = "col" type="Boolean" default="False"/>
-    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="False"/>
     <aura:attribute name="isTab" type="boolean" default="False"/>
     <aura:attribute name="NemeofSaving" type="String" />
     <aura:attribute name="Tid" type="String"/>

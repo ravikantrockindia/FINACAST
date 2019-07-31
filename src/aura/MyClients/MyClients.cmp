@@ -24,6 +24,7 @@
     <aura:handler name="CancelEvent" event="c:CreateNewClientEvent" action="{!c.doInit}"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:handler event="c:Fina_HideFilterEvent" action="{!c.addFilter}"/>
+    <aura:attribute name = "namespace" type = "String" />
     <aura:handler event="c:Fina_FilterInformationEvent" action="{!c.handleFilterEvent}"/>
     <div class="slds-box slds-theme_default clients_panel cBudget slds-show">
         <div class="slds-page-header__row">

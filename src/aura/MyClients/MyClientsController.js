@@ -1,5 +1,27 @@
 ({
     doInit : function(component, event, helper) { 
+        var action=component.get('c.getNamespace');
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                component.set("v.namespace", response.getReturnValue())
+                console.log(component.get("v.namespace"));
+                
+                
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message: " + 
+                                    errors[0].message);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action); 
         
         component.set("v.SearchText", null );
         var columns = [];
@@ -171,12 +193,17 @@
             
         });       
         evt.fire(); */
+        var namespace = component.get("v.namespace");
+        if(namespace == ""){
+            namespace = 'c';
+        }
+        console.log('namespace--->'+namespace+"__CreateNewClient");
         var workspaceAPI = component.find("workspace");
         workspaceAPI.openTab({
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": "c__CreateNewClient"
+                    "componentName": namespace+"__CreateNewClient"
                 },
                 "state": {}
             },

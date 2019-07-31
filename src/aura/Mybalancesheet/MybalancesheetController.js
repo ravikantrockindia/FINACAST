@@ -148,7 +148,7 @@
     },
     openModel: function(component, event, helper) {
         // Set isModalOpen attribute to true
-        alert(component.get("v.recordId"))
+       // alert(component.get("v.recordId"))
         component.set("v.isModalOpen", true);
     },
     closeModel: function(component, event, helper) {
