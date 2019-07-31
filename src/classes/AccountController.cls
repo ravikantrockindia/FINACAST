@@ -32,6 +32,14 @@ public class AccountController {
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
     }
+    
+     @AuraEnabled 
+    public static String getNamespace(){
+        
+        return NamespaceUtility.returnNamespace();
+        
+    }
+    
     @AuraEnabled
     public static ResultWrapper ColumnSet1(String whereClause)
     {
