@@ -1,6 +1,6 @@
 ({
     doInit : function(component, event, helper) { 
-        var action=component.get('c.getNamespace');
+      /*  var action=component.get('c.getNamespace');
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
@@ -21,7 +21,7 @@
                 }
             }
         });
-        $A.enqueueAction(action); 
+        $A.enqueueAction(action); */
         
         component.set("v.SearchText", null );
         var columns = [];
@@ -203,7 +203,7 @@
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": namespace+"__CreateNewClient"
+                    "componentName": "Finsol__CreateNewClient"
                 },
                 "state": {}
             },
