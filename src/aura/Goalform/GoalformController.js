@@ -50,11 +50,11 @@
     onload:function(component,event,helper){
          var namespace = component.get("v.namespace");
    var recUi = event.getParam("recordUi");
-               component.set("v.currentBal", recUi.record.fields["Start_Value__c"].value)
+               component.set("v.currentBal", recUi.record.fields[namespace+"Start_Value__c"].value)
           var selectedAccount=component.get("v.selectedAccount");
         console.log(selectedAccount);
         if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
-            		component.set("v.selectedAccount",recUi.record.fields["Associated_Account__c"].value);
+            		component.set("v.selectedAccount",recUi.record.fields[namespace+"Associated_Account__c"].value);
             console.log(recUi.record.fields["Associated_Account__c"].value)
         }
         console.log(component.get("v.selectedAccount"));
@@ -63,7 +63,7 @@
             component.find("amount").set("v.value",recUi.record.fields["FinServ__TargetValue__c"].value)
              var currentBal= component.get("v.currentBal");
         if($A.util.isUndefinedOrNull(currentBal)||currentBal=="")
-            component.set("v.currentBal",recUi.record.fields["Start_Value__c"].value)
+            component.set("v.currentBal",recUi.record.fields[namespace+"Start_Value__c"].value)
 },
     
     getCurrentAmt : function(component, event, helper)
