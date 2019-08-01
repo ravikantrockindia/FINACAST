@@ -146,10 +146,32 @@
             cmp.set('v.activeSectionsMessage', "Open sections: " + openSections.join(', '));
         }
     },
-    openModel: function(component, event, helper) {
+    openModel1: function(component, event, helper) {
         // Set isModalOpen attribute to true
        // alert(component.get("v.recordId"))
         component.set("v.isModalOpen", true);
+        var sav=event.getSource().get("v.value");
+      //  alert('sav' + sav);
+        component.set("v.CurrentOpening",sav);
+        
+    },
+    openModel2: function(component, event, helper) {
+        // Set isModalOpen attribute to true
+       // alert(component.get("v.recordId"))
+        component.set("v.isModalOpen", true);
+        var sav=event.getSource().get("v.value");
+       // alert('sav  ' + sav);
+        component.set("v.CurrentOpening",sav);
+        
+    },
+    openModel3: function(component, event, helper) {
+        // Set isModalOpen attribute to true
+       // alert(component.get("v.recordId"))
+        component.set("v.isModalOpen", true);
+        var sav=event.getSource().get("v.value");
+      //  alert('sav  ' + sav);
+        component.set("v.CurrentOpening",sav);
+        
     },
     closeModel: function(component, event, helper) {
         // Set isModalOpen attribute to true
