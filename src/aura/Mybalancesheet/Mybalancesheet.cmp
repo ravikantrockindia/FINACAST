@@ -17,6 +17,7 @@
     <aura:attribute name="NemeofSaving" type="String" />
     <aura:attribute name="Tid" type="String"/>
     <aura:attribute name="CurrentOpening" type="String"/>
+    <aura:attribute name="recordTypeIds" type="List"/>
     <aura:registerEvent name="rTid" type="c:AccountReport"/>
     <aura:handler name="change" value="{!v.isModalOpen}" action="{!c.doInit}"/>
     <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>
@@ -43,14 +44,12 @@
                     <aura:if isTrue="{!v.isTab}">
                         <div class="slds-clearfix">
                             <div class="slds-float_right">
-                                <lightning:button label="Add Manual Account" value="1" aura:id="savingAccount" variant="" onclick="{! c.openModel1 }"/>
+                                <lightning:button label="Add Manual Account" value="1" aura:id="savingAccount" variant="" onclick="{! c.openModel }"/>
                             </div>
                         </div>
-                        <aura:if isTrue="{!v.CurrentOpening == '1'}">
-                          <aura:if isTrue="{!v.isModalOpen}">  
-                            <c:BankAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}" />
-                            </aura:if>
-                        </aura:if>
+                        <aura:if isTrue="{!and(v.CurrentOpening=='1', v.isModalOpen)}">
+                            <c:BankAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}" recordTypeIds="{!v.recordTypeIds}"/>
+                         </aura:if>
                     </aura:if>
                     <aura:if isTrue="{!not(empty(v.saving))}" >
                         <aura:iteration items="{!v.saving}" var="s" >
@@ -85,13 +84,11 @@
                     <aura:if isTrue="{!v.isTab}">
                         <div class="slds-clearfix">
                             <div class="slds-float_right">
-                                <lightning:button label="Add credit Account" value="2" aura:id="creditAccount" variant="" onclick="{! c.openModel2 }"/>
+                                <lightning:button label="Add credit Account" value="2" aura:id="creditAccount" variant="" onclick="{! c.openModel }"/>
                             </div>
                         </div>
-                        <aura:if isTrue="{!v.CurrentOpening == '2'}">>
-                            <aura:if isTrue="{!v.isModalOpen}">  
-                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}"/>
-                            </aura:if>
+                        <aura:if isTrue="{!and(v.CurrentOpening=='2', v.isModalOpen)}">
+                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}" recordTypeIds="{!v.recordTypeIds}"/>
                         </aura:if>
                     </aura:if>
                     <aura:if isTrue="{!not(empty(v.credit))}">
@@ -132,13 +129,11 @@
                     <aura:if isTrue="{!v.isTab}">
                         <div class="slds-clearfix">
                             <div class="slds-float_right">
-                                <lightning:button label="Add Manual Account" variant="" value="3"  aura:id="savingAccount" onclick="{! c.openModel3 }"/>
+                                <lightning:button label="Add Manual Account" variant="" value="3"  aura:id="savingAccount" onclick="{! c.openModel }"/>
                             </div>
                         </div>
-                        <aura:if isTrue="{!v.CurrentOpening=='3'}">>
-                            <aura:if isTrue="{!v.isModalOpen}">  
-                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}"/>
-                            </aura:if>
+                        <aura:if isTrue="{!and(v.CurrentOpening=='3', v.isModalOpen)}">
+                            <c:DebtAccountModal accountRecordId="{!v.recordId}" showInModal="{!v.isModalOpen}" namespace="{!v.NameSpace}" recordTypeIds="{!v.recordTypeIds}"/>
                         </aura:if>
                     </aura:if>
                     <aura:if isTrue="{!not(empty(v.loan))}">
@@ -160,8 +155,7 @@
             <aura:set attribute="else">
                 <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
                     <lightning:accordionSection name="C" class="accord" label="novalue">
-                        <lightning:card title=""> No Value Present
-                        </lightning:card>
+                        <lightning:card title=""> No Value Present</lightning:card>
                     </lightning:accordionSection>
                 </lightning:accordion> 
             </aura:set>

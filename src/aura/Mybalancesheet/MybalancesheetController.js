@@ -29,10 +29,11 @@
                     component.set('v.loan', g.financialAccountList['2']);
                     var netWorth = g.balanceList['0'] - (g.balanceList['1'] + g.balanceList['2']);
                     component.set('v.netWorth', netWorth);
+                    component.set('v.recordTypeIds', g.recordTypes);
                     
                 }
                 else {
-                    alert("Create Data"); }
+                }
             } 
             //end set callback
             catch(e)
@@ -146,50 +147,18 @@
             cmp.set('v.activeSectionsMessage', "Open sections: " + openSections.join(', '));
         }
     },
-    openModel1: function(component, event, helper) {
-        // Set isModalOpen attribute to true
-       // alert(component.get("v.recordId"))
-        component.set("v.isModalOpen", true);
+    openModel: function(component, event, helper) {
         var sav=event.getSource().get("v.value");
-      //  alert('sav' + sav);
         component.set("v.CurrentOpening",sav);
-        
-    },
-    openModel2: function(component, event, helper) {
-        // Set isModalOpen attribute to true
-       // alert(component.get("v.recordId"))
-        component.set("v.isModalOpen", true);
-        var sav=event.getSource().get("v.value");
-       // alert('sav  ' + sav);
-        component.set("v.CurrentOpening",sav);
-        
-    },
-    openModel3: function(component, event, helper) {
-        // Set isModalOpen attribute to true
-       // alert(component.get("v.recordId"))
-        component.set("v.isModalOpen", true);
-        var sav=event.getSource().get("v.value");
-      //  alert('sav  ' + sav);
-        component.set("v.CurrentOpening",sav);
-        
-    },
-    closeModel: function(component, event, helper) {
-        // Set isModalOpen attribute to true
-        component.set("v.isModalOpen", false);
+        component.set("v.isModalOpen","true");
     },
     handleAccount:function(component,event,helper){
           
-        var ravi= event.getSource();
-        var f=ravi.get("v.value");
-       // var clientId=component.get('v.recordId');
-        component.set("v.Tid",f);
-         var x=component.get("v.Tid");
-        console.log('value of X' +x);
-        console.log("value of Financial Account"+f);
+        var eventSource= event.getSource();
+        var txnId=eventSource.get("v.value");
+        component.set("v.Tid",txnId);
         var cmpEvent = component.getEvent("rTid");
-        cmpEvent.setParams( { "eTid" :  x} );
-        
+        cmpEvent.setParams( { "eTid" :  txnId} );
         cmpEvent.fire();
-        
     }   
 })
