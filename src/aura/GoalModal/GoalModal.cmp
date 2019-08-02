@@ -1,6 +1,6 @@
 <aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" controller="GoalTypeSelectionController"><br/><br/><br/><br/> 
 	<aura:attribute name = "namespace" type = "String"/>
-    <aura:handler name="init" value="{!this}" action="{!c.init}"/> 
+  <!--  <aura:handler name="init" value="{!this}" action="{!c.init}"/> -->
     <aura:attribute name="client" type="String"/>    
     <aura:attribute name="showModalwedding" type="Boolean" default="false" />
     <aura:attribute name="showModaleducation" type="Boolean" default="false" />
@@ -131,7 +131,7 @@
         </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
     
     <aura:if isTrue="{!v.isRetirement}">
-                 <c:GoalformRetirement   namespace="{!v.namespace}" PrimaryOwner = "{!v.client}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" />               
+                 <c:GoalformRetirement   namespace="{!v.namespace}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" />               
             </aura:if>
     
     <aura:if isTrue="{!v.isNonRetirement}">

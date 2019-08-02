@@ -115,6 +115,7 @@
 
             }  
             console.log(component.get("v.isRetirement"));
+            debugger;
             component.set("v.editrecidGoal",event.getSource().get("v.value"));            
         });             
         $A.enqueueAction(action); 

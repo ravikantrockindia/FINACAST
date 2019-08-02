@@ -848,6 +848,9 @@ public class ClientDetailApex {
          @AuraEnabled
         public String clientid;
         
+         @AuraEnabled
+        public List<RecordType> recordTypes;
+        
     } //end of Wrapper class 
     
     @auraEnabled
@@ -855,14 +858,9 @@ public class ClientDetailApex {
         WrapperClass wrapperObj = new WrapperClass();
         try{
         //set initial Client
-       
             Account acc = [Select id, Name from account where id=:id  limit 1];
             initialClient = acc.Name;
             initialClientId = acc.id;
-           
-                 
-
-        
         //Store Household status here        
         Account a = [select id, Name, RecordType.DeveloperName from Account where id =: initialClientId];
         if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
@@ -871,15 +869,16 @@ public class ClientDetailApex {
         if(test.isRunningTest()){
             isHousehold = true;
         }
-          wrapperObj.financialAccountList = ClientDetailApex.getAccounts(initialClientId);
+        wrapperObj.financialAccountList = ClientDetailApex.getAccounts(initialClientId);
         wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
         wrapperObj.balanceList = tempList;
         wrapperObj.isportalUser = isportalEnabled;
         wrapperObj.firstClient = initialClient;
         wrapperObj.clientid = initialClientId;
-         ClientDetailApex.createClientData(initialClientId);
+        wrapperObj.recordTypes = [select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
+        ClientDetailApex.createClientData(initialClientId);
         if(!test.isRunningTest()){
-        wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
+       		wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
         }
                 System.debug('Client Data: ' + clientData);
         System.debug('Response: ' + wrapperObj.responseData);

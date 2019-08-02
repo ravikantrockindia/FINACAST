@@ -59,7 +59,11 @@
         console.log(selectedAccount);
         if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
             		component.set("v.selectedAccount",recUi.record.fields[namespace+"Associated_Account__c"].value);
+<<<<<<< HEAD
           //  console.log(recUi.record.fields["Associated_Account__c"].value)
+=======
+            console.log(recUi.record.fields["Associated_Account__c"].value)
+>>>>>>> 73bd3330de3277c42e9ed880a53c3127707c08e4
         }
         console.log(component.get("v.selectedAccount"));
         var targetValue= component.find("amount").get("v.value");
@@ -69,6 +73,10 @@
         if($A.util.isUndefinedOrNull(currentBal)||currentBal=="")
             component.set("v.currentBal",recUi.record.fields[namespace+"Start_Value__c"].value)
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 73bd3330de3277c42e9ed880a53c3127707c08e4
 },
     
     getCurrentAmt : function(component, event, helper)

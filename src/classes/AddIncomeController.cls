@@ -102,6 +102,7 @@ public with sharing class AddIncomeController {
         String goalSum ;
         wrapIncome wrapobj;
         Date stdate = date.newInstance(date.today().year(), date.today().month(), 1);
+        system.debug('stdate'+stdate);
         Date enddate = date.newInstance(date.today().year(), date.today().month(), date.daysInMonth(date.today().year(), date.today().month()));     
         Account acc  = new Account();
         Budget__c bg = new Budget__c();
@@ -164,8 +165,9 @@ public with sharing class AddIncomeController {
                                from Financial_Account_Transactions__r
                                where FinServ__TransactionDate__c = THIS_MONTH)
                               from FinServ__FinancialAccount__c 
-                              where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id];
-               goalRecord = [Select id,FinServ__PrimaryOwner__c , Name, FinServ__PrimaryOwner__r.name,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c from FinServ__FinancialGoal__c where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
+                              where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) /*and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)*/) and FinServ__PrimaryOwner__c =:acc.id];
+                system.debug('loanRecord'+loanRecord);
+                goalRecord = [Select id,FinServ__PrimaryOwner__c , Name, FinServ__PrimaryOwner__r.name,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c from FinServ__FinancialGoal__c where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
                 
                 
             }     
