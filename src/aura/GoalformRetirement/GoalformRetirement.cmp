@@ -68,6 +68,7 @@
                                               objectApiName = "FinServ__FinancialGoal__c"
                                               recordId = "{!v.retirementGoalId}" 
                                               onsubmit = "{!c.saveButton}"
+                                              onsuccess="{!c.handleSuccess}"
                                               
                                               > 
                         
@@ -164,7 +165,7 @@
                             <div class="button" align ="rionght">
                                 
                                 <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
-                                <lightning:button variant="brand" type="onsubmit" label="Submit"   />
+                                <lightning:button variant="brand" type="submit" label="Submit"   />
                                 
                             </div>
                         </footer>

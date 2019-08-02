@@ -65,15 +65,15 @@
             action.setCallback(this, function(a) {
                 var state  = a.getState();
                 console.log('state',state);
-               // var goals=a.getReturnValue()
-                   var list=JSON.stringify(a.getReturnValue()).replace(/Finsol__/g, "")
-                   var goals=JSON.parse(list);
+                // var goals=a.getReturnValue()
+                var list=JSON.stringify(a.getReturnValue()).replace(/Finsol__/g, "")
+                var goals=JSON.parse(list);
                 console.log('goaldata',JSON.stringify(goals))
                 debugger;
                 component.set("v.selectedAccount", goals.Associated_Account__c)
                 component.set("v.isTaxDeduction", goals.Does_the_contribution_bring_tax_benefit__c)
                 console.log(component.get("v.isTaxDeduction"))
-                  component.set("v.isMonthly", goals.Do_tax_benefits_realize_monthly__c)
+                component.set("v.isMonthly", goals.Do_tax_benefits_realize_monthly__c)
                 
             }); 
             $A.enqueueAction(action); 
@@ -523,10 +523,12 @@
         {
             
             helper.currentAmtError(component, event, helper,msg);
+            event.preventDefault();
+            return;
             
         }
         
-        else
+        /*  else
         {
             var action = component.get("c.saveData");
             action.setParams
@@ -568,10 +570,13 @@
                 
             } );
             $A.enqueueAction(action);   
-        }
+        }*/
     },
     
-    
+    handleSuccess:function(component,event,helper){
+        helper.hideExampleModal(component);
+        
+    },
     changeMonthlyContribution : function(component, event, helper)
     {
         
@@ -645,15 +650,15 @@
         console.log('handle')
         if(event.target.id=="yesCheck"){
             component.set("v.isTaxDeduction",true);
-             component.find("taxcontri").set("v.value","");
-            component.find("maxdeduction").set("v.value","")
+            component.find("taxcontri").set("v.value",0);
+            component.find("maxdeduction").set("v.value",0)
             
         }
         else if(event.target.id=="noCheck"){
-                       component.find("taxcontri").set("v.value","");
-            component.find("maxdeduction").set("v.value","")
+            component.find("taxcontri").set("v.value",0);
+            component.find("maxdeduction").set("v.value",0)
             component.set("v.isTaxDeduction",false);
- 
+            
             
         }
     },
