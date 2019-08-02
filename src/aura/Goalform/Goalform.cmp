@@ -63,7 +63,7 @@
                                     
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         
-                                        <span class = "highlight">* </span>Primary Owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c" onchange = "{!c.changeEntity}" variant="label-hidden" disabled="true"/><br/>
+                                        <span class = "highlight">* </span>Primary Owner<lightning:inputField aura:id = "owner" fieldName="FinServ__PrimaryOwner__c" variant="label-hidden" disabled="true"/><br/>
                                         <span class = "highlight">* </span>Financial Goal Name<lightning:inputField aura:id = "name" fieldName="Name" required = "true"/><br/>
                     
                                         <span class = "highlight">* </span>How much do you want to save? ($)<lightning:input aura:id = "amount" onchange="{!c.getChangeMonthlyConti}" label="How much do you want to save? ($)" ></lightning:input><br/>
