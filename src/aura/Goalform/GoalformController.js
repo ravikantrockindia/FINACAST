@@ -68,10 +68,8 @@
              var currentBal= component.get("v.currentBal");
         if($A.util.isUndefinedOrNull(currentBal)||currentBal=="")
             component.set("v.currentBal",recUi.record.fields[namespace+"Start_Value__c"].value)
-<<<<<<< HEAD
             }
-=======
->>>>>>> 3face6dd976e74d5db3707b4770aca09736b1616
+
 },
     
     getCurrentAmt : function(component, event, helper)
