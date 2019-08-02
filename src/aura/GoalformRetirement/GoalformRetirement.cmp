@@ -134,7 +134,7 @@
                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;"> 
                                             <span class = "highlight">* </span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="{!v.namespace+'What_of_contribution_bring_tax_benefit__c'}" aura:id="taxcontri"/><br/>
                                             Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
-                                            <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" value="{!v.isMonthly}" class="slds-hidden"/>     <br/>
+                                            <lightning:inputField fieldName ="{!v.namespace+'Do_tax_benefits_realize_monthly__c'}" value="{!v.isMonthly}" class="slds-hidden"/>     <br/>
                                         </div>
                                         <div class="slds-col   slds-size_1-of-2" style="color:grey;">
                                             Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" aura:id="maxdeduction" />
