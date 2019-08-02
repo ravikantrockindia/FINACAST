@@ -1,5 +1,5 @@
 ({
-    Acclist : function(component, event, helper) {
+    /* Acclist : function(component, event, helper) {
         
         var action = component.get("c.dample"); 
         var clientId=component.find("owner").get("v.value");
@@ -19,11 +19,12 @@
         });
         $A.enqueueAction(action);
         
-    },
+    },*/
     
-    doInit : function(component,event,helper)
+    doInit : function(component,event,helper) 
     {
-         var namespace = component.get("v.namespace");
+        console.log(component.get("v.retirementGoalId") )
+        var namespace = component.get("v.namespace");
         console.log('namespace value'+namespace);
         var clientId=component.find("owner").get("v.value");
         var clientId=component.get("v.client");
@@ -33,44 +34,52 @@
         component.set("v.isMonthly",false);
         var gId = component.get("v.retirementGoalId");
         console.log("dgd");
-       if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
+        if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
         {
-         console.log("the value is name" + clientId);
+            console.log("the value is name" + clientId);
             var action = component.get("c.dample");
             var associated = component.find("associateAcc").get("v.value");
-        console.log('saanjfnjnjnj'+associated);
+            console.log('saanjfnjnjnj'+associated);
             action.setParams({
                 clientId : clientId
-              });
+            });
             
             action.setCallback(this, function(a) {
                 var state  = a.getState();
                 console.log('state',state);
-                var goals=a.getReturnValue();
-                console.log(goals);
-                component.set("v.accountList",goals);
+                var accountList=a.getReturnValue();
+                console.log(accountList);
+                component.set("v.accountList",accountList);
             }); 
             $A.enqueueAction(action); 
-             }
-			
+        }
+        
         if(!($A.util.isUndefinedOrNull(gId) || gId == ""))
         {
             var action = component.get("c.getGoalData");
             action.setParams({
                 goalId : component.get("v.retirementGoalId")
             });
-
-        
-         action.setCallback(this, function(a) {
+            
+            
+            action.setCallback(this, function(a) {
                 var state  = a.getState();
                 console.log('state',state);
-                var goals=a.getReturnValue();
-             
+               // var goals=a.getReturnValue()
+                   var list=JSON.stringify(a.getReturnValue()).replace(/Finsol__/g, "")
+                   var goals=JSON.parse(list);
+                console.log('goaldata',JSON.stringify(goals))
+                debugger;
+                component.set("v.selectedAccount", goals.Associated_Account__c)
+                component.set("v.isTaxDeduction", goals.Does_the_contribution_bring_tax_benefit__c)
+                console.log(component.get("v.isTaxDeduction"))
+                  component.set("v.isMonthly", goals.Do_tax_benefits_realize_monthly__c)
+                
             }); 
             $A.enqueueAction(action); 
-
+            
         }
-    
+        
         var action = component.get("c.getDate");
         action.setParams({ 
             clientId : clientId
@@ -81,7 +90,7 @@
             console.log('resp: ',response.getReturnValue());
         });
         $A.enqueueAction(action); 
-        },
+    },
     
     
     
@@ -94,7 +103,7 @@
         helper.showExampleModal(component);
     },
     
-     nextButton : function(component, event, helper) {
+    nextButton : function(component, event, helper) {
         
         var status1 = 0;
         var status2 = 0;
@@ -147,7 +156,7 @@
                 status2 = 1;
             }
             
-             var roiSplit = rateofreturn.split(".");
+            var roiSplit = rateofreturn.split(".");
             var iRateSplit = iRate.split(".");
             console.log("iRateSplit.length",iRateSplit.length);
             if(iRateSplit.length == 1 )
@@ -208,7 +217,7 @@
                 status6 = 1;
             }
             
-           
+            
             
             if(roiSplit.length == 1)
             {
@@ -246,10 +255,10 @@
             }
             
             
-           
+            
         }
         
-            
+        
         if($A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(n) || n == "" ||  $A.util.isUndefinedOrNull(dateofbirth) || dateofbirth == "" || $A.util.isUndefinedOrNull(afterRetire) || afterRetire == "" || $A.util.isUndefinedOrNull(iRate) || iRate == "" || $A.util.isUndefinedOrNull(rAge) || rAge == "" || $A.util.isUndefinedOrNull(retireincome) || retireincome == "" || $A.util.isUndefinedOrNull(rateofreturn) || rateofreturn == "" )
         {
             status9 = 0;
@@ -260,7 +269,7 @@
         {
             status9 = 1;
         }
-       
+        
         if($A.util.isUndefinedOrNull(priowner) || priowner == "" ){
             console.log("null value present owner")
         }
@@ -269,7 +278,7 @@
         console.log(status1,status2,status3,status4,status5,status6,status7,status8,status9);
         if(status1 == 1 && status2 == 1 && status3 == 1 && status4 == 1 && status5 == 1 && status6 == 1 && status7 == 1 && status8 == 1 && status9 == 1)
         {
-             var getDate = [];
+            var getDate = [];
             var birthDate = component.find("birth").get("v.value");
             getDate = birthDate.split("-");
             console.log('getdate'+getDate);
@@ -277,14 +286,14 @@
             var retirementYear = component.find("retireAge").get("v.value");
             console
             var getYear = Number(getDate[0]);
-             console.log('getYear'+getYear);
+            console.log('getYear'+getYear);
             var acclist = component.get("v.Acclist");
             var rYear = Number(getDate[0])+Number(retirementYear);
             console.log('rYear'+rYear);
             getDate[1]=getDate[1].length==1?"0"+getDate[1]:getDate[1];        
             var d = rYear+"-"+getDate[1]+"-01";
             console.log('dddd'+d);
-              component.find("rDate").set("v.value",d);
+            component.find("rDate").set("v.value",d);
             var today = new Date();
             console.log('today'+today);
             var recordId=component.get("v.retirementGoalId");
@@ -299,45 +308,45 @@
                 helper.showAlertLessDate();
             }
             
-           
-            if(rYear > (today.getFullYear()))
             
+            if(rYear > (today.getFullYear()))
+                
             {
                 
-            
                 
-        var birthDate =component.find("birth").get("v.value");
-        var retirementYear = component.find("retireAge").get("v.value");
-        var income = component.find("annualIncome").get("v.value");
-        console.log("income",income);
-        var inflation = component.find("Rate").get("v.value");
-        console.log("inflation",inflation);
-        var interest = component.find("rateReturn").get("v.value");
-        console.log("interest",interest);
-        var after = component.find("afterRetirement").get("v.value");
-        console.log("after",after); 
                 
-        
-        var action = component.get("c.getAmountMonth");
-        action.setParams({
-            desIncome : income,
-            inflationRate : inflation,
-            interestRate : interest, 
-            yearsToLive : after, 
-            retireAge : retirementYear,
-            birth : birthDate
-        });
-        action.setCallback(this, function(response) {
-             //component.set("v.amtMonth",response.getReturnValue());
-               component.find("amount").set("v.value", response.getReturnValue().retirementAmount);
-             
-            console.log("value: ",response.getReturnValue());
-        });
-        $A.enqueueAction(action);
+                var birthDate =component.find("birth").get("v.value");
+                var retirementYear = component.find("retireAge").get("v.value");
+                var income = component.find("annualIncome").get("v.value");
+                console.log("income",income);
+                var inflation = component.find("Rate").get("v.value");
+                console.log("inflation",inflation);
+                var interest = component.find("rateReturn").get("v.value");
+                console.log("interest",interest);
+                var after = component.find("afterRetirement").get("v.value");
+                console.log("after",after); 
+                
+                
+                var action = component.get("c.getAmountMonth");
+                action.setParams({
+                    desIncome : income,
+                    inflationRate : inflation,
+                    interestRate : interest, 
+                    yearsToLive : after, 
+                    retireAge : retirementYear,
+                    birth : birthDate
+                });
+                action.setCallback(this, function(response) {
+                    //component.set("v.amtMonth",response.getReturnValue());
+                    component.find("amount").set("v.value", response.getReturnValue().retirementAmount);
+                    
+                    console.log("value: ",response.getReturnValue());
+                });
+                $A.enqueueAction(action);
             }
             
         }
-     },
+    },
     
     amtAndContri : function(component, event, helper)
     {
@@ -347,7 +356,7 @@
         var interestRate = component.find("rateReturn").get("v.value");
         var retDate =component.find("rDate").get("v.value");
         var curAmt = component.find("currVal").get("v.value");
-      
+        
         console.log("interest",interestRate);
         console.log("associated",associated);
         console.log("years",years);
@@ -433,15 +442,15 @@
         }
     },
     
-       
+    
     
     cancelButton : function(component, event, helper) {
-  
+        
         
         helper.hideExampleModal(component);
     },
     
-     saveButton : function(component, event, helper) {
+    saveButton : function(component, event, helper) {
         
         var recordId=component.get("v.retirementGoalId");
         console.log("record Id", recordId);
@@ -491,9 +500,9 @@
         var isTaxDeduction=component.get("v.isTaxDeduction");
         console.log("isTaxDeduction",isTaxDeduction, typeof isTaxDeduction);
         var taxcontri=0;
-
+        
         var maxdeduction=0;
-      
+        
         var ismonthly=true;
         console.log("ismonthly",ismonthly, typeof ismonthly);
         if(isTaxDeduction){
@@ -505,12 +514,12 @@
             
             var ismonthly=component.get("v.isMonthly")
             console.log("ismonthly",ismonthly, typeof ismonthly);
-            }
+        }
         
         
         var msg = "Please fill mandatory fields"
         if ($A.util.isUndefinedOrNull(acc) || acc == "" || $A.util.isUndefinedOrNull(amt) || amt == "" || 
-            ((start == "" || $A.util.isUndefinedOrNull(start)) && start != 0)|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
+            ((start == "" || $A.util.isUndefinedOrNull(start)))|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
         {
             
             helper.currentAmtError(component, event, helper,msg);
@@ -543,7 +552,7 @@
                 isMonthly: ismonthly.toString()
                 
                 
-                           });
+            });
             action.setCallback(this, function(response) {
                 var state = response.getState();
                 console.log('state',state);
@@ -588,7 +597,7 @@
             var installment = component.find("goalContri").get("v.value");
             console.log("installment ",installment);
             
-             var months = (target-current)/installment;
+            var months = (target-current)/installment;
             console.log("months: ",months);
             var getYear = months/12;
             console.log("newYear ",getYear);
@@ -603,7 +612,7 @@
             component.set("v.newTarDate", newDate);
             
             
-        
+            
             
         }
         if(event.getSource().get("v.value") ==  0 || event.getSource().get("v.value") == "") {
@@ -636,14 +645,19 @@
         console.log('handle')
         if(event.target.id=="yesCheck"){
             component.set("v.isTaxDeduction",true);
+             component.find("taxcontri").set("v.value","");
+            component.find("maxdeduction").set("v.value","")
             
         }
         else if(event.target.id=="noCheck"){
+                       component.find("taxcontri").set("v.value","");
+            component.find("maxdeduction").set("v.value","")
             component.set("v.isTaxDeduction",false);
+ 
             
         }
     },
-     handleIsMonthly: function(component, event){
+    handleIsMonthly: function(component, event){
         
         if(event.target.id=="yesMonthly"){
             
@@ -653,7 +667,8 @@
         else if(event.target.id=="noMonthly"){
             
             component.set("v.isMonthly",false);
+            
         }
     },
-   
+    
 })
