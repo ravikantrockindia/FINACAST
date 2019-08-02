@@ -4,7 +4,7 @@
         alert("recordId" +component.get("v.accountRecordId"))
     },*/
    
-    init : function(component , event,helper){
+    /*init : function(component , event,helper){
         
         var getName = event.getSource().get("v.client.Name"); 
         console.log('ggggggggggggggggggg'+getName);
@@ -220,7 +220,7 @@
             });  
         }
         $A.enqueueAction(action);
-    },
+    },*/
     
     closePopUp : function(component,event,helper)
     {
