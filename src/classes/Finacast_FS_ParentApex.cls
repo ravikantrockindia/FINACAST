@@ -572,13 +572,15 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                     }                   
                 } //end of if
                 
-                expList = [Select id, Name, Amount__c, Start_Date__c, End_Date__c,Does_contribution_bring_tax_benifit__c, Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c from Budget__c where Primary_Owner__c =: clientId 
+                expList = [Select id, Name, Amount__c, Start_Date__c, End_Date__c,Does_contribution_bring_tax_benifit__c, 
+                           Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c 
+                           from Budget__c where Primary_Owner__c =: clientId 
                            and recordType.developerName = 'Expense_Record_Type']; 
                 //set expenses here    
                 System.debug('Expense List: ' + expList);
                 double monthlyExpenses = 0;
                 //set expenses here    
-                if(expList!=null && expList.size() > 0){
+                if(expList != null && expList.size() > 0){
                     Integer j=1;
                     for(Budget__c e: expList) {
                         if(e.Amount__c != Null){
@@ -601,10 +603,11 @@ FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTra
                         setData +='\'percentContribution\':'+e.What_of_contribution_bring_tax_benifit__c+',';
                         setData +='\'maxLimit\':'+e.May_yearly_tax_deduction_allowed__c+',';
                         setData +='\'isMonthly\':'+e.Does_tax_benifit_realize_really__c+',';
-                        setData +='}';
+                        setData +='},';
                         ++j;
                     }//end for
                 }//end if
+                
                 else {
                     String startdate = '1/2018';
                     String enddate = '12/2100';
