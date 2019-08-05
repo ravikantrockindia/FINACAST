@@ -67,6 +67,14 @@ public with sharing class AddIncomeController {
            
         return transactionList;
     }
+    
+     @auraEnabled   
+    public static FinServ__FinancialAccount__c loanRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);      
+        FinServ__FinancialAccount__c LoanRec = [select Id, Do_you_get_tax_benefit_from_interest_pay__c,Do_tax_benefits_realize_monthly__c from FinServ__FinancialAccount__c where id = :clientId ];
+        System.debug('clientId-sassa-->'+LoanRec);
+        return LoanRec;
+    }
    
     //get summarychart loan transaction
     //
@@ -542,7 +550,7 @@ public with sharing class AddIncomeController {
                 Integer stMonth = monthMap.get(mon); 
             Integer yea = Integer.valueOf(tempList[1].trim());
            Date st = date.newInstance(yea,stMonth,1);
-        
+        system.debug('aaaaaaaa'+st);
         return st;
     }
     

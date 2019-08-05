@@ -143,8 +143,8 @@ public class NewScenarioApexTest {
         NewScenarioApex.getUserScenarios(ac.id, 'init');
         NewScenarioApex.getUserScenarios(hac.id, 'init');
         
-        NewScenarioApex.saveRecord('Loan', ac.Id, 'scenario', sc.Id, 1200.00, 1000,scIncome.Id);
- 		NewScenarioApex.saveRecord('debt', ac.Id, 'expense save', sc.Id, 1200.00, 1000,scIncome.Id);
+        NewScenarioApex.saveRecord( ac.Id, 'scenario', sc.Id, 1200.00, 1000,scIncome.Id);
+ 		NewScenarioApex.saveRecord( ac.Id, 'expense save', sc.Id, 1200.00, 1000,scIncome.Id);
        // NewScenarioApex.saveRecord('Loan', ac.Id, 'income save', sc.Id, 1200.00, 1000,scIncome.Id);
        // NewScenarioApex.saveRecord('Loan', ac.Id, 'income', sc.Id, 1200.00, 1000,scIncome.Id);
        // NewScenarioApex.saveRecord('Loan', 'hac.Id', 'scenario', 'sc.Id', 1200.00, 1000,scIncome.Id);
