@@ -114,20 +114,19 @@
             recordId : recId
         });
         action.setCallback(this, function(response) {
+            console.log('response after save button: ' + JSON.stringify(response.getReturnValue()));
             if(recTypeName == "scenario") {
                 helper.showFieldsValue(component);
             }
             if(recTypeName == "income save") {
                 component.set("v.income", response.getReturnValue());
             }
-            if(recTypeName == "expense save") {
-                console.log('expeses success');
-                console.log('resExp: ' + response.getReturnValue());
+            if(recTypeName == "expense save") {;
                 component.set("v.expense", response.getReturnValue());
             }
+                    helper.showFieldsValue(component);
         });
         $A.enqueueAction(action);
-        helper.showFieldsValue(component);
     },
     
     //set value of attribute on changing the slider for income, expense, loan , saving, credit cards
@@ -427,6 +426,7 @@
     },
     
     onScenarioSaveIcon : function(component) {
+        try{
         if(($A.util.isUndefinedOrNull(component.find("sceneName").get("v.value"))) != true && component.find("sceneName").get("v.value") !="" )
         {
             var action = component.get("c.saveRecord");
@@ -451,7 +451,8 @@
                 }
             });
             $A.enqueueAction(action);
-        }   
+        }  }
+        catch(e){console.log('Inside Save: ' + e);}
     },
     
     onDoneScenarioButton : function(component) {
@@ -459,7 +460,7 @@
     },
     
     //new method
-    onNewScenarioSaveSuccess : function(component) {
+    onNewScenarioSaveSuccess : function(component, event, helper) {
         console.log('Scenario Saving');
         if(($A.util.isUndefinedOrNull(component.find("sceneName").get("v.value"))) != true && component.find("sceneName").get("v.value") !="" )
         {
@@ -477,6 +478,7 @@
                     component.set("v.isAddScenarioActive", true);
                     component.set("v.scenario", response.getReturnValue());
                     component.set("v.scene",component.get("v.scenario[0].Id"));
+                    helper.showFieldsValue(component);
                 }
                 else{
                     console.log('failed');

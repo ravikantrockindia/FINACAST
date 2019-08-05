@@ -162,6 +162,7 @@
                             <div class="slds-col" align ="right" >
                                 <b> {!v.expenseAmount} </b>   
                             </div>
+                            
                         </div>
                     </div>       
                     <div class="slds-box slds-theme_default">

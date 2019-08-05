@@ -267,8 +267,9 @@ public class NewScenarioApex {
             
         }//end catch
         
-        catch(Exception e){  FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString()); }
-        
+        catch(Exception e){  
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }   
         return wrapper;  
     }//end init
     
@@ -294,136 +295,16 @@ public class NewScenarioApex {
     
     //to save the scenario to  Scenario__c object -----> calling js function: onScenarioSaveIcon()
     @AuraEnabled
-    public static List<sObject> saveRecord(String recName, String clientId, String recType, String sceneId, Decimal incomeAmount, Decimal expenseAmount, String recordId) {
+    public static List<sObject> saveRecord( String clientId, String recType, String sceneId, Decimal incomeAmount, Decimal expenseAmount, String recordId) {
         
         System.debug('SceneId in Save method:' + sceneId);
-        Boolean status = false;
-        Boolean hhStatus = false;
-        List<sObject> recordList = new List<sObject>();
-        Account accPrimaryOwn;							
-        String primaryOwner;
+       // Boolean status = false;
+       // Boolean hhStatus = false;
+        List<sObject> recordList = new List<sObject>();					
         
         //insert new scenario
         List<Id> client = new List<Id>();
         try{
-            
-            //case 1: if scenario
-          /* if(recType == 'scenario') {
-                List<Scenario__c> sceneList = [select Name, Client_Id__c from Scenario__c];
-                for(Scenario__c s : sceneList){
-                    if(s.Name == recName && s.Client_Id__c ==  clientId) {
-                        status = true;				// scenario exist with the same name for the client
-                    }
-                }
-                
-                // status = false i.e scenario doesn't exist, if scenario is saved, clone income -> amount , expense -> , savings, credit card, loan, goals of the user from budget__c
-                if(status == false) {
-                    Account acc = [select id, RecordTypeId from Account where id = : clientId];
-                    Decimal totalIncome = 0;
-                    Scenario__c scene = new Scenario__c();
-                    scene.Name = recName;
-                    scene.Client_Id__c = clientId;
-                    insert scene; 
-                    if(sceneId == null) {
-                        sceneId = scene.Id;
-                    }
-                    Account clientName = [select name from Account where id = :clientId];
-                    Scenario__c sceneName = [select name from Scenario__c where id = :sceneId];                  
-                    
-                    //insert loan
-                    List<Scenario_Debt__c> scLoan;
-                    List<Scenario_Debt__c> newLoanList = new  List<Scenario_Debt__c>();
-                    if(hhStatus == false) {
-                        scLoan = [select Name,Current_Value__c,Payment_Amount__c,Scenario_Id__c, Client_Id__c,APR__c,Frequency__c from Scenario_Debt__c where Client_Id__c = :clientId  AND Scenario_Id__c = null ];
-                        primaryOwner = clientId;
-                    }
-                    else {
-                        scLoan = [select Name,id,Current_Value__c,Payment_Amount__c,Scenario_Id__c,Client_Id__c, APR__c,Frequency__c from Scenario_Debt__c where Client_Id__c = :clientId  AND Scenario_Id__c = null ];    
-                        primaryOwner = accPrimaryOwn.Id;
-                    }
-                    if(scLoan.size() > 0) {
-                        for(Scenario_Debt__c sc : scLoan) {
-                            Scenario_Debt__c loan = new Scenario_Debt__c();
-                            loan.Client_Id__c = primaryOwner;
-                            loan.Scenario_Id__c = sceneId;                 
-                            loan.Name = sc.Name;
-                            loan.APR__c = sc.APR__c;
-                            loan.Current_Value__c = sc.Current_Value__c;
-                            loan.Frequency__c = sc.Frequency__c;
-                            loan.Payment_Amount__c = sc.Payment_Amount__c;
-                            //loan.Account_Type__c = 'Loan';
-                            newLoanList.add(loan);
-                        }
-                        insert newLoanList;
-                    }
-                    
-
-                    //insert savings
-                    List<Scenario_Savings__c> scSaving;
-                    Map <String, Scenario_Savings__c> bankAcc = new Map <String, Scenario_Savings__c>();			// to map scenario savings with scenario financial goals
-                    
-                    if(hhStatus == false) {
-                        scSaving = [select name, Current_Value__c,Client_Id__c,Scenario__c, APY__c, End_Date__c from Scenario_Savings__c where Client_Id__c = :clientId AND Scenario__c = null];
-                        primaryOwner = clientId;
-                    }
-                    else {
-                        scSaving = [select name, Current_Value__c, Client_Id__c,Scenario__c,APY__c, End_Date__c from Scenario_Savings__c where Client_Id__c = :clientId AND Scenario__c = null];
-                        primaryOwner = accPrimaryOwn.Id;
-                    }
-                    if(scSaving.size() > 0) {
-                        for(Scenario_Savings__c sc : scSaving) {
-                            Scenario_Savings__c savings = new Scenario_Savings__c();
-                            savings.Client_Id__c = primaryOwner;
-                            savings.Scenario__c = sceneId;
-                            savings.Name = sc.Name;
-                            savings.Current_Value__c = sc.Current_Value__c;
-                            savings.APY__c = sc.APY__c;
-                            savings.End_Date__c = sc.End_Date__c;
-                            bankAcc.put(sc.Id,savings);
-                        }
-                        insert bankAcc.values();
-                    }
-                    
-                    //insert goals
-                    List<Scenario_Goal__c> scGoal;
-                    List<Scenario_Goal__c> newgoalList = new List<Scenario_Goal__c>();
-                    //if(hhStatus == false) {
-                        scGoal = [select Name, Scenario_Start_Date__c,Scenario_Goal_Priority__c,Scenario_Current_Amount__c,Scenario_Monthly_Contribution__c, Associated_Account__c, Scenario_Target_Amount__c, Scenario_Target_Date__c from Scenario_Goal__c where Client_Id__c = :clientId AND Scenario__c = null ]; 
-                        primaryOwner = clientId;
-                    //}
-                    //else {
-                      //  scGoal = [select Name, RecordType.DeveloperName, Start_Value__c,Goal_Priority__c,Required_Monthly_Saving__c, Associated_Account__c, FinServ__TargetValue__c, FinServ__TargetDate__c from Scenario_Goal__c where FinServ__Household__c = :clientId AND Scenario_Id__c = null ]; 
-                        //primaryOwner = accPrimaryOwn.Id; 
-                    //}
-                    if(scGoal.size() > 0) {
-                        List<String> goalType = new List<String>();
-                        for(Scenario_Goal__c g :scGoal) {
-                            Scenario_Goal__c goals = new  Scenario_Goal__c();
-                            //goalType = g.RecordType.DeveloperName.split('RecordType');
-                            goals.Client_Id__c = primaryOwner;
-                            goals.Scenario__c = sceneId;
-                            goals.Scenario_Goal_Type__c = g.Scenario_Goal_Type__c;
-                            goals.Name = g.Name;
-                            goals.Scenario_Target_Amount__c = g.Scenario_Target_Amount__c;
-                            goals.Scenario_Start_Date__c = g.Scenario_Start_Date__c; 
-                            date startDate = date.today();
-					        date endDate = startDate.addYears(10);
-                            goals.Scenario_Target_Date__c = endDate;
-                            goals.Scenario_Current_Amount__c = g.Scenario_Current_Amount__c;
-                            goals.Scenario_Goal_Priority__c = g.Scenario_Goal_Priority__c;
-                            goals.Scenario_Monthly_Contribution__c = g.Scenario_Monthly_Contribution__c;
-                            goals.Scenario_Goal_Type__c = goalType[0]; 
-                            goals.Associated_Account__c = bankAcc.get(g.Associated_Account__c).Id;
-                            newgoalList.add(goals);
-                        }
-                        insert newgoalList;
-                    }    
-                }
-                
-                List<Scenario__c> scList = [select id, name from Scenario__c where Client_Id__c = :clientId];
-                recordList = scList;
-            }  */
-            
             //insert/update scenaro income
             if(recType == 'income save') {
                 System.debug('inside inceome');
@@ -447,7 +328,7 @@ public class NewScenarioApex {
                     scIncome.Amount__c = incomeAmount;
                     insert scIncome;
                 }
-                List<Budget__c> sceneIncomeList = [select Id, Name, Amount__c from Budget__c where Scenario_Id__c = :sceneId];
+                List<Scenario_Income__c> sceneIncomeList = [select Id, Name, Amount__c from Scenario_Income__c where Scenario_Id__c = :sceneId];
                 recordList = sceneIncomeList;
             }
             
@@ -585,7 +466,7 @@ public class NewScenarioApex {
     }
     
     @auraEnabled
-    public static UserAndScenarios saveNewScenario(String name, String clientId){
+    public static void saveNewScenario(String name, String clientId){
         try{
             Account clientAccount = [select name from Account where id = :clientId];
             
@@ -661,7 +542,7 @@ public class NewScenarioApex {
             insert sGoal;
   
             //Create Response wrapper
-            UserAndScenarios wrapper = new UserAndScenarios();
+            /*UserAndScenarios wrapper = new UserAndScenarios();
             
             List<Scenario_Income__c> sceneIncomeList = new List<sObject>();
             sceneIncomeList.add(scIncome); 
@@ -701,11 +582,13 @@ public class NewScenarioApex {
             wrapper.userNameId = clientAccount; 
             wrapper.primaryOwner = clientAccount.id;
             	
-            return wrapper;
-
+            return wrapper;*/
+			return;
         }
-        catch(exception e){}
-        return new UserAndScenarios();
+        catch(exception e){
+             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return;
     }
     
     //Delete records

@@ -7,7 +7,7 @@
   		var flag = false;
         if(component.get("v.scene") == "init") flag = true;
             
-        var action = component.get("c.getUserScenarios"); 
+            var action = component.get("c.getUserScenarios"); 
         action.setParams({
             clientId : component.get("v.cid"),
             sceneId : component.get("v.scene")
