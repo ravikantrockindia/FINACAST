@@ -27,3 +27,6 @@
     left: 25px;
     display: none;
 }
+.THIS .label-hidden label {
+    display: none !important;
+}
