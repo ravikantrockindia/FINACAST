@@ -70,7 +70,7 @@
                         <lightning:inputField fieldName ="{!v.namespace+'Do_tax_benefits_realize_monthly__c'}" value="{!v.isMonthly}" class="slds-hide" />     
                     </div>
                     <div class="slds-col slds-size_1-of-2">
-                        Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" variant="label-hide" aura:id = "deducationtax" />
+                        Max yearly tax deduction allowed ($)?  <lightning:inputField fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" variant="label-hide" aura:id = "deducationtax" />
                     </div>
                 </div>
                 <div style="clear: both"></div>

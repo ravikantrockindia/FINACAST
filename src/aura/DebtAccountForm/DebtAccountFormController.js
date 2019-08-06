@@ -7,7 +7,7 @@
         $A.util.addClass(spinner, "slds-hide");
         // console.log(JSON.stringify(component.get("v.financialAccount")))
         if(component.get("v.financialAccount.Id")!=null){
-            var field='v.financialAccount.'+namespace+'Account_Type__c'
+            var field='v.financialAccount.'+'Account_Type__c'
             var accountType=component.get(field)
             // alert(accountType)
             if (accountType=='Loan'){
@@ -21,7 +21,7 @@
                 
             }
             // alert(component.get("v.financialAccount.Do_you_get_tax_benefit_from_interest_pay__c"))
-            field='v.financialAccount.'+namespace+'Do_you_get_tax_benefit_from_interest_pay__c'
+            field='v.financialAccount.'+'Do_you_get_tax_benefit_from_interest_pay__c'
             if (component.get(field)){
                 // alert('yes')
                 component.set("v.isTaxBenefit",true);
@@ -32,7 +32,7 @@
                 component.set("v.isTaxBenefit",false);
                 
             }
-            field='v.financialAccount.'+namespace+'Do_tax_benefits_realize_monthly__c'
+            field='v.financialAccount.'+'Do_tax_benefits_realize_monthly__c'
             if(component.get(field)){
                 component.set("v.isMonthly",true)
             }
