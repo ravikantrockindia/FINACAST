@@ -14,7 +14,7 @@
         resultsToast.setParams({
             "title": "Save Success!",
             type: 'success',
-            "message": "Income Has been Saved"           
+            "message": "Income has been Saved"           
         });
         resultsToast.fire();   
 		helper.hideExampleModal(component);
