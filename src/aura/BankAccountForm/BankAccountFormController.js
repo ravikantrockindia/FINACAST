@@ -101,7 +101,7 @@
         $A.util.removeClass(spinner, "slds-show");
         $A.util.addClass(spinner, "slds-hide");
         component.set("v.disabled",false)
-        helper.showNotfication(component,"The record cannot be saved.Please try again!","error","Error!");    
+        helper.showNotfication(component,"The record cannot be saved. Please try again!","error","Error!");    
         // console.log('record save failed', e.message, ', ', e.detail)
         // var event=component.getEvent("lightningEvent");
         // cmpEvent.setParams({"result" : "error"}); 
