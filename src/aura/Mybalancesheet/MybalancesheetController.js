@@ -2,6 +2,7 @@
     doInit : function(component, event, helper) {               
         var jsonResponseJs;  
         var a= component.get("v.ids");
+        component.set("v.isClickable",false);
          
         var action = component.get("c.getData");
         action.setParams({
