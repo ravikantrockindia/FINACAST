@@ -4,21 +4,8 @@
 
 
 public class NewScenarioApex {
-
     
-    public static String requestEndpoint='https://mytafi.herokuapp.com/rest/service/getFutureSimulationsNew';
-    
-    //class variables come here
-    public static Id incomeRecId = FinacastUtility.getRecordTypeId('Budget__c' , 'Scenario_Income_Record_Type');
-    public static Id expenseRecId = FinacastUtility.getRecordTypeId('Budget__c' , 'Scenario_Expense_Record_Type');
-    public static Id savingsRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Savings_Record_Type');
-    public static Id goalsRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'Scenario_Goal_Record_Type');
-    public static Id loansRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Loans_Record_Type');
-    public static Id cardRecId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'Scenario_Credit_Cards_Record_Type');
-    public static Id recIdLoan = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'LoanAccount');
-    public static Id recIdCard = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c' , 'CreditCard');
-    public static Id houseHoldRecId = FinacastUtility.getRecordTypeId('Account' , 'IndustriesHousehold');
-    
+    private static String requestEndpoint='https://mytafi.herokuapp.com/rest/service/getFutureSimulationsNew';
     
     //Parent wrapper Class
     public class UserAndScenarios{
@@ -41,20 +28,15 @@ public class NewScenarioApex {
     }
     
     @AuraEnabled
-    public static  UserAndScenarios getUserScenarios(String clientId, String sceneId) {
-        system.debug('clientId: '+ clientId);
-        system.debug('sceneId: '+ sceneId);
+    public static UserAndScenarios getUserScenarios(String clientId, String sceneId) {
         String s2 = sceneId;
         List<sobject> emptyList = new List<sObject>();       
-        Integer hhStatus = 0;
+        List<Scenario__c> sceneList = new List<Scenario__c>();
         UserAndScenarios wrapper = new UserAndScenarios();
         
-        
         try{
-            List<Scenario__c> sceneList = new List<Scenario__c>();
-            List<Account> accList  = new List<Account>();   
-            Account ac = [select id,RecordTypeId,name from account where id=: clientId];
-            wrapper.userNameId = ac;           
+                       
+            wrapper.userNameId = [select id,RecordTypeId, name from account where id =: clientId];         
             
             //give values to sceneId
             if(sceneId == 'init' || String.isEmpty(sceneId) || String.isBlank(sceneId)) {
@@ -73,24 +55,12 @@ public class NewScenarioApex {
                 }
             }//end if
             else{
-               wrapper.scenarioId = s2; 
+                wrapper.scenarioId = s2; 
             }
-                      
-            /*if(ac.RecordTypeId == houseHoldRecId) {
-                list<AccountContactRelation> acr  = [Select id,ContactId, Account.Id from AccountContactRelation where AccountId = :ac.Id AND FinServ__Primary__c = true ]; 
-                for(AccountContactRelation c :acr){
-                    id acrCon = c.ContactId;
-                    Account accPrimaryOwn = [select id from Account where FinServ__PrimaryContact__c = :acrCon];
-                    wrapper.primaryOwner = accPrimaryOwn.Id;
-                }
-            }*/
             
-           // else {
-                wrapper.primaryOwner = ac.Id;
-           // }
+            wrapper.primaryOwner = clientId;
             
-            
-            //CAse1:   if a scenaroi exists
+            //case1:   if a scenaroi exists
             if(sceneId != 'No Scenario' && sceneId != null) {
                 Decimal totalAmount = 0;
                 
@@ -108,15 +78,8 @@ public class NewScenarioApex {
                         }
                     }
                     wrapper.totalIncomeAmount = totalAmount; 
-                }
-                else {
-                    emptyList = new List<sObject>();
-                    Scenario_Income__c sc = new Scenario_Income__c();
-                    sc.amount__c = 0;
-                    emptyList.add(sc);
-                    wrapper.userScenarioIncome = (List<Scenario_Income__c>) emptyList;
-                    wrapper.totalIncomeAmount = 0; 
-                }
+                }//end income if
+
                 
                 // 2. search scenario expense and calculate total expense amount
                 List<Scenario_Expense__c> sceneExpenseList = [select Id, Name, Amount__c from Scenario_Expense__c where Scenario_Id__c = :sceneId ];
@@ -132,15 +95,7 @@ public class NewScenarioApex {
                         }
                     }
                     wrapper.totalExpenseAmount = totalAmount;
-                }
-                else {
-                    emptyList = new List<sObject>();
-                    Scenario_Expense__c sc = new Scenario_Expense__c();
-                    sc.Amount__c = 0;
-                    emptyList.add(sc);
-                    wrapper.userScenarioExpense = (List<Scenario_Expense__c>) emptyList;
-                    wrapper.totalExpenseAmount = 0; 
-                }
+                }//end expense if
                 
                 // 3. search scenario goals and calculate total goal amount
                 List <Scenario_Goal__c> sceneGoal = [select name, Scenario_Target_Amount__c from Scenario_Goal__c where Scenario__c = :sceneId];
@@ -156,7 +111,7 @@ public class NewScenarioApex {
                         }
                     }
                     wrapper.totalGoalAmount = totalAmount;
-                }
+                }//end goal if
                 
                 // 4. search scenario loans and calculate total loan amount
                 List <Scenario_Debt__c> sceneLoan = [select Name, Current_Value__c, Payment_Amount__c, APR__c,Frequency__c from Scenario_Debt__c where Scenario_Id__c = :sceneId];
@@ -172,7 +127,7 @@ public class NewScenarioApex {
                         }
                     }
                     wrapper.totalLoanAmount = totalAmount;
-                }
+                }//end loan if
                 
                 
                 // 5. search scenario savinngs and calculate total saving amount
@@ -189,8 +144,8 @@ public class NewScenarioApex {
                         }
                     }
                     wrapper.totalSaveAmount = totalAmount;
-                }
-                
+                }//end saving if
+               
                 
                 // 6. List of iteration objects on the UI for name on select
                 if(sceneList.size() > 0) {
@@ -203,37 +158,21 @@ public class NewScenarioApex {
                     wrapper.userScenario  = (List<Scenario__c>) emptyList;
                 }
                 
-                // call to getRequestData for to send request data 
-                List<Scenario_Income__c> incomeList = [Select Amount__c from Scenario_Income__c  where Scenario_Id__c = :sceneId ];
-                List<Scenario_Expense__c> expenseList = [Select Amount__c from Scenario_Expense__c  where Scenario_Id__c = :sceneId ];
-                List<Scenario_Savings__c> fAccList = [Select id, Name, Current_Value__c,APY__c from Scenario_Savings__c where Scenario__c = :sceneId];
-                List<Scenario_Debt__c> debtAccList = [select Name, APR__c, Current_Value__c, Payment_Amount__c from Scenario_Debt__c where Scenario_Id__c = :sceneId ];
-                
-                List<Scenario_Goal__c> goalList = [select Scenario_Current_Amount__c, Name,  Scenario_Monthly_Contribution__c,Scenario_Goal_Priority__c, Scenario_Start_Date__c, 
-                                                   Scenario_Target_Amount__c, Scenario_Target_Date__c, Associated_Account__c 
-                                                   //Annual_Growth_Rate__c
-                                                   from Scenario_Goal__c where Scenario__c = :sceneId ];
-                
-                /*List<Scenario_Goal__c> goalList = [select Start_Value__c, Name,  Required_Monthly_Saving__c,Goal_Priority__c, Start_Date__c, FinServ__TargetValue__c,
-                                                            Annual_Growth_Rate__c, FinServ__TargetDate__c, Associated_Account__c from Scenario_Goal__c where Scenario_Id__c = :sceneId ];*/
+                // call to getRequestData for to send request data
+                wrapper.scenarioList = [select Name, Id from Scenario__c where Client_Id__c = :clientId order by LastModifiedDate DESC]; 
                 
                 //call the build utility in Utility call to build scenario data
-                String reqData = FinacastUtility.buildScenarioRequestData2(incomeList, expenseList, fAccList, debtAccList,  goalList, sceneId, ac.Id);
-                System.debug('Server Request in Scenario: ' + reqData);
-                
-                //Make Callout 
+                String reqData = FinacastUtility.buildScenarioRequestData2(sceneId, clientId);
                 wrapper.response = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', reqData);
+                
+                System.debug('Scenario Request data: ' + reqData);
                 System.debug('Scenario Exists Response Data: ' + wrapper.response);
-                wrapper.scenarioList = [select Name, Id from Scenario__c where Client_Id__c = :ac.Id order by LastModifiedDate DESC]; 
             }
             
-            //case 2. no scenario
+            //case 2. no scenario when first time client scenario page in landed on
             else {
                 System.debug('No Scenarios yet');
                 emptyList = new List<sObject>();
-                //Budget__c sc = new Budget__c();
-                //sc.amount__c = 0;
-                //emptyList.add(sc);
                 
                 wrapper.userScenarioIncome = (List<Scenario_Income__c>) emptyList;
                 wrapper.totalIncomeAmount = 0; 
@@ -247,22 +186,19 @@ public class NewScenarioApex {
                 wrapper.userScenarioLoan = (List<Scenario_Debt__c>) emptyList;
                 wrapper.totalLoanAmount = 0;
                 
-                
-                emptyList = new List<sObject>();
-                Scenario_Goal__c fGoal = new Scenario_Goal__c();
-                fGoal.Scenario_Target_Amount__c = 0;
+				
+                Scenario_Goal__c fGoal = new Scenario_Goal__c(Scenario_Target_Amount__c = 0);
                 emptyList.add(fGoal);
                 wrapper.userScenarioGoal = (List <Scenario_Goal__c>) emptyList;
                 wrapper.totalGoalAmount = 0;
-                
-                emptyList = new List<sObject> ();
-                Scenario__c s = new Scenario__c();
-                s.Name = '';
+               
+                emptyList = new List<sObject>();
+                Scenario__c s = new Scenario__c(Name='');
                 emptyList.add(s);
                 wrapper.userScenario = (List<Scenario__c>) emptyList;
                 
+                wrapper.scenarioList = [select Name, Id from Scenario__c where Client_Id__c = :clientId order by LastModifiedDate DESC];
                 system.debug('No Scenario response Wrappr: '+wrapper);
-                wrapper.scenarioList = [select Name, Id from Scenario__c where Client_Id__c = :ac.Id order by LastModifiedDate DESC];
             }//end else
             
         }//end catch
@@ -271,201 +207,9 @@ public class NewScenarioApex {
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }   
         return wrapper;  
-    }//end init
+    }//end init  
     
-        
-    
-    // get recordTypeId to create records for goals, loan, savings, credit card 
-    @AuraEnabled
-    public static String getRecordTypeId(String recName){
-        String recId;
-        
-        if(recName == 'goal button') {
-            recId = goalsRecId;        }
-        if(recName == 'loan button') {
-            recId = loansRecId;        }
-        if(recName == 'saving button') {
-            recId = savingsRecId;        }
-        if(recName == 'credit card button') {
-            recId = cardRecId;       }
-        
-        return recId;
-    }
-    
-    
-    //to save the scenario to  Scenario__c object -----> calling js function: onScenarioSaveIcon()
-    @AuraEnabled
-    public static List<sObject> saveRecord( String clientId, String recType, String sceneId, Decimal incomeAmount, Decimal expenseAmount, String recordId) {
-        
-        System.debug('SceneId in Save method:' + sceneId);
-       // Boolean status = false;
-       // Boolean hhStatus = false;
-        List<sObject> recordList = new List<sObject>();					
-        
-        //insert new scenario
-        List<Id> client = new List<Id>();
-        try{
-            //insert/update scenaro income
-            if(recType == 'income save') {
-                System.debug('inside inceome');
-                if(recordId != 'init') {
-                    Scenario_Income__c scIncome = [select Amount__c from Scenario_Income__c where id = :recordId];  
-                    scIncome.Amount__c = incomeAmount;
-                    System.debug('inceome init');
-                    upsert scIncome;
-                }
-                else {   
-                    System.debug('new Income');
-                    Scenario_Income__c scIncome = new Scenario_Income__c ();
-                    scIncome.Client_Id__c = clientId ;
-                    scIncome.Scenario_Id__c = sceneId;
-                    scIncome.Name= 'Income 1';
-                    //scIncome.RecordTypeId = incomeRecId;
-                    date startDate = date.today();
-					date endDate = startDate.addYears(10);
-                    scIncome.Start_Date__c = startDate;
-                    scIncome.End_Date__c = endDate;
-                    scIncome.Amount__c = incomeAmount;
-                    insert scIncome;
-                }
-                List<Scenario_Income__c> sceneIncomeList = [select Id, Name, Amount__c from Scenario_Income__c where Scenario_Id__c = :sceneId];
-                recordList = sceneIncomeList;
-            }
-            
-            //insert/update scenario expense
-            if(recType == 'expense save') {
-                if(recordId != 'init') {
-                    Scenario_Expense__c scExpense = [select Amount__c from Scenario_Expense__c where id = :recordId];
-                    system.debug('expense: ' + expenseAmount);
-                    scExpense.Amount__c = expenseAmount;
-                    upsert scExpense;   
-                }
-                else {   
-                    Scenario_Expense__c scExpense = new Scenario_Expense__c ();
-                    scExpense.Name = 'Expense 1';
-                    scExpense.Client_Id__c = clientId ;
-                    scExpense.Scenario_Id__c = sceneId;
-                    date startDate = date.today();
-					date endDate = startDate.addYears(10);
-                    scExpense.Start_Date__c = startDate;
-                    scExpense.End_Date__c = endDate;
-                    //scExpense.RecordTypeId  = expenseRecId;
-                    scExpense.Amount__c = expenseAmount; 
-                    insert scExpense;
-                }
-                List<Scenario_Expense__c> sceneExpenseList = [select Id, Name, Amount__c from Scenario_Expense__c where Scenario_Id__c = :sceneId];
-                recordList = sceneExpenseList;
-            }
-        }
-        catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-        }
-        return recordList;
-    }
-    
-    public class AmtContriWrapper {
-        @AuraEnabled public Decimal currentAmt;
-        @AuraEnabled public Decimal monthlyContri;
-    }
-    
-    @AuraEnabled
-    public static AmtContriWrapper getAmtContri (String accId, Decimal currentAmt, Date tarDate, Decimal tarAmt) {
-        AmtContriWrapper wrapper = new AmtContriWrapper();
-        Double iRate = 0;
-        try{
-            if (accId != null && accId != '')
-            {
-                Scenario_Savings__c savingAcc = [select Current_Value__c, APY__c, id from Scenario_Savings__c where id = :accId];
-                Double bal = savingAcc.Current_Value__c; 
-                if(savingAcc.APY__c != null)
-                {
-                    iRate = savingAcc.APY__c;
-                }
-                /*if(savingAcc.APR__c != null)
-                {
-                    iRate =  savingAcc.APR__c;
-                }*/
-                else 
-                    iRate = 0; 
-                
-                list<Scenario_Goal__c> allAssocGoals = [select Associated_Account__c, Scenario_Monthly_Contribution__c, Scenario_Start_Date__c, Scenario_Target_Amount__c 
-                                                        from Scenario_Goal__c where Associated_Account__c = :accId];
-                
-                Double totalEstimated = 0;
-                Decimal remainingAmount = 0;
-                Decimal growth=0;
-                
-                for(Scenario_Goal__c relgoal : allAssocGoals ) {
-                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Scenario_Monthly_Contribution__c), relgoal.Scenario_Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Scenario_Target_Amount__c;
-                }
-                
-                remainingAmount = bal - totalEstimated;
-                if(remainingAmount < 0)
-                {
-                    remainingAmount = 0;    
-                }
-                double curr = Math.ceil( remainingAmount);       
-                wrapper.currentAmt = Math.ceil( remainingAmount);
-                system.debug('current amt'+wrapper.currentAmt);
-                
-                if(tarDate != null && tarAmt != null) {
-                    Date targetDate = Date.valueOf(tarDate);
-                    Decimal currentAmount;
-                    if(currentAmt == null) {
-                        currentAmount = curr;
-                    }
-                    else {
-                        currentAmount = Double.valueOf(currentAmt);
-                    }
-                    
-                    wrapper.monthlyContri = Math.ceil(getMonthlyContribution(currentAmount, tarAmt, targetDate, iRate ));
-                }
-                else {
-                    wrapper.monthlyContri = 0;
-                }
-            } 
-        }
-        catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-        }
-        return wrapper;
-        
-    }
-    
-    /* to monthlyContribution
-* called from apex function getAmtContri 
-* ***/
-    public static Decimal getMonthlyContribution(Decimal currentAmount, Decimal tarAmt, Date targetDate, Double  iRate ) {
-        Integer months = (((targetDate.year())*12)+targetDate.month()) - ((((date.today()).year())*12)+date.today().month());
-        
-        if(months < 0) {
-            months = Math.abs(months);
-        }
-        Double installment = 0;
-        Double growth = (Math.pow((1 + ( iRate / 100)), (1/12)))- 1;
-        Decimal monContri;
-        system.debug('tarAmt'+tarAmt);
-        system.debug('currentAmount'+currentAmount);
-        system.debug('months'+months);
-        
-        If (tarAmt > (currentAmount * (Math.pow((1 + growth),months))))
-        { 
-            If (growth > 0) {
-                installment = ((tarAmt - currentAmount * (Math.pow((1 + growth), months))) * growth) / ((Math.pow((1 + growth), months)) - 1);
-            } 
-            Else {
-                installment = (tarAmt - currentAmount) / months;
-            }
-            monContri = installment;
-        }
-        Else {
-            monContri = installment;
-        }
-        
-        return Math.ceil(monContri);   
-    }
-    
-    @auraEnabled
+     @auraEnabled
     public static void saveNewScenario(String name, String clientId){
         try{
             Account clientAccount = [select name from Account where id = :clientId];
@@ -524,15 +268,16 @@ public class NewScenarioApex {
             loan.End_Date__c = endDate;
             loan.Payment_Amount__c = 1000;
             insert loan;
- 
+            
             //crate goal
             Scenario_Goal__c sGoal = new Scenario_Goal__c();
             sGoal.Scenario_Target_Amount__c = 60000;
+      
             sGoal.Scenario_Current_Amount__c = 10000;
             sGoal.Scenario_Monthly_Contribution__c =500;
             sGoal.Name = name + ' Goal 1';
             sGoal.Scenario__c = sceneId;
-			//sGoal.Tax_Benefit__c = 'false';
+            //sGoal.Tax_Benefit__c = 'false';
             sGoal.Scenario_Goal_Type__c = 'Education';
             sGoal.Associated_Account__c = savings.Id;
             sGoal.Client_Id__c = clientId;
@@ -540,53 +285,11 @@ public class NewScenarioApex {
             sGoal.Scenario_Target_Date__c = endDate;
             sGoal.Scenario_Start_Date__c = startDate;
             insert sGoal;
-  
-            //Create Response wrapper
-            /*UserAndScenarios wrapper = new UserAndScenarios();
-            
-            List<Scenario_Income__c> sceneIncomeList = new List<sObject>();
-            sceneIncomeList.add(scIncome); 
-            wrapper.userScenarioIncome = sceneIncomeList;
-            
-            List<Scenario_Expense__c> sceneExpenseList = new List<sObject>();
-            sceneExpenseList.add(scExpense);
-            wrapper.userScenarioExpense = sceneExpenseList;
-            
-            List<Scenario_Goal__c> sceneGoalList = new List<sObject>(); 
-            sceneGoalList.add(sGoal);
-            wrapper.userScenarioGoal = sceneGoalList;
-            
-            List<Scenario__c> emptyList = new List<sObject> ();
-            Scenario__c s = new Scenario__c(Name = '');
-            emptyList.add(s);
-            wrapper.userScenario = (List<Scenario__c>) emptyList;
-            
-            List<Scenario_Savings__c> savingList = new List<sObject> ();
-            savingList.add(savings);
-            wrapper.userSceneSave = savingList;
-                
-            List<Scenario_Debt__c> loanList = new List<sObject> ();
-            loanList.add(loan);
-            wrapper.userScenarioLoan = loanList;
-                
-            wrapper.totalGoalAmount = 0;
-            wrapper.totalIncomeAmount = 0;
-            wrapper.totalExpenseAmount = 0;
-            wrapper.totalLoanAmount = 0;
-            wrapper.scenarioId = sceneId;
-            
-            String reqData = FinacastUtility.buildScenarioRequestData2(sceneIncomeList, sceneExpenseList, savingList, loanList,  sceneGoalList, sceneId, clientId);
-            if(!test.isRunningTest())
-            wrapper.response  = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', reqData);
-            wrapper.scenarioList = [select Name, Id from Scenario__c where id =: sceneId];
-            wrapper.userNameId = clientAccount; 
-            wrapper.primaryOwner = clientAccount.id;
-            	
-            return wrapper;*/
-			return;
+
+            return;
         }
         catch(exception e){
-             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
         return;
     }
@@ -598,7 +301,7 @@ public class NewScenarioApex {
         Id typeId;
         
         Id sId = recId;
-         String recType = sId.getSObjectType().getDescribe().getName();
+        String recType = sId.getSObjectType().getDescribe().getName();
         //delete scenario and related data
         try{
             if(recType == 'scenario__c') {
@@ -637,28 +340,163 @@ public class NewScenarioApex {
             }
             
             //delete scenario loan savings
-                
-                if(recType == 'Scenario_Debt__c') {
-                    Scenario_Debt__c debtDel = [select id from Scenario_Debt__c where id = :recId];
-                    delete debtDel;
-                    List<Scenario_Debt__c> updatedList = [select Name, Current_Value__c, Payment_Amount__c, APR__c,Frequency__c from Scenario_Debt__c where Scenario_Id__c = :sceneId];
-                    recordList = updatedList;
-                }
-                
-                if(recType == 'Scenario_Savings__c') {
-                    Scenario_Savings__c savingDel = [select id from Scenario_Savings__c where id = :recId];
-                    Scenario_Goal__c gDel = [select id from Scenario_Goal__c where Associated_Account__c = :savingDel.Id];
-                    if(gDel != NULL)
+            
+            if(recType == 'Scenario_Debt__c') {
+                Scenario_Debt__c debtDel = [select id from Scenario_Debt__c where id = :recId];
+                delete debtDel;
+                List<Scenario_Debt__c> updatedList = [select Name, Current_Value__c, Payment_Amount__c, APR__c,Frequency__c from Scenario_Debt__c where Scenario_Id__c = :sceneId];
+                recordList = updatedList;
+            }
+            
+            if(recType == 'Scenario_Savings__c') {
+                Scenario_Savings__c savingDel = [select id from Scenario_Savings__c where id = :recId];
+                Scenario_Goal__c gDel = [select id from Scenario_Goal__c where Associated_Account__c = :savingDel.Id];
+                if(gDel != NULL)
                     delete gDel;
-                    
-                    delete savingDel;
-                    List<Scenario_Savings__c> updatedList = [select name, Current_Value__c, APY__c from Scenario_Savings__c where Scenario__c = :sceneId];
-                    recordList = updatedList;
-                }
+                
+                delete savingDel;
+                List<Scenario_Savings__c> updatedList = [select name, Current_Value__c, APY__c from Scenario_Savings__c where Scenario__c = :sceneId];
+                recordList = updatedList;
+            }
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
         return recordList;
     }
+    //to save the scenario to  Scenario__c object -----> calling js function: onScenarioSaveIcon()
+    
+    @AuraEnabled
+    public static List<sObject> saveRecord( String clientId, String recType, String sceneId, Decimal incomeAmount, Decimal expenseAmount, String recordId) {
+        List<sObject> recordList = new List<sObject>();					
+        
+        try{
+            //update scenaro income
+            if(recType == 'income save') {
+                if(recordId != 'init') {
+                    Scenario_Income__c scIncome = [select Amount__c from Scenario_Income__c where id = :recordId];  
+                    scIncome.Amount__c = incomeAmount;
+                    System.debug('inceome init');
+                    upsert scIncome;
+                }
+                List<Scenario_Income__c> sceneIncomeList = [select Id, Name, Amount__c from Scenario_Income__c where Scenario_Id__c = :sceneId];
+                recordList = sceneIncomeList;
+            }
+            
+            //update scenario expense
+            if(recType == 'expense save') {
+                if(recordId != 'init') {
+                    Scenario_Expense__c scExpense = [select Amount__c from Scenario_Expense__c where id = :recordId];
+                    system.debug('expense: ' + expenseAmount);
+                    scExpense.Amount__c = expenseAmount;
+                    upsert scExpense;   
+                }
+                List<Scenario_Expense__c> sceneExpenseList = [select Id, Name, Amount__c from Scenario_Expense__c where Scenario_Id__c = :sceneId];
+                recordList = sceneExpenseList;
+            }
+            
+        }
+        catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return recordList;
+    }
+    
+    public class AmtContriWrapper {
+        @AuraEnabled public Decimal currentAmt;
+        @AuraEnabled public Decimal monthlyContri;
+    }
+    
+    @AuraEnabled
+    public static AmtContriWrapper getAmtContri (String accId, Decimal currentAmt, Date tarDate, Decimal tarAmt) {
+        AmtContriWrapper wrapper = new AmtContriWrapper();
+        Double iRate = 0;
+        try{
+            if (accId != null && accId != '')
+            {
+                Scenario_Savings__c savingAcc = [select Current_Value__c, APY__c, id from Scenario_Savings__c where id = :accId];
+                Double bal = savingAcc.Current_Value__c; 
+                if(savingAcc.APY__c != null)
+                {
+                    iRate = savingAcc.APY__c;
+                }
+                else 
+                    iRate = 0; 
+                
+                list<Scenario_Goal__c> allAssocGoals = [select Associated_Account__c, Scenario_Monthly_Contribution__c, Scenario_Start_Date__c, Scenario_Target_Amount__c 
+                                                        from Scenario_Goal__c where Associated_Account__c = :accId];
+                
+                Double totalEstimated = 0;
+                Decimal remainingAmount = 0;
+                Decimal growth=0;
+                
+                for(Scenario_Goal__c relgoal : allAssocGoals ) {
+                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Scenario_Monthly_Contribution__c), relgoal.Scenario_Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Scenario_Target_Amount__c;
+                }
+                
+                remainingAmount = bal - totalEstimated;
+                if(remainingAmount < 0)
+                {
+                    remainingAmount = 0;    
+                }
+                double curr = Math.ceil( remainingAmount);       
+                wrapper.currentAmt = Math.ceil( remainingAmount);
+                system.debug('current amt'+wrapper.currentAmt);
+                
+                if(tarDate != null && tarAmt != null) {
+                    Date targetDate = Date.valueOf(tarDate);
+                    Decimal currentAmount;
+                    if(currentAmt == null) {
+                        currentAmount = curr;
+                    }
+                    else {
+                        currentAmount = Double.valueOf(currentAmt);
+                    }
+                    
+                    wrapper.monthlyContri = Math.ceil(getMonthlyContribution(currentAmount, tarAmt, targetDate, iRate ));
+                }
+                else {
+                    wrapper.monthlyContri = 0;
+                }
+            } 
+        }
+        catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return wrapper;
+        
+    }
+    
+    //to monthlyContribution called from apex function getAmtContri 
+    public static Decimal getMonthlyContribution(Decimal currentAmount, Decimal tarAmt, Date targetDate, Double  iRate ) {
+        Integer months = (((targetDate.year())*12)+targetDate.month()) - ((((date.today()).year())*12)+date.today().month());
+        
+        if(months < 0) {
+            months = Math.abs(months);
+        }
+        Double installment = 0;
+        Double growth = (Math.pow((1 + ( iRate / 100)), (1/12)))- 1;
+        Decimal monContri;
+        system.debug('tarAmt'+tarAmt);
+        system.debug('currentAmount'+currentAmount);
+        system.debug('months'+months);
+        
+        If (tarAmt > (currentAmount * (Math.pow((1 + growth),months))))
+        { 
+            If (growth > 0) {
+                installment = ((tarAmt - currentAmount * (Math.pow((1 + growth), months))) * growth) / ((Math.pow((1 + growth), months)) - 1);
+            } 
+            Else {
+                installment = (tarAmt - currentAmount) / months;
+            }
+            monContri = installment;
+        }
+        Else {
+            monContri = installment;
+        }
+        
+        return Math.ceil(monContri);   
+    }
+    
+    
 }
