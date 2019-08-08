@@ -64,61 +64,29 @@
                                                               recordId="{!v.recordId}"
                                                               onsuccess="{!c.handleSuccess}"
                                                               objectApiName="Account">
-                               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                              <div class="slds-gutters" style="border: none;">
-                                <div class="slds-box1">   
-                                       <div class="slds-form-element__control">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-col slds-size_1-of-2">  
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                        {!$Label.c.Name} <span class = "highlight" style="color: red">* </span><lightning:inputField fieldName="Name" class="label-hidden" variant="label-hidden" aura:id="name"/>
-                                                    </div>
-                                                </div>
+                                        
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Name} <span class = "highlight" style="color: red">* </span><lightning:inputField fieldName="Name" class="label-hidden" variant="label-hidden" aura:id="name"/>
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                         {!$Label.c.Client_Category} <span class = "highlight"  style="color: red">* </span><lightning:inputField fieldName="FinServ__ClientCategory__c" class="label-hidden" variant="label-hidden" aura:id="category"/>
-                                                    </div>
-                                                </div>
+                                                {!$Label.c.Client_Category} <span class = "highlight"  style="color: red">* </span><lightning:inputField fieldName="FinServ__ClientCategory__c" class="label-hidden" variant="label-hidden" aura:id="category"/>
                                             </div>
                                         </div>
-                                    </div>
-                                     <div class="slds-form-element__control">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-col slds-size_1-of-2">  
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                        {!$Label.c.Client_Address_Street} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden textarea_custom" fieldName="BillingStreet" aura:id="street" variant="label-hidden"/>
-                                                    </div>
-                                                </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Address_Street} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden textarea_custom" fieldName="BillingStreet" aura:id="street" variant="label-hidden"/>
+                                            </div>                        
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Address_City}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingCity" aura:id="city" variant="label-hidden"/>
+                                            </div>
+                                        </div> 
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                {!$Label.c.Client_Address_State} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingState" aura:id="state" variant="label-hidden"/>
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                         {!$Label.c.Client_Address_City}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingCity" aura:id="city" variant="label-hidden"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                         <div class="slds-form-element__control">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-col slds-size_1-of-2">  
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                         {!$Label.c.Client_Address_State} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingState" aura:id="state" variant="label-hidden"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="slds-col slds-size_1-of-2">
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                         {!$Label.c.Address_Zip_Postal_Code} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingPostalCode" aura:id="code" variant="label-hidden"/>
-                                                    </div>
-                                                </div>
+                                                {!$Label.c.Address_Zip_Postal_Code} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingPostalCode" aura:id="code" variant="label-hidden"/>
                                             </div>
                                         </div>
                                         <div class="slds-grid slds-gutters">
@@ -126,32 +94,16 @@
                                                 {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" aura:id="dob" variant="label-hidden" dateStyle="short"/>
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                         {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden" value=""/>
-                                                    </div>
-                                                </div>
+                                                {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
                                             </div>
                                         </div>
-                                    </div>
-                                        <div class="slds-form-element__control">
-                                        <div class="slds-form-element__row">
+                                        <div class="slds-grid slds-gutters">
                                             <div class="slds-col slds-size_1-of-2">
-                                                {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Risk_Profile__c'}" variant="label-hidden" value="" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
-                                                    </div>
-                                                </div>
+                                                {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Risk_Profile__c'}" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
-                                                <div class="slds-form-element">
-                                                    <div class="slds-form-element__control">
-                                                         {!$Label.c.Client_Time_Horizon} <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden" value=""/><a href="javascript:void(0)"></a>
-                                                    </div>
-                                                </div>
+                                                {!$Label.c.Client_Time_Horizon} <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden"/>
                                             </div>
-                                        </div>
-                                    </div>
-                                  </div>
-                                  </div>
                                         </div>
                                         <div class="slds-grid slds-gutters">
                                             <div class="slds-col slds-size_1-of-1">
@@ -175,9 +127,8 @@
                     </aura:if>
                 </div>
                 <div class="file_upload">
-                     <lightning:fileUpload  aura:id="fileUploader" name="fileUpload" label="Attach Image" multiple="false" accept=".jpg, .png"
-                                             recordId="{!v.recordId}" onuploadfinished="{!c.handleUploadFinished}"/>
-                     
+                    <lightning:fileUpload name="fileUploader" multiple="false" accept=".jpg, .png"
+                                          recordId="{!v.recordId}" onuploadfinished="{!c.handleUploadFinished}" />
                     <div class="upload-flie">Upload Image</div>
                 </div>  
             </div>
