@@ -5649,5 +5649,12 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
         <searchResultsAdditionalFields>ACCOUNT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
     </searchLayouts>
+	<validationRules>
+        <fullName>Name_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>LEN(Name)&gt;80</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>name Cannot be More than 80 character</errorMessage>
+    </validationRules>
     <sharingModel>Private</sharingModel>
 </CustomObject>
