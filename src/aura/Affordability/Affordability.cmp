@@ -118,7 +118,7 @@
                                             </div>
                                         </div>
                                         
-                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with interest</label>   <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="yesCheck2" value="{!v.isTaxBenefit}"/> Yes <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="noCheck"/> No
+                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with intrest</label>   <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="yesCheck2" value="{!v.isTaxBenefit}"/> Yes <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="noCheck"/> No
                                         <div id="ifYes1" style="visibility:hidden"> 
                                             
                                             <label>What %of contribution bring tax benefit?</label><lightning:input   />
