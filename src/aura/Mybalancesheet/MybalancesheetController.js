@@ -2,7 +2,6 @@
     doInit : function(component, event, helper) {               
         var jsonResponseJs;  
         var a= component.get("v.ids");
-         
         var action = component.get("c.getData");
         action.setParams({
             id: component.get('v.recordId')

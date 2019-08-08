@@ -68,7 +68,7 @@
                                         <li><div aura:id="lp1" class="defaultRedIndicators"></div></li>
                                         <li><div aura:id="lp2" class="defaultOrangeIndicators"></div></li>
                                         <li><div aura:id="lp3" class="defaultGreenIndicators"></div></li>
-                                        <li>Loan Payment</li> 
+                                        <li>Loan Payments</li> 
                                     </ul>
                                 </div> 
                                 

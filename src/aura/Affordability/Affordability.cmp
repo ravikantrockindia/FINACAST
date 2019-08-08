@@ -90,7 +90,7 @@
                                 <p>Name this Affordability Scenario</p>
                             </div>
                             <div class="aff-data-box">
-                                <label> Cost</label><lightning:input  value="{!v.totalAmount}" required="true" messageWhenValueMissing="Please enter an amount" aura:id="fields" />
+                                <label> Cost</label><lightning:input type="number" formatter="currency" value="{!v.totalAmount}" required="true" messageWhenValueMissing="Please enter an amount" aura:id="fields" />
                                 <p>What is the price of the item in the Affordability Scenario</p>
                             </div>
                             <div class="aff-data-box">
@@ -105,10 +105,10 @@
                                     <div id="ifYes" >
                                         <div class="slds-form-element__row">
                                             <div class="slds-size_1-of-2"> 
-                                                <label>Payment due this month</label> <lightning:input  value="{!v.downPayment}" />
+                                                <label>Payment due this month</label> <lightning:input type="number" formatter="currency" value="{!v.downPayment}" />
                                             </div>
                                             <div class="slds-size_1-of-2"> 
-                                                <label>Future monthly payment</label><lightning:input   value="{!v.installments}"/>
+                                                <label>Future monthly payment</label><lightning:input type="number" formatter="currency"  value="{!v.installments}"/>
                                             </div>
                                             <div class="slds-size_1-of-2"> 
                                                 <label>Start date</label> <lightning:input type="date"  value="{!v.startDate}" />
@@ -118,7 +118,7 @@
                                             </div>
                                         </div>
                                         
-                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with intrest</label>   <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="yesCheck2" value="{!v.isTaxBenefit}"/> Yes <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="noCheck"/> No
+                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with interest</label>   <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="yesCheck2" value="{!v.isTaxBenefit}"/> Yes <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="noCheck"/> No
                                         <div id="ifYes1" style="visibility:hidden"> 
                                             
                                             <label>What %of contribution bring tax benefit?</label><lightning:input   />

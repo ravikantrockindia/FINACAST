@@ -21,7 +21,6 @@
     <aura:registerEvent name="rTid" type="c:AccountReport"/>
     <aura:handler name="change" value="{!v.isModalOpen}" action="{!c.doInit}"/>
     <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>
-
     <div class="slds-col slds-size_1-of-1 dashboard-parant my_balance-sheets" >   
         
         <div>
@@ -54,16 +53,21 @@
                     <aura:if isTrue="{!not(empty(v.saving))}" >
                         <aura:iteration items="{!v.saving}" var="s" >
                             <lightning:card title="" aura:id="" >
-                                 
-                                <lightning:button variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }"/><p ><span class="loanrate">@{!s.FinServ__APY__c}%</span>
-                                <span class="balance">${!s.FinServ__Balance__c}</span>
-                                
-                                </p>
-                                    
-                                <br/>
-                                   
+                                <aura:if isTrue="{!s.FinServ__APY__c}"> 
+                                        <lightning:button variant="Base" label="{!s.Name}" value="{!s.Id}"/>
+                                                <p ><span class="loanrate">@{!s.FinServ__APY__c}%</span>
+                                                   <span class="balance">${!s.FinServ__Balance__c}</span>
+                                                </p>
+                                          <br/>
+  						        <aura:set attribute="else">
+                                         <lightning:button  variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }" /><p ><span class="loanrate">@0%</span>
+                                           <span class="balance">${!s.FinServ__Balance__c}</span>
+                                                  </p>
+                                                     <br/>
+                                 </aura:set>
+                                </aura:if>
                             </lightning:card>
-                        </aura:iteration> 
+                           </aura:iteration> 
                         <aura:set attribute="else">
                             <lightning:card title=""> No Value Present </lightning:card>
                         </aura:set>
@@ -71,20 +75,15 @@
                     
                 </lightning:accordionSection>
             </lightning:accordion>
-            
-            
-            
-            
-        </div>   
-        <br/>
-        <div>
-            
-            <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
+            </div>   
+            <br/>
+            <div>
+           <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{! c.handleSectionToggle }" >
                 <lightning:accordionSection name="B" class="balance-sheet" label="Credit">
                     <aura:if isTrue="{!v.isTab}">
                         <div class="slds-clearfix">
                             <div class="slds-float_right">
-                                <lightning:button label="Add credit Account" value="2" aura:id="creditAccount" variant="" onclick="{! c.openModel }"/>
+                                <lightning:button label="Add Credit Account" value="2" aura:id="creditAccount" variant="" onclick="{! c.openModel }"/>
                             </div>
                         </div>
                         <aura:if isTrue="{!and(v.CurrentOpening=='2', v.isModalOpen)}">
@@ -101,18 +100,24 @@
                             </lightning:card-->
                             
                             <lightning:card title="" aura:id="" >
-                                  
-                                <lightning:button variant="" label="{!c.Name}" value="{!c.Id}"  onclick="{!c.handleAccount }"/><p ><span class="loanrate">@{!c.FinServ__APY__c}%</span>
-                                <span class="balance">${!c.FinServ__Balance__c}</span>
-                                
-                                </p>
-                                    
-                                <br/>
-                                   
+                                    <aura:if isTrue="{!c.FinServ__APY__c}">  
+                                            <lightning:button variant="" label="{!c.Name}" value="{!c.Id}"  onclick="{!c.handleAccount }"/><p ><span class="loanrate">@{!c.FinServ__APY__c}%</span>
+                                                    <span class="balance">${!c.FinServ__Balance__c}</span>
+                                                    
+                                                    </p>
+                                                        
+                                                    <br/>
+                                   <aura:set attribute="else">  
+                                           <lightning:button variant="" label="{!c.Name}" value="{!c.Id}"  onclick="{!c.handleAccount }"/><p ><span class="loanrate">@0%</span>
+                                                <span class="balance">${!c.FinServ__Balance__c}</span>
+                                                
+                                                </p>
+                                                    
+                                                <br/>
+                                        </aura:set>
+                                </aura:if>
                             </lightning:card>
-                            
-                            
-                        </aura:iteration>
+                          </aura:iteration>
                         <aura:set attribute="else">
                             <lightning:card title=""> No Value Present </lightning:card>
                         </aura:set>
@@ -161,7 +166,5 @@
             </aura:set>
         </div>
     </div>
-    
-   
-    
+        
 </aura:component>
