@@ -174,20 +174,16 @@ public class Finacast_FS_ParentApexTest {
         goals4.add(goals2);
         insert goals4;
     }
-@isTest
+    
+   @isTest
     public static void Test(){
         Test.startTest();
-       // setUpTestData('Monthly');
         Account t =[select id from Account where name = 'Test'];
         Account t2 = [select id ,Name from Account where name='Test2'];
         Finacast_FS_ParentApex.createClientData(t.id);  
         Finacast_FS_ParentApex.createClientData(t2.id);
-        Finacast_FS_ParentApex.createClientData_bak(t.Id);
-        Finacast_FS_ParentApex.createClientData_bak(t2.Id);
         Finacast_FS_ParentApex.WrapperResponse.getData(t.Id);
         Finacast_FS_ParentApex.WrapperResponse.getData(t2.Id);
-        Finacast_FS_ParentApex.WrapperResponse.getData('init');
-        Finacast_FS_ParentApex.print();
         Test.stopTest(); 
     }
     
