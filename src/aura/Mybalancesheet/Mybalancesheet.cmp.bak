@@ -21,7 +21,6 @@
     <aura:registerEvent name="rTid" type="c:AccountReport"/>
     <aura:handler name="change" value="{!v.isModalOpen}" action="{!c.doInit}"/>
     <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>
-
     <div class="slds-col slds-size_1-of-1 dashboard-parant my_balance-sheets" >   
         
         <div>
