@@ -3569,7 +3569,6 @@ if(And( month(Today())= month(FinServ__RelationshipStartDate__c), Day(Today())&l
             </values>
         </picklistValues>
         <picklistValues>
-        <picklistValues>
             <picklist>FinServ__BorrowingHistory__c</picklist>
             <values>
                 <fullName>Excellent</fullName>
