@@ -1,3 +1,0 @@
-<aura:event type="Application" description="Hides the filter on the screen">
-    <aura:attribute name="isfilterVisible" type="Boolean" default="false"/>
-</aura:event>

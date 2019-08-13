@@ -1,8 +1,0 @@
-({
-    setupChart  : function(component,event) {
-       
-
-
-
-    }
-})

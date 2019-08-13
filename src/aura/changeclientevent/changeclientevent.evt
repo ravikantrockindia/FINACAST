@@ -1,5 +1,0 @@
-<aura:event type="APPLICATION" >
-    <aura:attribute name="idclient" type="String" />
-     <aura:attribute name="NameSpace" type="String" />
-    
-</aura:event>
