@@ -1,6 +1,6 @@
 ({
     doInit : function(component, event, helper) { 
-      /*  var action=component.get('c.getNamespace');
+        var action=component.get('c.getNamespace');
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
@@ -21,7 +21,7 @@
                 }
             }
         });
-        $A.enqueueAction(action); */
+        $A.enqueueAction(action); 
         
         component.set("v.SearchText", null );
         var columns = [];
@@ -31,7 +31,10 @@
             var state =response.getState();
             if (state === "SUCCESS") {
                 var allFieldList = response.getReturnValue().lstFields;
-                
+                var allFieldList2 = response.getReturnValue().lstSObject;
+                var ClientSize=allFieldList2.length;
+            
+                component.set("v.TotalClient",ClientSize);
                 var allColumnList = [];
                 var counter = 0;
                 var referenceFieldsArray = [];              
@@ -203,7 +206,7 @@
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": "Finsol__CreateNewClient"
+                    "componentName": namespace+"__CreateNewClient"
                 },
                 "state": {}
             },

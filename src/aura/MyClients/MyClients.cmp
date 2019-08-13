@@ -20,13 +20,33 @@
     <aura:attribute name="sortDirection" type="String" default=""/>
     <aura:attribute name="flag" type="Boolean" default="true"/>
     <aura:attribute name="col" type="Boolean"/>
+    <aura:attribute name="TotalClient" type="Integer"/>
     <aura:handler name="saveListEvent" event="c:SaveListEvent" action="{!c.handleComponentEvent}"/>
     <aura:handler name="CancelEvent" event="c:CreateNewClientEvent" action="{!c.doInit}"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:handler event="c:Fina_HideFilterEvent" action="{!c.addFilter}"/>
     <aura:attribute name = "namespace" type = "String" />
     <aura:handler event="c:Fina_FilterInformationEvent" action="{!c.handleFilterEvent}"/>
-    <div class="slds-box slds-theme_default clients_panel cBudget slds-show">
+   
+    <div class="slds-card__header slds-box slds-theme_default ">
+    <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_3-of-12 ">
+                    <c:GoalValue/>                  
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <c:ClientManaged TotalClient="{!v.TotalClient}"/>                                 
+            </div>
+             
+            <div class="slds-col slds-size_6-of-12 ">                  
+                <c:ClientInvestmentGraph/>                                  
+            </div>
+        </div>
+    </div>
+    <div class="slds-col slds-size_12-of-12">
+        <c:StockMarket />
+    </div>
+    <div class="slds-box slds-theme_default clients_panel cBudget slds-show slds-m-top_small">
+        
         <div class="slds-page-header__row">
             <div class="slds-size_6-of-12">
                 <h2>My Clients</h2>

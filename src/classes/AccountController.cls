@@ -1,6 +1,4 @@
 public class AccountController {
-    
-    
     public static String columnList {get; set;}
     
     public static void getDisplayColumns()

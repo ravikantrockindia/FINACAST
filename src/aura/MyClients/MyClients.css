@@ -15,7 +15,7 @@
     border-radius: 3px;
 }
 .THIS .slds-button_icon-bare{
-overflow: visible;
+    overflow: visible;
 }
 .THIS .slds-scrollable_x {
     overflow-y:visible !important;
@@ -51,4 +51,25 @@ overflow: visible;
 }
 .THIS .slds-p-around_small {
     text-align: center;
+}
+
+.THIS .total_investment {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.THIS .total_investment p {
+    color: #000;
+    display: block;
+}
+.THIS .total_investment p span {
+    font-size: 12px;
+}
+.THIS .total_investment h1 {
+    font-size: 25px;
+    font-weight: 700;
+    margin: 80px 0;
+    display: block;
+    color: #000;
 }

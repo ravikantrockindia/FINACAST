@@ -1,0 +1,13 @@
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS.client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+    text-align: center;
+    padding: 10px 0;
+    color: #000;
+}
+.THIS.client_managed h2 {
+    margin: 80px 0; 
+    font-weight: 500;
+}
