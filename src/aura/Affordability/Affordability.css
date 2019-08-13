@@ -1,3 +1,23 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600; color: #000;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 10px;
+    min-width: 120px;
+}
+.THIS .slds-button:hover {
+    color: #fff;
+}
+
 .THIS .slds-tabs_default__content {
     /*background-color: #f1f2f3;*/
     border: 1px solid #ccc;
@@ -7,6 +27,9 @@
     text-align: center;
     color: white;
     width: 74%;
+}
+.THIS.aff-data-box .customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
 }
 .THIS .slds-required{
     display:none;
@@ -173,12 +196,12 @@
     padding: 0;
 }
 .THIS .Summary_cashflow .slds-modal__header .slds-table thead th {
-    /*background-color: #2D4A7D;
-    color: #fff;*/
-    padding: 10px ;
+    background-color: #f6f9fc;
+    /*color: #fff;*/
+    padding: 12px 10px ;
 }
 .THIS .Summary_cashflow .slds-modal__header .slds-table thead th:first-child {
-    width: 30%;
+    width: 25%;
 }
 .THIS .Summary_cashflow .slds-modal__content {
     padding: 0;
@@ -186,19 +209,281 @@
 .THIS .Summary_cashflow .slds-modal__content .slds-table {
     margin-top: -24px;
 }
+.THIS .Summary_cashflow .slds-button {
+    background: transparent;
+    width: 30px;
+    min-width: 30px;
+    height: 50px;
+}
 .THIS .Summary_cashflow .slds-modal__content .slds-table tbody th:first-child {
-    width: 30%;
+    width: 25%;
     border-bottom: 1px solid #ccc;
+    padding: 12px 10px;
 }
 .THIS .Summary_cashflow .slds-modal__content .slds-table tbody td:first-child {
-    width: 30%;
+    width: 25%;
 }
 .THIS .Summary_cashflow .slds-modal__content .slds-table tbody td {
-    padding: 8px 6px;
+    padding: 8px 12px;
     border-bottom: 1px solid #ccc;
 }
+.THIS .Summary_cashflow .slds-modal__content .slds-table tbody tr:last-child th:first-child {
+    font-weight: 700;
+}
 .THIS .select_year {
-    width : 15%;
+    width : 100%;
     float : right;
     margin :-18px 2px 1px;
+}
+
+/*8888888888888888*/
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600; color: #000;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    width: 120px;
+}
+.THIS .slds-button:hover {
+    color: #fff;
+}
+.THIS .clients-details span {
+    color: #999999;
+    font-size: 12px;
+}
+.THIS .active_goal-tab {
+    background-color: transparent;
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS .active_goal-tab .slds-tabs_default__nav {
+    border: none;
+}
+.THIS .slds-tabs_default__item {
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 30px;
+    font-weight: 700;
+}
+.THIS .slds-is-active .slds-tabs_default__link {
+    color: #4e75a3;
+    font-weight: 700 !important;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+}
+.THIS .client_managed p {
+	color: #8e8e8e;
+    font-size: 12px;
+}
+.THIS .ac-featers {
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS .ac-featers .slds-grid {
+    border-bottom: 1px solid #f1f2f3;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.THIS .footer {
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    color: #69778f;
+}
+.THIS .footer p {
+    font-weight: 600;
+    font-size: 12px;
+}
+.THIS .footer ul li {
+    display: inline-block;
+    margin: 0 30px;
+}
+.THIS .footer ul li:last-child {
+    margin-right: 0;
+}
+.THIS .footer ul li a {
+    color: #69778f;
+}
+.THIS .footer ul li a:hover {
+    text-decoration: none;
+}
+.THIS .canvasjs-chart-credit {
+    display: none;
+}
+/*.THIS #chartContainer3 {
+    height: 180px !important;
+}*/
+.THIS #chartContainer3 .canvasjs-chart-container {
+    height: 180px;
+    overflow: hidden;
+}
+.THIS #chartContainer3 .canvasjs-chart-container .canvasjs-chart-canvas {
+    height: 220px;
+}
+.THIS #chartContainer21 .canvasjs-chart-container {
+    height: 180px;
+    overflow: hidden;
+}
+.THIS #chartContainer21 .canvasjs-chart-container .canvasjs-chart-canvas {
+    height: 220px;
+}
+.THIS .half-chart-sticker {
+    position: relative;
+    z-index: 0;
+}
+.THIS .chart-sticker {
+    position: absolute;
+    top: 90px;
+    text-align: left;
+    /*width: calc(100% - 20px);*/
+    width: 100%;
+}
+.THIS .chart-sticker ul li {
+    display: inline-block;
+    font-size: 11px;
+}
+.THIS .chart-sticker ul li:first-child {
+    margin-left:0px;
+}
+.THIS .chart-sticker ul li:nth-child(2) {
+    margin-left:50px;
+}
+.THIS .chart-sticker ul li:last-child {
+    margin-left:43px;
+}
+.THIS .chart-sticker h2 {
+    font-size: 40px;
+    font-weight: 600;
+}
+.THIS .client-profile h2 .slds-icon {
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+.THIS .clients-details span {
+    color: #999999;
+    font-size: 12px;
+}
+.THIS .clients-details h5 {
+    color: #000;
+    font-size: 14px;
+}
+.THIS .clients-details h5 b {
+    font-weight: 600;
+}
+.THIS .client_managed .slds-table .non-track {
+    font-size: 12px;
+}
+.THIS .health-features p {
+    font-size: 12px;
+}
+.THIS .health-features p .slds-icon_container_circle {
+    position: relative;
+    height: 20px;
+    width: 20px;
+}
+.THIS .health-features p span {
+    margin: -14px 0 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.THIS .health-features p .slds-icon {
+    position: absolute;
+    top: 2px;
+    width: 20px;
+    left: 0;
+}
+.THIS .on-track .slds-icon {
+    left: 3px !important;
+}
+.THIS .health-features h4 {
+    font-size: 12px;
+    color: #808080;
+    font-weight: 500;
+    margin-top:	5px;
+}
+.THIS .on-track {
+    color: #00b088;
+    font-size: 12px;
+}
+.THIS .non-track {
+    color: #f24865;
+}
+.THIS .net-worth h1 span {
+    font-size: 12px;
+    color: #808285;
+    font-weight: 600;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.THIS .net-worth h1 span .slds-icon {
+    vertical-align:	text-bottom;
+    fill: green;
+}
+.THIS .need-adv {
+    color: #ff8b00;
+}
+.THIS .need-adv .slds-icon-action-approval {
+    background-color: #ff8b00;
+}
+.THIS .pre-next-date {
+    border: 1px solid #ccc;
+    float: right;
+}
+.THIS .pre-next-date a {
+    padding: 5px;
+    display: inline-block;
+}
+.THIS .pre-next-date .slds-icon {
+    width: 12px;
+    height: 12px;
+}
+.THIS .view-scenario label {
+ 	color: #8d8d8d;
+    margin-top: 10px;
+    display: block;   
+}
+.THIS .view-scenario .slds-select_container:after {
+    display: none;
+}
+.THIS .view-scenario .slds-select_container:before {
+    display: none;
+}
+.THIS .view-scenario .slds-select {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 0;
+    height: 40px;
+    color: #7e7e7e;
+}
+.THIS .view-scenario .slds-select_container {
+    position: relative;
+    z-index: 0;
+}
+.THIS .view-scenario .slds-icon_container {
+    position: absolute;
+    right: 15px;
+    top: 13px;
+    z-index: -1;
+}
+.THIS .networth-fea {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.THIS .networth-msg b {
+    color: #000;
+}
+.THIS .networth-msg span {
+    color: #2fbf9e;
+}
+.THIS .networth-fea h4 {
+    font-size: 18px;
 }

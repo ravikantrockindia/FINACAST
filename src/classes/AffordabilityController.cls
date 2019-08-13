@@ -601,7 +601,7 @@ public class AffordabilityController {
                         }
                         setData +='{';
                         setData +='\'id\':\''+j+'\',';
-                        setData +='\'type\':\''+e.Name+'\',';
+                        setData +='\'type\':\'expenses\',';
                         if(monthlyExpenses != null){
                             setData +='\'amount\':'+monthlyExpenses + ',';
                         }else{
@@ -639,7 +639,7 @@ public class AffordabilityController {
                 System.debug('Client Data from Future Simulation: ' + clientData);
                 
             }
-            System.debug('Non-HouseHold Request Data:$%' + setData);
+            System.debug('setdata--' + setData);
             return setData;
         }
     }
