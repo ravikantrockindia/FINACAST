@@ -64,6 +64,8 @@
     <aura:attribute name="afford2" type="boolean" default="false"/>
     <aura:attribute name="afford1" type="boolean" default="false"/>
     <aura:attribute type="String" name="displaySection" default = "false" />
+    <aura:attribute type="String" name="displayTax" default = "false" />
+    <aura:attribute type="String" name="TaxDeduction" default = "false" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <ltng:require scripts="{!$Resource.ChartJs}" />
     <lightning:card  title="">
@@ -90,7 +92,7 @@
                                 <p>Name this Affordability Scenario</p>
                             </div>
                             <div class="aff-data-box">
-                                <label> Cost</label><lightning:input type="number" formatter="currency" value="{!v.totalAmount}" required="true" messageWhenValueMissing="Please enter an amount" aura:id="fields" />
+                                <label> Cost</label><lightning:input  value="{!v.totalAmount}" type="number" formatter="currency" required="true" messageWhenValueMissing="Please enter an amount" aura:id="fields" />
                                 <p>What is the price of the item in the Affordability Scenario</p>
                             </div>
                             <div class="aff-data-box">
@@ -99,7 +101,10 @@
                             </div>
                             <div class="aff-data-box">
                                 <label style="float: left; display: block; width: 100%;">Is there a payment plan for this item</label>
-                                <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" value="{!v.isPaymentPlan}"/> Yes <input type="radio" onclick = "{!c.handleRadio1}" value="{!v.getNo}" name="yesno" id="noCheck"/> No                        
+                                <fieldset id="group1">
+                                    <input type="radio" onclick = "{!c.handleRadio}" name="group1" id="yesCheck" value="{!v.isPaymentPlan}"/> Yes 
+                                    <input type="radio" onclick = "{!c.handleRadio1}" value="{!v.getNo}" name="group1" id="noCheck"/> No      
+                                </fieldset>              
                                 <p style="clear:both;">Choose yes if taking a loan</p>
                                 <aura:if isTrue="{!v.displaySection}">
                                     <div id="ifYes" >
@@ -118,15 +123,29 @@
                                             </div>
                                         </div>
                                         
-                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with interest</label>   <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="yesCheck2" value="{!v.isTaxBenefit}"/> Yes <input type="radio" onclick = "{!c.handleRadio2}" name="yesno" id="noCheck"/> No
-                                        <div id="ifYes1" style="visibility:hidden"> 
-                                            
+                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Tax benefit with interest</label>  
+                                        <fieldset id="group3">
+                                        <input type="radio" onclick = "{!c.handleRadio2}" name="group3"  value="{!v.isTaxBenefit}"/> Yes 
+                                        <input type="radio" onclick = "{!c.handleRadio4}" name="group3" /> No
+                                        </fieldset>
+                                        <div>
+                                             <aura:if isTrue="{!v.displayTax}">
+
                                             <label>What %of contribution bring tax benefit?</label><lightning:input   />
+                                            
+                                            </aura:if>
                                         </div>  
-                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Are tax benefit realized monthly</label>   <input type="radio" onclick = "{!c.handleRadio3}" name="yesno" id="yesCheck6" /> Yes <input type="radio" onclick = "{!c.handleRadio3}"  name="yesno" id="noCheck"/> No
-                                        <div id="ifYes5" style="visibility:hidden"> 
+                                        <label style="float: left; display: block; width: 100%; margin-top: 5px;">Are tax benefit realized monthly</label>  
+                                        <fieldset id="group2">
+                                        <input type="radio" onclick = "{!c.handleRadio3}" name="group2"  /> Yes 
+                                        <input type="radio" onclick = "{!c.handleRadio5}"  name="group2" /> No
+                                        </fieldset>
+                                        <div > 
+                                            
+                                               <aura:if isTrue="{!v.TaxDeduction}">
                                             
                                             <label>Maximum yearly tax deduction allowed</label><lightning:input   />
+                                            </aura:if>
                                         </div>
                                     </div>
                                 </aura:if>
@@ -243,61 +262,61 @@
                                                     <tr>
                                                         <th>Savings at hand</th>
                                                         <aura:iteration items="{!v.monthlySavingList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Expenses</th>
                                                         <aura:iteration items="{!v.monthlyExpenseList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Planned Income</th>
                                                         <aura:iteration items="{!v.monthlyExpenseList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Savings allocated to goals</th>
                                                         <aura:iteration items="{!v.monthlyGoalTargetList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Credit Card Debts</th>
                                                         <aura:iteration items="{!v.monthlyCreditCardList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Monthly Loan Payments</th>
                                                         <aura:iteration items="{!v.monthlyTermDebtList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Rainy Day Fund Requirement</th>
                                                         <aura:iteration items="{!v.displayAffordRainyDayFunds}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Net savings available for the purchase</th>
                                                         <aura:iteration items="{!v.cashAvailableForPurchaseList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>One time payment for the purchase</th>
                                                         <aura:iteration items="{!v.downPayments}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>-${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Monthly Installment</th>
                                                         <aura:iteration items="{!v.installment}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
@@ -361,55 +380,55 @@
                                                     <tr>
                                                         <th>Expenses</th>
                                                         <aura:iteration items="{!v.monthlyExpenseRecommendList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Planned Income</th>
                                                         <aura:iteration items="{!v.monthlyIncomeRecommendList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Savings allocated to goals</th>
                                                         <aura:iteration items="{!v.monthlyGoalTargetRecommendList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Credit Card Debts</th>
                                                         <aura:iteration items="{!v.monthlyCreditCardRecommendList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Monthly Loan Payments</th>
                                                         <aura:iteration items="{!v.monthlyTermDebtRecommendList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Rainy Day Fund Requirement</th>
                                                         <aura:iteration items="{!v.displayFutureAffordRainyDayFunds}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Net savings available for the purchase</th>
                                                         <aura:iteration items="{!v.cashAvailableForPurchaseRecommendList}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>One time payment for the purchase</th>
                                                         <aura:iteration items="{!v.downPaymentRec}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>
                                                         <th>Monthly Installment</th>
                                                         <aura:iteration items="{!v.installmentRec}" var="element">
-                                                            <td>{!element}</td>
+                                                            <td>${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
                                                     <tr>

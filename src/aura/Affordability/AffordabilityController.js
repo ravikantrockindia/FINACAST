@@ -1,9 +1,9 @@
 ({
-    handleRadio: function yesnoCheck(component, event) {                
+    handleRadio: function (component, event) {                
         component.set("v.displaySection" ,  true);        
     },
     
-    doInit: function yesnoCheck(component, event) { 
+    doInit: function (component, event) { 
         var workspaceAPI = component.find("workspace");
         var tab=component.get("v.tabName")
         console.log('tab',tab)
@@ -20,23 +20,28 @@
     }
     ,
     
-    handleRadio1: function yesnoCheck(component, event) {                
+    handleRadio1: function (component, event) {                
         component.set("v.displaySection" ,  false);        
     },
     
-    handleRadio2: function yesnoCheck(component, event) {
-        component.set("v.displaySection1", true);
+    handleRadio2: function (component, event) {
+        component.set("v.displayTax" ,  true);
+        
         
     },
-    handleRadio3: function yesnoCheck(component, event) 
+    handleRadio4: function (component, event) {
+        component.set("v.displayTax" ,  false);
+        
+        
+    },
+    handleRadio3: function (component, event) 
     {
-        if (document.getElementById('yesCheck6').checked) {
-            document.getElementById('ifYes5').style.visibility = 'visible';
-        }
-        else document.getElementById('ifYes5').style.visibility = 'hidden';
-        
+        component.set("v.TaxDeduction" ,  true);
     },
-    
+    handleRadio5: function (component, event) 
+    {
+        component.set("v.TaxDeduction" ,  false);
+    },
     YearlyData: function (component, event) {
         
         var action = component.get("c.getData");
@@ -97,7 +102,7 @@
                 
                 for(var i in tabledata.monthlySavingList){
                     if(tabledata.monthlySavingList[i].substring(0,4) == year )
-                        monthlySavingList.push(tabledata.monthlySavingList[i].substring(5));
+                        monthlySavingList.push(parseFloat(tabledata.monthlySavingList[i].substring(5)).toFixed(2));
                     
                 }
                 component.set("v.monthlySavingList",monthlySavingList);
@@ -105,65 +110,65 @@
                 
                 for(var i in tabledata.monthlyExpenseList){
                     if(tabledata.monthlyExpenseList[i].substring(0,4) == year )
-                        monthlyExpenseList.push(tabledata.monthlyExpenseList[i].substring(5));
+                        monthlyExpenseList.push(parseFloat(tabledata.monthlyExpenseList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyExpenseList",monthlyExpenseList);
                 
                 
                 for(var i in tabledata.monthlyIncomeList){
                     if(tabledata.monthlyIncomeList[i].substring(0,4) == year )
-                        monthlyIncomeList.push(tabledata.monthlyIncomeList[i].substring(5));
+                        monthlyIncomeList.push(parseFloat(tabledata.monthlyIncomeList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyIncomeList",monthlyIncomeList);
                 
                 for(var i in tabledata.monthlyGoalTargetList){
                     if(tabledata.monthlyGoalTargetList[i].substring(0,4) == year )
-                        monthlyGoalTargetList.push(tabledata.monthlyGoalTargetList[i].substring(5));
+                        monthlyGoalTargetList.push(parseFloat(tabledata.monthlyGoalTargetList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyGoalTargetList",monthlyGoalTargetList);
                 
                 for(var i in tabledata.monthlyCreditCardList){
                     if(tabledata.monthlyCreditCardList[i].substring(0,4) == year )
-                        monthlyCreditCardList.push(tabledata.monthlyCreditCardList[i].substring(5));
+                        monthlyCreditCardList.push(parseFloat(tabledata.monthlyCreditCardList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyCreditCardList",monthlyCreditCardList);
                 
                 for(var i in tabledata.monthlyTermDebtList){
                     if(tabledata.monthlyTermDebtList[i].substring(0,4) == year )
-                        monthlyTermDebtList.push(tabledata.monthlyTermDebtList[i].substring(5));
+                        monthlyTermDebtList.push(parseFloat(tabledata.monthlyTermDebtList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyTermDebtList",monthlyTermDebtList);
                 
                 
                 for(var i in tabledata.displayAffordRainyDayFunds){
                     if(tabledata.displayAffordRainyDayFunds[i].substring(0,4) == year )
-                        displayAffordRainyDayFunds.push(tabledata.displayAffordRainyDayFunds[i].substring(5));
+                        displayAffordRainyDayFunds.push(parseFloat(tabledata.displayAffordRainyDayFunds[i].substring(5)).toFixed(2));
                 }
                 component.set("v.displayAffordRainyDayFunds",displayAffordRainyDayFunds);
                 
                 
                 for(var i in tabledata.cashAvailableForPurchaseList){
                     if(tabledata.cashAvailableForPurchaseList[i].substring(0,4) == year )
-                        cashAvailableForPurchaseList.push(tabledata.cashAvailableForPurchaseList[i].substring(5));
+                        cashAvailableForPurchaseList.push(parseFloat(tabledata.cashAvailableForPurchaseList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.cashAvailableForPurchaseList",cashAvailableForPurchaseList);
                 
                 for(var i in tabledata.downPayment){
                     if(tabledata.downPayment[i].substring(0,4) == year )
-                        downPayment.push(tabledata.downPayment[i].substring(5));
+                        downPayment.push(parseFloat(tabledata.downPayment[i].substring(5)).toFixed(2));
                 }
                 component.set("v.downPayments",downPayment);
                 
                 for(var i in tabledata.installment){
                     if(tabledata.installment[i].substring(0,4) == year )
-                        installment.push(tabledata.installment[i].substring(5));
+                        installment.push(parseFloat(tabledata.installment[i].substring(5)).toFixed(2));
                 }
                 component.set("v.installment",installment);
                 
                 
                 for(var i in tabledata.networthAnalysisList){
                     if(tabledata.networthAnalysisList[i].substring(0,4) == year )
-                        networthAnalysisList.push(tabledata.networthAnalysisList[i].substring(5));
+                        networthAnalysisList.push(parseFloat(tabledata.networthAnalysisList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.networthAnalysisList",networthAnalysisList);
                 
@@ -192,72 +197,72 @@
                 
                 for(var i in tabledata.monthlySavingRecommendList){
                     if(tabledata.monthlySavingRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        monthlySavingRecommendList.push(tabledata.monthlySavingRecommendList[i].substring(5));
+                        monthlySavingRecommendList.push(parseFloat(tabledata.monthlySavingRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlySavingRecommendList",monthlySavingRecommendList);
                 
                 
                 for(var i in tabledata.monthlyExpenseRecommendList){
                     if(tabledata.monthlyExpenseRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        monthlyExpenseRecommendList.push(tabledata.monthlyExpenseRecommendList[i].substring(5));
+                        monthlyExpenseRecommendList.push(parseFloat(tabledata.monthlyExpenseRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyExpenseRecommendList",monthlyExpenseRecommendList);
                 
                 
                 for(var i in tabledata.monthlyIncomeRecommendList){
                     if(tabledata.monthlyIncomeRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        monthlyIncomeRecommendList.push(tabledata.monthlyIncomeRecommendList[i].substring(5));
+                        monthlyIncomeRecommendList.push(parseFloat(tabledata.monthlyIncomeRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyIncomeRecommendList",monthlyIncomeRecommendList);
                 
                 for(var i in tabledata.monthlyGoalTargetRecommendList){
                     if(tabledata.monthlyGoalTargetRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        monthlyGoalTargetRecommendList.push(tabledata.monthlyGoalTargetRecommendList[i].substring(5));
+                        monthlyGoalTargetRecommendList.push(parseFloat(tabledata.monthlyGoalTargetRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyGoalTargetRecommendList",monthlyGoalTargetRecommendList);
                 
                 for(var i in tabledata.monthlyCreditCardRecommendList){
                     if(tabledata.monthlyCreditCardRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        monthlyCreditCardRecommendList.push(tabledata.monthlyCreditCardRecommendList[i].substring(5));
+                        monthlyCreditCardRecommendList.push(parseFloat(tabledata.monthlyCreditCardRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyCreditCardRecommendList",monthlyCreditCardRecommendList);
                 
                 for(var i in tabledata.monthlyTermDebtRecommendList){
                     if(tabledata.monthlyTermDebtRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        monthlyTermDebtRecommendList.push(tabledata.monthlyTermDebtRecommendList[i].substring(5));
+                        monthlyTermDebtRecommendList.push(parseFloat(tabledata.monthlyTermDebtRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyTermDebtRecommendList",monthlyTermDebtRecommendList);
                 
                 
                 for(var i in tabledata.displayFutureAffordRainyDayFunds){
                     if(tabledata.displayFutureAffordRainyDayFunds[i].substring(0,4) == FutureTableselectedYear )
-                        displayFutureAffordRainyDayFunds.push(tabledata.displayFutureAffordRainyDayFunds[i].substring(5));
+                        displayFutureAffordRainyDayFunds.push(parseFloat(tabledata.displayFutureAffordRainyDayFunds[i].substring(5)).toFixed(2));
                 }
                 component.set("v.displayFutureAffordRainyDayFunds",displayFutureAffordRainyDayFunds);
                 
                 
                 for(var i in tabledata.cashAvailableForPurchaseRecommendList){
                     if(tabledata.cashAvailableForPurchaseRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        cashAvailableForPurchaseRecommendList.push(tabledata.cashAvailableForPurchaseRecommendList[i].substring(5));
+                        cashAvailableForPurchaseRecommendList.push(parseFloat(tabledata.cashAvailableForPurchaseRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.cashAvailableForPurchaseRecommendList",cashAvailableForPurchaseRecommendList);
                 
                 for(var i in tabledata.downPaymentRec){
                     if(tabledata.downPaymentRec[i].substring(0,4) == FutureTableselectedYear )
-                        downPaymentRec.push(tabledata.downPaymentRec[i].substring(5));
+                        downPaymentRec.push(parseFloat(tabledata.downPaymentRec[i].substring(5)).toFixed(2));
                 }
                 component.set("v.downPaymentRec",downPaymentRec);
                 
                 for(var i in tabledata.installmentRec){
                     if(tabledata.installmentRec[i].substring(0,4) == FutureTableselectedYear )
-                        installmentRec.push(tabledata.installmentRec[i].substring(5));
+                        installmentRec.push(parseFloat(tabledata.installmentRec[i].substring(5)).toFixed(2));
                 }
                 component.set("v.installmentRec",installmentRec);
                 
                 
                 for(var i in tabledata.networthAnalysisRecommendList){
                     if(tabledata.networthAnalysisRecommendList[i].substring(0,4) == FutureTableselectedYear )
-                        networthAnalysisRecommendList.push(tabledata.networthAnalysisRecommendList[i].substring(5));
+                        networthAnalysisRecommendList.push(parseFloat(tabledata.networthAnalysisRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.networthAnalysisRecommendList",networthAnalysisRecommendList);
                 
@@ -372,7 +377,7 @@
                 
                 for(var i in tabledata.monthlySavingList){
                     if(tabledata.monthlySavingList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        monthlySavingList.push(tabledata.monthlySavingList[i].substring(5));
+                            monthlySavingList.push( parseFloat(tabledata.monthlySavingList[i].substring(5)).toFixed(2));
                     
                 }
                 component.set("v.monthlySavingList",monthlySavingList);
@@ -380,65 +385,65 @@
                 
                 for(var i in tabledata.monthlyExpenseList){
                     if(tabledata.monthlyExpenseList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        monthlyExpenseList.push(tabledata.monthlyExpenseList[i].substring(5));
+                            monthlyExpenseList.push(parseFloat(tabledata.monthlyExpenseList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyExpenseList",monthlyExpenseList);
                 
                 
                 for(var i in tabledata.monthlyIncomeList){
                     if(tabledata.monthlyIncomeList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        monthlyIncomeList.push(tabledata.monthlyIncomeList[i].substring(5));
+                            monthlyIncomeList.push(parseFloat(tabledata.monthlyIncomeList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyIncomeList",monthlyIncomeList);
                 
                 for(var i in tabledata.monthlyGoalTargetList){
                     if(tabledata.monthlyGoalTargetList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        monthlyGoalTargetList.push(tabledata.monthlyGoalTargetList[i].substring(5));
+                            monthlyGoalTargetList.push(parseFloat(tabledata.monthlyGoalTargetList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyGoalTargetList",monthlyGoalTargetList);
                 
                 for(var i in tabledata.monthlyCreditCardList){
                     if(tabledata.monthlyCreditCardList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        monthlyCreditCardList.push(tabledata.monthlyCreditCardList[i].substring(5));
+                            monthlyCreditCardList.push(parseFloat(tabledata.monthlyCreditCardList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyCreditCardList",monthlyCreditCardList);
                 
                 for(var i in tabledata.monthlyTermDebtList){
                     if(tabledata.monthlyTermDebtList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        monthlyTermDebtList.push(tabledata.monthlyTermDebtList[i].substring(5));
+                            monthlyTermDebtList.push(parseFloat(tabledata.monthlyTermDebtList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyTermDebtList",monthlyTermDebtList);
                 
                 
                 for(var i in tabledata.displayAffordRainyDayFunds){
                     if(tabledata.displayAffordRainyDayFunds[i].substring(0,4) == tabledata.yearlyList[0] )
-                        displayAffordRainyDayFunds.push(tabledata.displayAffordRainyDayFunds[i].substring(5));
+                            displayAffordRainyDayFunds.push(parseFloat(tabledata.displayAffordRainyDayFunds[i].substring(5)).toFixed(2));
                 }
                 component.set("v.displayAffordRainyDayFunds",displayAffordRainyDayFunds);
                 
                 
                 for(var i in tabledata.cashAvailableForPurchaseList){
                     if(tabledata.cashAvailableForPurchaseList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        cashAvailableForPurchaseList.push(tabledata.cashAvailableForPurchaseList[i].substring(5));
+                            cashAvailableForPurchaseList.push(parseFloat(tabledata.cashAvailableForPurchaseList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.cashAvailableForPurchaseList",cashAvailableForPurchaseList);
                 
                 for(var i in tabledata.downPayment){
                     if(tabledata.downPayment[i].substring(0,4) == tabledata.yearlyList[0] )
-                        downPayment.push(tabledata.downPayment[i].substring(5));
+                            downPayment.push(parseFloat(tabledata.downPayment[i].substring(5)).toFixed(2));
                 }
                 component.set("v.downPayments",downPayment);
                 
                 for(var i in tabledata.installment){
                     if(tabledata.installment[i].substring(0,4) == tabledata.yearlyList[0] )
-                        installment.push(tabledata.installment[i].substring(5));
+                            installment.push(parseFloat(tabledata.installment[i].substring(5)).toFixed(2));
                 }
                 component.set("v.installment",installment);
                 
                 
                 for(var i in tabledata.networthAnalysisList){
                     if(tabledata.networthAnalysisList[i].substring(0,4) == tabledata.yearlyList[0] )
-                        networthAnalysisList.push(tabledata.networthAnalysisList[i].substring(5));
+                            networthAnalysisList.push(parseFloat(tabledata.networthAnalysisList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.networthAnalysisList",networthAnalysisList);
                 
@@ -472,72 +477,72 @@
                 
                 for(var i in tabledata.monthlySavingRecommendList){
                     if(tabledata.monthlySavingRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        monthlySavingRecommendList.push(tabledata.monthlySavingRecommendList[i].substring(5));
+                            monthlySavingRecommendList.push(parseFloat(tabledata.monthlySavingRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlySavingRecommendList",monthlySavingRecommendList);
                 
                 
                 for(var i in tabledata.monthlyExpenseRecommendList){
                     if(tabledata.monthlyExpenseRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        monthlyExpenseRecommendList.push(tabledata.monthlyExpenseRecommendList[i].substring(5));
+                            monthlyExpenseRecommendList.push(parseFloat(tabledata.monthlyExpenseRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyExpenseRecommendList",monthlyExpenseRecommendList);
                 
                 
                 for(var i in tabledata.monthlyIncomeRecommendList){
                     if(tabledata.monthlyIncomeRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        monthlyIncomeRecommendList.push(tabledata.monthlyIncomeRecommendList[i].substring(5));
+                            monthlyIncomeRecommendList.push(parseFloat(tabledata.monthlyIncomeRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyIncomeRecommendList",monthlyIncomeRecommendList);
                 
                 for(var i in tabledata.monthlyGoalTargetRecommendList){
                     if(tabledata.monthlyGoalTargetRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        monthlyGoalTargetRecommendList.push(tabledata.monthlyGoalTargetRecommendList[i].substring(5));
+                            monthlyGoalTargetRecommendList.push(parseFloat(tabledata.monthlyGoalTargetRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyGoalTargetRecommendList",monthlyGoalTargetRecommendList);
                 
                 for(var i in tabledata.monthlyCreditCardRecommendList){
                     if(tabledata.monthlyCreditCardRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        monthlyCreditCardRecommendList.push(tabledata.monthlyCreditCardRecommendList[i].substring(5));
+                            monthlyCreditCardRecommendList.push(parseFloat(tabledata.monthlyCreditCardRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyCreditCardRecommendList",monthlyCreditCardRecommendList);
                 
                 for(var i in tabledata.monthlyTermDebtRecommendList){
                     if(tabledata.monthlyTermDebtRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        monthlyTermDebtRecommendList.push(tabledata.monthlyTermDebtRecommendList[i].substring(5));
+                            monthlyTermDebtRecommendList.push(parseFloat(tabledata.monthlyTermDebtRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.monthlyTermDebtRecommendList",monthlyTermDebtRecommendList);
                 
                 
                 for(var i in tabledata.displayFutureAffordRainyDayFunds){
                     if(tabledata.displayFutureAffordRainyDayFunds[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        displayFutureAffordRainyDayFunds.push(tabledata.displayFutureAffordRainyDayFunds[i].substring(5));
+                            displayFutureAffordRainyDayFunds.push(parseFloat(tabledata.displayFutureAffordRainyDayFunds[i].substring(5)).toFixed(2));
                 }
                 component.set("v.displayFutureAffordRainyDayFunds",displayFutureAffordRainyDayFunds);
                 
                 
                 for(var i in tabledata.cashAvailableForPurchaseRecommendList){
                     if(tabledata.cashAvailableForPurchaseRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        cashAvailableForPurchaseRecommendList.push(tabledata.cashAvailableForPurchaseRecommendList[i].substring(5));
+                            cashAvailableForPurchaseRecommendList.push(parseFloat(tabledata.cashAvailableForPurchaseRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.cashAvailableForPurchaseRecommendList",cashAvailableForPurchaseRecommendList);
                 
                 for(var i in tabledata.downPaymentRec){
                     if(tabledata.downPaymentRec[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        downPaymentRec.push(tabledata.downPaymentRec[i].substring(5));
+                            downPaymentRec.push(parseFloat(tabledata.downPaymentRec[i].substring(5)).toFixed(2));
                 }
                 component.set("v.downPaymentRec",downPaymentRec);
                 
                 for(var i in tabledata.installmentRec){
                     if(tabledata.installmentRec[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        installmentRec.push(tabledata.installmentRec[i].substring(5));
+                            installmentRec.push(parseFloat(tabledata.installmentRec[i].substring(5)).toFixed(2));
                 }
                 component.set("v.installmentRec",installmentRec);
                 
                 
                 for(var i in tabledata.networthAnalysisRecommendList){
                     if(tabledata.networthAnalysisRecommendList[i].substring(0,4) == tabledata.yearlyListRec[0] )
-                        networthAnalysisRecommendList.push(tabledata.networthAnalysisRecommendList[i].substring(5));
+                            networthAnalysisRecommendList.push(parseFloat(tabledata.networthAnalysisRecommendList[i].substring(5)).toFixed(2));
                 }
                 component.set("v.networthAnalysisRecommendList",networthAnalysisRecommendList);
                 
