@@ -1,0 +1,147 @@
+<aura:component  controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+<ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/>  
+    <aura:attribute type="id" name="recordId" default="0014600001ePgeyAAC"/>
+    <aura:attribute name="isPortalUser" type="Boolean" default="false" />
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+    
+   <aura:attribute name = "score" type="Double" default = "0"/>
+    <aura:attribute name = "months" type="Double" default="0"/>
+     <aura:attribute name="istrue" type="boolean" default="true"/>
+    <aura:attribute name="istrue1" type="boolean" default="false" />
+     <aura:attribute name="istrue2" type="boolean" default="false" />
+     <aura:attribute name="istrue3" type="boolean" default="false" />
+    <aura:attribute name="istrue4" type="boolean" default="false" />
+    <aura:attribute name="istrue5" type="boolean" default="false" />
+    <aura:attribute name="istrue6" type="boolean" default="false" />
+    <aura:attribute name="istrue7" type="boolean" default="false" />
+    <aura:attribute name="istrue8" type="boolean" default="false" />
+    <aura:attribute name="istrue9" type="boolean" default="false" />
+    <aura:attribute name="istrue10" type="boolean" default="false" />
+     <aura:attribute name="istrue11" type="boolean" default="false" />
+     <aura:attribute name="istrue12" type="boolean" default="false" />
+     <aura:attribute name="NameSpace" type="string" />
+     <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
+
+  <div class="slds-col slds-size_12-of-12">
+            	<div class="client_managed">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_6-of-12 slds-border_right slds-p-top_medium slds-p-bottom_medium">
+                           <h3 class="slds-m-top_none">Financial Health</h3>
+                            <h4>Overall Score</h4>                            
+                              <div class="half-chart half-chart-sticker">
+                                <div class="slds-grid slds-p-top_large slds-p-bottom_large">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <div id="chartContainer2" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                                         <div>
+                        	                <p><i><b>Insight:</b> At, this rate you can sustain {!v.months} months without income.</i></p>
+                                     		   <div class="chart-sticker">
+                                                    <ul>
+                                                        <li><span>0 - Bad</span></li>
+                                                        <li><h2>{!v.score}/10</h2></li>
+                                                        <li><span>10 - Excellent</span></li>
+                                                    </ul>
+                                               </div>
+                                        </div>
+                           
+                                      </div>
+                 
+                              <aura:if isTrue="{!v.showModal}">
+                                <c:CustomModalComponent isActive="{!v.showModal}" title="Your Financial Health">
+                                    <div>
+                                        <p class="slds-text-longform"><ui:message class="modalCss" title="Status" severity="information" closable="false">
+                                            <div style="padding: 0px 10px;">
+                                                Your financial score is an indicator of how likely you are to meet your current financial commitments like:<br/>
+                                                <ul>
+                                                    <li>Your expenses for the next month </li>
+                                                    <li>Your immediate credit card dues</li>
+                                                    <li>Your immediate loan payments </li>
+                                                    <li>Immediate savings needed for your financial goals </li>                   
+                                                </ul>
+                                                The score is graded between 0 and 10, depending on your likelihood of meeting the above financial commitments. In addition, this score also takes into account the number
+                                                of months that you can survive without an income.       
+                                                The green, orange and red color indicators for each of the sections tells you if your expenses, loans and credit card payments are likely to be met fully or partially in the next month.
+                                            </div>
+                                            <br/>
+                                            <div class="bBody"><h4>Score Key</h4></div>
+                                            <div style="padding: 0px 10px 10px;">
+                                                Below 1:	You are unlikely to meet your everyday expenses in the next month<br/>
+                                                Between 1 and 4:	You are likely to meet your everyday expenses but not meet your debt commitments<br/>
+                                                Between 4 and 5:	You will meet your expenses, and debt commitments but may not have enough to save for other financial goals<br/>
+                                                Above 5:	You will meet your immediate expenses, debt commitments and save for other goals. You are also likely to have enough to live for a few days without an income<br/>
+                                            </div>
+                                            </ui:message></p>
+                                    </div>
+                                  </c:CustomModalComponent>
+                            </aura:if>
+                          
+  				 <div class="slds-col slds-size_12-of-12 what-is slds-p-top_medium slds-p-bottom_medium">
+                      <div class="fh-button budget-brand">
+                                <lightning:button variant="neutral" label="What is this?" onclick="{!c.showDetails}"/>
+                       </div>
+                            <div class="health-features">
+                                <div class="slds-grid slds-p-top_xx-large slds-p-bottom_large">
+                                    <div class="slds-col slds-size_6-of-12">
+                                         <aura:if isTrue="{!v.istrue1}">
+                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                             
+                                            <aura:if isTrue="{!v.istrue2}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                <aura:if isTrue="{!v.istrue3}">
+                                        <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                        
+                                                </aura:if>
+                                             </aura:if>
+                                        </aura:if>
+                                        <h4>Household Expenses</h4>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                         <aura:if isTrue="{!v.istrue4}">
+                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                            <aura:if isTrue="{!v.istrue5}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                <aura:if isTrue="{!v.istrue6}">
+                                        <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                        </aura:if>
+                                             </aura:if>
+                                        </aura:if>
+                                         <h4>Credit Payments</h4>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-p-bottom_large">
+                                    <div class="slds-col slds-size_6-of-12">
+                                         <aura:if isTrue="{!v.istrue7}">
+                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                            <aura:if isTrue="{!v.istrue8}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                <aura:if isTrue="{!v.istrue9}">
+                                        <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                       
+                                                </aura:if>
+                                             </aura:if>
+                                          </aura:if>
+                                         <h4>Loan Payments</h4>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                       <aura:if isTrue="{!v.istrue10}">
+                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                            <aura:if isTrue="{!v.istrue11}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                <aura:if isTrue="{!v.istrue12}">
+                                        <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                        
+                                                </aura:if>
+                                           </aura:if>
+                                           </aura:if>
+                                        <h4>Goals</h4>
+                                     </div>
+                                  </div>
+                             </div>
+                          </div>
+                        </div>
+                     </div>
+                   </div>
+                </div>
+           </div>
+        </div>
+</aura:component>

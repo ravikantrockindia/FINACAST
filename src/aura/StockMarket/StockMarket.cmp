@@ -1,0 +1,99 @@
+<aura:component   controller="StockMarketApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <aura:attribute name="response" type="Map"/>
+     <aura:attribute name="DownJonesprice" type="Integer" />
+    <aura:attribute name="SPprice" type="Integer" />
+    <aura:attribute name="NASDAQprice" type="Integer" />
+    <aura:attribute name="NYSEprice" type="Integer" />
+    <aura:attribute name="DownJonespercent" type="Integer" />
+    <aura:attribute name="SPpercent" type="Integer" />
+    <aura:attribute name="NASDAQpercent" type="Integer" />
+    <aura:attribute name="NYSEpercent" type="Integer" />
+    <aura:attribute name="istrue" type="boolean" default="true"/>
+    <aura:attribute name="istrueSP" type="boolean" default="false" />
+     <aura:attribute name="istrueDownJones" type="boolean" default="false" />
+     <aura:attribute name="istrueNASDAQ" type="boolean" default="false" />
+    <aura:attribute name="istrueNYSE" type="boolean" default="false" />
+    <aura:attribute name="timelatest" type="String" />
+<!--   <aura:attribute name="isBigDataMode" type="String" /> -->
+
+   
+           <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="client_managed client_managed1 client_managed2 slds-clearfix">
+                    <div class="slds-col slds-size_12-of-12">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                            	<h3 class="slds-text-align_left">Stock Market</h3>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                            	<h4  class="slds-text-align_right">Last Run Time : {!v.timelatest}</h4>
+                            </div>
+                        </div>
+                        
+                       
+                        
+                        <br/>
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_3-of-12">
+                                <h4 class="slds-text-align_left">S &amp; P 500</h4>
+                                <h2 class="slds-text-align_left">{!v.SPprice}
+                                    <span>
+                                         <aura:if isTrue="{!v.istrueSP}">
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small"/>Increase {!v.SPpercent}%
+                                             <aura:set attribute="else">
+                                           <lightning:icon iconName="utility:arrowdown" size="xx-small"/>Decrease {!v.SPpercent}%
+                                             </aura:set>
+                                        </aura:if>
+                                    </span>
+                                </h2>
+                            </div>
+                            
+                            <div class="slds-col slds-size_3-of-12">
+                                <h4 class="slds-text-align_left">Down Jones</h4>
+                                <h2 class="slds-text-align_left">{!v.DownJonesprice}
+                                    <span>
+                                          <aura:if isTrue="{!v.istrueDownJones}">
+                                          <lightning:icon iconName="utility:arrowup" size="xx-small"/>Increase {!v.DownJonespercent}%
+                                          <aura:set attribute="else">
+                               <lightning:icon iconName="utility:arrowdown" size="xx-small"/>Decrease {!v.DownJonespercent}%
+                        </aura:set>
+                          </aura:if> 
+                                 </span>
+                                </h2>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <h4 class="slds-text-align_left">NASDAQ</h4>
+                                <h2 class="slds-text-align_left">{!v.NASDAQprice}
+                                    <span>
+                                          <aura:if isTrue="{!v.istrueNASDAQ}">
+                                              
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small"/>Increase {!v.NASDAQpercent}%
+                                               <aura:set attribute="else">
+                                         <lightning:icon iconName="utility:arrowdown" size="xx-small"/>Decrease {!v.NASDAQpercent}%  
+                                         </aura:set>
+                                     </aura:if> 
+                                    </span>
+                                </h2>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <h4 class="slds-text-align_left">NYSE</h4>
+                                <h2 class="slds-text-align_left">{!v.NYSEprice}
+                                    <span>
+                                         <aura:if isTrue="{!v.istrueNYSE}">
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small"/>Increase {!v.NYSEpercent}%
+                                                <aura:set attribute="else">
+                                   <lightning:icon iconName="utility:arrowdown" size="xx-small"/>Decrease {!v.NYSEpercent}%
+                                             </aura:set>
+                                        </aura:if>
+                                    </span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+</aura:component>
