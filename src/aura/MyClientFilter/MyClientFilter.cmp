@@ -1,0 +1,239 @@
+<aura:component controller="MyClientFilterController" implements="flexipage:availableForAllPageTypes,force:appHostable" access="global">
+    <aura:attribute name="timeZoneOffset" type="Integer" default="0"/>
+    <aura:attribute name="sObjectName" type="String" default="Lead"/>
+    <aura:attribute name="objectFields" type="List"/>
+    <aura:attribute name="listId" type="String" default=""/> 
+    <aura:attribute name="whereClause" type="String" default=""/> 
+    <aura:attribute name="operators" type="List"/>
+    <aura:attribute name="filters" type="List" default="[]"/>
+    <aura:attribute name="filtersBackup" type="List" default="[]"/>
+    <aura:attribute name="filtersUpdated" type="Boolean" default="false"/>
+    <aura:attribute name="ownerFilter" type="List"/>
+    <aura:attribute name="ownerFilterValue" type="String" default="ALL"/>
+    <aura:attribute name="customFilterLogicProvided" type="Boolean" default="false"/>
+    <aura:attribute name="customFilterLogic" type="String"/>
+    <aura:attribute name="customFilterLogicBackup" type="String"/>
+    <aura:attribute name="customFilterLogicDisplayMessage" type="String" default=""/>
+    <aura:attribute name="SpellCheckError" type="String" default="Check the spelling in your filter logic."/>
+    <aura:attribute name="UsingUndefinedFilterError" type="String" default="The filter logic references an undefined filter."/>
+    <aura:attribute name="UnbalancedParanthesisError" type="String" default="The paranthesis in filter logic are unbalanced."/>
+    <aura:attribute name="screenWidth" type="String" default="0px"/>
+    <aura:attribute name="editMode" type="Boolean" default="false"/>
+    <aura:attribute name="ownerFilterEdit" type="Boolean" default="false"/>
+    <aura:attribute name="viewName" type="String" default="listPage"/>
+    <aura:attribute name="supportedDateFilters" type="List" default="['YESTERDAY', 'TODAY', 'TOMORROW', 'LAST WEEK', 'THIS WEEK', 'NEXT WEEK'
+                                                                     , 'LAST n WEEKS', 'NEXT n WEEKS', 'n WEEKS AGO', 'LAST MONTH', 'THIS MONTH'
+                                                                     , 'NEXT n MONTHS', 'LAST n MONTHS', 'n MONTHS AGO', 'NEXT MONTH', 'LAST 90 DAYS'
+                                                                     , 'NEXT 90 DAYS', 'LAST n DAYS', 'NEXT n DAYS', 'n DAYS AGO', 'LAST QUARTER'
+                                                                     , 'THIS QUARTER', 'NEXT QUARTER', 'LAST n QUARTERS', 'NEXT n QUARTERS', 'n QUARTERS AGO'
+                                                                     , 'LAST YEAR', 'THIS YEAR', 'NEXT YEAR', 'n YEARS AGO', 'LAST n YEARS', 'NEXT n YEARS','NOW']"/>
+    
+    
+    <aura:attribute name="pkageName" type="String"/>
+  <aura:handler name="init" value="{!this}" action="{!c.getObjectFields}"/>
+      <!--    
+    <aura:method name="saveFiltersChild" action="{!c.saveFilters}" access="PUBLIC"/>-->
+    <aura:registerEvent name="Fina_HideFilterEvent" type="c:Fina_HideFilterEvent"/> 
+    <aura:registerEvent name="Fina_FilterInformationEvent" type="c:Fina_FilterInformationEvent"/>
+    <div aura:id="measurement" />
+    <lightning:card>
+        <aura:set attribute="title">
+            <div class="slds-border_bottom slds-p-bottom_xx-small" style="overflow:hidden">
+                <div class="slds-float_left">
+                    <aura:if isTrue="{!v.filtersUpdated}">
+                        <lightning:button label="Cancel" title="Cancel" onclick="{!c.cancelFilters}"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="action:filter" size="xx-small"/>
+                            Filters
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <div class="slds-float_right">
+                    <aura:if isTrue="{!v.filtersUpdated}">
+                        <lightning:button variant="brand" label="Apply" title="Apply" onclick="{!c.applyFilters}"/>
+                        <aura:set attribute="else">
+                            <lightning:buttonIcon variant="neutral" iconName="utility:forward" size="large" onclick="{!c.hideFilters}" alternativeText="Hide Filter"/>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </aura:set>
+        <aura:set attribute="footer">
+            
+            <!---===============Add Some Footer if required===================-->
+        </aura:set>
+        <div class="slds-p-left_medium slds-p-right_medium">
+            
+    
+            <div>
+                <aura:if isTrue="{!customFilterLogicProvided}">
+                    Matching these filters
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!v.filters.length>0}">
+                        	Matching all of these filters
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </div>
+            <aura:iteration items="{!v.filters}" var="filter" indexVar="filterIndex">
+                <!--aura:if isTrue="{!filterIndex == v.filters.length-1}"-->
+                <aura:if isTrue="{!and(filter.editMode, v.editMode)}">
+                    <!--##################################### FILTER EDIT MODE START #######################################-->
+                    <div class="slds-box" style="{! 'position:absolute; background:white; top: 143px; z-index:1; width: ' + v.screenWidth + '; right:' + v.screenWidth}">
+                        <!--############ Field Selector ##########-->
+                        <div class="slds-p-around_small">
+                            <lightning:select aura:id="_field" name="{!filter.index+'_field'}" 
+                                              label="Field" value="{!filter.field}" onchange="{!c.handleFieldChange}">
+                                <aura:iteration items="{!v.objectFields}" var="field">
+                                    <option value="{!field.apiName}">{!field.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        
+                        <!--############ Operator Selector ##########-->
+                        <div class="slds-p-around_small">
+                            <lightning:select aura:id="_operator" name="{!filter.index+'_operator'}" 
+                                              label="Operator" value="{!filter.operator}" onchange="{!c.handleOperatorChange}">
+                                <aura:if isTrue="{!filter.dataType == 'BOOLEAN'}">
+                                    <aura:iteration items="{!v.operators}" var="opp">
+                                        <aura:if isTrue="{!opp.type_2==true}">
+                                            <option value="{!opp.key}">{!opp.value}</option>
+                                        </aura:if>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue="{!filter.dataType == 'STRING' || filter.dataType == 'PICKLIST' || filter.dataType == 'TEXTAREA' 
+                                                         || filter.dataType == 'URL' || filter.dataType == 'PHONE' || filter.dataType == 'EMAIL'}">
+                                            <aura:iteration items="{!v.operators}" var="opp">
+                                                <aura:if isTrue="{!opp.type_1==true}">
+                                                    <option value="{!opp.key}">{!opp.value}</option>
+                                                </aura:if>
+                                            </aura:iteration>
+                                            <aura:set attribute="else">
+                                                <aura:iteration items="{!v.operators}" var="opp">
+                                                    <aura:if isTrue="{!opp.type_3==true}">
+                                                        <option value="{!opp.key}">{!opp.value}</option>
+                                                    </aura:if>
+                                                </aura:iteration>
+                                            </aura:set>
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if>
+                            </lightning:select>
+                        </div>
+                        
+                        <!--############ Value Selector ##########-->
+                        <div class="slds-p-around_small">
+                            <aura:if isTrue="{!filter.dataType == 'BOOLEAN' || filter.dataType == 'PICKLIST'}">
+                                <aura:if isTrue="{!filter.dataType == 'BOOLEAN'}">
+                                    <div class="slds-float_left custom-stretch_div custom-button_bottom_align">
+                                        <lightning:button class="custom_stretch-button" variant="{!if(filter.value == 'true', 'brand', 'Neutral')}" 
+                                                          name="{!filter.index+'_true'}" label="True" title="True" onclick="{!c.handleTrueClick}"/>
+                                    </div>
+                                    <div class="slds-float_right custom-stretch_div custom-button_bottom_align">
+                                        <lightning:button class="custom_stretch-button" variant="{!if(filter.value == 'false', 'brand', 'Neutral')}" 
+                                                          name="{!filter.index+'_false'}" label="False" title="False" onclick="{!c.handleFalseClick}" />
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!filter.dataType == 'PICKLIST'}">
+                                    <lightning:dualListbox aura:id="_value" name="{!filter.index+'_value'}"  label=" "
+                                                           variant="label-hidden"
+                                                           sourceLabel="Available Options"
+                                                           selectedLabel="Selected Options"
+                                                           options="{!filter.valueList}"
+                                                           value="{!filter.value}"
+                                                           disableReordering="true"
+                                                           onchange="{!c.handleMultiselectChange}"/>
+                                </aura:if>
+                                <aura:set attribute="else">
+                                    <lightning:input aura:id="_value" name="{!filter.index+'_value'}" 
+                                                     label="Value" value="{!filter.value}" onchange="{!c.handleValueChange}"/>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        <div class="slds-float_right">
+                            <lightning:button name="{!filter.index+'_done'}" title="Done" label="Done" onclick="{!c.updateFilter}"/>
+                        </div>
+                    </div>
+                </aura:if>
+                <!--##################################### FILTER EDIT MODE END #######################################-->
+                
+                <div class="slds-box slds-m-bottom_x-small" id="{!filter.index+'_div'}" onclick="{!c.makeFilterEditable}" style="overflow:hidden">
+                    <div class="slds-float_left" style="z-index:2">
+                        {!filter.index + '. '}
+                        <aura:iteration items="{!v.objectFields}" var="objFlds">
+                            <aura:if isTrue="{!objFlds.apiName==filter.field}">
+                                {!objFlds.label}
+                            </aura:if>
+                        </aura:iteration>
+                        <br/>
+                        <aura:iteration items="{!v.operators}" var="opp">
+                            <aura:if isTrue="{!opp.key==filter.operator}">
+                                {!opp.value + ' '}
+                            </aura:if>
+                        </aura:iteration>
+                        <aura:if isTrue="{!filter.dataType == 'PICKLIST'}">
+                            <aura:iteration items="{!v.objectFields}" var="objFlds">
+                                <aura:if isTrue="{!objFlds.apiName==filter.field}">
+                                    <aura:iteration items="{!filter.value}" var="selectedValue" indexVar="valIndex">
+                                        <aura:iteration items="{!objFlds.pkValList}" var="pkVal">
+                                            <aura:if isTrue="{!and(valIndex == 0, pkVal.value == selectedValue)}">
+                                                {!pkVal.label}
+                                            </aura:if>
+                                            <aura:if isTrue="{!and(valIndex != 0, pkVal.value == selectedValue)}">
+                                                {!', '+ pkVal.label}
+                                            </aura:if>
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </aura:if>
+                            </aura:iteration>
+                            <aura:set attribute="else">
+                                {!filter.value}
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-float_right">
+                        <lightning:buttonIcon name="{!filter.index+'_close'}" variant="bare" iconName="utility:close" 
+                                              size="medium" onclick="{!c.handleFilterRowDelete}"/>
+                    </div>
+                </div>
+            </aura:iteration>
+        </div>
+        <div class="slds-p-left_medium slds-p-top_medium slds-p-right_medium slds-p-bottom_small" style="overflow:hidden">
+            <div class="slds-float_left">
+                <a href="javascript:void(0)" onclick="{!c.addAnotherFilter}">
+                    Add Filter
+                </a>
+            </div>
+            <div class="slds-float_right">
+                <a href="javascript:void(0)" onclick="{!c.removeAllFilters}">
+                    Remove All
+                </a>
+            </div>
+        </div>
+        <div class="slds-p-left_medium slds-p-top_medium slds-p-right_medium slds-p-bottom_small slds-m-top_small" 
+             style="overflow:hidden; background: rgb(216, 237, 255)">
+            <div class="slds-float_left">
+                <a href="javascript:void(0)" onclick="{!c.addFilterLogic}">
+                    Add Filter Logic
+                </a>
+            </div>
+            <div class="slds-float_right">
+                <aura:if isTrue="{!v.customFilterLogicProvided}">
+                    <a href="javascript:void(0)" onclick="{!c.removeFilterLogic}">
+                        Remove
+                    </a>
+                </aura:if>
+            </div>
+            <div class="slds-p-around_medium">
+                <aura:if isTrue="{!v.customFilterLogicProvided}">
+                    <lightning:input name="customFilterLogic" value="{!v.customFilterLogic}" onchange="{!c.handleFilterLogicEdit}"/>
+                </aura:if>
+            </div>
+            <div class="slds-p-around_medium">
+                <aura:if isTrue="{!v.customFilterLogicProvided}">
+                    {!v.customFilterLogicDisplayMessage}
+                </aura:if>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

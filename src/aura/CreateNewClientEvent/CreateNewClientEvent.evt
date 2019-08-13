@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Event to refresh parent component">
+    <aura:attribute name="result" type="String" default="success"/>
+</aura:event>

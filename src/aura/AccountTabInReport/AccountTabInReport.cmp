@@ -1,0 +1,77 @@
+<aura:component controller="AccountTabReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="cid" type="Id"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="tabName" type="String" default=" Account"/>
+    <aura:attribute name="NameSpace" type="string"/>
+    <aura:attribute name = "parentInitialised" type = "boolean" default = "false" />
+    <aura:attribute name = "data" type = "FinServ__FinancialAccountTransaction__c"/>
+    <aura:attribute name = "Tid" type="String"  default="a0F4600000088DYEAY" />
+    <aura:handler name="rTid" event="c:AccountReport" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.InitGraph}"/> 
+    
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_3-of-12 dashboard-parant my_balance-sheets">            
+            <span><c:Mybalancesheet NameSpace="{!v.NameSpace}" recordId="{!v.cid}" isTab="True" /></span>
+        </div>
+        <div class="slds-col slds-size_9-of-12 dashboard-parant my_balance-sheets">
+            
+                    <aura:if isTrue = "{!v.parentInitialised}" >
+                        <lightning:tabset selectedTabId="one">
+                            <lightning:tab class="subsection" label="SUMMARY" id="one" onactive="{!c.handleTid}">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_8-of-12">
+                                        
+                                        <div class="slds-col chartJs-graph" style="width: 100%; padding: 20px 0;height: 400px;">                                                         
+                                            <aura:if isTrue = "{!v.parentInitialised}" >
+                                                
+                                                <c:cashFlowSummary  NameSpace="{!v.NameSpace}" transactionId="{!v.Tid}"/> 
+                                                
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                     <div class="slds-col slds-size_4-of-12" style="Padding:20px 0 0 0;">
+                                        <!--aura:if isTrue = "{!v.parentInitialised}" >
+                                        {!v.Tid}
+                                            <lightning:recordViewForm recordId="a0F4600000088DYEAY" objectApiName="FinServ__FinancialAccountTransaction__c">
+                                            <div class="slds-box">
+                                                <lightning:outputField fieldName="FinServ__TransactionName__c" />
+                                                <lightning:outputField fieldName="FinServ__Amount__c" />
+                                            </div>
+                                        </lightning:recordViewForm>
+                                        </aura:if-->
+                                        <!--force:recordData aura:id="record"
+                                                          layoutType="FULL"
+                                                          recordId="{!v.Tid}"                                                   
+                                                          targetFields ="{!v.simpleRecord}"
+                                                          mode="VIEW"/-->
+                                        
+                                        <!--aura:if isTrue="{!not(empty(v.data))}"> 
+                                            <aura:iteration items="{!v.data}" var="item">                         
+                                                <div class="slds-box slds-box_x_small">                                                                             
+                                                    <p><h3>Transaction Amount:{!item.FinServ__Amount__c}</h3></p>
+                                                    <p><h3>Transaction Name:{!item.TransactionName__c}</h3></p>
+                                                    
+                                                </div>
+                                            </aura:iteration>
+                                            <aura:set attribute="else">
+                                                <div class="slds-box slds-box_x_small">
+                                                    <h3>There is not any transaction Related to this account.</h3>
+                                                </div>
+                                            </aura:set>
+                                        </aura:if-->  
+                                    </div>   
+                                </div> 
+                            </lightning:tab>
+                            <lightning:tab class="subsection" label="TRANSACTION" id="two" onactive="{!c.handleComponentEventExpense}" >
+                                <!--Transaction for expenses-->
+                                
+                                
+                            </lightning:tab>
+                        </lightning:tabset>                              
+                    </aura:if>   
+        </div>
+    </div>
+</aura:component>

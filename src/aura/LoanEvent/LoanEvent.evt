@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" >
+     <aura:attribute name="isTaxDeduction" type="boolean"/>
+    <aura:attribute name="getYes" type="boolean"/>
+    <aura:attribute name="getNo" type="boolean"/>
+    <aura:attribute name="isMonthly" type="boolean"/>
+    
+</aura:event>

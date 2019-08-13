@@ -1,0 +1,152 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name= "data" type="Object"/>
+    <aura:attribute name = "score" type="Double"/>
+    <aura:attribute name = "financialHealthMessage" type="Object[]"/>
+    <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "year" type="Integer"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
+    
+    <aura:handler name="change" value="{!v.data}" action="{!c.finHealth}"/>
+    
+    <ltng:require scripts="{!$Resource.ChartJs}"/>
+    
+    <aura:if isTrue="{! !v.isEmptyData}">
+    
+    <div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small help_link" style="">
+        <a href="javascript:void(0)" aria-describedby="help" onclick="{!c.openHelpBox}">Help</a>
+        
+        <aura:if isTrue="{!v.helpBox}">
+            <div class="help-box-financialhealth" >
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header slds-modal__header_empty">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeHelpBox}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            
+                        </header>
+                        <div class="slds-modal__content" id="modal-content-id-1">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-4" style="background-color:#25368B">
+                                    <div class="slds-text-heading_large" style = "color:white; font-weight: 700; padding:10px; margin: 45% 0 0; text-align: center;">
+                                        
+                                        <span >Your Financial Health</span>
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_3-of-4" style="padding: 20px">
+                                    <div class="simulation-pop-up slds-text-body_regular slds-text-align_left slds-text-color_default" style = "font-weight:400">
+                                        <div style="padding: 0 5px;">
+                                            <span style="font-weight: 600; margin-bottom: 10px; display: block;">Your financial score is an indicator of how likely you are to meet your current financial commitments like:
+                                            </span>
+                                            <ol class="slds-list--dotted">
+                                                <li>Your expenses for the next month</li> 
+                                                <li>Your immediate credit card dues</li> 
+                                                <li>Your immediate loan payments</li> 
+                                                <li>Immediate savings needed for your financial goals</li>
+                                            </ol> 
+                                            
+                                            <div style="padding-top: 10px">
+                                                The score is graded between 0 and 10, depending on your likelihood of meeting the above financial commitments. In addition, this score also takes into account the number of months that you can survive without an income.
+                                                
+                                                <br/>The green, orange and red color indicators for each of the sections tells you if your expenses, loans and credit card payments are likely to be met fully or partially in the next month.
+                                            </div>
+                                            <span style = "font-weight:900;"> 
+                                                <br/>Score Key 
+                                            </span>
+                                        </div>
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer financial_table">
+                                            <tr>
+                                                <th>Below 1</th>
+                                                <td>You are unlikely to meet your everyday expenses in the next month</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Between 1 and 4</th>
+                                                <td>You are likely to meet your everyday expenses but not meet your debt commitments</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Between 4 and 5</th>
+                                                <td>Between 4 and 5	You will meet your expenses, and debt commitments but may not have enough to save for other financial goals</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Above 5</th>
+                                                <td>You will meet your immediate expenses, debt commitments and save for other goals. You are also likely to have enough to live for a few days without an income</td>
+                                            </tr>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+            
+        </aura:if>
+    </div>
+    
+    <lightning:card class="chart"> 
+        <div class="slds-grid slds-card__header">
+            <div class="slds-size_11-of-12">
+                <span> 
+                    <div class="chart1" style="">
+                        <div class="chart1-child">
+                            <canvas aura:id="financialHealthGraph"></canvas>
+                        </div>
+                    </div> 
+                </span>  
+            </div>
+            
+            <div class="slds-size_1-of-12">
+                <span>
+                    <div class="bar">
+                        <lightning:slider label="Score" type="vertical" min="0" max = "10" 
+                                          value="{!v.score}" disabled="true" size="small"/>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+        <div class="slds-text-align_center label-font" style="margin: 0px 0;">
+            <span>Select a year to view that years forecast</span>
+        </div>
+        <div class="slds-text-align_center"  style="margin-bottom: 15px;">
+            <span>
+                <button class="slds-button" onclick = "{!c.showYearlyScorePrev}">
+                    <lightning:icon iconName="utility:chevronleft"
+                                    alternativeText="prev" size="small"/>
+                </button>
+                
+                <lightning:button class="yearButton"
+                                  label="{!v.year}" variant="brand"/>
+                
+                <button class="slds-button" onclick = "{!c.showYearlyScoreNext}">
+                    <lightning:icon iconName="utility:chevronright" 
+                                    alternativeText="next" size="small"/>    
+                </button>
+            </span>
+        </div>
+        <div class="slds-grid slds-card__header">
+            <div class="slds-size_12-of-12">
+                <div class="slds-text-align_center" style="margin: 5px 0 0;">
+                    <ui:message title="Messages" severity="confirm" closable="true">
+                        <aura:iteration items="{! v.financialHealthMessage}" var="m">           
+                            {!m.message}<br/>
+                        </aura:iteration> 
+                    </ui:message>
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+    </aura:if>
+    
+    <aura:if isTrue="{! v.isEmptyData}">
+        <lightning:card class="chart2" >                   
+            <div class="chart2" style="width: 100%; height: auto;"><p>No Data to Display</p></div>
+        </lightning:card>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,138 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name = "totalSavings" type = "Double"/>
+    <aura:attribute name = "totalDebts" type="Double"/>
+    <aura:attribute name = "networth" type="Double"/>
+    <aura:attribute name = "year" type="Integer"/>
+     <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="true"/>
+
+    <aura:handler name="change" value="{!v.data}" action="{!c.shownetWorthData}"/>
+    
+    <ltng:require scripts="{!$Resource.ChartJs}"/>
+    
+    <!--aura:if isTrue="{! !v.isEmptyData}"-->
+    
+    <div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small help_link" style="">
+        <a href="javascript:void(0)" aria-describedby="help" onclick="{!c.openHelpBox}">Help</a>
+        <aura:if isTrue="{!v.helpBox}">
+            <div class="help-box-netWorthForecast">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header slds-modal__header_empty">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeHelpBox}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            
+                        </header>
+                        <div class="slds-modal__content" id="modal-content-id-1">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-4" style="background-color:#25368B">
+                                    <div class="slds-text-heading_large" style = "color:white; padding:10px; margin: 25% 0 0; text-align: center;">
+                                        
+                                        <span style="font-weight: 700;">NetWorth Forecast</span>
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_3-of-4" style="padding: 20px">
+                                    <div class="slds-text-body_regular slds-text-align_left slds-text-color_default" style = "font-weight:400">
+                                        
+                                        <span style="font-weight: 600; margin-bottom: 10px; display: block;">Finacast simulates your future cash flows based on your budget items. It allocates the cash needed to take care of your expenses and debts and puts the net savings into the highest paying savings account. It looks at cash coming into your accounts every year (in form of income, interests , etc), the cash going out of your account (in terms of cash expenses, credit card payments, loan payments etc). This graph will help you understand if you are saving any net amount in a particular year and if these savings match your expectations. A negative amount for "net savings" indicates that your savings are decreasing in that particular year.</span>
+                                        <ol class="slds-list--dotted">
+                                            <li> 
+                                                You can view the saving for a specific year by selecting the year through the year button</li> 
+                                            <li> 
+                                                Finacast shows you the possible savings if you were to cut your expenses by 10%</li> 
+                                            
+                                        </ol> 
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+            
+        </aura:if>
+    </div>
+    <lightning:card class="chart3">
+        <div style="width: 100%; height: auto;">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_12-of-12">
+                    <div class="charts-child">
+                        <canvas aura:id="networth"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-wrap slds-grid tab3-messages" style="margin: 0 0;">
+            <div class="slds-col slds-size_3-of-12">
+                <div class="slds-text-align_center label-font">
+                    <span>Year Ending</span>
+                </div>
+             
+            </div>
+            
+            <div class="slds-col slds-size_3-of-12 " style="padding: 0% 5px;">
+                <div class="slds-text-align_center label-font">
+                    <span>Total Savings($)</span>
+                </div>
+                <div class="slds-text-align_center value-boxes">
+                    <span>{!v.totalSavings}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_3-of-12" style="padding: 0% 5px;">
+                <div class="slds-text-align_center label-font">
+                    <span>Total Debts($)</span>
+                </div>
+                <div class="slds-text-align_center value-boxes">
+                    <span>{!v.totalDebts}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_3-of-12" style="padding: 0% 5px;">
+                <div class="slds-text-align_center label-font">
+                    <span>Networth($)</span>
+                </div>
+                <div class="slds-text-align_center value-boxes">
+                    <span>{!v.networth}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_12-of-12" style="margin-top: 10px;">
+            	<div class="slds-text-align_center">
+                    <span>
+                        <button class="slds-button" onclick = "{!c.showNetWorthPrev}">
+                            <lightning:icon iconName="utility:chevronleft"
+                                            alternativeText="prev" size="small"/>
+                        </button>
+                        
+                        <lightning:button class="yearButton"
+                                          label="{!v.year}" variant="brand"/>
+                        
+                        <button class="slds-button" onclick = "{!c.showNetWorthNext}">
+                            <lightning:icon iconName="utility:chevronright" 
+                                            alternativeText="next" size="small"/>    
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>           
+        
+        <div class="slds-box" style="border: none; text-align: center;">
+            <!-- {!v.NetworthMessage} -->
+        </div>
+    </lightning:card>
+    <!--/aura:if>
+    
+    <aura:if isTrue="{! v.isEmptyData}">
+        <lightning:card class="chart2" >                   
+            <div class="chart2" style="width: 100%; height: auto;"><p>No Data to Display</p></div>
+        </lightning:card>
+    </aura:if-->
+</aura:component>

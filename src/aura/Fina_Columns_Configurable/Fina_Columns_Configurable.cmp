@@ -1,0 +1,49 @@
+<aura:component controller="AccountController"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+     <aura:attribute name="searchResult" type="List" description="use for store and display account list return from server"/>
+      <aura:attribute name="options"
+                      type="List" />    
+    <aura:attribute name="selectedValues" type="List" default="[]" />
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+     <aura:registerEvent name="cmpEvent" type="c:SaveListEvent"/>
+     <aura:attribute name="allCol" type="List" default="[]" />
+     <aura:attribute name="allColDisplay" type="List" default="[]" />
+    <aura:attribute name="packageName" type="String"  />
+        
+  <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isOpen}">
+   <!--###### MODAL BOX Start From Here ######--> 
+      <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+        <div class="slds-modal__container">
+          <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+          <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModelCross}">
+              X
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header99" class="slds-text-heading--medium">Manage Table Columns</h2>
+          </div>
+          <!--###### MODAL BOX BODY Part Start From Here ######-->
+          <div class="slds-modal__content slds-p-around--medium">
+              <div class="slds-p-around_medium">
+
+                  <lightning:dualListbox name="lists"  
+                                         aura:id="mygroup"
+                                         sourceLabel="Available" 
+                                         selectedLabel="Selected" 
+                                         fieldLevelHelp="This is a dual listbox" 
+                                         options="{!v.options}" 
+                                         onchange="{! c.handleChange }"
+                                         value="{! v.selectedValues }"/>
+              </div>  
+            </div>
+          <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+          <div class="slds-modal__footer">
+             <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}" >Save</button>
+          </div>
+        </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+ </aura:if> 
+</aura:component>

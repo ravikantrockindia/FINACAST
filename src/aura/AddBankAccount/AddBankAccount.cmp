@@ -1,0 +1,100 @@
+<!-- Created by: Megha Goel-->
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="CreateNewClient">
+    <aura:handler name="lightningEvent" event="c:CreateNewClientEvent" action="{!c.doInit}"/>    
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="currentStep" type="String"/>
+    <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c"/>
+    <aura:attribute name="FinancialAccountList" type="FinServ__FinancialAccount__c[]"/>
+    <aura:attribute name="showInModal" type="Boolean" default="false"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+        <aura:attribute name="namespace" type="String" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:attribute name="recordTypeIds" type="List" default="[]"/>
+        <lightning:workspaceAPI aura:id="workspace"/>
+
+    <lightning:card>    
+               <lightning:spinner aura:id="mySpinner"/>
+
+        <div class="slds-m-around_x-small">
+            <div class="custom_card slds-gutters">
+                <div class="slds-col slds-size_1-of-1">
+                    <aura:if isTrue="{!empty(v.FinancialAccountList)}">
+                        <c:BankAccountForm aura:id ="bankAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}" namespace="{!v.namespace}"/>
+                        <aura:set attribute="else">
+                            <div class="slds-m-top_medium slds-clearfix ">
+                                <div class="slds-float_right">
+                                    <lightning:button class="slds-button slds-button_brand budget-brand" label="{!$Label.c.Add_Bank_Account}" title="Add Bank Account" onclick="{!c.createBankAccount}"/>
+                                </div>
+                            </div>
+                            <aura:if isTrue="{!v.showInModal}">
+                                <c:BankAccountModal accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}"/>
+                            </aura:if>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_medium" style="padding: 0;">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="slds-text-title_caps" scope="col">
+                                            <div class="slds-truncate" title="Bank Account Name">{!$Label.c.Bank_Account_Name}</div>
+                                        </th>
+                                        <th class="slds-text-title_caps" scope="col">
+                                            <div class="slds-truncate" title="Type of Account">{!$Label.c.Type_Of_Account}</div>
+                                        </th>  
+                                        <th class="slds-text-title_caps" scope="col">
+                                            <div class="slds-truncate" title="Current Balance">{!$Label.c.Current_Balance}</div>
+                                        </th>  
+                                        <th class="slds-text-title_caps" scope="col">
+                                            <div class="slds-truncate" title="Action">{!$Label.c.Action}</div>
+                                        </th>
+                                    </tr>
+                                </thead>               
+                                <tbody>
+                                    <aura:iteration items="{!v.FinancialAccountList}" var="finanAccountDetail">
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Bank Account Name"  scope="row">
+                                                <div class="slds-truncate" title="Bank Account Name">{!finanAccountDetail.Name}</div>
+                                            </th>
+                                            <td data-label="Type of Account">
+                                                <div class="slds-truncate" title="Account Type" style="color:black;">{!finanAccountDetail.Account_Type__c}</div>
+                                            </td>
+                                            <td data-label="Current Balance">
+                                                <div class="slds-truncate" title="Current Balance" style="color:black;"><ui:outputCurrency value="{!finanAccountDetail.FinServ__Balance__c}"/></div>
+                                            </td>
+                                            <td data-label="Action">
+                                                <div class="slds-truncate" title="Action">
+                                                    <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!finanAccountDetail}" onclick="{!c.onClickEdit}"/>                       
+                                                    &nbsp;
+                                                    <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!finanAccountDetail.Id}" onclick="{!c.onClickDelete}"/>                                   
+                                                </div>                                        
+                                            </td>
+                                        </tr>  
+                                    </aura:iteration>                            
+                                </tbody>
+                            </table>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+            <div class="custom_card slds-gutters">
+                <div class="slds-col slds-size_1-of-1">
+                    <div class="slds-clearfix ">
+                        <div class="slds-m-top_medium slds-float_right">
+                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}"  class="mlr"/>
+                            <aura:if isTrue="{!empty(v.FinancialAccountList)}">
+                                <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" class="mlr"/>
+                                <lightning:button  variant="brand" label="{!$Label.c.Skip}" onclick="{!c.skipButton}"/>
+                                <aura:set attribute="else">
+                                    <lightning:button  variant="brand" label="{!$Label.c.Next}" onclick="{!c.skipButton}"/>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        <div class="slds-m-top_medium slds-float_left">
+                            <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </lightning:card>
+    
+</aura:component>

@@ -1,0 +1,54 @@
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+}
+.THIS .searchbar{
+    margin-right:40%;
+}
+.THIS .selected{
+    width: 60px;
+    height: 30px;
+    padding: 3px;
+    border: 1px solid;
+    display: inline-block;
+    border-radius: 3px;
+}
+.THIS .slds-button_icon-bare{
+overflow: visible;
+}
+.THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS lightning-button > button{
+    display : contents !important;
+}
+.THIS .inline-buttons {
+    display:inline-block !important;
+}
+.THIS .left-margin{
+    margin-left:5px;
+}
+/*=====-18-06-2019-=====*/
+.THIS.slds-show {
+    background-color: #fdfdfd;
+}
+.THIS.slds-show .slds-page-header__row .slds-size_6-of-12 h2 {
+    font-size: 28px;
+    font-weight: 500;
+}
+.THIS .slds-align-right {
+    text-align: right;
+}
+.THIS .slds-button+.slds-button {
+    margin-left: 3px;
+}
+.THIS .slds-p-around_small {
+    text-align: center;
+}

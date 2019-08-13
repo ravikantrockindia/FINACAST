@@ -1,0 +1,251 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name = "year" type="Integer" />
+    <aura:attribute name = "shortTermYearlyInterest" type="String[]"/>
+    <aura:attribute name = "longTermLoans"  type="Double" default="0"/>
+    <aura:attribute name = "shortTermLoans"  type="Double" default="0"/>
+    <aura:attribute name = "debtStatus" type="Object"/>
+    <aura:attribute name = "chartDataObject" type = "Object" />
+    <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
+    
+    <!--aura:handler name="init" value="{!this}" action="{!c.debtForecast}"/-->
+    <aura:handler name="change" value="{!v.data}" action="{!c.debtForecast}"/>
+    
+    <ltng:require scripts="{!$Resource.ChartJs}"/>
+    
+    <!--aura:if isTrue="{! !v.isEmptyData}"-->
+	<div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small help_link">
+                    <a href="javascript:void(0)" aria-describedby="help" onclick="{!c.openHelpBox}">Help</a>
+                    <aura:if isTrue="{!v.helpBox}">
+                        <div class="help-box-debtForecast" >
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header slds-modal__header_empty">
+                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeHelpBox}">
+                                            <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                            <span class="slds-assistive-text">Close</span>
+                                        </button>
+                                        
+                                    </header>
+                                    <div class="slds-modal__content" id="modal-content-id-1">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-4" style="background-color:#25368B">
+                                                <div class="slds-text-heading_large " style = "color:white; padding:10px; margin: 25% 0 0; text-align: center;">
+                                                    
+                                                    <span style="font-weight: 700;">Debt Forecast</span>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-4" style="padding: 20px">
+                                                <div class="slds-text-body_regular slds-text-align_left slds-text-color_default" style = "font-weight:400">
+                                                    
+                                                    <span style="font-weight: 600; margin-bottom: 10px; display:block;">Finacast simulates your future cash flows based on your budget items. It allocates the cash needed to take care of your expenses and debts from the future income and savings.</span>
+                                                    <ol class="slds-list--dotted">
+                                                        <li> 
+                                                            For unpaid credit card debts, Finacast takes the interest charged into account.</li> 
+                                                        <li> 
+                                                            When the monthly payment for a loan is not paid in full, Finacast puts the gap in an unplanned debt bucket with an interest rate of 18% per annum.</li> 
+                                                        <li> 
+                                                            You can view the interest paid in different years by selecting the year through the year button.</li> 
+                                                        <li>
+                                                            You get specific call outs for debts if you are not able to meet your debt obligations in next 10 years.</li>
+                                                        <li>
+                                                            You can select a specific debt from the drop down to view the details just for that debt.</li>
+                                                    </ol> 
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </div>
+                        
+                    </aura:if>
+                </div>
+    			<div class="slds-grid slds-gutters">
+                    <div class="slds-col  slds-size_12-of-12">
+                		<lightning:card class="chart2" >
+                    
+                    <div class="chart2" style="width: 100%; height: auto;">
+                        <div class="charts-child">
+                            <canvas aura:id="debtForecastGraph"></canvas> 
+                        </div>
+                    </div>
+                    
+                    <div class="slds-wrap slds-grid tab3-message" style="margin: 0 0;">
+                        
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="slds-text-align_center label-font">
+                                <span>Interest Paid In</span>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-col slds-size_4-of-12" style="padding: 0 5px;">
+                            <div class="slds-text-align_center label-font">
+                                <span>Long Term Loans</span>
+                            </div>
+                            <div class="slds-text-align_center value-boxes">
+                                <span>{!v.longTermLoans}</span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12" style="padding: 0 5px;">
+                            <div class="slds-text-align_center label-font">
+                                <span>Short Term Loans</span>
+                            </div>
+                            <div class="slds-text-align_center value-boxes">
+                                <span>{!v.shortTermLoans}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col slds-size_12-of-12" style="margin-top: 10px;">
+                        	<div class="slds-text-align_center">
+                                <span>
+                                    <button class="slds-button" onclick = "{!c.showYearlyInterestPrev}">
+                                        <lightning:icon iconName="utility:chevronleft"
+                                                        alternativeText="prev" size="small"/>
+                                    </button>
+                                    
+                                    <lightning:button class="yearButton"
+                                                      label="{!v.year}" variant="brand"/>
+                                    
+                                    <button class="slds-button" onclick = "{!c.showYearlyInterestNext}">
+                                        <lightning:icon iconName="utility:chevronright" 
+                                                        alternativeText="next" size="small"/>    
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-box" style="border: none; text-align: center;">
+                        <ui:message title="Messages" severity="confirm" closable="true">
+                            <aura:iteration items="{!v.debtStatus}" var="d">
+                                <aura:if isTrue="{!d.showSeeHow}">
+                                    <div style="color:red"> {!d.message}<a href="javascript:void(0)" id="{!d.type}" name="{!d.termDebt}" aria-describedby="help" onclick="{!c.openSeeHow}">(See How)</a></div>
+                                    <aura:set attribute="else">
+                                        <div style="color:green">{!d.message}</div>
+                                        
+                                    </aura:set>
+                                </aura:if>
+                            </aura:iteration>
+                        </ui:message>
+                        <aura:if isTrue="{!v.seeHowBox}">
+                            <aura:if isTrue="{!not(empty(v.defaultAlertData))}">
+                                <div class="demo-only" style="height: 640px;">
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                        <div class="slds-modal__container debt_forecast-model">
+                                            <header class="slds-modal__header">
+                                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeSeeHow}">
+                                                    <lightning:icon iconName="utility:close" size="small" variant="bare"/>
+                                                    <span class="slds-assistive-text">Close</span>
+                                                </button>
+                                                <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Year</th>
+                                                            <th>Payment Owed</th>
+                                                            <th>Payment Possible</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <!--<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>-->
+                                            </header>
+                                            <div class="slds-modal__content" id="modal-content-id-1">
+                                                <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Year</th>
+                                                            <th>Payment Owed</th>
+                                                            <th>Payment Possible</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <aura:iteration items="{!v.defaultAlertData}" var="d">
+                                                            <tr>
+                                                                <td>{!d.scale}</td>
+                                                                
+                                                                <td>{!d.owed}</td>
+                                                                <td>{!d.possible}</td>
+                                                            </tr>
+                                                            
+                                                        </aura:iteration>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!not(empty(v.interestAlertData))}">
+                                
+                                <div class="see-how-debtForecast" >
+                                    <div class="demo-only" style="height: 640px;">
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                            <div class="slds-modal__container debt_forecast-model">
+                                                <header class="slds-modal__header">
+                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeSeeHow}">
+                                                        <lightning:icon iconName="utility:close" size="small" variant="bare"/>
+                                                        <span class="slds-assistive-text">Close</span>
+                                                    </button>
+                                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Year</th>
+                                                                <th>Interest Charge</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                    <!--<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>-->
+                                                </header>
+                                                <div class="slds-modal__content" id="modal-content-id-1">
+                                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Year</th>
+                                                                <th>Interest Charge</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <aura:iteration items="{!v.interestAlertData}" var="d">
+                                                                <tr>
+                                                                    <td>{!d.scale}</td>
+                                                                    
+                                                                    <td>{!d.charge}</td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </aura:iteration>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </div>
+                                    
+                                </div>
+                            </aura:if>
+                        </aura:if>
+                        
+                    </div>
+                    
+                </lightning:card>
+                    </div>
+                </div>
+    <!--/aura:if>
+    
+    <aura:if isTrue="{! v.isEmptyData}">
+        <lightning:card class="chart2" >                   
+            <div class="chart2" style="width: 100%; height: auto;"><p>No Data to Display</p></div>
+        </lightning:card>
+    </aura:if-->
+</aura:component>

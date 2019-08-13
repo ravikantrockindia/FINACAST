@@ -1,0 +1,277 @@
+.THIS .det-bar-chart {
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS  div.chart  {
+    width:50%!important;
+    height:50%!important;  
+}
+.THIS canvas.chart.chartjs-render-monitor {
+    width:50%!important;
+    height:50%!important;
+   
+}
+.THIS .slds-tabs_default__content slds-hide{
+    width: 80%;
+    margin: 0 auto;   
+}
+.THIS .label-font{
+    font-size: 1rem;
+}
+.THIS .value-boxes{
+    border: solid 1px lightblue;
+    border-radius: 1px;
+    margin-top: 2%;
+}
+.THIS .yearButton{
+    line-height: 1.575rem;
+    pointer-events: none;
+}
+
+.THIS .bar{
+    width: 30px;
+    height: 210px;
+    margin-left: 10px;
+}
+.THIS .slds-slider__range{
+    background:linear-gradient(to right, rgb(45, 226, 84) 0%, rgb(229, 152, 43) 33%, rgb(255, 20, 20) 75%, rgb(255, 20, 20) 100%) !important;
+}
+.THIS .slds-slider-label__label  {
+    font-family:Salesforce Sans,Arial,sans-serif;
+    font-size: 1rem !important;
+    font-weight: bold;
+}
+.THIS .slds-slider-label__range  {
+    font-family:Salesforce Sans,Arial,sans-serif;
+    font-size: 1rem !important;
+    font-weight: bold;
+}
+.THIS .slds-slider__value  {
+    font-family:Salesforce Sans,Arial,sans-serif;
+    font-size: 1rem !important;
+    font-weight: bold;
+}
+
+.THIS .fh-chart {
+    float: left;
+}
+.THIS .f_f-simulation {
+   background-color: #ff00ff;
+}
+.THIS .slds-tabs_default__item:after {
+    display: none;
+}
+.THIS .slds-tabs_default__link[tabindex="0"]:focus {
+    text-decoration:none;
+}
+.THIS .charts-child {
+    width: 50%;
+    margin: 0 auto;
+}
+.THIS .chart1-child {
+    width: 100%;
+}
+.THIS .chartjs-render-monitor {
+    
+}
+
+.THIS .slds-slider_vertical .slds-slider__range {
+    width: 11rem;
+    margin-top: -4rem;
+} 
+
+.THIS .slds-slider-label__range {
+    visibility: hidden;
+}
+.THIS .slds-slider-label__label {
+    visibility: hidden;
+}
+
+.THIS.chngClientbtn {
+   padding: 0.25rem 1rem 0.25rem 1rem;
+    
+}
+.THIS .chng-client-btn-div{
+    width: 13%;
+    height:-2.9rem;
+}
+.THIS .cClientLookup .slds-form-element__control {
+    width: 100% !important;
+}
+.THIS .slds-col-3 {
+    width: 25%;
+}
+.THIS .chart11 {
+   width: 100%;
+   margin-left: 0;
+}
+.THIS .sf-charts-child {
+    width: 100%;
+    padding: 0 15px;
+}
+.THIS .chart11 canvas.chartjs-render-monitor {
+    width: 100% !important;
+    height: 350px !important;
+}
+.THIS .slds-form-element__label {
+    margin-right: 0;
+}
+.THIS .simulation-pop-up .slds-grid {
+    background-color: #f1f2f3;
+}
+.THIS .simulation-pop-up .slds-grid .slds-col {
+    background-color: #f1f1f1;
+}
+/*=======29-24-2019======*/
+.THIS .slds-card__body {
+    width: 100%;
+    margin: 0 auto;
+}
+.THIS .slds-tabs_default__nav {
+    padding: 0;
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .chart1 {
+    width: 100%; 
+    height: auto;
+}
+.THIS .slds-tabs_default__link {
+    font-size: 14px;
+    padding: 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none; 
+    transition: all 100ms;
+}
+.THIS .slds-is-active a {
+    color: #000;
+    font-weight: 700;
+    border-radius: 5px 5px 0 0;
+    font-weight: normal !important;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .slds-tabs_default__item.slds-is-active::after {
+    background-color: rgba(0, 112, 210, 1);
+    height: .1875rem;
+    display: block;
+    content: '';
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+.THIS .slds-tabs_default__item {
+    padding: 0;
+    margin: 10px 5px 0 0px;
+}
+.THIS .financial_table {
+    margin: 15px 0 0;
+}
+.THIS .financial_table td {
+    white-space: normal;
+    padding: 7px;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+.THIS .financial_table tr:first-child td {
+    border-top: 1px solid #ddd;
+}
+.THIS .financial_table th {
+    padding: 7px;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-right: none;
+}
+.THIS .financial_table tr:first-child th {
+    border-top: 1px solid #ddd;
+}
+.THIS .slds-text-heading_small {
+    font-size: 12px;
+}
+.THIS .f-health-help {
+    position: absolute;
+    top: -30px;
+    right: 10%;
+}
+.THIS .slds-tabs_default__content {
+    padding: 0;
+}
+.THIS .financial_table tr:nth-child(odd) th {
+    background-color: #f1f2f3;
+}
+.THIS .financial_table tr:nth-child(odd) td {
+    background-color: #f1f2f3;
+}
+/*02-05-2019*/
+.THIS .label_none .slds-form-element__label {
+    display: none;
+}
+/*06-05-2019*/ 
+.THIS .debt_forecast-model .slds-modal__header {
+    background-color: rgb(250, 250, 249);
+    padding: 5px;
+}
+.THIS .debt_forecast-model .slds-modal__header .slds-table {
+    border: none;
+}
+.THIS .debt_forecast-model .slds-modal__header .slds-table thead th {
+    /*background-color: #2D4A7D;
+    color: #fff;*/
+    text-align: center;
+    width: 33%;
+}
+.THIS .debt_forecast-model .slds-modal__header .slds-table thead th:first-child {
+    padding-left: 0;
+}
+.THIS .debt_forecast-model .slds-modal__content .slds-table {
+    margin-top: -30px;
+}
+.THIS .debt_forecast-model .slds-modal__content .slds-table tbody th {
+    text-align: center;
+    width: 33%;
+}
+.THIS .debt_forecast-model .slds-modal__content .slds-table tbody td {
+    text-align: center;
+    width: 33%;
+}
+/*.THIS .debt_forecast-model .slds-modal__content .slds-table tbody tr:nth-child(even) td {
+    background-color: #d1f2f1;
+}*/
+/*10-07-2019*/
+.THIS .chart1-child .chartjs-render-monitor {
+    display: block;
+    width: 100% !important;
+    height: 254px !important;
+} 
+.THIS .slds-slider__value {
+    bottom: 4rem;
+}
+
+
+@media (max-width: 1200px) {
+	.THIS {}
+    .THIS .bar{
+        margin-left: 0px;
+    }
+}
+@media (max-width: 992px) {
+	.THIS {}
+    .THIS .bar{
+        margin-left: 0px;
+    }
+}
+@media (max-width: 768px) {
+    .THIS {}
+    .THIS .bar{
+        margin-left: 0px;
+    }
+}
+@media (max-width: 576px) {
+   .THIS {}
+    .THIS .bar{
+        margin-left: 0px;
+    }
+}
