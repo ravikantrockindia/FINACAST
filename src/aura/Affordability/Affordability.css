@@ -1,3 +1,23 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600; color: #000;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 10px;
+    min-width: 120px;
+}
+.THIS .slds-button:hover {
+    color: #fff;
+}
+
 .THIS .slds-tabs_default__content {
     /*background-color: #f1f2f3;*/
     border: 1px solid #ccc;
@@ -7,6 +27,9 @@
     text-align: center;
     color: white;
     width: 74%;
+}
+.THIS.aff-data-box .customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
 }
 .THIS .slds-required{
     display:none;
@@ -173,12 +196,13 @@
     padding: 0;
 }
 .THIS .Summary_cashflow .slds-modal__header .slds-table thead th {
-    /*background-color: #2D4A7D;
-    color: #fff;*/
-    padding: 10px ;
+    background-color: #f6f9fc;
+    /*color: #fff;*/
+
+    padding: 12px 10px ;
 }
 .THIS .Summary_cashflow .slds-modal__header .slds-table thead th:first-child {
-    width: 30%;
+    width: 25%;
 }
 .THIS .Summary_cashflow .slds-modal__content {
     padding: 0;
@@ -186,19 +210,30 @@
 .THIS .Summary_cashflow .slds-modal__content .slds-table {
     margin-top: -24px;
 }
+.THIS .Summary_cashflow .slds-button {
+    background: transparent;
+    width: 30px;
+    min-width: 30px;
+    height: 50px;
+}
 .THIS .Summary_cashflow .slds-modal__content .slds-table tbody th:first-child {
-    width: 30%;
+    width: 25%;
     border-bottom: 1px solid #ccc;
+    padding: 12px 10px;
 }
 .THIS .Summary_cashflow .slds-modal__content .slds-table tbody td:first-child {
-    width: 30%;
+    width: 25%;
 }
 .THIS .Summary_cashflow .slds-modal__content .slds-table tbody td {
-    padding: 8px 6px;
+    padding: 8px 12px;
     border-bottom: 1px solid #ccc;
 }
+.THIS .Summary_cashflow .slds-modal__content .slds-table tbody tr:last-child th:first-child {
+    font-weight: 700;
+}
 .THIS .select_year {
-    width : 15%;
+    width : 100%;
     float : right;
     margin :-18px 2px 1px;
+}
 }
