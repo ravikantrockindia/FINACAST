@@ -451,7 +451,6 @@
                     </div>
                 </div>
             </lightning:tab>
-<<<<<<< HEAD
             <lightning:tab label="Compare Options" >
 <!--    <hr class="slds-m-top_xx-small slds-m-bottom_xx-small"/>
     <div class="slds-card__header ">
@@ -480,7 +479,6 @@
                                                         </select>
                                                         <lightning:icon iconName="utility:down" size="xx-small"/>
                                                     </div>
-=======
             <lightning:tab label="Compare Options" onactive="{!c.showFinHealth}">
                 
                 <div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small" style="">
@@ -502,7 +500,6 @@
                                             <div class="slds-col slds-size_1-of-4" style="background-color:#25368B">
                                                 <div class="slds-text-heading_large" style = "color:white; font-weight: 700; padding:10px; margin: 45% 0 0; text-align: center;">                                                    
                                                     <span >Your Financial Health</span>    
->>>>>>> ac1193ef2f7b8e41ddd545a23bcb43c23cfbbdfd
                                                 </div>
                                             </div>
                                             <div class="slds-col slds-size_3-of-4" style="padding: 20px">
@@ -552,7 +549,6 @@
                             </section>
                             <div class="slds-backdrop slds-backdrop_open"></div>
                         </div>
-<<<<<<< HEAD
                   
                         <div class="slds-grid slds-gutter slds-m-top_large">
                            <div class="slds-col slds-size_6-of-12 slds-p-right_small">
@@ -1007,7 +1003,6 @@
             </div>
         </div>
     </div>   -->
-=======
                         
                     </aura:if>
                 </div>
@@ -1059,7 +1054,6 @@
                         </ui:message>
                     </div>                  
                 </lightning:card>
->>>>>>> ac1193ef2f7b8e41ddd545a23bcb43c23cfbbdfd
             </lightning:tab >
         </lightning:tabset>
     </lightning:card>
