@@ -2,7 +2,6 @@
     doInit : function(component, event, helper) {               
         var jsonResponseJs;  
         var a= component.get("v.ids");
-         
         var action = component.get("c.getData");
         action.setParams({
             id: component.get('v.recordId')
@@ -10,10 +9,6 @@
         action.setCallback(this, function(response){
             try{
                 var g = response.getReturnValue();
-                console.log('Response in Dashboard in init: ' + JSON.stringify(g));
-                console.log("Name:" + g.firstClient);
-                console.log(g.responseData);
-                
                 var state = response.getState();
                 if(state==="SUCCESS" && (!($A.util.isUndefinedOrNull(g))))  {
                     
@@ -43,52 +38,9 @@
             
             
         });
-         $A.enqueueAction(action); 
-     },
-    
-    
-    childComponentEvent : function(component, event) {
-        console.log('dddhehdedhewbdhewdhedhed');
-        console.log(JSON.stringify(event.getParam("idclient")));
-        var id =event.getParam("idclient");
-        component.set("v.ids", id);
-        var a= component.get("v.ids");
-        console.log('aaaaaaaaaaaaaaaa'+a);
-        
-        if(!$A.util.isEmpty(a))
-        {
-            var action = component.get("c.getData");
-            console.log('client id: '+ a.Id); 
-            action.setParams({
-                id: a.toString()
-            });
-            action.setCallback(this, function(response) {
-                try
-                {
-                    var g = response.getReturnValue();
-                    console.log("Future Simulation Response on change client: " + JSON.stringify(g));
-                    var state = response.getState();
-                    
-                    if(state==="SUCCESS" && (!($A.util.isUndefinedOrNull(g)))) {
-                        
-                        //set loan, credit, saving, networth, goals
-                        component.set('v.saving', g.financialAccountList['0']);
-                        component.set('v.credit', g.financialAccountList['1']);
-                        component.set('v.loan', g.financialAccountList['2']);
-                        var netWorth = g.balanceList['0'] - (g.balanceList['1'] + g.balanceList['2']);
-                        component.set('v.netWorth', netWorth);
-                        
-                        
-                    }
-                    else { helper.showToast(component, a.Name);} 
-                }
-                catch(e){
-                    
-                }
-            })
-            $A.enqueueAction(action);
-        }
+        $A.enqueueAction(action); 
     },
+    
     
     //change client method
     changeClient: function(component, event) {
@@ -99,7 +51,6 @@
         if(!$A.util.isEmpty(selectedClient))
         {
             var action = component.get("c.getData");
-            console.log('client id: '+ selectedClient.Id); 
             action.setParams({
                 id: selectedClient.toString()
             });
@@ -107,7 +58,6 @@
                 try
                 {
                     var g = response.getReturnValue();
-                    console.log("Future Simulation Response on change client: " + JSON.stringify(g));
                     var state = response.getState();
                     
                     if(state==="SUCCESS" && (!($A.util.isUndefinedOrNull(g)))) {
@@ -153,7 +103,7 @@
         component.set("v.isModalOpen","true");
     },
     handleAccount:function(component,event,helper){
-          
+        
         var eventSource= event.getSource();
         var txnId=eventSource.get("v.value");
         component.set("v.Tid",txnId);

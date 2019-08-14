@@ -1,29 +1,27 @@
 <aura:component  controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
 
 <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/>  
-    <aura:attribute type="id" name="recordId" default="0014600001ePgeyAAC"/>
+    <aura:attribute type="id" name="clientId"/>
     <aura:attribute name="isPortalUser" type="Boolean" default="false" />
     <aura:attribute name="showModal" type="Boolean" default="false"/>
-    
    <aura:attribute name = "score" type="Double" default = "0"/>
     <aura:attribute name = "months" type="Double" default="0"/>
      <aura:attribute name="istrue" type="boolean" default="true"/>
-    <aura:attribute name="istrue1" type="boolean" default="false" />
-     <aura:attribute name="istrue2" type="boolean" default="false" />
-     <aura:attribute name="istrue3" type="boolean" default="false" />
-    <aura:attribute name="istrue4" type="boolean" default="false" />
-    <aura:attribute name="istrue5" type="boolean" default="false" />
-    <aura:attribute name="istrue6" type="boolean" default="false" />
-    <aura:attribute name="istrue7" type="boolean" default="false" />
-    <aura:attribute name="istrue8" type="boolean" default="false" />
-    <aura:attribute name="istrue9" type="boolean" default="false" />
-    <aura:attribute name="istrue10" type="boolean" default="false" />
-     <aura:attribute name="istrue11" type="boolean" default="false" />
-     <aura:attribute name="istrue12" type="boolean" default="false" />
+    <aura:attribute name="Trackexpense" type="boolean" default="false" />
+     <aura:attribute name="NotTrackexpense" type="boolean" default="false" />
+     <aura:attribute name="Adviseexpense" type="boolean" default="false" />
+    <aura:attribute name="Trackcredit" type="boolean" default="false" />
+    <aura:attribute name="NotTrackcredit" type="boolean" default="false" />
+    <aura:attribute name="Advisecredit" type="boolean" default="false" />
+    <aura:attribute name="Trackloan" type="boolean" default="false" />
+    <aura:attribute name="NotTrackloan" type="boolean" default="false" />
+    <aura:attribute name="Adviseloan" type="boolean" default="false" />
+    <aura:attribute name="Trackgoals" type="boolean" default="false" />
+     <aura:attribute name="NotTrackgoals" type="boolean" default="false" />
+     <aura:attribute name="Advisegoals" type="boolean" default="false" />
      <aura:attribute name="NameSpace" type="string" />
-     <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
-
-  <div class="slds-col slds-size_12-of-12">
+     
+  <div class="slds-col slds-size_12-of-12 slds-p-left_none slds-p-right_none">
             	<div class="client_managed">
                     <div class="slds-grid">
                         <div class="slds-col slds-size_6-of-12 slds-border_right slds-p-top_medium slds-p-bottom_medium">
@@ -49,7 +47,7 @@
                               <aura:if isTrue="{!v.showModal}">
                                 <c:CustomModalComponent isActive="{!v.showModal}" title="Your Financial Health">
                                     <div>
-                                        <p class="slds-text-longform"><ui:message class="modalCss" title="Status" severity="information" closable="false">
+                                        <p class="slds-text-longform "><ui:message class="modalCss slds-p-left_x-small slds-p-bottom_x-small" title="Status" severity="information" closable="false">
                                             <div style="padding: 0px 10px;">
                                                 Your financial score is an indicator of how likely you are to meet your current financial commitments like:<br/>
                                                 <ul>
@@ -63,7 +61,7 @@
                                                 The green, orange and red color indicators for each of the sections tells you if your expenses, loans and credit card payments are likely to be met fully or partially in the next month.
                                             </div>
                                             <br/>
-                                            <div class="bBody"><h4>Score Key</h4></div>
+                                            <div class="bBody"><h4 class="slds-p-left_x-small slds-p-bottom_x-small">Score Key</h4></div>
                                             <div style="padding: 0px 10px 10px;">
                                                 Below 1:	You are unlikely to meet your everyday expenses in the next month<br/>
                                                 Between 1 and 4:	You are likely to meet your everyday expenses but not meet your debt commitments<br/>
@@ -82,12 +80,12 @@
                             <div class="health-features">
                                 <div class="slds-grid slds-p-top_xx-large slds-p-bottom_large">
                                     <div class="slds-col slds-size_6-of-12">
-                                         <aura:if isTrue="{!v.istrue1}">
+                                         <aura:if isTrue="{!v.Trackexpense}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
                                              
-                                            <aura:if isTrue="{!v.istrue2}">
+                                            <aura:if isTrue="{!v.NotTrackexpense}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.istrue3}">
+                                                <aura:if isTrue="{!v.Adviseexpense}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                         
                                                 </aura:if>
@@ -96,11 +94,11 @@
                                         <h4>Household Expenses</h4>
                                     </div>
                                     <div class="slds-col slds-size_6-of-12">
-                                         <aura:if isTrue="{!v.istrue4}">
+                                         <aura:if isTrue="{!v.Trackcredit}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                            <aura:if isTrue="{!v.istrue5}">
+                                            <aura:if isTrue="{!v.NotTrackcredit}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.istrue6}">
+                                                <aura:if isTrue="{!v.Advisecredit}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                         </aura:if>
                                              </aura:if>
@@ -110,11 +108,11 @@
                                 </div>
                                 <div class="slds-grid slds-p-bottom_large">
                                     <div class="slds-col slds-size_6-of-12">
-                                         <aura:if isTrue="{!v.istrue7}">
+                                         <aura:if isTrue="{!v.Trackloan}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                            <aura:if isTrue="{!v.istrue8}">
+                                            <aura:if isTrue="{!v.NotTrackloan}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.istrue9}">
+                                                <aura:if isTrue="{!v.Adviseloan}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                        
                                                 </aura:if>
@@ -123,11 +121,11 @@
                                          <h4>Loan Payments</h4>
                                     </div>
                                     <div class="slds-col slds-size_6-of-12">
-                                       <aura:if isTrue="{!v.istrue10}">
+                                       <aura:if isTrue="{!v.Trackgoals}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                            <aura:if isTrue="{!v.istrue11}">
+                                            <aura:if isTrue="{!v.NotTrackgoals}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.istrue12}">
+                                                <aura:if isTrue="{!v.Advisegoals}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                         
                                                 </aura:if>

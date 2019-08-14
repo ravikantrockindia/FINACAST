@@ -11,27 +11,16 @@
         <componentInstances>
             <componentName>ClientDetail</componentName>
         </componentInstances>
-        <name>main</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <componentInstances>
             <componentName>Mybalancesheet</componentName>
         </componentInstances>
-        <name>rightsidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentName>ShowDemographicInformation</componentName>
-        </componentInstances>
-        <name>leftsidebar</name>
+        <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Finacast Client Detail</masterLabel>
     <sobjectType>Account</sobjectType>
     <template>
-        <name>flexipage:recordHomePinnedHeaderLeftSidebarTemplateDesktop</name>
+        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>

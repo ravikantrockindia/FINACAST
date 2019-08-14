@@ -13,8 +13,6 @@ public class ClientDetailApex {
         
            return NamespaceUtility.returnNamespace();
         
-        // System.debug('delete');
-        
     }
     
     //Create client data
@@ -22,7 +20,7 @@ public class ClientDetailApex {
     public static String createClientData(String clientId){
         
          System.debug('inside Method create Client'); 
-       // String clientId ='0014600001ePIu5AAG';
+     
         Boolean showClientLookup = false;
         Boolean fadeOut = false; 
         Boolean isSelected =false;
@@ -44,8 +42,7 @@ public class ClientDetailApex {
         /************ For Household Accounts ********/
         if(isHousehold){            
             List<account> householdMembersList = new List<Account>();
-            //householdMembersList = [select id, name from FinServ__AccountAccountRelation__c where FinServ__RelatedAccount__c =: clientId];           
-            system.debug('Inside Household');       
+                 
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
             if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) {                 
@@ -53,18 +50,11 @@ public class ClientDetailApex {
                 cashFlowPopup = false;
                 List<FinServ__FinancialAccount__c> FFDAList = new List<FinServ__FinancialAccount__c>();
                 List<FinServ__FinancialAccount__c> FFAList = new List<FinServ__FinancialAccount__c>();
-                
-                //try {               
-                System.debug('Inside try');
-                setData = '{"key":"'+FSK+'","formParams":"[';
-                
-                //double monthlyIncome = 0;                   
-                incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Frequency__c,Tax_Rate__c, Yearly_growth__c from Budget__c where HouseHold__c =: clientId 
+                  setData = '{"key":"'+FSK+'","formParams":"[';
+               incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Frequency__c,Tax_Rate__c, Yearly_growth__c from Budget__c where HouseHold__c =: clientId 
                              and recordType.developerName = 'Income_Record_Type' ];
                 
-                System.debug('client Id: '+ clientId);
-                System.debug('Income List: ' + incmeList);
-                
+                              
                 //Create Income List
                 if(incmeList!=null && incmeList.size() > 0){
                     Integer i = 1;
@@ -74,7 +64,7 @@ public class ClientDetailApex {
                         switch on inc.Frequency__c {
                             when 'Monthly' {
                                 incomeFrequency = 1;
-                            }	
+                            }   
                             when 'Semi Monthly' {
                                 incomeFrequency = 2;
                             }
@@ -125,9 +115,7 @@ public class ClientDetailApex {
                     setData +='\'enddate\':\'' + enddate + '\'';
                     setData +='},';
                 }
-                
-                
-                System.debug('income here: ' + setData);
+               
                 Integer flag = 0; 
                 Map<id, integer> FFAMap = new Map<id, integer>();
                 
@@ -141,9 +129,6 @@ public class ClientDetailApex {
                            RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
                            FinServ__Household__c =: clientId 
                            limit 1000];
-                
-                System.debug('FFA List: '+FFAList.size());
-                
                 if(FFAList.size() > 0){
                     for(FinServ__FinancialAccount__c FFA : FFAList){
                         accountNameMap.put(FFA.Id, FFA.Name);
@@ -167,7 +152,7 @@ public class ClientDetailApex {
                 }
                 
                 // Loan and debt accounts
-                System.debug('above');
+               
                 FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
                             from FinServ__FinancialAccount__c where
                             (Account_Type__c = 'Loan' or
@@ -181,14 +166,14 @@ public class ClientDetailApex {
                 /*********** NOTE: Outstanding Payment and Loan End Date *********/
                 
                 
-                System.debug('Debt Accounts: ' + FFDAList.size());
+              
                 if(FFDAList.size() > 0){
                     for(FinServ__FinancialAccount__c FFDA : FFDAList){
                         Double loanFrequency = 1;
                         switch on FFDA.FinServ__PaymentFrequency__c {
                             when 'Monthly' {
                                 loanFrequency = 1;
-                            }	
+                            }   
                             when 'Semi Monthly' {
                                 loanFrequency = 2;
                             }
@@ -249,12 +234,12 @@ public class ClientDetailApex {
                                                             //Account_Value__c, 
                                                             Name, 
                                                             Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                            Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c	, Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
+                                                            Annual_Growth_Rate__c,  FinServ__TargetDate__c, Associated_Account__c, Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c  , Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
                                                             from FinServ__FinancialGoal__c where
                                                             RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                             FinServ__Household__c =: clientId
                                                             limit 1000];
-                System.debug('Goal List: ' + goalList);
+               
                 if(goalList.size() > 0){
                     for(FinServ__FinancialGoal__c goal : goalList){
                         
@@ -292,7 +277,7 @@ public class ClientDetailApex {
                 //Create Expense Data
                 expList = [Select id, Name, Amount__c ,Start_Date__c, End_Date__c, Does_contribution_bring_tax_benifit__c, Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c from Budget__c where HouseHold__c =: clientId 
                            and recordType.developerName = 'Expense_Record_Type']; 
-                System.debug('Expense List: ' + expList);
+          
                 double monthlyExpenses = 0;
                 //set expenses here    
                 if(expList!=null && expList.size() > 0){
@@ -350,7 +335,7 @@ public class ClientDetailApex {
         }
         
         /******** Normal non - Household Code goes here *******/
-        else {            	
+        else {              
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
             if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) { 
@@ -379,7 +364,7 @@ public class ClientDetailApex {
                         switch on inc.Frequency__c {
                             when 'Monthly' {
                                 incomeFrequency = 1;
-                            }	
+                            }   
                             when 'Semi Monthly' {
                                 incomeFrequency = 2;
                             }
@@ -536,7 +521,7 @@ public class ClientDetailApex {
                                                             //Account_Value__c, 
                                                             Name, 
                                                             Required_Monthly_Saving__c, Start_Date__c, FinServ__TargetValue__c,
-                                                            Annual_Growth_Rate__c, 	FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c, Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
+                                                            Annual_Growth_Rate__c,  FinServ__TargetDate__c, Associated_Account__c,Goal_Priority__c,Does_the_contribution_bring_tax_benefit__c, Do_tax_benefits_realize_monthly__c,What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c
                                                             from FinServ__FinancialGoal__c where
                                                             RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                             FinServ__PrimaryOwner__c =: clientId
@@ -878,7 +863,7 @@ public class ClientDetailApex {
         wrapperObj.recordTypes = [select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
         ClientDetailApex.createClientData(initialClientId);
         if(!test.isRunningTest()){
-       		wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
+            wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
         }
                 System.debug('Client Data: ' + clientData);
         System.debug('Response: ' + wrapperObj.responseData);
