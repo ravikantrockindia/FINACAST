@@ -31,7 +31,10 @@
             var state =response.getState();
             if (state === "SUCCESS") {
                 var allFieldList = response.getReturnValue().lstFields;
-                
+                var allFieldList2 = response.getReturnValue().lstSObject;
+                var ClientSize=allFieldList2.length;
+            
+                component.set("v.TotalClient",ClientSize);
                 var allColumnList = [];
                 var counter = 0;
                 var referenceFieldsArray = [];              
