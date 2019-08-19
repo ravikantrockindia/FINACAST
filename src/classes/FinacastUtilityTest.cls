@@ -189,7 +189,7 @@ public class FinacastUtilityTest {
         list<Scenario_Savings__c> savings2 = [select id from Scenario_Savings__c where client_Id__c =: acc.id];
         list<Scenario_Debt__c> debt = [select id from Scenario_Debt__c where client_Id__c =: acc.id];
         list<Scenario_Goal__c> goals4 = [select id from Scenario_Goal__c where client_Id__c =: acc.id];
-       FinacastUtility.buildScenarioRequestData2(income, expense, savings2, debt, goals4, sc.id, acc.id);
+       FinacastUtility.buildScenarioRequestData2( sc.id, acc.id);
        FinacastUtility.ExceptionHandle(10,'Message Error' , 'StackTrace');
         
     }
