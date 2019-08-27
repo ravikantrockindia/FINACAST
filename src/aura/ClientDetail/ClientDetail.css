@@ -1,268 +1,228 @@
-.THIS .bar{
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .slds-button:hover {
+    color: #fff;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+}
+.THIS .client_managed h3 {
+    margin: 6px 0 0;
+}
+.THIS .net-worth {
+    background-color: #f6f9fc;
+}
+.THIS .net-worth h4 {
+    font-weight: 500;
+    font-size: 18px;
+}
+.THIS .ac-featers {
+    font-family: 'Open Sans', sans-serif;
+    border-bottom: 1px solid #ccc;
+}
+.THIS .ac-featers .slds-grid {
+    border-bottom: 1px solid #ccc;
+}
+.THIS .ac-featers a {
+    display: block;
     width: 100%;
-    height: auto;
-    margin-bottom: 30px;
-}
-
-.THIS .slds-slider__range{
-    background:linear-gradient(to left, rgb(45, 226, 84) 0%, rgb(229, 152, 43) 33%, rgb(255, 20, 20) 75%, rgb(255, 20, 20) 100%) !important;
-}
-.THIS .slds-slider-label__label  {
-    font-family:Salesforce Sans,Arial,sans-serif;
-    font-size: 1rem !important;
-    font-weight: bold;
-}
-.THIS .slds-slider-label__range  {
-    font-family:Salesforce Sans,Arial,sans-serif;
-    font-size: 1rem !important;
-    font-weight: bold;
-}
-.THIS .slds-slider__value  {
-    font-family:Salesforce Sans,Arial,sans-serif;
-    font-size: 1rem !important;
-    font-weight: bold;
-}
-
-.THIS .slds-slider_vertical .slds-slider__range {
-        width: 16rem;
-} 
-
-.THIS .slds-slider-label__range {
-    display: none;
-}
-.THIS .slds-slider-label__label {
-    display: none;
-}
-
-.THIS .alertMessage div{
-    color : #000 !important;
-}
-
-.THIS .modalCss div{
-    color: #000 !important;
-}
-.THIS .defaultRedIndicators {
-    width: 15px;
-    background: #f7d6d6;
-    height: 15px;
-    border-radius: 9px;
-}
-
-.THIS .defaultOrangeIndicators {
-    width: 15px;
-    background: #fff0d0;
-    height: 15px;
-    border-radius: 9px;
-}
-
-.THIS .defaultGreenIndicators {
-    width: 15px;
-    background: #e6ffe4;
-    height: 15px;
-    border-radius: 9px;
-}
-
-.THIS .RedIndicators {
-    width: 15px;
-    background: #ff0023;
-    height: 15px;
-    border-radius: 9px;
-}
-
-.THIS .OrangeIndicators {
-    width: 15px;
-    background: #ff8c00;
-    height: 15px;
-    border-radius: 9px;
-}
-
-.THIS .GreenIndicators {
-    width: 15px;
-    background: #00ff14;
-    height: 15px;
-    border-radius: 9px;
-}
-
-.THIS .indicators li {
     float: left;
+    padding: 18px 0;
+    font-weight: 600;
 }
-.THIS .slds-card {
-    border: none;
+.THIS .ac-featers a span {
+    color: #969696;
+    font-weight: 400;
 }
-.THIS .slds-card__header {
-    background-color: #2D4A7d;
-    padding: 5px 15px;
-    color: #fff;
+.THIS .ac-featers a .slds-icon {
+    width: 10px;
+    margin-left: 15px;
 }
-.THIS .slds-text-title_caps {
-    line-height: 24px;
-    font-weight: 700;
+.THIS .what-is {
+    text-align: right;
 }
-.THIS .slds-table thead th {
-    background-color: #4C9BDF;
-    color: #fff;
-    text-transform: capitalize;
+.THIS .what-is a {
+    color: #000;
+    text-decoration: underline;
+    display: inline-block;
+    margin-top:3px;
 }
-.THIS .fh-button {
+.THIS .health-features p {
+    font-size: 12px;
+}
+.THIS .health-features p .slds-icon_container_circle {
+    position: relative;
+    height: 20px;
+    width: 20px;
+}
+.THIS .health-features p span {
+    margin: -14px 0 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.THIS .health-features p .slds-icon {
     position: absolute;
     top: 2px;
-    right: 15px;
+    width: 20px;
+    left: 0;
 }
-.THIS .fh-button .slds-button_neutral {
+.THIS .on-track .slds-icon {
+    left: 3px !important;
+}
+.THIS .health-features h4 {
+    font-size: 14px;
+    color: #808080;
+    font-weight: 500;
+    margin-top:	5px;
+}
+.THIS .on-track {
+    color: #00b088;
+    font-size: 12px;
+}
+.THIS .non-track {
+    color: #f24865;
+}
+.THIS .net-worth h1 span {
+    font-size: 12px;
+    color: #808285;
+    font-weight: 600;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.THIS .net-worth h1 span .slds-icon {
+    vertical-align:	text-bottom;
+    fill: green;
+}
+.THIS .need-adv {
+    color: #ff8b00;
+}
+.THIS .need-adv .slds-icon-action-approval {
+    background-color: #ff8b00;
+}
+.THIS .half-chart {
+    text-align: center;
+}
+.THIS .half-chart p {
+    margin: 15px 0 0;
+    font-size: 12px;
+}
+.THIS .client_managed .slds-table thead th {
+    background-color: #f6f9fc;
+}
+.THIS .client_managed .slds-table .slds-icon_container_circle {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+.THIS .client_managed .slds-table thead th {
+    color: #000;
+    font-family: 'Work Sans', sans-serif;
+    padding-top: 18px;
+    padding-bottom: 18px;
     font-weight: 700;
-    line-height: 24px;
 }
-.THIS .information {
-    /*background: -moz-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  ff3.6+ */
-	/*background: -webkit-gradient(360deg, #1B5F9E 0%, #fff 100%);  safari4+,chrome */
-	/*background: -webkit-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  safari5.1+,chrome10+ */
-	/*background: -o-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  opera 11.10+ */
-	/*background: -ms-linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  ie10+ */
-	/*background: linear-gradient(360deg, #1B5F9E 0%, #fff 100%);  w3c */
-    margin: 0;
-    background-color: #fff;
-} 
-.THIS ul.indicators {
-    margin-top: 5px;
+.THIS .client_managed .slds-table .slds-icon_container_circle .slds-icon {
+    position: absolute;
+    top: 2px;
+    width: 20px;
+    left: 0;
 }
-.THIS ul.indicators li:last-child {
+.THIS .client_managed .slds-table span {
+ 	margin: -14px 0 0 5px;
+    display: inline-block;
+    vertical-align: middle;   
+}
+.THIS .client_managed .slds-table tbody td:last-child .slds-icon {
+    fill: #4e75a3;
+    width: 30px;
+    height: 30px;
+}
+.THIS .client_managed .slds-table .non-track {
+    font-size: 12px;
+}
+.THIS .client_managed .slds-table tbody td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.THIS .month-date {
+    font-size: 12px;
+    color: #808285;
+}
+.THIS .month-date .slds-icon {
+    width: 12px;
+    fill : #808285;
+}
+.THIS .graph-image img {
+    width: 100%;
+}
+.THIS .health-features {
+    text-align: left;
+}
+.THIS .client-profile h2 .slds-icon {
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
     margin-left: 5px;
 }
-.THIS .slds-table_cell-buffer tr>th:first-child {
-    padding-left: 10px;
+.THIS .clients-details span {
+    color: #999999;
+    font-size: 12px;
 }
-.THIS .slds-table_cell-buffer tr>td:first-child {
-    padding-left: 10px;
+.THIS .clients-details h5 {
+    color: #000;
+    font-size: 14px;
 }
-.THIS .slds-table_cell-buffer tr>th:last-child {
-    padding-right: 0px;
+.THIS .clients-details h5 b {
+    font-weight: 600;
 }
-.THIS .slds-table_cell-buffer tr>td:last-child {
-    padding-right: 0px;
-}
-/*26-04-1990*/
-.THIS .dashboard_header .slds-form-element__control {
-    width: 100%;
-}
-.THIS .slds-card__body {
-    padding: 5px 0;
-    width: 95%;
-    margin: 0 auto;
-}
-.THIS .my_balance-sheets .slds-card__body {
-    padding: 0;
-    width: 100%;
-}
-.THIS .slds-text-title_caps {
-    text-transform: capitalize;
-}
-.THIS .budget-brand .slds-button {
-    background-color: #71ba3d;
-    border: 1px solid #71ba3d;
-    color: #fff;
-}
-.THIS .slds-modal__header {
-    background-color: #004487;
-    color: #fff;
-}
-.THIS .slds-modal__header h2 {
-    font-weight: 700;
-}
-.THIS .slds-modal__content .bBody h4 {
-    background-color: #4c9bdf;
-    color: #fff;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-}
-.THIS .slds-modal__content .information {
-    padding: 0;
-}
-.THIS .slds-modal__content .bBody {
-    overflow: visible;
-}
-/*02-05-2019*/
-.THIS .label_none .slds-form-element__label {
+.THIS .canvasjs-chart-credit {
     display: none;
 }
-/*03-05-2019*/
-.THIS .months .information {
-    background-color: #A61A14;
-    color: #fff;
+.THIS #chartContainer3 .canvasjs-chart-container {
+    height: 180px;
+    overflow: hidden;
 }
-.THIS .months .information.bg-green {
-    background-color: #57D14B;
+.THIS #chartContainer3 .canvasjs-chart-container .canvasjs-chart-canvas {
+    height: 250px;
 }
-.THIS .slds-text-title--caps .slds-text-title_caps:last-child {
-    padding-left: 10px;
+.THIS .half-chart-sticker {
+    position: relative;
+    z-index: 0;
 }
-@media (max-width: 992px) {
-    .THIS .slds-page-header__row {
-        display: inline;
-    } 
-    .THIS .dashboard-parant {
-        width: 100%;
-        float: left;
-    }
-    .THIS .payment-goals .slds-size_3-of-12 {
-        width: 50%;
-        display: inline-block;
-    }
-	.THIS .slds-col.slds-size_1-of-3.dashboard-parant:first-child {
-        margin-bottom: 15px;
-    }
+.THIS .chart-sticker {
+    position: absolute;
+    top: 105px;
+    text-align: left;
+    width: calc(100% - 20px);
 }
-@media (max-width: 768px) {
-    .THIS .slds-page-header__row {
-        display: inline;
-    } 
-    .THIS .dashboard-parant {
-        width: 100%;
-        float: left;
-    }
-    .THIS .payment-goals .slds-size_3-of-12 {
-        width: 50%;
-        display: inline-block;
-    }
-    .THIS .slds-col.slds-size_1-of-3.dashboard-parant:first-child {
-        margin-bottom: 15px;
-    }
+.THIS .chart-sticker ul li {
+    display: inline-block;
 }
-@media (max-width: 576px) {
-    .THIS .slds-page-header__row {
-        display: inline;
-    } 
-    .THIS .dashboard-parant {
-        width: 100%;
-        float: left;
-    }
-    .THIS .payment-goals .slds-size_3-of-12 {
-        width: 50%;
-        display: inline-block;
-    }
-    .THIS ul.indicators li:last-child {
-        margin-left: 1px;
-        font-size: 10px;
-    }
-	.THIS .slds-col.slds-size_1-of-3.dashboard-parant:first-child {
-        margin-bottom: 15px;
-    }
+.THIS .chart-sticker ul li:first-child {
+    margin-left:62px;
 }
-
-.THIS .cDashboardComponent .bBody {
-    color: black;
+.THIS .chart-sticker ul li:nth-child(2) {
+    margin-left:60px;
 }
-.THIS .leftColumnTab {
-    height: 30px;
-    background: #2d4a7d;
-    border-radius: 5px 5px 0 0;
-    margin-top: -7px;
-    width: 294px;
-    margin-left: -1px;
+.THIS .chart-sticker ul li:last-child {
+    margin-left:61px;
 }
-.THIS .netAmount {
-    width: 292px;
-    height: 41px;
-    float: left;
-    background: #f1f6fc;
-    border-bottom: solid 1px #ccc;
+.THIS .chart-sticker h2 {
+    font-size: 40px;
+    font-weight: 600;
 }
