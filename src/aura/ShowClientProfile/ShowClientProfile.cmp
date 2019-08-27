@@ -1,0 +1,112 @@
+<aura:component controller="FetchImage" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:handler name="change" value="{!v.FinalVal}" action="{!c.itemsChange}"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute type="Id" name="recordId" default="0014o00001fRvur"/>
+    <aura:attribute name="isEditTrue" type="Boolean" />
+    <aura:attribute name="isEditImage" type="Boolean" /> 
+    <aura:attribute name="DefaultImg" type="Boolean" default="false" />
+    <!--aura:attribute name="isImageAvailable" type="Boolean"  default="true"/> -->
+    <aura:attribute name="prefixURL" type="String" default="/servlet/servlet.FileDownload?file="/>
+    <aura:attribute name="attachId" type="String" />
+    <aura:attribute name="FinalVal" type="String" default="String"/> 
+    <aura:attribute name="TempFinalVal" type="String" default="String"/> 
+    
+    <force:recordData aura:id="record"
+                      layoutType="FULL"
+                      recordId="{!v.recordId}"
+                      targetError="{!v.recordError}"
+                      targetFields ="{!v.simpleRecord}"
+                      mode="VIEW"/>  
+    <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Account">  
+        
+        <div class="client_managed client-profile">
+            <div class="slds-grid slds-p-top_small slds-p-bottom_small">
+                <div class="slds-col slds-size_10-of-12">
+                    <h3 class="slds-m-top_none">Client Profile</h3>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-p-top_small slds-p-bottom_small">
+                <div class="slds-col slds-size_6-of-12">
+                    <aura:if isTrue="{!v.DefaultImg}">  
+                        <span class="slds-image">
+                            <img src="{!v.FinalVal}"/>
+                        </span>   
+                        <aura:set attribute="else">  
+                            <span class="slds-image">
+                                <img src="{!$Resource.staticImageUser}" alt="Image"/>
+                            </span>   
+                        </aura:set>        
+                        
+                    </aura:if>
+                </div>
+                
+                <div class="slds-col slds-size_6-of-12 slds-align_absolute-center">
+                    <div class="slds-clearfix ">
+                        <h2 class="EditPencil"> {!v.simpleRecord.Name} <lightning:buttonIcon iconName="utility:edit"  size="small"   onclick="{!c.handleProfile }" variant="bare" class="slds-float_right" alternativeText="Edit Profile" /> </h2>
+                        <aura:if isTrue="{!v.isEditTrue}">
+                            
+                            <section role="dialog" aura:id="change" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium slds-hide ">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header EditCross">
+                                        <lightning:buttonIcon iconName="utility:close"
+                                                              onclick="{! c.closeModel }"
+                                                              alternativeText="close"
+                                                              variant="bare-inverse"
+                                                              class="slds-modal__close"/>
+                                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Demographic Details</h2>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium " aria-hidden="true" id="modal-content-id-1">
+                                        <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" />
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </aura:if>
+                        <div class="clients-details">                                  
+                            <h5>DoB <b><lightning:outputField  fieldName="Date_Of_Birth__c" variant="label-hidden" /></b></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="ac-featers">
+                <li class="slds-grid">
+                    <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_small">
+                        <div class="clients-details">
+                            
+                            <h5><b><lightning:outputField fieldName="Risk_Profile__c"/></b></h5>
+                        </div>
+                    </div>
+                </li>
+                <li class="slds-grid">
+                    <div class="slds-col slds-size_12-of-12 slds-p-top_small slds-p-bottom_small">
+                        <div class="clients-details">
+                            
+                            <h5><b><lightning:outputField fieldName="FinServ__InvestmentExperience__c"/></b></h5>
+                        </div>
+                    </div>
+                </li>
+                <li class="slds-grid">
+                    <div class="slds-col slds-size_12-of-12 slds-p-top_small slds-p-bottom_small">
+                        <div class="clients-details">
+                            <b><span>Additional Information</span></b>
+                            <h5>Last Interaction</h5>
+                        </div>
+                    </div>
+                </li>
+                <li class="slds-grid">
+                    <div class="slds-col slds-size_12-of-12 slds-p-top_small slds-p-bottom_small">
+                        <div class="clients-details">
+                            <h5>Associated household</h5>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </lightning:recordViewForm> 
+    
+</aura:component>
