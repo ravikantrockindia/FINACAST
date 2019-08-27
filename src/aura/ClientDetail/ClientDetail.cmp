@@ -218,7 +218,7 @@
                             </div>
                         </div>
                         <!-- <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">-->
-                            <c:POC_ClientDashboard_CashFlowBar/>
+                          <!--  <c:POC_ClientDashboard_CashFlowBar/> -->
                             <!-- <div class="slds-col slds-size_12-of-12 graph-image">
                             	<img src="{!$Resource.graph1}" />
                             </div> -->
@@ -240,7 +240,7 @@
                             	<img src="{!$Resource.graph2}"/>
                             </div> 
                         </div>-->
-                        <c:POC_ClientDashboard_DebtForecastStacked/>
+                        <!--<c:POC_ClientDashboard_DebtForecastStacked/> -->
                     </div>                
                 </div>
                 <div class="slds-m-top_large slds-m-bottom_medium">
