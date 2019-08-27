@@ -47,7 +47,7 @@
                               <aura:if isTrue="{!v.showModal}">
                                 <c:CustomModalComponent isActive="{!v.showModal}" title="Your Financial Health">
                                     <div>
-                                        <p class="slds-text-longform "><ui:message class="modalCss slds-p-left_x-small slds-p-bottom_x-small" title="Status" severity="information" closable="false">
+                                        <div class="slds-text-longform "><ui:message class="modalCss slds-p-left_x-small slds-p-bottom_x-small" title="Status" severity="information" closable="false">
                                             <div style="padding: 0px 10px;">
                                                 Your financial score is an indicator of how likely you are to meet your current financial commitments like:<br/>
                                                 <ul>
@@ -68,7 +68,8 @@
                                                 Between 4 and 5:	You will meet your expenses, and debt commitments but may not have enough to save for other financial goals<br/>
                                                 Above 5:	You will meet your immediate expenses, debt commitments and save for other goals. You are also likely to have enough to live for a few days without an income<br/>
                                             </div>
-                                            </ui:message></p>
+                                            </ui:message>
+                                        </div>
                                     </div>
                                   </c:CustomModalComponent>
                             </aura:if>
@@ -82,27 +83,28 @@
                                     <div class="slds-col slds-size_6-of-12">
                                          <aura:if isTrue="{!v.Trackexpense}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                             
+                                        </aura:if>   
                                             <aura:if isTrue="{!v.NotTrackexpense}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                        </aura:if>
                                                 <aura:if isTrue="{!v.Adviseexpense}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                         
                                                 </aura:if>
-                                             </aura:if>
-                                        </aura:if>
+                                             
                                         <h4>Household Expenses</h4>
                                     </div>
                                     <div class="slds-col slds-size_6-of-12">
                                          <aura:if isTrue="{!v.Trackcredit}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                            <aura:if isTrue="{!v.NotTrackcredit}">
+                                        </aura:if>
+                                             <aura:if isTrue="{!v.NotTrackcredit}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.Advisecredit}">
+                                             </aura:if>
+                                                 <aura:if isTrue="{!v.Advisecredit}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                         </aura:if>
-                                             </aura:if>
-                                        </aura:if>
+                                             
                                          <h4>Credit Payments</h4>
                                     </div>
                                 </div>
@@ -110,27 +112,28 @@
                                     <div class="slds-col slds-size_6-of-12">
                                          <aura:if isTrue="{!v.Trackloan}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                            <aura:if isTrue="{!v.NotTrackloan}">
+                                        </aura:if>
+                                             <aura:if isTrue="{!v.NotTrackloan}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.Adviseloan}">
+                                        </aura:if>
+                                                 <aura:if isTrue="{!v.Adviseloan}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                        
                                                 </aura:if>
-                                             </aura:if>
-                                          </aura:if>
                                          <h4>Loan Payments</h4>
                                     </div>
                                     <div class="slds-col slds-size_6-of-12">
                                        <aura:if isTrue="{!v.Trackgoals}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                            <aura:if isTrue="{!v.NotTrackgoals}">
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.NotTrackgoals}">
                                         <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
-                                                <aura:if isTrue="{!v.Advisegoals}">
+                                        </aura:if>
+                                            <aura:if isTrue="{!v.Advisegoals}">
                                         <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
                                         
                                                 </aura:if>
-                                           </aura:if>
-                                           </aura:if>
+                                           
                                         <h4>Goals</h4>
                                      </div>
                                   </div>

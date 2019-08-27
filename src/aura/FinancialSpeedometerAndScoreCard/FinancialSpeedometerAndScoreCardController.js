@@ -46,7 +46,7 @@
                     component.set("v.NotTrackgoals",true);
                     
                 }
-                    else if (financialscore>2.0 && financialscore<2.25){
+                    else if (financialscore>=2.0 && financialscore<2.25){
                         component.set("v.istrue",true);
                         component.set("v.Trackexpense",true);
                         component.set("v.NotTrackcredit",true);
@@ -55,7 +55,7 @@
                         
                         
                     }
-                        else if (financialscore>2.25 && financialscore<4.0){
+                        else if (financialscore>=2.25 && financialscore<4.0){
                             component.set("v.istrue",true);
                             component.set("v.Trackexpense",true);
                             component.set("v.Advisecredit",true);
@@ -65,12 +65,11 @@
                             
                         }
                 
-                            else if (financialscore>4.0 && financialscore<5.0){
+                            else if (financialscore>=4.0 && financialscore<5.0){
                                 component.set("v.istrue",true);
                                 component.set("v.Trackexpense",true);
                                 component.set("v.Trackcredit",true);
                                 component.set("v.Trackloan",true);
-                                
                                 component.set("v.Advisegoals",true);
                                 
                             }
@@ -106,7 +105,7 @@
                    
                     if (financialscore>3.1 && financialscore<6.0)
                     if(!gauge.data.color)
-                        gauge.data.color = "#FFFF00";
+                        gauge.data.color = "#ff8400";
                    
                     if (financialscore<3.0 )
                     if(!gauge.data.color)
