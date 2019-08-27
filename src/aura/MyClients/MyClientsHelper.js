@@ -20,7 +20,6 @@
             component.set('v.myColumnsDisplay', JSON.parse(JSON.stringify(component.get("v.mycolumns"))));
         }
         
-        console.log('newColumns'+JSON.stringify(newColumns));
     },
     sortData : function(component,helper,fieldName,sortDirection){
         var data = component.get("v.allData");     
@@ -42,6 +41,11 @@
         }
     },
     
+    GetvalueAmount : function(component, event, helper) { 
+        var amt = event.getParam("AmtVal");
+        
+        component.set("v.Amount", amt);
+    },
     /*
      * this function will build table data
      * based on current page selection
@@ -61,7 +65,7 @@
                 data.push(allData[x]);                 
             }
         }
-       
+        
         component.set("v.listDetails", data);
         
         helper.generatePageList(component, pageNumber);
@@ -74,7 +78,6 @@
         pageNumber = parseInt(pageNumber);
         var pageList = [];
         var totalPages = component.get("v.totalPages");
-        console.log('totalPages---'+totalPages);
         if(totalPages > 1){
             if(totalPages < 10){
                 var counter = 2;
@@ -105,34 +108,33 @@
         });
         action.setCallback(this, function(response) {
             var state =response.getState();
-             if (state === "SUCCESS") {
-             // hide spinner when response coming from server 
-            component.find("Id_spinner").set("v.class" , 'slds-hide');
-            var allFieldList = response.getReturnValue().lstFields;var ListWrapper = response.getReturnValue(); 
-            var data = ListWrapper.lstSObject;            
-            var updatedColumns = ListWrapper.columnsSaving;
-            var showColumns = [];
-            
-            if(!$A.util.isUndefinedOrNull(updatedColumns)){
-                showColumns = updatedColumns.split(',');
-                component.set("v.selectedValues",showColumns);
-            }
-            else{
-                showColumns = [];
-            }
-            
-            helper.setDisplayColumns(component, event, helper,showColumns);
-            
-            data.forEach(function(record){
-                record.linkName = '/'+record.Id;
-                console.log("test"+ record.linkName);
-            });
-            
-            component.set("v.totalPages", Math.floor(data.length/component.get("v.pageSize")));            
-            component.set("v.allData", data );  
-            component.set("v.currentPageNumber",1);
-            helper.buildData(component, helper);
-             } 
+            if (state === "SUCCESS") {
+                // hide spinner when response coming from server 
+                component.find("Id_spinner").set("v.class" , 'slds-hide');
+                var allFieldList = response.getReturnValue().lstFields;var ListWrapper = response.getReturnValue(); 
+                var data = ListWrapper.lstSObject;            
+                var updatedColumns = ListWrapper.columnsSaving;
+                var showColumns = [];
+                
+                if(!$A.util.isUndefinedOrNull(updatedColumns)){
+                    showColumns = updatedColumns.split(',');
+                    component.set("v.selectedValues",showColumns);
+                }
+                else{
+                    showColumns = [];
+                }
+                
+                helper.setDisplayColumns(component, event, helper,showColumns);
+                
+                data.forEach(function(record){
+                    record.linkName = '/'+record.Id;
+                });
+                
+                component.set("v.totalPages", Math.floor(data.length/component.get("v.pageSize")));            
+                component.set("v.allData", data );  
+                component.set("v.currentPageNumber",1);
+                helper.buildData(component, helper);
+            } 
         });
         
         $A.enqueueAction(action);

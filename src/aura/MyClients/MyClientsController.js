@@ -1,11 +1,17 @@
 ({
     doInit : function(component, event, helper) { 
-      /*  var action=component.get('c.getNamespace');
+        var amt = event.getParam("Amtval");
+        
+        component.set("v.Amount", amt);
+        
+        
+        
+        var action=component.get('c.getNamespace');
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 component.set("v.namespace", response.getReturnValue())
-                console.log(component.get("v.namespace"));
+                
                 
                 
             }
@@ -13,15 +19,14 @@
                 var errors = response.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + 
-                                    errors[0].message);
+                        
                     }
                 } else {
-                    console.log("Unknown error");
+                    
                 }
             }
         });
-        $A.enqueueAction(action); */
+        $A.enqueueAction(action); 
         
         component.set("v.SearchText", null );
         var columns = [];
@@ -33,7 +38,7 @@
                 var allFieldList = response.getReturnValue().lstFields;
                 var allFieldList2 = response.getReturnValue().lstSObject;
                 var ClientSize=allFieldList2.length;
-            
+                
                 component.set("v.TotalClient",ClientSize);
                 var allColumnList = [];
                 var counter = 0;
@@ -80,7 +85,7 @@
                                 "type" :  'url',
                                 "typeAttributes" :  {
                                     label: { fieldName: 'Name' },
-                                    target: '_blank'}
+                                    target: '_self'}
                             });
                         }
                     
@@ -113,18 +118,22 @@
                 
                 data.forEach(function(record){
                     record.linkName = '/'+record.Id;
-                    console.log("test"+ record.linkName);
-                });
+                }); 
+                
                 
                 component.set("v.totalPages", Math.round(data.length/component.get("v.pageSize")));            
                 component.set("v.allData", data ); 
                 component.set("v.currentPageNumber",1);
                 helper.buildData(component, helper);
+                
+                
             }
         });
         
         $A.enqueueAction(action);
+        
     },
+    
     
     onNext : function(component, event, helper) {        
         var pageNumber = component.get("v.currentPageNumber");
@@ -156,7 +165,7 @@
     handleSort : function(component,event,helper){
         //Returns the field which has to be sorted
         var sortBy = event.getParam("fieldName");
-        console.log('sortBy'+sortBy);
+        
         component.set("v.sortBy",sortBy);
         var sortDirection = event.getParam("sortDirection");
         component.set("v.sortDirection",sortDirection);
@@ -166,7 +175,6 @@
     SearchClient : function(component, event, helper){
         component.find("Id_spinner").set("v.class" , 'slds-show');
         var Search=component.get("v.SearchText");
-        console.log('Search'+Search);
         var action=component.get("c.getLimitedAccounts");
         action.setParams({"searchKeyword" : Search});
         action.setCallback(this, function(response){
@@ -176,7 +184,7 @@
                 var data = response.getReturnValue();
                 data.forEach(function(record){
                     record.linkName = '/'+record.Id;
-                    console.log("test"+ record.linkName);
+                    
                 });
                 component.set("v.allData", data); 
                 
@@ -200,13 +208,12 @@
         if(namespace == ""){
             namespace = 'c';
         }
-        console.log('namespace--->'+namespace+"__CreateNewClient");
         var workspaceAPI = component.find("workspace");
         workspaceAPI.openTab({
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": "Finsol__CreateNewClient"
+                    "componentName": namespace+"__CreateNewClient"
                 },
                 "state": {}
             },
@@ -215,7 +222,6 @@
             workspaceAPI.getTabInfo({
                 tabId: response
             }).then(function(tabInfo) {
-                console.log("The recordId for this tab is: " + tabInfo.recordId);
             });
         }).catch(function(error) {
             console.log(error);

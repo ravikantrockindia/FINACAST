@@ -8,7 +8,7 @@
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {
                 component.set("v.response", response.getReturnValue());
-               
+                
                 component.set('v.DownJonesprice',JSON.parse(response.getReturnValue().data[0].price));
                 component.set('v.SPprice',JSON.parse(response.getReturnValue().data[1].price));
                 component.set('v.NASDAQprice',JSON.parse(response.getReturnValue().data[2].price));
@@ -18,9 +18,8 @@
                 component.set('v.SPpercent',JSON.parse(response.getReturnValue().data[1].change_pct));
                 component.set('v.NASDAQpercent',JSON.parse(response.getReturnValue().data[2].change_pct));
                 component.set('v.NYSEpercent',JSON.parse(response.getReturnValue().data[3].change_pct));
-           
+                
                 var timezone = response.getReturnValue().data[0].timezone;
-                console.log('timezone--'+timezone);
                 component.set("v.timezoneTime",timezone);
                 var DownJonespercent =JSON.parse(response.getReturnValue().data[0].change_pct);
                 if (DownJonespercent >0){
@@ -68,11 +67,11 @@
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 
                 component.set("v.timelatest",time);
-          
+                
                 
                 var getAllRates = component.get("v.response")['data'];
                 var dataList = JSON.stringify(getAllRates);
-                           }
+            }
         });
         
         $A.enqueueAction(action);

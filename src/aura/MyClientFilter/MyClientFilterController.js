@@ -1,19 +1,18 @@
 ({
-	getObjectFields : function(component, event, helper) {
+    getObjectFields : function(component, event, helper) {
         //REMOVE THIS
         component.set("v.editMode",true);
         
         var sObjectName = component.get("v.sObjectName");
-        console.log('sObjectName'+sObjectName);
         if($A.util.isEmpty(sObjectName)){
-        	helper.showToast("Error!", "Object not provided!");
+            helper.showToast("Error!", "Object not provided!");
             helper.hideFilterPopup();
             return;
         }
         helper.setOperatorsList(component, helper);
         //helper.setOwnerFilters(component, helper, sObjectName);
         helper.callApexForObjectFields(component, event, helper, sObjectName);
-	},
+    },
     
     addAnotherFilter : function(component, event, helper){
         //helper.enlistPreviousFilter(component, event, helper);
@@ -128,10 +127,8 @@
                     action.setCallback(this,function(response){
                         if(response.getState() === "SUCCESS"){
                             component.set("v.timeZoneOffset",response.getReturnValue());
-                         //   console.log("Offset: "+response.getReturnValue());
                         }
                         else{
-                          //  console.log("Unable to fetch timezone offset");
                         }
                     });
                     $A.enqueueAction(action);
@@ -140,7 +137,6 @@
         }
         filters[filterIndex-1].editMode = false;
         component.set("v.filters",filters);
-       // console.log("Filter: "+ JSON.stringify(filters));
     },
     
     updateOwnerFilter : function(component, event, helper){
@@ -149,9 +145,7 @@
     
     cancelFilters : function(component, event, helper){
         //Overwrite the "filters" attribute value with "filtersBackup" 
-        /*var width = Number(component.find("measurement").getElement().getBoundingClientRect().width) + 5;
-        component.set("v.screenWidth",width+"px");
-        console.log(width);*/
+        
         var backupFilters = JSON.parse(JSON.stringify(component.get("v.filtersBackup")));
         if(backupFilters.length>0){
             if(backupFilters[0].index == 0 && backupFilters[0].field == "SCOPE"){
@@ -185,7 +179,7 @@
         var appEvent = $A.get("e.c:Fina_HideFilterEvent"); 
         appEvent.setParams({"isfilterVisible" : false}); 
         appEvent.fire(); 
-       
+        
     },
     
     applyFilters : function(component, event, helper){
@@ -207,20 +201,8 @@
             component.set("v.customFilterLogic", "");
         }
         helper.upsertFiltersAndCreateWhereClause(component, event, helper, customFilterLogic, transformedFilterLogic);
-         helper.hideFilters1(component, event, helper);
+        helper.hideFilters1(component, event, helper);
     },
-    
-    /*saveFilters : function(component, event, helper){
-        var customFilterLogic = '';
-        if(component.get("v.customFilterLogicProvided") && !$A.util.isEmpty(component.get("v.customFilterLogic"))){
-            customFilterLogic = component.get("v.customFilterLogic");
-        }
-        else{
-            component.set("v.customFilterLogicProvided", false);
-            component.set("v.customFilterLogic", "");
-        }
-        helper.upsertFilters(component, event, helper, customFilterLogic);
-    },*/
     
     handleTrueClick : function(component, event, helper){
         var filterIndex = event.getSource().get("v.name").split("_")[0];

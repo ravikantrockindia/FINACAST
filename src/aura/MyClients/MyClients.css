@@ -1,3 +1,13 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS a { font-family: 'Open Sans', sans-serif;}
+
 .THIS.mgList {
     margin-bottom: 30px;
     color: inherit;
@@ -15,7 +25,7 @@
     border-radius: 3px;
 }
 .THIS .slds-button_icon-bare{
-overflow: visible;
+    overflow: visible;
 }
 .THIS .slds-scrollable_x {
     overflow-y:visible !important;
@@ -51,4 +61,42 @@ overflow: visible;
 }
 .THIS .slds-p-around_small {
     text-align: center;
+}
+
+.THIS .total_investment {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.THIS .total_investment p {
+    color: #000;
+    display: block;
+}
+.THIS .total_investment p span {
+    font-size: 12px;
+}
+.THIS .total_assesment_abc {
+     
+    background-color: #4E75A3;
+    padding-bottom: 96px;
+    color: #fff;
+}
+.THIS .total_assesment_abc_one{
+      text-align: left;
+     padding-left:10px;
+    padding-top: 10px;
+   font-weight: BOLD;
+}
+.THIS .total_assesment_abc_two{
+        text-align: center;
+    padding-top: 70px;
+    font-weight: BOLD;
+}
+.THIS .total_investment h1 {
+    font-size: 25px;
+    font-weight: 700;
+    margin: 80px 0;
+    display: block;
+    color: #000;
 }
