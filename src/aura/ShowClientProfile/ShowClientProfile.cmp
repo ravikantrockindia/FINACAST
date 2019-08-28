@@ -11,6 +11,7 @@
     <aura:attribute name="attachId" type="String" />
     <aura:attribute name="FinalVal" type="String" default="String"/> 
     <aura:attribute name="TempFinalVal" type="String" default="String"/> 
+    <aura:attribute name="NameSpace" type="String"/>
     
     <force:recordData aura:id="record"
                       layoutType="FULL"
@@ -61,14 +62,14 @@
                                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Demographic Details</h2>
                                     </header>
                                     <div class="slds-modal__content slds-p-around_medium " aria-hidden="true" id="modal-content-id-1">
-                                        <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" />
+                                        <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" NameSpace="{!v.NameSpace}" />
                                     </div>
                                 </div>
                             </section>
                             <div class="slds-backdrop slds-backdrop_open"></div>
                         </aura:if>
                         <div class="clients-details">                                  
-                            <h5>DoB <b><lightning:outputField  fieldName="Date_Of_Birth__c" variant="label-hidden" /></b></h5>
+                            <h5>DoB <b><lightning:outputField  fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" variant="label-hidden" /></b></h5>
                         </div>
                     </div>
                 </div>
@@ -78,7 +79,7 @@
                     <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_small">
                         <div class="clients-details">
                             
-                            <h5><b><lightning:outputField fieldName="Risk_Profile__c"/></b></h5>
+                            <h5><b><lightning:outputField fieldName="{!v.NameSpace+'Risk_Profile__c'}"/></b></h5>
                         </div>
                     </div>
                 </li>

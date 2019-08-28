@@ -13,7 +13,7 @@
     <aura:attribute name="attachId" type="String" default=""/>
     <aura:attribute name="TempFinalVal" type="String" default="String"/> 
     <aura:attribute name="DefaultImg" type="Boolean" default="false" />
-    
+    <aura:attribute name="NameSpace" type="String"/>
     <lightning:recordEditForm
                               aura:id="form"
                               recordTypeId="{!v.recordTypeId}"
@@ -76,7 +76,7 @@
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <span class="EditCalender">
-                        {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Date_Of_Birth__c" disabled="true" aura:id="dob" variant="label-hidden" dateStyle="short"/>
+                        {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" disabled="true" aura:id="dob" variant="label-hidden" dateStyle="short"/>
                     </span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             <br/>
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_1-of-2">
-                    <span>{!$Label.c.Risk_Profile}</span> <lightning:inputField class="label-hidden" fieldName="Risk_Profile__c" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
+                    <span>{!$Label.c.Risk_Profile}</span> <lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Risk_Profile__c'}" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
                 </div>                        
                 <div class="slds-col slds-size_1-of-2">
                     <span>{!$Label.c.Client_Time_Horizon}</span> <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden"/>
