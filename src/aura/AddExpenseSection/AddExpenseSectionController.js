@@ -161,14 +161,20 @@
             if(data[e]["expense"]["isTaxBenefit"]){
                 data[e]["showSection"]=true;
                 var maxDeduction=data[e]["expense"]["maxDeduction"]
-                 if(!$A.util.isUndefinedOrNull(maxDeduction) || maxDeduction==""){
+                console.log('maxDeduction', maxDeduction)
+                if($A.util.isUndefinedOrNull(maxDeduction) || maxDeduction==""){
+                    data[e]["expense"]["maxDeduction"]=0;
+                }
+            }
+            else{
                 data[e]["expense"]["maxDeduction"]=0;
-                 }
+                data[e]["expense"]["percentageContribution"]=0;
             }
         }
         component.set("v.ExpenseList",data)
+        var tax=component.find("taxbenefit")
         if(!$A.util.isUndefinedOrNull(tax)){
-            var tax=component.find("taxbenefit")
+            
             //  var taxbenefit=tax.get("v.value")
             if(tax.length>0)  {
                 for(var i=0;i<tax.length;i++){
@@ -222,8 +228,8 @@
             //check if the validity condition are met or not.
             return isValidSoFar && inputCmp.checkValidity();
         },true);*/
-            
-            /*if(data.length>1){
+        
+        /*if(data.length>1){
             isAllValid = component.find('taxbenefit').reduce(function(isValidSoFar, inputCmp){
                 //display the error messages
                 console.log("abc")
@@ -260,50 +266,54 @@
             
             
         }*/
-            console.log(isAllValid)
+        console.log(isAllValid)
+        
+        console.log('valid',isAllValid)
+        if(isAllValid){
             
-            console.log('valid',isAllValid)
-            if(isAllValid){
+            var action=component.get("c.saveExpense");
+            action.setParams({ expenses : JSON.stringify(expenses)
+                             });
+            
+            // Create a callback that is executed after 
+            // the server-side action returns
+            action.setCallback(this, function(response) {
                 
-                var action=component.get("c.saveExpense");
-                action.setParams({ expenses : JSON.stringify(expenses)
-                                 });
-                
-                // Create a callback that is executed after 
-                // the server-side action returns
-                action.setCallback(this, function(response) {
+                var state = response.getState();
+                // alert(state)
+                if (state === "SUCCESS") {
+                    helper.showNotfication(component,"The record has been saved succcessfully","success","Success!");  
                     
-                    var state = response.getState();
-                    alert(state)
-                    if (state === "SUCCESS") {
-                        console.log(response.getReturnValue())
-                        component.set("v.ExpenseList",response.getReturnValue())
+                    console.log(response.getReturnValue())
+                    component.set("v.ExpenseList",response.getReturnValue())
+                    $A.util.removeClass(spinner, "slds-show");
+                    
+                    $A.util.addClass(spinner, "slds-hide");
+                    
+                }
+                else if (state === "INCOMPLETE") {
+                    // do something
+                }
+                    else if (state === "ERROR") {
+                        helper.showNotfication(component,"The record cannot be saved. Please try again!","error","Error!");  
+                        
+                        component.set("v.disabled",false)
                         $A.util.removeClass(spinner, "slds-show");
                         
                         $A.util.addClass(spinner, "slds-hide");
-                        
-                    }
-                    else if (state === "INCOMPLETE") {
-                        // do something
-                    }
-                        else if (state === "ERROR") {
-                            component.set("v.disabled",false)
-                            $A.util.removeClass(spinner, "slds-show");
-                            
-                            $A.util.addClass(spinner, "slds-hide");
-                            var errors = response.getError();
-                            if (errors) {
-                                if (errors[0] && errors[0].message) {
-                                    console.log("Error message: " + 
-                                                errors[0].message);
-                                }
-                            } else {
-                                console.log("Unknown error");
+                        var errors = response.getError();
+                        if (errors) {
+                            if (errors[0] && errors[0].message) {
+                                console.log("Error message: " + 
+                                            errors[0].message);
                             }
+                        } else {
+                            console.log("Unknown error");
                         }
-                });
-                $A.enqueueAction(action);
-            }
+                    }
+            });
+            $A.enqueueAction(action);
+        }
         else{
             component.set("v.disabled",false);
             
@@ -322,8 +332,27 @@
     },
     skipButton: function(component,event,helper){
         var Id=component.get("v.recordId");
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            var focusedTabId = response.tabId;
+            workspaceAPI.closeTab({tabId: focusedTabId});
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.openTab({
+            pageReference : {
+                "type": 'standard__recordPage',
+                "attributes": {
+                    "recordId": Id,
+                    "actionName": "view"
+                }
+            },
+            focus: true
+        });
         
-        var navService = component.find("navService");
+        /* var navService = component.find("navService");
         // Sets the route to /lightning/o/Account/home
         var pageReference = {
             type: 'standard__recordPage',
@@ -333,7 +362,7 @@
                 "actionName": "view"
             }
         };
-        navService.navigate(pageReference);
+        navService.navigate(pageReference);*/
     },
     
     handleCancel: function(component,event,helper){
@@ -407,6 +436,8 @@
             var state = response.getState();
             console.log(state)
             if (state === "SUCCESS") {
+                helper.showNotfication(component,"The record has been deleted successfully.","success","Success!");  
+                
                 //alert("success")
                 /* var i;
                 for ( i = 0; i < expenses.length; i++) {
@@ -438,6 +469,8 @@
                 // do something
             }
                 else if (state === "ERROR") {
+                    helper.showNotfication(component,"The record cannot be deleted. Please try again!","error","Error!");  
+                    
                     var errors = response.getError();
                     if (errors) {
                         if (errors[0] && errors[0].message) {
