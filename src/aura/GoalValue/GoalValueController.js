@@ -6,9 +6,12 @@
             var sum=0;
             if (state === "SUCCESS") {
                 var goalList = response.getReturnValue(); 
-                
+                 
                 for (var i = 0; i < goalList.length; i++) { 
+                    if(goalList[i].FinServ__TargetValue__c!=null){
                     sum += goalList[i].FinServ__TargetValue__c;
+                    }
+                     
                 }
            
                 
@@ -32,7 +35,7 @@
                             }                
                 
             }
-            
+             
         });
         $A.enqueueAction(action);
         
