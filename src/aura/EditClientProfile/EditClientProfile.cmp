@@ -5,7 +5,7 @@
     <!--aura:handler name="init" value="{!this}" action="{!c.doInit}"/--> 
     <!-- 'showLoadingSpinner' attribute for show/hide the uploading image and msg in aura:if-->
     <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />	
-    <aura:attribute name="fileName" type="String" default="" />
+    <aura:attribute name="fileName" type="String" default=""/>
     <aura:attribute name="isFileSelected" type="boolean" default="false"/>
     <aura:attribute name="numOfFile" type="Integer"/>
     <aura:attribute name="FinalVal" type="String" default="String"/> 
@@ -13,7 +13,9 @@
     <aura:attribute name="attachId" type="String" default=""/>
     <aura:attribute name="TempFinalVal" type="String" default="String"/> 
     <aura:attribute name="DefaultImg" type="Boolean" default="false" />
+    <aura:attribute name="ResourceImage" type="string" default="{!$Resource.staticImageUser}"/>
     <aura:attribute name="NameSpace" type="String"/>
+    <!--aura:handler name="change" value="{!v.TempFinalVal}" action="{!c.itemsChange}"/-->
     <lightning:recordEditForm
                               aura:id="form"
                               recordTypeId="{!v.recordTypeId}"
@@ -32,7 +34,7 @@
                                 </span>   
                                 <aura:set attribute="else">  
                                     <span class="slds-image">
-                                        <img src="{!$Resource.staticImageUser}" alt="Image"/>
+                                        <img src="{!v.ResourceImage}" alt="Image"/>
                                     </span>   
                                 </aura:set>        
                             </aura:if> 

@@ -8,7 +8,6 @@
                 component.set("v.NameSpace", response.getReturnValue());
             } 
         });
-       
         helper.fetchImage(component,event,helper);
          $A.enqueueAction(action);
     },

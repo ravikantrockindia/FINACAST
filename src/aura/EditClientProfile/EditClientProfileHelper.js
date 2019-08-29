@@ -83,11 +83,18 @@
             
             var attachId = response.getReturnValue();
             component.set("v.attachId",attachId);
-             
+            var DefaultImg=component.get("v.DefaultImg");
+            console.log('DefaultImg DefaultImg'+DefaultImg)
             var c=component.get('v.prefixURL') + component.get('v.attachId');
+           if(DefaultImg===true){
             component.set("v.TempFinalVal",c);
+               var tChange=component.get("v.TempFinalVal");
+           }else{
+             component.set("v.ResourceImage",c);
+               var tChange=component.get("v.ResourceImage");
+           }
             
-            var tChange=component.get("v.TempFinalVal");            
+         //   var tChange=component.get("v.TempFinalVal");            
             var state = response.getState();
             if (state === "SUCCESS") {
                 

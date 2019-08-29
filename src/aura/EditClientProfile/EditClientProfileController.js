@@ -1,4 +1,4 @@
-({
+({	 
     handleCancel : function(component, event, helper) {
         component.set("v.isEditTrue",false);
         component.set("v.isImageAvailable",false); 
@@ -26,11 +26,19 @@
             helper.showAlertEmptyInvalidVal(component,msg);      
         }
         var DelCon=component.get("v.isFileSelected");
+        var DefaultImg=component.get("v.DefaultImg");
+        var tChange="";
         if(DelCon===true){
-            var tChange=component.get("v.TempFinalVal");
+            if(DefaultImg===true){
+               var tChange=component.get("v.TempFinalVal");
+                component.set("v.TempFinalVal",'');
+           }else{
+               var tChange=component.get("v.ResourceImage");
+               component.set("v.TempFinalVal",tChange);
+           }
             console.log('Final Image ' +tChange);
             component.set("v.FinalVal",tChange);
-            component.set("v.TempFinalVal",'');
+          //  component.set("v.TempFinalVal",'');
         }
         
     },
