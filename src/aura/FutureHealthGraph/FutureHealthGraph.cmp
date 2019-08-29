@@ -1,0 +1,144 @@
+<aura:component controller="AffordabilityController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name = "score" type="Double"/>
+    <aura:attribute name = "months" type="Double"/>
+    <aura:attribute name = "YearList" type="List"/>
+    <aura:attribute name="futureselectedValue" type="String" />
+    <aura:attribute name="Trackexpense" type="boolean" default="false" />
+    <aura:attribute name="NotTrackexpense" type="boolean" default="false" />
+    <aura:attribute name="Adviseexpense" type="boolean" default="false" />
+    <aura:attribute name="Trackcredit" type="boolean" default="false" />
+    <aura:attribute name="NotTrackcredit" type="boolean" default="false" />
+    <aura:attribute name="Advisecredit" type="boolean" default="false" />
+    <aura:attribute name="Trackloan" type="boolean" default="false" />
+    <aura:attribute name="NotTrackloan" type="boolean" default="false" />
+    <aura:attribute name="Adviseloan" type="boolean" default="false" />
+    <aura:attribute name="Trackgoals" type="boolean" default="false" />
+    <aura:attribute name="NotTrackgoals" type="boolean" default="false" />
+    <aura:attribute name="Advisegoals" type="boolean" default="false" />
+    <aura:attribute name = "financialHealthMessage" type="string"/>
+    <aura:attribute name = "cid" type = "String" default=""/>
+    <aura:attribute name = "Name" type = "String" default="CAR"/>
+    <aura:attribute name = "totalAmount" type = "double" default="3000"/>
+    <aura:attribute name = "year" type="Integer"/>
+    <aura:attribute name = "downPayment" type = "double" default="0"/>
+    <aura:attribute name = "installments" type = "double" default="0"/>
+    <aura:attribute name = "startDate" type = "Date" default="7/2019"/>
+    <aura:attribute name = "endDate" type = "Date" default="10/2019"/>
+    <aura:attribute name = "isTaxBenefit" type = "Boolean" default="false"/>
+    <aura:attribute name = "isPaymentPlan" type = "Boolean" default="false"/>
+    <aura:attribute name = "rainyDayMonths" type = "integer" default="3"/>
+    <aura:attribute name = "Tabledata" type = "object" />
+    <aura:handler name="change" value="{!v.futureselectedValue}" action="{!c.generateChart}"/>
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/>    
+ <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+        <div class="client_managed">
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small slds-border_right">
+                    <h3 class="slds-m-top_none">Financial Health</h3>
+                    <h4>Overall Score</h4>                            
+                    <div class="half-chart half-chart-sticker">
+                        <div class="slds-grid slds-p-top_large slds-p-bottom_large">
+                            <div class="slds-col slds-size_12-of-12">
+                                <!-- <img src="{!$Resource.piChart}"/> -->
+                                <div id="chartContainer51" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                                <p class="networth-msg"><i><b>Insight:</b> At, this rate you can sustain {!v.months} months without income.</i>
+                                    <br/>
+                                        <aura:iteration items="{! v.financialHealthMessage}" var="m">           
+                                            {!m.message}<br/>
+                                        </aura:iteration> 
+                                    
+                                </p>
+                                <div class="chart-sticker">
+                                    <ul>
+                                        <li><span>0 - Bad</span></li>
+                                        <li><h2>{!v.score}/10</h2></li>
+                                        <li><span>10 - Excellent</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                    <div class="slds-clearfix">
+                        <div class="slds-text-align_right"  style="margin-bottom: 15px;">
+                            <span>
+                                <button class="slds-button-btn " onclick = "{!c.showPrevYearlyScore}">
+                                    <lightning:icon iconName="utility:chevronleft"
+                                                    alternativeText="prev" size="small"/>
+                                </button>
+                                
+                                <lightning:button class="yearButton"
+                                                  label="{!v.year}" variant="brand"/>
+                                
+                                <button class="slds-button-btn" onclick = "{!c.showNextYearlyScore}">
+                                    <lightning:icon iconName="utility:chevronright" 
+                                                    alternativeText="next" size="small"/>    
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="health-features">
+                        <div class="slds-grid slds-p-top_xx-large slds-p-bottom_large">
+                            <div class="slds-col slds-size_6-of-12">
+                                <aura:if isTrue="{!v.Trackexpense}">
+                                    <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                    
+                                    <aura:if isTrue="{!v.NotTrackexpense}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                        <aura:if isTrue="{!v.Adviseexpense}">
+                                            <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                            
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:if>
+                                <h4>Household Expenses</h4>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <aura:if isTrue="{!v.Trackcredit}">
+                                    <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                    <aura:if isTrue="{!v.NotTrackcredit}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                        <aura:if isTrue="{!v.Advisecredit}">
+                                            <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:if>
+                                <h4>Credit Payments</h4>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-p-bottom_large">
+                            <div class="slds-col slds-size_6-of-12">
+                                <aura:if isTrue="{!v.Trackloan}">
+                                    <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                    <aura:if isTrue="{!v.NotTrackloan}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                        <aura:if isTrue="{!v.Adviseloan}">
+                                            <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                            
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:if>
+                                <h4>Loan Payments</h4>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <aura:if isTrue="{!v.Trackgoals}">
+                                    <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                    <aura:if isTrue="{!v.NotTrackgoals}">
+                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                        <aura:if isTrue="{!v.Advisegoals}">
+                                            <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                            
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:if>
+                                <h4>Goals</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

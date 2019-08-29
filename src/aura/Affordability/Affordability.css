@@ -20,13 +20,13 @@
 
 .THIS .slds-tabs_default__content {
     /*background-color: #f1f2f3;*/
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
 }
 .THIS .container {
     position: relative;
     text-align: center;
     color: white;
-    width: 74%;
+    width: 100%;
 }
 .THIS.aff-data-box .customRadioCls .slds-form-element__control .slds-radio{
     display : inline-block !important;
@@ -80,19 +80,17 @@
     transform: translate(-50%, -50%);
 }
 .THIS .slds-card__body {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
 }
 .THIS .slds-tabs_default__item {
     padding: 0;
-    margin: 10px 5px 0 0;
+    margin: 0 30px 0 0;
 }
 .THIS .slds-tabs_default__link {
     font-size: 14px;
-    padding: 0 15px;
-    border: 1px solid #ccc;
+    padding: 0;
     border-radius: 5px 5px 0 0;
-    border-bottom: none;
     transition: all 100ms;
     text-decoration: none;
 }
@@ -198,7 +196,6 @@
 .THIS .Summary_cashflow .slds-modal__header .slds-table thead th {
     background-color: #f6f9fc;
     /*color: #fff;*/
-
     padding: 12px 10px ;
 }
 .THIS .Summary_cashflow .slds-modal__header .slds-table thead th:first-child {
@@ -235,4 +232,39 @@
     width : 100%;
     float : right;
     margin :-18px 2px 1px;
+}
+.THIS .slds-tabs_default__nav {
+    border: none;
+}
+/*8888888888888888*/
+.THIS .view-scenario .slds-form-element__label {
+    display: none;
+}
+.THIS .view-scenario .slds-select_container:before {
+    display: none;
+}
+.THIS .view-scenario .slds-select_container:after {
+    border-top: 5px solid #888;
+    top: 12px;
+    height: 7px;
+    width: 7px;
+}
+.THIS .what-is span:first-child {
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+.THIS .what-is span .slds-button-btn {
+    border: none;
+    background-color: #fff;
+}
+.THIS .what-is span .slds-button {
+    min-width: 26px;
+    background: transparent;
+    color: #333;
+    padding: 0;
+    border: none;
+}
+.THIS .what-is span .slds-icon {
+    height: 14px;
+    width: 14px;
 }

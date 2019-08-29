@@ -1,0 +1,72 @@
+<aura:component controller="AffordabilityController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name = "cid" type = "String" default=""/>
+      <aura:attribute name = "moneyOwned" type = "double" />
+     <aura:attribute name = "moneytobepaid" type = "double" />
+    <aura:attribute name = "year" type="Integer"/>
+    <aura:attribute name = "Tabledata" type = "object" />
+    <aura:attribute name = "totalSavings" type = "Double"/>
+    <aura:attribute name = "totalDebts" type="Double"/>
+    <aura:attribute name = "networth" type="Double"/>
+    <aura:attribute name = "NetworthMessage" type="String"/>
+    <aura:attribute name="currentselectedValue" type="String" default="" />
+     <aura:attribute name = "longTermLoans" type = "double" default="0"/>
+     <aura:attribute name = "shortTermLoans" type = "double" default="0"/>
+    <aura:attribute name = "shortTermYearlyInterest" type = "double" default="0"/>
+    <aura:handler name="change" value="{!v.currentselectedValue}" action="{!c.generateChart}"/>
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
+    <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+        <div class="client_managed">
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <h3 class="slds-m-top_none">Debt Forecast</h3>
+                </div>
+                <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                    <span>
+                                <button class="slds-button-btn" onclick = "{!c.prevYearlyInterest}">
+                                    <lightning:icon iconName="utility:chevronleft"
+                                                    alternativeText="prev" size="small"/>
+                                </button>
+                                
+                                <lightning:button class="yearButton"
+                                                  label="{!v.year}" variant="brand"/>
+                                
+                                <button class="slds-button-btn" onclick = "{!c.nextYearlyInterest}">
+                                    <lightning:icon iconName="utility:chevronright" 
+                                                    alternativeText="next" size="small"/>    
+                                </button>
+                            </span>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Owed</p>
+                        <h4>${!v.moneyOwned}</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Paid</p>
+                        <h4>$0</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money to be Paid</p>
+                        <h4>${!v.moneytobepaid}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div id="chartContainer3.299" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is $ 11,124.</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

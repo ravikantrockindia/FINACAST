@@ -1,6 +1,7 @@
 <aura:component controller="AffordabilityController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default="Affordability"/>
+    <aura:attribute type="String" name="compareTabselected" default="AffordAnly"/>
     <aura:attribute type="String" name="Name" />
     <aura:attribute type="Double" name="totalAmount" />
     <aura:attribute name= "score" type="Double"/>
@@ -53,6 +54,7 @@
     <aura:attribute name = "financialHealthMessage" type="Object[]"/>
     <aura:attribute type="boolean" name="isTaxBenefit" default="false" />
     <aura:attribute type="boolean" name="isPaymentPlan" default="false" />
+    <aura:attribute type="boolean" name="Comparetab" default="false" />
     <aura:attribute type="Integer" name="rainyDayMonths" default="6"/>
     <aura:attribute name="CurrentTable" type="boolean" default="false"/>
     <aura:attribute name="FutureTable" type="boolean" default="false"/>
@@ -62,28 +64,40 @@
     <aura:attribute name="istrue3" type="boolean" default="false"/>
     <aura:attribute name="istrue4" type="boolean" default="false"/>
     <aura:attribute name="afford2" type="boolean" default="false"/>
-    <aura:attribute name="afford1" type="boolean" default="false"/>
-    <aura:attribute type="String" name="displaySection" default = "false" />
-    <aura:attribute type="String" name="displayTax" default = "false" />
-    <aura:attribute type="String" name="TaxDeduction" default = "false" />
+     <aura:attribute name="afford1" type="boolean" default="false"/>
+    <aura:attribute name="ShowMoreMsg" type="boolean" default="false"/>
+    <aura:attribute type="boolean" name="displaySection" default = "false" />
+    <aura:attribute type="boolean" name="displayTax" default = "false" />
+    <aura:attribute type="boolean" name="TaxDeduction" default = "false" />
+    <aura:attribute name="options1" type="List" />
+    <aura:attribute name="options2" type="List" />
+    <aura:attribute name="currentselectedValue" type="String" default="buy"/>
+    <aura:attribute name="futureselectedValue" type="String" default="nobuy"/>
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+     <aura:handler name="init" value="{!this}" action="{!c.loadOptions}" />
+     <aura:handler name="init" value="{!this}" action="{!c.loadOptions1}" />
     <ltng:require scripts="{!$Resource.ChartJs}" />
     <lightning:card  title="">
         <div class="slds-page-header__name-title bud-months" >
-            <h1 data-aura-rendered-by="722:0">
+            <!--<h1 data-aura-rendered-by="722:0">
                 <span class="slds-page-header__title slds-truncate" title="Income" data-aura-rendered-by="723:0">Purchase Advise</span>
             </h1>
             <p>
                 The cornerstone of a strong financial strategy is making smart purchases at the right 
                 time. Use Finacast before buying an item and learn if you can really afford it. This 
                 powerful tool helps you review the impact of the desired purchase, before it's too late.
-            </p>
+                <aura:if isTrue="{!v.ShowMoreMsg}">
+                Wouldn't it be nice to know when it would be a good time to buy that item that you cannot afford today? Based on your current and future financial health, Finacast analyzes your future to determine the most opportune time make important purchases. On the Affordability Analysis tab enter the details of the item you would like to purchase and select the "Check Affordability" button below to display the Affordability result. On the Compare Options tab you can display graphs to show the impact purchasing the item would have on your overall financial health.
+                </aura:if>
+            </p>-->
         </div>
-        <lightning:tabset>
-            <lightning:tab label="Affordability Analysis" >
+        <lightning:tabset selectedTabId ="{!v.compareTabselected}">
+            <lightning:tab label="Analysis"  id="AffordAnly">
                 <div class="slds-page-header__row">
                     <div class="show_more">
-                        <a href="#" >Show more</a>
+                       <lightning:button  label="Show more" aura:id="showmore" onclick="{!c.dispayMsg}" class="slds-show"/>
+                        <lightning:button  label="Show less" aura:id="showless" onclick="{!c.hideMsg}" class="slds-hide"/>
                     </div>
                     <div class="slds-col slds-size_7-of-12">
                         
@@ -103,7 +117,7 @@
                                 <label style="float: left; display: block; width: 100%;">Is there a payment plan for this item</label>
                                 <fieldset id="group1">
                                     <input type="radio" onclick = "{!c.handleRadio}" name="group1" id="yesCheck" value="{!v.isPaymentPlan}"/> Yes 
-                                    <input type="radio" onclick = "{!c.handleRadio1}" value="{!v.getNo}" name="group1" id="noCheck"/> No      
+                                    <input type="radio" onclick = "{!c.handleRadio1}" checked="true" name="group1" id="noCheck"/> No      
                                 </fieldset>              
                                 <p style="clear:both;">Choose yes if taking a loan</p>
                                 <aura:if isTrue="{!v.displaySection}">
@@ -130,11 +144,11 @@
                                         </fieldset>
                                         <div>
                                              <aura:if isTrue="{!v.displayTax}">
-
+                                                 
                                             <label>What %of contribution bring tax benefit?</label><lightning:input   />
-                                            
+                                                     
                                             </aura:if>
-                                        </div>  
+                                         </div>
                                         <label style="float: left; display: block; width: 100%; margin-top: 5px;">Are tax benefit realized monthly</label>  
                                         <fieldset id="group2">
                                         <input type="radio" onclick = "{!c.handleRadio3}" name="group2"  /> Yes 
@@ -143,7 +157,7 @@
                                         <div > 
                                             
                                                <aura:if isTrue="{!v.TaxDeduction}">
-                                            
+                                    
                                             <label>Maximum yearly tax deduction allowed</label><lightning:input   />
                                             </aura:if>
                                         </div>
@@ -153,7 +167,7 @@
                             <div class="check-affordability">
                                 <lightning:button  label="Check Affordability" onclick="{!c.showResult}" />        
                             </div>
-                        
+                         <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />  
                     </div>
                     <div class="slds-col slds-size_5-of-12">
                         <aura:if isTrue="{!v.istrue2}">
@@ -198,7 +212,7 @@
                                 <br/>
                                 <br/>
                                 <h1><b><label style="Color:red;font-size: 20px;">What happens if i buy NOW?</label></b></h1>
-                                <p>{!v.buynowMsg} <a href="javascript:void(0)" onclick="{!c.ss}"><u>Show Details</u></a>
+                                <p>{!v.buynowMsg} <a href="javascript:void(0)" onclick="{!c.tabchange}"><u>Show Details</u></a>
                                 </p>
                                 <br/>
                                 <aura:if isTrue="{!v.afford1}">
@@ -207,7 +221,7 @@
                                 </aura:if>
                                 <aura:if isTrue="{!v.afford2}">
                                     <h1><b><label style="Color:red;font-size: 20px;">When CAN i afford it?</label></b></h1>
-                                    You CAN NOT afford the item in next 10 years. <a href="javascript:void(0)" > <u>Show Details</u></a>
+                                    You CAN NOT afford the item in next 10 years. <a href="javascript:void(0)" onclick="{!c.tabchange}" > <u>Show Details</u></a>
                                 </aura:if>
                             </div>
                         </aura:if>
@@ -216,7 +230,7 @@
                                 <h1><b><label style="Color:green;font-size: 20px;">When CAN i afford this now?</label></b></h1>
                                 {!v.topmsg1}, {!v.resultMessage} <a href="javascript:void(0)" onclick="{!c.openModel}"> <u>Show Details</u></a>
                                 <h1><b><label style="Color:green;font-size: 20px;">When happens if i buy NOW?</label></b></h1>
-                                {!v.purchaseEffectMsg}<a href="javascript:void(0)" onclick="{!c.doSomething}"> <u>Show Details</u></a>                           
+                                {!v.purchaseEffectMsg}<a href="javascript:void(0)" onclick="{!c.tabchange}"> <u>Show Details</u></a>                           
                             </div>
                         </aura:if>
                         <div>
@@ -309,7 +323,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>One time payment for the purchase</th>
-                                                        <aura:iteration items="{!v.downPayments}" var="element">
+                                                        <aura:iteration items="{!v.downPayments}"  var="element">
                                                             <td>-${!element}</td>
                                                         </aura:iteration>
                                                     </tr>
@@ -451,128 +465,584 @@
                     </div>
                 </div>
             </lightning:tab>
-            <lightning:tab label="Compare Options" onactive="{!c.showFinHealth}">
-                
-                <div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small" style="">
-                    <a href="javascript:void(0)" aria-describedby="help" onclick="{!c.openHelpBox}">Help</a>
-                    <!--<span>Help</span>-->
-                    <aura:if isTrue="{!v.helpBox}">
-                        <div class="help-box-financialhealth" >
-                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
-                                <div class="slds-modal__container">
-                                    <header class="slds-modal__header slds-modal__header_empty">
-                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeHelpBox}">
-                                            <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
-                                            <span class="slds-assistive-text">Close</span>
-                                        </button>
-                                        
-                                    </header>
-                                    <div class="slds-modal__content" id="modal-content-id-1">
-                                        <div class="slds-grid slds-gutters">
-                                            <div class="slds-col slds-size_1-of-4" style="background-color:#25368B">
-                                                <div class="slds-text-heading_large" style = "color:white; font-weight: 700; padding:10px; margin: 45% 0 0; text-align: center;">                                                    
-                                                    <span >Your Financial Health</span>    
+            <aura:if isTrue="{!v.Comparetab}" >
+            <lightning:tab label="Compare" id="compareTabOpen" >
+                                        <!--Viewing Scenario section Start-->
+                        <div class="view-scenario slds-p-top_large slds-p-bottom_large">
+                            <div class="slds-grid slds-gutter">
+                                <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                                    <div class="slds-grid slds-gutter">
+                                    	<div class="slds-col slds-size_3-of-12 slds-p-top_x-small">
+                                            <label>Viewing Scenario</label>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                   
+                                                        <lightning:select name="select"  aura:id="mySelect" value="{!v.currentselectedValue}"  >
+                                                            <aura:iteration items="{!v.options1}" var="item">
+                                                                <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/> 
+             
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                       
+                                                    
                                                 </div>
                                             </div>
-                                            <div class="slds-col slds-size_3-of-4" style="padding: 20px">
-                                                <div class="simulation-pop-up slds-text-body_regular slds-text-align_left slds-text-color_default" style = "font-weight:400">
-                                                    <div style="padding: 0 5px;">
-                                                        <span style="font-weight: 600; margin-bottom: 10px; display: block;">Your financial score is an indicator of how likely you are to meet your current financial commitments like:
-                                                        </span>
-                                                        <ol class="slds-list--dotted">
-                                                            <li>Your expenses for the next month</li> 
-                                                            <li>Your immediate credit card dues</li> 
-                                                            <li>Your immediate loan payments</li> 
-                                                            <li>Immediate savings needed for your financial goals</li>
-                                                        </ol> 
-                                                        
-                                                        <div style="padding-top: 10px">
-                                                            The score is graded between 0 and 10, depending on your likelihood of meeting the above financial commitments. In addition, this score also takes into account the number of months that you can survive without an income.
-                                                            
-                                                            <br/>The green, orange and red color indicators for each of the sections tells you if your expenses, loans and credit card payments are likely to be met fully or partially in the next month.
-                                                        </div>
-                                                        <span style = "font-weight:900;"> 
-                                                            <br/>Score Key 
-                                                        </span>
-                                                    </div>
-                                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer financial_table">
-                                                        <tr>
-                                                            <th>Below 1</th>
-                                                            <td>You are unlikely to meet your everyday expenses in the next month</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Between 1 and 4</th>
-                                                            <td>You are likely to meet your everyday expenses but not meet your debt commitments</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Between 4 and 5</th>
-                                                            <td>Between 4 and 5	You will meet your expenses, and debt commitments but may not have enough to save for other financial goals</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Above 5</th>
-                                                            <td>You will meet your immediate expenses, debt commitments and save for other goals. You are also likely to have enough to live for a few days without an income</td>
-                                                        </tr>
-                                                    </table>   
+                                        </div>
+                                    </div>    	
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                                    <div class="slds-grid slds-gutter">
+                                    	<div class="slds-col slds-size_3-of-12 slds-p-top_x-small">
+                                            <label>Viewing Scenario</label>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 ">
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                   <lightning:select name="select"  aura:id="mySelect" value="{!v.futureselectedValue}" >
+                                                            <aura:iteration items="{!v.options2}" var="item">
+                                                                <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/> 
+             
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-                            <div class="slds-backdrop slds-backdrop_open"></div>
+                            </div>
                         </div>
-                        
-                    </aura:if>
-                </div>
-                <lightning:card class="chart">                   
-                    <div class="slds-page-header__row">
-                        <div class="slds-size_2-of-12"></div>
-                        <div class="slds-size_8-of-12">
-                            <span> 
-                                <div class="chart1" style="">
-                                    <div class="chart1-child">
-                                        <canvas aura:id="financialHealthGraph"></canvas>
-                                    </div>
-                                </div> 
-                            </span>                            
-                        </div>                        
-                        <div class="slds-size_2-of-12">
-                            <span>
-                                <div class="bar">
-                                    <lightning:slider label="Score" type="vertical" min="0" max = "10" 
-                                                      value="{!v.score}" disabled="true" size="small"/>
+                        <!--Viewing Scenario section End-->
+                        <div class="slds-grid slds-gutter slds-m-top_large ">
+                            <c:HealthGraph currentselectedValue="{!v.currentselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}" />
+                            <c:FutureHealthGraph futureselectedValue="{!v.futureselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}"/>
+                        </div>
+                        <div class="slds-grid slds-gutter slds-m-top_xx-large">
+                            <c:CurrentDebtGraph currentselectedValue="{!v.currentselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}"/>
+                            <c:FutureDebtGraph futureselectedValue="{!v.futureselectedValue}" cid="{!v.cid}"  Tabledata="{!v.Tabledata}"/>
+                        </div>
+                        <div class="slds-grid slds-gutter slds-m-top_xx-large">
+                            <c:CurrentNetworthGraph currentselectedValue="{!v.currentselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}"/>
+                            <c:FutureNetworthGraph futureselectedValue="{!v.futureselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}"/>
+                        </div>
+                        <div class="slds-grid slds-gutter slds-m-top_xx-large">
+                            <c:CurrentGoalGraph currentselectedValue="{!v.currentselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}"/>
+                            <c:FutureGoalGraph futureselectedValue="{!v.futureselectedValue}" cid="{!v.cid}" Tabledata="{!v.Tabledata}"/>
+                        </div>
+                <!--    <hr class="slds-m-top_xx-small slds-m-bottom_xx-small"/>
+    <div class="slds-card__header ">
+        <div class="slds-grid slds-gutter slds-m-top_large">
+        	<div class="slds-col slds-size_12-of-12">
+            	<div class="slds-tabs_default active_goal-tab">
+                   
+                    <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                      
+                        <div class="view-scenario slds-p-top_large slds-p-bottom_large">
+                            <div class="slds-grid slds-gutter">
+                                <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                                    <div class="slds-grid slds-gutter">
+                                    	<div class="slds-col slds-size_2-of-12">
+                                            <label>Viewing Scenario</label>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-select_container">
+                                                        <select class="slds-select" id="select-01">
+                                                            <option value="">Buy Now</option>
+                                                            <option>Option One</option>
+                                                            <option>Option Two</option>
+                                                            <option>Option Three</option>
+                                                        </select>
+                                                        <lightning:icon iconName="utility:down" size="xx-small"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    	
                                 </div>
-                            </span>
-                        </div>                        
-                    </div>
-                    <div class="slds-text-align_center label-font" style="margin: 0px 0;">
-                        <span>Select a year to view that years forecast</span>
-                    </div>
-                    <div class="slds-text-align_center"  style="margin-bottom: 15px;">
-                        <span>
-                            <button class="slds-button" onclick = "{!c.showYearlyScorePrev}">
-                                <lightning:icon iconName="utility:chevronleft"
-                                                alternativeText="prev" size="small"/>
-                            </button>
-                            
-                            <lightning:button class="yearButton"
-                                              label="{!v.year}" variant="brand"/>
-                            
-                            <button class="slds-button" onclick = "{!c.showYearlyScoreNext}">
-                                <lightning:icon iconName="utility:chevronright" 
-                                                alternativeText="next" size="small"/>    
-                            </button>
-                        </span>
-                    </div>
-                    <div class="slds-text-align_center" style="margin: 5px 0 0;">
-                        <ui:message title="Messages" severity="confirm" closable="true">
-                            <aura:iteration items="{! v.financialHealthMessage}" var="m">   
-                                {!m.message}<br/>
-                            </aura:iteration> 
-                        </ui:message>
-                    </div>                  
-                </lightning:card>
+                                <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                                    <div class="slds-grid slds-gutter">
+                                    	<div class="slds-col slds-size_2-of-12 ">
+                                            <label>Viewing Scenario</label>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 ">
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-select_container">
+                                                        <select class="slds-select" id="select-01">
+                                                            <option value="">Buy When Recommended</option>
+                                                            <option>Option One</option>
+                                                            <option>Option Two</option>
+                                                            <option>Option Three</option>
+                                                        </select>
+                                                        <lightning:icon iconName="utility:down" size="xx-small"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <div class="slds-grid slds-gutter slds-m-top_large">
+                           <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small slds-border_right">
+                                            <h3 class="slds-m-top_none">Financial Health</h3>
+                                            <h4>Overall Score</h4>                            
+                                            <div class="half-chart half-chart-sticker">
+                                                <div class="slds-grid slds-p-top_large slds-p-bottom_large">
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                 
+                                                        <c:POC_ClientDashboard_FHSpeedometer/>
+                                                        <p class="networth-msg"><i><b>Insight:</b> At, this rate you can sustain 4 months without income.</i></p>
+                                                        <div class="chart-sticker">
+                                                            <ul>
+                                                                <li><span>0 - Bad</span></li>
+                                                                <li><h2>7.9/10</h2></li>
+                                                                <li><span>10 - Excellent</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="health-features">
+                                                <div class="slds-grid slds-p-top_xx-large slds-p-bottom_large">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                                        <h4>Household Expenses</h4>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                        <h4>Credit Payments</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-p-bottom_large">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                                        <h4>Loan Payments</h4>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                                        <h4>Goals</h4>
+                                                    </div>
+                                                </div>
+											</div>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                           <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small slds-border_right">
+                                            <h3 class="slds-m-top_none">Financial Health</h3>
+                                            <h4>Overall Score</h4>                            
+                                            <div class="half-chart half-chart-sticker">
+                                                <div class="slds-grid slds-p-top_large slds-p-bottom_large">
+                                                    <div class="slds-col slds-size_12-of-12">
+     
+                                                        <c:POC_FutureSimulation_FHSpeedometer/>
+                                                        <p class="networth-msg"><i><b>Insight:</b> At, this rate you can sustain 4 months without income.</i></p>
+                                                        <div class="chart-sticker">
+                                                            <ul>
+                                                                <li><span>0 - Bad</span></li>
+                                                                <li><h2>7.9/10</h2></li>
+                                                                <li><span>10 - Excellent</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium  slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="health-features">
+                                                <div class="slds-grid slds-p-top_xx-large slds-p-bottom_large">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                                        <h4>Household Expenses</h4>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                        <h4>Credit Payments</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-p-bottom_large">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                                        <h4>Loan Payments</h4>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <p class="need-adv"><lightning:icon iconName="action:approval" size="xx-small"/> <span>Needs Advising</span></p>
+                                                        <h4>Goals</h4>
+                                                    </div>
+                                                </div>
+											</div>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                    	</div>
+
+                        <div class="slds-grid slds-gutter slds-m-top_xx-large">
+                           <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <h3 class="slds-m-top_none">Networth Forecast</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="slds-grid slds-gutter ">
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                             <div class="networth-fea">
+                                                 <p>Total Savings</p>
+                                                 <h4>$14,124</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Total Debts</p>
+                                                 <h4>$3400</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Networth</p>
+                                                 <h4>$11,124</h4>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <c:POC_Scenario_NetworthStacked/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                                            <p class="networth-msg"><i><b>Insight:</b></i> <span> At, this rate you can sustain 4 months without income.</span></p>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                           <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <h3 class="slds-m-top_none">Networth Forecast</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="slds-grid slds-gutter ">
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                             <div class="networth-fea">
+                                                 <p>Total Savings</p>
+                                                 <h4>$14,124</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Total Debts</p>
+                                                 <h4>$3400</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Networth</p>
+                                                 <h4>$11,124</h4>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <c:POC_ScenarioCompare_NetworthArea/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                                            <p class="networth-msg"><i><b>Insight:</b></i> <span> At, this rate you can sustain 4 months without income.</span></p>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                    	</div>
+
+                        <div class="slds-grid slds-gutter slds-m-top_xx-large">
+                           <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <h3 class="slds-m-top_none">Debt Forecast</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="slds-grid slds-gutter ">
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                             <div class="networth-fea">
+                                                 <p>Money Owed</p>
+                                                 <h4>$34,6789</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Money Paid</p>
+                                                 <h4>$7,575</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Money to be Paid</p>
+                                                 <h4>$27,575</h4>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <c:POC_Scenario_DebtForecastStacked/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                                            <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is $ 11,124.</span></p>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                           <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <h3 class="slds-m-top_none">Debt Forecast</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="slds-grid slds-gutter ">
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                             <div class="networth-fea">
+                                                 <p>Money Owed</p>
+                                                 <h4>$34,6789</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Money Paid</p>
+                                                 <h4>$7,575</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Money to be Paid</p>
+                                                 <h4>$27,575</h4>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <c:POC_FutureSimulation_DebtForecastStacked/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                                            <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is $ 11,124.</span></p>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                    	</div>
+
+                        <div class="slds-grid slds-gutter slds-m-top_xx-large">
+                           <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <h3 class="slds-m-top_none">Goals Forecast</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="slds-grid slds-gutter ">
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                             <div class="networth-fea">
+                                                 <p>Total Goals Value</p>
+                                                 <h4>$ 14,124</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Present Savings</p>
+                                                 <h4>$3400</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Still Needed</p>
+                                                 <h4>$11,124</h4>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <c:POC_Scenario_GoalForecastStacked/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                                            <p class="networth-msg"><i><b>Insight:</b></i> <span> You will have all goals on target at the end of 2029.</span></p>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                           <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                           		<div class="client_managed">
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <h3 class="slds-m-top_none">Goals Forecast</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                                            <div class="slds-clearfix">
+                                                <div class="pre-next-date">
+                                                    <p>
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronleft" size="xx-small"/></a>
+                                                        2019
+                                                        <a href="javascript:void(0)"><lightning:icon iconName="utility:chevronright" size="xx-small"/></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="slds-grid slds-gutter ">
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                             <div class="networth-fea">
+                                                 <p>Total Goals Value</p>
+                                                 <h4>$ 14,124</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Present Savings</p>
+                                                 <h4>$3400</h4>
+                                             </div>
+                                         </div>
+                                         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                         	<div class="networth-fea">
+                                                 <p>Still Needed</p>
+                                                 <h4>$11,124</h4>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                                            <c:POC_FutureSimulation_GoalForecastStacked/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutter ">
+                                        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                                            <p class="networth-msg"><i><b>Insight:</b></i> <span> You will have all goals on target at the end of 2029.</span></p>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                    	</div>
+
+                     </div>
+                    <div id="tab-default-2" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-card__header slds-m-bottom_none slds-p-left_none slds-p-right_none">
+        <div class="footer">
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_6-of-12 slds-p-top_large slds-p-bottom_large slds-p-left_medium">
+                    <p>&copy; 2019 Finacast. A Mirketa Company. All Right Reserved.</p>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-top_large slds-p-bottom_large slds-p-right_medium">
+                    <ul class="slds-text-align_right">
+                    	<li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Policy Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>   -->
             </lightning:tab >
+            </aura:if>
         </lightning:tabset>
     </lightning:card>
     

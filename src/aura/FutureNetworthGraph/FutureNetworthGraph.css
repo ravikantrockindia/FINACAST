@@ -1,0 +1,53 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600; color: #000;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button-btn {
+    border-radius: 9px;
+    font-size: 12px;
+    background-color: none;
+    color: #fff;
+    padding: 1px 5px;
+}
+.THIS .slds-button-btn:hover {
+    color: #fff;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+}
+.THIS .client_managed p {
+	color: #8e8e8e;
+    font-size: 12px;
+}
+.THIS .networth-fea {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.THIS .networth-msg b {
+    color: #000;
+}
+.THIS .networth-msg span {
+    color: #2fbf9e;
+}
+.THIS .networth-fea h4 {
+    font-size: 18px;
+}
+.THIS .net-worth h1 span {
+    font-size: 12px;
+    color: #808285;
+    font-weight: 600;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.THIS .net-worth h1 span .slds-icon {
+    vertical-align:	text-bottom;
+    fill: green;
+}
+.THIS .what-is span:first-child {
+    float: right;
+}
