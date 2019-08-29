@@ -1,5 +1,5 @@
 @isTest
-private class StockMarketApexTest {
+public class StockMarketApexTest {
      @isTest static void testCallout() {
         // Set mock callout class 
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
