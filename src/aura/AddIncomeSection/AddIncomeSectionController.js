@@ -13,8 +13,8 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 
-              //  alert("From server: " + JSON.stringify(response.getReturnValue()));
-                if(response.getReturnValue().length==1 && !response.getReturnValue().disabled ){
+                  console.log("From server: " + JSON.stringify(response.getReturnValue()[0]));
+                if(response.getReturnValue().length==1 && !response.getReturnValue()[0].disabled ){
                     component.set("v.IncomeList",response.getReturnValue())
                     
                     //component.set("v.LastKey", 0)
@@ -229,8 +229,10 @@
             action.setCallback(this, function(response) {
                 
                 var state = response.getState();
-                alert(state)
+                // alert(state)
                 if (state === "SUCCESS") {
+                    helper.showNotfication(component,"The record has been saved successfully.","success","Success!");  
+                    
                     console.log(JSON.stringify(response.getReturnValue()))
                     component.set("v.IncomeList",response.getReturnValue())
                     component.find("skipNextButton").set("v.label",'Next')
@@ -246,6 +248,7 @@
                 }
                     else if (state === "ERROR") {
                         component.set("v.disabled",false)
+                        helper.showNotfication(component,"The record cannot be saved. Please try again!","error","Error!");  
                         
                         var errors = response.getError();
                         if (errors) {
@@ -346,6 +349,7 @@
                 var state = response.getState();
                 console.log(state)
                 if (state === "SUCCESS") {
+                    helper.showNotfication(component,"The record has been deleted successfully.","success","Success!");  
                     //  alert("success")
                     // alert("From server: " + JSON.stringify(response.getReturnValue()));
                     
@@ -359,6 +363,8 @@
                     // do something
                 }
                     else if (state === "ERROR") {
+                        helper.showNotfication(component,"The record can't be deleted. Please try again!","error","Error!");  
+                        
                         var errors = response.getError();
                         if (errors) {
                             if (errors[0] && errors[0].message) {

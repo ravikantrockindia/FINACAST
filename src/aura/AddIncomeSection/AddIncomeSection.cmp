@@ -7,7 +7,8 @@
     <aura:attribute name="recordTypeId" type="String"/>
     <aura:attribute name="todayDate" type="Date"/>
     <lightning:workspaceAPI aura:id="workspace"/>
-    
+        <lightning:notificationsLibrary aura:id="notifLib"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
     <lightning:card>  
@@ -79,10 +80,10 @@
                                             
                                         </lightning:select>
                                     </td>
-                                    <td>
+                                    <td class="dob">
                                         <lightning:input type="date" name="{!'row_'+index+'_startdate'}" disabled="{!i.disabled}"  value="{!i.income.startDate}" aura:id="startdate" variant="label-hidden"/>
                                     </td>
-                                    <td>
+                                    <td class="dob">
                                         <lightning:input type="date" disabled="{!i.disabled}"  name="{!'row_'+index+'_enddate'}" required="true" value="{!i.income.endDate}" messageWhenBadInput="End Date should be greater or equal to start date" messageWhenValueMissing="Complete this field" aura:id="enddate" variant="label-hidden" onblur="{!c.onblur}"/>
                                     </td>
                                     <td>
@@ -92,7 +93,7 @@
                                         <lightning:input aura:id="fields" disabled="{!i.disabled}" type="number" required="true"  formatter="percent-fixed" messageWhenValueMissing="Complete this field" step="0.01" value="{!i.income.taxRate}" min="0" messageWhenRangeUnderflow="Income tax rate cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
                                     </td>
                                     
-                                    <td>
+                                    <td class="dob">
                                         <lightning:buttonIcon iconName="utility:edit" alternativeText="Edit" size="small" disabled="{!!i.disabled}" onclick="{!c.editRow}" value="{!index}"/>
                                         <lightning:buttonIcon iconName="utility:delete" alternativeText="Delete" size="small" onclick="{!c.deleteRow}" value="{!index}"/>                                        
                                     </td>
@@ -100,14 +101,14 @@
                             </tbody>
                         </aura:iteration>
                     </table>
-                    <div class="slds-m-top_medium slds-clearfix ">
+                    <div class="slds-m-top_medium slds-m-bottom_medium slds-clearfix ">
                         <div class="slds-float_right">
                             <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" class="mlr" />
                             <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" onclick="{!c.saveIncomes}" disabled="{!v.disabled}" class="mlr" />
                             <lightning:button  variant="brand" aura:id="skipNextButton" label="{!$Label.c.Skip}" onclick="{!c.skipButton}"/>
                             
                         </div>
-                        <div class="slds-float_left">
+                        <div class="slds-float_left slds-m-bottom_medium">
                             <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
                         </div>
                     </div>
