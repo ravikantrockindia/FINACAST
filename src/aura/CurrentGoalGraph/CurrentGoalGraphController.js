@@ -127,18 +127,18 @@
             {
                 // chartLabels[i] = dataSeriesGoal[0]["objectDisplay"][i][0];
                 chartDataSet[i] = dataSeriesGoal[0]["objectDisplay"][i][1];
-                moneyOwned += parseFloat(chartDataSet[i].toFixed(2));
-                        
-                        moneytobepaid = parseFloat(chartDataSet[9]);
+                 moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
+                 moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
                         if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
-                        }
+                        }     
+                       
             }
         }
-         component.set("v.moneyOwned",moneyOwned);       
-      
-        console.log('moneyOwned----kk'+moneyOwned);
-         console.log('moneyOwned----jk'+chartDataSet);
+          component.set("v.moneyOwned",moneyOwned.toLocaleString());
+                component.set("v.moneytobepaid",moneytobepaid.toLocaleString());
+       // console.log('moneyOwned----kk'+moneyOwned);
+        // console.log('moneyOwned----jk'+chartDataSet);
         //console.log("Data Set Array: " + JSON.stringify(datasetArray));
         ///console.log("Labels Array: " + JSON.stringify(labelsArray));
         

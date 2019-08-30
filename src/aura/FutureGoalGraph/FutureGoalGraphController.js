@@ -127,16 +127,16 @@
                     {
                        // chartLabels[i] = dataSeriesGoal[0]["objectDisplay"][i][0];
                         chartDataSet[i] = dataSeriesGoal[0]["objectDisplay"][i][1];
-                        moneyOwned += parseFloat(chartDataSet[i].toFixed(2));
-                        
-                        moneytobepaid = parseFloat(chartDataSet[9]);
-                        if(isNaN(moneytobepaid)){ 
+                          moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
+                         moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
+                        if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
                         }
+                       
                     }
                 }
-         component.set("v.moneyOwned",moneyOwned);       
-                    component.set("v.moneytobepaid",moneytobepaid);
+          component.set("v.moneyOwned",moneyOwned.toLocaleString());
+                 component.set("v.moneytobepaid",moneytobepaid.toLocaleString());
             //console.log("Data Set Array: " + JSON.stringify(datasetArray));
             ///console.log("Labels Array: " + JSON.stringify(labelsArray));
             
@@ -201,10 +201,10 @@
                     controllerGoalForecastStatusArray.push(neg + " will not be met on time.");
                 }
                 component.set("v.goalForecastStatus", controllerGoalForecastStatusArray[0]);
-               debugger;
+             //  debugger;
                 var test = component.get("v.goalForecastStatus");
-                console.log('Message-------'+test);
-                console.log('controllerGoalForecastStatusArray-------'+controllerGoalForecastStatusArray);
+              //  console.log('Message-------'+test);
+              //  console.log('controllerGoalForecastStatusArray-------'+controllerGoalForecastStatusArray);
             }
                 
                 

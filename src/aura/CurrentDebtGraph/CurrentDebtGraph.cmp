@@ -13,6 +13,7 @@
      <aura:attribute name = "shortTermLoans" type = "double" default="0"/>
     <aura:attribute name = "shortTermYearlyInterest" type = "double" default="0"/>
     <aura:handler name="change" value="{!v.currentselectedValue}" action="{!c.generateChart}"/>
+     <aura:handler name="change" value="{!v.Tabledata}" action="{!c.generateChart}"/>
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
     <div class="slds-col slds-size_6-of-12 slds-p-right_small">
         <div class="client_managed">
@@ -64,7 +65,7 @@
             </div>
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is $ 11,124.</span></p>
+                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
                 </div>
             </div>
         </div>

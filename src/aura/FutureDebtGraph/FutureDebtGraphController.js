@@ -194,17 +194,17 @@
                     {
                         chartLabels[i] = dataSeriesDebt[0]["objectDisplay"][i][0];
                         chartDataSet[i] = dataSeriesDebt[0]["objectDisplay"][i][1];
-                        moneyOwned += parseFloat(chartDataSet[i].toFixed(2));
-                        moneytobepaid = parseFloat(chartDataSet[9]);
+                       moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
+                         moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
                         if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
                         }
                     }
                 }
-                component.set("v.moneyOwned",moneyOwned);
-                 component.set("v.moneytobepaid",moneytobepaid);
-                console.log('moneytobepaid---'+moneytobepaid);
-               console.log('chartDataSet'+chartDataSet);
+                component.set("v.moneyOwned",moneyOwned.toLocaleString());
+                component.set("v.moneytobepaid",moneytobepaid.toLocaleString());
+              //  console.log('moneytobepaid---'+moneytobepaid);
+             //  console.log('chartDataSet'+chartDataSet);
                
                 var dps=new Array();
                 for(var i=0; i<chartLabels.length; i++){
