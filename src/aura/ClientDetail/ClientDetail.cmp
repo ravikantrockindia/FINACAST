@@ -6,7 +6,7 @@
     <div class="slds-card__header">
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_3-of-12">
-                <c:FinancialBalanceSheet recordId="{!v.recordId}"/>
+               
                 <div class="client_managed client-profile">
                     <c:ShowClientProfile recordId="{!v.recordId}"/>
                 </div>
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                        
-                            <c:POC_ClientDashboard_CashFlowBar/>
+                           
                           
                     </div>
                 </div>
@@ -40,7 +40,6 @@
                             </div>
                         </div>
                       
-                        <c:POC_ClientDashboard_DebtForecastStacked/>
                     </div>                
                 </div>
                 <div class="slds-m-top_large slds-m-bottom_medium">
