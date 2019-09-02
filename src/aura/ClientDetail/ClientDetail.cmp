@@ -6,207 +6,14 @@
     <div class="slds-card__header">
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_3-of-12">
-              <div class="client_managed slds-m-bottom_large">
-                    <div class="slds-grid slds-p-top_small slds-p-bottom_small">
-                    	<div class="slds-col slds-size_4-of-12">
-                        	<h3>Accounts</h3>
-                        </div>
-                        <div class="slds-col slds-size_8-of-12">
-                            <div class="slds-clearfix">
-                                <button class="slds-button slds-float_right" type="button">+ Add New Account</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="net-worth">
-                    	<div class="slds-grid slds-p-top_small slds-p-bottom_small">
-                    		<div class="slds-col slds-size_12-of-12">
-                                <h4>Net Worth</h4>
-                                <h1>$1,234,654.55
-                                	<span>
-                                        <lightning:icon iconName="utility:arrowup" size="xx-small"/>Increase 14%
-                                    </span>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="ac-featers">
-                        <li class="slds-grid">
-                            <div class="slds-col slds-size_12-of-12">
-                                <a href="#">
-                                    <div class="slds-float_left">Cash</div>
-                                    <div class="slds-float_right">
-                                        <span>$23,445.00</span>
-                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"/>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="slds-grid">
-                            <div class="slds-col slds-size_12-of-12">
-                                <a href="#">
-                                    <div class="slds-float_left">Credit</div>
-                                    <div class="slds-float_right">
-                                        <span>$114,333.56</span>
-                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"/> 
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="slds-grid">
-                            <div class="slds-col slds-size_12-of-12">
-                                <a href="#">
-                                    <div class="slds-float_left">Investments</div>
-                                    <div class="slds-float_right">
-                                        <span>$35,788.00</span>
-                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"/>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="slds-grid">
-                            <div class="slds-col slds-size_12-of-12">
-                                <a href="#">
-                                    <div class="slds-float_left">Loans</div>
-                                    <div class="slds-float_right">
-                                        <span>$2,58,666.00</span>
-                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"/>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="slds-grid">
-                            <div class="slds-col slds-size_12-of-12">
-                                <a href="#">
-                                    <div class="slds-float_left">Properties</div>
-                                    <div class="slds-float_right">
-                                        <span>$906,666.00</span>
-                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"/>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="slds-grid">
-                            <div class="slds-col slds-size_12-of-12">
-                                <a href="#">
-                                    <div class="slds-float_left">Other Assets</div>
-                                    <div class="slds-float_right">
-                                        <span>$1.52 M</span>
-                                        <lightning:icon iconName="utility:chevrondown" size="xx-small"/>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <c:FinancialBalanceSheet recordId="{!v.recordId}"/>
                 <div class="client_managed client-profile">
                     <c:ShowClientProfile recordId="{!v.recordId}"/>
                 </div>
             </div>
             <div class="slds-col slds-size_9-of-12">
                 <c:FinancialSpeedometerAndScoreCard clientId="{!v.recordId}"/>
-              <!--  <c:Goalfinal cid="{!v.recordId}" /> -->
-              <!--  <div class="client_managed slds-m-top_large">
-                    <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                        <div class="slds-col slds-size_1-of-12">
-                        	<h3 class="slds-m-top_x-small">Goals</h3>
-                        </div>
-                        <div class="slds-col slds-size_11-of-12">
-                        	<button class="slds-button" type="button">+ Add New Goals</button>
-                        </div>
-                    </div>
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-  						<thead>
-    						<tr class="slds-line-height_reset">
-                              	<th class="" scope="col">
-                                	<div class="slds-truncate" title="Opportunity Name">Name</div>
-                              	</th>
-                              	<th class="" scope="col">
-                                	<div class="slds-truncate" title="Account Name">Goal Amount</div>
-                              	</th>
-                              	<th class="" scope="col">
-                                	<div class="slds-truncate" title="Close Date">Completion Date</div>
-                              	</th>
-                              	<th class="" scope="col">
-                                	<div class="slds-truncate" title="Stage">Goals Status</div>
-                              	</th>
-                              	<th class="" scope="col">
-                                	<div class="slds-truncate" title="Confidence">Options</div>
-                              	</th>
-    						</tr>
-  						</thead>
-  						<tbody>
-    						<tr class="slds-hint-parent">
-                                <td data-label="Opportunity Name" scope="row">
-                                    <div class="slds-truncate" title="Goal target">
-                                      <a href="javascript:void(0);" tabindex="-1">House</a>
-                                    </div>
-                                </td>
-      							<td data-label="Account Name">
-        							<div class="slds-truncate" title="Amount">$23,445 of $50,000</div>
-      							</td>
-      							<td data-label="Close Date">
-        							<div class="slds-truncate" title="Date">5/19/2024</div>
-      							</td>
-      							<td data-label="Prospecting">
-        							<div class="slds-truncate" title="Track">
-                                    	<p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                    </div>
-      							</td>
-                                <td data-label="Confidence">
-                                    <div class="slds-truncate" title="More">
-                                    	<lightning:icon iconName="utility:threedots" size="xx-small"/>
-                                    </div>
-                                </td>
-    						</tr>
-                            <tr class="slds-hint-parent">
-                                <td data-label="Opportunity Name" scope="row">
-                                    <div class="slds-truncate" title="Goal target">
-                                      <a href="javascript:void(0);" tabindex="-1">Car</a>
-                                    </div>
-                                </td>
-      							<td data-label="Account Name">
-        							<div class="slds-truncate" title="Amount">$23,445 of $50,000</div>
-      							</td>
-      							<td data-label="Close Date">
-        							<div class="slds-truncate" title="Date">5/19/2024</div>
-      							</td>
-      							<td data-label="Prospecting">
-        							<div class="slds-truncate" title="Track">
-                                    	<p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                    </div>
-      							</td>
-                                <td data-label="Confidence">
-                                    <div class="slds-truncate" title="More">
-                                    	<lightning:icon iconName="utility:threedots" size="xx-small"/>
-                                    </div>
-                                </td>
-    						</tr>
-                            <tr class="slds-hint-parent">
-                                <td data-label="Opportunity Name" scope="row">
-                                    <div class="slds-truncate" title="Goal target">
-                                      <a href="javascript:void(0);" tabindex="-1">World Tour</a>
-                                    </div>
-                                </td>
-      							<td data-label="Account Name">
-        							<div class="slds-truncate" title="Amount">$23,445 of $50,000</div>
-      							</td>
-      							<td data-label="Close Date">
-        							<div class="slds-truncate" title="Date">5/19/2024</div>
-      							</td>
-      							<td data-label="Prospecting">
-        							<div class="slds-truncate" title="Track">
-                                    	<p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Needs Advising</span></p>
-                                    </div>
-      							</td>
-                                <td data-label="Confidence">
-                                    <div class="slds-truncate" title="More">
-                                    	<lightning:icon iconName="utility:threedots" size="xx-small"/>
-                                    </div>
-                                </td>
-    						</tr>
-  						</tbody>
-					</table>
-                </div> -->
+       
                 <div class="slds-m-top_large slds-m-bottom_medium">
                     <div class="client_managed">
                         <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
@@ -217,12 +24,9 @@
                                 <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
                             </div>
                         </div>
-                        <!-- <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">-->
-                          <!--  <c:POC_ClientDashboard_CashFlowBar/> -->
-                            <!-- <div class="slds-col slds-size_12-of-12 graph-image">
-                            	<img src="{!$Resource.graph1}" />
-                            </div> -->
-                        <!-- </div> -->
+                       
+                            <c:POC_ClientDashboard_CashFlowBar/>
+                          
                     </div>
                 </div>
                 <div class="slds-m-top_large slds-m-bottom_medium">
@@ -235,12 +39,8 @@
                                 <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
                             </div>
                         </div>
-                        <!--<div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                             <div class="slds-col slds-size_12-of-12  graph-image">
-                            	<img src="{!$Resource.graph2}"/>
-                            </div> 
-                        </div>-->
-                        <!--<c:POC_ClientDashboard_DebtForecastStacked/> -->
+                      
+                        <c:POC_ClientDashboard_DebtForecastStacked/>
                     </div>                
                 </div>
                 <div class="slds-m-top_large slds-m-bottom_medium">
@@ -253,12 +53,7 @@
                                 <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
                             </div>
                         </div>
-                        <!-- <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                            <div class="slds-col slds-size_12-of-12 graph-image">
-                            	<img src="{!$Resource.graph3}"/>
-                            </div> 
-                        </div>-->
-                       <!-- <c:POC_ClientDashboard_InvestmentArea/> -->
+                        
                     </div>                
                 </div>
             </div>           
