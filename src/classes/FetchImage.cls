@@ -8,4 +8,18 @@ public class FetchImage {
     public static String getNameSpace(){
         return NamespaceUtility.returnNamespace();
     }
+     @AuraEnabled 
+    public static List<Contact> getContact(String recordId){
+         List<Contact> c;
+        try{
+            
+           c=[Select Id, FinServ__Gender__c, Email, Birthdate, AccountId, Phone from Contact where AccountId=:recordId limit 1];
+            
+            
+        }catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+        }
+        return c;
+        
+    }
 }

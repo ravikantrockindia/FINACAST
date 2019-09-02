@@ -11,6 +11,8 @@
     <aura:attribute name="prefixURL" type="String" default="/servlet/servlet.FileDownload?file="/>
     <aura:attribute name="attachId" type="String" />
     <aura:attribute name="FinalVal" type="String" default="String"/> 
+        <aura:attribute name="dob" type="date" default=""/> 
+
     <aura:attribute name="TempFinalVal" type="String" default="String"/> 
     <aura:attribute name="NameSpace" type="String"/>
     
@@ -70,7 +72,10 @@
                             <div class="slds-backdrop slds-backdrop_open"></div>
                         </aura:if>
                         <div class="clients-details">                                  
-                            <h5>DoB <b><lightning:outputField  fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" variant="label-hidden" /></b></h5>
+                            <b>DoB 
+                                           <h5>     <ui:outputDate value="{!v.dob}"/>
+
+                              <!--  <lightning:outputField  fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" variant="label-hidden"/>--></h5></b>	
                         </div>
                     </div>
                 </div>

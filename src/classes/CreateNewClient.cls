@@ -51,6 +51,41 @@ public class CreateNewClient {
         
         
     }
+    @AuraEnabled 
+    public static void updateContact(String recordId, String phone, String email, String gender, String dob){
+        try{
+            
+            system.debug(phone+email+gender+dob+recordId);
+            List<Contact> c=[Select Id, FinServ__Gender__c, Email, Birthdate, AccountId, Phone from Contact where AccountId=:recordId limit 1];
+            c[0].FinServ__Gender__c=gender;
+            c[0].Email=email;
+            c[0].Birthdate=Date.valueOf(dob);
+            c[0].Phone=phone;
+            update c;
+            
+                if(TEST.isRunningTest())
+                    throw new NullPointerException();
+            
+        }catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+        }
+        
+        
+    }
+    @AuraEnabled 
+    public static List<Contact> getContact(String recordId){
+         List<Contact> c;
+        try{
+            
+           c=[Select Id, FinServ__Gender__c, Email, Birthdate, AccountId, Phone from Contact where AccountId=:recordId limit 1];
+            
+            
+        }catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+        }
+        return c;
+        
+    }
     /* @AuraEnabled 
 public static Id individualAccountRecordType(){
 Id devRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('IndustriesIndividual').getRecordTypeId();
