@@ -70,6 +70,58 @@ public class CreateNewClientTest {
         Test.stopTest();
         
     }
+      @isTest
+    static void updateContactTest(){
+        
+        Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
+        // insert a;
+        
+        Id accountId=a.Id;
+        Test.startTest();
+        CreateNewClient.updateContact(a.Id, '3435454','ac@def.com','Male','2019-02-01');
+        Test.stopTest();
+        
+    }
+    
+    @isTest
+    static void getContactTest(){
+        
+        Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
+        // insert a;
+        
+        Id accountId=a.Id;
+        Test.startTest();
+        CreateNewClient.getContact(a.Id);
+        Test.stopTest();
+        
+    }
+    
+     @isTest
+    static void addIncomeTest(){
+        
+        Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
+        // insert a;
+        
+        Id accountId=a.Id;
+        Test.startTest();
+        CreateNewClient.addIncome(a.Id);
+        Test.stopTest();
+        
+    }
+    
+      @isTest
+    static void addExpenseTest(){
+        
+        Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
+        // insert a;
+        
+        Id accountId=a.Id;
+        Test.startTest();
+        CreateNewClient.addExpense(a.Id);
+        Test.stopTest();
+        
+    }
+    
     
     @isTest
     static void returnBankAccountTest(){
