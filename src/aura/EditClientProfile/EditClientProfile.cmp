@@ -2,7 +2,7 @@
     <aura:attribute name="isEditTrue" type="Boolean" />
     <aura:attribute name="isImageAvailable" type="Boolean" default="true" />
     <aura:attribute name="recordId" type="Id" default="0014o00001fRvur" />
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--aura:handler name="init" value="{!this}" action="{!c.doInit}"/--> 
     <!-- 'showLoadingSpinner' attribute for show/hide the uploading image and msg in aura:if-->
     <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />	
     <aura:attribute name="fileName" type="String" default=""/>
@@ -78,12 +78,11 @@
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <span class="EditCalender">
-                        {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:input readonly="true" aura:id="dob" variant="label-hidden" dateStyle="short"/>
+                        {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" disabled="true" aura:id="dob" variant="label-hidden" dateStyle="short"/>
                     </span>
                 </div>
             </div>
             <br/>
-           
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_1-of-2 demographic_select">
                     <span>{!$Label.c.Client_Address_Street}</span> <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden textarea_custom" fieldName="BillingStreet" aura:id="street" variant="label-hidden"/>
@@ -96,29 +95,11 @@
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_1-of-2">
                     <span>{!$Label.c.Address_Zip_Postal_Code}</span> <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingPostalCode" aura:id="code" variant="label-hidden"/>
-                </div> 
+                </div>                        
                 <div class="slds-col slds-size_1-of-2">
-                            Email  <lightning:input type="email" aura:id="email" variant="label-hidden"/>
-                        </div>
-                
+                    <span>{!$Label.c.Client_Investment_Experience}</span> <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
+                </div>
             </div> 
-            <br/>
-             <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-2">
-                            Gender <span class = "highlight"  style="color: red"> </span>
-                            <lightning:select aura:id="gender" class="label-hidden">
-                                <option value="">--None--</option>
-                                <option value="Female">Female</option>
-                                <option value="Male">Male</option>
-                                <option value="Decline to Specify">Decline to Specify</option>
-                                <option value="Other">Other</option>
-                                
-                            </lightning:select>                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                            Phone
-                            <lightning:input type="tel" aura:id="phone" class="label-hidden"/>
-                        </div>
-                    </div>
             <br/>
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_1-of-2">
@@ -129,13 +110,7 @@
                 </div>
             </div> 
         </div>
-          <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-2">
-                            {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
-                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                        </div>
-                    </div>
+        
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_1-of-1">
                 <div class="slds-clearfix ">

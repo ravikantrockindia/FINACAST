@@ -12,7 +12,7 @@
     <aura:attribute name="recordTypeId" type="String"/>
     <aura:attribute name="namespace" type="String" default=""/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
     
     
     <lightning:card>
@@ -55,28 +55,11 @@
                         </div>
                     </div>
                     <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-2 dob">
-                            {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span>
-                            <lightning:input type="date" aura:id="dob" class="label-hidden"/>
+                        <div class="slds-col slds-size_1-of-2">
+                            {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Date_Of_Birth__c'}" aura:id="dob" variant="label-hidden"/>
                         </div>
                         <div class="slds-col slds-size_1-of-2">
-                            Email  <lightning:input type="email" aura:id="email" variant="label-hidden"/>
-                        </div>
-                    </div>
-                    <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-2">
-                            Gender <span class = "highlight"  style="color: red"> </span>
-                            <lightning:select aura:id="gender" class="label-hidden">
-                                <option value="">--None--</option>
-                                <option value="Female">Female</option>
-                                <option value="Male">Male</option>
-                                <option value="Decline to Specify">Decline to Specify</option>
-                                <option value="Other">Other</option>
-                                
-                            </lightning:select>                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                            Phone
-                            <lightning:input type="tel" aura:id="phone" class="label-hidden"/>
+                            {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
                         </div>
                     </div>
                     <div class="slds-grid slds-gutters">
@@ -88,13 +71,6 @@
                         </div>
                     </div>
                     <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-2">
-                            {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>
-                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                        </div>
-                    </div>
-                    <div class="slds-grid slds-gutters slds-m-bottom_large">
                         <div class="slds-col slds-size_1-of-1">
                             <div class="slds-clearfix ">
                                 <div class="slds-float_right">
