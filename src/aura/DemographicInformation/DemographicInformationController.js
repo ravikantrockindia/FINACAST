@@ -1,6 +1,5 @@
 ({
     doInit:function(component,event,helper){
-        debugger;
         try{
             
         var recordId=component.get("v.recordId");
