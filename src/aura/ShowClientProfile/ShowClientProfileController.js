@@ -10,6 +10,48 @@
         });
         helper.fetchImage(component,event,helper);
          $A.enqueueAction(action);
+          var recordId=component.get("v.recordId");
+            console.log(recordId);
+           // alert(recordId);
+        if(!($A.util.isUndefinedOrNull(recordId)&&recordId=="")){
+         var action=component.get("c.getContact");
+                action.setParams({ recordId : component.get("v.recordId")});
+                
+                // Create a callback that is executed after 
+                // the server-side action returns
+                action.setCallback(this, function(response) {
+                    var state = response.getState();
+                  //   alert(state)
+                    if (state === "SUCCESS") {
+                     //   alert(JSON.stringify(response.getReturnValue()))
+                        component.set("v.dob", response.getReturnValue()[0].Birthdate);
+                     //  alert(component.get("v.dob"))
+                                              
+
+                    }
+                    
+                    else if (state === "INCOMPLETE") {
+                        // do something
+                    }
+                        else if (state === "ERROR") {
+                           
+                            var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) {
+                                    console.log("Error message: " + 
+                                                errors[0].message);
+                                }
+                            } else {
+                                console.log("Unknown error");
+                            }
+                        }
+                });
+                // A client-side action could cause multiple events, 
+                // which could trigger other events and 
+                // other server-side action calls.
+                // $A.enqueueAction adds the server-side action to the queue.
+                $A.enqueueAction(action);
+        }
     },
     itemsChange:function(component,event,helper){
         helper.fetchImage(component,event,helper);

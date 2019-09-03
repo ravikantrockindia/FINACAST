@@ -1,4 +1,57 @@
 ({
+    doInit:function(component,event,helper){
+        try{
+            
+        var recordId=component.get("v.recordId");
+            console.log(recordId);
+           // alert(recordId);
+        if(!($A.util.isUndefinedOrNull(recordId)&&recordId=="")){
+         var action=component.get("c.getContact");
+                action.setParams({ recordId : component.get("v.recordId")});
+                
+                // Create a callback that is executed after 
+                // the server-side action returns
+                action.setCallback(this, function(response) {
+                    var state = response.getState();
+                     //alert(state)
+                    if (state === "SUCCESS") {
+                        console.log(response.getReturnValue())
+                        component.find("dob").set("v.value", response.getReturnValue()[0].Birthdate);
+                                                component.find("email").set("v.value", response.getReturnValue()[0].Email);
+                        component.find("phone").set("v.value", response.getReturnValue()[0].Phone);
+                        component.find("gender").set("v.value",response.getReturnValue()[0].FinServ__Gender__c)
+
+                    }
+                    
+                    else if (state === "INCOMPLETE") {
+                        // do something
+                    }
+                        else if (state === "ERROR") {
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) {
+                                    console.log("Error message: " + 
+                                                errors[0].message);
+                                }
+                            } else {
+                                console.log("Unknown error");
+                            }
+                        }
+                });
+                // A client-side action could cause multiple events, 
+                // which could trigger other events and 
+                // other server-side action calls.
+                // $A.enqueueAction adds the server-side action to the queue.
+                $A.enqueueAction(action);
+        }
+        }
+        catch(e){
+            console.log(e.message)
+        }
+    },
     handleSuccess : function(component, event, helper) {
         try{
             var spinner = component.find("mySpinner");
@@ -8,7 +61,47 @@
             $A.util.addClass(spinner, "slds-hide");
             component.set("v.recordId",event.getParams().response.id)
             console.log(component.get("v.recordId"))
-            
+             var action=component.get("c.updateContact");
+                action.setParams({ recordId : component.get("v.recordId"),
+                                  phone: component.find("phone").get("v.value"),
+                                  email: component.find("email").get("v.value"),
+                                   gender: component.find("gender").get("v.value"),
+                                  dob: component.find("dob").get("v.value")
+                                 });
+                
+                // Create a callback that is executed after 
+                // the server-side action returns
+                action.setCallback(this, function(response) {
+                    var state = response.getState();
+                    // alert(state)
+                    if (state === "SUCCESS") {
+                        
+                        
+                    }
+                    
+                    else if (state === "INCOMPLETE") {
+                        // do something
+                    }
+                        else if (state === "ERROR") {
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) {
+                                    console.log("Error message: " + 
+                                                errors[0].message);
+                                }
+                            } else {
+                                console.log("Unknown error");
+                            }
+                        }
+                });
+                // A client-side action could cause multiple events, 
+                // which could trigger other events and 
+                // other server-side action calls.
+                // $A.enqueueAction adds the server-side action to the queue.
+                $A.enqueueAction(action);
             // console.log(event.getParams().response.fields.Name.value)
             
             component.set("v.tabName", event.getParams().response.fields.Name.value)
