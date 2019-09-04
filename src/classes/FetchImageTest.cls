@@ -12,6 +12,7 @@ public class FetchImageTest {
         b.ParentId=a.Id;
         insert b;
         FetchImage.fetchLatestImage(a.Id);
-        FetchImage.getNameSpace();         
+        FetchImage.getNameSpace();  
+        FetchImage.getContact(a.Id);
     }
 }
