@@ -202,6 +202,7 @@ public class AffordabilityControllerTest {
         AffordabilityController.NumberOfMonths(system.today(), system.today());
         AffordabilityController.curentgoalestimation(250, system.today(), system.today()); 
         
+        System.assert(acc!=null);
         test.stopTest();
     }
 }

@@ -14,5 +14,6 @@ public class FetchImageTest {
         FetchImage.fetchLatestImage(a.Id);
         FetchImage.getNameSpace();  
         FetchImage.getContact(a.Id);
+        System.assert(b != null);
     }
 }

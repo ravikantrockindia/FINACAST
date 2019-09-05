@@ -7,10 +7,10 @@ public class AccountControllerTest
         AccountController.ColumnSet();
         AccountController.getDisplayColumns();
         AccountController.getLimitedAccounts('s');
-        AccountController.ColumnSet1(' Where createdById=:currentuser');
-        
+        AccountController.ResultWrapper rw = AccountController.ColumnSet1(' Where createdById=:currentuser');
         AccountController.saveColumns('name');
         AccountController.saveColumns('');
+        System.assert(rw != null);
         
     }
 

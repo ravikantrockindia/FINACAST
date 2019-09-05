@@ -5,11 +5,12 @@ public class MyClientFilterControllerTest
     public static void testClientFilter()
     {
         
-        MyClientFilterController.getObjectFieldsApex('account');
+        MyClientFilterController.Data_Wrapper dw = MyClientFilterController.getObjectFieldsApex('account');
         MyClientFilterController.getGenuineObjectFieldsApex('account');
         MyClientFilterController.setExcludedFields('account');
         MyClientFilterController.getNamespace();
         
+        System.assert(dw != null);
     }
 
 }

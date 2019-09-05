@@ -192,6 +192,8 @@ public class FinacastUtilityTest {
        FinacastUtility.buildScenarioRequestData2( sc.id, acc.id);
        FinacastUtility.ExceptionHandle(10,'Message Error' , 'StackTrace');
         
+        System.assert(acc != null);
+        
     }
     
 }
