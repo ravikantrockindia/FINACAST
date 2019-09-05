@@ -36,6 +36,7 @@
                 component.set("v.isInvestmentAccount",false)
                 
             }
+            
             //console.log(component.get(recordTypeId))
             this.assignRecordType(component,accountType);
         }catch(e){
@@ -48,14 +49,14 @@
         try{
             var recordTypeIds=component.get("v.recordTypeIds")
             console.log(recordTypeIds[0].DeveloperName)
-            if(accountType=='CD' || accountType=='Other' || accountType=='Money Market' || accountType=='Cash'){
+            /* if(accountType=='Other' || accountType=='Cash'){
                 for(var i=0;i<recordTypeIds.length;i++){             
                     if(recordTypeIds[i].DeveloperName=='BankingAccount'){
                         console.log('hi')
                         component.set("v.recordTypeId",recordTypeIds[i].Id)
                     }
                 }
-            }
+            }*/
             if(accountType=='Savings'){
                 for(var i=0;i<recordTypeIds.length;i++){             
                     if(recordTypeIds[i].DeveloperName=='SavingsAccount'){
@@ -64,7 +65,7 @@
                     }
                 }
             }
-            if(accountType=='Checking'){
+            if(accountType=='Checking' || accountType=='Money Market'  || accountType=="CD"){
                 for(var i=0;i<recordTypeIds.length;i++){             
                     if(recordTypeIds[i].DeveloperName=='CheckingAccount'){
                         console.log('hi')
@@ -97,23 +98,25 @@
             // console.log("account Type",accountType)
             var currentBal=component.find("currentBalance").get("v.value")
             var apy
-            if(accountType!='401K'  && accountType!='IRA' && accountType!='Roth IRA' && accountType!='529 Account' )
-                apy=component.find("apy").get("v.value")
-                //var cost=    component.find("cost").get("v.value")
-                // console.log("balance",currentBal);
-                if ($A.util.isUndefinedOrNull(name) || name == "" ||  
-                    $A.util.isUndefinedOrNull(accountType) || accountType == "" || accountType=="None" || $A.util.isUndefinedOrNull(currentBal) || currentBal =="" )
-                    
-                {
-                    $A.util.removeClass(spinner, "slds-show");
-                    
-                    $A.util.addClass(spinner, "slds-hide");
-                    component.set("v.disabled",false)
-                    event.preventDefault();
-                    var msg = "Please fill mandatory fields!"
-                    this.showNotfication(component,msg,'error','Error!');
-                    return;
-                }
+            var maturityDate;
+            var cost;
+            var withdrawalDate;
+            
+            //var cost=    component.find("cost").get("v.value")
+            // console.log("balance",currentBal);
+            if ($A.util.isUndefinedOrNull(name) || name == "" ||  
+                $A.util.isUndefinedOrNull(accountType) || accountType == "" || accountType=="None" || $A.util.isUndefinedOrNull(currentBal) || currentBal =="" )
+                
+            {
+                $A.util.removeClass(spinner, "slds-show");
+                
+                $A.util.addClass(spinner, "slds-hide");
+                component.set("v.disabled",false)
+                event.preventDefault();
+                var msg = "Please fill mandatory fields!"
+                this.showNotfication(component,msg,'error','Error!');
+                return;
+            }
             else{
                 if(currentBal<0){
                     $A.util.removeClass(spinner, "slds-show");
@@ -126,17 +129,106 @@
                     this.showNotfication(component,msg,'error','Error!');
                     return;
                 }
-                if(! ($A.util.isUndefinedOrNull(apy) || apy == "")&& apy<0 ){
-                    component.set("v.disabled",false)
-                    $A.util.removeClass(spinner, "slds-show");
-                    
-                    $A.util.addClass(spinner, "slds-hide");
-                    event.preventDefault();
-                    var msg = "APY can't be negative!"
-                    this.showNotfication(component,msg,'error','Error!');
-                    return;
+                if(accountType!='401K'  && accountType!='IRA' && accountType!='Roth IRA' && accountType!='529 Account' ){
+                    apy=component.find("apy").get("v.value")
+                    if ($A.util.isUndefinedOrNull(apy) || apy == "")
+                        
+                    {
+                        $A.util.removeClass(spinner, "slds-show");
+                        
+                        $A.util.addClass(spinner, "slds-hide");
+                        component.set("v.disabled",false)
+                        event.preventDefault();
+                        var msg = "Please fill mandatory fields!"
+                        this.showNotfication(component,msg,'error','Error!');
+                        return;
+                    }
+                    else{
+                        if(apy<0 ){
+                            component.set("v.disabled",false)
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            event.preventDefault();
+                            var msg = "APY can't be negative!"
+                            this.showNotfication(component,msg,'error','Error!');
+                            return;
+                        }
+                    }
                 }
-                if(accountType=="CD" && new Date(component.find("maturity_date").get("v.value"))>new Date()){
+                if(accountType=='CD'  ){
+                    maturityDate=component.find("maturity_date").get("v.value")
+                    if ($A.util.isUndefinedOrNull(maturityDate) || maturityDate == "")
+                        
+                    {
+                        $A.util.removeClass(spinner, "slds-show");
+                        
+                        $A.util.addClass(spinner, "slds-hide");
+                        component.set("v.disabled",false)
+                        event.preventDefault();
+                        var msg = "Please fill mandatory fields!"
+                        this.showNotfication(component,msg,'error','Error!');
+                        return;
+                    }
+                    /* else{
+                        if(new Date(maturityDate)>new Date() ){
+                            component.set("v.disabled",false)
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            event.preventDefault();
+                            var msg = "Maturity Date cannot be greater than today's date"
+                            this.showNotfication(component,msg,'error','Error!');
+                            return;
+                        }
+                    }*/
+                }
+                if(accountType=='Retail Brokerage'  ){
+                    cost=component.find("cost").get("v.value")
+                    if ($A.util.isUndefinedOrNull(cost) || cost == "")
+                        
+                    {
+                        $A.util.removeClass(spinner, "slds-show");
+                        
+                        $A.util.addClass(spinner, "slds-hide");
+                        component.set("v.disabled",false)
+                        event.preventDefault();
+                        var msg = "Please fill mandatory fields!"
+                        this.showNotfication(component,msg,'error','Error!');
+                        return;
+                    }
+                    else{
+                        if(cost<0){
+                            component.set("v.disabled",false)
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            event.preventDefault();
+                            var msg = "Cost cannot be negative!"
+                            this.showNotfication(component,msg,'error','Error!');
+                            return;
+                        }
+                    }
+                }
+                debugger;
+                if(accountType=='529 Account' ){
+                  var  withdrawalDate=component.find("withdrawldate").get("v.value")
+                  console.log(withdrawalDate)
+                    if ($A.util.isUndefinedOrNull(withdrawalDate) || withdrawalDate == "")
+                        
+                    {
+                        $A.util.removeClass(spinner, "slds-show");
+                        
+                        $A.util.addClass(spinner, "slds-hide");
+                        component.set("v.disabled",false)
+                        event.preventDefault();
+                        var msg = "Please fill mandatory fields!"
+                        this.showNotfication(component,msg,'error','Error!');
+                        return;
+                    }
+                }
+                
+                /*if(accountType=="CD" && new Date(component.find("maturity_date").get("v.value"))>new Date()){
                     component.set("v.disabled",false)
                     $A.util.removeClass(spinner, "slds-show");
                     
@@ -145,14 +237,14 @@
                     var msg = "Maturity Date cannot be greater than today's date"
                     this.showNotfication(component,msg,'error','Error!');
                     return;
-                }
+                }*/
                 /* if(accountType=="Retail Brokerage"&& (!($A.util.isUndefinedOrNull(cost) || cost == "")&& cost<0)){
                 event.preventDefault();
                 var msg = "Cost can't be negative!"
                 this.showAlertEmptyInvalidVal(event,msg);
                 return;
             }*/
-                if(accountType=="529 Account" && new Date(component.find("withdrawldate").get("v.value"))>new Date()){
+                /* if(accountType=="529 Account" && new Date(component.find("withdrawldate").get("v.value"))>new Date()){
                     component.set("v.disabled",false)
                     
                     $A.util.removeClass(spinner, "slds-show");
@@ -162,7 +254,7 @@
                     var msg = "Withdrawl Date cannot be greater than today's date!"
                     this.showNotfication(component,msg,'error','Error!');
                     return; 
-                }
+                }*/
                 /*if(acc="firstAccount"){
                 alert('submit')
                 component.find('form').submit();
@@ -177,8 +269,8 @@
             
             $A.util.addClass(spinner, "slds-hide");
             component.set("v.disabled",true)
-                   // this.showNotfication(component,"The record cannot be saved.Please try again!","error","Error!");    
-
+            // this.showNotfication(component,"The record cannot be saved.Please try again!","error","Error!");    
+            
         }        
         
         

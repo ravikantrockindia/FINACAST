@@ -18,7 +18,7 @@
                <lightning:spinner aura:id="mySpinner"/>
 
         <div class="slds-m-around_x-small">
-            <div class="custom_card slds-gutters">
+            <div class=" slds-gutters">
                 <div class="slds-col slds-size_1-of-1">
                     <aura:if isTrue="{!empty(v.FinancialAccountList)}">
                         <c:BankAccountForm aura:id ="bankAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}" namespace="{!v.namespace}"/>
@@ -28,9 +28,7 @@
                                     <lightning:button class="slds-button slds-button_brand budget-brand" label="{!$Label.c.Add_Bank_Account}" title="Add Bank Account" onclick="{!c.createBankAccount}"/>
                                 </div>
                             </div>
-                            <aura:if isTrue="{!v.showInModal}">
-                                <c:BankAccountModal accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}"/>
-                            </aura:if>
+                          
                             <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_medium" style="padding: 0;">
                                 <thead>
                                     <tr class="slds-line-height_reset">
@@ -78,7 +76,7 @@
             <div class="custom_card slds-gutters">
                 <div class="slds-col slds-size_1-of-1">
                     <div class="slds-clearfix ">
-                        <div class="slds-m-top_medium slds-float_right">
+                        <div class="slds-m-bottom_large slds-float_right">
                             <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}"  class="mlr"/>
                             <aura:if isTrue="{!empty(v.FinancialAccountList)}">
                                 <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" class="mlr"/>
@@ -88,7 +86,7 @@
                                 </aura:set>
                             </aura:if>
                         </div>
-                        <div class="slds-m-top_medium slds-float_left">
+                        <div class="slds-m-bottom_large slds-float_left">
                             <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
                         </div>
                     </div>
@@ -96,5 +94,7 @@
             </div>
         </div>        
     </lightning:card>
-    
+      <aura:if isTrue="{!v.showInModal}">
+                                <c:BankAccountModal accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
+                            </aura:if>
 </aura:component>

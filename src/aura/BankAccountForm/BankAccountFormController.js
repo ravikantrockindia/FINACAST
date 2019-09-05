@@ -11,7 +11,7 @@
             var namespace=component.get("v.namespace")
             console.log(namespace)
             var field='v.financialAccount.'+'Account_Type__c'
-            component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Other', value:'Other'},{label:'Checking', value:'Checking'},{label:'Savings', value:'Savings'},{label:'Money Market', value:'Money Market'},{label:'CD', value:'CD'},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'Cash', value:'Cash'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
+            component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Checking', value:'Checking'},{label:'Savings', value:'Savings'},{label:'Money Market', value:'Money Market'},{label:'CD', value:'CD'},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
             var accountType=component.get(field)
             if( $A.util.isUndefinedOrNull(accountType) || accountType == "" ){
                 component.set("v.selectedAccount",'')
