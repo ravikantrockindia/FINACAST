@@ -11,7 +11,6 @@
                     if(goalList[i].FinServ__TargetValue__c!=null){
                     sum += goalList[i].FinServ__TargetValue__c;
                     }
-                    console.log('value of sum'+sum);
                 }
            
                 
@@ -35,7 +34,6 @@
                             }                
                 
             }
-            console.log('value of sum'+sum);
             
         });
         $A.enqueueAction(action);

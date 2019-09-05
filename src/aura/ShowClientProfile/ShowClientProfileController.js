@@ -11,8 +11,6 @@
         helper.fetchImage(component,event,helper);
          $A.enqueueAction(action);
           var recordId=component.get("v.recordId");
-            console.log(recordId);
-           // alert(recordId);
         if(!($A.util.isUndefinedOrNull(recordId)&&recordId=="")){
          var action=component.get("c.getContact");
                 action.setParams({ recordId : component.get("v.recordId")});
@@ -21,13 +19,8 @@
                 // the server-side action returns
                 action.setCallback(this, function(response) {
                     var state = response.getState();
-                  //   alert(state)
                     if (state === "SUCCESS") {
-                     //   alert(JSON.stringify(response.getReturnValue()))
                         component.set("v.dob", response.getReturnValue()[0].Birthdate);
-                     //  alert(component.get("v.dob"))
-                                              
-
                     }
                     
                     else if (state === "INCOMPLETE") {

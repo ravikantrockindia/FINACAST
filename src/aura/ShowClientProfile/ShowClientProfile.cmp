@@ -2,12 +2,11 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
     <aura:handler name="change" value="{!v.FinalVal}" action="{!c.itemsChange}"/>
     <aura:attribute name="simpleRecord" type="Object"/>
-    <aura:attribute type="Id" name="recordId" default="0014o00001fRvur"/>
+    <aura:attribute type="Id" name="recordId"/>
     <aura:attribute name="isEditTrue" type="Boolean" />
     <aura:attribute name="isEditImage" type="Boolean" /> 
     <aura:attribute name="DefaultImg" type="Boolean" default="false" />
     <aura:attribute name="ResourceImage" type="string" default="{!$Resource.staticImageUser}"/>
-    <!--aura:attribute name="isImageAvailable" type="Boolean"  default="true"/> -->
     <aura:attribute name="prefixURL" type="String" default="/servlet/servlet.FileDownload?file="/>
     <aura:attribute name="attachId" type="String" />
     <aura:attribute name="FinalVal" type="String" default="String"/> 
@@ -65,7 +64,7 @@
                                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Demographic Details</h2>
                                     </header>
                                     <div class="slds-modal__content slds-p-around_medium " aria-hidden="true" id="modal-content-id-1">
-                                        <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" NameSpace="{!v.NameSpace}"/>
+                                        <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" NameSpace="{!v.NameSpace}" />
                                     </div>
                                 </div>
                             </section>
@@ -75,7 +74,7 @@
                             <b>DoB 
                                            <h5>     <ui:outputDate value="{!v.dob}"/>
 
-                              <!--  <lightning:outputField  fieldName="{!v.NameSpace+'Date_Of_Birth__c'}" variant="label-hidden"/>--></h5></b>	
+                              </h5></b>	
                         </div>
                     </div>
                 </div>

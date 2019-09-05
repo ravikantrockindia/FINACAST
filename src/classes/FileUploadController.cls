@@ -51,8 +51,6 @@ public with sharing class FileUploadController {
     @AuraEnabled 
     public static void updateContact(String recordId, String phone, String email, String gender, String dob){
         try{
-            
-            system.debug(phone+email+gender+dob+recordId);
             List<Contact> c=[Select Id, FinServ__Gender__c, Email, Birthdate, AccountId, Phone from Contact where AccountId=:recordId limit 1];
             c[0].FinServ__Gender__c=gender;
             c[0].Email=email;
@@ -60,12 +58,10 @@ public with sharing class FileUploadController {
             c[0].Birthdate=Date.valueOf(dob);
             c[0].Phone=phone;
             update c;
-            System.debug(c);
                 if(TEST.isRunningTest())
                     throw new NullPointerException();
             
         }catch(Exception e){
-            System.debug(e.getStackTraceString());
             //new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
         }
         
