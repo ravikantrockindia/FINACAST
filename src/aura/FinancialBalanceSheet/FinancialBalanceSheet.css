@@ -1,0 +1,283 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
+.THIS .slds-button:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+}
+.THIS .client_managed h3 {
+    margin: 6px 0 0;
+}
+.THIS .net-worth {
+    background-color: #f6f9fc;
+}
+.THIS .net-worth h4 {
+    font-weight: 500;
+    font-size: 18px;
+}
+.THIS .ac-featers {
+    font-family: 'Open Sans', sans-serif;
+    border-bottom: 1px solid #ccc;
+}
+/*.THIS .ac-featers .slds-grid {
+    border-bottom: 1px solid #ccc;
+}*/
+.THIS .ac-featers a {
+    display: block;
+    width: 100%;
+    float: left;
+    padding: 18px 0;
+    font-weight: 600;
+}
+.THIS .ac-featers a span {
+    color: #969696;
+    font-weight: 400;
+}
+.THIS .ac-featers a .slds-icon {
+    width: 10px;
+    margin-left: 15px;
+}
+.THIS .what-is {
+    text-align: right;
+}
+.THIS .what-is a {
+    color: #000;
+    text-decoration: underline;
+    display: inline-block;
+    margin-top:3px;
+}
+.THIS .health-features p {
+    font-size: 12px;
+}
+.THIS .health-features p .slds-icon_container_circle {
+    position: relative;
+    height: 20px;
+    width: 20px;
+}
+.THIS .health-features p span {
+    margin: -14px 0 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.THIS .health-features p .slds-icon {
+    position: absolute;
+    top: 2px;
+    width: 20px;
+    left: 0;
+}
+.THIS .on-track .slds-icon {
+    left: 3px !important;
+}
+.THIS .health-features h4 {
+    font-size: 14px;
+    color: #808080;
+    font-weight: 500;
+    margin-top:	5px;
+}
+.THIS .on-track {
+    color: #00b088;
+    font-size: 12px;
+}
+.THIS .non-track {
+    color: #f24865;
+}
+.THIS .net-worth h1 span {
+    font-size: 12px;
+    color: #808285;
+    font-weight: 600;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.THIS .net-worth h1 span .slds-icon {
+    vertical-align:	text-bottom;
+    fill: green;
+}
+.THIS .need-adv {
+    color: #ff8b00;
+}
+.THIS .need-adv .slds-icon-action-approval {
+    background-color: #ff8b00;
+}
+.THIS .half-chart {
+    text-align: center;
+}
+.THIS .half-chart p {
+    margin: 15px 0 0;
+    font-size: 12px;
+}
+.THIS .client_managed .slds-table thead th {
+    background-color: #f6f9fc;
+}
+.THIS .client_managed .slds-table .slds-icon_container_circle {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+.THIS .client_managed .slds-table thead th {
+    color: #000;
+    font-family: 'Work Sans', sans-serif;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    font-weight: 700;
+}
+.THIS .client_managed .slds-table .slds-icon_container_circle .slds-icon {
+    position: absolute;
+    top: 2px;
+    width: 20px;
+    left: 0;
+}
+.THIS .client_managed .slds-table span {
+ 	margin: -14px 0 0 5px;
+    display: inline-block;
+    vertical-align: middle;   
+}
+.THIS .client_managed .slds-table tbody td:last-child .slds-icon {
+    fill: #4e75a3;
+    width: 30px;
+    height: 30px;
+}
+.THIS .client_managed .slds-table .non-track {
+    font-size: 12px;
+}
+.THIS .client_managed .slds-table tbody td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.THIS .month-date {
+    font-size: 12px;
+    color: #808285;
+}
+.THIS .month-date .slds-icon {
+    width: 12px;
+    fill : #808285;
+}
+.THIS .graph-image img {
+    width: 100%;
+}
+.THIS .health-features {
+    text-align: left;
+}
+.THIS .client-profile h2 .slds-icon {
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+.THIS .clients-details span {
+    color: #999999;
+    font-size: 12px;
+}
+.THIS .clients-details h5 {
+    color: #000;
+    font-size: 14px;
+}
+.THIS .clients-details h5 b {
+    font-weight: 600;
+}
+.THIS .canvasjs-chart-credit {
+    display: none;
+}
+.THIS #chartContainer3 .canvasjs-chart-container {
+    height: 180px;
+    overflow: hidden;
+}
+.THIS #chartContainer3 .canvasjs-chart-container .canvasjs-chart-canvas {
+    height: 250px;
+}
+.THIS .half-chart-sticker {
+    position: relative;
+    z-index: 0;
+}
+.THIS .chart-sticker {
+    position: absolute;
+    top: 105px;
+    text-align: left;
+    width: calc(100% - 20px);
+}
+.THIS .chart-sticker ul li {
+    display: inline-block;
+}
+.THIS .chart-sticker ul li:first-child {
+    margin-left:62px;
+}
+.THIS .chart-sticker ul li:nth-child(2) {
+    margin-left:60px;
+}
+.THIS .chart-sticker ul li:last-child {
+    margin-left:61px;
+}
+.THIS .chart-sticker h2 {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.THIS .slds-text-title_caps {
+    line-height: 24px;
+    font-weight: 700;
+}
+
+.THIS .card{
+    margin: 5px;
+}
+
+.THIS .section{
+    margin-top:2px;
+    margin-bottom:2px;
+}
+.THIS .loanrate {
+    float: left;
+   	/*padding: 2px;*/
+    color: #555;    
+}
+.THIS .balance{
+    float: right;
+    color: #555;
+}
+
+.THIS .netTotalValue{
+    padding: 5px;
+    float:right;
+}
+.THIS .client_managed2 h1 span {
+    font-size: 12px;
+    color: #808285;
+    font-weight: 600;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.THIS .client_managed2 h1 span .slds-icon {
+    vertical-align:	text-bottom;
+    fill: #00b088;
+}
+.THIS .client_managed2 h1 span .slds-icon-utility-arrowdown .slds-icon {
+ 	fill: #f00;   
+}
+.THIS .networth_accordian {
+    padding: 10px;
+    position: relative;
+    z-index: 0;
+}
+.THIS .networth_accordian .slds-button {
+    position: absolute;
+    right: 10px;
+}
