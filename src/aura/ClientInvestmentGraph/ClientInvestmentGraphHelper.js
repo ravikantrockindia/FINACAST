@@ -131,9 +131,7 @@
                                 component.set("v.Amount",Math.round((sum/1000000000)) + "B");
                                 
                             } 
-                //  var sumcashvalue =component.get("v.sumCash");
-                //  component.set("v.sumCash2",+sumcashvalue);
-                if(sumCash < 9999) {
+               if(sumCash < 9999) {
                     component.set("v.sumCash2",sumCash);
                     
                 }                
@@ -190,7 +188,6 @@
                 innerRadius: 25,
                 indexLabelFontSize: 10,
                 indexLabelFontWeight:300,
-                //       indexLabelOrientation: "vertical",
                 
                 indexLabelFontColor: "white",
                 indexLabelFontStyle: "bold",

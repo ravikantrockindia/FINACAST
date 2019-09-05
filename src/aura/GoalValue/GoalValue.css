@@ -19,6 +19,9 @@
     padding: 10px;
     text-align: center;
 }
+.THIS.total_assesment h2 {
+    margin: 15px 0;
+}
 .THIS.total_assesment p {
   
     display: block;

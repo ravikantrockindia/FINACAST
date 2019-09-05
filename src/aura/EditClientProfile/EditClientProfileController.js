@@ -13,10 +13,9 @@
                 // the server-side action returns
                 action.setCallback(this, function(response) {
                     var state = response.getState();
-                 //    alert(state)
                     if (state === "SUCCESS") {
                         console.log(response.getReturnValue())
-                        component.find("dob").set("v.value", response.getReturnValue()[0].Birthdate);
+                        component.set("v.dob", response.getReturnValue()[0].Birthdate);
                                                 component.find("email").set("v.value", response.getReturnValue()[0].Email);
                         component.find("phone").set("v.value", response.getReturnValue()[0].Phone);
                         component.find("gender").set("v.value",response.getReturnValue()[0].FinServ__Gender__c)
@@ -68,7 +67,6 @@
     handleSuccess:function(cmp,event,helper){
         try{
          var action=cmp.get("c.updateContact");
-          //  alert('abc')
                 action.setParams({ recordId : cmp.get("v.recordId"),
                                   phone: cmp.find("phone").get("v.value"),
                                   email: cmp.find("email").get("v.value"),
@@ -90,9 +88,6 @@
                         // do something
                     }
                         else if (state === "ERROR") {
-                            //$A.util.removeClass(spinner, "slds-show");
-                            
-                            //$A.util.addClass(spinner, "slds-hide");
                             var errors = response.getError();
                             if (errors) {
                                 if (errors[0] && errors[0].message) {
@@ -136,7 +131,6 @@
            }
             console.log('Final Image ' +tChange);
             component.set("v.FinalVal",tChange);
-          //  component.set("v.TempFinalVal",'');
         }
         
     },

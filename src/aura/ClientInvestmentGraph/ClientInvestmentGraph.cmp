@@ -19,10 +19,11 @@
                     <h3 class="slds-float_left slds-text-align_left">Client Investment Distribution</h3>
         <div id="CanvasContainer" style="height: 203px; width: 100%; margin-top: 15px;"></div>
                     <div class="total_invstment-value-c">
-                    	<!--<h2>${!v.Amount}</h2> -->
+                    	<h2>${!v.Amount}</h2>
                       
                         
-                      <!--  <p><b>Total Investment Value</b></p> -->
+                      <p><b>Total Investment Value</b></p>
                     </div>
                 </div>        	
+    
 </aura:component>

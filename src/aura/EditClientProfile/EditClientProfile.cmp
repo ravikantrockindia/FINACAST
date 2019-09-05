@@ -1,7 +1,7 @@
 <aura:component controller="FileUploadController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
     <aura:attribute name="isEditTrue" type="Boolean" />
     <aura:attribute name="isImageAvailable" type="Boolean" default="true" />
-    <aura:attribute name="recordId" type="Id" default="0014o00001fRvur" />
+    <aura:attribute name="recordId" type="Id"  />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <!-- 'showLoadingSpinner' attribute for show/hide the uploading image and msg in aura:if-->
     <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />	
@@ -15,6 +15,7 @@
     <aura:attribute name="DefaultImg" type="Boolean" default="false" />
     <aura:attribute name="ResourceImage" type="string" default="{!$Resource.staticImageUser}"/>
     <aura:attribute name="NameSpace" type="String"/>
+    <aura:attribute name="dob" type="date" default=""/> 
     <!--aura:handler name="change" value="{!v.TempFinalVal}" action="{!c.itemsChange}"/-->
     <lightning:recordEditForm
                               aura:id="form"
@@ -78,7 +79,7 @@
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <span class="EditCalender">
-                        {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><lightning:input readonly="true" aura:id="dob" variant="label-hidden" dateStyle="short"/>
+                        {!$Label.c.Client_Date_Of_Birth} <span class = "highlight"  style="color: red">* </span><br/><span class="slds-p-top_x-small" style="display:inline-block;"><ui:outputDate aura:id="dob" value="{!v.dob}"/></span>
                     </span>
                 </div>
             </div>
@@ -141,8 +142,8 @@
                 <div class="slds-clearfix ">
                     
                     <div class="slds-float_right">
-                        <lightning:button variant="neutral" name="cancel" label="Cancel" onclick="{!c.handleCancel}" />
-                        <lightning:button  variant="brand" type="submit" name="save" label="Save"/>
+                        <lightning:button variant="neutral" name="cancel" label="Cancel" onclick="{!c.handleCancel}" class="btn1" />
+                        <lightning:button  variant="brand" type="submit" name="save" label="Save" class="btn1"/>
                         
                     </div>   
                 </div>
