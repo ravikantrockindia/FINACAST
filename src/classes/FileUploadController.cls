@@ -42,7 +42,6 @@ public with sharing class FileUploadController {
     }
     @AuraEnabled
     public static void DeleteLatestImage(string cid) {
-        
         attachment a=  [select id from attachment where ParentId=:cid Order by LAstMOdifiedDate desc limit 1];
         
         delete a;
@@ -62,7 +61,8 @@ public with sharing class FileUploadController {
                     throw new NullPointerException();
             
         }catch(Exception e){
-            //new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+           //new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
         }
         
         
@@ -76,7 +76,8 @@ public with sharing class FileUploadController {
             
             
         }catch(Exception e){
-            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+           // new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
         }
         return c;
         
