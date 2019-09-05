@@ -50,11 +50,13 @@ public class FinacastUtility {
     
     public static void ExceptionHandle(Integer LineNumber, String Message,string StackTrace)
     {
-        Exception_Details__c ex =new Exception_Details__c();
+        List<Exception_Details__c> listOfExceptionDetails = new List<Exception_Details__c>();
+		Exception_Details__c ex =new Exception_Details__c();
         ex.Message__c = Message;
         ex.Line_Number__c = LineNumber;
         ex.Stack_Trace__c = StackTrace;
-        insert ex;  
+		listOfExceptionDetails.add(ex);
+        insert listOfExceptionDetails;   
     }
     
     //builds data for scenarios to make callout
