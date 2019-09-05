@@ -1,3 +1,22 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
 .THIS .custom_card {
     width: 94%;
     margin: 0 3%;
@@ -29,4 +48,7 @@
 }
 .THIS .label-hidden label {
     display: none !important;
+}
+.THIS .apy_hidden-icon .slds-form-element__icon {
+    display: none;
 }

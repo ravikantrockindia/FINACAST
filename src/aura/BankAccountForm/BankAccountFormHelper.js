@@ -3,7 +3,6 @@
         try{
             var accountType=component.find("accountType").get("v.value");
             component.set("v.selectedAccount", accountType)
-            console.log(component.get("v.selectedAccount"))
             if (accountType=='CD'){
                 component.set("v.isCD",true)
             }
@@ -36,8 +35,6 @@
                 component.set("v.isInvestmentAccount",false)
                 
             }
-            
-            //console.log(component.get(recordTypeId))
             this.assignRecordType(component,accountType);
         }catch(e){
             console.log("Exception",e.message );
@@ -48,19 +45,9 @@
     assignRecordType:function(component,accountType){
         try{
             var recordTypeIds=component.get("v.recordTypeIds")
-            console.log(recordTypeIds[0].DeveloperName)
-            /* if(accountType=='Other' || accountType=='Cash'){
-                for(var i=0;i<recordTypeIds.length;i++){             
-                    if(recordTypeIds[i].DeveloperName=='BankingAccount'){
-                        console.log('hi')
-                        component.set("v.recordTypeId",recordTypeIds[i].Id)
-                    }
-                }
-            }*/
             if(accountType=='Savings'){
                 for(var i=0;i<recordTypeIds.length;i++){             
                     if(recordTypeIds[i].DeveloperName=='SavingsAccount'){
-                        console.log('hi')
                         component.set("v.recordTypeId",recordTypeIds[i].Id)
                     }
                 }
@@ -68,7 +55,6 @@
             if(accountType=='Checking' || accountType=='Money Market'  || accountType=="CD"){
                 for(var i=0;i<recordTypeIds.length;i++){             
                     if(recordTypeIds[i].DeveloperName=='CheckingAccount'){
-                        console.log('hi')
                         component.set("v.recordTypeId",recordTypeIds[i].Id)
                     }
                 }
@@ -76,7 +62,6 @@
             if(accountType=='401K' || accountType=='IRA' || accountType=='Roth IRA' || accountType=='529 Account' || accountType=='Retail Brokerage'){
                 for(var i=0;i<recordTypeIds.length;i++){             
                     if(recordTypeIds[i].DeveloperName=='InvestmentAccount'){
-                        console.log('hi')
                         component.set("v.recordTypeId",recordTypeIds[i].Id)
                     }
                 }
@@ -93,17 +78,13 @@
             var spinner = component.find("mySpinner");
             
             var name=component.find("name").get('v.value');
-            // console.log('name', name)
             var accountType=component.find("accountType").get("v.value")
-            // console.log("account Type",accountType)
             var currentBal=component.find("currentBalance").get("v.value")
             var apy
             var maturityDate;
             var cost;
             var withdrawalDate;
             
-            //var cost=    component.find("cost").get("v.value")
-            // console.log("balance",currentBal);
             if ($A.util.isUndefinedOrNull(name) || name == "" ||  
                 $A.util.isUndefinedOrNull(accountType) || accountType == "" || accountType=="None" || $A.util.isUndefinedOrNull(currentBal) || currentBal =="" )
                 
@@ -170,18 +151,6 @@
                         this.showNotfication(component,msg,'error','Error!');
                         return;
                     }
-                    /* else{
-                        if(new Date(maturityDate)>new Date() ){
-                            component.set("v.disabled",false)
-                            $A.util.removeClass(spinner, "slds-show");
-                            
-                            $A.util.addClass(spinner, "slds-hide");
-                            event.preventDefault();
-                            var msg = "Maturity Date cannot be greater than today's date"
-                            this.showNotfication(component,msg,'error','Error!');
-                            return;
-                        }
-                    }*/
                 }
                 if(accountType=='Retail Brokerage'  ){
                     cost=component.find("cost").get("v.value")
@@ -212,8 +181,8 @@
                 }
                 debugger;
                 if(accountType=='529 Account' ){
-                  var  withdrawalDate=component.find("withdrawldate").get("v.value")
-                  console.log(withdrawalDate)
+                    var  withdrawalDate=component.find("withdrawldate").get("v.value")
+                    console.log(withdrawalDate)
                     if ($A.util.isUndefinedOrNull(withdrawalDate) || withdrawalDate == "")
                         
                     {
@@ -228,38 +197,6 @@
                     }
                 }
                 
-                /*if(accountType=="CD" && new Date(component.find("maturity_date").get("v.value"))>new Date()){
-                    component.set("v.disabled",false)
-                    $A.util.removeClass(spinner, "slds-show");
-                    
-                    $A.util.addClass(spinner, "slds-hide");
-                    event.preventDefault();
-                    var msg = "Maturity Date cannot be greater than today's date"
-                    this.showNotfication(component,msg,'error','Error!');
-                    return;
-                }*/
-                /* if(accountType=="Retail Brokerage"&& (!($A.util.isUndefinedOrNull(cost) || cost == "")&& cost<0)){
-                event.preventDefault();
-                var msg = "Cost can't be negative!"
-                this.showAlertEmptyInvalidVal(event,msg);
-                return;
-            }*/
-                /* if(accountType=="529 Account" && new Date(component.find("withdrawldate").get("v.value"))>new Date()){
-                    component.set("v.disabled",false)
-                    
-                    $A.util.removeClass(spinner, "slds-show");
-                    
-                    $A.util.addClass(spinner, "slds-hide");
-                    event.preventDefault();
-                    var msg = "Withdrawl Date cannot be greater than today's date!"
-                    this.showNotfication(component,msg,'error','Error!');
-                    return; 
-                }*/
-                /*if(acc="firstAccount"){
-                alert('submit')
-                component.find('form').submit();
-                
-            }*/
                 return true;
                 
             }
@@ -269,16 +206,13 @@
             
             $A.util.addClass(spinner, "slds-hide");
             component.set("v.disabled",true)
-            // this.showNotfication(component,"The record cannot be saved.Please try again!","error","Error!");    
             
         }        
         
         
     },
     showNotfication : function(component,msg,type,title){
-        //console.log("inhelper");
         try{
-            // component.set("v.errors", [{message:"Invalid field: " }]);
             component.find('notifLib').showToast({
                 "title": title,
                 "variant":type,
@@ -290,14 +224,5 @@
             console.log(e.message)
         } 
     },
-    /* showAlertEmptyInvalidVal:function(event,msg){
-        
-        var toastEvent = $A.get("e.force:showToast");
-        toastEvent.setParams({
-            type : "error",
-            "title": "Error!",
-            "message": msg
-        });
-        toastEvent.fire();             
-    }*/
+    
 })

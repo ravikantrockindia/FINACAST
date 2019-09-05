@@ -1,28 +1,26 @@
 ({
     doInit:function(component,event,helper){
         try{
-             var action=component.get('c.getNamespace');
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-               component.set("v.namespace", response.getReturnValue())
-                            console.log(component.get("v.namespace"));
-
-                
-            }
-            else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + 
-                                    errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
+            var action=component.get('c.getNamespace');
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    component.set("v.namespace", response.getReturnValue());
+                    
                 }
-            }
-        });
-        $A.enqueueAction(action); 
+                else if (state === "ERROR") {
+                    var errors = response.getError();
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + 
+                                        errors[0].message);
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
+                }
+            });
+            $A.enqueueAction(action); 
             var workspaceAPI = component.find("workspace");
             var tab=component.get("v.tabName")
             console.log('tab',tab)
@@ -37,22 +35,18 @@
             .catch(function(error) {
                 console.log(error);
             });
-            //  alert('hello')
             helper.getRecordTypeId(component);
         }catch(e){
             console.log(e.message);
         }
-        // helper.getFinancialAccountRecordTypeId(component);
-        // helper.getIncomeRecordType(component);
-        // helper.getExpenseRecordType(component);
+        
         
     },
     
-     changeTabName:function(component,event,helper){
+    changeTabName:function(component,event,helper){
         try{
             var workspaceAPI = component.find("workspace");
             var tab=component.get("v.tabName")
-            console.log('tab',tab)
             workspaceAPI.getFocusedTabInfo().then(function(response) {
                 var focusedTabId = response.tabId;
                 console.log('tab id',focusedTabId )
@@ -64,14 +58,10 @@
             .catch(function(error) {
                 console.log(error);
             });
-            //  alert('hello')
-            //helper.getRecordTypeId(component);
+            
         }catch(e){
             console.log(e.message);
         }
-        // helper.getFinancialAccountRecordTypeId(component);
-        // helper.getIncomeRecordType(component);
-        // helper.getExpenseRecordType(component);
         
     },
     selectStep1:function(component,event,helper){
@@ -82,7 +72,6 @@
         }
     },
     selectStep2:function(component,event,helper){
-        //('hello')
         try{
             var recordId=component.get("v.accountRecordId");
             if( $A.util.isUndefinedOrNull(recordId) || recordId == ""){
@@ -94,7 +83,6 @@
                 
                 
                 helper.showToast(component,"Error!","error","Please fill demographic information")
-                // return;
                 
             }
             else{
@@ -103,11 +91,9 @@
         }catch(e){
             console.log(e.message)
         }
-        //  alert(component.get("v.currentStep"))
     },
     onstep:function(component,event,helper){
         var stepIndex = event.getParam('index');
-        //alert(stepIndex)
         component.set("v.currentStep",2)
     },
     selectStep3:function(component,event,helper){
@@ -155,10 +141,7 @@
         }
         component.set("v.currentStep","5")
     },
-    onTabClosed : function(component, event, helper) {
-        var tabId = event.getParam("tabId");
-        // alert("Tab with tabId of " + tabId + " was just closed.");
-    },
+    
     onTabRefreshed : function(component, event, helper) {
         console.log("Tab Refreshed");
         var refreshedTabId = event.getParam("tabId");

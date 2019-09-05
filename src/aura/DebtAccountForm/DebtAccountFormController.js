@@ -5,11 +5,9 @@
         $A.util.removeClass(spinner, "slds-show");
         
         $A.util.addClass(spinner, "slds-hide");
-        // console.log(JSON.stringify(component.get("v.financialAccount")))
         if(component.get("v.financialAccount.Id")!=null){
             var field='v.financialAccount.'+'Account_Type__c'
             var accountType=component.get(field)
-            // alert(accountType)
             if (accountType=='Loan'){
                 component.set("v.isFixedTerm",true)
                 component.set("v.accountType", 'Loan')
@@ -20,15 +18,12 @@
                 component.set("v.accountType", 'Credit Card')
                 
             }
-            // alert(component.get("v.financialAccount.Do_you_get_tax_benefit_from_interest_pay__c"))
             field='v.financialAccount.'+'Do_you_get_tax_benefit_from_interest_pay__c'
             if (component.get(field)){
-                // alert('yes')
                 component.set("v.isTaxBenefit",true);
                 
             }
             else{
-                //alert("no")
                 component.set("v.isTaxBenefit",false);
                 
             }
@@ -54,15 +49,8 @@
         
         $A.util.addClass(spinner, "slds-show");
         helper.validateInput(component, event, "accounts"); 
-        /* if(!valid){
-            component.set("v.disabled",false)
-            
-            helper.showAlertEmptyInvalidVal(event);
-        }*/
-        //  alert('submit')
     },
     handleSuccess: function(component, event, helper){
-        //alert('success')
         var spinner = component.find("mySpinner");
         
         $A.util.removeClass(spinner, "slds-show");
@@ -70,25 +58,15 @@
         $A.util.addClass(spinner, "slds-hide");
         var event = component.getEvent("submitDebtForm");
         event.fire();
-        //alert("set"+component.set("v.showInModal",false))
         component.set("v.showInModal",false);
     },
     handleError: function(component,event,helper){
         
-        //  component.set("v.showInModal",true)
-        //var spinner = component.find("mySpinner");
-        // $A.util.removeClass(spinner, "slds-show");
-        // $A.util.addClass(spinner, "slds-hide");
         var spinner = component.find("mySpinner");
         $A.util.removeClass(spinner, "slds-show");
         $A.util.addClass(spinner, "slds-hide");
         component.set("v.disabled",false)
         helper.showNotfication(component,"The record cannot be saved.Please try again!","error","Error!");    
-        // console.log('record save failed', e.message, ', ', e.detail)
-        // var event=component.getEvent("lightningEvent");
-        // cmpEvent.setParams({"result" : "error"}); 
-        
-        // event.fire();
         
     },
     
@@ -146,18 +124,9 @@
         $A.util.addClass(spinner, "slds-show");
         var validate=helper.validateInput(component, event, "firstAccount"); 
         if(validate){
-            console.log('submit')
             component.find('form').submit();
             
         }
-        /* if(!valid){
-            component.set("v.disabled",false)
-            
-            helper.showAlertEmptyInvalidVal(event);
-        }
-        else{
-            component.find('form').submit();
-            
-        }*/
+        
     }
 })

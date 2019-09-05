@@ -48,7 +48,6 @@
        window.setTimeout(
           $A.getCallback(function() {       
            var cmps = component.find(secId);
-            //  alert('I am working');
             for (var cm in cmps) {
                 if ($A.util.hasClass(cmps[cm], 'slds-tabs_scoped__content')) {
                     $A.util.removeClass(cmps[cm], 'slds-show');

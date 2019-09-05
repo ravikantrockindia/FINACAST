@@ -8,8 +8,8 @@
     <aura:attribute name="showInModal" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="recordId" type="String"/>
-        <aura:attribute name="namespace" type="String" default=""/>
-
+    <aura:attribute name="namespace" type="String" default=""/>
+    
     <aura:handler name="submitDebtForm" event="c:CreateNewClientEvent" action="{!c.doInit}"/>    
     <lightning:notificationsLibrary aura:id="notifLib"/>
     
@@ -25,7 +25,7 @@
                         <div class="slds-col slds-size_1-of-1">
                             <div class="slds-m-top_medium slds-clearfix ">
                                 <div class="slds-float_right">
-                                    <lightning:button class="add-dept-ac slds-button slds-button_brand budget-brand" label="Add Debt Account" title="Add Bank Account" onclick="{!c.createDebtAccount}"/>
+                                    <lightning:button class="add-dept-ac slds-button slds-button_brand btn1 budget-brand" label="Add Debt Account" title="Add Bank Account" onclick="{!c.createDebtAccount}"/>
                                 </div>
                             </div>
                         </div>
@@ -82,20 +82,20 @@
             </aura:if>
             <div class="custom_card slds-gutters">
                 <div class="slds-col slds-size_1-of-1">
-                    <div class="slds-m-top_medium slds-clearfix ">
+                    <div class="slds-m-top_medium slds-m-bottom_medium slds-clearfix ">
                         <div class="slds-float_right">
-                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" class="mlr"/>
+                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}" class="mlr btn1"/>
                             
                             <aura:if isTrue="{!empty(v.FinancialAccountList)}">
-                                <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" class="mlr"/>                      
-                                <lightning:button  variant="brand" label="{!$Label.c.Skip}" onclick="{!c.skipButton}" />
+                                <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" class="mlr btn1"/>                      
+                                <lightning:button  variant="brand" label="{!$Label.c.Skip}" onclick="{!c.skipButton}" class="btn1" />
                                 <aura:set attribute="else">
-                                    <lightning:button  variant="brand" label="{!$Label.c.Next}" onclick="{!c.skipButton}" />
+                                    <lightning:button  variant="brand" label="{!$Label.c.Next}" onclick="{!c.skipButton}" class="btn1" />
                                 </aura:set>
                             </aura:if>
                         </div>
-                        <div class="slds-float_left">
-                            <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}"/>
+                        <div class="slds-m-bottom_medium slds-float_left">
+                            <lightning:button  variant="brand" label="{!$Label.c.Back}" onclick="{!c.backButton}" class="btn1"/>
                         </div>
                     </div>
                 </div>

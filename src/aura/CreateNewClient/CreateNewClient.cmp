@@ -10,7 +10,7 @@
     <aura:attribute name="incomeRecordType" type="String"/>
     <aura:attribute name="expenseRecordType" type="String"/>    
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
-    <aura:attribute name="currentStep" type="String" default="1"/>
+    <aura:attribute name="currentStep" type="String" default="3"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:attribute name="namespace" type="String" default=""/>
     
@@ -39,8 +39,5 @@
         <aura:if isTrue="{!v.currentStep=='5'}" >
             <c:AddExpenseSection recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}" recordTypeId="{#v.expenseRecordType}" />
         </aura:if>
-        <!--<aura:if isTrue="{!v.currentStep=='6'}" >
-            <c:Goalfinal recordId="{!v.accountRecordId}" currentStep="{!v.currentStep}"/>
-        </aura:if> -->
     </div>
 </aura:component>

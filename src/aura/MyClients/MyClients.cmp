@@ -34,15 +34,14 @@
             
               <div class="slds-col slds-size_3-of-12">
                 <div class="total_assesment_abc">
-                    <div class ="total_assesment_abc_one"><p>Total Client Assets</p></div>
+                    <div class ="total_assesment_abc_one"><h3>Total Assets Managed</h3></div>
                    <div class ="total_assesment_abc_two"><h1>${!v.Amount}</h1></div>
                 </div>
             </div>
             
             <div class="slds-col slds-size_3-of-12 ">
-                    <c:GoalValue/>  
-               
                 <c:ClientManaged TotalClient="{!v.TotalClient}"/>
+                    <c:GoalValue/>  
             </div>
         	     <div class="slds-col slds-size_6-of-12 ">                  
                 <c:ClientInvestmentGraph/>                                  
@@ -60,19 +59,14 @@
     
     <div class="slds-box slds-theme_default clients_panel cBudget slds-show slds-m-top_small">
         
-        <div class="slds-page-header__row">
-            <div class="slds-size_6-of-12">
-                <h2>My Clients</h2>
+        <div class="slds-page-header__row search_panel">
+            <div class="slds-size_1-of-12 slds-p-top_xx-small">
+                <h3>My Clients</h3>
             </div>
-            <div class="slds-size_6-of-12 slds-align-right btn">
-                <lightning:button class="btn" onclick="{!c.addclient}">Add New Client</lightning:button>
+            <div class="slds-size_7-of-12">
+                <lightning:button class="btn btn1" onclick="{!c.addclient}">+ Add New Client</lightning:button>
             </div>
-        </div>
-        
-        <div class="search_panel">
-            <div class="slds-page-header__row">
-                <div class="slds-size_9-of-12"></div>
-                <div class="slds-size_2-of-12">
+            <div class="slds-size_3-of-12">
                     <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
                         <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
                             <Lightning:input name="input1" placeholder="Search Clients..." value="{!v.SearchText}"  type="search" variant="label-hidden" onchange="{!c.SearchClient}" />
@@ -81,12 +75,11 @@
                     </div>
                 </div>
                 <div class="slds-size_1-of-12" style="text-align: right; margin-bottom: 10px;">
-                    <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class=" inline-buttons left-margin"/>
+                <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class=" inline-buttons"/>
                     <lightning:buttonicon iconName="utility:filterList" size="medium" alternativeText="filterList" onclick="{!c.addFilter}"  class="inline-buttons "/>
                     <lightning:buttonIcon size="large"  iconName="utility:matrix" onclick="{!c.addColumns}" title="manage table columns" alternativeText="Settings" iconClass="dark" class=" inline-buttons"/>
                 </div>
             </div>
-        </div>
         <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />  
         <aura:if isTrue="{!v.col}">     
             <c:Fina_Columns_Configurable isOpen = "{!v.col}"  

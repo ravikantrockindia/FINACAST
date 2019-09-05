@@ -3,7 +3,6 @@
         
         var action=component.get('c.returnBankAccount');
         action.setParams({ recordId : component.get("v.recordId") });
-        //alert('helper')
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
@@ -12,11 +11,8 @@
                 
                 $A.util.addClass(spinner, "slds-hide");
                 var list=JSON.stringify(response.getReturnValue());
-                console.log(list)
-             var list1= list.replace(/Finsol__/g,"")
-            console.log(list1)
+                var list1= list.replace(/Finsol__/g,"")
                 component.set("v.FinancialAccountList",JSON.parse(list1))
-                console.log(JSON.stringify(component.get("v.FinancialAccountList")))
                 
             }
             else if (state === "ERROR") {
@@ -40,9 +36,7 @@
         
     },
     showNotfication : function(component,msg,type,title){
-        //console.log("inhelper");
         try{
-            // component.set("v.errors", [{message:"Invalid field: " }]);
             component.find('notifLib').showToast({
                 "title": title,
                 "variant":type,

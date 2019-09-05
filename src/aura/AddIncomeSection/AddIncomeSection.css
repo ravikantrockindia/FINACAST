@@ -1,3 +1,43 @@
+.THIS body { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS .dob .slds-button {
+    min-width: 20px;
+    background: transparent;
+    border-radius: 0;
+    color:#333;
+    margin-top: -2px;
+}
+.THIS .dob h2 {
+    font-size: 14px;
+}
+.THIS .dob .slds-datepicker__month th {
+    padding: 0 5px;
+}
+.THIS .dob .slds-datepicker__month td {
+    padding: 0;
+}
+.THIS .dob .slds-datepicker__month td .slds-day {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    line-height: 25px;
+}
 .THIS lightning-input>label {
         display: none !important;
 }
@@ -8,13 +48,26 @@
     padding: 5px 5px;
 }
 .THIS .custom_card .slds-datepicker__month tbody td {
-    padding: 5px 5px;
+    padding: 0px 0px;
 }
 .THIS .custom_card {
     margin: auto;
 }
 .THIS .mlr {
     margin: 0 0.25rem;
+}
+.THIS .custom_card .slds-size_1-of-2 {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: rgb(62, 62, 60);
+    line-height: 1.5;
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS .slds-input {
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS .slds-textarea {
+    font-family: 'Open Sans', sans-serif;
 }
 @media (max-width: 992px) {
     .THIS .slds-table thead th {

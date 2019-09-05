@@ -1,5 +1,5 @@
 public class ClientDetailApex {
-  
+    
     public static List<Double> tempList = new List<Double>();
     public static Boolean isportalEnabled = false;
     public static String initialClient = '';
@@ -7,11 +7,11 @@ public class ClientDetailApex {
     public static Boolean isHousehold = false;
     public static String clientData = '';
     public static String requestEndpoint='https://mytafi.herokuapp.com/rest/service/getFinacastHealthScoreNew';
-   
-     @AuraEnabled 
+    
+    @AuraEnabled 
     public static String getNamespace(){
         
-           return NamespaceUtility.returnNamespace();
+        return NamespaceUtility.returnNamespace();
         
     }
     
@@ -19,8 +19,8 @@ public class ClientDetailApex {
     @auraEnabled
     public static String createClientData(String clientId){
         
-         System.debug('inside Method create Client'); 
-     
+        System.debug('inside Method create Client'); 
+        
         Boolean showClientLookup = false;
         Boolean fadeOut = false; 
         Boolean isSelected =false;
@@ -42,7 +42,7 @@ public class ClientDetailApex {
         /************ For Household Accounts ********/
         if(isHousehold){            
             List<account> householdMembersList = new List<Account>();
-                 
+            
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
             if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) {                 
@@ -50,11 +50,11 @@ public class ClientDetailApex {
                 cashFlowPopup = false;
                 List<FinServ__FinancialAccount__c> FFDAList = new List<FinServ__FinancialAccount__c>();
                 List<FinServ__FinancialAccount__c> FFAList = new List<FinServ__FinancialAccount__c>();
-                  setData = '{"key":"'+FSK+'","formParams":"[';
-               incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Frequency__c,Tax_Rate__c, Yearly_growth__c from Budget__c where HouseHold__c =: clientId 
+                setData = '{"key":"'+FSK+'","formParams":"[';
+                incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Frequency__c,Tax_Rate__c, Yearly_growth__c from Budget__c where HouseHold__c =: clientId 
                              and recordType.developerName = 'Income_Record_Type' ];
                 
-                              
+                
                 //Create Income List
                 if(incmeList!=null && incmeList.size() > 0){
                     Integer i = 1;
@@ -115,7 +115,7 @@ public class ClientDetailApex {
                     setData +='\'enddate\':\'' + enddate + '\'';
                     setData +='},';
                 }
-               
+                
                 Integer flag = 0; 
                 Map<id, integer> FFAMap = new Map<id, integer>();
                 
@@ -152,7 +152,7 @@ public class ClientDetailApex {
                 }
                 
                 // Loan and debt accounts
-               
+                
                 FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c, FinServ__PaymentFrequency__c, Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c, Do_tax_benefits_realize_monthly__c, Max_yearly_tax_deduction_allowed__c, What_of_contribution_bring_tax_benefit__c
                             from FinServ__FinancialAccount__c where
                             (Account_Type__c = 'Loan' or
@@ -166,7 +166,7 @@ public class ClientDetailApex {
                 /*********** NOTE: Outstanding Payment and Loan End Date *********/
                 
                 
-              
+                
                 if(FFDAList.size() > 0){
                     for(FinServ__FinancialAccount__c FFDA : FFDAList){
                         Double loanFrequency = 1;
@@ -239,7 +239,7 @@ public class ClientDetailApex {
                                                             RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                             FinServ__Household__c =: clientId
                                                             limit 1000];
-               
+                
                 if(goalList.size() > 0){
                     for(FinServ__FinancialGoal__c goal : goalList){
                         
@@ -277,7 +277,7 @@ public class ClientDetailApex {
                 //Create Expense Data
                 expList = [Select id, Name, Amount__c ,Start_Date__c, End_Date__c, Does_contribution_bring_tax_benifit__c, Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c from Budget__c where HouseHold__c =: clientId 
                            and recordType.developerName = 'Expense_Record_Type']; 
-          
+                
                 double monthlyExpenses = 0;
                 //set expenses here    
                 if(expList!=null && expList.size() > 0){
@@ -326,7 +326,7 @@ public class ClientDetailApex {
                     setData +='}';
                 }
                 setData += ']"}';
-               // setData += ',{\'name\' :\''+name+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate+'\',\'endDate\' :\''+endDate+'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
+                // setData += ',{\'name\' :\''+name+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate+'\',\'endDate\' :\''+endDate+'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
                 clientData = setData;
                 System.debug('Client Data from Future Simulation: ' + clientData);
             }
@@ -612,8 +612,8 @@ public class ClientDetailApex {
                     setData +='}';
                 }
                 
-                 setData += ']"}';
-               // setData += ',{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate+'\',\'endDate\' :\''+endDate+'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
+                setData += ']"}';
+                // setData += ',{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate+'\',\'endDate\' :\''+endDate+'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
                 clientData = setData;
                 System.debug('Client Data from Future Simulation: ' + clientData);
                 
@@ -626,7 +626,7 @@ public class ClientDetailApex {
     
     
     @auraEnabled
-   public static double curentgoalestimation(double emi, Date startDate, Date todaydate ){
+    public static double curentgoalestimation(double emi, Date startDate, Date todaydate ){
         double result = 0;
         Integer months = 0;
         try{
@@ -652,7 +652,7 @@ public class ClientDetailApex {
                 
             }
             catch(Exception e){
-                 FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+                FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             }
             return months;
         }
@@ -669,12 +669,12 @@ public class ClientDetailApex {
     public static list<FinServ__FinancialGoal__c> getGoals(String ClientId) {
         List<FinServ__FinancialGoal__c> fl;
         try{        
-                    fl= [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
-                              from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId];
+            fl= [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
+                 from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId];
         }
         catch(Exception e){
             new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
-
+            
         }
         return fl;
         
@@ -684,22 +684,22 @@ public class ClientDetailApex {
     //Query Financial Accounts
     @auraEnabled   
     public static FinAccountWrapperClass getAccounts(String ClientId) {
-                FinAccountWrapperClass fin=new FinAccountWrapperClass();
-
+        FinAccountWrapperClass fin=new FinAccountWrapperClass();
+        
         try{
-         List<FinServ__FinancialAccount__c> cashAccountList=new List<FinServ__FinancialAccount__c>();
-        Double cashAmount=0.0;
-         List<FinServ__FinancialAccount__c> creditAccountList=new List<FinServ__FinancialAccount__c>();
-         Double creditAmount=0;
-         List<FinServ__FinancialAccount__c> investmentAccountList=new List<FinServ__FinancialAccount__c>();
-         Double investmentAmount=0;
-         List<FinServ__FinancialAccount__c> loanAccountList=new List<FinServ__FinancialAccount__c>();
+            List<FinServ__FinancialAccount__c> cashAccountList=new List<FinServ__FinancialAccount__c>();
+            Double cashAmount=0.0;
+            List<FinServ__FinancialAccount__c> creditAccountList=new List<FinServ__FinancialAccount__c>();
+            Double creditAmount=0;
+            List<FinServ__FinancialAccount__c> investmentAccountList=new List<FinServ__FinancialAccount__c>();
+            Double investmentAmount=0;
+            List<FinServ__FinancialAccount__c> loanAccountList=new List<FinServ__FinancialAccount__c>();
             Double loanAmount=0;
-
-Account a = [select id, Name, RecordType.DeveloperName from Account where id =: ClientId];
-        if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
-            //isHousehold = true;
-        }
+            
+            Account a = [select id, Name, RecordType.DeveloperName from Account where id =: ClientId];
+            if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
+                //isHousehold = true;
+            }
             else if(a.RecordType.DeveloperName == 'IndustriesIndividual'){
                 List<FinServ__FinancialAccount__c> finAccounts=[Select Id, Name, FinServ__PrimaryOwner__c,FinServ__Balance__c, FinServ__APY__c, FinServ__LoanAmount__c, Account_Type__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:ClientId AND (Account_Type__c='401K' OR Account_Type__c='CD' OR Account_Type__c='529 Account' OR Account_Type__c='Checking' OR Account_Type__c='IRA' OR Account_Type__c='Money Market' OR Account_Type__c='Retail Brokerage' OR Account_Type__c='Roth IRA'  OR Account_Type__c='Savings' OR Account_Type__c='Loan' OR Account_Type__c='Credit Card') ];
                 if(!finAccounts.isEmpty()){
@@ -723,7 +723,7 @@ Account a = [select id, Name, RecordType.DeveloperName from Account where id =: 
                         
                     }
                 }
-               fin.cashAccountList=cashAccountList;
+                fin.cashAccountList=cashAccountList;
                 fin.investmentAccountList=investmentAccountList;
                 fin.creditAccountList=creditAccountList;
                 fin.loanAccountList=loanAccountList;
@@ -734,9 +734,9 @@ Account a = [select id, Name, RecordType.DeveloperName from Account where id =: 
             } 
             if(Test.isRunningTest())
                 throw new nullpointerexception();
-            }
+        }
         catch(Exception e){
-            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+                    FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
 
         }
         return fin;
@@ -760,38 +760,38 @@ Account a = [select id, Name, RecordType.DeveloperName from Account where id =: 
         @AuraEnabled
         public String responseData;
         
-         @AuraEnabled
+        @AuraEnabled
         public String clientid;
         
-         @AuraEnabled
+        @AuraEnabled
         public List<RecordType> recordTypes;
         
     } //end of Wrapper class 
     
-     public class FinAccountWrapperClass {
+    public class FinAccountWrapperClass {
         
         @auraEnabled
         public List<FinServ__FinancialAccount__c> cashAccountList;
         
-         @auraEnabled
+        @auraEnabled
         public List<FinServ__FinancialAccount__c> creditAccountList;
-         
-          @auraEnabled
+        
+        @auraEnabled
         public List<FinServ__FinancialAccount__c> investmentAccountList;
-         
-          @auraEnabled
+        
+        @auraEnabled
         public List<FinServ__FinancialAccount__c> loanAccountList;
         
         @auraEnabled
         public Double cashAmount;
-         
-          @auraEnabled
+        
+        @auraEnabled
         public Double creditAmount;
-         
-          @auraEnabled
+        
+        @auraEnabled
         public Double investmentAmount;
-         
-          @auraEnabled
+        
+        @auraEnabled
         public Double loanAmount;
         
         
@@ -801,46 +801,46 @@ Account a = [select id, Name, RecordType.DeveloperName from Account where id =: 
     public static WrapperClass getData(String id) {
         WrapperClass wrapperObj = new WrapperClass();
         try{
-        //set initial Client
+            //set initial Client
             Account acc = [Select id, Name from account where id=:id  limit 1];
             initialClient = acc.Name;
             initialClientId = acc.id;
-        //Store Household status here        
-        Account a = [select id, Name, RecordType.DeveloperName from Account where id =: initialClientId];
-        if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
-            isHousehold = true;
+            //Store Household status here        
+            Account a = [select id, Name, RecordType.DeveloperName from Account where id =: initialClientId];
+            if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
+                isHousehold = true;
+            }
+            if(test.isRunningTest()){
+                isHousehold = true;
+            }
+            wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
+            wrapperObj.balanceList = tempList;
+            wrapperObj.isportalUser = isportalEnabled;
+            wrapperObj.firstClient = initialClient;
+            wrapperObj.clientid = initialClientId;
+            wrapperObj.recordTypes = [select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
+            ClientDetailApex.createClientData(initialClientId);
+            if(!test.isRunningTest()){
+                wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
+            }
+            System.debug('Client Data: ' + clientData);
+            System.debug('Response: ' + wrapperObj.responseData);
         }
-        if(test.isRunningTest()){
-            isHousehold = true;
+        catch(Exception e)
+        {
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
-        wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
-        wrapperObj.balanceList = tempList;
-        wrapperObj.isportalUser = isportalEnabled;
-        wrapperObj.firstClient = initialClient;
-        wrapperObj.clientid = initialClientId;
-        wrapperObj.recordTypes = [select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
-        ClientDetailApex.createClientData(initialClientId);
-        if(!test.isRunningTest()){
-            wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
-        }
-                System.debug('Client Data: ' + clientData);
-        System.debug('Response: ' + wrapperObj.responseData);
-    }
-    catch(Exception e)
-    {
-        FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-    }
         return wrapperObj;
     }//method end
-     
-     @auraEnabled
+    
+    @auraEnabled
     public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)
     {      
         FinServ__FinancialGoal__c finGoal  = [select recordtypeid,recordtype.developername  from FinServ__FinancialGoal__c where id=:strRecordTypeName];       
         return finGoal.recordtype.developername;
     } 
     
-     @auraEnabled
+    @auraEnabled
     public static void deleteGoals(id goalId) {
         
         FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];

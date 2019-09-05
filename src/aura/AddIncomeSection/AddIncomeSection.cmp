@@ -7,13 +7,13 @@
     <aura:attribute name="recordTypeId" type="String"/>
     <aura:attribute name="todayDate" type="Date"/>
     <lightning:workspaceAPI aura:id="workspace"/>
-        <lightning:notificationsLibrary aura:id="notifLib"/>
-
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-
+    
     <lightning:card>  
-                     <lightning:spinner aura:id="mySpinner" alternativeText="Loading" size="medium"/>
-
+        <lightning:spinner aura:id="mySpinner" alternativeText="Loading" size="medium"/>
+        
         <div class="slds-m-around_x-small">
             <div class="custom_card slds-gutters">
                 <div class="slds-col">

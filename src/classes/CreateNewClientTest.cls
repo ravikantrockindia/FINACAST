@@ -2,12 +2,12 @@
 public class CreateNewClientTest {
     @testSetup static void setup() {
         
-                String namespace= NamespaceUtility.returnNamespace();
+        String namespace= NamespaceUtility.returnNamespace();
 
         Id devRecordTypeId = [select Id,DeveloperName  from RecordType where sObjectType='Account' AND DeveloperName='IndustriesIndividual'].Id;
-                    String objectName=namespace+'Budget__c';
+        String objectName=namespace+'Budget__c';
         Id incomeRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Income_Record_Type'].Id;
-
+        
         Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
         Account a=new Account(Name='test', RecordTypeId=devRecordTypeId);
         insert a;
@@ -48,10 +48,7 @@ public class CreateNewClientTest {
         
         Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
         Id accountId=a.Id;
-        System.debug(accountId);
-        System.debug(a.RecordTypeId);
         List<Account> ab=[Select Id, RecordTypeId from Account where Id=: a.Id];
-        System.debug(ab);
         Test.startTest();
         System.assert(ab != null);
         CreateNewClient.deleteRecords(a.Id);
@@ -202,7 +199,6 @@ public class CreateNewClientTest {
         System.assert(b != null);
         System.debug(b.Name);
         Test.stopTest();
-        System.debug(JSON.serialize(ib));
         
         
     }

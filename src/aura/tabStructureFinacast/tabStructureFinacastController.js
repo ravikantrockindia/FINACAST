@@ -1,26 +1,5 @@
 ({
     
-    checkLicenseKey: function(component,event,helper){
-        var licenseAction = component.get("c.checkEMRLicense");
-        var is_license_available = false;
-        licenseAction.setCallback(component,function(response){
-            if(response.getState() === "SUCCESS"){
-                is_license_available = response.getReturnValue();
-                component.set("v.licenseAvailable",is_license_available);
-            }
-        });
-        $A.enqueueAction(licenseAction);
-    }, 
-    notAccessible:function(component,event,helper){
-        var toastEvent = $A.get("e.force:showToast");
-        toastEvent.setParams({
-            "title": "Insufficient Permissions",
-            "type":"error",
-            "message": "Your profile permissions does not allow you to access this tab!"
-        });
-        toastEvent.fire();
-    },
-    
     sectionOne: function(component, event, helper) {
         helper.helperFun(component,event,'articleOne');
     },

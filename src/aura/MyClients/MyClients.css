@@ -7,6 +7,14 @@
 .THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
 .THIS span { font-family: 'Open Sans', sans-serif;}
 .THIS a { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
 
 .THIS.mgList {
     margin-bottom: 30px;
@@ -45,7 +53,7 @@
 .THIS .left-margin{
     margin-left:5px;
 }
-/*=====-18-06-2019-=====*/
+
 .THIS.slds-show {
     background-color: #fdfdfd;
 }
@@ -79,19 +87,30 @@
 .THIS .total_assesment_abc {
      
     background-color: #4E75A3;
-    padding-bottom: 96px;
+    padding-bottom: 15px;
     color: #fff;
 }
 .THIS .total_assesment_abc_one{
-      text-align: left;
+    text-align: center;
      padding-left:10px;
     padding-top: 10px;
    font-weight: BOLD;
 }
 .THIS .total_assesment_abc_two{
         text-align: center;
-    padding-top: 70px;
+    padding: 70px 0 65px;
     font-weight: BOLD;
+}
+.THIS .total_assesment_abc_one h3 .slds-icon {
+    fill: #fff;
+}
+.THIS .total_assesment_abc_one h3 span {
+    font-weight: 300;
+    font-size: 12px;
+}
+.THIS .total_assesment_abc_two h1 {
+    font-size: 36px;
+    letter-spacing: 5px;
 }
 .THIS .total_investment h1 {
     font-size: 25px;
@@ -99,4 +118,20 @@
     margin: 80px 0;
     display: block;
     color: #000;
+}
+.THIS .slds-table_header-fixed thead th {
+    background-color: #e2ecf7;
+}
+.THIS .slds-table_header-fixed thead th a span {
+    font-weight: 700;
+    color: #000;
+}
+.THIS .slds-th__action {
+    height: 3rem;
+}
+.THIS .slds-table_header-fixed tbody tr td {
+    padding: 10px 0;
+}
+.THIS .slds-scrollable_y table {
+    margin-top: 15px;
 }

@@ -1,6 +1,5 @@
 ({
     doInit: function(component,event, helper){
-        // alert(component.get("v.recordId"))
         component.set("v.showInModal",false)
         component.set("v.financialAccount",null)
         helper.getAccounts(component,event,helper);
@@ -18,7 +17,6 @@
     },
     onClickEdit:function(component,event,helper){
         var finId=event.getSource().get("v.value");
-        //  alert(finId.Id)
         component.set("v.financialAccount", finId);
         component.set("v.showInModal",true)
         
@@ -45,8 +43,8 @@
                         "title": "Success!",
                         "message": "The record has been deleted successfully."
                     });
-                            component.set("v.disabled",false)
-
+                    component.set("v.disabled",false)
+                    
                 }
                 else if (state === "ERROR") {
                     var spinner = component.find("mySpinner");
@@ -95,14 +93,10 @@
             var action=component.get("c.deleteRecords");
             action.setParams({ recordId : component.get("v.recordId") });
             
-            // Create a callback that is executed after 
-            // the server-side action returns
             action.setCallback(this, function(response) {
                 var state = response.getState();
-                // alert(state)
                 if (state === "SUCCESS") {
                     
-                    // alert("From server: " + JSON.stringify(response.getReturnValue()))
                     
                 }
                 
@@ -121,10 +115,6 @@
                         }
                     }
             });
-            // A client-side action could cause multiple events, 
-            // which could trigger other events and 
-            // other server-side action calls.
-            // $A.enqueueAction adds the server-side action to the queue.
             $A.enqueueAction(action);
         }  
     },

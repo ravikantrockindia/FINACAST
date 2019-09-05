@@ -114,7 +114,7 @@
                 }
                 
                 helper.setDisplayColumns(component, event, helper,showColumns);
-                //var setColumns = [];
+                
                 
                 data.forEach(function(record){
                     record.linkName = '/'+record.Id;
@@ -198,12 +198,7 @@
     
     //onclick functionality for button "Add New"
     addclient: function(component,event,helper){
-        /* var evt = $A.get("e.force:navigateToURL");
-        evt.setParams({
-            "url"  : "/lightning/n/create_client",
-            
-        });       
-        evt.fire(); */
+        
         var namespace = component.get("v.namespace");
         if(namespace == ""){
             namespace = 'c';

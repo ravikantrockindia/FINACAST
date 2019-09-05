@@ -20,7 +20,7 @@
      <aura:attribute name="NotTrackgoals" type="boolean" default="false" />
      <aura:attribute name="Advisegoals" type="boolean" default="false" />
      <aura:attribute name="NameSpace" type="string" />
-     
+    <div class="slds-grid slds-m-bottom_large">
   <div class="slds-col slds-size_12-of-12 slds-p-left_none slds-p-right_none">
             	<div class="client_managed">
                     <div class="slds-grid">
@@ -74,7 +74,10 @@
                                   </c:CustomModalComponent>
                             </aura:if>
                           
-  				 <div class="slds-col slds-size_12-of-12 what-is slds-p-top_medium slds-p-bottom_medium">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium">
                       <div class="fh-button budget-brand">
                                 <lightning:button variant="neutral" label="What is this?" onclick="{!c.showDetails}"/>
                        </div>
@@ -108,7 +111,7 @@
                                          <h4>Credit Payments</h4>
                                     </div>
                                 </div>
-                                <div class="slds-grid slds-p-bottom_large">
+                            <div class="slds-grid slds-p-top_large">
                                     <div class="slds-col slds-size_6-of-12">
                                          <aura:if isTrue="{!v.Trackloan}">
                                         <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
@@ -139,8 +142,7 @@
                                   </div>
                              </div>
                           </div>
-                        </div>
-                     </div>
+                    
                    </div>
                 </div>
            </div>

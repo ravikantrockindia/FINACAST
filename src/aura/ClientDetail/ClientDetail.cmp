@@ -6,15 +6,15 @@
  <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
     <div class="slds-card__header">
         <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_3-of-12">
-                               <c:FinancialBalanceSheet recordId="{!v.recordId}"/>
+            <div class="slds-col slds-size_3-of-12 slds-p-left_none">
+                <c:FinancialBalanceSheet recordId="{!v.recordId}"/>
                 <div class="client_managed client-profile">
                     <c:ShowClientProfile recordId="{!v.recordId}"/>
                 </div>
             </div>
-            <div class="slds-col slds-size_9-of-12">
+            <div class="slds-col slds-size_9-of-12 slds-p-right_none">
                 <c:FinancialSpeedometerAndScoreCard clientId="{!v.recordId}"/>
-                       <c:Goalfinal cid="{!v.recordId}" recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
+                <c:Goalfinal cid="{!v.recordId}" recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
                 <div class="slds-m-top_large slds-m-bottom_medium">
                     <div class="client_managed">
                         <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">

@@ -55,7 +55,7 @@
                 {!$Label.c.Financial_Institution} <lightning:inputField class="label-hidden textarea_custom" fieldName="{!v.namespace+'Financial_Institution__c'}" variant="label-hidden"/>
             </div>  
             <aura:if isTrue="{!v.isAPY}">
-                <div class="slds-col slds-size_1-of-2">
+                <div class="slds-col slds-size_1-of-2 apy_hidden-icon">
                     {!$Label.c.APY} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" aura:id="apy" variant="label-hidden"/>
                 </div>
             </aura:if>
@@ -96,8 +96,8 @@
                 <div class="slds-clearfix custom_width">
                     <div class="slds-float_right">
                         <aura:if isTrue="{!v.showInModal}">
-                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr"/>
-                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}"/>
+                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr btn1"/>
+                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" class="btn1"/>
                         </aura:if>
                     </div>                    
                 </div>
