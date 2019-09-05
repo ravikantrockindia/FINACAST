@@ -84,7 +84,6 @@
             var attachId = response.getReturnValue();
             component.set("v.attachId",attachId);
             var DefaultImg=component.get("v.DefaultImg");
-            console.log('DefaultImg DefaultImg'+DefaultImg)
             var c=component.get('v.prefixURL') + component.get('v.attachId');
            if(DefaultImg===true){
             component.set("v.TempFinalVal",c);
@@ -107,7 +106,6 @@
                 }
                 
             } else if (state === "INCOMPLETE") {
-                alert("From server: " + response.getReturnValue());
             } else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors) {

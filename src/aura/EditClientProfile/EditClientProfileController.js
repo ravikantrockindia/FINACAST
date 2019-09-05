@@ -3,8 +3,6 @@
         try{
             
         var recordId=component.get("v.recordId");
-            console.log(recordId);
-          //  alert(recordId);
         if(!($A.util.isUndefinedOrNull(recordId)&&recordId=="")){
          var action=component.get("c.getContact");
                 action.setParams({ recordId : component.get("v.recordId")});
@@ -129,7 +127,6 @@
                var tChange=component.get("v.ResourceImage");
                component.set("v.TempFinalVal",tChange);
            }
-            console.log('Final Image ' +tChange);
             component.set("v.FinalVal",tChange);
         }
         
