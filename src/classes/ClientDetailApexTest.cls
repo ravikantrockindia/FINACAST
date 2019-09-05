@@ -196,7 +196,7 @@ public class ClientDetailApexTest {
 
         test.startTest();
         ClientDetailApex.getGoals(acc2.id );
-       ClientDetailApex.getAccounts(acc3.id);
+       ClientDetailApex.getAccounts(acc.id);
          ClientDetailApex.getAccounts(acc4.id);
         ClientDetailApex.getData(acc.id);
         ClientDetailApex.getAccounts('init');

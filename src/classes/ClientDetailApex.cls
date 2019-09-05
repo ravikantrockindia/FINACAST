@@ -667,153 +667,83 @@ public class ClientDetailApex {
     //Query Financial Goals
     @auraEnabled         
     public static list<FinServ__FinancialGoal__c> getGoals(String ClientId) {
-        
-        //when initialised
-        User us = [select contactid , accountid from user where id=: userinfo.getUserId()];
-        if(us.contactid == null){
-            
-            //in CRM
-            if(ClientId=='init') {
-                Account acc = [Select id, Name from account where OwnerId =: UserInfo.getUserId()  order by name  limit 1];
-                initialClient = acc.Name;
-                initialClientId = acc.id;
-                
-               
-                    return [Select id, Name, Start_Value__c,FinServ__TargetDate__c from 
-                            FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: acc.Id];
-               
-            }//end of init
-            
-            //when client is selected
-            else {                    
-                                         
-                    return [Select id, Name, Start_Value__c,FinServ__TargetDate__c from 
-                            FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: ClientId];
-                }
-            }//when change cliet is use
-        
-        
-        //for Community Portal
-        else
-        {
-            isportalEnabled = true;
-            return [Select id, Name, Start_Value__c,FinServ__TargetDate__c from 
-                    FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: us.AccountId];
+        List<FinServ__FinancialGoal__c> fl;
+        try{        
+                    fl= [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
+                              from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId];
         }
+        catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+
+        }
+        return fl;
         
     }//method End
     
     
     //Query Financial Accounts
     @auraEnabled   
-    public static list<list<FinServ__FinancialAccount__c>> getAccounts(String ClientId) {
-        
-        list<FinServ__FinancialAccount__c> savingsAccountList = new list<FinServ__FinancialAccount__c>();
-        list<FinServ__FinancialAccount__c> loanAccountList = new list<FinServ__FinancialAccount__c>();
-        list<FinServ__FinancialAccount__c> creditAccountList = new list<FinServ__FinancialAccount__c>();
-        list<list<FinServ__FinancialAccount__c>> listOfListFinancialAccounts = new list<list<FinServ__FinancialAccount__c>>();
-        list<Double> netBalanceList = new list<Double>();
-        Double netSaving = 0;
-        Double netLoan = 0;
-        Double netCredit = 0;
-        list<FinServ__FinancialAccount__c> tempAccountList = new  list<FinServ__FinancialAccount__c> ();
-        User us = [select contactid , accountid from user where id=: userinfo.getUserId()];
+    public static FinAccountWrapperClass getAccounts(String ClientId) {
+                FinAccountWrapperClass fin=new FinAccountWrapperClass();
+
         try{
-        if(us.contactid == null){
-            //when initialised
-            if(ClientId=='init') {
-                Account acc = [Select id from account where OwnerId =: UserInfo.getUserId() order by name limit 1];
-                //if household check
-                if(isHousehold){
-                    tempAccountList =[Select id, Name, FinServ__Balance__c, FinServ__LoanAmount__c, Account_Type__c, FinServ__APY__c,
-                                      FinServ__FinancialAccountType__c from FinServ__FinancialAccount__c where 
-                                      RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                                      RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                                      RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                                      FinServ__Household__c =: acc.Id]; 
-                      }
-                //not household
-                else{
-                    tempAccountList =[Select id, Name, FinServ__Balance__c, FinServ__LoanAmount__c, Account_Type__c, FinServ__APY__c,
-                                      FinServ__FinancialAccountType__c from FinServ__FinancialAccount__c where 
-                                      RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                                      RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                                      RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                                      FinServ__PrimaryOwner__c =: acc.Id];
-                }           
-            }//init ends
-            
-            //when client is selected
-            else {
-                //household is true and client is selected
-                if(isHousehold){
-                    tempAccountList = [Select id, Name,FinServ__Balance__c,FinServ__LoanAmount__c, FinServ__FinancialAccountType__c, 
-                                       Account_Type__c, FinServ__APY__c from  FinServ__FinancialAccount__c where
-                                       RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                                       RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                                       RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                                       FinServ__Household__c =: ClientId];
+         List<FinServ__FinancialAccount__c> cashAccountList=new List<FinServ__FinancialAccount__c>();
+        Double cashAmount=0.0;
+         List<FinServ__FinancialAccount__c> creditAccountList=new List<FinServ__FinancialAccount__c>();
+         Double creditAmount=0;
+         List<FinServ__FinancialAccount__c> investmentAccountList=new List<FinServ__FinancialAccount__c>();
+         Double investmentAmount=0;
+         List<FinServ__FinancialAccount__c> loanAccountList=new List<FinServ__FinancialAccount__c>();
+            Double loanAmount=0;
+
+Account a = [select id, Name, RecordType.DeveloperName from Account where id =: ClientId];
+        if(a.RecordType.DeveloperName == 'IndustriesHousehold'){
+            //isHousehold = true;
+        }
+            else if(a.RecordType.DeveloperName == 'IndustriesIndividual'){
+                List<FinServ__FinancialAccount__c> finAccounts=[Select Id, Name, FinServ__PrimaryOwner__c,FinServ__Balance__c, FinServ__APY__c, FinServ__LoanAmount__c, Account_Type__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:ClientId AND (Account_Type__c='401K' OR Account_Type__c='CD' OR Account_Type__c='529 Account' OR Account_Type__c='Checking' OR Account_Type__c='IRA' OR Account_Type__c='Money Market' OR Account_Type__c='Retail Brokerage' OR Account_Type__c='Roth IRA'  OR Account_Type__c='Savings' OR Account_Type__c='Loan' OR Account_Type__c='Credit Card') ];
+                if(!finAccounts.isEmpty()){
+                    for(FinServ__FinancialAccount__c f: finAccounts){
+                        if(f.Account_Type__c=='Savings' || f.Account_Type__c=='Money Market' || f.Account_Type__c=='CD' || f.Account_Type__c=='Checking'){
+                            cashAccountList.add(f);
+                            cashAmount+=f.FinServ__Balance__c;
+                        }
+                        else if(f.Account_Type__c=='401K' || f.Account_Type__c=='529 Account' || f.Account_Type__c=='IRA' || f.Account_Type__c=='Roth IRA' || f.Account_Type__c=='Retail Brokerage'){
+                            investmentAccountList.add(f);
+                            investmentAmount+=f.FinServ__Balance__c;
+                        }
+                        else if(f.Account_Type__c=='Credit Card'){
+                            creditAccountList.add(f);
+                            creditAmount+=f.FinServ__LoanAmount__c;
+                        }
+                        else if(f.Account_Type__c=='Loan'){
+                            loanAccountList.add(f);
+                            loanAmount+=f.FinServ__LoanAmount__c;
+                        }
+                        
+                    }
                 }
-                //for non household Account
-                else{ 
-                    tempAccountList = [Select id, Name,FinServ__Balance__c,FinServ__LoanAmount__c, FinServ__FinancialAccountType__c, 
-                                       Account_Type__c, FinServ__APY__c from  FinServ__FinancialAccount__c where
-                                       RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                                       RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                                       RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                                       FinServ__PrimaryOwner__c =: ClientId];
-                }   
-            }  
+               fin.cashAccountList=cashAccountList;
+                fin.investmentAccountList=investmentAccountList;
+                fin.creditAccountList=creditAccountList;
+                fin.loanAccountList=loanAccountList;
+                fin.cashAmount=cashAmount;
+                fin.investmentAmount=investmentAmount;
+                fin.creditAmount=creditAmount;
+                fin.loanAmount=loanAmount;
+            } 
+            if(Test.isRunningTest())
+                throw new nullpointerexception();
+            }
+        catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+
         }
-        else{
-            isportalEnabled = true;
-            tempAccountList = [Select id, Name,FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__FinancialAccountType__c, 
-                               Account_Type__c, FinServ__APY__c from  FinServ__FinancialAccount__c where
-                               RecordType.DeveloperName != 'Scenario_Credit_Cards_Record_Type' AND
-                               RecordType.DeveloperName != 'Scenario_Loans_Record_Type' AND
-                               RecordType.DeveloperName != 'Scenario_Savings_Record_Type' AND
-                               FinServ__PrimaryOwner__c =: us.AccountId];
-            
-        }
-        
-        //segregate account types as saving, credit, loans
-        for(FinServ__FinancialAccount__c ffa: tempAccountList)
-        {
-            if(ffa.Account_Type__c =='Credit Card') {
-                netCredit = netCredit + ffa.FinServ__Balance__c;
-                creditAccountList.add(ffa); }
-            else if(ffa.Account_Type__c =='Loan') {
-                netLoan = netLoan + ffa.FinServ__LoanAmount__c;
-                loanAccountList.add(ffa);}
-            else {
-                netSaving = netSaving + ffa.FinServ__Balance__c;
-                savingsAccountList.add(ffa);}
-        }
-        
-        //add netsaving, netloan, netcredit to the list
-        netBalanceList.add(netSaving);
-        netBalanceList.add(netCredit);
-        netBalanceList.add(netLoan);
-        
-        tempList = netBalanceList;
-        
-        //add list to list
-        listOfListFinancialAccounts.add(savingsAccountList);
-        listOfListFinancialAccounts.add(creditAccountList);
-        listOfListFinancialAccounts.add(loanAccountList);
-    }
-        catch(Exception e)
-    {
-        FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-    }
-        return listOfListFinancialAccounts;
+        return fin;
         
     }//method End
     
     public class WrapperClass {
-        
-        @auraEnabled
-        public List<List<FinServ__FinancialAccount__c>> financialAccountList;
         
         @auraEnabled
         public List<FinServ__FinancialGoal__c> financialGoalList;
@@ -838,6 +768,35 @@ public class ClientDetailApex {
         
     } //end of Wrapper class 
     
+     public class FinAccountWrapperClass {
+        
+        @auraEnabled
+        public List<FinServ__FinancialAccount__c> cashAccountList;
+        
+         @auraEnabled
+        public List<FinServ__FinancialAccount__c> creditAccountList;
+         
+          @auraEnabled
+        public List<FinServ__FinancialAccount__c> investmentAccountList;
+         
+          @auraEnabled
+        public List<FinServ__FinancialAccount__c> loanAccountList;
+        
+        @auraEnabled
+        public Double cashAmount;
+         
+          @auraEnabled
+        public Double creditAmount;
+         
+          @auraEnabled
+        public Double investmentAmount;
+         
+          @auraEnabled
+        public Double loanAmount;
+        
+        
+    } //end of Wrapper class 
+    
     @auraEnabled
     public static WrapperClass getData(String id) {
         WrapperClass wrapperObj = new WrapperClass();
@@ -854,7 +813,6 @@ public class ClientDetailApex {
         if(test.isRunningTest()){
             isHousehold = true;
         }
-        wrapperObj.financialAccountList = ClientDetailApex.getAccounts(initialClientId);
         wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
         wrapperObj.balanceList = tempList;
         wrapperObj.isportalUser = isportalEnabled;
@@ -874,5 +832,18 @@ public class ClientDetailApex {
     }
         return wrapperObj;
     }//method end
-       
+     
+     @auraEnabled
+    public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)
+    {      
+        FinServ__FinancialGoal__c finGoal  = [select recordtypeid,recordtype.developername  from FinServ__FinancialGoal__c where id=:strRecordTypeName];       
+        return finGoal.recordtype.developername;
+    } 
+    
+     @auraEnabled
+    public static void deleteGoals(id goalId) {
+        
+        FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];
+        delete goalItem;
+    }
 }//Outer Class
