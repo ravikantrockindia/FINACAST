@@ -13,7 +13,7 @@
         var amn = component.find("loanamt").get("v.value");
         
         if ($A.util.isUndefinedOrNull(name) || name == "" ||  
-            $A.util.isUndefinedOrNull(accountType) || accountType == "" || $A.util.isUndefinedOrNull(amn) || amn =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" ){
+            $A.util.isUndefinedOrNull(accountType) || accountType == "" || $A.util.isUndefinedOrNull(amn) || amn =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(apr) || apr == "" ){
             event.preventDefault();
             component.set("v.disabled",false)
             $A.util.removeClass(spinner, "slds-show");
