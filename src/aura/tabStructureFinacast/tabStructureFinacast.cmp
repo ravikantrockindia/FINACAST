@@ -1,7 +1,6 @@
 <aura:component   implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
     <aura:attribute type="id" name="recordId"/>
     <aura:attribute name="accessibilityMap" type="Map"/>
-    <aura:attribute name="licenseAvailable" type="boolean" default="true"/>
     <aura:attribute name="oppId" type="Id"/>
     <aura:attribute name="ccid" type="Id"/>
     <aura:attribute name="namespace" type="string"/>
@@ -15,7 +14,6 @@
     <lightning:workspaceAPI aura:id="workspace"/>
     
     <div class="slds-tabs_scoped" id="navDiv">
-        <aura:if isTrue="{!v.licenseAvailable}">
             <ul class="slds-tabs_scoped__nav" role="tablist" id="nav">
                 <li class="bigIcons  slds-shrink-none" aura:id="articleOne" title="Admission Forms" role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Financial Relationship Forms" onclick="{!c.ClientInformHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
@@ -66,5 +64,5 @@
                         </div>Accounts</a>
                 </li>
             </ul>
-        </aura:if> </div> 
+           </div> 
 </aura:component>
