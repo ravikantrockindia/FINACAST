@@ -80,9 +80,9 @@
             
         }
         
-        var action = component.get("c.getDate");
+        var action = component.get("c.getContactDob");
         action.setParams({ 
-            clientId : clientId
+            recordId : clientId
         });
         action.setCallback(this, function(response) {
             component.set("v.birthDate",response.getReturnValue());
@@ -651,7 +651,7 @@
         if(event.target.id=="yesCheck"){
             component.set("v.isTaxDeduction",true);
             component.find("taxcontri").set("v.value",0);
-            component.find("maxdeduction").set("v.value",0)
+            component.find("maxdeduction").set("v.value",0);
             
         }
         else if(event.target.id=="noCheck"){
