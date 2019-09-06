@@ -673,7 +673,7 @@ public class ClientDetailApex {
                  from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId];
         }
         catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
             
         }
         return fl;

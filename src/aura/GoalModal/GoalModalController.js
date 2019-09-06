@@ -56,7 +56,7 @@
                 console.log("car",component.get("v.car"));
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         car : recordType         
@@ -83,7 +83,7 @@
                 console.log("rctype"+recordType );
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         wedding : recordType         
@@ -108,7 +108,7 @@
                 var recordType = response.getReturnValue();
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         education : recordType         
@@ -133,7 +133,7 @@
                 var recordType = response.getReturnValue();
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         vacation : recordType         
@@ -160,7 +160,7 @@
                 var recordType = response.getReturnValue();
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         homeimprovement : recordType         
@@ -185,7 +185,7 @@
                 var recordType = response.getReturnValue();
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         home : recordType         
@@ -210,7 +210,7 @@
                 var recordType = response.getReturnValue();
                 var evt = $A.get("e.force:navigateToComponent");
                 evt.setParams({
-                    componentDef  : "c:Goalform" ,  
+                    componentDef  : "Finsol:Goalform" ,  
                     componentAttributes: {
                         
                         othergoals : recordType         
@@ -239,7 +239,7 @@
         
          /*   var homeEvent = $A.get("e.force:navigateToComponent");
             homeEvent.setParams({
-                componentDef : "c:Goalfinal",
+                componentDef : "Finsol:Goalfinal",
                 componentAttributes: {
                     cId : component.get("v.cid")
         }
@@ -255,6 +255,7 @@
     
     onGoalClick: function(component,event,helper){
         var heading,subheading;
+        var icon;
         var clickedGoalName = event.getSource().get("v.name");
         console.log('ghgcbhvhwvhwegfhwewe'+ event.getSource().get("v.name"));
         var isRetirement , isNonRetirement = true;
@@ -262,43 +263,51 @@
         {
             heading = "Wedding";
             subheading = "Finacast will help you plan your Wedding";
-            
+            var icon = $A.get("$Resource.WeddingIcon");
+            component.set("v.icon",icon);
         }
         else if (clickedGoalName == "CarRecordType")
         {
             heading = "Car";
             subheading = "Finacast will help you plan your Car purchase";
-            
+            var icon = $A.get("$Resource.CarIcon");
+            component.set("v.icon",icon);
         }
             else if (clickedGoalName == "VacationRecordType")
             {
                 heading = "Vacation";
                 subheading = "Finacast will help you plan your vacation";
+                var icon = $A.get("$Resource.VacationIcon");
+            	component.set("v.icon",icon);
                 
             }
                 else if (clickedGoalName == "EducationRecordType")
                 {
                     heading = "Education";
                     subheading = "Finacast will help you plan your Education";
-                    
+                    var icon = $A.get("$Resource.EducationIcon");
+           			component.set("v.icon",icon);
                 }
                     else if (clickedGoalName == "HomeRecordType")
                     {
                         heading = "Home";
                         subheading = "Finacast will help you plan your home";
-                        
+                        var icon = $A.get("$Resource.HomeIcon");
+            			component.set("v.icon",icon);
                     }
                         else if (clickedGoalName == "HomeImprovementRecordType")
                         {
                             heading = "Home Improvement";
                             subheading = "Finacast will help you plan your  Home Improvement";
-                            
+                            var icon = $A.get("$Resource.HomeImprovementIcon");
+            				component.set("v.icon",icon);
                         }
                             else if (clickedGoalName == "OtherGoalsRecordType")
                             {
                                 heading = "Other Goals";
                                 subheading = "Finacast will help you plan your Goals";
-                                
+                                var icon = $A.get("$Resource.OtherGoalsIcon");
+            					component.set("v.icon",icon);
                             }
                                 else if (clickedGoalName == "RetirementRecordType")
                                 {
@@ -320,6 +329,7 @@
             component.set("v.isRetirement",isRetirement);
             component.set("v.isNonRetirement",isNonRetirement);
             component.set("v.recordTypeId",response.getReturnValue());
+            component.set("v.icon",icon);
             
         });
          $A.enqueueAction(action);

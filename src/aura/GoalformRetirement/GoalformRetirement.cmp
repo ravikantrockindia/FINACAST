@@ -56,10 +56,17 @@
                             <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                             <span class="slds-assistive-text">Close</span>
                         </button>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-5">
+                              <img src="{!$Resource.RetirementIcon}"  height="100" width="100" title="Retirement"/>  
+                            </div>
+                            <div class="slds-size_4-of-5">
                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>Retirement</b></h2>
                         <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black" > 
                             <b>Entering this information will help us understand if you are on track for retirement and help us recommend steps to keep you on track for retirement.</b>
                         </h3>
+                                </div>
+                        </div>    
                     </header>
                     
                     <lightning:recordEditForm    
@@ -85,7 +92,7 @@
                                         <br/> 
                                         <span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name" />
                                         <br/>
-                                        <span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "{!v.namespace+'Date_Of_Birth__c'}"  value = "{!v.birthDate}" onchange = "{!c.nextButton}" />
+                                        <span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "{!v.namespace+'Date_Of_Birth__c'}"  value = "{!v.birthDate}" disabled="true" onchange = "{!c.nextButton}" />
                                         
                                         <br/> 
                                         <span class = "highlight">* </span>Years of Living After Retirement<lightning:inputField aura:id = "afterRetirement"  fieldName="{!v.namespace+'Years_Of_Living_After_Retirement__c'}"  value = "{!v.YearsLivingAfterRetirement}"  onchange = "{!c.nextButton}"/><br/>
@@ -165,7 +172,7 @@
                             <div class="button" align ="rionght">
                                 
                                 <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
-                                <lightning:button variant="brand" type="submit" label="Submit"   />
+                                <lightning:button variant="brand" type="submit" label="Create Goal"   />
                                 
                             </div>
                         </footer>

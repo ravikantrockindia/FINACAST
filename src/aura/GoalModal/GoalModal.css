@@ -1,8 +1,27 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
 .THIS container.slds-template__container{
     background-color: white;
 }
 .THIS .slds-modal__container {
-    width: 70%;
+    width: 50%;
     max-width: 70%;
     margin: o auto;
 }
@@ -14,15 +33,20 @@
     z-index: 0;
     text-align: center;
 }
-
+.THIS .slds-col1 span {
+    display: block;
+    width: 100%;
+}
 .THIS.hideDiv {
     display: none;
 }
 .THIS .slds-col1 .slds-button {
-    padding: 20px 20px 15px;
+    padding: 10px 0px 10px;
+    width: 100%;
 }
 .THIS .slds-col1 img {
     width: 50%;
+    height: 40px;
     transition: all 500ms;
 	-moz-transition: all 500ms;
 	-webkit-transition: all 500ms;

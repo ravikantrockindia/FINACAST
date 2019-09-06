@@ -13,6 +13,7 @@
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name = "heading" type = "String"/>
     <aura:attribute name = "subheading" type = "String"/>
+    <aura:attribute name="icon" type="string"/>
     <aura:attribute name = "isRetirement" type = "Boolean" default = "False"/>
     <aura:attribute name = "isNonRetirement" type = "Boolean" default = "False"/>
      <aura:attribute name="recordTypeId" type="String"/>
@@ -46,7 +47,7 @@
                         <div class="slds-col slds-col1">       
                             <span>
                                 <lightning:button class="slds-button" name="CarRecordType" onclick="{!c.onGoalClick}"  >
-                                    <img src="{!$Resource.CarIcon}" height="200" width="300" title="Car"/>
+                                    <img src="{!$Resource.CarIcon}" height="150" width="150" title="Car"/>
                                     <div  class = "slds-col1-cover" >
                                         <h5>Car</h5>
                                     </div>  
@@ -59,7 +60,7 @@
                             
                             
                             <lightning:button class="slds-button" name="WeddingRecordType" onclick="{!c.onGoalClick}">
-                                <img src="{!$Resource.WeddingIcon}" height="200" width="300" title="Wedding"/>
+                                <img src="{!$Resource.WeddingIcon}" height="150" width="150" title="Wedding"/>
                                 <div class = "slds-col1-cover" >
                                     <h5>Wedding</h5>
                                 </div>
@@ -70,7 +71,7 @@
                             <span>
                                 
                                 <lightning:button class="slds-button" name="VacationRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.VacationIcon}" height="200" width="300" title="Vacation"/>
+                                    <img src="{!$Resource.VacationIcon}" height="150" width="150" title="Vacation"/>
                                     <div class = "slds-col1-cover" >
                                         <h5>Vacation</h5>
                                     </div>
@@ -82,7 +83,7 @@
                         <div class="slds-col slds-col1">       
                             <span>
                                 <lightning:button class="slds-button" name="EducationRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.EducationIcon}" height="200" width="300" title="Education"/>
+                                    <img src="{!$Resource.EducationIcon}" height="150" width="150" title="Education"/>
                                     <div class = "slds-col1-cover" >
                                         <h5>Education</h5>
                                     </div>
@@ -92,7 +93,7 @@
                         <div class="slds-col slds-col1">
                             <span>
                                 <lightning:button class="slds-button" name="HomeRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.HomeIcon}" height="200" width="300" title="Home"/>
+                                    <img src="{!$Resource.HomeIcon}" height="150" width="150" title="Home"/>
                                     <div class = "slds-col1-cover" >
                                         <h5>Home</h5>
                                     </div>
@@ -102,7 +103,7 @@
                         <div class="slds-col slds-col1">         
                             <span>
                                 <lightning:button class="slds-button" name="HomeImprovementRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.HomeImprovementIcon}" height="200" width="300" title="Home Improvement"/>
+                                    <img src="{!$Resource.HomeImprovementIcon}" height="150" width="150" title="Home Improvement"/>
                                     <div class = "slds-col1-cover" >
                                         <h5>Home Improvement</h5>
                                     </div>
@@ -112,7 +113,7 @@
                         <div class="slds-col slds-col1">
                             <span>
                                 <lightning:button class="slds-button" name="OtherGoalsRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.OtherGoalsIcon}" height="200" width="300" title="Other Goals"/>
+                                    <img src="{!$Resource.OtherGoalsIcon}" height="150" width="150" title="Other Goals"/>
                                     <div class = "slds-col1-cover" >
                                         <h5>Other Goals</h5>
                                     </div>
@@ -125,7 +126,7 @@
             
             <footer class="slds-modal__footer">
                 <div class="button" align ="right">
-                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closePopUp}"/>
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closePopUp}" class="btn1"/>
                 </div>
             </footer>
         </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
@@ -135,7 +136,7 @@
             </aura:if>
     
     <aura:if isTrue="{!v.isNonRetirement}">
-                 <c:Goalform  namespace="{!v.namespace}"  client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" />               
+                 <c:Goalform  namespace="{!v.namespace}"  client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" icon="{!v.icon}"/>               
             </aura:if>
     
     
