@@ -66,5 +66,10 @@
                         </div>Accounts</a>
                 </li>
             </ul>
+            <aura:set attribute="else">
+                <div style="color:blue;font-weight:bold" aura:id="licensecheck">
+                    <p>This functionality is part of EMR. Please get in touch with Mirketa if you are interested in EMR.</p>
+                </div>
+            </aura:set>
         </aura:if> </div> 
 </aura:component>
