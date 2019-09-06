@@ -279,6 +279,7 @@
     </fields>
     <fields>
         <fullName>May_yearly_tax_deduction_allowed__c</fullName>
+		<defaultValue>0</defaultValue>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>May yearly tax deduction allowed($)?</label>

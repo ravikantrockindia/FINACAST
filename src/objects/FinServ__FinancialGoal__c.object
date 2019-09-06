@@ -591,6 +591,7 @@
     </fields>
     <fields>
         <fullName>Max_yearly_tax_deduction_allowed__c</fullName>
+		<defaultValue>0</defaultValue>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Max yearly tax deduction allowed ($ )?</label>
