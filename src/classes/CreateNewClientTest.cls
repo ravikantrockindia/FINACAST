@@ -12,7 +12,7 @@ public class CreateNewClientTest {
         Account a=new Account(Name='test', RecordTypeId=devRecordTypeId);
         insert a;
         List<FinServ__FinancialAccount__c> fa=new List<FinServ__FinancialAccount__c>();
-        fa.add(new FinServ__FinancialAccount__c(Name='testfa', FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Other'));
+        fa.add(new FinServ__FinancialAccount__c(Name='testfa', FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Savings'));
         fa.add(new FinServ__FinancialAccount__c(Name='testfa', FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Loan'));
         
         insert fa;

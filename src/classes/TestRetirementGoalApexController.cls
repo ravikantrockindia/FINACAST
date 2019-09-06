@@ -38,13 +38,11 @@ public class TestRetirementGoalApexController {
     {
         
         Account accId = [select id from Account where name = 'test account'];
-        RetirementGoalApexController.getDate(accId.id);
+        RetirementGoalApexController.getContactDob(accId.id);
         FinServ__FinancialAccount__c fAccId = [select id from FinServ__FinancialAccount__c where name = 'test financial account'];
         Date retire = date.today()+900;
         String retireDate = String.valueOf(retire);
-        
-        //RetirementGoalApexController.getCurrentAmount( '500', '10', '100', '100000', retireDate);
-        
+                
         DateTime target = Date.today()+900;
         String tDate = target.format('YYYY-MM-dd');
         System.debug('target: '+target);
@@ -65,10 +63,7 @@ public class TestRetirementGoalApexController {
         RetirementGoalApexController.getAmountMonth(500, 3, 3,'10','60', birthDate);
         RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,current);
         RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,null);        
-       
-        RetirementGoalApexController.saveData(String.valueOf((fGoal.id)),Userinfo.getUserId() ,'sahil123', birthDate, '30' ,'6', '35' , '65588',
-                              '12', '54655', String.valueOf(fGoal.Associated_Account__c) ,priority, '500', tDate,'34534','46','56',DD1,'true');
-        //RetirementGoalApexController.getGoalData(fAccId.id);
+ 
         test.stopTest();
         System.assertEquals('1','1');
     }
