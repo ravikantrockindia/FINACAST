@@ -282,7 +282,7 @@
                             <br/>
                             <aura:if isTrue="{!v.istrue1}">
                                 <div class="question_accordian">
-                                      <lightning:accordion activeSectionName="">
+                                      <lightning:accordion  allowMultipleSectionsOpen="true">
                                     
                                            <lightning:accordionSection name="D" label="Why CAN I NOT afford this now?">
                                                {!v.notAbleToPayMsg}<br/> <a href="javascript:void(0)" onclick="{!c.openModel }"> Show Details</a>
@@ -310,8 +310,8 @@
                                 </div>
                             </aura:if>
                              <aura:if isTrue="{!v.istrue}">
-                                <div class="question_accordian question_accordian1">                     
-                                   <lightning:accordion activeSectionName="">
+                                <div class="question_accordian question_accordian1" >                     
+                                   <lightning:accordion  allowMultipleSectionsOpen="true">
                                     <lightning:accordionSection name="c" label="Why CAN I  afford this now?">
                                     {!v.topmsg1}, {!v.resultMessage}<br/> <a href="javascript:void(0)" onclick="{!c.openModel}"> Show Details</a>
                                     </lightning:accordionSection>
