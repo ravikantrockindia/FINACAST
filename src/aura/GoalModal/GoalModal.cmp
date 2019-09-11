@@ -16,7 +16,8 @@
     <aura:attribute name="icon" type="string"/>
     <aura:attribute name = "isRetirement" type = "Boolean" default = "False"/>
     <aura:attribute name = "isNonRetirement" type = "Boolean" default = "False"/>
-     <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="recordTypeIdName" type="String"/>
     
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
     
@@ -132,11 +133,11 @@
         </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
     
     <aura:if isTrue="{!v.isRetirement}">
-                 <c:GoalformRetirement   namespace="{!v.namespace}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" />               
+                 <c:GoalformRetirement   namespace="{!v.namespace}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}"  />               
             </aura:if>
     
     <aura:if isTrue="{!v.isNonRetirement}">
-                 <c:Goalform  namespace="{!v.namespace}"  client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" icon="{!v.icon}"/>               
+                 <c:Goalform  namespace="{!v.namespace}"  client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" icon="{!v.icon}" />               
             </aura:if>
     
     

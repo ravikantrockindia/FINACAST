@@ -4,69 +4,68 @@
     
     <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c"/>
     <aura:attribute name="showInModal" type="boolean"/>
-   <!-- <aura:registerEvent name="submitDebtForm" type="c:CreateNewClientEvent"/>-->
+    <!-- <aura:registerEvent name="submitDebtForm" type="c:CreateNewClientEvent"/>-->
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:attribute name="disabled" type="Boolean" default="false"/>
-        <aura:attribute name="namespace" type="String" default=""/>
-
+    <aura:attribute name="namespace" type="String" default=""/>
+    
     <lightning:notificationsLibrary aura:id="notifLib"/>
     
-   <!-- <aura:method name="saveDebtAccount" action="{!c.createDebtAccount}" access="PUBLIC"/>-->
+    <!-- <aura:method name="saveDebtAccount" action="{!c.createDebtAccount}" access="PUBLIC"/>-->
     
-        <div style="height:640px">
+    <div style="height:640px">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Credit Card Account</h2>
                 </header>
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
-
-                    <lightning:recordEditForm
-                              aura:id="form"
-                              onsubmit="{!c.handleSubmit}"
-                              recordId="{!v.financialAccount.Id}"
-                              recordTypeId="{!v.recordTypeId}"
-                              onerror="{!c.handleError}"
-                              onsuccess="{!c.handleSuccess}"
-                              objectApiName="FinServ__FinancialAccount__c">
-        
-        <div class="custom_card slds-gutters">
-            <div class="slds-col slds-size_1-of-2">
-                {!$Label.c.Name}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Name" aura:id="name" variant="label-hidden"/>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-                Current Debt Value <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__LoanAmount__c"  aura:id="loanamt" variant="label-hidden"/>
-            </div>
-            <div class="slds-col slds-size_1-of-2">
-                {!$Label.c.Primary_Owner} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__PrimaryOwner__c" aura:id="owner" value="{!v.accountRecordId}" variant="label-hidden" disabled="true"/>
-            </div>
-            <div class="slds-col slds-size_1-of-2">                
-                APR<span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" variant="label-hidden" aura:id="apr"/>
-            </div>
-         
-        </div>
-        <div style="clear: both"></div>
-     
-        <lightning:inputField fieldName ="{!v.namespace+'Account_Type__c'}" value="Credit Card"  class="slds-hide"/> 
-        <div class="custom_card slds-gutters">
-            <div class="slds-col slds-size_1-of-1">
-                <div class="slds-m-top_medium slds-clearfix ">
-                    <div class="slds-float_right">                   
-                        <aura:if isTrue="{!v.showInModal}">
-                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr"/>
-                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" />
-                        </aura:if>
+                <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+                
+                <lightning:recordEditForm
+                                          aura:id="form"
+                                          onsubmit="{!c.handleSubmit}"
+                                          recordId="{!v.financialAccount.Id}"
+                                          recordTypeId="{!v.recordTypeId}"
+                                          onerror="{!c.handleError}"
+                                          onsuccess="{!c.handleSuccess}"
+                                          objectApiName="FinServ__FinancialAccount__c">
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        
+                        <div class="custom_card slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                {!$Label.c.Name}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Name" aura:id="name" variant="label-hidden"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                Current Debt Value <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__LoanAmount__c"  aura:id="loanamt" variant="label-hidden"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                {!$Label.c.Primary_Owner} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__PrimaryOwner__c" aura:id="owner" value="{!v.accountRecordId}" variant="label-hidden" disabled="true"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">                
+                                APR<span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" variant="label-hidden" aura:id="apr"/>
+                            </div>
+                            
+                        </div>
+                        <div style="clear: both"></div>
+                        
+                        <lightning:inputField fieldName ="{!v.namespace+'Account_Type__c'}" value="Credit Card"  class="slds-hide"/> 
                     </div>
-                </div>                    
-            </div>
-        </div>
-    </lightning:recordEditForm>
-                </div>
+                    
+                    <footer class="slds-modal__footer">
+                        
+                        <div class="slds-m-top_medium slds-clearfix ">
+                            <div class="slds-float_right">                   
+                                <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr btn2 btn1"/>
+                                <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" class="btn1" />
+                            </div>
+                        </div>
+                    </footer>
+                </lightning:recordEditForm>
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
     
-  
+    
 </aura:component>

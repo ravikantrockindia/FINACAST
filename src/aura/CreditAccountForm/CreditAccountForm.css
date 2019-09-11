@@ -1,3 +1,30 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+}
+.THIS .btn2:hover {
+    background-color: #fff;
+    color: #4e75a3;
+}
 .THIS lightning-input>label {
     display: none !important;
 }
@@ -7,17 +34,25 @@
 }
 
 .THIS .custom_card {
-    width: 94%;
-    margin: 0 3%;
-}
-.THIS .textarea_custom .slds-textarea {
-    height: 32px;
+    width: 100%;
+    margin: 0 0%;
 }
 .THIS .custom_card .slds-size_1-of-2 {
-    float: left;
+	float: left;
     font-size: 0.75rem;
     color: rgb(62, 62, 60);
     line-height: 1.5;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 15px;
+}
+.THIS .custom_card .slds-size_1-of-2 .slds-input {
+    margin-top: 8px;
+    background-color: #f2f0f0;
+    border-radius: 0;
+    height: 40px;
+}
+.THIS .textarea_custom .slds-textarea {
+    height: 32px;
 }
 .THIS .custom_card .slds-form-element {
     margin-bottom: 10px;
@@ -31,4 +66,10 @@
 }
 .THIS .mlr {
     margin: 0 0.25rem;
+}
+.THIS .slds-combobox__input-entity-icon {
+    margin-top: 5px;
+}
+.THIS .slds-input__icon_right {
+    margin-top: -2px;
 }

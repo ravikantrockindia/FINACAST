@@ -35,20 +35,20 @@
               <div class="slds-col slds-size_3-of-12">
                 <div class="total_assesment_abc">
                     <div class ="total_assesment_abc_one"><h3>Total Assets Managed</h3></div>
-                   <div class ="total_assesment_abc_two"><h1>${!v.Amount}</h1></div>
+                   	<div class ="total_assesment_abc_two"><h1>${!v.Amount}</h1></div>
                 </div>
             </div>
             
             <div class="slds-col slds-size_3-of-12 ">
                 <c:ClientManaged TotalClient="{!v.TotalClient}"/>
-                    <c:GoalValue/>  
+                <c:GoalValue/> 
             </div>
         	     <div class="slds-col slds-size_6-of-12 ">                  
                 <c:ClientInvestmentGraph/>                                  
             </div>
             
         </div>
-    </div>
+    
   
 
        
@@ -67,19 +67,19 @@
                 <lightning:button class="btn btn1" onclick="{!c.addclient}">+ Add New Client</lightning:button>
             </div>
             <div class="slds-size_3-of-12">
-                    <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
-                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
-                            <Lightning:input name="input1" placeholder="Search Clients..." value="{!v.SearchText}"  type="search" variant="label-hidden" onchange="{!c.SearchClient}" />
-                            <!--            <input id="lookup-01" class="slds-lookup__search-input slds-input" type="text" value="{!v.SearchText}" onchange="{!c.SearchClient}" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" placeholder="Search Accounts" />  -->
-                        </div>
+                <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                        <Lightning:input name="input1" placeholder="Search Clients..." value="{!v.SearchText}"  type="search" variant="label-hidden" onchange="{!c.SearchClient}" />
+                        <!--            <input id="lookup-01" class="slds-lookup__search-input slds-input" type="text" value="{!v.SearchText}" onchange="{!c.SearchClient}" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" placeholder="Search Accounts" />  -->
                     </div>
                 </div>
-                <div class="slds-size_1-of-12" style="text-align: right; margin-bottom: 10px;">
-                <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class=" inline-buttons"/>
-                    <lightning:buttonicon iconName="utility:filterList" size="medium" alternativeText="filterList" onclick="{!c.addFilter}"  class="inline-buttons "/>
-                    <lightning:buttonIcon size="large"  iconName="utility:matrix" onclick="{!c.addColumns}" title="manage table columns" alternativeText="Settings" iconClass="dark" class=" inline-buttons"/>
-                </div>
             </div>
+            <div class="slds-size_1-of-12" style="text-align: right; margin-bottom: 10px;">
+                <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class=" inline-buttons"/>
+                <lightning:buttonicon iconName="utility:filterList" size="medium" alternativeText="filterList" onclick="{!c.addFilter}"  class="inline-buttons "/>
+                <lightning:buttonIcon size="large"  iconName="utility:matrix" onclick="{!c.addColumns}" title="manage table columns" alternativeText="Settings" iconClass="dark" class=" inline-buttons"/>
+            </div>
+        </div>
         <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />  
         <aura:if isTrue="{!v.col}">     
             <c:Fina_Columns_Configurable isOpen = "{!v.col}"  
@@ -147,4 +147,5 @@
         </aura:if>
         
     </div>
+        </div>
 </aura:component>

@@ -54,3 +54,21 @@
 .THIS .mlr {
     margin: 0 0.25rem;
 }
+.THIS .slds-input {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-textarea {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-select {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}

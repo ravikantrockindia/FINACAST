@@ -39,11 +39,24 @@
     line-height: 1.5;
     font-family: 'Open Sans', sans-serif;
 }
+.THIS .custom_card .slds-size_1-of-2 input {
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .custom_card .slds-size_1-of-2 select {
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+
 .THIS .slds-input {
     font-family: 'Open Sans', sans-serif;
 }
-.THIS .slds-textarea {
+.THIS .custom_card .slds-textarea {
     font-family: 'Open Sans', sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
 }
 .THIS .custom_card .slds-size_1-of-2 .slds-form-element {
     margin-top: 2px;

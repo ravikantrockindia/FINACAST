@@ -20,6 +20,16 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+   background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3; 
+}
 .THIS .EditCalender .slds-button{
     background: transparent;
     color: #333;
@@ -38,8 +48,10 @@
     border: 1px solid #ccc;
 }
 .THIS .demographic_select textarea {
-    height: 33px;
+    height: 40px;
+    margin-top: 8px;
     font-family: 'Open Sans', sans-serif;
+    background-color: #f2f0f0;
 }
 .THIS .upload-image .slds-file-selector__dropzone {
     border: none;
@@ -49,4 +61,31 @@
 }
 .THIS .slds-input {
     font-family: 'Open Sans', sans-serif;
+     margin-top: 8px;
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-select {
+    font-family: 'Open Sans', sans-serif;
+     margin-top: 8px;
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-select_container:before {
+    top: 15px;
+}
+.THIS input[readonly] {	
+	font-family: 'Open Sans', sans-serif;
+     margin-top: 8px;
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;    
+}
+.THIS .slds-form-element__label {
+    display: none !important;
 }

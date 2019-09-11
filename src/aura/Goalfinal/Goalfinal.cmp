@@ -1,104 +1,117 @@
-<aura:component  controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+<aura:component  controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:isUrlAddressable"  access="global" >
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="tabName" type="String" default=" Goals"/>
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="financialGoal" type="FinServ__FinancialGoal__c"/>
-     <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
+    <aura:attribute name="addGoal" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="isRetirement" type="Boolean" default="false"/>
     <aura:attribute name="isNonRetirement" type="Boolean" default="false" />
     <aura:attribute name = "CancelCut" type="String"/>
     <aura:attribute name="editrecidGoal" type="String"/>
     <aura:attribute name="addGoals" type="Boolean" default=""/>
-   <aura:attribute name="recordTypeId" type="String"/> 
+    <aura:attribute name="recordTypeId" type="String"/> 
     <aura:attribute name="cid" type="Id"/>
     <aura:attribute name="recordId" type="String"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:attribute name = "clientName" type="Account"/>
     <aura:attribute name = "activeModal" type="Boolean" default = "True"/>
     <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
-  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>  
-  	<aura:attribute name="icon" type="String" default="String"/>
-    <aura:attribute name = "heading" type = "String"/>
+    <aura:attribute name="icon" type="String" default="String"/>
+    <aura:attribute name="heading" type="string"/>
+    <!-- This is for Goal Info -->
+    <aura:attribute name = "name" type = "String"/>
+    
+    <!-- This is for Goal Info -->
     <lightning:card >
-        <div class="slds-m-around_x-small">
-            <div class="client_managed slds-m-top_large">
-            <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                        <div class="slds-col slds-size_1-of-12">
-                        	<h3 class="slds-m-top_x-small">Goals</h3>
-                        </div>
-                        <div class="slds-col slds-size_11-of-12">
-                        	<lightning:button class="slds-button slds-button_brand btn1 budget-brand" label=" + Add Goal" title="Add Goal" onclick="{!c.createGoal}"/>
-                        </div>
+        <div class="">
+            <div class="">
+                <div class="slds-grid slds-p-bottom_medium">
+                    <div class="slds-col slds-size_1-of-12">
+                        <h3 class="slds-m-top_x-small">Goals</h3>
                     </div>
-          <!--  <div class="slds-m-top_medium slds-clearfix ">
+                    <div class="slds-col slds-size_11-of-12">
+                        <lightning:button class="slds-button slds-button_brand btn1 budget-brand" label=" + Add Goal" title="Add Goal" onclick="{!c.createGoal}"/>
+                    </div>
+                </div>
+                <!--  <div class="slds-m-top_medium slds-clearfix ">
                 <div class="slds-float_right">
                     <lightning:button class="slds-button slds-button_brand budget-brand" label="Add Goal" title="Add Goal" onclick="{!c.createGoal}"/>
                 </div>
             </div> -->
-            <br/>
-            <aura:if isTrue="{!v.addGoals}">
-                
-                <c:GoalModal   namespace="{!v.namespace}" client ="{!v.cid}" />
-            </aura:if> 
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="padding: 0;">
-                <thead>
-                   <tr class="slds-line-height_reset">
-                        <th class="" scope="col">
-                            <div class="slds-truncate" title="Opportunity Name">Name</div>
-                        </th>
-                        <th class="" scope="col">
-                            <div class="slds-truncate" title="Account Name">Goal Amount</div>
-                        </th>
-                        <th class="" scope="col">
-                            <div class="slds-truncate" title="Close Date">Completion Date</div>
-                        </th>
-                        <th class="" scope="col">
-                            <div class="slds-truncate" title="Stage">Goals Status</div>
-                        </th>
-                        <th class="" scope="col">
-                            <div class="slds-truncate" title="Confidence">Options</div>
-                        </th>
-                    </tr>
-                </thead>               
-                <tbody>
-                    <aura:iteration items="{!v.addGoal}" var="Gdetails">
-                        <tr class="slds-hint-parent">
-                            <th data-label="Goal Name" scope="col">
-                                <div class="slds-truncate" title="Goal Name"><a href="{! '/'+ Gdetails.Id}" tabindex="-1"> &nbsp;&nbsp;{!Gdetails.Name}</a></div>
-                            </th>
-                            <td data-label="Goal Amount" scope="col" class="display">
-                                <div class="slds-truncate" title="Amount">
-                                    <lightning:formattedNumber value="{!Gdetails.Start_Value__c}" style="currency"   /> of
-                                    <lightning:formattedNumber value="{!Gdetails.FinServ__TargetValue__c}" style="currency"/>
-                                </div>
-                                
-                            </td>
-                            <td data-label="Current Amount" scope="col">
-                                 
-                                <lightning:formattedDateTime value="{!Gdetails.FinServ__TargetDate__c}" timeZone="UTC" />
-                                                            </td>
-                            <td data-label="Prospecting" scope="col">
-        							<div class="slds-truncate" title="Track">
-                                    	<p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
-                                    </div>
-      							</td>
-                            <td data-label="Option" scope="col">
-                                <div class="slds-truncate" title="Action">
-                                    &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Gdetails.Id}" onclick="{!c.onClickEditGoals}"/>                       
-                                    
-                                    &nbsp;
-                                    <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Gdetails.Id}" onclick="{!c.onClickDeletegoals}"/>                                   
-                                </div>
-                            </td>
-                        </tr>  
-                    </aura:iteration>
+                <aura:if isTrue="{!v.addGoals}">
                     
-                </tbody>
-            </table>
-          
-        </div>
+                    <c:GoalModal   namespace="{!v.namespace}" client ="{!v.cid}" />
+                </aura:if> 
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="padding: 0;">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Opportunity Name">Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Account Name">Goal Amount</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Close Date">Completion Date</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Stage">Goals Status</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Confidence">Options</div>
+                            </th>
+                        </tr>
+                    </thead>               
+                    <tbody>
+                        <aura:iteration items="{!v.addGoal}" var="Gdetails">
+                            <tr class="slds-hint-parent">
+                                <th data-label="Goal Name" scope="col">
+                                    <div class="slds-truncate" title="Goal Name">
+                                        <lightning:button variant="base" label="{!Gdetails.finGoal.Name}" value="{!Gdetails.finGoal.Id}"  onclick="{! c.viewGoal }"/>
+                                        
+                                    </div>
+                                </th>
+                                <td data-label="Goal Amount" scope="col" class="display">
+                                    <div class="slds-truncate" title="Amount">
+                                        <lightning:formattedNumber value="{!Gdetails.actualValue}" style="currency"   /> of
+                                        <lightning:formattedNumber value="{!Gdetails.finGoal.FinServ__TargetValue__c}" style="currency"/>
+                                    </div>
+                                    
+                                </td>
+                                <td data-label="Current Amount" scope="col">
+                                    
+                                    <lightning:formattedDateTime value="{!Gdetails.finGoal.FinServ__TargetDate__c}" timeZone="UTC" />
+                                </td>
+                                <td data-label="Track" scope="col">
+                                    <div class="slds-truncate" title="Track">
+                                        <aura:if isTrue="{!Gdetails.goalTrack}">
+                                            <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                            
+                                            <aura:set attribute="else">
+                                                <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </td>
+                                <td data-label="Option" scope="col">
+                                    <div class="slds-truncate" title="Action">
+                                        &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Gdetails.finGoal.Id}" onclick="{!c.onClickEditGoals}"/>                       
+                                        
+                                        &nbsp;
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Gdetails.finGoal.Id}" onclick="{!c.onClickDeletegoals}"/>                                   
+                                    </div>
+                                </td>
+                            </tr>  
+                        </aura:iteration>
+                        
+                    </tbody>
+                </table>
+                
+            </div>
         </div>
         
     </lightning:card>
@@ -109,7 +122,6 @@
         <aura:if isTrue="{!v.isNonRetirement}">   
             <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}"/>
         </aura:if>
-        
     </aura:if> 
     
 </aura:component>

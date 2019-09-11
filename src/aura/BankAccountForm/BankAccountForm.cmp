@@ -98,7 +98,7 @@
                 <div class="slds-clearfix custom_width">
                     <div class="slds-float_right">
                         <aura:if isTrue="{!v.showInModal}">
-                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr btn1"/>
+                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr btn1 btn2"/>
                             <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" class="btn1"/>
                         </aura:if>
                     </div>                    

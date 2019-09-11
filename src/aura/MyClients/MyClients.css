@@ -15,7 +15,9 @@
     padding: 1px 5px;
     min-width: 120px;
 }
-
+/*.THIS .slds-button:hover {
+    color: #fff;
+}*/
 .THIS.mgList {
     margin-bottom: 30px;
     color: inherit;
@@ -53,7 +55,7 @@
 .THIS .left-margin{
     margin-left:5px;
 }
-
+/*=====-18-06-2019-=====*/
 .THIS.slds-show {
     background-color: #fdfdfd;
 }
@@ -135,3 +137,9 @@
 .THIS .slds-scrollable_y table {
     margin-top: 15px;
 }
+/*.THIS .slds-table_header-fixed tbody tr:first-child td {
+    padding-top: 22px;
+}
+.THIS .slds-table_header-fixed tbody tr:first-child th {
+    padding-top: 22px;
+}*/

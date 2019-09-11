@@ -82,8 +82,8 @@
                 <div class="slds-m-top_medium slds-clearfix ">
                     <div class="slds-float_right">                   
                         <aura:if isTrue="{!v.showInModal}">
-                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr"/>
-                            <lightning:button  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" />
+                            <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr btn1"/>
+                            <lightning:button class="btn1"  variant="brand" type="submit" name="save" label="{!$Label.c.Save}" disabled="{!v.disabled}" />
                         </aura:if>
                     </div>
                 </div>                    

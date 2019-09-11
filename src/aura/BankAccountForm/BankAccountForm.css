@@ -17,6 +17,14 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+}
+.THIS .btn2:hover {
+    background-color: #fff;
+    color: #4e75a3;
+}
 .THIS .custom_card {
     width: 94%;
     margin: 0 3%;
@@ -26,6 +34,26 @@
     font-size: 0.75rem;
     color: rgb(62, 62, 60);
     line-height: 1.5;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 15px;
+}
+.THIS .custom_card .slds-size_1-of-2 .slds-icon-standard-account {
+    margin-top: 5px;
+}
+.THIS .custom_card .slds-size_1-of-2 .slds-input__icon_right {
+    margin-top: 0px;
+}
+.THIS .slds-select_container:before {
+    top: 15px;
+}
+.THIS .custom_card .slds-size_1-of-2 .slds-input {
+    margin-top: 8px;
+}
+.THIS .custom_card .slds-size_1-of-2 .slds-select {
+    margin-top: 8px;
+}
+.THIS .custom_card .slds-size_1-of-2 .slds-textarea {
+    margin-top: 8px;
 }
 .THIS .custom_card .slds-form-element {
     margin-bottom: 10px;

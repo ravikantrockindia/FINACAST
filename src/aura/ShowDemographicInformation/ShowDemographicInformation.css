@@ -5,6 +5,10 @@
     position: relative;
     z-index: 0;
     margin-top: 10px;
+     
+}
+.THIS .slds-hyphenate {
+    display : none;
 }
 .THIS .upload-flie {
    	position: absolute;
@@ -24,6 +28,9 @@
 }
 .THIS .file_upload .slds-form-element__label {
     display: none;
+}
+.THIS .file_upload .slds-file-selector__button .slds-modal__header {
+     display:none;
 }
 .THIS.budget_personal-info {
     background-color: #f1f2f3;
@@ -53,4 +60,14 @@
     text-align: right;
     top: 3px;
     right: 4px;
+}
+.THIS .slds-modal__header{
+   display:none; 
+} 
+.THIS .slds-text-heading_medium .slds-text-heading--medium {
+    display:none;
+}
+.THIS .slds-box1 .slds-size_1-of-2 {
+    float : left;
+    margin-bottom: 5px;
 }
