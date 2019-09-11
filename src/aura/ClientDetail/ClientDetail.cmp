@@ -7,7 +7,7 @@
     <div class="slds-card__header">
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_3-of-12 slds-p-left_none">
-                <c:FinancialBalanceSheet recordId="{!v.recordId}"/>
+                <c:FinancialBalanceSheet recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
                 <div class="client_managed client-profile">
                     <c:ShowClientProfile recordId="{!v.recordId}"/>
                 </div>

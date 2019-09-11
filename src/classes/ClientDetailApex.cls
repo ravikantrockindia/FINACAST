@@ -743,21 +743,6 @@ public class ClientDetailApex {
         
     }//method End
     
-    @AuraEnabled 
-    public static List<RecordType> getRecordTypeIds(){
-        List<RecordType> recordTypes;
-        try{
-            
-            recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
-            if(TEST.isRunningTest())
-                throw new NullPointerException();
-        }catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-        }
-        return recordTypes;
-        
-    }
-    
     public class WrapperClass {
         
         @auraEnabled
@@ -848,8 +833,34 @@ public class ClientDetailApex {
         return wrapperObj;
     }//method end
     
-   
     @auraEnabled
+    public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)
+    {      
+        FinServ__FinancialGoal__c finGoal  = [select recordtypeid,recordtype.developername  from FinServ__FinancialGoal__c where id=:strRecordTypeName];       
+        return finGoal.recordtype.developername;
+    } 
+    
+    @auraEnabled
+    public static void deleteGoals(id goalId) {
+        
+        FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];
+        delete goalItem;
+    }
+	 @AuraEnabled 
+    public static List<RecordType> getRecordTypeIds(){
+        List<RecordType> recordTypes;
+        try{
+
+            recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
+            if(TEST.isRunningTest())
+                throw new NullPointerException();
+        }catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return recordTypes;
+
+    }
+	@auraEnabled
     public static Account getClient(String ClientId) {
         
         Account ac;
@@ -885,7 +896,8 @@ public class ClientDetailApex {
             
         }
         catch(Exception e){
-           FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            
         }
         return true;
         
