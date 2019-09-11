@@ -1,9 +1,11 @@
 <!-- Created by: Megha Goel-->
 
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
-    <aura:attribute name="accountRecordId" type="String"/>
+    <aura:attribute name="accountRecordId" type="String" default=""/>
+        <aura:attribute name="selectedAccountType" type="String" default=""/>
+
     <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c" default=""/>
-    <aura:attribute name="showInModal" type="boolean"/>
+    <aura:attribute name="showInModal" type="boolean" default="false"/>
     <aura:attribute name="namespace" type="String" default=""/>
     <aura:attribute name="recordTypeIds" type="List[]"/>
 
@@ -14,7 +16,7 @@
                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.Add_Bank_Account}</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <c:BankAccountForm accountRecordId="{#v.accountRecordId}" recordTypeIds="{!v.recordTypeIds}" financialAccount="{!v.financialAccount}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"></c:BankAccountForm>
+                    <c:BankAccountForm accountRecordId="{#v.accountRecordId}" recordTypeIds="{!v.recordTypeIds}" financialAccount="{!v.financialAccount}" showInModal="{!v.showInModal}" namespace="{!v.namespace}" selectedAccountType="{!v.selectedAccountType}"></c:BankAccountForm>
                 </div>
             </div>
         </section>
