@@ -1,8 +1,11 @@
 <aura:component controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
-    <!--on component load call doInit javaScript function and fetch records from server-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <aura:attribute name="NameSpace" type="String" />
-    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="loanId" type="String" default=""/>
+    
+    <aura:attribute name="client" type="Account" default=""/>
+    
     <aura:attribute name="cash" type="List"/>
     <aura:attribute name="investment" type="List" />
     <aura:attribute name="credit" type="List"/>
@@ -12,23 +15,16 @@
     <aura:attribute name="investmentvalue" type="Double"   default="0"/>
     <aura:attribute name="creditvalue" type="Double"   default="0"/>
     <aura:attribute name="loanvalue" type="Double"   default="0"/>
-    
-    <aura:attribute name="client" type="String" />
-    <aura:attribute name="ids" type="String" />
-    <aura:attribute type="id" name="recordId"/>
-    <aura:attribute name = "selectedClient" type = "String"/>
-    <aura:attribute name = "selectedClientchild" type = "String"/>
-    <aura:attribute name = "col" type="Boolean" default="False"/>
     <aura:attribute name="isModalOpen" type="boolean" default="False"/>
     <aura:attribute name="showInModal" type="boolean" default="False"/>
+    <aura:attribute name="accountTypeforEdit" type="String" default=""/>
+    <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c" default=""/>
     
-    <aura:attribute name="isTab" type="boolean" default="true"/>
-    <aura:attribute name="NemeofSaving" type="String" />
-    <aura:attribute name="Tid" type="String"/>
-    <aura:attribute name="CurrentOpening" type="String"/>
     <aura:attribute name="recordTypeIds" type="List"/>
-    <aura:registerEvent name="rTid" type="c:AccountReport"/>
     <aura:handler name="change" value="{!v.showInModal}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.isModalOpen}" action="{!c.doInit}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
     
     
     
@@ -47,7 +43,7 @@
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
                 <div class="slds-col slds-size_12-of-12 client_managed2">
                     <h4>Net Worth</h4>
-                    <h1>${!v.netWorth}<span> <lightning:icon iconName="utility:arrowup" size="xx-small"/>Increase 14%</span></h1>
+                    <h1><ui:outputCurrency class="networth" value="{!v.netWorth}"/></h1>
                 </div>
             </div>
         </div>
@@ -62,7 +58,7 @@
                         <span class="slds-truncate slds slds-p-left_x-small">Cash</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
-                        <span>${!v.cashvalue}</span>
+                        <span><ui:outputCurrency value="{!v.cashvalue}"/></span>
                         
                     </div>
                 </div>
@@ -71,20 +67,18 @@
             <div aura:id="cashSection" class="slds-is-collapsed">
                 <aura:if isTrue="{!not(empty(v.cash))}" >
                     
-                    <aura:iteration items="{!v.cash}" var="s" >
+                    <aura:iteration items="{!v.cash}" var="s" indexVar="index">
                         <div class="slds-card card" >
-                            <!--  <aura:if isTrue="{!s.FinServ__APY__c}"> -->
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <!--  <lightning:button variant="Base" label="{!s.Name}" value="{!s.Id}"/>-->
                                     <span class="loanrate">{!s.Name} </span>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
-                                        <lightning:buttonicon  variant="bare" iconName="utility:edit" size="medium" title="Edit" value="" onclick="{!c.onClickEdit}"/>                       
+                                        <lightning:buttonicon  variant="bare" name="CashEditButton" iconName="utility:edit" size="medium" title="Edit" value="{!index}" onclick="{!c.onClickEdit}"/>                       
                                         
                                         
-                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="" onclick="{!c.onClickDelete}"/>                                                                                   
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" name="CashDeleteButton" size="medium" title="Delete" value="{!index}" onclick="{!c.onClickDelete}"/>                                                                                   
                                     </div>
                                 </div>
                             </div>
@@ -93,35 +87,16 @@
                                     <span class="loanrate">@{!s.FinServ__APY__c}% </span>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
-                                    <span class="balance">${!s.FinServ__Balance__c}</span>
+                                    <span class="balance"><ui:outputCurrency value="{!s.FinServ__Balance__c}"/></span>
                                 </div>
                             </div>
-                            <!--  <lightning:button variant="Base" label="{!s.Name}" value="{!s.Id}"/>
-                                <p ><span class="loanrate">@{!s.FinServ__APY__c}% </span>
-                                    <span class="balance">${!s.FinServ__Balance__c}</span>
-                                </p>
-                                <br/>
-                                <aura:set attribute="else">
-                                    <lightning:button  variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }" /><p ><span class="loanrate">@0%</span>
-                                    <span class="balance">${!s.FinServ__Balance__c}</span>
-                                    </p>
-                                    <br/>
-                                </aura:set>-->
-                            <!-- </aura:if>-->
-                            <!-- <br/>
-                            <div >
-                                <lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="" onclick="{!c.onClickEdit}"/>                       
-                                
-                                
-                                <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="" onclick="{!c.onClickDelete}"/>                                   
-                            </div>-->
-                            
                         </div>
                     </aura:iteration> 
                     <aura:set attribute="else">
                         <div class="slds-grid slds-gutters slds-p-around_x-small">
                             <div class="slds-col slds-size_12-of-12">
-                                <div class="slds-align_absolute-center"> No Value Present </div>
+                                <div class="slds-align_absolute-center">You have not created any account. 
+</div>
                             </div>
                         </div>
                     </aura:set>
@@ -141,7 +116,7 @@
                         <span class="slds-truncate slds-p-left_x-small">Credit</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
-                        <span>${!v.creditvalue}</span>
+                        <span><ui:outputCurrency value="{!v.creditvalue}"/></span>
                         
                     </div>
                 </div>
@@ -150,20 +125,18 @@
             <div aura:id="creditSection" class="slds-is-collapsed">
                 <aura:if isTrue="{!not(empty(v.credit))}" >
                     
-                    <aura:iteration items="{!v.credit}" var="s" >
+                    <aura:iteration items="{!v.credit}" var="s" indexVar="index">
                         <div class="slds-card card" >
-                            <!--  <aura:if isTrue="{!s.FinServ__APY__c}"> -->
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <!--  <lightning:button variant="Base" label="{!s.Name}" value="{!s.Id}"/>-->
                                     <span class="loanrate">{!s.Name} </span>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
-                                        <lightning:buttonicon  variant="bare" iconName="utility:edit" size="medium" title="Edit" value="" onclick="{!c.onClickEdit}"/>                       
+                                        <lightning:buttonicon  variant="bare" iconName="utility:edit" name="CreditEditButton" size="medium" title="Edit" value="{!index}" onclick="{!c.onClickEdit}"/>                       
                                         
                                         
-                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="" onclick="{!c.onClickDelete}"/>                                                                                   
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" name="CreditDeleteButton" size="medium" title="Delete" value="{!index}" onclick="{!c.onClickDelete}"/>                                                                                   
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +145,7 @@
                                     <span class="loanrate">@{!s.FinServ__APY__c}% </span>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
-                                    <span class="balance">${!s.FinServ__LoanAmount__c}</span>
+                                    <span class="balance"><ui:outputCurrency value="{!s.FinServ__LoanAmount__c}"/></span>
                                 </div>
                             </div>                            
                         </div>
@@ -180,7 +153,7 @@
                     <aura:set attribute="else">
                         <div class="slds-grid slds-gutters slds-p-around_x-small">
                             <div class="slds-col slds-size_12-of-12">
-                                <div class="slds-align_absolute-center"> No Value Present </div>
+                                <div class="slds-align_absolute-center">You have not created any account.</div>
                             </div>
                         </div>
                     </aura:set>
@@ -200,7 +173,7 @@
                         <span class="slds-truncate slds-p-left_x-small">Investment</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
-                        <span>${!v.investmentvalue}</span>
+                        <span><ui:outputCurrency value="{!v.investmentvalue}"/></span>
                         
                     </div>
                 </div>
@@ -209,20 +182,18 @@
             <div aura:id="investmentSection" class="slds-is-collapsed">
                 <aura:if isTrue="{!not(empty(v.investment))}" >
                     
-                    <aura:iteration items="{!v.investment}" var="s" >
+                    <aura:iteration items="{!v.investment}" var="s" indexVar="index">
                         <div class="slds-card card" >
-                            <!--  <aura:if isTrue="{!s.FinServ__APY__c}"> -->
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <!--  <lightning:button variant="Base" label="{!s.Name}" value="{!s.Id}"/>-->
                                     <span class="loanrate">{!s.Name} </span>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
-                                        <lightning:buttonicon  variant="bare" iconName="utility:edit" size="medium" title="Edit" value="" onclick="{!c.onClickEdit}"/>                       
+                                        <lightning:buttonicon  variant="bare" name="InvestmentEditButton" iconName="utility:edit" size="medium" title="Edit" value="{!index}" onclick="{!c.onClickEdit}"/>                       
                                         
                                         
-                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="" onclick="{!c.onClickDelete}"/>                                                                                   
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" name="InvestmentDeleteButton" size="medium" title="Delete" value="{!index}" onclick="{!c.onClickDelete}"/>                                                                                   
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +202,7 @@
                                     <span class="loanrate">@{!s.FinServ__APY__c}% </span>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
-                                    <span class="balance">${!s.FinServ__Balance__c}</span>
+                                    <span class="balance"><ui:outputCurrency value="{!s.FinServ__Balance__c}"/></span>
                                 </div>
                             </div>                            
                         </div>
@@ -239,7 +210,7 @@
                     <aura:set attribute="else">
                         <div class="slds-grid slds-gutters slds-p-around_x-small">
                             <div class="slds-col slds-size_12-of-12">
-                                <div class="slds-align_absolute-center"> No Value Present </div>
+                                <div class="slds-align_absolute-center">You have not created any account.</div>
                             </div>
                         </div>
                     </aura:set>
@@ -259,7 +230,7 @@
                         <span class="slds-truncate slds-p-left_x-small">Loan</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
-                        <span>${!v.loanvalue}</span>
+                        <span><ui:outputCurrency value="{!v.loanvalue}"/></span>
                         
                     </div>
                 </div>
@@ -268,7 +239,7 @@
             <div aura:id="loanSection" class="slds-is-collapsed">
                 <aura:if isTrue="{!not(empty(v.loan))}" >
                     
-                    <aura:iteration items="{!v.loan}" var="s" >
+                    <aura:iteration items="{!v.loan}" var="s" indexVar="index">
                         <div class="slds-card card" >
                             <!--  <aura:if isTrue="{!s.FinServ__APY__c}"> -->
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
@@ -278,10 +249,10 @@
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
-                                        <lightning:buttonicon  variant="bare" iconName="utility:edit" size="medium" title="Edit" value="" onclick="{!c.onClickEdit}"/>                       
+                                        <lightning:buttonicon  variant="bare" iconName="utility:edit" name="LoanEditButton" size="medium" title="Edit" value="{!index}" onclick="{!c.onClickEdit}"/>                       
                                         
                                         
-                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="" onclick="{!c.onClickDelete}"/>                                                                                   
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" name="LoanDeleteButton" size="medium" title="Delete" value="{!index}" onclick="{!c.onClickDelete}"/>                                                                                   
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +261,7 @@
                                     <span class="loanrate">@{!s.FinServ__APY__c}% </span>
                                 </div>
                                 <div class="slds-col slds-size_6-of-12">
-                                    <span class="balance">${!s.FinServ__LoanAmount__c}</span>
+                                    <span class="balance"><ui:outputCurrency value="{!s.FinServ__LoanAmount__c}"/></span>
                                 </div>
                             </div>                            
                         </div>
@@ -298,7 +269,7 @@
                     <aura:set attribute="else">
                         <div class="slds-grid slds-gutters slds-p-around_x-small">
                             <div class="slds-col slds-size_12-of-12">
-                                <div class="slds-align_absolute-center"> No Value Present </div>
+                                <div class="slds-align_absolute-center">You have not created any account.</div>
                             </div>
                         </div>
                     </aura:set>
@@ -309,6 +280,19 @@
         <!--section 4 end-->
     </div>
     <aura:if isTrue="{!v.showInModal}">
-        <c:AddNewAccountModal showInModal="{!v.showInModal}"/>
+        <c:AddNewAccountModal showInModal="{!v.showInModal}" client="{!v.client}" clientid="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}"/>
     </aura:if>
+    <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Cash')}" >
+        <c:BankAccountModal showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
+    </aura:if>
+    <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Investment')}" >
+        <c:BankAccountModal showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
+    </aura:if>
+    <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Loan')}" >
+        <c:AddLoan isActive="{!v.isModalOpen}" client="{!v.client}" loanId="{!v.financialAccount.Id}" namespace="{!v.namespace}" Loan="{!v.recordTypeId}"/>
+    </aura:if>
+    <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Credit')}" >
+        <c:CreditAccountForm showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeId="{!v.recordTypeId}" namespace="{!v.namespace}"/>
+    </aura:if>
+    
 </aura:component>

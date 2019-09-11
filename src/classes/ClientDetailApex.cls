@@ -743,6 +743,21 @@ public class ClientDetailApex {
         
     }//method End
     
+    @AuraEnabled 
+    public static List<RecordType> getRecordTypeIds(){
+        List<RecordType> recordTypes;
+        try{
+            
+            recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
+            if(TEST.isRunningTest())
+                throw new NullPointerException();
+        }catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return recordTypes;
+        
+    }
+    
     public class WrapperClass {
         
         @auraEnabled
@@ -833,17 +848,46 @@ public class ClientDetailApex {
         return wrapperObj;
     }//method end
     
+   
     @auraEnabled
-    public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)
-    {      
-        FinServ__FinancialGoal__c finGoal  = [select recordtypeid,recordtype.developername  from FinServ__FinancialGoal__c where id=:strRecordTypeName];       
-        return finGoal.recordtype.developername;
-    } 
-    
-    @auraEnabled
-    public static void deleteGoals(id goalId) {
+    public static Account getClient(String ClientId) {
         
-        FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];
-        delete goalItem;
+        Account ac;
+        try{        
+            ac= [Select Id from Account  where Id =: ClientId];
+        }
+        catch(Exception e){
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            
+        }
+        return ac;
+        
+    }
+     @auraEnabled
+    public static boolean deleteFinAccout(String finId) {
+        
+        FinServ__FinancialAccount__c ac;
+        try{        
+            ac= [Select Id,RecordType.DeveloperName from FinServ__FinancialAccount__c  where Id =: finId limit 1];
+            if(ac.RecordType.DeveloperName !='LoanAccount' && ac.Recordtype.DeveloperName!='CreditCard'){
+                List<FinServ__FinancialGoal__c> fl= [Select id from FinServ__FinancialGoal__c  where Associated_Account__c =: finId];
+                if(fl.size()>0){
+                    return false;
+                }
+                else{
+                    delete ac;
+                }
+                
+            }
+            else{
+                delete ac;
+            }
+            
+        }
+        catch(Exception e){
+           FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return true;
+        
     }
 }//Outer Class

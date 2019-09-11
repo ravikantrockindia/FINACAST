@@ -91,7 +91,9 @@
                                     </div>
                                 </aura:if>
                                 <div style="clear: both;"></div> 
-                            </div>                        
+                            </div> 
+                <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="Loan" class="slds-hidden"/>
+
                         </div>   
                           
                         <footer class="slds-modal__footer">

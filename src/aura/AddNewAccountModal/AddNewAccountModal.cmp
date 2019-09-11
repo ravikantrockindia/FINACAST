@@ -1,49 +1,44 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
     <aura:attribute name="accountRecordId" type="String"/>
     <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c" default=""/>
-    <aura:attribute name="showInModal" type="boolean"/>
-    <aura:attribute name="showInModal1" type="boolean"/>
-    
+    <aura:attribute name="showInModal" type="boolean" default="false"/>
+        <aura:attribute name="client" type="Account"/>
+
     <aura:attribute name="clientid" type="boolean"/>
     <aura:attribute name="namespace" type="String" default=""/>
     <aura:attribute name="recordTypeIds" type="List[]"/>
+        <aura:attribute name="recordTypeId" type="String"/>
+
     <aura:attribute name="options" type="List" default="[
                                                         {'label': 'Cash', 'value': 'Cash'},
                                                         {'label': 'Credit', 'value': 'Credit'},
                                                         {'label': 'Investment', 'value': 'Investment'},
                                                         {'label': 'Loan', 'value': 'Loan'}
                                                         ]"/>
-    <aura:attribute name="value" type="String" default="Cash"/>
+    <aura:attribute name="value" type="String" default=""/>
     
-    <!-- <lightning:recordEditForm
-                              aura:id="form"
-                             recordId="{!v.financialAccount.Id}"
-                              recordTypeId="{!v.recordTypeId}"
-                              onerror="{!c.handleError}"
-                              onsuccess="{!c.handleSuccess}"
-                              objectApiName="FinServ__FinancialAccount__c">-->
     <div style="height:640px">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             
             <div class="slds-modal__container" >
                 
                 <header class="slds-modal__header">
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Account</h2>
+                    <h3 class="slds-text-heading_medium slds-hyphenate">Select the Account Type</h3>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
-                    <h3> Select the Account Type</h3>
                     <lightning:radioGroup name="radioGroup"
                                           options="{! v.options }"
                                           value="{! v.value }"
                                           type="radio"
-                                          onchange="{!c.changeOption}"/>
+                                          onchange="{!c.changeOption}"
+                                          class="radio-inline"/>
                 </div>
                 <footer class="slds-modal__footer">
                     
                     <div class="slds-clearfix custom_width">
                         <div class="slds-float_right">
                             <aura:if isTrue="{!v.showInModal}">
-                                <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr"/>
+                                <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.onClickCancel}" class="mlr btn1"/>
                             </aura:if>
                         </div>                    
                     </div>
@@ -52,10 +47,19 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
-    <aura:if isTrue="{!v.showInModal1}">
-        
+    <aura:if isTrue="{!v.showInModal}">
         <aura:if isTrue="{!v.value=='Cash'}">
-            <c:BankAccountModal accountRecordId="{!v.accountRecordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal1}" namespace="{!v.namespace}"/>
-        </aura:if>  </aura:if>     
-    <!-- </lightning:recordEditForm>-->
+            <c:BankAccountModal accountRecordId="{!v.clientid}" selectedAccountType="Cash" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
+        </aura:if> 
+            <aura:if isTrue="{!v.value=='Investment'}">
+                <c:BankAccountModal accountRecordId="{!v.clientid}" selectedAccountType="Investment" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.value=='Credit'}">
+                <c:CreditAccountForm  accountRecordId="{!v.clientid}" showInModal="{!v.showInModal}" namespace="{!v.namespace}" recordTypeId="{!v.recordTypeId}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.value=='Loan'}">
+                <c:AddLoan  namespace="{!v.namespace}" client="{!v.client}" Loan="{!v.recordTypeId}" accLoanRecType="IndustriesIndividual" isActive="{!v.showInModal}" />
+            </aura:if> 
+            
+    </aura:if>    
 </aura:component>
