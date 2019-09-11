@@ -868,7 +868,7 @@ public class ClientDetailApex {
             ac= [Select Id from Account  where Id =: ClientId];
         }
         catch(Exception e){
-            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             
         }
         return ac;
@@ -896,7 +896,7 @@ public class ClientDetailApex {
             
         }
         catch(Exception e){
-            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             
         }
         return true;
