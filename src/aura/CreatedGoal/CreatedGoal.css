@@ -1,0 +1,67 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; font-weight: 600; color: #000;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #000;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 20px;
+    min-width: 120px;
+    border: 1px solid #4E75a3;
+}
+.THIS .btn-blank {
+    background-color: #fff;
+    color: #4e75a3;
+}
+.THIS .created-goal {
+    text-align: center;
+    background-color: #fff;
+}
+.THIS .created-gaol-bg {
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+}
+.THIS .created-gaol-bg img {
+    width: 100%;
+    fill: #4e75a3;
+}
+.THIS .created-gaol-fi {
+    position: absolute;
+    z-index: 1;
+    width: 160px;
+    left: 20px;
+    top: 70px;
+}
+.THIS .created-gaol-fi img {
+    width: 72%;
+    height: 90px;
+}
+.THIS .created-goal h1 {
+    line-height: 30px;
+    margin: 85px 0 25px;
+}
+.THIS .created-goal button {
+    margin:  0 15px;
+}
+.THIS .cros_btn {
+    background-color:transparent;
+    color:#fff;
+    border:none;
+    min-width:25px;
+    padding:0;
+}
+.THIS .slds-modal__header {
+    position: relative;
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem;
+    border-bottom:none;
+    padding: 1rem;
+    text-align: center;
+}

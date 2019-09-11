@@ -1,0 +1,55 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="icon" type="String" default="String"/>
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="cid" type="Id"/>
+    <aura:attribute name="addGoals" type="Boolean" default=""/>
+    <aura:attribute name="modalOpen" type="Boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="createModal" type="Boolean" default="false"/>
+    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+     <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name = "GoalId" type="String"/>   
+    {!v.GoalId}
+  <aura:if isTrue="{!v.createModal}">  
+    <div class="slds-m-around_xx-large">
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                 
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-card__header">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12">
+                                <div class="created-goal slds-p-top_xx-large slds-p-bottom_xx-large">
+                                    <div class="created-gaol-bg">
+                                        <img src="{!$Resource.successstars}"/>
+                                        <div class="created-gaol-fi">
+                                            <!-- <img src="{!$Resource.CarIcon}"/>-->
+                                            <img src="{!v.icon}"/>
+                                        </div>
+                                    </div>
+                                    <h1>Congratulations!<br/>You successfully created a goal.</h1>
+                                    <button class="slds-button btn-blank" type="button" onclick="{!c.viewGoal}">Go to Goals</button>
+                                    <button class="slds-button" type="button" onclick="{!c.createGoal}">Create Another Goal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                 
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        
+    </div>
+    </aura:if>
+   
+    <aura:if isTrue="{!v.addGoals}">
+        
+        <c:GoalModal   namespace="{!v.namespace}" client ="{!v.cid}" />
+    </aura:if> 
+</aura:component>
