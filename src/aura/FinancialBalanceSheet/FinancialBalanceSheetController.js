@@ -178,14 +178,12 @@
             
         }
         if(name=='LoanEditButton'){
-            debugger;
             var loanList=component.get("v.loan");
             component.set("v.accountTypeforEdit",'Loan');
             
             component.set("v.financialAccount", loanList[value]);
             var recordTypeIds=component.get("v.recordTypeIds")
             component.set("v.loadId",loanList[value].Id)
-            alert (component.get("v.financialAccount.Id"))
             for(var i=0;i<recordTypeIds.length;i++){             
                 if(recordTypeIds[i].DeveloperName=='LoanAccount'){
                     component.set("v.recordTypeId",recordTypeIds[i].Id)

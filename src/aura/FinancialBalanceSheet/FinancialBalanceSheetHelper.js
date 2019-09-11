@@ -7,7 +7,7 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
-                var data=response.getReturnValue();
+                var data=JSON.parse(JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,""));
                 component.set("v.cash", data.cashAccountList);
                 component.set("v.investment", data.investmentAccountList);
                 component.set("v.credit", data.creditAccountList);
