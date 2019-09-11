@@ -6,10 +6,19 @@
             var spinner = component.find("mySpinner");
             $A.util.removeClass(spinner, "slds-show");
             $A.util.addClass(spinner, "slds-hide");
-            
-            var namespace=component.get("v.namespace")
             var field='v.financialAccount.'+'Account_Type__c'
-            component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Checking', value:'Checking'},{label:'Savings', value:'Savings'},{label:'Money Market', value:'Money Market'},{label:'CD', value:'CD'},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
+            var selectedAccountType=component.get("v.selectedAccountType");
+            if(selectedAccountType=='Cash'){
+                component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Checking', value:'Checking'},{label:'Savings', value:'Savings'},{label:'Money Market', value:'Money Market'},{label:'CD', value:'CD'}])
+                
+            }
+            else if(selectedAccountType=='Investment'){
+                component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
+                
+            }
+           else{
+                    component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Checking', value:'Checking'},{label:'Savings', value:'Savings'},{label:'Money Market', value:'Money Market'},{label:'CD', value:'CD'},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
+                }
             var accountType=component.get(field)
             if( $A.util.isUndefinedOrNull(accountType) || accountType == "" ){
                 component.set("v.selectedAccount",'')
@@ -28,7 +37,7 @@
     handleSubmit:function(component,event,helper){
         try{
             component.set("v.disabled",true)
-                        var spinner = component.find("mySpinner");
+            var spinner = component.find("mySpinner");
             $A.util.removeClass(spinner, "slds-hide");
             
             $A.util.addClass(spinner, "slds-show");
@@ -57,7 +66,7 @@
         $A.util.addClass(spinner, "slds-hide");
         component.set("v.disabled",false)
         helper.showNotfication(component,"The record cannot be saved. Please try again!","error","Error!");    
-
+        
     },
     
     onClickCancel: function(component, event, helper) {

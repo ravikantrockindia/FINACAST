@@ -21,9 +21,6 @@
     width: 94%;
     margin: 0 3%;
 }
-.THIS .textarea_custom .slds-textarea {
-    height: 32px;
-}
 .THIS .custom_card .slds-size_1-of-2 {
     float: left;
     font-size: 0.75rem;
@@ -51,4 +48,25 @@
 }
 .THIS .apy_hidden-icon .slds-form-element__icon {
     display: none;
+}
+.THIS .slds-input {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-input[readonly] {
+    background-color: #f2f0f0;
+}
+.THIS .slds-textarea {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-select {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
 }
