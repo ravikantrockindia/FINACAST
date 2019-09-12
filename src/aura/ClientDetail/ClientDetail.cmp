@@ -2,28 +2,31 @@
                 implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">   
  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute type="id" name="recordId"/>
+    
     <aura:attribute name="NameSpace" type="string" />
  <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
+    <div class="slds-theme_default">
     <div class="slds-card__header">
         <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_3-of-12 slds-p-left_none">
+            <div class="slds-col slds-size_3-of-12 ">
                 <c:FinancialBalanceSheet recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
                 <div class="client_managed client-profile">
                     <c:ShowClientProfile recordId="{!v.recordId}"/>
                 </div>
             </div>
-            <div class="slds-col slds-size_9-of-12 slds-p-right_none">
+            <div class="slds-col slds-size_9-of-12 ">
                 <c:FinancialSpeedometerAndScoreCard clientId="{!v.recordId}"/>
                 <c:Goalfinal cid="{!v.recordId}" recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
                 <div class="slds-m-top_large slds-m-bottom_medium">
                     <div class="client_managed">
-                        <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                            <div class="slds-col slds-size_6-of-12">
-                                <h3 class="slds-m-top_none">Cash Flow</h3>
+                        <div class=" slds-p-top_medium slds-p-bottom_medium">
+                            <div class="slds-col slds-size_12-of-12">
+                                <h3 class="slds-m-top_none slds-m-bottom_medium" style="margin-bottom: 25px;">Cash Flow</h3>
+                                <c:FinancialCashFlowGraph recordId="{!v.recordId}"/>
                             </div>
-                            <div class="slds-col slds-size_6-of-12 what-is">
+                            <!--div class="slds-col slds-size_6-of-12 what-is">
                                 <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
-                            </div>
+                            </div-->
                         </div>
                        
                            
@@ -35,6 +38,7 @@
                         <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
                             <div class="slds-col slds-size_6-of-12">
                                 <h3 class="slds-m-top_none">Debt</h3>
+                                <c:DashboardDebtGraph />
                             </div>
                             <div class="slds-col slds-size_6-of-12 what-is">
                                 <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
@@ -59,4 +63,5 @@
             </div>           
         </div>	
     </div>
+        </div>
 </aura:component>
