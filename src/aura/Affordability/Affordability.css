@@ -243,7 +243,7 @@
 }
 .THIS .view-scenario .slds-select_container:after {
     border-top: 5px solid #888;
-    top: 12px;
+    top: 18px;
     height: 7px;
     width: 7px;
 }
@@ -278,6 +278,7 @@
 .THIS .client_managed .slds-input {
     background-color: #f2f0f0;
     height: 40px;
+    border-radius: 0;
 }
 .THIS .client_managed .slds-no-flex {
     display: none;
@@ -408,4 +409,9 @@
 }
 .THIS .question_accordian1 a {
     color: #00b088;
+}
+.THIS .slds-select {
+    border-radius: 0;
+    height: 40px;
+    background-color: #fdfdfd;
 }
