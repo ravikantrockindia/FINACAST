@@ -1,9 +1,21 @@
 ({
     doInit : function(component, event, helper) {
-        console.log('the helper is:', component.get("v.ExpenseTransaction"));
-        var cmpTarget = component.find('exampleModal');
-        $A.util.removeClass(cmpTarget, 'hideDiv');
-        component.set("v.isActive",true);
+         var cll = component.get("v.cid");
+    // alert(cll);
+         var action = component.get("c.getTransction"); 
+         action.setParams({ 
+                      clientId :    cll        
+                          });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") 
+            {
+           var data =  response.getReturnValue();
+                alert('data------'+data);
+                component.set("v.FinancialList",data);
+            }    
+        });
+        $A.enqueueAction(action);
         
     },
     

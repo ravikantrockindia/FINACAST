@@ -1,12 +1,55 @@
 //-----------------Works on component initialization  --------------------------------------//
 ({
+    toggleSection : function(component, event, helper) {
+        // dynamically get aura:id name from 'data-auraId' attribute
+        var sectionAuraId = event.target.getAttribute("data-auraId");
+        // get section Div element using aura:id
+        var sectionDiv = component.find(sectionAuraId).getElement();
+        /* The search() method searches for 'slds-is-open' class, and returns the position of the match.
+         * This method returns -1 if no match is found.
+        */
+        var sectionState = sectionDiv.getAttribute('class').search('slds-is-open'); 
+        
+        // -1 if 'slds-is-open' class is missing...then set 'slds-is-open' class else set slds-is-close class to element
+        if(sectionState == -1){
+            sectionDiv.setAttribute('class' , 'slds-section slds-is-open');
+        }else{
+            sectionDiv.setAttribute('class' , 'slds-section slds-is-close');
+        }
+    }
+,
+    LoanPopupOpen : function(component, event, helper) {
+        var index=event.getSource().get("v.value");
+        var loans=component.get("v.LoanRecord");
+        component.set("v.selectedLoanRecord",loans[index]); 
+        component.set("v.getLoanId",loans[index].Id);
+        component.set("v.LoanPopup",true);
+        // alert(recId);
+    },
+    ExpensePopupOpen : function(component, event, helper) {
+        //alert('hey');
+        
+        var index=event.getSource().get("v.value");
+        var records=component.get("v.IncomeRecord"); 
+        var expenses=records["expenseRecList"]; 
+       
+      component.set("v.selectedIncomeRecord",expenses[index]);
+        component.set("v.getExpenseBudgetId",expenses[index].Id);
+        
+       
+        component.set("v.expensePopup",true);
+      //  alert("budget"+recId);
+      //  alert(records);
+    },
     getmonthlybudget : function(component, event, helper) {
-        console.log('SAY'+component.get('v.namespace'));
+       // console.log('SAY'+component.get('v.namespace'));
+       // 
+        //alert(event.getSource().get("v.value"));
+       // alert('kishan');
         var workspaceAPI = component.find("workspace");
         var tab=component.get("v.tabName")
         console.log('tab',tab)
         workspaceAPI.getFocusedTabInfo().then(function(response) {
-
             var focusedTabId = response.tabId;
             console.log('tab id',focusedTabId )
             workspaceAPI.setTabLabel({
@@ -17,10 +60,10 @@
             console.log(error);
         });
         
-        console.log('inside init'+component.get("v.cid"));
+       // console.log('inside init'+component.get("v.cid"));
         helper.removeBackgroundColor(component, helper);
-        var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-                          "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ];
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
         var arr=[];
         var fromDate = new Date();
         var toDate = new Date();
@@ -111,11 +154,13 @@
                     }
                 }
                 console.log('loan Rec list',data.loanRecList);
+               // debugger;
                 for(var e in data.loanRecList){
                     data.loanRecList[e]["showSection"]=false;
                     data.loanRecList[e]["iconName"]="utility:right";
                     data.loanRecList[e]["ariavaluenow"] = data.transAmountLoan[data.loanRecList[e].Id];
-                    console.log('aria value',data.loanRecList[e]["ariavaluenow"]);
+                    
+                 //   alert('aria value',data.loanRecList[e]["ariavaluenow"]);
                     data.loanRecList[e]["trLoan"] = data.sumOfLoan[data.loanRecList[e].Id];
                     console.log('total loan',data.loanRecList[e]["trLoan"]);
                     data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c;
@@ -137,6 +182,7 @@
                 
                 component.set("v.tInc",data.totalIncome);
                 component.set("v.tExp",data.totalExpense);
+                
                 component.set("v.tLoan", data.totalLoan);
                 component.set("v.addGoal",data.goalRecList);
                  var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
@@ -200,6 +246,7 @@
     createExpenseTransactionRecord : function(component, event, helper) {   
         component.set("v.addExpenseTransaction",true);
         component.set("v.expenseTransaction",event.getSource().get("v.value"));
+        //alert(event.getSource().get("v.value"));
         console.log('the transaction value is as follows:', event.getSource().get("v.value"));               
     },
     createLoanTransactionRecord : function(component, event, helper) {   
@@ -253,20 +300,6 @@
         });     
         $A.enqueueAction(action);
         
-    },
-    LoanEventcalling: function(component,event,helper){
-        var isTaxDeduction =event.getParam("isTaxDeduction");
-        component.set("v.isTaxDeduction ", isTaxDeduction);
-        console.log('isTaxDeduction---'+isTaxDeduction);
-        var getYes = event.getParam("getYes");   
-        component.set("v.getYes ", getYes);
-        console.log('getYes---'+getYes);
-        var getNo =event.getParam("getNo");
-        component.set("v.getNo ", getNo);
-        var isMonthly = event.getParam("isMonthly");   
-        component.set("v.isMonthly ", isMonthly);
-        console.log('isMonthly---'+isMonthly);
-       
     },
     //----------------------Method to Add Expense records-----------------------------//
     createExpenseRecord : function(component , event , helper){
@@ -335,7 +368,6 @@
     onClickEditLoan : function(component,event,helper) {
         component.set("v.showModalLoan",true);
         component.set("v.editrecidLoan",event.getSource().get("v.value"));
-        console.log('sssssss'+event.getSource().get("v.value"));
     },
     //----------------------Method to Edit transaction records-----------------------------//
     onClickEditIncomeTransaction : function(component,event,helper) {
@@ -443,6 +475,7 @@
                 "title": "Delete Success!",
                 type: 'success',
                 "message": "Record has been deleted successfully"           
+
             });
             resultsToast.fire();  
         });     
@@ -710,16 +743,7 @@
         
         cmp.set("v.IncomeRecord",records);
         cmp.set("v.getBudgetId",recId);
-        /*cmp.set("",event.getSource().get("v.value"));
-         cmp.set("v.icon", cmp.get("v.icon")=="utility:right"?
-                      "utility:down":"utility:right");
-       var exInc = cmp.get("v.expandIncome");
-        if(exInc == false){
-            cmp.set("v.expandIncome", true);
-        }
-        else{
-             cmp.set("v.expandIncome", false);
-        } */             
+        
     },
     //-------------------------------Method for Expense Subsection------------------------------//
     handleClickExpandExpense: function (cmp, event) {
@@ -762,6 +786,34 @@
     },
     changeClientName :function(component,event,helper){
         console.log(component.find("inf1").get("v.value"));
-    }
+    },
+    openModelIncome1: function(component, event, helper) {
+      // for Display Model,set the "isOpen" attribute to "true"
+      component.set("v.isOpen", true);
+       component.set("v.IncomePart", true);
+         component.set("v.TransctionPart", false);
+       component.set("v.incomeId",event.getSource().get("v.value"));  
+   },
+    openModelIncome2: function(component, event, helper) {
+      // for Display Model,set the "isOpen" attribute to "true"
+      debugger;
+        var index=event.getSource().get("v.value");
+        
+        var records=component.get("v.IncomeRecord");
+        
+        var incomes=records["incomeRecList"];
+       
+        
+        component.set("v.selectedIncomeRecord",incomes[index]);
+        component.set("v.getBudgetId",incomes[index].Id);
+        component.set("v.isOpen", true);
+        component.set("v.TransctionPart", true);
+        component.set("v.IncomePart", false);
+        component.set("v.incomeId",incomes[index].Id); 
+        
+
+        
+
+   },
     
 })

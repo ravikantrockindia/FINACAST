@@ -10,8 +10,8 @@ public class GetTransctionTest
         insert ac;
         
         GetTransction.getBudget('Expense', ac.id);
-       GetTransction.getTransction('Saving', ac.id);
-        GetTransction.getTransction('Debt', ac.id);
+       GetTransction.getTransction( ac.id);
+      
         System.assert(ac != null);
     }
 

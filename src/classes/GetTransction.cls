@@ -1,17 +1,12 @@
 public class GetTransction {
     
     @auraEnabled
-    public static list<FinServ__FinancialAccount__c> getTransction(String transction, string clientId ){   
+    public static list<FinServ__FinancialAccount__c> getTransction( string clientId ){   
         Id recTypeId = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Savings Account').getRecordTypeId();
-        Id recTypeId1 = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
         list<FinServ__FinancialAccount__c> Facclist = new list<FinServ__FinancialAccount__c>();
-        if(transction =='Saving'){
+
             Facclist= [select name from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeId];
-        }
-        if(transction =='Debt'){
-            Facclist= [select name from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeId1];
-        }
-        system.debug('Facclist'+Facclist);
+      
         return Facclist;
     }   
     
@@ -27,5 +22,5 @@ public class GetTransction {
         system.debug('Facclist'+Facclist);
         return Facclist;
     } 
-    
+   
 }

@@ -1,11 +1,14 @@
-<aura:component controller="AddIncomeController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+<aura:component controller="GetTransction" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
     <aura:attribute name="loanTransaction" type="String"/> 
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name = "transId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
+     <aura:attribute name="cid" type="String"/>
     <aura:attribute name = "trLoanId" type = "String"/>
     <aura:attribute name = "namespace" type = "String"/>
      <aura:attribute name = "client" type = "Account"/>
+     <aura:attribute name="FinancialList" type="List" />
+     <aura:attribute name="selectedValue1" type="String" />
 	<aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
@@ -31,14 +34,30 @@
                                     <div class="slds-box1">
                                         
                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                             <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name" /><br/>                     
-                                          <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" /><br/>
-                                           Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" /><br/>
-</div>
+                                             <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name" />                    
+                                        </div>
+                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                            Date and Time<lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" />
+                                        </div>
+                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                           Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" />
+                                        </div>
+
                                         <div class="slds-col   slds-size_1-of-2" style="color:grey;">
-                                         <span class = "highlight">* </span>   Category<lightning:inputField fieldName="{!v.namespace+'Destination_Financial_Account__c'}" aura:id="dest" /><br/>
-                                           <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" /><br/>
-                                        <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.loanTransaction}" class="slds-hidden" /> 
+                                         <span class = "highlight">* </span>   Category<lightning:select name="Expense" label="jj"  aura:id="mySelect" value="{!v.selectedValue1}" >
+                                            <option>None</option>               
+                                            <aura:iteration items="{!v.FinancialList}" var="item">
+                                                               
+            									 <option label="{!item.Name}" value="{!item.Id}" selected="{!item.Id==v.selectedValue1}"/> 
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                            <lightning:inputField fieldName="{!v.namespace+'Destination_Financial_Account__c'}" aura:id="dest"  class="slds-hide" value="{!v.selectedValue1}" />
+                                    </div>
+                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                           <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" />
+                                        </div>
+                                         <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.loanTransaction}" class="slds-hide" /> 
                                         </div>
                                         <div style="clear: both;"></div>
                                     </div>

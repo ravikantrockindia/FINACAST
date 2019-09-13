@@ -1,60 +1,82 @@
-<aura:component controller="AddIncomeController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+<aura:component controller="GetTransction" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
     <aura:attribute name="expenseTransaction" type="String"/> 
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name = "transId" type = "String"/>
     <aura:attribute name = "title" type = "String"/>
     <aura:attribute name = "trExpenseId" type = "String"/>
+    <aura:attribute name = "getExpenseBudgetId" type="String"/>
     <aura:attribute name = "namespace" type = "String"/>
-     <aura:attribute name = "client" type = "Account"/>
-	<aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
- 
+    <aura:attribute name = "client" type = "Account"/>
+     <aura:attribute name="cid" type="String"/>  
+    <aura:attribute name="addExpenseTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+    <aura:attribute name="FinancialList" type="List" />
+     <aura:attribute name="selectedValue1" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
-            <div class="slds-m-around_xx-large">
-                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
-                    <div class="slds-modal__container">                        
-                        <header class="slds-modal__header">
-                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
-                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
-                                <span class="slds-assistive-text">Close</span>
-                            </button>
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.title}</h2>                            
-       </header>
-                        <lightning:recordEditForm 
-                                                  recordId = "{!v.trExpenseId}"
-                                                  objectApiName="FinServ__FinancialAccountTransaction__c"  onsuccess="{!c.saveAndCloseBtn}"
-                                                   onsubmit = "{!c.handleSubmit}"
-                                               >
-                         
-                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    <div class="slds-m-around_xx-large">
+        <div role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+            <div class="slds-modal__container">                        
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                        <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Transaction</h3>                            
+                </header>
+                <lightning:recordEditForm 
+                                          recordId = "{!v.trExpenseId}"
+                                          objectApiName="FinServ__FinancialAccountTransaction__c"  onsuccess="{!c.saveAndCloseBtn}"
+                                          onsubmit = "{!c.handleSubmit}"
+                                          >
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <div class="slds-gutters" style="border: none;">
+                            <div class="slds-box1">
                                 
-                                <div class="slds-gutters" style="border: none;">
-                                    <div class="slds-box1">
-                                        
-                                        <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                             <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name" /><br/>
-                                          <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" /><br/>
-                                           Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" /><br/>
-</div>
-                                        <div class="slds-col   slds-size_1-of-2" style="color:grey;">
-                                         <span class = "highlight">* </span>   Category<lightning:inputField fieldName="{!v.namespace+'Destination_Financial_Account__c'}" aura:id="dest" /><br/>
-                                           <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" /><br/>
-                                        <lightning:inputField fieldName ="{!v.namespace+'Budget_Category__c'}" value="{!v.expenseTransaction}"  class="slds-hidden"/> 
-                                        </div>
-                                        <div style="clear: both;"></div>
-                                    </div>
+                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name" />
                                 </div>
-                            </div>
-                            
-                            <footer class="slds-modal__footer">
-                                <div class="button" align ="right">
-                                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
-                                    <lightning:button variant="brand" label="Save" type="submit"  />
+                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    Transaction Date &amp; Time<lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" />
+                                </div>
+                                <div style="clear:both;"></div>
+                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" />
+                                </div>
+                                <div class="slds-col   slds-size_1-of-2" style="color:grey;">
+                                    <span class = "highlight">* </span>   Category
+                                    <lightning:select name="Expense" label="jj"  aura:id="mySelect" value="{!v.selectedValue1}" >
+                                            <option>None</option>               
+                                            <aura:iteration items="{!v.FinancialList}" var="item">
                                                                
+            									 <option label="{!item.Name}" value="{!item.Id}" selected="{!item.Id==v.selectedValue1}"/> 
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                    <lightning:inputField fieldName="{!v.namespace+'Destination_Financial_Account__c'}" aura:id="dest"  class="slds-hide" value="{!v.selectedValue1}" />
                                 </div>
-                            </footer>
-                        </lightning:recordEditForm>
-                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
-       
+                                <div style="clear:both;"></div>
+                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" />
+                                </div>
+                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    <lightning:inputField fieldName ="{!v.namespace+'Budget_Category__c'}" value="{!v.expenseTransaction}"  class="slds-hide"/> 
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <div class="button" align ="right">
+                            <lightning:button class="btn1 btn2" variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                            <lightning:button class="btn1" variant="brand" label="Save" type="submit"  />
+                            
+                        </div>
+                    </footer>
+                </lightning:recordEditForm>
+            </div></div><div class="slds-backdrop slds-backdrop_open"></div>
+        
     </div>
 </aura:component>

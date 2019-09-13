@@ -2,10 +2,11 @@
     doInit : function(component, event, helper) {
         var chartDataArray = [];
         var chartLabelArray = [];
-      component.get("v.loanId");
-        var action = component.get("c.getLoanSummaryTransaction");  
+      component.get("v.tansactionId");
+       // alert("Transaction Id " +component.get("v.tansactionId"))
+        var action = component.get("c.getSummaryTransaction");  
         action.setParams({
-            Id: component.get("v.loanId")
+            Id: component.get("v.tansactionId")
         })
         
         var temp=[];
@@ -22,7 +23,7 @@
             }
             
             var apexResponse = response.getReturnValue();
-            
+             
             //extract response against last six months and cummulate them
             for( var i=0; i<apexResponse.length; i++)
             {
@@ -42,13 +43,12 @@
             console.log('Data: ' + chartDataArray);
             console.log('Label: ' + chartLabelArray);
             
-                      
            var dps =new Array();       
             for(var i=0; i<chartLabelArray.length; i++){
                 dps.push({label: chartLabelArray[i] , y: chartDataArray[i],color:"skyblue"});
             }
             console.log('dps: ' + JSON.stringify(dps));            
-            var chart = new CanvasJS.Chart("Canvas02", {
+            var chart = new CanvasJS.Chart("Canvas01", {
                 theme: "light1", // "light2", "dark1", "dark2"
                 animationEnabled: true, // change to true		
                 axisY:{
@@ -68,7 +68,6 @@
             });
             
             chart.render();
-  
         })
         $A.enqueueAction(action);
     }                      
