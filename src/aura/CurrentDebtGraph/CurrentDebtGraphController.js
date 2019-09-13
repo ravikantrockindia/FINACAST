@@ -211,8 +211,8 @@
                 
             //    console.log('moneytobepaid---'+moneytobepaid);
             //   console.log('chartDataSet'+chartDataSet);
-            //     console.log('chartLabels---->'+chartLabels);
-           //     console.log('chartDataSet---->'+chartDataSet);
+                 console.log('chartLabelsggggggg---->'+chartLabels);
+                 console.log('chartDataSet---->'+chartDataSet);
            //     console.log('dataSeriesDebt---->'+JSON.stringify(dataSeriesDebt));
                 
                 

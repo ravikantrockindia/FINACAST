@@ -1,0 +1,78 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS .btn1:hover {
+    color: #fff;
+    background-color: #4E75A3;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+}
+.THIS .active-goal .slds-icon-action-approval {
+    position: relative;
+} 
+.THIS .on-track .slds-icon {
+    position: absolute;
+    top: 0px;
+    width: 20px;
+    left: 0;
+}
+.THIS .on-track {
+    color: #00b088;
+    font-size: 12px;
+    position: relative;
+    margin-left: 10px;
+}
+.THIS .on-track span {
+    position: absolute;
+    left: 22px;
+    top: -5px;
+    width: 100px;
+}
+.THIS .non-track {
+    color: #f24865;
+}
+.THIS .active-goal h3 {
+    color: #4e75a3;
+}
+.THIS .active-goal h3 .slds-float_right1 {
+    color: #000;
+    font-size: 14px;
+}
+.THIS .proj-com {
+    font-size: 12px;
+    color: #808080;
+}
+.THIS .more-btn .slds-icon  {
+    width: 30px;
+    height: 30px;
+    fill: #4e75a3;
+}
+.THIS .active-goal .slds-progress-bar {
+    height: 18px;
+}
+.THIS .active-goal img {
+    fill: #000;
+    width: 65px;
+}
+.THIS .advisory .slds-icon-action-approval {
+    background-color: #ff8b00;
+}
+.THIS .advisory {
+    color: #ff8b00;
+}

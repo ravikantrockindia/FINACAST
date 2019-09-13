@@ -1,0 +1,194 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name = "year" type="Integer" />
+    <aura:attribute name = "shortTermYearlyInterest" type="String[]"/>
+    <aura:attribute name = "longTermLoans"  type="Double" default="0"/>
+    <aura:attribute name = "shortTermLoans"  type="Double" default="0"/>
+    <aura:attribute name = "debtStatus" type="Object"/>
+    <aura:attribute name = "chartDataObject" type = "Object" />
+    <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
+    <aura:attribute name = "showSeeHow" type="Boolean" default="false"/>
+     <aura:attribute name = "moneyOwned" type = "double" />
+     <aura:attribute name = "moneytobepaid" type = "double" />
+    <!--aura:handler name="init" value="{!this}" action="{!c.debtForecast}"/-->
+    <aura:handler name="change" value="{!v.data}" action="{!c.debtForecast}"/>
+    
+   <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.debtForecast}"/>
+    
+    <!--aura:if isTrue="{! !v.isEmptyData}"-->
+	<!--div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small help_link">
+                    <a href="javascript:void(0)" aria-describedby="help" onclick="{!c.openHelpBox}">Help</a>
+                    <aura:if isTrue="{!v.helpBox}">
+                        <div class="help-box-debtForecast" >
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header slds-modal__header_empty">
+                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeHelpBox}">
+                                            <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                            <span class="slds-assistive-text">Close</span>
+                                        </button>
+                                        
+                                    </header>
+                                    <div class="slds-modal__content" id="modal-content-id-1">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-4" style="background-color:#25368B">
+                                                <div class="slds-text-heading_large " style = "color:white; padding:10px; margin: 25% 0 0; text-align: center;">
+                                                    
+                                                    <span style="font-weight: 700;">Debt Forecast</span>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-4" style="padding: 20px">
+                                                <div class="slds-text-body_regular slds-text-align_left slds-text-color_default" style = "font-weight:400">
+                                                    
+                                                    <span style="font-weight: 600; margin-bottom: 10px; display:block;">Finacast simulates your future cash flows based on your budget items. It allocates the cash needed to take care of your expenses and debts from the future income and savings.</span>
+                                                    <ol class="slds-list-dotted">
+                                                        <li> 
+                                                            For unpaid credit card debts, Finacast takes the interest charged into account.</li> 
+                                                        <li> 
+                                                            When the monthly payment for a loan is not paid in full, Finacast puts the gap in an unplanned debt bucket with an interest rate of 18% per annum.</li> 
+                                                        <li> 
+                                                            You can view the interest paid in different years by selecting the year through the year button.</li> 
+                                                        <li>
+                                                            You get specific call outs for debts if you are not able to meet your debt obligations in next 10 years.</li>
+                                                        <li>
+                                                            You can select a specific debt from the drop down to view the details just for that debt.</li>
+                                                    </ol> 
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </div>
+                        
+                    </aura:if>
+                </div-->
+    <div class="slds-grid slds-gutter ">
+    <div class="slds-col slds-size_12-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_6-of-12 slds-p-left_none">
+            	<h2>Debt Forecast</h2>
+            </div>
+			<div class="slds-col slds-size_6-of-12 slds-p-right_none slds-text-align_right">            
+        		<span>
+                                <button class="slds-button-btn" onclick = "{!c.showYearlyInterestPrev}">
+                                    <lightning:icon iconName="utility:chevronleft"
+                                                    alternativeText="prev" size="small"/>
+                                </button>
+                                
+                                <lightning:button class="yearButton"
+                                                  label="{!v.year}" variant="brand"/>
+                                
+                                <button class="slds-button-btn" onclick = "{!c.showYearlyInterestNext}">
+                                    <lightning:icon iconName="utility:chevronright" 
+                                                    alternativeText="next" size="small"/>    
+                                </button>
+                            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Owed</p>
+                        <h4>${!v.moneyOwned}</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Paid</p>
+                        <h4>$0</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money to be Paid</p>
+                        <h4>${!v.moneytobepaid}</h4>
+                    </div>
+                </div>
+            </div>
+    			<div class="slds-grid slds-gutters">
+                    <div class="slds-col  slds-size_12-of-12">
+                		<lightning:card class="chart2" >
+                            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div id="chartContainer3.29959" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                </div>
+            </div>
+                    
+                    <!--div class="chart2" style="width: 100%; height: auto;">
+                        <div class="charts-child">
+                           <div id="chartContainer3.2995" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                        </div>
+                    </div-->
+                     <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+                </div>
+            </div>
+                    <!--div class="slds-wrap slds-grid tab3-message" style="margin: 0 0;">
+                        
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="slds-text-align_center label-font">
+                                <span>Interest Paid In</span>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-col slds-size_4-of-12" style="padding: 0 5px;">
+                            <div class="slds-text-align_center label-font">
+                                <span>Long Term Loans</span>
+                            </div>
+                            <div class="slds-text-align_center value-boxes">
+                                <span>{!v.longTermLoans}</span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12" style="padding: 0 5px;">
+                            <div class="slds-text-align_center label-font">
+                                <span>Short Term Loans</span>
+                            </div>
+                            <div class="slds-text-align_center value-boxes">
+                                <span>{!v.shortTermLoans}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col slds-size_12-of-12" style="margin-top: 10px;">
+                        	<div class="slds-text-align_center">
+                                <span>
+                                    <button class="slds-button" onclick = "{!c.showYearlyInterestPrev}">
+                                        <lightning:icon iconName="utility:chevronleft"
+                                                        alternativeText="prev" size="small"/>
+                                    </button>
+                                    
+                                    <lightning:button class="yearButton"
+                                                      label="{!v.year}" variant="brand"/>
+                                    
+                                    <button class="slds-button" onclick = "{!c.showYearlyInterestNext}">
+                                        <lightning:icon iconName="utility:chevronright" 
+                                                        alternativeText="next" size="small"/>    
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div-->
+                    
+            
+                    
+                </lightning:card>
+                    </div>
+                </div>
+    <!--/aura:if>
+    
+    <aura:if isTrue="{! v.isEmptyData}">
+        <lightning:card class="chart2" >                   
+            <div class="chart2" style="width: 100%; height: auto;"><p>No Data to Display</p></div>
+        </lightning:card>
+    </aura:if-->
+</aura:component>

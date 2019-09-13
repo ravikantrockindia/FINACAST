@@ -248,3 +248,8 @@
 .THIS .networth-fea h4 {
     font-size: 18px;
 }
+.THIS .networth-msg {
+    position: absolute;
+    background-color: #fff;
+    bottom: 0;
+}

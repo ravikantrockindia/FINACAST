@@ -37,32 +37,32 @@
     <!-- Income attribute list -->
     <aura:attribute name = "incomeSlider" type = "Integer" />
     <aura:attribute name = "incomeLimit" type = "Integer" />
-    <aura:attribute name="income" type="Budget__c[]" default="[{'Name': 'Income 1', 'Amount' : '0'}]" />
+    <aura:attribute name="income" type="Scenario_Income__c[]" default="[{'Name': 'Income 1', 'Amount__c' : '0'}]" />
     <aura:attribute name = "incomeAmount" type = "Integer" />
     
     <!-- Expense attribute list -->
     <aura:attribute name = "expenseSlider" type = "Integer" />
     <aura:attribute name = "expenseLimit" type = "Integer" />
-    <aura:attribute name="expense" type="Budget__c[]" default="[{'Name': 'Expense 1', 'Amount' : '0'}]"/>
+    <aura:attribute name="expense" type="Scenario_Expense__c[]" default="[{'Name': 'Expense 1', 'Amount__c' : '0'}]"/>
     <aura:attribute name = "expenseAmount" type = "Integer" />
     
     <!-- Goal attribute list -->
     <aura:attribute name = "goalLimit" type = "Integer" />	
-    <aura:attribute name="goal" type="FinServ__FinancialGoal__c[]" default="[{'Name': 'Goal 1', 'Amount' : '0'}]" />
+    <aura:attribute name="goal" type="Scenario_Goal__c[]" default="[{'Name': 'Goal 1', 'Amount__c' : '0'}]" />
     <aura:attribute name="goalAmount" type="Decimal" default = "0"/>
     
     <!-- Loan attribute list -->
     <aura:attribute name = "loanLimit" type = "Integer" />
-    <aura:attribute name="loan" type="FinServ__FinancialAccount__c[]" default="[{'Name': 'Loan', 'Amount' : '0', 'APR__c': '0'}]"/>
+    <aura:attribute name="loan" type="Scenario_Debt__c[]" default="[{'Name': 'Loan', 'Amount__c' : '0', 'APR__c': '0'}]"/>
     <aura:attribute name="loanAmount" type="Decimal" default = "0"/>
     
     <!-- Credit attribute list -->
     <aura:attribute name = "creditCardLimit" type ="Integer" />
-    <aura:attribute name="creditcard" type="FinServ__FinancialAccount__c[]" default="[{'Name': 'Credit Card', 'Amount' : '0'}]"/>
+    <aura:attribute name="creditcard" type="Scenario_Debt__c[]" default="[{'Name': 'Credit Card', 'Amount__c' : '0'}]"/>
     <aura:attribute name="cardAmount" type="Decimal" default = "0"/>
     
     <!-- Saving attribute list -->
-    <aura:attribute name="savings" type="FinServ__FinancialAccount__c[]" default="[{'Name': 'Saving', 'Amount' : '0'}]" /> 
+    <aura:attribute name="savings" type="Scenario_Savings__c[]" default="[{'Name': 'Saving', 'Amount__c' : '0'}]" /> 
     <aura:attribute name="savingsAmount" type="Integer" default = "0"/> 
     <aura:attribute name = "savingLimit" type = "Integer" default = "0" />
     
@@ -320,7 +320,7 @@
                                                   onsubmit = "{!c.handleSubmit}"
                                                   onsuccess = "{!c.handleSuccess}"
                                                   recordId = "{!v.recordId}"
-                                                  
+                                                  onload="{!c.recordloaded}"
                                                   > 
                             <lightning:messages/>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">

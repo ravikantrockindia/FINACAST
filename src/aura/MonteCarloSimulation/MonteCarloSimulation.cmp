@@ -1,0 +1,124 @@
+<aura:component controller="MonteCarloSimulationTest" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="childgid" type="String"/>
+    <aura:attribute name="IA" type="Integer"/>
+    <aura:attribute name="requiredMonthlySaving" type="Integer"/>
+    <aura:attribute name="TA" type="Integer"/>
+    <aura:attribute name="TD" type="Date"/>
+    <aura:attribute name="Vol" type="Double"/>
+    <aura:attribute name="picklistValues" type="String[]" />
+        <aura:attribute name="standardDeviationValueMap" type="Object" />
+        <lightning:spinner aura:id="mySpinner" size="medium" class="slds-hide"/>
+
+    <div class="client_managed monte_carlo-form slds-m-top_large slds-p-bottom_xx-small">
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_small">
+                <h3 class="slds-m-left_small">Monte Carlo Simulation</h3>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-left_small slds-p-right_small">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="form-element-01">Initial Amount</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input type="integer" name="input1" label="Initial Amount" aura:id="initialAmount" variant="label-hidden" value="{!v.IA}"/>
+                        
+                        <!--      <input type="text" id="form-element-01" placeholder="$3,000" class="slds-input" />-->
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-left_small slds-p-right_small">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="form-element-01">Annual Savings</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input type="number" name="input2" label="Annual Saving" aura:id="annualSaving" variant="label-hidden" value="{!v.requiredMonthlySaving*12}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-p-left_small slds-p-right_small">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="form-element-01">Target Amount</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input type="number" name="input3" label="Target Amount" aura:id="targetAmount" variant="label-hidden"  value="{!v.TA}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-p-left_small slds-p-right_small">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="form-element-01">Volatility</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input type="number" name="input4" label="Volatility" aura:id="volatility" variant="label-hidden" value="4.0"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-p-left_small slds-p-right_small">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="form-element-01">Target Date</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input type="date" name="input5" label="Target Date" aura:id="targetDate" variant="label-hidden" value="{!v.TD}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-p-left_small slds-p-right_small">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="select-01">Risk Profile</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <lightning:select aura:id="riskProfile" variant="label-hidden">       
+                                <option value="">Choose one</option> 
+                                <aura:iteration items="{!v.picklistValues}" var="item">
+                                    <option value="{!item.value}">
+                                        {!item}
+                                    </option>
+                                </aura:iteration>
+                            </lightning:select>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_12-of-12 slds-text-align_center slds-p-top_x-large slds-p-bottom_xx-large  slds-p-left_medium slds-p-right_medium">
+                <lightning:button variant="brand" label="Simulate" title="Simulate" onclick="{!c.simulate}"/>
+            </div>
+        </div>
+    </div>
+            <aura:if isTrue="{!!(v.standardDeviationValueMap==null)}">
+
+    <div class="client_managed slds-m-top_large slds-p-bottom_xx-small">
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_small">
+                <h3 class="slds-m-left_small">Monte Carlo Simulation</h3>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_large">
+                <h4 class="slds-m-left_small"><i><b>Alert</b></i></h4>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-left_small slds-p-right_medium">
+                <div class="conf-level">
+                    <h4><b>68% confidence level: </b>You will have atleast {!v.standardDeviationValueMap[1]}
+                        for your goal.</h4>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-left_small slds-p-right_medium">
+                <div class="conf-level conf-level1">
+                    <h4><b>95% confidence level: </b>You will have atleast {!v.standardDeviationValueMap[2]}
+                        for your goal.</h4>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_large slds-p-left_small slds-p-right_small">
+                <img src="{!$Resource.MonteCarloSimulation}" class="img_responsive"/>
+            </div>
+        </div>
+    </div>
+    </aura:if>
+</aura:component>

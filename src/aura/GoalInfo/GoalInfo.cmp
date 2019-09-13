@@ -1,0 +1,170 @@
+<aura:component controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/>   
+    <aura:attribute name = "name" type = "String"/>
+    <aura:attribute name = "reqMonSaving" type = "String"/>
+    <aura:attribute name = "startValue" type = "String"/>
+    <aura:attribute name = "AnnualGrowthRate" type = "String"/>
+    <aura:attribute name = "StartDate" type = "String"/>
+    <aura:attribute name = "Priority" type = "String"/>
+    <aura:attribute name = "AccountAssociated" type = "String"/>
+    <aura:attribute name = "tarVal" type = "String"/>
+    <aura:attribute name = "tarDate" type = "String"/>
+    <aura:attribute name="res" type="Integer"/>
+    <!--for Edit Button -->
+    <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
+    <aura:attribute name="editrecidGoal" type="String"/>
+    <aura:attribute name="cid" type="Id"/>
+    <aura:attribute name="icon" type="String" default="String"/>
+    <aura:attribute name="isRetirement" type="Boolean" default="false"/>
+    <aura:attribute name="isNonRetirement" type="Boolean" default="false" />
+        <aura:attribute name="actualValue" type="Double" />
+
+    <aura:attribute name="heading" type="String" default="String"/>
+     <aura:attribute name="namespace" type="string"/>
+    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+   <!--  <hr class="slds-m-top_xx-small slds-m-bottom_xx-small"/> -->
+
+   <!-- <div class="slds-card__header ">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12">
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                    <Lightning:button class="slds-button slds-float_right" label="+ Edit Goal" onclick="{!c.onClickEditGoals}"/>
+            </div>
+        </div>
+        </div>-->
+        <div class="slds-grid slds-gutter slds-m-top_large">
+        	<div class="slds-col slds-size_12-of-12">
+            	<div class="slds-tabs_default active_goal-tab">
+                    <!--<ul class="slds-tabs_default__nav" role="tablist">
+                        <li class="slds-tabs_default__item slds-is-active" title="Goal Info" role="presentation">
+                        <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Goal Info</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="Goal Performance" role="presentation">
+                        <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">Goal Performance</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="Monte Carlo Simulation" role="presentation">
+                        <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item">Monte Carlo Simulation</a>
+                        </li>
+                    </ul> -->
+                    <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                        <div class="client_managed slds-m-top_large">
+                        	<div class="slds-grid slds-gutter ">
+                                <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-border_right">
+                                    <h3 class="slds-m-left_small slds-grid">
+                                    <div class="slds-col slds-size_8-of-12">
+                                        <b>Goal Information</b>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <Lightning:button class="slds-button slds-float_right" label="+ Edit Goal" onclick="{!c.onClickEditGoals}"/>            
+                                    </div>   
+                                    </h3>
+                                    <div class="slds-gutter">
+                                    	<ul class="ac-featers slds-p-top_small">
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Financial Goal Name</b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    {!v.name}
+                                                </div>
+                                            </li>
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Required Monthly Savings</b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    {!v.reqMonSaving}
+                                                </div>
+                                            </li>
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Start Value</b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    {!v.startValue}
+                                                </div>
+                                            </li>
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Annual Growth Rate</b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                     {!v.AnnualGrowthRate}
+                                                </div>
+                                            </li>
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Start Date</b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                   <lightning:formattedDateTime value="{!v.StartDate}" timeZone="UTC" />
+                                                </div>
+                                            </li>
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Priority</b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                   {!v.Priority}
+                                                </div>
+                                            </li>
+                                            <li class="slds-grid">
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    <b>Account Associated </b>
+                                                </div>
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    {!v.AccountAssociated}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                                    <h3 class="slds-m-left_small slds-m-right_small">Goal Progress
+                                           <!-- <lightning:icon iconName="utility:chevrondown" size="small" class="slds-float_right"/>-->
+                                    </h3>
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_4-of-12 slds-m-top_xx-large"></div>
+                                    	<div class="slds-col slds-size_4-of-12 slds-m-top_xx-large">
+                                          <!--  <img src="{!$Resource.piChart}"/>-->
+                                      
+                                     <!-- -->
+                                    <div class="slds-col slds-size_12-of-12">
+                                    <div id="{!v.editrecidGoal}" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                                        <div>   
+                                            <div class="chart-sticker">
+                                                <ul>
+                                                    <li><span>0 - Bad</span></li>
+                                                    <li><h2>{!v.res}%</h2></li>
+                                                    <li><span>100 - Excellent</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                                       <!---->           
+                                            <div class="slds-p-top_small">
+                                                <p>Target Value: <lightning:formattedNumber value="{!v.tarVal}" style="currency" /></p>
+                                                <p>Target Date: <lightning:formattedDateTime value="{!v.tarDate}" timeZone="UTC" /></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+     <aura:if isTrue="{!v.showModalGoal}">
+        <aura:if isTrue="{!v.isRetirement}">      
+            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}"/>  
+        </aura:if>
+        <aura:if isTrue="{!v.isNonRetirement}">  
+            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}"/>
+        </aura:if>
+        
+    </aura:if> 
+             
+</aura:component>

@@ -1,8 +1,10 @@
 ({
-	 /* doInit: function(component, event, helper) {
-        alert(component.get("v.financialGoal.Id"))
-        alert("recordId" +component.get("v.accountRecordId"))
-    },*/
+	 doInit: function(component, event, helper) {
+       // alert(component.get("v.financialGoal.Id"))
+       debugger;
+        var cmpTarget = component.find('exampleModal');
+        
+    },
    
     /*init : function(component , event,helper){
         
@@ -256,7 +258,9 @@
     onGoalClick: function(component,event,helper){
         var heading,subheading;
         var icon;
+        console.log(component.get("v.client"))
         var clickedGoalName = event.getSource().get("v.name");
+        component.set("v.recordTypeIdName",clickedGoalName);
         console.log('ghgcbhvhwvhwegfhwewe'+ event.getSource().get("v.name"));
         var isRetirement , isNonRetirement = true;
         if(clickedGoalName == "WeddingRecordType")

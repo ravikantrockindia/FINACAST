@@ -1,0 +1,76 @@
+<aura:component controller="GoalPlaningController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="gid" type="String" default=""/>
+        <aura:attribute name="chartId" type="String" default=""/>
+
+    <aura:attribute name="goalnotonTrack" type="Boolean" access="global"/>
+    <aura:attribute name="goalStatus" type="Double" access="global"/>
+    <aura:attribute name="goalonTrack" type="Boolean" access="global"/>
+    
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.doInit}"/> 
+    <div class="client_managed slds-m-top_large slds-p-bottom_xx-small">
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_small">
+                <h3 class="slds-m-left_small">Goal Performance</h3>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.goalnotonTrack}">
+            <div class="slds-grid slds-gutter">
+                <div class="slds-col slds-size_2-of-12 slds-p-top_medium slds-m-left_small slds-m-right_small">
+                    <div class="goal-perform">
+                        <p>You are behind your goal car by:-</p>
+                        <h3>{!v.goalStatus}</h3>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_2-of-12 slds-p-top_medium slds-m-left_small">
+                    <div class="goal-perform">
+                        <p>Increase your goal date to:-</p>
+                        <h3>{!v.increaseDate}</h3>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+      <!--  <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_8-of-12 slds-p-top_xx-small slds-m-bottom_small"></div>
+            <div class="slds-col slds-size_2-of-12 slds-p-top_small slds-p-left_small slds-p-right_small slds-text-align_right slds-m-bottom_small">
+                <div class="score-goal-p">
+                    <p>
+                        <lightning:icon iconName="utility:record" size="x-small" class="b-indicator"/> 
+                        Expected Goal Performance
+                    </p>
+                </div>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-p-top_small slds-p-left_small slds-p-right_small slds-text-align_right slds-m-bottom_small">
+                <div class="score-goal-p">
+                    <p>
+                        <lightning:icon iconName="utility:record" size="x-small" class="g-indicator"/>
+                        Actual Goal Performance
+                    </p>                                        
+                </div>
+            </div>
+        </div>-->
+        <div class="slds-grid slds-gutter">
+            <!--class="slds-col slds-size_12-of-12 slds-p-top_small slds-p-left_small slds-p-right_small slds-m-bottom_small-->
+            <div id="{!v.chartId}" style="height: 300px; width: 100%;">
+                <!-- <img src="{!$Resource.GoalPerformance}" class="img_responsive"/>-->
+            </div>
+        </div>
+        <div class="slds-grid slds-gutter">
+            <div class="slds-col slds-size_3-of-12 slds-p-top_small slds-p-left_small slds-p-right_small slds-m-bottom_small">
+                <div class="insight_goal-p">
+                    <h5><i>Insights:</i></h5>
+                    <aura:if isTrue="{!v.goalnotonTrack}">
+                        
+                        <p>You are behind your goal Car by:- {!v.goalStatus}</p>
+                        <p>Increase your goal date to:-{!v.increaseDate}</p>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.goalonTrack}">
+                        <lightning:formattedText value="You are on Track for your goal" class=" slds-text-body_regular"  /> 
+                    </aura:if>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

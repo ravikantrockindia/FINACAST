@@ -18,9 +18,12 @@
     <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+        <aura:handler name="openModal" event="c:SaveIncomeEvent" action="{!c.createGoal}"/>
+
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>  
     <aura:attribute name="icon" type="String" default="String"/>
     <aura:attribute name="heading" type="string"/>
+    <aura:attribute name="actualValue" type="Double" />
     <!-- This is for Goal Info -->
     <aura:attribute name = "name" type = "String"/>
     
@@ -117,10 +120,10 @@
     </lightning:card>
     <aura:if isTrue="{!v.showModalGoal}">
         <aura:if isTrue="{!v.isRetirement}">       
-            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}"/>  
+            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}" editModal="{!v.showModalGoal}"/>  
         </aura:if>
         <aura:if isTrue="{!v.isNonRetirement}">   
-            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}"/>
+            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}" editModal="{!v.showModalGoal}"/>
         </aura:if>
     </aura:if> 
     

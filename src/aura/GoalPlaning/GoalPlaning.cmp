@@ -1,0 +1,121 @@
+<aura:component Controller="GoalPlaningController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="tabName" type="String" default=" Goals"/>
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="cid" type="Id"/>
+    <aura:attribute name="name" type="String"/>
+    <aura:attribute name="icon" type="String"/>
+    <aura:attribute name="addGoals" type="Boolean" default=""/>
+    <aura:attribute name="goalList" type="FinServ__FinancialGoal__c[]"/>
+    <aura:attribute name="editrecidGoal" type="String"/>
+        <aura:attribute name="budgetScreen" type="Boolean" default="false"/>
+
+    <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
+    <aura:attribute name="isRetirement" type="Boolean" default="false"/>
+    <aura:attribute name="isNonRetirement" type="Boolean" default="false" />
+     <aura:attribute name="heading" type="string"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>  
+    <div class="slds-theme_default">
+    <div class="slds-card__header">
+                <aura:if isTrue="{!!v.budgetScreen}">
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12">
+                <h3 class="slds-m-top_x-small">Your Active Goals</h3>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <button class="slds-button slds-float_right btn1" type="button" onclick="{!c.createGoal}">+ Add New Goals</button>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.addGoals}">
+            
+            <c:GoalModal namespace="{!v.namespace}" client ="{!v.cid}" />
+        </aura:if> 
+        </aura:if>
+        <aura:iteration items="{!v.goalList}" var="Gdetails">
+            <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                <div class="slds-col slds-size_12-of-12 slds-m-top_medium">
+                    <div class="client_managed active-goal">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                <!-- <h2>{!Gdetails.RecordType.DeveloperName}</h2>-->
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='WeddingRecordType'}">
+                                    <img src="{!$Resource.WeddingIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='CarRecordType'}">
+                                    <img src="{!$Resource.CarIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='VacationRecordType'}">
+                                    <img src="{!$Resource.VacationIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='EducationRecordType'}">
+                                    <img src="{!$Resource.EducationIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='HomeRecordType'}">
+                                    <img src="{!$Resource.HomeIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='HomeImprovementRecordType'}">
+                                    <img src="{!$Resource.HomeImprovementIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='OtherGoalsRecordType'}">
+                                    <img src="{!$Resource.OtherGoalsIcon}"/> 
+                                </aura:if>
+                                <aura:if isTrue="{!Gdetails.finGoal.RecordType.DeveloperName=='RetirementRecordType'}">
+                                    <img src="{!$Resource.RetirementIcon}"/> 
+                                </aura:if>
+                            </div>
+                            <div class="slds-col slds-size_10-of-12">
+                                <h3 class="slds-m-top_large">
+                                    <!--Buy a House-->
+                                <a>    <lightning:button variant="base" label="{!Gdetails.finGoal.Name}" value="{!Gdetails.finGoal.Id}"  onclick="{! c.viewGoal }"/></a>
+              
+                                    <aura:if isTrue="{!Gdetails.goalTrack}">
+                                    <span class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></span>
+                                     <aura:set attribute="else">
+                                         <span class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></span>
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                    <span class="slds-float_right slds-float_right1"><lightning:formattedNumber value="{!Gdetails.actualValue}" maximumFractionDigits="2" style="currency"/> of <lightning:formattedNumber value="{!Gdetails.finGoal.FinServ__TargetValue__c}" maximumFractionDigits="2" style="currency"/></span>
+                                </h3>
+                                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
+                                    <!--<span class="slds-progress-bar__value slds-progress-bar__value_success" style="width:25%">-->
+                                     
+                                        <lightning:progressBar value="{!Gdetails.percentage}" title="{!Gdetails.percentage}"/>
+                                       <!-- <span class="slds-assistive-text">Progress: {!Gdetails.percentage}</span>-->
+                                    <!--/span>-->
+                                </div>
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                        <p class="proj-com">Projected Completion:  <lightning:formattedDateTime value="{!Gdetails.finGoal.FinServ__TargetDate__c}" timeZone="UTC" /></p>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                        <h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12 more-btn slds-align_absolute-center">
+                                &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!Gdetails.finGoal.Id}" onclick="{!c.onClickEditGoals}"/>                       
+                                
+                                &nbsp;
+                                <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!Gdetails.finGoal.Id}" onclick="{!c.onClickDeletegoals}"/>                                   
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:iteration>
+        <aura:if isTrue="{!v.showModalGoal}">
+        <aura:if isTrue="{!v.isRetirement}">       
+            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}" editModal="true"/>  
+        </aura:if>
+        <aura:if isTrue="{!v.isNonRetirement}">   
+            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}" editModal="true"/>
+        </aura:if>
+    </aura:if> 
+    </div>
+        </div>
+</aura:component>

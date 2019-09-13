@@ -1,0 +1,42 @@
+<aura:component controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="tabName" type="String" default="{!v.name}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name = "name" type = "String"/>
+    <aura:attribute name = "reqMonSaving" type = "Integer"/>
+    <aura:attribute name = "startValue" type = "Integer"/>
+    <aura:attribute name = "AnnualGrowthRate" type = "String"/>
+    <aura:attribute name = "StartDate" type = "Date"/>
+    <aura:attribute name = "Priority" type = "String"/>
+    <aura:attribute name = "AccountAssociated" type = "String"/>
+    <aura:attribute name = "AccountAssociatedType" type = "String"/>
+    <aura:attribute name = "tarVal" type = "Integer"/>
+    <aura:attribute name = "tarDate" type = "Date"/>
+    <aura:attribute name="editrecidGoal" type="String"/>
+    <aura:attribute name="cid" type="Id"/>
+    <aura:attribute name="actualValue" type="Integer" />
+    <aura:attribute name="res" type="Integer"/>
+	tar-{!v.tarVal}  Actualvalue-{!v.actualValue}  res-{!v.res}
+    <aura:attribute name="namespace" type="string"/>
+    <lightning:tabset selectedTabId="one">
+        <aura:if isTrue="{!or(v.AccountAssociatedType == 'Savings',v.AccountAssociatedType == 'Money Market',v.AccountAssociatedType == 'Checking',v.AccountAssociatedType == 'CD')}">
+            <lightning:tab label="Goal Info" id="one">
+                <c:GoalInfo name="{!v.name}" reqMonSaving="{!v.reqMonSaving}" startValue="{!v.startValue}" AnnualGrowthRate="{!v.AnnualGrowthRate}" StartDate="{!v.StartDate}" AccountAssociated="{!v.AccountAssociated}" Priority="{!v.Priority}" editrecidGoal="{!v.editrecidGoal}" namespace="{!v.namespace}" cid="{!v.cid}" tarDate="{!v.tarDate}" tarVal="{!v.tarVal}" actualValue="{!v.actualValue}" res="{!v.res}"/>
+            </lightning:tab>
+            <lightning:tab label="Goal Performance" id="two">
+                <c:GoalPerformance gid="{!v.editrecidGoal}"/>
+            </lightning:tab>
+            <aura:set attribute="else">
+                <lightning:tab label="Goal Info" id="one">
+                    <c:GoalInfo name="{!v.name}" reqMonSaving="{!v.reqMonSaving}" startValue="{!v.startValue}" AnnualGrowthRate="{!v.AnnualGrowthRate}" StartDate="{!v.StartDate}" AccountAssociated="{!v.AccountAssociated}" Priority="{!v.Priority}" editrecidGoal="{!v.editrecidGoal}" namespace="{!v.namespace}" cid="{!v.cid}" tarDate="{!v.tarDate}" tarVal="{!v.tarVal}" actualValue="{!v.actualValue}"  res="{!v.res}"/>
+                </lightning:tab>
+                <lightning:tab label="Goal Performance" id="two" >
+                    <c:GoalPerformance gid="{!v.editrecidGoal}"/>
+                </lightning:tab>
+                <lightning:tab label="Monte Carlo Simulation" id="three">
+            <c:MonteCarloSimulation childgid="{!v.editrecidGoal}" IA="{!v.startValue}" requiredMonthlySaving="{!v.reqMonSaving}" TA="{!v.tarVal}" TD="{!v.tarDate}"/>
+            </lightning:tab>
+            </aura:set>
+        </aura:if>
+    </lightning:tabset>
+</aura:component>

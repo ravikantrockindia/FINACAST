@@ -24,7 +24,7 @@
                 <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <h3 class="slds-m-top_none">Networth Forecast</h3>
                 </div>
-                <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+                <div class="slds-col slds-size_6-of-12 what-is slds-p-bottom_medium slds-p-left_large slds-p-right_small">
                     <div class="slds-clearfix">
                         <div class="slds-text-align_right"  style="margin-bottom: 15px;">
                             <span>
@@ -67,11 +67,11 @@
             </div>
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-                    <div id="chartContainer3.42" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                    <div id="chartContainer3.42" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                 </div>
             </div>
             <div class="slds-grid slds-gutter ">
-                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                <div class="slds-col slds-size_12-of-12 slds-p-bottom_small slds-p-left_small">
                     <p class="networth-msg"><i><b>Insight:</b></i> <span> {!v.NetworthMessage}</span></p>
                 </div>
             </div>

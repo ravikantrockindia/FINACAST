@@ -1,5 +1,5 @@
-<!-- Developer Name:  Aditya Kaushal -->
-<aura:component controller="Finacast_ScenarioParentApex" 
+<!-- Developer Name:  Aditya Kaushal -->	
+	<aura:component controller="Finacast_ScenarioParentApex" 
                 implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" 
                 access="global">
     
@@ -26,7 +26,7 @@
         </div>
     </aura:if>
     <!-- Loading spinner end-->
-    
+    <div class="slds-card__body">
     <!--Tabs set here-->
     <lightning:tabset>
         
@@ -38,38 +38,182 @@
                                                   namespace="{! v.namespace}"/>
                 </div>
                 <div class="slds-col  slds-size_5-of-12">
-                    <lightning:card  title="Financial Health"> <c:Finacast_FS_FinancialHealthComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Debt Forecast"><c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Networth Forecast"><c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Goal Forecast"><c:Finacast_FS_FinancialGoalForecastComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card> 
+                    <c:ScenarioHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    <c:ScenarioDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    <c:ScenarioNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    <c:ScenarioGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                 </div>
             </div>
         </lightning:tab>
-        
+        <div class="view-scenario slds-p-top_small" >
+            <div class="slds-grid slds-gutter">
+                <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                    <div class="slds-grid slds-gutter">
+                        <div class="slds-col slds-size_3-of-12 slds-p-top_small">
+                            <label>Viewing Scenario</label>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control" >
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" >
+                                            <!--render facet: 4027:0-->
+                                            <span class="" ></span>
+                                        </label>
+                                        <div class="slds-form-element__control slds-grow">
+                                            <div class="slds-select_container">
+                                                <select class="slds-select">
+                                                    <option value="buy">Buy Now</option>
+                                                    <option value="nobuy">Don't Buy Now</option>
+                                                    <option value="recommend">Buy When Recommended</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--render facet: 4034:0-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                    <div class="slds-grid slds-gutter">
+                        <div class="slds-col slds-size_3-of-12 slds-p-top_small">
+                            <label>Viewing Scenario</label>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 ">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control" >
+                                    <div class="slds-form-element" >
+                                        <label class="slds-form-element__label" >
+                                            <!--render facet: 4051:0-->
+                                            <span class="" ></span>
+                                        </label>
+                                        <div class="slds-form-element__control slds-grow">
+                                            <div class="slds-select_container">
+                                                <select class="slds-select" >
+                                                    <option value="buy" >Buy Now</option>
+                                                    <option value="nobuy">Don't Buy Now</option>
+                                                    <option value="recommend" >Buy When Recommended</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--render facet: 4058:0-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <lightning:tab onactive="{! c.handleActive }" label="Compare" title="Compare to current state">
-            Compare to Current State
+            <!--Compare to Current State-->
             
             <div class="slds-grid slds-gutters">
                 
                 <!-- 1. Current State -->
-                <div class="slds-col  slds-size_6-of-12">
-                     <lightning:card  title="Financial Health"> <c:Finacast_FS_FinancialHealthComponent data="{! v.data1}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Debt Forecast"><c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data1}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Networth Forecast"><c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data1}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Goal Forecast"><c:Finacast_FS_FinancialGoalForecastComponent data="{! v.data1}" namespace="{! v.namespace}"/></lightning:card>
+                <div class="slds-col  slds-size_6-of-12 ">
+                    <div class="client_managed">
+                    <c:CurrentStateHealthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
                 </div>
-                
+                <div class="slds-col  slds-size_6-of-12 ">
+                    <div class="client_managed">
+                	<c:SecnarioStateHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                	<c:CurrentStateDebtGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                	<c:SecnarioStateDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+             </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
+                    <div class="client_managed">
+                	<c:CurrentStateNetWorthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
+                    <div class="client_managed">
+                	<c:ScenarioStateNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                	<c:CurrentStateGoalGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
                 <!-- Scenario State -->
-                <div class="slds-col  slds-size_6-of-12">
-                    <lightning:card  title="Financial Health"> <c:Finacast_FS_FinancialHealthComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Debt Forecast"><c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Networth Forecast"><c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card>
-                    <lightning:card  title="Financial Goal Forecast"><c:Finacast_FS_FinancialGoalForecastComponent data="{! v.data2}" namespace="{! v.namespace}"/></lightning:card> 
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                    <c:ScenarioStateGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
                 </div>
                 
             </div>
         </lightning:tab>
-        
+           <lightning:tab onactive="{! c.handleActive }" label="ManageScenario" title="Compare to current state">
+               	<div class="slds-grid slds-gutters">
+                	<div class="slds-col  slds-size_12-of-12 slds-m-top_medium  slds-m-bottom_medium">
+                    	<div class="client_managed">
+                        	<h3 class="slds-p-top_small slds-p-bottom_small slds-p-left_small">
+                                Scenarios 
+                                <button class="slds-button btn1 slds-m-left_small">+Add New Scenarios</button>
+                            </h3>
+                            <table class="slds-table">
+                            	<thead>
+                                	<tr>
+                                    	<th>Scenario Name</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<tr>
+                                    	<td>Buying a Ferrari</td>
+                                        <td>
+                                            <lightning:icon iconName="utility:edit" size="xx-small"/>
+                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>Producing a Movie</td>
+                                        <td>
+                                        	<lightning:icon iconName="utility:edit" size="xx-small"/>
+                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>Buying a House</td>
+                                        <td>
+                                        	<lightning:icon iconName="utility:edit" size="xx-small"/>
+                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td>Buying a 6 Acre Land</td>
+                                        <td>
+                                        	<lightning:icon iconName="utility:edit" size="xx-small"/>
+                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </lightning:tab>
     </lightning:tabset>
+        </div>
     
 </aura:component>

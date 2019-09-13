@@ -142,44 +142,36 @@
     //********************* model utilities come here ****************************/
      
     addGoalButton : function(component, event, helper) {
-        var action = component.get("c.getRecordTypeId");
+  /*      var action = component.get("c.getRecordTypeId");
         action.setParams ({
             recName : event.getSource().get("v.name")
         });
-        action.setCallback(this, function(response){
-            component.set("v.recordTypeId",response.getReturnValue());
+        action.setCallback(this, function(response){*/
+          //  component.set("v.recordTypeId",response.getReturnValue());
             component.set("v.recordName", event.getSource().get("v.name"));				//set recordName atttribute -- to use same editButton(), handleSubmit (), handleSuccess () for different records         
             component.set("v.recordId",'');												// set recordId attribute to blank -- to use recordId attribute for different records 
             component.set("v.goalButtonStatus",true);
-            helper.showFieldsValue(component);
-        });
-        $A.enqueueAction(action);
+           // helper.showFieldsValue(component);
+   //     });
+     //   $A.enqueueAction(action);
     },
     
-    addIncomeButton : function(component) {
-        component.set("v.recordName", event.getSource().get("v.name"));				//set recordName atttribute -- to use same editButton(), handleSubmit (), handleSuccess () for different records         
-        component.set("v.recordId",'');												// set recordId attribute to blank -- to use recordId attribute for different records 
-    },
-    
-    addExpenseButton : function(component) {
-        component.set("v.recordName", event.getSource().get("v.name"));				//set recordName atttribute -- to use same editButton(), handleSubmit (), handleSuccess () for different records         
-        component.set("v.recordId",'');												// set recordId attribute to blank -- to use recordId attribute for different records 
-    },
+   
     
     addLoanButton : function(component, event) {
-        console.log(component.get("v.namespace"));
+   /*     console.log(component.get("v.namespace"));
         var action = component.get("c.getRecordTypeId");
         action.setParams ({
             recName : event.getSource().get("v.name")
         });
-        action.setCallback(this, function(response){
-            component.set("v.recordTypeId",response.getReturnValue());
+        action.setCallback(this, function(response){*/
+     //       component.set("v.recordTypeId",response.getReturnValue());
             component.set("v.recordName", event.getSource().get("v.name"));				//set recordName atttribute -- to use same editButton(), handleSubmit (), handleSuccess () for different records         
             component.set("v.isLoan",true);         
             component.set("v.recordId",'');												// set recordId attribute to blank -- to use recordId attribute for different records 
             component.set("v.debtButtonStatus",true); 
-        });
-        $A.enqueueAction(action);
+     //   });
+      //  $A.enqueueAction(action);
     },
     
 
@@ -200,17 +192,17 @@
     
 
     addSavingButton : function(component,event) {
-        var action = component.get("c.getRecordTypeId");
+   /*     var action = component.get("c.getRecordTypeId");
         action.setParams ({
             recName : event.getSource().get("v.name")
         });
-        action.setCallback(this, function(response){
-            component.set("v.recordTypeId",response.getReturnValue());
+        action.setCallback(this, function(response){*/
+          //  component.set("v.recordTypeId",response.getReturnValue());
             component.set("v.recordName", event.getSource().get("v.name"));				//set recordName atttribute -- to use same editButton(), handleSubmit (), handleSuccess () for different records         
             component.set("v.recordId",'');												// set recordId attribute to blank -- to use recordId attribute for different records 
             component.set("v.savingButtonStatus", true);
-        });
-        $A.enqueueAction(action);
+      //  });
+      //  $A.enqueueAction(action);
     },
     
     // check type of saving accout and display fields 

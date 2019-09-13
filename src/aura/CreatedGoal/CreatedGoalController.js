@@ -1,17 +1,12 @@
 ({	
     doInit:function(component , event , helper){
-        component.set("v.addGoals",false)
-       
-         
-      //  helper.hideExampleModal(component);   
+        component.set("v.createModal1",true);
+        
+        component.set("v.addGoals",false);
+        // helper.hideExampleModal(component);   
     },
-    closeModel:function(component , event , helper){
-        component.set("v.modalOpen",false)
-    },
-    
-	viewGoal : function(component, event, helper) {
-		var Id= component.get("v.ccid");
-        var namespace= component.get("v.namespace");
+    viewGoal : function(component, event, helper) {
+        
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:GoalInfoTab",
@@ -22,20 +17,59 @@
             }
         });
         evt.fire();
-        var cmpTarget = component.find('exampleModal');
+        var cmpTarget = component.find('exampleModal1');
         
-            console.log('the cross is : '+ cmpTarget );
-            $A.util.addClass(cmpTarget, 'hideDiv');
-            component.set("v.isActive",false);
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
-            saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            
-            saveIncomeEvent.fire();
-	},
+        console.log('the cross is : '+ cmpTarget );
+        $A.util.addClass(cmpTarget, 'hideDiv');
+        component.set("v.isActive",false);
+        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+        saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+        
+        saveIncomeEvent.fire();
+    },
+    
+    close : function(component, event, helper) {
+        
+        
+        var cmpTarget = component.find('exampleModal1');
+        
+        console.log('the cross is : '+ cmpTarget );
+        $A.util.addClass(cmpTarget, 'hideDiv');
+        component.set("v.isActive",false);
+        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+        saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+        
+        saveIncomeEvent.fire();
+    },
     createGoal : function(component , event , helper){
-        component.set("v.addGoals" , true);
-        component.set("v.modalOpen",false);
-        var cmpTarget = component.find('exampleModal');
+        
+        debugger;
+        /*var Id= component.get("v.cid");
+        var namespace= component.get("v.namespace");
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef:"c:GoalModal",
+            componentAttributes: {
+                client : Id,
+                namespace : namespace,
+               // createModal1:true
+            }
+        });
+        evt.fire();*/
+        var cmpTarget = component.find('exampleModal1');
+        
+        console.log('the cross is : '+ cmpTarget );
+        $A.util.addClass(cmpTarget, 'hideDiv');
+        component.set("v.isActive",false);
+        //  component.set("v.addGoals",true);
+        var saveIncomeEvent = component.getEvent("openModal");
+         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+        
+        saveIncomeEvent.fire();
+        debugger;
+    //  component.set("v.createModal",false);
+       // component.destroy();
+        /*var cmpTarget = component.find('exampleModal');
         
             console.log('the cross is : '+ cmpTarget );
             $A.util.addClass(cmpTarget, 'hideDiv');
@@ -43,6 +77,9 @@
             var saveIncomeEvent = component.getEvent("saveIncomeEvent");
             saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
             
-            saveIncomeEvent.fire();
+            saveIncomeEvent.fire();*/
+        
+        
+        
     }
 })

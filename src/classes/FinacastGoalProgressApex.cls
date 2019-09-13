@@ -136,16 +136,16 @@ public with sharing class FinacastGoalProgressApex{
                 SavingError = true;
             }
             if((retgoal.Required_Monthly_Saving__c != 0) && (retgoal.FinServ__TargetValue__c != 0)){
-                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today(),growth)).setScale(2,                                                                                                                                            RoundingMode.HALF_UP) + retgoal.Start_Value__c;
+                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + retgoal.Start_Value__c;
             }else{
-                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today(),growth)).setScale(2,                                                                                                                                            RoundingMode.HALF_UP);
+                goalstatus = ((Decimal)curentgoalestimation((double)(retgoal.Required_Monthly_Saving__c), retgoal.Start_Date__c, Date.today(),growth)).setScale(2,RoundingMode.HALF_UP);
             }
             
             
             totalEstimated = 0;
             for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
             {
-                totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,                                                                                                                                                                RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                totalEstimated = totalEstimated + ((Decimal)curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
             }
             
             if(goalstatus > retgoal.Associated_Account__r.FinServ__Balance__c - totalEstimated){

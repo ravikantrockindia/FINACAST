@@ -1,0 +1,77 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name = "totalSavings" type = "Double"/>
+    <aura:attribute name = "totalDebts" type="Double"/>
+    <aura:attribute name = "networth" type="Double"/>
+    <aura:attribute name = "year" type="Integer"/>
+     <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="true"/>
+	 <aura:attribute name = "NetworthMessage" type="string"/>
+    <aura:handler name="change" value="{!v.data}" action="{!c.shownetWorthData}"/>
+    
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.shownetWorthData}"/> 
+
+    <div class="slds-grid slds-gutter ">
+        <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-left_large slds-p-right_small">
+        	<h3>Networth Forecast</h3>
+        </div>
+    <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-left_large slds-p-right_small">
+                    <div class="slds-clearfix">
+                        <div class="slds-text-align_right"  style="margin-bottom: 15px;">
+                            <span>
+                                <button class="slds-button-btn" onclick = "{!c.showNetWorthPrev}">
+                                    <lightning:icon iconName="utility:chevronleft"
+                                                    alternativeText="prev" size="small"/>
+                                </button>
+                                
+                                <lightning:button class="yearButton"
+                                                  label="{!v.year}" variant="brand"/>
+                                
+                                <button class="slds-button-btn" onclick = "{!c.showNetWorthNext}">
+                                    <lightning:icon iconName="utility:chevronright" 
+                                                    alternativeText="next" size="small"/>    
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Total Savings</p>
+                        <h4>${!v.totalSavings}</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Total Debts</p>
+                        <h4>${!v.totalDebts}</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Networth</p>
+                        <h4>${!v.networth}</h4>
+                    </div>
+                </div>
+            </div>
+    <lightning:card class="chart3">
+        <div style="width: 100%; height: auto;">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_12-of-12">
+                    <div class="charts-child">
+                        <div id="chartContainer0.966" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-box" style="border: none; text-align: left;">
+          <p class="networth-msg"><i><b>Insight: </b></i> <span> {!v.NetworthMessage}</span></p>
+        </div>
+    </lightning:card>
+    
+</aura:component>

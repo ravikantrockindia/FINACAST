@@ -22,7 +22,7 @@
     },*/
     
     doInit : function(component,event,helper) 
-    {
+    {	component.set("v.createModal",false);
         console.log(component.get("v.retirementGoalId") )
         var namespace = component.get("v.namespace");
         console.log('namespace value'+namespace);
@@ -401,7 +401,7 @@
         if(curAmt > component.get("v.initialAmount") ||curAmt < 0)
         {
             status = 0
-            helper.currentAmtError(component, event, helper,msg);
+           // helper.currentAmtError(component, event, helper,msg);
             component.set("v.contribution", 0 );
             
         }
@@ -571,9 +571,42 @@
             } );
             $A.enqueueAction(action);   
         }*/
+        /*var evt = $A.get("e.force:navigateToComponent");
+                evt.setParams({
+                    componentDef : "c:CreatedGoal",
+                    componentAttributes: {
+                        cid :component.get("v.client"),
+                        namespace:component.get("v.namespace"),
+                       // icon:component.get("v.icon")
+                        icon:$A.get("$Resource.RetirementIcon")
+                         
+                    }
+                });
+                evt.fire(); */
+        
     },
-    
+    handleError:function(component,event,helper){
+        console.log("handle Error ");
+    },
     handleSuccess:function(component,event,helper){
+        
+        var updatedRecord = JSON.parse(JSON.stringify(event.getParams()));
+        console.log(updatedRecord);
+        console.log('onsuccess: ', JSON.stringify(updatedRecord.response.id));
+        var retId=updatedRecord.response.id;
+       	component.set("v.viewGoalId",retId);
+        var icon=$A.get("$Resource.RetirementIcon");
+        component.set("v.icon",icon);
+        
+        if(!component.get("v.editModal")){
+              var cmpTarget = component.find('exampleModal');
+        
+            console.log('the cross is : '+ cmpTarget );
+            $A.util.addClass(cmpTarget, 'hideDiv');
+        component.set("v.createModal",true);
+        }
+        else
+        
         helper.hideExampleModal(component);
         
     },

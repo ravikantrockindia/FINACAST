@@ -39,7 +39,7 @@
             </div>
           <!--###### MODAL BOX FOOTER Part Start From Here ######-->
           <div class="slds-modal__footer">
-             <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}" >Save</button>
+             <button class="slds-button btn1" onclick="{!c.closeModel}" >Save</button>
           </div>
         </div>
       </div>

@@ -1,0 +1,57 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "goalForecastStatus" type="String"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="true"/>
+	 <aura:attribute name = "moneyOwned" type = "double" />
+     <aura:attribute name = "moneytobepaid" type = "double" />    
+    <aura:handler name="change" value="{!v.data}" action="{!c.goalForecast}"/>
+    
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.goalForecast}"/> 
+
+    <div class="slds-grid slds-gutter ">
+        <div class="slds-col slds-size_12-of-12 slds-p-top_medium  slds-p-left_small">
+        	<h3>Goal Forecast</h3>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_small slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Owed</p>
+                        <h4>${!v.moneyOwned}</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_small slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Paid</p>
+                        <h4>$0</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money to be Paid</p>
+                        <h4>${!v.moneytobepaid}</h4>
+                    </div>
+                </div>
+            </div>
+        <lightning:card class="chart4">
+            <div style="width: 100%; height: auto;">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_12-of-12">
+                        <div class="charts-child">
+                               <div id="chartContainer044" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-box" style="border: none; text-align: left;">
+                    
+                    <aura:iteration items="{!v.goalForecastStatus}" var="g">
+                        <i><b>Insight: </b></i> <span style="color: #2fbf9e;">{!g}</span>
+                    </aura:iteration>
+                   
+                </div>
+            </div>
+        </lightning:card>
+</aura:component>

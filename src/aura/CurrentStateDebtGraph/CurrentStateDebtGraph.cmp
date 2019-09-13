@@ -1,0 +1,85 @@
+<aura:component>
+    
+    <aura:attribute name="namespace" type="string"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name = "year" type="Integer" />
+    <aura:attribute name = "shortTermYearlyInterest" type="String[]"/>
+    <aura:attribute name = "longTermLoans"  type="Double" default="0"/>
+    <aura:attribute name = "shortTermLoans"  type="Double" default="0"/>
+    <aura:attribute name = "debtStatus" type="Object"/>
+    <aura:attribute name = "chartDataObject" type = "Object" />
+    <aura:attribute name = "helpBox" type="Boolean"/>
+    <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
+    <aura:attribute name = "showSeeHow" type="Boolean" default="false"/>
+    <aura:attribute name = "moneyOwned" type = "double" />
+    <aura:attribute name = "moneytobepaid" type = "double" />
+    <!--aura:handler name="init" value="{!this}" action="{!c.debtForecast}"/-->
+    <aura:handler name="change" value="{!v.data}" action="{!c.debtForecast}"/>
+    
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.debtForecast}"/>
+    
+    <div class="slds-grid slds-gutter ">
+        <div class="slds-col slds-size_12-of-12 what-is slds-p-top_medium slds-p-bottom_small slds-p-left_large slds-p-right_small">
+            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_6-of-12 slds-p-left_none">
+                    <h3>Debt Forecast</h3>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-right_none slds-text-align_right">            
+                    <span>
+                        <button class="slds-button-btn" onclick = "{!c.showYearlyInterestPrev}">
+                            <lightning:icon iconName="utility:chevronleft"
+                                            alternativeText="prev" size="small"/>
+                        </button>
+                        
+                        <lightning:button class="yearButton"
+                                          label="{!v.year}" variant="brand"/>
+                        
+                        <button class="slds-button-btn" onclick = "{!c.showYearlyInterestNext}">
+                            <lightning:icon iconName="utility:chevronright" 
+                                            alternativeText="next" size="small"/>    
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutter ">
+        <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+            <div class="networth-fea">
+                <p>Money Owed</p>
+                <h4>${!v.moneyOwned}</h4>
+            </div>
+        </div>
+        <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+            <div class="networth-fea">
+                <p>Money Paid</p>
+                <h4>$0</h4>
+            </div>
+        </div>
+        <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+            <div class="networth-fea">
+                <p>Money to be Paid</p>
+                <h4>${!v.moneytobepaid}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col  slds-size_12-of-12">
+            <lightning:card class="chart2" >
+                <div class="slds-grid slds-gutter ">
+                    <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                        <div id="chartContainer0776" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutter ">
+                    <div class="slds-col slds-size_12-of-12  slds-p-left_small">
+                        <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+                    </div>
+                </div>
+                
+                
+            </lightning:card>
+        </div>
+    </div>
+    
+</aura:component>

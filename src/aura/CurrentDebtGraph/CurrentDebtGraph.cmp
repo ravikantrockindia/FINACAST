@@ -60,11 +60,11 @@
             </div>
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-                    <div id="chartContainer3.299" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                    <div id="chartContainer3.299" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                 </div>
             </div>
             <div class="slds-grid slds-gutter ">
-                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                <div class="slds-col slds-size_12-of-12 slds-p-bottom_small slds-p-left_small">
                     <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
                 </div>
             </div>

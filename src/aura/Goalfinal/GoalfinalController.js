@@ -15,13 +15,15 @@
         .catch(function(error) {
             console.log(error);
         });   */
-            
-            // alert(component.get("v.recordId"))
-            component.set("v.addGoals",false)
-            component.set("v.showModalGoal",false);
-                    var clntId = component.get("v.cid");
-
-            /*console.log('-----------------s--s-----s-s-'+component.get("v.cid"));
+        
+        
+        
+        // alert(component.get("v.recordId"))
+        component.set("v.addGoals",false)
+        component.set("v.showModalGoal",false);
+        var clntId = component.get("v.cid");
+        
+        /*console.log('-----------------s--s-----s-s-'+component.get("v.cid"));
             
             
             console.log('clntId',clnt);
@@ -36,24 +38,27 @@
                 clntId = clnt;
             }
             console.log("sss"+clntId);*/
+        
+        
+        var action = component.get("c.getGoals");
+        action.setParams({
+            ClientId : clntId,
             
-            var action = component.get("c.getGoals");
-            action.setParams({
-                ClientId : clntId,
+        });
+        action.setCallback(this, function(response) {
+            try {
                 
-            });
-            action.setCallback(this, function(response) {
-                try {
-                    var state = response.getState();
-                    if (state === "SUCCESS") {
-                        var data = response.getReturnValue();
-                         
-                        //component.set("v.addGoal",data.goalRecList);
-                        var list=JSON.stringify(data).replace(/Finsol__/g,"")
-                         
-                        
-                        component.set("v.addGoal",JSON.parse(list));
-                     /*   component.set("v.GoalDetails", response.getReturnValue()[0]);
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    var data = response.getReturnValue();
+                    
+                    //component.set("v.addGoal",data.goalRecList);
+                    var list=JSON.stringify(data).replace(/Finsol__/g,"")
+                    
+                    
+                    component.set("v.addGoal",JSON.parse(list));
+                    console.log(JSON.stringify(list))
+                    /*   component.set("v.GoalDetails", response.getReturnValue()[0]);
                         component.set("v.tGoal" , data.totalGoal);
                         component.set("v.selectedClient" , data.client.Id);
                         component.set("v.GoalsList", g.financialGoalList);
@@ -67,6 +72,9 @@
                         
                         
                     }
+                else{
+                    console.log("abc")
+                }
                 }
                 catch(e){
                     
@@ -74,13 +82,16 @@
                     
                 }
             });
-            $A.enqueueAction(action); 
-            
-            
-        },
-    
-    
+
+         
+        $A.enqueueAction(action); 
+        
+        
+    },
     createGoal : function(component , event , helper){
+        debugger;
+                component.set("v.addGoals",false)
+
         component.set("v.addGoals" , true);
     },
     
@@ -89,7 +100,7 @@
         var getName = event.getSource().get("v.value");
         
         var action = component.get("c.getRecordTypeIdbyName");
-        //  component.set("v.editrecidGoal",event.getSource().get("v.value"));
+	  //  component.set("v.editrecidGoal",event.getSource().get("v.value"));
         action.setParams({     
             objectName  : "FinServ__FinancialGoal__c",
             strRecordTypeName : getName,
@@ -171,11 +182,11 @@
                                     component.set("v.isNonRetirement",true); 
                                     component.set("v.isRetirement",false);
                                 }
-            					else if (recordTypeName == "RetirementRecordType")
-                                {
-                                     component.set("v.isRetirement",true);
-                					 component.set("v.isNonRetirement",false);
-                                }
+                                    else if (recordTypeName == "RetirementRecordType")
+                                    {
+                                        component.set("v.isRetirement",true);
+                                        component.set("v.isNonRetirement",false);
+                                    }
             
             //
             /* if(recordTypeName == "RetirementRecordType")
@@ -190,33 +201,79 @@
 
             }  */
             component.set("v.heading",heading);
-             
+            
             component.set("v.editrecidGoal",event.getSource().get("v.value"));            
         });             
-       $A.enqueueAction(action); 
-   },
+        $A.enqueueAction(action); 
+    },
     
     
-    onClickDeletegoals : function(component,event,helper) {   
-        var action2 = component.get("c.deleteGoals");
-        action2.setParams({
-            'goalId' : event.getSource().get('v.value')
-        });
+    onClickDeletegoals : function(component,event,helper) { 
         
-        action2.setCallback(this, function(response) {
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
-            saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            saveIncomeEvent.fire();
-            var resultsToast = $A.get("e.force:showToast");
-            resultsToast.setParams({
-                "title": "Delete Success!",
-                type: 'success',
-                "message": "Record has been deleted successfully"           
+        var retVal = confirm("Are you sure ?");
+        if( retVal == true ) {
+            var action2 = component.get("c.deleteGoals");
+            action2.setParams({
+                'goalId' : event.getSource().get('v.value')
             });
-            resultsToast.fire();
-        });     
-        $A.enqueueAction(action2);
+            
+            action2.setCallback(this, function(response) {
+                var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+                saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+                saveIncomeEvent.fire();
+                var resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": "Delete Success!",
+                    type: 'success',
+                    "message": "Record has been deleted successfully"           
+                });
+                resultsToast.fire();
+            });     
+            $A.enqueueAction(action2);
+            
+            return true;
+        } else {
+            return false;
+        }
         
     }, 
+    viewGoal : function(component, event, helper) {
+        debugger;
+        var idx=event.getSource().get("v.value");
+        component.set("v.editrecidGoal",idx);
+        var clntId = component.get("v.cid");
+        var action = component.get("c.getGoalDetail");
+        action.setParams({
+            'goalId' :idx,
+            ClientId : clntId,
+        });
+        
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if(state==='SUCCESS'){
+                var data=response.getReturnValue();
+                var name=data.finGoal.Name;
+                var actualvalue=data.actualValue;
+                component.set("v.actualValue",actualvalue);
+                component.set("v.name",name);
+                var evt = $A.get("e.force:navigateToComponent");
+                evt.setParams({
+                    componentDef : "c:GoalInfoTab",
+                    componentAttributes: {
+                        name:component.get("v.name"),
+                        editrecidGoal:component.get("v.editrecidGoal"),
+                        namespace:component.get("v.namespace"),
+                        cid:component.get("v.cid"),
+                        actualvalue:component.get("v.actualvalue")
+                    }
+                });
+                evt.fire();
+            }
+        });     
+        $A.enqueueAction(action);
+        
+        
+    },
+    
     
 })

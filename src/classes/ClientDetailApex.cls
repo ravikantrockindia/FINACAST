@@ -666,20 +666,382 @@ public class ClientDetailApex {
     
     //Query Financial Goals
     @auraEnabled         
-    public static list<FinServ__FinancialGoal__c> getGoals(String ClientId) {
+    public static list<FinGoalWrapperClass> getGoals(String ClientId) {
+        List<FinGoalWrapperClass> finGoalWrapper=new List<FinGoalWrapperClass>();
+        FinServ__FinancialAccount__c ffa;
+        Decimal goalstatus;
+        Boolean goalTrack;
+        Boolean goalonTrack;
+        Boolean goalnotonTrack;
+        Decimal totalEstimated;
+        String chartValueList;
+        Decimal actualValue;// send google chart value to VF page.
+        
         List<FinServ__FinancialGoal__c> fl;
         try{        
-            fl= [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
+            fl= [Select id,FinServ__PrimaryOwner__c ,Current_Goal_Amount__c,Goal_Priority__c,Goal_Priority_Number__c,Associated_Account__r.FinServ__Balance__c,Annual_Growth_Rate__c,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__r.Account_Type__c,Associated_Account__r.Name,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c
                  from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId];
-        }
-        catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            for(FinServ__FinancialGoal__c f: fl ){
+                goalTrack=false;
+                goalonTrack = false;
+                goalnotonTrack = false;
+                // List<List<Object>> goalPerformance=FinacastGoalProgressApex.goalStatus(f.Id);
+                // System.debug(goalPerformance);
+                //    f = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Associated_Account__r.Account_Type__c, Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, Goal_Priority_Number__c,FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where id=:fingoalId];
+                // List<FinServ__FinancialGoal__c> allAssocGoals = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where Associated_Account__c=: f.Associated_Account__c and id !=: f.id and Goal_Priority_Number__c <=: f.Goal_Priority_Number__c];
+                
+                ffa = [select name, Account_Type__c,FinServ__APY__c,(select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from Financial_Goals__r where Associated_Account__c=: f.Associated_Account__c and id !=: f.id and Goal_Priority_Number__c <=: f.Goal_Priority_Number__c) from FinServ__FinancialAccount__c where id=:f.Associated_Account__c];
+                Double interestRate ;
+                
+                if(ffa.FinServ__APY__c != null)
+                {
+                    interestRate =  ffa.FinServ__APY__c;
+                }
+                else{
+                    interestRate = 0;
+                }
+                
+                
+                Decimal growth =((Decimal) ((Math.pow((1 + (interestRate/100)),1)- 1))).setScale(5);
+                
+                system.debug('in'+interestRate + 'gr'+growth);
+                /*  if(ffa.Account_Type__c == 'IRA' || ffa.Account_Type__c == 'Roth IRA' || ffa.Account_Type__c == '529 Account' || ffa.Account_Type__c == 'Retail Brokerage' ){
+//  isMonteCarloSimulation = true;
+}*/
+                /* Double EMP = testEstimatedMonthlyPayment((double)(f.Start_Value__c), (double)(f.FinServ__TargetValue__c), (Integer)(f.Annual_Growth_Rate__c), f.Start_Date__c, f.FinServ__TargetDate__c);
+
+if(integer.valueof(EMP) != 0 && f.Required_Monthly_Saving__c == 0){
+SavingError = true;
+}*/
+                if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                    goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + f.Start_Value__c;
+                }else{
+                    goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2,RoundingMode.HALF_UP);
+                }
+                
+                
+                totalEstimated = 0;
+                for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
+                {
+                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                }
+                
+                if(goalstatus > f.Associated_Account__r.FinServ__Balance__c - totalEstimated){
+                    
+                    f.Current_Goal_Amount__c = f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                    goalstatus =    goalstatus - f.Current_Goal_Amount__c;
+                    goalTrack = false;
+                    goalnotonTrack = true;
+                    
+                }else {
+                    goalstatus = goalstatus;
+                    f.Current_Goal_Amount__c = goalstatus;
+                    goalTrack = true;
+                    goalonTrack = true;
+                    
+                }
+                /*if((goalstatus != 0)&&(f.Required_Monthly_Saving__c != 0)){
+increasedate = extenddate((integer)goalstatus, (double)(f.Required_Monthly_Saving__c), f.FinServ__TargetDate__c);
+} */
+                system.debug('rer'+ goalstatus);
+                List<GoalPerformanceData> data=new List<GoalPerformanceData>();
+                //Goal Chart data.
+                //chartValueList = '[';
+                integer months = NumberOfMonths(f.Start_Date__c, Date.today());
+                Integer month=date.today().month();
+                Integer year=date.today().year();
+                if(months > 6){
+                    for(integer i=5; i>=0; i--){
+                        //GoalPerformanceData d=new GoalPerformanceData();
+                        // PerformanceValue p=new PerformanceValue();
+                        decimal expected;
+                        /*chartValueList+= '{';
+chartValueList+= '"date":"'+date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year()+'",';
+
+d.dateMonth=date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year();*/
+                        if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                            
+                        }else{
+                            
+                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, RoundingMode.HALF_UP); 
+                            
+                        }  totalEstimated = 0;
+                        for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
+                        {
+                            totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                        }
+                        // chartValueList+= '"estimated":"'+expected+'",';
+                        // p.expected=expected;
+                        if(f.Associated_Account__r.FinServ__Balance__c >= totalEstimated+expected){
+                            //chartValueList+= '"actual":"'+expected+'"';
+                            // p.actual=expected;
+                            //  if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                            actualValue=expected;
+                        }else{
+                            //chartValueList+= '"actual":"'+ (totalEstimated - f.Associated_Account__r.FinServ__Balance__c) +'"';
+                            // p.actual=(totalEstimated - f.Associated_Account__r.FinServ__Balance__c) ;
+                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                actualValue=totalEstimated - f.Associated_Account__r.FinServ__Balance__c;
+                        }
+                        /*  chartValueList+= '},';
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+actualValue=p.actual;*/
+                        //d.values=p;
+                        //data.add(d);
+                    }
+                }
+                if(months <= 6){
+                    Boolean chacktest = false;
+                    for(integer i=months; i>=0; i--){
+                        // GoalPerformanceData d=new GoalPerformanceData();
+                        // PerformanceValue p=new PerformanceValue();
+                        if(chacktest == false)
+                        {
+                            
+                            // chartValueList+= '{';
+                            // chartValueList+= '"date":"'+date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year()+'",';
+                            //d.dateMonth=date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year();
+                            totalEstimated = 0;
+                            for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
+                            {
+                                system.debug('name'+ relgoal.name);
+                                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                                                            RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                            }
+                            system.debug('vdrrdrgr'+totalEstimated);
+                            
+                            if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){ 
+                                if(f.Start_Value__c > f.Associated_Account__r.FinServ__Balance__c - totalEstimated ){
+                                    //   chartValueList+= '"estimated":"'+f.Start_Value__c+'",';
+                                    //  p.expected=f.Start_Value__c;
+                                    //   chartValueList+= '"actual":"'+ (f.Associated_Account__r.FinServ__Balance__c - totalEstimated)+'"';
+                                    //  p.actual=(f.Associated_Account__r.FinServ__Balance__c - totalEstimated);
+                                    if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                        actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                                }else {
+                                    // chartValueList+= '"estimated":"'+f.Start_Value__c+'",';
+                                    // p.expected=f.Start_Value__c;
+                                    //  chartValueList+= '"actual":"'+f.Start_Value__c+'"';
+                                    //  p.actual=f.Start_Value__c;
+                                    if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                        actualValue=f.Start_Value__c;
+                                }
+                                
+                            }else{
+                                //chartValueList+= '"estimated":"0",';
+                                // p.expected=0;
+                                //chartValueList+= '"actual":"0"';
+                                //   p.actual=0;
+                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                    actualValue=0;
+                            }
+                            
+                            
+                            // chartValueList+= '},';
+                            chacktest = true;
+                        }else{
+                            decimal expected;
+                            //chartValueList+= '{';
+                            // chartValueList+= '"date":"'+date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year()+'",';
+                            // d.dateMonth=date.today().addMonths(-i).month()+'-'+date.today().addMonths(-i).year();
+                            if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                                expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                          RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                            }else{
+                                expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                          RoundingMode.HALF_UP); 
+                            }     
+                            totalEstimated = 0;
+                            for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
+                            {
+                                
+                                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                                                            RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                            }
+                            system.debug('vdrrdrgr'+totalEstimated);
+                            system.debug('vdrrdrgr'+expected);
+                            // chartValueList+= '"estimated":"'+expected+'",';
+                            // p.expected=expected;
+                            if(f.Associated_Account__r.FinServ__Balance__c >=   totalEstimated+expected){
+                                
+                                // chartValueList+= '"actual":"'+expected+'"';
+                                // p.actual=expected;
+                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                    actualValue=expected;
+                            }else{
+                                //system.debug('rrdrer');
+                                // chartValueList+= '"actual":"'+(  f.Associated_Account__r.FinServ__Balance__c - totalEstimated)+'"';
+                                //  p.actual=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                    
+                                    actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                            }
+                            chartValueList+= '},';
+                        }
+                        //if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                        //    actualValue=p.actual;
+                        // d.values=p;
+                        // data.add(d);
+                    }
+                    
+                    months = 5-months;
+                    for(integer j=1;j<=months;  j++){
+                        GoalPerformanceData d=new GoalPerformanceData();
+                        PerformanceValue p=new PerformanceValue();
+                        decimal expected;
+                        //chartValueList+= '{';
+                        // chartValueList+= '"date":"'+date.today().addMonths(+j).month()+'-'+date.today().addMonths(+j).year()+'",';
+                        //d.dateMonth=date.today().addMonths(+j).month()+'-'+date.today().addMonths(+j).year();
+                        if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
+                                                                                                                                                                                                      RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                        }else{
+                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
+                                                                                                                                                                                                      RoundingMode.HALF_UP); 
+                        }                
+                        //chartValueList+= '"estimated":"'+expected+'",';
+                        //p.expected=expected;
+                        //  chartValueList+= '"actual":"0"';
+                        //p.actual=0;
+                        //chartValueList+= '},';
+                        if(date.today().addMonths(+j).month()==month&&date.today().addMonths(+j).year()==year)
+                            actualValue=0;
+                        // d.values=p;
+                        //data.add(d);
+                    }
+                }
+                //  Integer stlength = chartValueList.length();
+                // chartValueList = chartValueList.substring(0, stlength-1);
+                // chartValueList+= ']';
+                // system.debug('chartlist'+ chartValueList);
+                System.debug(data);
+                /*List<Object> expectedList = new List<Object>();
+List<Object> actualList = new List<Object>();
+List<Object> dateList = new List<Object>();
+List<Object> objList = (List<Object>) JSON.deserializeUntyped(chartValueList);
+for(Object obj :objList)
+{
+expectedList.add(((Map<String,Object>)obj).get('estimated'));
+actualList.add(((Map<String,Object>)obj).get('actual'));
+dateList.add(((Map<String,Object>)obj).get('date'));
+}
+
+List<Object> curramtlist = new List<Object>();
+curramtlist.add(f.Current_Goal_Amount__c);
+List<Object> onTrack = new List<Object>();
+List<List<Object>> bothList = new List<List<Object>>();
+
+onTrack.add(goalonTrack);
+onTrack.add(goalnotonTrack);
+onTrack.add(f.name);
+onTrack.add(goalstatus);
+// onTrack.add(increasedate);
+// onTrack.add(isMonteCarloSimulation);
+
+bothList.add(expectedList) ;
+bothList.add(actualList);
+bothList.add(dateList);
+bothList.add(curramtlist);
+bothList.add(onTrack);
+System.debug(bothList);*//*List<FinServ__FinancialGoal__c> allAssocGoals = [select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from FinServ__FinancialGoal__c where Associated_Account__c=: f.Associated_Account__c and id !=: f.id and Goal_Priority_Number__c <=: f.Goal_Priority_Number__c];
+
+ffa = [select name, Account_Type__c,FinServ__APY__c from FinServ__FinancialAccount__c where id=:f.Associated_Account__c];
+Double interestRate ;
+if(ffa.FinServ__APY__c != null)
+{
+interestRate = ffa.FinServ__APY__c;
+}
+if(ffa.FinServ__APY__c != null)
+{
+interestRate =  ffa.FinServ__APY__c;
+}
+else{
+interestRate = 0;
+}
+
+
+Decimal growth =((Decimal) ((Math.pow((1 + (interestRate/100)),1)- 1))).setScale(5);
+
+system.debug('in'+interestRate + 'gr'+growth);
+goalStatus=0;
+if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + f.Start_Value__c;
+}else{
+goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2,RoundingMode.HALF_UP);
+}
+
+
+totalEstimated = 0;
+for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
+{
+totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+}
+
+if(goalstatus > f.Associated_Account__r.FinServ__Balance__c - totalEstimated){
+
+f.Current_Goal_Amount__c = f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+goalstatus =    goalstatus - f.Current_Goal_Amount__c;
+goalTrack = false;
+}else {
+goalstatus = goalstatus;
+f.Current_Goal_Amount__c = goalstatus;
+goalTrack = true;
+}*/
+                System.debug(goalTrack);
+                FinGoalWrapperClass fingoalwrap=new FinGoalWrapperClass();
+                fingoalwrap.finGoal=f;
+                fingoalwrap.goalTrack=goalTrack;
+                // fingoalwrap.data=data;
+                fingoalwrap.actualValue=actualValue;
+                finGoalWrapper.add(fingoalwrap);
+            }
             
         }
-        return fl;
+        catch(Exception e){
+            System.debug(e.getStackTraceString());
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
+            
+        }
+        System.debug(finGoalWrapper);
+        return finGoalWrapper;
+        
+        
+        
         
     }//method End
     
+    public class GoalPerformanceData{
+        @auraEnabled 
+        public String dateMonth;
+        
+        @auraEnabled
+        public  PerformanceValue values;
+    } 
+    public class PerformanceValue{
+        @auraEnabled
+        public Decimal expected;
+        
+        @auraEnabled
+        public Decimal actual;
+    }
+    public class FinGoalWrapperClass {
+        
+        @auraEnabled
+        public FinServ__FinancialGoal__c finGoal;
+        
+        @auraEnabled
+        public Boolean goalTrack;
+        
+        /* @auraEnabled
+public List<GoalPerformanceData> data;*/
+        @auraEnabled
+        public Decimal actualValue;
+        
+        
+        
+        
+    }
     
     //Query Financial Accounts
     @auraEnabled   
@@ -736,17 +1098,32 @@ public class ClientDetailApex {
                 throw new nullpointerexception();
         }
         catch(Exception e){
-                    FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            
         }
         return fin;
         
     }//method End
     
+    @AuraEnabled 
+    public static List<RecordType> getRecordTypeIds(){
+        List<RecordType> recordTypes;
+        try{
+            
+            recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
+            if(TEST.isRunningTest())
+                throw new NullPointerException();
+        }catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return recordTypes;
+        
+    }
+    
     public class WrapperClass {
         
-        @auraEnabled
-        public List<FinServ__FinancialGoal__c> financialGoalList;
+        /* @auraEnabled
+public List<FinServ__FinancialGoal__c> financialGoalList;*/
         
         @auraEnabled
         public List<Double> balanceList;
@@ -813,7 +1190,7 @@ public class ClientDetailApex {
             if(test.isRunningTest()){
                 isHousehold = true;
             }
-            wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
+            // wrapperObj.financialGoalList = ClientDetailApex.getGoals(initialClientId);
             wrapperObj.balanceList = tempList;
             wrapperObj.isportalUser = isportalEnabled;
             wrapperObj.firstClient = initialClient;
@@ -846,21 +1223,205 @@ public class ClientDetailApex {
         FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];
         delete goalItem;
     }
-	 @AuraEnabled 
-    public static List<RecordType> getRecordTypeIds(){
-        List<RecordType> recordTypes;
-        try{
-
-            recordTypes=[select Id,DeveloperName  from RecordType where sObjectType='FinServ__FinancialAccount__c'];
-            if(TEST.isRunningTest())
-                throw new NullPointerException();
-        }catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+    @auraEnabled
+    public static FinGoalWrapperClass getGoalDetail(string goalId,String ClientId) {
+        FinGoalWrapperClass fingoalwrap=new FinGoalWrapperClass();
+        FinServ__FinancialAccount__c ffa;
+        Decimal goalstatus;
+        Boolean goalTrack;
+        
+        Decimal totalEstimated;
+        Decimal actualValue;
+        FinServ__FinancialGoal__c f;
+        try{        
+            f= [Select id,FinServ__PrimaryOwner__c ,Goal_Priority__c,Goal_Priority_Number__c, Associated_Account__r.FinServ__Balance__c,Annual_Growth_Rate__c,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__r.Account_Type__c,Associated_Account__r.Name,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
+                from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId and id=:goalId limit 1];
+            
+            goalTrack=false;
+            
+            ffa = [select name, Account_Type__c,FinServ__APY__c,(select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from Financial_Goals__r where Associated_Account__c=: f.Associated_Account__c and id !=: f.id and Goal_Priority_Number__c <=: f.Goal_Priority_Number__c) from FinServ__FinancialAccount__c where id=:f.Associated_Account__c];
+            Double interestRate ;
+            
+            if(ffa.FinServ__APY__c != null)
+            {
+                interestRate =  ffa.FinServ__APY__c;
+            }
+            else{
+                interestRate = 0;
+            }
+            
+            
+            Decimal growth =((Decimal) ((Math.pow((1 + (interestRate/100)),1)- 1))).setScale(5);
+            
+            system.debug('in'+interestRate + 'gr'+growth);
+            
+            if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + f.Start_Value__c;
+            }else{
+                goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2,RoundingMode.HALF_UP);
+            }
+            
+            
+            totalEstimated = 0;
+            for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
+            {
+                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+            }
+            
+            if(goalstatus > f.Associated_Account__r.FinServ__Balance__c - totalEstimated){
+                
+                f.Current_Goal_Amount__c = f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                goalstatus =    goalstatus - f.Current_Goal_Amount__c;
+                goalTrack = false;
+                
+            }else {
+                goalstatus = goalstatus;
+                f.Current_Goal_Amount__c = goalstatus;
+                goalTrack = true;
+                
+            }
+            
+            system.debug('rer'+ goalstatus);
+            
+            integer months = FinacastGoalProgressApex.NumberOfMonths(f.Start_Date__c, Date.today());
+            Integer month=date.today().month();
+            Integer year=date.today().year();
+            if(months > 6){
+                for(integer i=5; i>=0; i--){
+                    
+                    decimal expected;
+                    
+                    if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                        
+                    }else{
+                        
+                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, RoundingMode.HALF_UP); 
+                        
+                    }  totalEstimated = 0;
+                    for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
+                    {
+                        totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                    }
+                    
+                    if(f.Associated_Account__r.FinServ__Balance__c >= totalEstimated+expected){
+                        actualValue=expected;
+                    }else{
+                        
+                        if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                            actualValue=totalEstimated - f.Associated_Account__r.FinServ__Balance__c;
+                    }
+                    
+                }
+            }
+            if(months <= 6){
+                Boolean chacktest = false;
+                for(integer i=months; i>=0; i--){
+                    
+                    if(chacktest == false)
+                    {
+                        
+                        totalEstimated = 0;
+                        for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
+                        {
+                            system.debug('name'+ relgoal.name);
+                            totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                                                        RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                        }
+                        system.debug('vdrrdrgr'+totalEstimated);
+                        
+                        if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){ 
+                            if(f.Start_Value__c > f.Associated_Account__r.FinServ__Balance__c - totalEstimated ){
+                                
+                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                    actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                            }else {
+                                
+                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                    actualValue=f.Start_Value__c;
+                            }
+                            
+                        }else{
+                            
+                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                actualValue=0;
+                        }
+                        
+                        
+                        chacktest = true;
+                    }else{
+                        decimal expected;
+                        
+                        if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                      RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                        }else{
+                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                      RoundingMode.HALF_UP); 
+                        }     
+                        totalEstimated = 0;
+                        for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
+                        {
+                            
+                            totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+                                                                                                                                                                                                                                        RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+                        }
+                        system.debug('vdrrdrgr'+totalEstimated);
+                        system.debug('vdrrdrgr'+expected);
+                        
+                        if(f.Associated_Account__r.FinServ__Balance__c >=   totalEstimated+expected){
+                            
+                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                actualValue=expected;
+                        }else{
+                            
+                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+                                
+                                actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+                        }
+                    }
+                    
+                }
+                
+                months = 5-months;
+                for(integer j=1;j<=months;  j++){
+                    
+                    decimal expected;
+                    
+                    if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
+                                                                                                                                                                                                  RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                    }else{
+                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
+                                                                                                                                                                                                  RoundingMode.HALF_UP); 
+                    }                
+                    
+                    if(date.today().addMonths(+j).month()==month&&date.today().addMonths(+j).year()==year)
+                        actualValue=0;
+                    
+                }
+            }
+            
+            
+            System.debug(goalTrack);
+            fingoalwrap.finGoal=f;
+            fingoalwrap.actualValue=actualValue;
+            
+            
+            
         }
-        return recordTypes;
-
+        catch(Exception e){
+            System.debug(e.getStackTraceString());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            
+        }
+        system.debug('value of view Goal'+f);
+        
+        system.debug('value of view Goal'+fingoalwrap);
+        return fingoalwrap;
+        
     }
-	@auraEnabled
+    @auraEnabled
     public static Account getClient(String ClientId) {
         
         Account ac;
@@ -874,7 +1435,7 @@ public class ClientDetailApex {
         return ac;
         
     }
-     @auraEnabled
+    @auraEnabled
     public static boolean deleteFinAccout(String finId) {
         
         FinServ__FinancialAccount__c ac;
@@ -896,7 +1457,8 @@ public class ClientDetailApex {
             
         }
         catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            
+            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
             
         }
         return true;

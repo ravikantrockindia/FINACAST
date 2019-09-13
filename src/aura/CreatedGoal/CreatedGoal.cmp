@@ -2,22 +2,38 @@
     <aura:attribute name="icon" type="String" default="String"/>
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="cid" type="Id"/>
-    <aura:attribute name="addGoals" type="Boolean" default=""/>
-    <aura:attribute name="modalOpen" type="Boolean" default="true"/>
+    <aura:attribute name="name" type="String"/>
+  <!--  <aura:attribute name="addGoals" type="Boolean" default=""/>-->
+   <!-- <aura:attribute name="modalOpen" type="Boolean" default="true"/>-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="createModal" type="Boolean" default="false"/>
-    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+        <aura:attribute name="createModal1" type="Boolean" default="false"/>
+
+  <!--   <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>-->
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
      <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name = "GoalId" type="String"/>   
-    {!v.GoalId}
-  <aura:if isTrue="{!v.createModal}">  
-    <div class="slds-m-around_xx-large">
+         <aura:registerEvent name="openModal" type="c:SaveIncomeEvent"/>
+
         <!-- Modal/Popup Box starts here-->
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div aura:id="exampleModal1" class="slds-align_absolute-center">
+        <div class="slds-m-around_xx-large">
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <!-- Modal/Popup Box Header Starts here-->
-                 
+                 <header class="slds-modal__header">
+                        <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.close}">
+                            <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        
+                        
+                        
+                       <!-- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>{!v.heading}</b></h2>                            
+                        <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>{!v.subheading}</b>
+                            <br/>                     
+                        </h3> -->
+                    </header>
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <div class="slds-card__header">
@@ -42,14 +58,14 @@
                 <!--Modal/Popup Box Footer Starts here-->
                  
             </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+            <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
         
+        </div>
     </div>
-    </aura:if>
-   
-    <aura:if isTrue="{!v.addGoals}">
-        
+    
+ <!-- <aura:if isTrue="{!v.addGoals}">
+      <c:Goalform/>
         <c:GoalModal   namespace="{!v.namespace}" client ="{!v.cid}" />
-    </aura:if> 
+    </aura:if> -->
 </aura:component>

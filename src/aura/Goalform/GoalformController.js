@@ -1,5 +1,5 @@
 ({
-   /* changeEntity : function(component, event, helper) {
+    /* changeEntity : function(component, event, helper) {
        
         var action = component.get("c.dample");
          var clientId=component.find("owner").get("v.value");
@@ -18,73 +18,75 @@
         $A.enqueueAction(action);
     }, */
     doInit : function(component , event , helper){
-       var namespace = component.get("v.namespace");
+        // component.set("v.createModal1",false);
+        var namespace = component.get("v.namespace");
         var clientId=component.find("owner").get("v.value");
         var clientId=component.get("v.client");
-        console.log('id'+clientId);
         
-       component.find("owner").set("v.value",clientId);
+        
+        component.find("owner").set("v.value",clientId);
         var getName = component.get("v.FinServ__PrimaryOwner__r.Name");
-        console.log('xxxxxx'+getName);
-         if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
+        
+        if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
         {
             
-
-           console.log("the value is name" + clientId);
+            
+            
             var action = component.get("c.dample");
             action.setParams({
                 clientId : clientId
             });
-           
+            
             action.setCallback(this, function(a) {
                 var state  = a.getState();
-                console.log('state',state);
+                
                 var goals=a.getReturnValue();
-                console.log(goals);
+                
                 component.set("v.accountList",goals);
             }); 
             $A.enqueueAction(action); 
-       
+            
         }
     },
     onload:function(component,event,helper){
-       var goalId = component.get("v.goalId");
-        //console.log('xxxxxx'+getName);
-         if(!($A.util.isUndefinedOrNull(goalId) || goalId == ""))
+        var goalId = component.get("v.goalId");
+        
+        if(!($A.util.isUndefinedOrNull(goalId) || goalId == ""))
         {
-         var namespace = component.get("v.namespace");
-   var recUi = event.getParam("recordUi");
-               component.set("v.currentBal", recUi.record.fields[namespace+"Start_Value__c"].value)
-          var selectedAccount=component.get("v.selectedAccount");
-        console.log(selectedAccount);
-        if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
-            		component.set("v.selectedAccount",recUi.record.fields[namespace+"Associated_Account__c"].value);
-          //  console.log(recUi.record.fields["Associated_Account__c"].value)
-        }
-        console.log(component.get("v.selectedAccount"));
-        var targetValue= component.find("amount").get("v.value");
-        if($A.util.isUndefinedOrNull(targetValue)||targetValue=="")
-            component.find("amount").set("v.value",recUi.record.fields["FinServ__TargetValue__c"].value)
-             var currentBal= component.get("v.currentBal");
-        if($A.util.isUndefinedOrNull(currentBal)||currentBal=="")
-            component.set("v.currentBal",recUi.record.fields[namespace+"Start_Value__c"].value)
+            var namespace = component.get("v.namespace");
+            var recUi = event.getParam("recordUi");
+            component.set("v.currentBal", recUi.record.fields[namespace+"Start_Value__c"].value)
+            var selectedAccount=component.get("v.selectedAccount");
+            console.log(selectedAccount);
+            if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
+                component.set("v.selectedAccount",recUi.record.fields[namespace+"Associated_Account__c"].value);
+                //  console.log(recUi.record.fields["Associated_Account__c"].value)
             }
-},
+            console.log(component.get("v.selectedAccount"));
+            var targetValue= component.find("amount").get("v.value");
+            if($A.util.isUndefinedOrNull(targetValue)||targetValue=="")
+                component.find("amount").set("v.value",recUi.record.fields["FinServ__TargetValue__c"].value)
+                var currentBal= component.get("v.currentBal");
+            if($A.util.isUndefinedOrNull(currentBal)||currentBal=="")
+                component.set("v.currentBal",recUi.record.fields[namespace+"Start_Value__c"].value)
+                }
+    },
     
     getCurrentAmt : function(component, event, helper)
-    {
+    {	
+        
         var currentAmt = component.find("strtvalue").get("v.value"); 
         
         var amt = component.find("amount").get("v.value"); 
         var tDate = component.find("tarDate").get("v.value"); 
-       // var associated = component.find("associateAcc").get("v.value");
-       var associated=component.get("v.selectedAccount");
-        console.log(associated);
+        // var associated = component.find("associateAcc").get("v.value");
+        var associated=component.get("v.selectedAccount");
+        
         if($A.util.isUndefinedOrNull(associated)||associated==""){
-           // debugger;
+            // debugger;
             component.find("strtvalue").set("v.fieldName",namespace+"Start_Value__c");
             component.find("strtvalue").set("v.value",null);
-            console.log(component.find("strtvalue").get("v.value"));
+            
             return;
         }
         var action = component.get("c.getCurrentAmount");
@@ -98,12 +100,12 @@
         
         action.setCallback(this, function(response) {
             var namespace = component.get("v.namespace");
-            console.log(response.getReturnValue());
+            
             component.find("strtvalue").set("v.fieldName",namespace+"Start_Value__c");
             component.find("strtvalue").set("v.value",response.getReturnValue().currentAmt);
-            console.log(component.find("strtvalue").get("v.value"));
+            
             component.set("v.currentBal", response.getReturnValue().currentAmt);
-            console.log(component.find("strtvalue").get("v.value"));
+            
             component.set("v.actualbalance", response.getReturnValue().currentAmt);
             component.set("v.contribution",response.getReturnValue().emi); 
             component.set("v.actualEmi",response.getReturnValue().emi);
@@ -115,13 +117,13 @@
     },  
     
     cancelButton : function(component, event, helper) {
-      
-   helper.hideExampleModal(component);
+        
+        helper.hideExampleModal(component);
     },
     
     getChangeMonthlyConti : function(component, event, helper)
     {
-       //debugger;
+        
         var msg  = "";
         var status1 = 1;
         var status2 = 1;
@@ -129,12 +131,12 @@
         
         var current=component.find("strtvalue").get("v.value");
         console.log(current);
-       
-       var target=component.find("amount").get("v.value");
-        console.log('hh'+current);
+        
+        var target=component.find("amount").get("v.value");
+        
         var tDate = component.find("tarDate").get("v.value");
         var associated = component.find("associateAcc").get("v.value");
-        console.log(associated);
+        
         if(component.find("tarDate").get("v.value") <= component.get("v.newTarDate"))
         {
             component.set("v.buttonDisplay",false);
@@ -142,8 +144,8 @@
         }
         if(target != null && target <= 0)
         {
-           console.log(target); status1 = 0;
-                
+            console.log(target); status1 = 0;
+            
         }
         else
         {
@@ -180,7 +182,7 @@
         if(status1 == 1 && status2 == 1 && status3 == 1 ) 
         {
             if(target == current || current == null)     
-           // if(target == current || current == 0 || current == null)        
+                // if(target == current || current == 0 || current == null)        
             {
                 component.set("v.contribution" ,0);    
             } 
@@ -209,16 +211,37 @@
         
     },
     onSuccessCall:function(component,event,helper){
-    
-      helper.hideExampleModal(component);
-      
+        
+        
+        var updatedRecord = JSON.parse(JSON.stringify(event.getParams()));
+        console.log(updatedRecord);
+        console.log('onsuccess: ', JSON.stringify(updatedRecord.response.id));
+        var retId=updatedRecord.response.id;
+        component.set("v.viewGoalId",retId);
+        // var icon=$A.get("$Resource.RetirementIcon");
+        // component.set("v.icon",icon);
+                //helper.hideExampleModal(component);
+
+           // component.set("v.isActive",false);
+       // component.set("v.createModal1",false);
+        if(!component.get("v.editModal")){
+               var cmpTarget = component.find('exampleModal');
+        
+            console.log('the cross is : '+ cmpTarget );
+            $A.util.addClass(cmpTarget, 'hideDiv');
+            component.set("v.createModal",true);
+        }
+        else
+            helper.hideExampleModal(component);
+        //	helper.hideExampleModal(component);
+        
     },
     
     hideExampleModal : function(component, event, helper) {
         helper.hideExampleModal(component);
     },
     
-     handleSubmit : function(component, event, helper)
+    handleSubmit : function(component, event, helper)
     { 
         var status1 = 0;
         var status2 = 0;
@@ -252,7 +275,7 @@
             status3 = 0;
             event.preventDefault();
             //msg = "Please fill mandatory fields."
-          //  helper.showAlertEmptyInvalidVal(component,msg);       
+            //  helper.showAlertEmptyInvalidVal(component,msg);       
         }
         else{
             status3 = 1;
@@ -285,18 +308,33 @@
         {
             event.preventDefault();
         }
-              event.preventDefault();
-   var namespace = component.get("v.namespace");
-  var eventFields = event.getParam("fields");
+        event.preventDefault();
+        var namespace = component.get("v.namespace");
+        var eventFields = event.getParam("fields");
         console.log("event",eventFields["FinServ__TargetValue__c"]);
-  eventFields["FinServ__TargetValue__c"] = component.find("amount").get("v.value");
+        eventFields["FinServ__TargetValue__c"] = component.find("amount").get("v.value");
         console.log("event",eventFields["FinServ__TargetValue__c"]);
         eventFields[namespace+"Associated_Account__c"]=component.get("v.selectedAccount");
         console.log("event",eventFields[namespace+"Associated_Account__c"])
         component.find("non-retirement").submit(eventFields);
+        var cmpTarget = component.find('exampleModal');
+        
+        //helper.hideExampleModal(component);
+        // component.set("v.createModal",true);
+        // component.set("v.createModal1",false);
+        /* var evt = $A.get("e.force:navigateToComponent");
+                evt.setParams({
+                    componentDef : "c:createModal",
+                    componentAttributes: {
+                        cid :component.get("v.client"),
+                        namespace:component.get("v.namespace"),
+                        icon:component.get("v.icon")
+                         
+                    }
+                });
+                evt.fire();*/
         
         
- 
     },
     
     handleChangeMonthlyContribution : function(component, event, helper)
@@ -340,8 +378,8 @@
     },
     handleMonthlyContribution : function(component, event, helper)
     {   var namespace = component.get("v.namespace");
-        component.find("goalContri").set("v.fieldName",namespace+"Required_Monthly_Saving__c");
-        component.find("goalContri").set("v.value",  component.get("v.actualEmi"));
+     component.find("goalContri").set("v.fieldName",namespace+"Required_Monthly_Saving__c");
+     component.find("goalContri").set("v.value",  component.get("v.actualEmi"));
     },
     
     handleTargetDate : function(component, event, helper)
@@ -355,23 +393,23 @@
         console.log(event.getParams('error').errorCode);
         console.log(event.getParams('error').message);
     },
-
-   changeEntity1 : function(component , event , helper){
+    
+    changeEntity1 : function(component , event , helper){
         console.log('handle change');
         var clientId=component.get("v.client.Id");
         console.log('id'+clientId);
-       
         
-         if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
+        
+        if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
         {
             
-
-           console.log("the value is name" + clientId);
+            
+            console.log("the value is name" + clientId);
             var action = component.get("c.dample");
             action.setParams({
                 clientId : clientId
             });
-
+            
             action.setCallback(this, function(response) {
                 var goals = response.getReturnValue();
                 
@@ -379,7 +417,7 @@
                 component.set("v.accountList",goals);
             }); 
             $A.enqueueAction(action); 
-
+            
         }
     } 
 })
