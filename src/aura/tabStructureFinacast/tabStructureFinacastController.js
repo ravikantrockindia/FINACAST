@@ -53,7 +53,7 @@
         });
         evt.fire();
     },
-    GoalHandler: function(component,event,helper){
+   /* GoalHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
         var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
@@ -65,7 +65,22 @@
             }
         });
         evt.fire();
+    },*/
+    /* Goal Planning ----------*/
+     GoalHandler: function(component,event,helper){
+        var Id= component.get("v.ccid");
+        var namespace= component.get("v.namespace");
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef:"c:GoalPlaning",
+            componentAttributes: {
+                cid : Id,
+                namespace : namespace
+            }
+        });
+        evt.fire();
     },
+    /* Goal Planning ----------*/
     AccountHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
         var namespace= component.get("v.namespace");
