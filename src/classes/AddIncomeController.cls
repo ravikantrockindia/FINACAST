@@ -26,7 +26,7 @@ public with sharing class AddIncomeController {
     @AuraEnabled
     public static List<FinServ__FinancialAccountTransaction__c> getTransaction(String budgetId){
         Budget__c bg = new Budget__c();
-        bg=[Select id , name from Budget__c where id =: budgetId];
+        bg=[Select id , name from Budget__c where id =: budgetId];   
         
         List<FinServ__FinancialAccountTransaction__c> transactionRecord = new List<FinServ__FinancialAccountTransaction__c>();
         
@@ -153,7 +153,7 @@ public with sharing class AddIncomeController {
                                where FinServ__TransactionDate__c = THIS_MONTH)
                               from FinServ__FinancialAccount__c 
                               where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)) and FinServ__Household__c=:acc.id];
-                goalRecord = [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c 
+                goalRecord = [Select id,FinServ__PrimaryOwner__c ,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
                               from FinServ__FinancialGoal__c 
                               where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__Household__c=:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
             } 
@@ -168,6 +168,7 @@ public with sharing class AddIncomeController {
                             where (((Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and 
                                                                    Start_Date__c <=: enddate)) and ((End_Date__c >=: stdate) or End_Date__c = null)) and 
                             Primary_Owner__c =:acc.id];
+                 system.debug('budgetList'+budgetList);
                 loanRecord = [select id ,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name,FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c,              
                               (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
                                from Financial_Account_Transactions__r
@@ -175,7 +176,7 @@ public with sharing class AddIncomeController {
                               from FinServ__FinancialAccount__c 
                               where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) /*and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)*/) and FinServ__PrimaryOwner__c =:acc.id];
                 system.debug('loanRecord'+loanRecord);
-                goalRecord = [Select id,FinServ__PrimaryOwner__c , Name, FinServ__PrimaryOwner__r.name,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c from FinServ__FinancialGoal__c where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
+                goalRecord = [Select id,FinServ__PrimaryOwner__c , Name, FinServ__PrimaryOwner__r.name,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c from FinServ__FinancialGoal__c where ((( Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:acc.id and RecordType.DeveloperName != 'Scenario_Record_Type'];
                 
                 
             }     
@@ -242,8 +243,9 @@ public with sharing class AddIncomeController {
                 Double transactionAmount=0;
                 for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){                
                     percentage = percentage + tTransaction.FinServ__Amount__c ; 
+                    system.debug('percentage'+percentage);
                     transactionAmount=tTransaction.Budget_Category__r.Amount__c;
-                    
+                      system.debug('transactionAmount'+transactionAmount);
                     //sumTransaction = ((percentage / tTransaction.Budget_Category__r.Amount__c) * 100);
                     //getTransactionAmount.put(tAmount.id, sumTransaction);
                     valTrans = valTrans + tTransaction.FinServ__Amount__c ;   
@@ -275,6 +277,7 @@ public with sharing class AddIncomeController {
                 Double percentage = 0;
                 for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){                
                     percentage = percentage + tTransaction.FinServ__Amount__c ;
+                    system.debug('percentage'+percentage);
                     sumTransaction = ((percentage / tTransaction.Budget_Category__r.Amount__c) * 100);
                     getTransactionAmountExpense.put(tAmount.id, sumTransaction);
                     valTransExp = valTransExp + tTransaction.FinServ__Amount__c ;   
@@ -289,8 +292,11 @@ public with sharing class AddIncomeController {
                 Double percentage = 0;
                 Double sumLoanTransaction=0;
                 for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){
+                      system.debug('kishan');
                     percentage = percentage + tTransaction.FinServ__Amount__c ;
+                      system.debug('percentage'+percentage);
                     sumLoanTransaction=tTransaction.FinServ__FinancialAccount__r.FinServ__PaymentAmount__c;
+                      system.debug('sumLoanTransaction'+sumLoanTransaction);
                     valTransLoan = valTransLoan + tTransaction.FinServ__Amount__c ;   
                 }
                 if (tAmount.FinServ__PaymentFrequency__c=='Monthly' && sumLoanTransaction!=0){
@@ -356,7 +362,7 @@ public with sharing class AddIncomeController {
         String goalSum ; 
         String loanSum;
         Date stdate = getMonth(month);
-        Boolean isportalEnabled = false;
+        Boolean isportalEnabled = false;   
         String clientId = acc.Id;
         String budgetId ;
         // Account acc = [Select id,name from account where id=: clientId limit 1];
@@ -448,8 +454,8 @@ public with sharing class AddIncomeController {
                     
                 }
             }
-                            loanSum = '$' + sumLoan.format();
-
+            loanSum = '$' + sumLoan.format();
+            
             Double valTrans = 0 ;
             Map<Id ,Double> getTransactionAmount = new Map<Id, Double>();
             Map<Id ,String> getTransactionAmountIncome = new Map<Id, String>();
@@ -549,7 +555,7 @@ public with sharing class AddIncomeController {
         system.debug('rtyuiop');
         
         String mon = tempList[0].trim();
-        Map<String,Integer> monthMap = new Map<String , Integer>{'JAN' => 1 , 'FEB'=> 2, 'MAR'=> 3, 'APR'=> 4, 'MAY'=> 5, 'JUN'=> 6, 'JUL'=> 7, 'AUG'=> 8, 'SEP'=>9, 'OCT'=>10, 'NOV'=> 11, 'DEC'=> 12};
+        Map<String,Integer> monthMap = new Map<String , Integer>{'Jan' => 1 , 'Feb'=> 2, 'Mar'=> 3, 'Apr'=> 4, 'May'=> 5, 'Jun'=> 6, 'Jul'=> 7, 'Aug'=> 8, 'Sep'=>9, 'Oct'=>10, 'Nov'=> 11, 'Dec'=> 12};
             Integer stMonth = monthMap.get(mon); 
         Integer yea = Integer.valueOf(tempList[1].trim());
         Date st = date.newInstance(yea,stMonth,1);
@@ -646,5 +652,6 @@ public with sharing class AddIncomeController {
         }
         
     }
-    
+  
+
 }
