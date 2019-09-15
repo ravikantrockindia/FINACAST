@@ -87,6 +87,8 @@
        <aura:attribute name = "goalAcc"  type = "Id"/>   
  
     <aura:attribute name ="amtget"  type = "String"/> 
+        <aura:attribute name ="month"  type = "String"/> 
+
     <aura:attribute name = "selectedClient" type = "String" />
      <aura:handler  event="c:changeclientevent" action="{!c.getmonthlybudget}"/>
     
@@ -189,7 +191,7 @@
                                             <h2>
                                             	<span>{!v.tExp}</span>
                                             </h2>
-                                            <img src="{!$Resource. expenses}"/>
+                                            <img src="{!$Resource.expenses}"/>
                                         </div>
                                     </div>
                                     <p class="slds-page-header__name-meta" style="color: #f3536e;">Spent : ${!v.SumOfExpenseTrans}</p>
@@ -605,7 +607,7 @@
             </aura:if>
             <!--Add goal button ends-->
             <aura:if isTrue="{!not(empty(v.addGoal))}">
-                <c:GoalPlaning cid="{!v.cid}" namespace="{!v.namespace}" budgetScreen="true"/> 
+                <c:GoalPlaning cid="{!v.cid}" namespace="{!v.namespace}" budgetScreen="true" month="{!v.month}"/> 
                <!-- <div style="width:100%;" class="slds-scrollable_y listViewContent total_investment">
                 <table class=" income-tab slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table-striped slds-table_resizable-cols" style="padding: 0; width: 100%;">
                     <thead>

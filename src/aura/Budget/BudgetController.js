@@ -154,7 +154,7 @@
                     }
                 }
                 console.log('loan Rec list',data.loanRecList);
-               // debugger;
+               debugger;
                 for(var e in data.loanRecList){
                     data.loanRecList[e]["showSection"]=false;
                     data.loanRecList[e]["iconName"]="utility:right";
@@ -186,9 +186,10 @@
                 component.set("v.tLoan", data.totalLoan);
                 component.set("v.addGoal",data.goalRecList);
                  var list=JSON.stringify(data.goalRecList).replace(/Finsol__/g,"")
-                console.log(list)
+               // console.log(list)
                 
                 component.set("v.addGoal",JSON.parse(list));
+                console.log(component.get("v.addGoal"));
                 component.set("v.GoalDetails", response.getReturnValue()[0]);
                 component.set("v.tGoal" , data.totalGoal);
                 component.set("v.LoanRecord" , data.loanRecList);
@@ -567,7 +568,13 @@
         component.set("v.showModalExpense",false);
         component.set("v.showModalLoan",false);
         component.set("v.showModalGoal",false);
+        var arrayName = [];
+
+
+                        component.set("v.addGoal",arrayName);
+
         var eventgen = event.getSource().get("v.value");
+        component.set("v.month",eventgen)
         var action = component.get("c.getmonthincome");
         action.setParams({
             "month": eventgen,
@@ -577,6 +584,7 @@
             var state = response.getState();
             if (state == "SUCCESS") {
                 var data = response.getReturnValue();
+                console.log(JSON.stringify(data))
                 for(var e in data.expenseRecList){
                     data.expenseRecList[e]["showSection"]=false;
                     data.expenseRecList[e]["iconName"]="utility:right";

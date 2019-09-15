@@ -7,14 +7,16 @@
         var action = component.get("c.getGoalDetail");
         action.setParams({
             goalId :idx,
-            ClientId : clntId
+          //  ClientId : clntId
         });
         
         action.setCallback(this, function(response) {
             var state = response.getState();
             if(state==='SUCCESS'){
+              
                 var data=JSON.parse(JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,""));
                 console.log('data'+data);
+                debugger;
                 var name=data.finGoal.Name;
                 component.set("v.name",name);
                 var reqMonSaving=data.finGoal.Required_Monthly_Saving__c;
@@ -52,6 +54,12 @@
                     console.log('res',integer);
                     component.set("v.res",integer);    
                 }
+                
+                component.set("v.goalStatus",data.goalStatus);
+                component.set("v.goalTrack",data.goalTrack);
+                component.set("v.increaseDate",data.increasedDate);
+                component.set("v.data",data.data);
+                console.log(data.data);
                 
                 var workspaceAPI = component.find("workspace");
                 var namespace = component.get("v.namespace");

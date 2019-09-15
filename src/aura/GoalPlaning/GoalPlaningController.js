@@ -23,6 +23,9 @@
         var action = component.get("c.getTotalGoal");
         action.setParams({
             ClientId : clntId,
+            budgetScreen:component.get("v.budgetScreen"),
+                        monthBudget: component.get("v.month"),
+
             
         });
         
@@ -46,11 +49,11 @@
         });
         
         $A.enqueueAction(action); 
-        if(component.get("v.budgetScreen")){
+     /*   if(component.get("v.budgetScreen")){
        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
                 saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
                 saveIncomeEvent.fire();
-        }
+        }*/
     },
     createGoal:function(component, event, helper) {
         component.set("v.addGoals" , true);
@@ -199,13 +202,23 @@
         var idx=event.getSource().get("v.value");
         component.set("v.editrecidGoal",idx);
         var clntId = component.get("v.cid");
-        var action = component.get("c.getGoalDetail");
+       /* var action = component.get("c.getGoalDetail");
         action.setParams({
             'goalId' :idx,
             ClientId : clntId,
-        });
-        
-        action.setCallback(this, function(response) {
+        });*/
+        var evt = $A.get("e.force:navigateToComponent");
+                evt.setParams({
+                    componentDef : "c:GoalInfoTab",
+                    componentAttributes: {
+                      //  name:component.get("v.name"),
+                        editrecidGoal:component.get("v.editrecidGoal"),
+                        namespace:component.get("v.namespace"),
+                       // cid:component.get("v.cid") 
+                    }
+                });
+                evt.fire();
+        /*action.setCallback(this, function(response) {
             var state = response.getState();
             if(state==='SUCCESS'){
                 var data=response.getReturnValue();
@@ -215,7 +228,7 @@
                 evt.setParams({
                     componentDef : "c:GoalInfoTab",
                     componentAttributes: {
-                        name:component.get("v.name"),
+                      //  name:component.get("v.name"),
                         editrecidGoal:component.get("v.editrecidGoal"),
                         namespace:component.get("v.namespace"),
                         cid:component.get("v.cid") 
@@ -224,7 +237,7 @@
                 evt.fire();
             }
         });     
-        $A.enqueueAction(action);
+        $A.enqueueAction(action);*/
         
         
     },

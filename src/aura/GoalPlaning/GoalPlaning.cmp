@@ -8,6 +8,8 @@
     <aura:attribute name="addGoals" type="Boolean" default=""/>
     <aura:attribute name="goalList" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="editrecidGoal" type="String"/>
+        <aura:attribute name="month" type="String" default=""/>
+
         <aura:attribute name="budgetScreen" type="Boolean" default="false"/>
 
     <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>

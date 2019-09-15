@@ -55,10 +55,10 @@ public class GoalPlaningControllerTest {
         FinServ__FinancialGoal__c goal1=[select id from FinServ__FinancialGoal__c where name='Test Goal 1'];
       //  integer months = FinacastGoalProgressApex.NumberOfMonths(goal1.Start_Date__c, Date.today());
         test.startTest();
-        GoalPlaningController.getTotalGoal(acc.id );
+        GoalPlaningController.getTotalGoal(acc.id ,false,'');
        	GoalPlaningController.getRecordTypeIdbyName('FinServ__FinancialGoal__c',goal1.Id);
         GoalPlaningController.deleteGoals(goal1.Id);
-        GoalPlaningController.getGoalDetail(goal1.Id,acc.Id);
+        GoalPlaningController.getGoalDetail(goal1.Id);
       	GoalPlaningController.getGoalPerformance(goal1.Id);
         GoalPlaningController.getPicklistValues();
       	GoalPlaningController.getSimulation(238273,354534553,64783,'JSON.stringify(goal1.FinServ__TargetDate__c)','acc.Risk_Profile__c',12);

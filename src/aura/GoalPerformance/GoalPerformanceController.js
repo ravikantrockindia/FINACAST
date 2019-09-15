@@ -7,28 +7,30 @@
         var numberOfMonths;
         var expectedGoalAmount;
         var expectedGoalAmountPerMonth;
-        var label1 = component.get("v.gid");
+      /*  var label1 = component.get("v.gid");
         console.log("labwl"+ label1)
         component.set("v.chartId",label1+'1')  ;
-        var chartId=component.get("v.chartId")
-        component.set("v.gid",label1  ); 
-        var action = component.get("c.getGoalPerformance");  //actual goal contribution
+        component.set("v.gid",label1  ); */
+       /* var action = component.get("c.getGoalPerformance");  //actual goal contribution
         action.setParams({
             'goalId': label1});
         action.setCallback(this, function(response) {
-            var tempArray = response.getReturnValue();
-            console.log(JSON.stringify(tempArray))
+            var tempArray = response.getReturnValue();            console.log(JSON.stringify(tempArray))*/
             var a1=new Array();
             var a2=new Array();
-            
-            for(var i=0;i<tempArray[2].length;i++){
-                a1.push({label: tempArray[2][i], y: parseInt(tempArray[1][i])})
-            }
-            for(var i=0;i<tempArray[2].length;i++){
-                a2.push({label: tempArray[2][i], y: parseInt(tempArray[0][i])})
+        console.log(JSON.parse(JSON.stringify(component.get("v.data"))))
+        var d=JSON.parse(JSON.stringify(component.get("v.data")));
+        for (var index = 0; index < d.length; index++ ){
+            //for(var i=0;i<tempArray[2].length;i++){
+            console.log(d)
+                a1.push({label: d[index].dateMonth, y: d[index].values.actual})
+           // }
+            //for(var i=0;i<tempArray[2].length;i++){
+                a2.push({label:d[index].dateMonth, y: d[index].values.expected})
             }
             console.log(JSON.stringify(a1), a2)
-            
+                    var chartId=component.get("v.chartId")
+
             var chart = new CanvasJS.Chart(chartId, {
                 animationEnabled: true,
                 
@@ -50,8 +52,8 @@
             chart.render();
             console.log(chart.get("data"))
             
-            /
-                console.log(JSON.stringify(tempArray))
+            
+                //console.log(JSON.stringify(tempArray))
             /* var chartdata = {
                 labels: tempArray[2],
                 datasets: [
@@ -98,7 +100,7 @@
             component.set("v.increaseDate", tempArray[4][4]);
             component.set("v.isMonteCarloSimulation", tempArray[4][5]);
             console.log('track'+tempArray[4][0]+tempArray[4][1] );*/
-                        component.set("v.goalnotonTrack", tempArray[4][1]);
+                        /*component.set("v.goalnotonTrack", tempArray[4][1]);
                         component.set("v.goalStatus", tempArray[4][3].toString());
                         component.set("v.increaseDate", tempArray[4][4]);
                         component.set("v.goalonTrack", tempArray[4][0]);
@@ -107,7 +109,7 @@
 
 
         });    
-        $A.enqueueAction(action);       
+        $A.enqueueAction(action);       */
     }
     
 })
