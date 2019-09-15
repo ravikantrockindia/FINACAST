@@ -1,7 +1,6 @@
 ({	
     doInit: function(component, event, helper){
         
-        debugger;
         
         var idx=component.get("v.editrecidGoal");
         var clntId = component.get("v.cid");
@@ -14,7 +13,7 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             if(state==='SUCCESS'){
-                var data=response.getReturnValue();
+                var data=JSON.parse(JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,""));
                 console.log('data'+data);
                 var name=data.finGoal.Name;
                 component.set("v.name",name);

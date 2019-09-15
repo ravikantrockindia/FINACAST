@@ -16,7 +16,6 @@
     <aura:attribute name="cid" type="Id"/>
     <aura:attribute name="actualValue" type="Integer" />
     <aura:attribute name="res" type="Integer"/>
-	tar-{!v.tarVal}  Actualvalue-{!v.actualValue}  res-{!v.res}
     <aura:attribute name="namespace" type="string"/>
     <lightning:tabset selectedTabId="one">
         <aura:if isTrue="{!or(v.AccountAssociatedType == 'Savings',v.AccountAssociatedType == 'Money Market',v.AccountAssociatedType == 'Checking',v.AccountAssociatedType == 'CD')}">

@@ -120,7 +120,7 @@
         
     },
     generateChart: function (component, event, helper) { 
-        debugger;
+        
         
             var financialscore=component.get("v.res");
             var containername= component.get("v.editrecidGoal");
