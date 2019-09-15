@@ -154,7 +154,6 @@
                     }
                 }
                 console.log('loan Rec list',data.loanRecList);
-               debugger;
                 for(var e in data.loanRecList){
                     data.loanRecList[e]["showSection"]=false;
                     data.loanRecList[e]["iconName"]="utility:right";
