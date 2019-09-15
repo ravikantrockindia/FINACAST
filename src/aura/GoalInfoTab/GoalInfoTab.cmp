@@ -21,7 +21,8 @@
         <aura:attribute name="goalTrack" type="Boolean" access="global"/>
         <aura:attribute name="increaseDate" type="Date" access="global"/>
         <aura:attribute name="data" type="List"/>
-
+  <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
+    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
     <lightning:tabset selectedTabId="one">
         <aura:if isTrue="{!or(v.AccountAssociatedType == 'Savings',v.AccountAssociatedType == 'Money Market',v.AccountAssociatedType == 'Checking',v.AccountAssociatedType == 'CD')}">
             <lightning:tab label="Goal Info" id="one">

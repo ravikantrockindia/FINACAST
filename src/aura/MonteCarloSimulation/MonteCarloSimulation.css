@@ -1,0 +1,11 @@
+.THIS .btn1{
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}

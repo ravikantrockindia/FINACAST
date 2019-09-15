@@ -21,8 +21,7 @@
 
     <aura:attribute name="heading" type="String" default="String"/>
      <aura:attribute name="namespace" type="string"/>
-    <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
-    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+  
    <!--  <hr class="slds-m-top_xx-small slds-m-bottom_xx-small"/> -->
 
    <!-- <div class="slds-card__header ">
@@ -57,7 +56,7 @@
                                         <b>Goal Information</b>
                                     </div>
                                     <div class="slds-col slds-size_4-of-12">
-                                        <Lightning:button class="slds-button slds-float_right" label="+ Edit Goal" onclick="{!c.onClickEditGoals}"/>            
+                                        <Lightning:button class="slds-button btn1 slds-float_right" label="+ Edit Goal" onclick="{!c.onClickEditGoals}"/>            
                                     </div>   
                                     </h3>
                                     <div class="slds-gutter">
@@ -159,10 +158,10 @@
             </div></div>
      <aura:if isTrue="{!v.showModalGoal}">
         <aura:if isTrue="{!v.isRetirement}">      
-            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}"/>  
+            <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}" editModal="true"/>  
         </aura:if>
         <aura:if isTrue="{!v.isNonRetirement}">  
-            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}"/>
+            <c:Goalform   namespace="{!v.namespace}" goalId = "{!v.editrecidGoal}" client ="{!v.cid}" icon="{!v.icon}" heading = "{!v.heading}" editModal="true"/>
         </aura:if>
         
     </aura:if> 

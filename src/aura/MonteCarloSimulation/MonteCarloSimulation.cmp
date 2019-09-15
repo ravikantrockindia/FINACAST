@@ -83,7 +83,7 @@
         </div>
         <div class="slds-grid slds-gutter">
             <div class="slds-col slds-size_12-of-12 slds-text-align_center slds-p-top_x-large slds-p-bottom_xx-large  slds-p-left_medium slds-p-right_medium">
-                <lightning:button variant="brand" label="Simulate" title="Simulate" onclick="{!c.simulate}"/>
+                <lightning:button class="btn1" variant="brand" label="Simulate" title="Simulate" onclick="{!c.simulate}"/>
             </div>
         </div>
     </div>
@@ -103,13 +103,13 @@
         <div class="slds-grid slds-gutter">
             <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-left_small slds-p-right_medium">
                 <div class="conf-level">
-                    <h4><b>68% confidence level: </b>You will have atleast {!v.standardDeviationValueMap[1]}
+                    <h4><b>68% confidence level: </b>You will have atleast <ui:outputCurrency value="{!v.standardDeviationValueMap[1]}"/>
                         for your goal.</h4>
                 </div>
             </div>
             <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-left_small slds-p-right_medium">
                 <div class="conf-level conf-level1">
-                    <h4><b>95% confidence level: </b>You will have atleast {!v.standardDeviationValueMap[2]}
+                    <h4><b>95% confidence level: </b>You will have atleast <ui:outputCurrency value="{!v.standardDeviationValueMap[2]}"/>
                         for your goal.</h4>
                 </div>
             </div>

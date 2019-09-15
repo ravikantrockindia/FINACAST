@@ -6,7 +6,7 @@
 .THIS h6 { font-family: 'Work Sans', sans-serif;}
 .THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
 .THIS span { font-family: 'Open Sans', sans-serif;}
-.THIS .slds-button {
+.THIS .btn1{
     border-radius: 25px;
     font-size: 12px;
     background-color: #4E75A3;
@@ -14,7 +14,7 @@
     padding: 1px 5px;
     width: 120px;
 }
-.THIS .slds-button:hover {
+.THIS .btn1:hover {
     color: #fff;
 }
 .THIS .clients-details span {
