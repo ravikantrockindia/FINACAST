@@ -148,7 +148,7 @@
                 </div>
             </aura:iteration>
         </div>-->
-        
+        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
         <!--Income Bar ends-->
         <!--Roll up bar starts-->
         <div class="slds-align_absolute-center">
@@ -284,9 +284,7 @@
                                     <tr>
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
                                             <lightning:buttonIcon iconName="{!rec.iconName}" variant="bare"  name="{!rec.Id}" onclick="{!c.handleClickExpand}" />
-                                            INCOME :<span style="color: #4e75a3;"><lightning:button  label="{!rec.Name}" 
-                                                                     value="{!rec.Id}" onclick="{!c.openModelIncome1}" 
-                                                                              />  OF  {!rec.Primary_Owner__r.Name}</span></td>
+                                            INCOME :<span style="color: #4e75a3;"> {!rec.Name} OF  {!rec.Primary_Owner__r.Name}</span></td>
                                         <td style="text-align: right; color:black; font-weight: 700 ">${!rec.trIncome } of ${!rec.amount}</td>
                                         <!--<td scope="col" class="slds-truncate" role="gridcell" style="color:black;"> {!v.Inc}</td>-->
                                         
@@ -654,7 +652,7 @@
                 </div>-->
                 <aura:set attribute="else">
                     <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <h3>No Goal Data</h3>
+                        <h2>No Goal Data</h2>
                     </div>
                 </aura:set>
             </aura:if>

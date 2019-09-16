@@ -171,7 +171,7 @@ public with sharing class AddIncomeController {
                  system.debug('budgetList'+budgetList);
                 loanRecord = [select id ,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name,FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c,              
                               (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
-                               from Financial_Account_Transactions__r
+                               from Finserv__FinancialAccountTranslations__r
                                where FinServ__TransactionDate__c = THIS_MONTH)
                               from FinServ__FinancialAccount__c 
                               where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) /*and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)*/) and FinServ__PrimaryOwner__c =:acc.id];
@@ -291,7 +291,7 @@ public with sharing class AddIncomeController {
             for(FinServ__FinancialAccount__c tAmount : loanRecord){
                 Double percentage = 0;
                 Double sumLoanTransaction=0;
-                for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){
+                for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Finserv__FinancialAccountTranslations__r ){
                       system.debug('kishan');
                     percentage = percentage + tTransaction.FinServ__Amount__c ;
                       system.debug('percentage'+percentage);
@@ -401,12 +401,14 @@ public with sharing class AddIncomeController {
             List<FinServ__FinancialAccount__c> loanRecord = new List<FinServ__FinancialAccount__c>();
             List<FinServ__FinancialGoal__c> goalRecord = new List<FinServ__FinancialGoal__c>();
             List<FinServ__FinancialAccountTransaction__c> transactionRecord = new List<FinServ__FinancialAccountTransaction__c>();
-            loanRecord = [select id ,FinServ__PrimaryOwner__c, Name,FinServ__PrimaryOwner__r.name, FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c ,CreatedDate,FinServ__LoanEndDate__c ,
-                          (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
-                           from Financial_Account_Transactions__r
-                           where FinServ__TransactionDate__c = THIS_MONTH)
-                          from FinServ__FinancialAccount__c 
-                          where recordtype.developername = 'LoanAccount' and (((CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) and ((FinServ__LoanEndDate__c >=: stdate) or   FinServ__LoanEndDate__c = null)) and FinServ__PrimaryOwner__c =:clientId];
+             loanRecord = [select id ,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name,FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c,              
+                              (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
+                               from Finserv__FinancialAccountTranslations__r
+                               where FinServ__TransactionDate__c = THIS_MONTH)
+                              from FinServ__FinancialAccount__c 
+                              where RecordType.developername= 'LoanAccount' and  ((( CreatedDate <=: stdate ) or(CreatedDate >=: stdate and  CreatedDate <=: enddate)) /*and ((FinServ__LoanEndDate__c >=: stdate) or FinServ__LoanEndDate__c = null)*/) and FinServ__PrimaryOwner__c =:acc.id];
+                system.debug('loanRecord'+loanRecord);
+           
             goalRecord = [Select id,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name ,Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c from FinServ__FinancialGoal__c where (((Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and  Start_Date__c <=: enddate)) and ((FinServ__TargetDate__c >=: stdate) or   FinServ__TargetDate__c = null)) and FinServ__PrimaryOwner__c =:clientId and RecordType.DeveloperName != 'Scenario_Record_Type'];
             
             for ( Budget__c tIncome  : incomeList){
@@ -509,7 +511,7 @@ public with sharing class AddIncomeController {
             for(FinServ__FinancialAccount__c tAmount : loanRecord){
                 Double percentage = 0;
                 Double sumLoanTransaction=0;
-                for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Financial_Account_Transactions__r ){
+                for(FinServ__FinancialAccountTransaction__c tTransaction : tAmount.Finserv__FinancialAccountTranslations__r ){
                     percentage = percentage + tTransaction.FinServ__Amount__c ;
                     sumLoanTransaction=tTransaction.FinServ__FinancialAccount__r.FinServ__PaymentAmount__c;
                     //sumTransactionLoan = ((percentage / tTransaction.FinServ__FinancialAccount__r.FinServ__PaymentAmount__c) * 100);

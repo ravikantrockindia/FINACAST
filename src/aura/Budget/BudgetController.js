@@ -64,6 +64,7 @@
         helper.removeBackgroundColor(component, helper);
         var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+        
         var arr=[];
         var fromDate = new Date();
         var toDate = new Date();
@@ -83,6 +84,7 @@
         component.set("v.showModalLoanTransaction",false);
         fromDate.setMonth(toDate.getMonth()-11);
         if(fromDate.getFullYear() != toDate.getFullYear()) {
+            
             for(var i=fromDate.getMonth();i<=11;i++) {
                 arr.push({"label":monthNames[i] + '\n'+ fromDate.getFullYear(),"val":monthNames[i] + ','+ fromDate.getFullYear() });
                 
@@ -113,7 +115,7 @@
             clntId = clnt;
         }
         console.log("sss"+clntId);
-        
+        component.find("Id_spinner").set("v.class" , 'slds-show');
         var action = component.get("c.getBudget");
         action.setParams({
             clientId : clntId,
@@ -123,6 +125,7 @@
             try {
                 var state = response.getState();
             if (state === "SUCCESS") {
+                component.find("Id_spinner").set("v.class" , 'slds-hide');
                 var list=JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,"")
                var data = JSON.parse(list);
                 console.log("--->"+JSON.stringify(data));
@@ -154,12 +157,13 @@
                     }
                 }
                 console.log('loan Rec list',data.loanRecList);
+              //
                 for(var e in data.loanRecList){
                     data.loanRecList[e]["showSection"]=false;
                     data.loanRecList[e]["iconName"]="utility:right";
                     data.loanRecList[e]["ariavaluenow"] = data.transAmountLoan[data.loanRecList[e].Id];
                     
-                 //   alert('aria value',data.loanRecList[e]["ariavaluenow"]);
+                  //  alert('aria value',data.transAmountLoan[data.loanRecList[e].Id]);
                     data.loanRecList[e]["trLoan"] = data.sumOfLoan[data.loanRecList[e].Id];
                     console.log('total loan',data.loanRecList[e]["trLoan"]);
                     data.loanRecList[e]["amount"]=data.loanRecList[e].FinServ__PaymentAmount__c;
@@ -571,7 +575,7 @@
 
 
                         component.set("v.addGoal",arrayName);
-
+ component.find("Id_spinner").set("v.class" , 'slds-show');
         var eventgen = event.getSource().get("v.value");
         component.set("v.month",eventgen)
         var action = component.get("c.getmonthincome");
@@ -582,6 +586,7 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state == "SUCCESS") {
+                  component.find("Id_spinner").set("v.class" , 'slds-hide');
                 var data = response.getReturnValue();
                 console.log(JSON.stringify(data))
                 for(var e in data.expenseRecList){

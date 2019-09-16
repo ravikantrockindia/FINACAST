@@ -159,8 +159,8 @@ public class AddIncomeControllerTest {
         AddIncomeController.wrapIncome result = AddIncomeController.getBudget(acc1.Id);
         AddIncomeController.wrapIncome res = AddIncomeController.getBudget(acc2.Id);
         AddIncomeController.wrapIncome result1 = AddIncomeController.getBudget('init');
-        AddIncomeController.wrapIncome result2 = AddIncomeController.getmonthincome('Jan,2019', acc1 );
-        AddIncomeController.getMonth('Jan,2019'); 
+        AddIncomeController.wrapIncome result2 = AddIncomeController.getmonthincome('JAN,2019', acc1 );
+        AddIncomeController.getMonth('JAN,2019'); 
         AddIncomeController.deleteIncome(bg.id);
         AddIncomeController.deleteGoals(fGoal1.id);
         AddIncomeController.deleteLoan(fAcc1.id);
@@ -172,7 +172,7 @@ for(Budget__c b : bd) {
 bdId.add(b.Id);
 }
 FinacastBudgetHelper.shareBudget(bdId);*/
-        SummaryCashFlowController.getMonth('Jan');
+        SummaryCashFlowController.getMonth('JAN');
         System.assertEquals('1', '1');
     }
     
