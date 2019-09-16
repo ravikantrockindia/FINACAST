@@ -214,7 +214,7 @@
                       //  name:component.get("v.name"),
                         editrecidGoal:component.get("v.editrecidGoal"),
                         namespace:component.get("v.namespace"),
-                       // cid:component.get("v.cid") 
+                        cid:component.get("v.cid") 
                     }
                 });
                 evt.fire();
