@@ -4,42 +4,42 @@ public class MonteCarloSimulationTestTestClass {
     @isTest static void testSimulatedShortValues() {
         Map<integer, double> returnedMap = new Map<Integer, Double>();
            returnedMap= MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Moderate', 4);
-        Integer MapSize = returnedMap.size();
+        //Integer MapSize = returnedMap.size();
         //System.assertEquals(7, MapSize);
     }
     
     @isTest static void testSimulatedConsevativeValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
          returnedMap=   MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Conservative', 4);
-        Integer MapSize = returnedMap.size();
+       // Integer MapSize = returnedMap.size();
       //  System.assertEquals(7, MapSize);
     }
     
     @isTest static void testSimulatedBalancedValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
            returnedMap=  MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Balanced', 4);
-        Integer MapSize = returnedMap.size();
+        //Integer MapSize = returnedMap.size();
        // System.assertEquals(7, MapSize);
     }
     
     @isTest static void testSimulatedGrowthValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
             returnedMap= MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Growth', 4);
-        Integer MapSize = returnedMap.size();
+       // Integer MapSize = returnedMap.size();
        // System.assertEquals(7, MapSize);   
     }
     
     @isTest static void testSimulatedAggressiveValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
            returnedMap=  MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Aggressive', 4);
-        Integer MapSize = returnedMap.size();
+       // Integer MapSize = returnedMap.size();
       //  System.assertEquals(7, MapSize);
     }
     
     @isTest static void testSimulatedVeryAggresiveValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
            returnedMap=  MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Very Aggressive', 4);
-        Integer MapSize = returnedMap.size();
+       // Integer MapSize = returnedMap.size();
        // System.assertEquals(7, MapSize);
     }
     
