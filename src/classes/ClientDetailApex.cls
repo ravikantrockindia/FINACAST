@@ -883,7 +883,7 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
         FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];
         delete goalItem;
     }
-    @auraEnabled
+   /* @auraEnabled
     public static FinGoalWrapperClass getGoalDetail(string goalId,String ClientId) {
         FinGoalWrapperClass fingoalwrap=new FinGoalWrapperClass();
         FinServ__FinancialAccount__c ffa;
@@ -1080,7 +1080,8 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
         system.debug('value of view Goal'+fingoalwrap);
         return fingoalwrap;
         
-    }
+    }*/
+    
     @auraEnabled
     public static Account getClient(String ClientId) {
         

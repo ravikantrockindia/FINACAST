@@ -27,33 +27,7 @@ public class GoalPerformanceAndMonteCarlo {
         }
         return newDate.addmonths(noMonths);
     }
-    
-    public static double testEstimatedMonthlyPayment(double current, double target, Integer growth, Date startDate, Date endDate){
-        Integer months = 0;
-        months = NumberOfMonths(startDate, endDate);
-        double installment = 0;
-        
-        if(months < 1){
-            return (target > current) ? (target - current):0;
-        }
-        Double NOFMonths = (Double)months;
-        if(growth != null && growth != 0){
-            growth = FrequencyAdjustedRate(growth, 12)/100;
-        }else{
-            growth = 0;
-        }
-        
-        if(target > current*(Math.pow((double)(1.0+growth), NOFMonths))){
-            if(growth > 0){
-                installment = ((target - current*(Math.pow((double)(1+growth), NOFMonths)))*growth)/(Math.pow((double)(1+growth), NOFMonths) - 1);
-            } else {
-                installment = (target - current) / NOFMonths;
-            }
-            return installment;
-        } else {
-            return installment;
-        }
-    }
+
     
     public static integer NumberOfMonths(Date startDate, Date endDate){
         
