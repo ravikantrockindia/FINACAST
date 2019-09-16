@@ -55,6 +55,9 @@
 .THIS .custom_card .slds-size_1-of-2 .slds-textarea {
     margin-top: 8px;
 }
+.THIS .custom_card .slds-size_1-of-2 .textarea_custom lightning-textarea{
+    display:inline;
+}
 .THIS .custom_card .slds-form-element {
     margin-bottom: 10px;
     margin-top: 2px;

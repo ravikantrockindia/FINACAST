@@ -16,6 +16,7 @@
               
                 var data=JSON.parse(JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,""));
                 console.log('data'+data);
+                debugger;
                 var name=data.finGoal.Name;
                 component.set("v.name",name);
                 var reqMonSaving=data.finGoal.Required_Monthly_Saving__c;

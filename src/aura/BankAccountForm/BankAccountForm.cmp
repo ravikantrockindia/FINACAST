@@ -61,6 +61,11 @@
                     {!$Label.c.APY} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" aura:id="apy" variant="label-hidden"/>
                 </div>
             </aura:if>
+             <aura:if isTrue="{!v.isRetailBrokerage}"> 
+                <div class="slds-col slds-size_1-of-2">
+                    {!$Label.c.Cost} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Cost__c'}" aura:id="cost" variant="label-hidden"/>
+                </div>
+            </aura:if>
             <aura:if isTrue="{!v.isInvestmentAccount}">
                 <div class="slds-col slds-size_1-of-2">
                     {!$Label.c.Risk_Profile}<lightning:inputField class="label-hidden" fieldName="FinServ__ModelPortfolio__c" variant="label-hidden"/><br/>
@@ -78,19 +83,16 @@
                     {!$Label.c.Maturity_Date} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Maturity_Date__c'}" aura:id="maturity_date" variant="label-hidden"/>
                 </div>      
             </aura:if>
-            <aura:if isTrue="{!v.isRetailBrokerage}"> 
-                <div class="slds-col slds-size_1-of-2">
-                    {!$Label.c.Cost} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Cost__c'}" aura:id="cost" variant="label-hidden"/>
-                </div>
-            </aura:if>
-            <div class="slds-col slds-size_1-of-2">
-                <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="{!v.selectedAccount}" class="slds-hide"/>
-            </div>
+           
+            
             <aura:if isTrue="{!v.is529Account}">
                 <div class="slds-col slds-size_1-of-2">
                     {!$Label.c.Withdrawl_Start_Date} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" aura:id="withdrawldate" fieldName="{!v.namespace+'Withdrawl_Start_Date__c'}" variant="label-hidden"/><br/>
                 </div>
             </aura:if>
+            <div class="slds-col slds-size_1-of-2">
+                <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="{!v.selectedAccount}" class="slds-hide"/>
+            </div>
         </div>
         <div style="clear: both;"></div>
         <div class="custom_card slds-gutters">

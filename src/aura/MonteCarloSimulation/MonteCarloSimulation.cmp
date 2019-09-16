@@ -66,9 +66,7 @@
             <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-p-left_small slds-p-right_small">
                 <div class="slds-form-element">
                     <label class="slds-form-element__label" for="select-01">Risk Profile</label>
-                    <div class="slds-form-element__control">
-                        <div class="slds-select_container">
-                            <lightning:select aura:id="riskProfile" variant="label-hidden">       
+                            <lightning:select aura:id="riskProfile" class="label-hidden" variant="label-hidden">       
                                 <option value="">Choose one</option> 
                                 <aura:iteration items="{!v.picklistValues}" var="item">
                                     <option value="{!item.value}">
@@ -76,8 +74,7 @@
                                     </option>
                                 </aura:iteration>
                             </lightning:select>  
-                        </div>
-                    </div>
+                       
                 </div>
             </div>
         </div>

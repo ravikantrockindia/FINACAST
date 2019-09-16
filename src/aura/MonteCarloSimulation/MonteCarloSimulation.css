@@ -9,3 +9,7 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+
+.THIS .label-hidden label {
+    display: none !important;
+}
