@@ -11,9 +11,6 @@
         <componentInstances>
             <componentName>ClientDetail</componentName>
         </componentInstances>
-        <componentInstances>
-            <componentName>Mybalancesheet</componentName>
-        </componentInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
