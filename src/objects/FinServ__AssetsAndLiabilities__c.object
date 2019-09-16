@@ -148,62 +148,13 @@
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <fieldSets>
-        <fullName>WM_Client_Assets_Liabilities</fullName>
-        <description>Client profile&apos;s Financials tab</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__AssetsAndLiabilitiesType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__OwnerType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Amount__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Assets &amp; Liabilities</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>WM_Household_Assets_Liabilities</fullName>
-        <description>Household profile&apos;s Financials tab</description>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__PrimaryOwner__r.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__AssetsAndLiabilitiesType__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>FinServ__Amount__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Assets &amp; Liabilities</label>
-    </fieldSets>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>FinServ__Amount__c</fullName>
         <deprecated>false</deprecated>
@@ -213,7 +164,6 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -223,7 +173,6 @@
         <externalId>false</externalId>
         <label>Source</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -248,7 +197,6 @@
         <externalId>false</externalId>
         <label>Type</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -309,6 +257,16 @@
                     <default>false</default>
                     <label>Cash</label>
                 </value>
+                <value>
+                    <fullName>Stocks</fullName>
+                    <default>false</default>
+                    <label>Stocks</label>
+                </value>
+                <value>
+                    <fullName>Bonds</fullName>
+                    <default>false</default>
+                    <label>Bonds</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -318,7 +276,6 @@
         <externalId>false</externalId>
         <label>Description</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -333,7 +290,6 @@
         <relationshipLabel>Assets and Liabilities</relationshipLabel>
         <relationshipName>AssetsAndLiabilities</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -357,7 +313,6 @@
         <relationshipLabel>Household Assets and Liabilities</relationshipLabel>
         <relationshipName>HouseholdAssetsAndLiabilities</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -380,7 +335,6 @@
         <relationshipLabel>Joint Owner</relationshipLabel>
         <relationshipName>JointOwner</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -391,7 +345,6 @@
         <label>Owner Type</label>
         <length>18</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -402,7 +355,6 @@
         <externalId>false</externalId>
         <label>Ownership</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -445,7 +397,6 @@
         <relationshipLabel>Client Assets and Liabilities</relationshipLabel>
         <relationshipName>ClientAssetsAndLiabilities</relationshipName>
         <required>true</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -456,7 +407,6 @@
         <label>Source System ID</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -467,16 +417,17 @@
         <columns>NAME</columns>
         <columns>FinServ__Description__c</columns>
         <columns>FinServ__Amount__c</columns>
+        <columns>FinServ__AssetsAndLiabilitiesType__c</columns>
+        <columns>FinServ__AssetsAndLiabilitiesSource__c</columns>
+        <columns>FinServ__PrimaryOwner__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
     <nameField>
         <label>Asset or Liability Name</label>
-        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Assets and Liabilities</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>FinServ__Liability</fullName>
         <active>true</active>
@@ -551,6 +502,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
             </values>
@@ -576,6 +531,10 @@
             </values>
             <values>
                 <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stocks</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
