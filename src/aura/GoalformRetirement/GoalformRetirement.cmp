@@ -188,7 +188,7 @@
                             <div class="button" align ="rionght">
                                 
                                 <lightning:button class="btn1 btn2" variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>
-                                <lightning:button class="btn1" variant="brand" type="submit" label="Create Goal"   />
+                                <lightning:button class="btn1" variant="brand" type="submit" label="Save Goal"   />
                                 
                             </div>
                         </footer>

@@ -93,7 +93,7 @@
                var tChange=component.get("v.ResourceImage");
            }
             
-           var state = response.getState();
+            var state = response.getState();
             if (state === "SUCCESS") {
                 
                 startPosition = endPosition;
@@ -106,7 +106,7 @@
                 }
                 
             } else if (state === "INCOMPLETE") {
-            } else if (state === "ERROR") {
+             } else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {

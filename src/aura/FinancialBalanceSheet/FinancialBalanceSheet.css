@@ -101,14 +101,14 @@
 .THIS .non-track {
     color: #f24865;
 }
-.THIS .net-worth h1 span {
-    font-size: 12px;
+.THIS .networth {
+    font-size: 16px;
     color: #808285;
     font-weight: 600;
     margin-left: 10px;
     vertical-align: middle;
 }
-.THIS .net-worth h1 span .slds-icon {
+.THIS .networth h1 span .slds-icon {
     vertical-align:	text-bottom;
     fill: green;
 }

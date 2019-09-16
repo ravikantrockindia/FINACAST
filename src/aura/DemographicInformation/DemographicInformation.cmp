@@ -81,7 +81,7 @@
                     </div>
                     <div class="slds-grid slds-gutters">
                         <div class="slds-col slds-size_1-of-2">
-                            {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Risk_Profile__c'}" variant="label-hidden" /><a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>                            
+                            {!$Label.c.Risk_Profile} <lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Risk_Profile__c'}" variant="label-hidden" /><!--<a href="javascript:void(0)">{!$Label.c.Know_your_risk_profile}</a>-->                            
                         </div>
                         <div class="slds-col slds-size_1-of-2">
                             {!$Label.c.Client_Time_Horizon} <lightning:inputField class="label-hidden" fieldName="FinServ__TimeHorizon__c" variant="label-hidden"/>
