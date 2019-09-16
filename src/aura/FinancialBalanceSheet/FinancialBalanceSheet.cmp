@@ -32,7 +32,7 @@
         <div>
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
                 <div class="slds-col slds-size_6-of-12">
-                    <h3>Account</h3>                    
+                    <h3 class="">Account</h3>                    
                 </div>
                 <div class="slds-col slds-size_6-of-12 slds-text-align_right">
                     <lightning:button label="+Add New Account" class="btn1" variant="bare" onclick="{! c.addnewaccount}" />
@@ -55,7 +55,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright" aura:id="cashSectionButton" variant="bare" onclick="{! c.toggleSection }" name="cashSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate slds slds-p-left_x-small">Cash</span>
+                        <span class="slds-truncate slds ">Cash</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.cashvalue}"/></span>
@@ -113,7 +113,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright" variant="bare" onclick="{! c.toggleSection }" name="creditSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate slds-p-left_x-small">Credit</span>
+                        <span class="slds-truncate">Credit</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.creditvalue}"/></span>
@@ -170,7 +170,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright"  variant="bare" onclick="{! c.toggleSection }" name="investmentSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate slds-p-left_x-small">Investment</span>
+                        <span class="slds-truncate ">Investment</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.investmentvalue}"/></span>
@@ -227,7 +227,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright" variant="bare" onclick="{! c.toggleSection }" name="loanSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate slds-p-left_x-small">Loan</span>
+                        <span class="slds-truncate ">Loan</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.loanvalue}"/></span>

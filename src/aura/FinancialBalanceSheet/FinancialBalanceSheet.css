@@ -105,7 +105,6 @@
     font-size: 16px;
     color: #808285;
     font-weight: 600;
-    margin-left: 10px;
     vertical-align: middle;
 }
 .THIS .networth h1 span .slds-icon {
@@ -259,10 +258,8 @@
     float:right;
 }
 .THIS .client_managed2 h1 span {
-    font-size: 12px;
-    color: #808285;
+    color: #000;
     font-weight: 600;
-    margin-left: 5px;
     vertical-align: middle;
 }
 .THIS .client_managed2 h1 span .slds-icon {
