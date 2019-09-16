@@ -652,7 +652,7 @@
                 </div>-->
                 <aura:set attribute="else">
                     <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <h2>No Goal Data</h2>
+                        <h3>No Goal Data</h3>
                     </div>
                 </aura:set>
             </aura:if>
