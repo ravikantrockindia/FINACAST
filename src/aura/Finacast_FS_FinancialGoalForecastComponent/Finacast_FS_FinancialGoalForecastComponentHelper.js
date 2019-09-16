@@ -106,10 +106,60 @@
                 }
             }
             //make chart Label and set points
+             var moneyOwned=0;
+        var moneytobepaid=0;
             chartLabels = labelsArray;
-            
-            //console.log("Data Set Array: " + JSON.stringify(datasetArray));
-            ///console.log("Labels Array: " + JSON.stringify(labelsArray));
+                    if($A.util.isUndefinedOrNull(dataSeriesGoal[0]) != true) {
+            for(var i = 0; i<dataSeriesGoal[0].data.length; i++)
+            {
+                // chartLabels[i] = dataSeriesGoal[0]["data"][i][0];
+                chartDataSet[i] = dataSeriesGoal[0]["data"][i][1];
+                 moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
+                 moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
+                        if(isNaN(moneytobepaid)){
+                            moneytobepaid =0;
+                        }     
+               
+                        }
+            }
+        	  if(moneyOwned < 999) {
+                    component.set("v.moneyOwned",moneyOwned);
+                }
+               
+                else if(moneyOwned < 1000000) {
+                    component.set("v.moneyOwned",Math.round(moneyOwned/1000) + " K");
+                }
+                    else if( moneyOwned < 10000000) {
+                        component.set("v.moneyOwned",(moneyOwned/1000000).toFixed(2) + " M");
+                    }
+               
+                        else  if(moneyOwned < 1000000000) {
+                            component.set("v.moneyOwned",Math.round((moneyOwned/1000000)) + " M");
+                        }
+               
+                            else if(moneyOwned < 1000000000000) {
+                                component.set("v.moneyOwned",Math.round((moneyOwned/1000000000)) + " B");
+                            }            
+              //  component.set("v.moneyOwned",moneyOwned.toLocaleString());    
+                
+                   if(moneytobepaid < 999) {
+                    component.set("v.moneytobepaid",moneytobepaid);
+                }
+               
+                else if(moneytobepaid < 1000000) {
+                    component.set("v.moneytobepaid",Math.round(moneytobepaid/1000) + " K");
+                }
+                    else if( moneytobepaid < 10000000) {
+                        component.set("v.moneytobepaid",(moneytobepaid/1000000).toFixed(2) + " M");
+                    }
+               
+                        else  if(moneytobepaid < 1000000000) {
+                            component.set("v.moneytobepaid",Math.round((moneytobepaid/1000000)) + " M");
+                        }
+               
+                            else if(moneytobepaid < 1000000000000) {
+                                component.set("v.moneytobepaid",Math.round((moneytobepaid/1000000000)) + " B");
+                            } 
             
             //Lower Comments 
             var flagAllMeet=true;
@@ -173,50 +223,52 @@
                 }
                 component.set("v.goalForecastStatus", controllerGoalForecastStatusArray);
             }
-            
-            
+           
             //Chart plotting Starts here
-            var chartdata = component.get("v.chartDataObject");
-            if(chartdata) {
-                chartData.destroy();
-            }
-            chartdata = {
-                labels: chartLabels,
-                datasets: datasetArray
-            }
-            
-            var ctx = component.find("goalForecastGraph").getElement();
-            var lineChart = new Chart(ctx ,{
-                type: 'bar',
-                data: chartdata,
-                options: {	
-                    scales: { 
-                        
-                        xAxes: [{
-                            stacked: true
-                        }],
-                        
-                        yAxes: [{
-                            stacked: true,
-                            display: true,
-                            ticks: {
-                                suggestedMin: 0,    
-                                beginAtZero: true,
-                                callback: function(label, index, labels) {
-                                    return Intl.NumberFormat('Yo', { 
-                                        style: 'currency', currency: 'USD', minimumFractionDigits: 0, 
-                                    }).format(label);
-                                }
-                            }
-                        }]
-                    },
-                    legend: {
-                        position: 'bottom',
-                        padding: 1,
-                    },
-                    responsive: true
-                }
-            });            
+        var dps=new Array();
+        for(var i=0; i<chartLabels.length; i++){
+            dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i],color: "lightgreen"});
+        }
+        
+        
+        
+        var chart = new CanvasJS.Chart("chartContainer3.358", {
+            animationEnabled: true,
+            title:{
+                //text: "Debt Forecast",
+                fontFamily: "arial black",
+                fontColor: "#695A42"
+            },
+            dataPointWidth: 35,
+            axisX: {
+                interval: 1,
+                intervalType: "year"
+            },
+            axisY:{
+                // valueFormatString:"#0K",
+                gridColor: "#ffffff",
+                tickColor: "#ffffff"
+            },
+            toolTip:{
+                contentFormatter: function ( e ) {
+                    var value = e.entries[0].dataPoint.y;
+                    if(value > 999)
+                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value)
+                    else if(value < 10000000)
+                     return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
+                      else if(value < 1000000000000)
+                           return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
+                }  
+            },
+            data: [{
+                yValueFormatString: "$ #,### ",
+                type: "stackedColumn",
+                dataPoints: dps
+            },
+                   
+                  ]
+                   });
+         chart.render();
         
      }//end try
          catch(e){

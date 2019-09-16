@@ -29,7 +29,9 @@
                     chartLabels.push(offset+i);
                     chartDataSet.push(data.financialHealthAnalysis[i].score.toPrecision(2));
                 }
-                
+                console.log('offset---'+offset);
+                console.log('chartDataSet---'+chartDataSet);
+                console.log('chartLabels---'+chartLabels);
                 var greenGoalMsg=false;
                 var greenGoalMsgCounter=-1;
                 var diagnosis = data;
@@ -58,58 +60,101 @@
                 component.set("v.financialHealthMessage", messages);           
                 component.set("v.score",chartDataSet[0]);
                 //component.set("v.data",data);
-                
-                var chartdata = component.get("v.chartDataObject");
-                if(chartdata) {
-                    chartData.destroy();
+               var financialscore=component.get("v.score");
+                if (financialscore == 0.0){
+                    component.set("v.istrue",true);
+                    component.set("v.NotTrackexpense",true);
+                    component.set("v.NotTrackcredit",true);
+                    component.set("v.NotTrackloan",true);
+                    component.set("v.NotTrackgoals",true);    
+                    
+                    
+                }  
+                else if (financialscore>0.0 && financialscore<2.0){
+                    component.set("v.istrue",true);
+                    component.set("v.Adviseexpense",true);
+                    component.set("v.NotTrackcredit",true);
+                    component.set("v.NotTrackloan",true);
+                    component.set("v.NotTrackgoals",true);
+                    
                 }
-                chartdata = {
-                    labels: chartLabels,
-                    datasets: [
-                        {
-                            label:'Your Financial Health Score',
-                            data: chartDataSet,
-                            borderColor:'rgba(62, 159, 222, 0.5)',
-                            fill: true,
-                            pointBackgroundColor: "#FFFFFF",
-                            pointBorderWidth: 4,
-                            pointHoverRadius: 5,
-                            pointRadius: 3,
-                            bezierCurve: true,
-                            pointHitRadius: 10
-                        }
-                    ]
-                }
-                
-                var ctx = component.find("financialHealthGraph").getElement();
-                var lineChart = new Chart(ctx ,{
-                    type: 'line',
-                    data: chartdata,
-                    options: {	
-                        legend: {
-                            position: 'bottom',
-                            padding: 10,
-                        },
-                        scales: {xAxes: [{
-                            gridLines: {
-                                color: "rgba(0, 0, 0, .1)",
-                            }
-                        }],
-                                 yAxes: [{
-                                     gridLines: {
-                                         color: "rgba(0, 0, 0, .1)",
-                                     } ,ticks:{
-                                         max: 10,
-                                         min: 0,
-                                         stepSize:1,
-                                         callback: function(label, index, labels) {
-                                             return Intl.NumberFormat().format(label);}
-                                     }  
-                                 }]
-                                },
-                        responsive: true
+                    else if (financialscore>2.0 && financialscore<2.25){
+                        component.set("v.istrue",true);
+                        component.set("v.Trackexpense",true);
+                        component.set("v.NotTrackcredit",true);
+                        component.set("v.Adviseloan",true);
+                        component.set("v.NotTrackgoals",true);                                               
                     }
-                }); 
+                        else if (financialscore>2.25 && financialscore<4.0){
+                            component.set("v.istrue",true);
+                            component.set("v.Trackexpense",true);
+                            component.set("v.Advisecredit",true);
+                            component.set("v.Trackloan",true);                            
+                            component.set("v.NotTrackgoals",true);                            
+                        }                
+                            else if (financialscore>4.0 && financialscore<5.0){
+                                component.set("v.istrue",true);
+                                component.set("v.Trackexpense",true);
+                                component.set("v.Trackcredit",true);
+                                component.set("v.Trackloan",true);                               
+                                component.set("v.Advisegoals",true);                                
+                            }
+                                else{
+                                    component.set("v.istrue",true);
+                                    component.set("v.Trackexpense",true);
+                                    component.set("v.Trackcredit",true);
+                                    component.set("v.Trackloan",true);                                    
+                                    component.set("v.Trackgoals",true);     
+                                }
+               var gauge = {
+                    //title:{text: "Financial Health"},
+                    data : { y: chartDataSet[0]}, //gauge value change it
+                    maximum : 10
+                };
+                
+                var chart = new CanvasJS.Chart("chartContainer217");
+                createGauge(chart);
+                //Function for gauge
+                function createGauge(chart){
+                    //Caluculation of remaining parameters to render gauge with the help of doughnut
+                    gauge.unoccupied = {
+                        y: gauge.maximum - gauge.data.y , 
+                        color: "#DEDEDE", 
+                        toolTipContent: null, 
+                        highlightEnabled: false,
+                        click : function (){ gauge.unoccupied.exploded = true; }
+                    }
+                    gauge.data.click = function (){ gauge.data.exploded = true; };
+
+                        if(!gauge.data.color )
+                            gauge.data.color = "#008000	";
+                    
+                    var data = {
+                        type: "doughnut",
+                        innerRadius: 100,
+                        dataPoints: [
+                            {
+                                y: gauge.maximum ,
+                                color: "transparent",
+                                toolTipContent: null
+                            },
+                            gauge.data,
+                            gauge.unoccupied
+                        ],
+                    };            
+                    if(!chart.options.data)
+                        chart.options.data = [];
+                    chart.options.data.push(data);
+                    
+                    if(gauge.title){
+                        chart.options.title = gauge.title;
+                    }
+                    //For showing value
+                    if(!chart.options.subtitles)
+                        chart.options.subtitles = [];
+                    chart.options.subtitles.push(gauge.valueText);
+                }
+                    chart.render();
             }
         }//end try
         catch(e){ 

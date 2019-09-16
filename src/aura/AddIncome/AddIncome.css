@@ -1,3 +1,33 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    border: 1px solid #4e75a3;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+   background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3; 
+}
 .THIS label.slds-form-element__label{
     display: none!important ;     
 }
@@ -15,13 +45,25 @@
 }
 .THIS .slds-box1 .slds-size_1-of-2 {
     float : left;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .THIS .slds-box1 .slds-size_1-of-2 input {
-    margin-top: 2px;
+    margin-top: 8px;
 }
 .THIS .slds-text-heading_small {
     font-weight: 300;
+}
+.THIS .slds-input {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-input[readonly] {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
 }
 @media (max-width: 767px) {
     .THIS .slds-box1 {

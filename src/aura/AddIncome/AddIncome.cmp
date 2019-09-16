@@ -69,8 +69,8 @@
                         </div>                           
                         <footer class="slds-modal__footer">
                             <div class="button" align ="right">
-                                <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
-                                <lightning:button variant="brand" label="Save" type="submit"  />                                                               
+                                <lightning:button variant ="neutral" class="btn1 btn2" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                                <lightning:button variant="brand"  class="btn1" label="Save" type="submit"  />                                                               
                             </div>
                         </footer>
                     </lightning:recordEditForm>

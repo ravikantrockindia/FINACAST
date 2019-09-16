@@ -65,7 +65,7 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                    	Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}" value="{!v.getYes}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"/>
+                                    	Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}" value="{!v.getYes}" style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"  style="height: 10px;" />
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                     	<aura:if isTrue="{!v.accLoanRecType == 'IndustriesHousehold'}">
@@ -74,7 +74,7 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                    	<lightning:inputField fieldName ="Finsol__Do_you_get_tax_benefit_from_interest_pay__c" value="{!v.isTaxDeduction}" aura:id = "isTax" class="slds-hide"/>
+                                    	<lightning:inputField fieldName ="Do_you_get_tax_benefit_from_interest_pay__c" value="{!v.isTaxDeduction}" aura:id = "isTax" class="slds-hide"/>
                                     </div>
                                     <div style="clear:both;"></div>
                                 </div>
@@ -82,8 +82,8 @@
                                     <div class="slds-gutters">
                                         <div class="slds-col  slds-size_1-of-2" > 
                                             <span class = "highlight">*</span>What % of contribution bring tax benefits? <lightning:inputField  fieldName ="{!v.namespace+'What_of_contribution_bring_tax_benefit__c'}" variant="label-hidden" aura:id = "taxbenfit" />
-                                            Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" aura:id = "interestpay"  id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" aura:id = "interestpay1"  checked="{!!v.isMonthly}"/>
-                                            <lightning:inputField fieldName ="Finsol__Do_tax_benefits_realize_monthly__c" aura:id = "monthly" variant="label-hidden" value="{!v.isMonthly}" class="slds-hidden" />    
+                                            Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" aura:id = "interestpay"  id="yesMonthly" checked="{!v.isMonthly}"  style="height: 10px;" /> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" aura:id = "interestpay1"  checked="{!!v.isMonthly}"  style="height: 10px;"/>
+                                            <lightning:inputField fieldName ="Do_tax_benefits_realize_monthly__c" aura:id = "monthly" variant="label-hidden" value="{!v.isMonthly}" class="slds-hidden" />    
                                         </div>
                                         <div class="slds-col   slds-size_1-of-2" >
                                             Max yearly tax deduction allowed ($ )?  <lightning:inputField variant="label-hidden" fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" aura:id = "deducationtax" />
@@ -98,8 +98,8 @@
                           
                         <footer class="slds-modal__footer">
                             <div class="button" align ="right">
-                                <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
-                                <lightning:button variant="brand" label="Save" type="submit" />
+                                <lightning:button variant ="neutral" class="btn1 btn2" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                                <lightning:button variant="brand" class="btn1" label="Save" type="submit" />
                             </div>
                         </footer>
                     </lightning:recordEditForm>

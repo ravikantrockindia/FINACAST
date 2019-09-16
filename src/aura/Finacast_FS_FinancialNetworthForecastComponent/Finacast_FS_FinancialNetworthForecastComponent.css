@@ -2,3 +2,44 @@
 .THIS.chart3 .chartjs-render-monitor {
     width: 100% !important;
 }
+.THIS .what-is span:first-child {
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+.THIS .what-is span:first-child .yearButton {
+    min-width: 40px;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    border-radius: 0;
+    line-height: 25px;
+}
+.THIS .what-is span:first-child .slds-button-btn {
+    background: transparent;
+    border: none;
+    width: 25px;
+}
+.THIS .what-is span:first-child .slds-icon {
+    width: 15px;
+    height: 15px;
+}
+.THIS .networth-fea {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.THIS .networth-fea p {
+    font-size: 14px;
+    color: #aaa;
+}
+.THIS .networth-msg {
+    font-size: 12px;
+}
+.THIS .networth-msg b {
+    color: #000;
+}
+.THIS .networth-msg span {
+    color: #2fbf9e;
+}
+.THIS .networth-fea h4 {
+    font-size: 18px;
+}

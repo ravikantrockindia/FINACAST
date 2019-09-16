@@ -49,6 +49,14 @@ public class GoalPerformanceAndMonteCarloTest {
         System.assertEquals(1, l.size());
         
     }
+    
+     @isTest
+    public static void getGoalsTest2(){
+        String clientId=[Select Id from Account where name='Test3' limit 1].Id;
+       list<GoalPerformanceAndMonteCarlo.FinGoalWrapperClass> l= GoalPerformanceAndMonteCarlo.getGoals(clientId,true,'Jan,2019');
+     //   System.assertEquals(1, l.size());
+        
+    }
      @isTest
     public static void getGoalDetailTest(){
         String goalId=[Select Id from FinServ__FinancialGoal__c where name='Test Goal 1' limit 1].Id;

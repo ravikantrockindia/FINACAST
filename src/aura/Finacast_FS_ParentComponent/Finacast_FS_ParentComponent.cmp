@@ -33,24 +33,31 @@
         </div>
     </aura:if>
     <!-- Loading spinner end-->
-    
-    <!--SLDS Grid-->
-    <div class="slds-grid slds-gutters future_simulation">
-        <div class="slds-col  slds-size_1-of-2">
-            <lightning:card  title="Financial Health"><c:Finacast_FS_FinancialHealthComponent data="{! v.data}" namespace="{! v.namespace}"/></lightning:card>
-        </div>
-        <div class="slds-col slds-size_1-of-2">
-            <lightning:card  title="Financial Debt Forecast"><c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data}" namespace="{! v.namespace}"/></lightning:card>  
-        </div>
-    </div><br/> 
-    
-    <div class="slds-grid slds-gutters">
-        <div class="slds-col slds-size_1-of-2">
-            <lightning:card  title="Financial Networth Forecast"><c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data}" namespace="{! v.namespace}"/></lightning:card>  
-        </div>
-        <div class="slds-col slds-size_1-of-2">
-            <lightning:card  title="Financial Goal Forecast"><c:Finacast_FS_FinancialGoalForecastComponent data="{! v.data}" namespace="{! v.namespace}"/></lightning:card>
+    <div class="slds-card">
+        <!--SLDS Grid-->
+        <div class="slds-grid slds-gutters future_simulation">
+            <div class="slds-col  slds-size_1-of-2">
+                <div class="client_managed">
+                    <c:Finacast_FS_FinancialHealthComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <div class="client_managed">
+                    <c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                </div>
+            </div>
+        </div>        
+        <div class="slds-grid slds-gutters future_simulation">
+            <div class="slds-col slds-size_1-of-2">
+                <div class="client_managed">
+                    <c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-2" >
+                <div class="client_managed">
+                    <c:Finacast_FS_FinancialGoalForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                </div>
+            </div>
         </div>
     </div>
-    
 </aura:component>

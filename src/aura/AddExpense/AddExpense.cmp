@@ -43,7 +43,7 @@
                                 <div class="slds-box1">
                                     <div class="slds-form-element__control">
                                         <div class="slds-form-element__row">
-                                            <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-col slds-size_1-of-2 expence_select">
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
                                                         <span class = "highlight">* </span> Expense Name
@@ -109,7 +109,7 @@
                                             <div class="slds-col slds-size_1-of-2">
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
-                                                        Contribution bring tax benefit ? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"/>
+                                                        Contribution bring tax benefit ? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"  style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"   style="height: 10px;" />
                                                     </div>
                                                    <lightning:inputField fieldName ="{!v.namespace+'Does_contribution_bring_tax_benifit__c'}" value="{!v.isTaxDeduction}" class="slds-hide"/> 
                                                 </div>
@@ -152,7 +152,7 @@
                                                         <div class="slds-col slds-size_1-of-2">
                                                             <div class="slds-form-element">
                                                                 <div class="slds-form-element__control">
-                                                                    Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>                                                                   
+                                                                    Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"  style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"  style="height: 10px;"/>                                                                   
                                                                 </div>
                                                                 <lightning:inputField fieldName ="{!v.namespace+'Does_tax_benifit_realize_really__c'}" value="{!v.isMonthly}" class="slds-hide"/>
                                                             </div>                                                                                                                      
@@ -167,8 +167,8 @@
                         
                         <footer class="slds-modal__footer">
                             <div class="button" align ="right">
-                                <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
-                                <lightning:button variant="brand" label="Save" type="submit"  />
+                                <lightning:button variant ="neutral" class="btn1 btn2" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                                <lightning:button variant="brand"  class="btn1" label="Save" type="submit"  />
                                 
                             </div>
                         </footer>

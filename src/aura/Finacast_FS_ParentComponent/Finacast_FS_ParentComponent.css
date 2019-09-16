@@ -1,12 +1,29 @@
-.THIS {
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .slds-button {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .slds-button:hover {
+    color: #fff;
 }
 .THIS.slds-spinner_container {  
   z-index: 10000;
   position: fixed;   
 }
-.THIS.future_simulation .slds-card {
+/*.THIS.future_simulation .slds-card {
     height: 100%;
-}
+}*/
 .THIS .help_link {
     position: absolute;
     z-index: 1;
@@ -14,5 +31,17 @@
     right: 12px;
 }
 .THIS .slds-card {
+    /*height: 100%;*/
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
     height: 100%;
+    border-radius: 5px;
+}
+.THIS .future_simulation {
+    margin: 25px auto;
 }

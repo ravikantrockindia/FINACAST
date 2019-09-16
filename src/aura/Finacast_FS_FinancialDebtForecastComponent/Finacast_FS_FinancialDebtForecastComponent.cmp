@@ -10,14 +10,16 @@
     <aura:attribute name = "chartDataObject" type = "Object" />
     <aura:attribute name = "helpBox" type="Boolean"/>
     <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
-    
+    <aura:attribute name = "showSeeHow" type="Boolean" default="false"/>
+     <aura:attribute name = "moneyOwned" type = "double" />
+     <aura:attribute name = "moneytobepaid" type = "double" />
     <!--aura:handler name="init" value="{!this}" action="{!c.debtForecast}"/-->
     <aura:handler name="change" value="{!v.data}" action="{!c.debtForecast}"/>
     
-    <ltng:require scripts="{!$Resource.ChartJs}"/>
+   <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.debtForecast}"/>
     
     <!--aura:if isTrue="{! !v.isEmptyData}"-->
-	<div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small help_link">
+	<!--div class="f-health-help slds-text-link slds-text-align_right slds-text-heading_small help_link">
                     <a href="javascript:void(0)" aria-describedby="help" onclick="{!c.openHelpBox}">Help</a>
                     <aura:if isTrue="{!v.helpBox}">
                         <div class="help-box-debtForecast" >
@@ -43,7 +45,7 @@
                                                 <div class="slds-text-body_regular slds-text-align_left slds-text-color_default" style = "font-weight:400">
                                                     
                                                     <span style="font-weight: 600; margin-bottom: 10px; display:block;">Finacast simulates your future cash flows based on your budget items. It allocates the cash needed to take care of your expenses and debts from the future income and savings.</span>
-                                                    <ol class="slds-list--dotted">
+                                                    <ol class="slds-list-dotted">
                                                         <li> 
                                                             For unpaid credit card debts, Finacast takes the interest charged into account.</li> 
                                                         <li> 
@@ -67,18 +69,72 @@
                         </div>
                         
                     </aura:if>
+                </div-->
+    <div class="slds-grid slds-gutter ">
+    <div class="slds-col slds-size_12-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
+        <div class="slds-grid slds-gutter ">
+            <div class="slds-col slds-size_6-of-12 slds-p-left_none">
+            	<h2>Debt Forecast</h2>
+            </div>
+			<div class="slds-col slds-size_6-of-12 slds-p-right_none slds-text-align_right">            
+        		<span>
+                                <button class="slds-button-btn" onclick = "{!c.showYearlyInterestPrev}">
+                                    <lightning:icon iconName="utility:chevronleft"
+                                                    alternativeText="prev" size="small"/>
+                                </button>
+                                
+                                <lightning:button class="yearButton"
+                                                  label="{!v.year}" variant="brand"/>
+                                
+                                <button class="slds-button-btn" onclick = "{!c.showYearlyInterestNext}">
+                                    <lightning:icon iconName="utility:chevronright" 
+                                                    alternativeText="next" size="small"/>    
+                                </button>
+                            </span>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Owed</p>
+                        <h4>${!v.moneyOwned}</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money Paid</p>
+                        <h4>$0</h4>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Money to be Paid</p>
+                        <h4>${!v.moneytobepaid}</h4>
+                    </div>
+                </div>
+            </div>
     			<div class="slds-grid slds-gutters">
                     <div class="slds-col  slds-size_12-of-12">
                 		<lightning:card class="chart2" >
+                            <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div id="chartContainer3.2995" style="height: 200px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                </div>
+            </div>
                     
-                    <div class="chart2" style="width: 100%; height: auto;">
+                    <!--div class="chart2" style="width: 100%; height: auto;">
                         <div class="charts-child">
-                            <canvas aura:id="debtForecastGraph"></canvas> 
+                           <div id="chartContainer3.2995" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                         </div>
-                    </div>
-                    
-                    <div class="slds-wrap slds-grid tab3-message" style="margin: 0 0;">
+                    </div-->
+                     <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+                </div>
+            </div>
+                    <!--div class="slds-wrap slds-grid tab3-message" style="margin: 0 0;">
                         
                         <div class="slds-col slds-size_4-of-12">
                             <div class="slds-text-align_center label-font">
@@ -121,122 +177,9 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </div-->
                     
-                    <div class="slds-box" style="border: none; text-align: center;">
-                        <ui:message title="Messages" severity="confirm" closable="true">
-                            <aura:iteration items="{!v.debtStatus}" var="d">
-                                <aura:if isTrue="{!d.showSeeHow}">
-                                    <div style="color:red"> {!d.message}<a href="javascript:void(0)" id="{!d.type}" name="{!d.termDebt}" aria-describedby="help" onclick="{!c.openSeeHow}">(See How)</a></div>
-                                    <aura:set attribute="else">
-                                        <div style="color:green">{!d.message}</div>
-                                        
-                                    </aura:set>
-                                </aura:if>
-                            </aura:iteration>
-                        </ui:message>
-                        <aura:if isTrue="{!v.seeHowBox}">
-                            <aura:if isTrue="{!not(empty(v.defaultAlertData))}">
-                                <div class="demo-only" style="height: 640px;">
-                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                                        <div class="slds-modal__container debt_forecast-model">
-                                            <header class="slds-modal__header">
-                                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeSeeHow}">
-                                                    <lightning:icon iconName="utility:close" size="small" variant="bare"/>
-                                                    <span class="slds-assistive-text">Close</span>
-                                                </button>
-                                                <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Year</th>
-                                                            <th>Payment Owed</th>
-                                                            <th>Payment Possible</th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>
-                                                <!--<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>-->
-                                            </header>
-                                            <div class="slds-modal__content" id="modal-content-id-1">
-                                                <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Year</th>
-                                                            <th>Payment Owed</th>
-                                                            <th>Payment Possible</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <aura:iteration items="{!v.defaultAlertData}" var="d">
-                                                            <tr>
-                                                                <td>{!d.scale}</td>
-                                                                
-                                                                <td>{!d.owed}</td>
-                                                                <td>{!d.possible}</td>
-                                                            </tr>
-                                                            
-                                                        </aura:iteration>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <div class="slds-backdrop slds-backdrop_open"></div>
-                                </div>
-                            </aura:if>
-                            <aura:if isTrue="{!not(empty(v.interestAlertData))}">
-                                
-                                <div class="see-how-debtForecast" >
-                                    <div class="demo-only" style="height: 640px;">
-                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                                            <div class="slds-modal__container debt_forecast-model">
-                                                <header class="slds-modal__header">
-                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeSeeHow}">
-                                                        <lightning:icon iconName="utility:close" size="small" variant="bare"/>
-                                                        <span class="slds-assistive-text">Close</span>
-                                                    </button>
-                                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Year</th>
-                                                                <th>Interest Charge</th>
-                                                                
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
-                                                    <!--<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Header</h2>-->
-                                                </header>
-                                                <div class="slds-modal__content" id="modal-content-id-1">
-                                                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Year</th>
-                                                                <th>Interest Charge</th>
-                                                                
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <aura:iteration items="{!v.interestAlertData}" var="d">
-                                                                <tr>
-                                                                    <td>{!d.scale}</td>
-                                                                    
-                                                                    <td>{!d.charge}</td>
-                                                                    
-                                                                </tr>
-                                                                
-                                                            </aura:iteration>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <div class="slds-backdrop slds-backdrop_open"></div>
-                                    </div>
-                                    
-                                </div>
-                            </aura:if>
-                        </aura:if>
-                        
-                    </div>
+            
                     
                 </lightning:card>
                     </div>

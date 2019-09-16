@@ -150,10 +150,12 @@
         }
     },
     recordLoaded: function(component,event,helper){
-        var recUi = event.getParam("recordUi");
-        console.log(recUi);
+        var expId = component.get("v.expId");
+        if(!(expId=="" || $A.util.isUndefinedOrNull(expId))){
+             var recUi = event.getParam("recordUi");
+        console.log(JSON.stringify(recUi));
         var namespace = component.get("v.namespace");
-        var taxDeduction=recUi.record.fields[namespace+"Does_contribution_bring_tax_benifit__c"].value;
+        var taxDeduction=recUi.record.fields["Does_contribution_bring_tax_benifit__c"].value;
         console.log(taxDeduction)
         if (taxDeduction){
             component.set("v.isTaxDeduction",true);
@@ -164,7 +166,7 @@
             component.set("v.getNo",true);
             
         }
-        var ismonthly=recUi.record.fields[namespace+"Does_tax_benifit_realize_really__c"].value;
+        var ismonthly=recUi.record.fields["Does_tax_benifit_realize_really__c"].value;
         console.log(ismonthly)
         
         if (ismonthly){
@@ -174,5 +176,7 @@
             component.set("v.isMonthly",false);
             
         }
+        }
+       
     }
 })
