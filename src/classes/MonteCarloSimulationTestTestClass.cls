@@ -73,6 +73,7 @@ public class MonteCarloSimulationTestTestClass {
         goal.Associated_Account__c=fa.Id;
         goal.FinServ__TargetDate__c=Date.newInstance(2020, 12, 9);
         insert goal;
+        MonteCarloSimulationTest.getPicklistValues();
         FinServ__FinancialGoal__c f = [select id from FinServ__FinancialGoal__c  where name = 'test goal'];
         List<FinServ__FinancialGoal__c> goalDetails = MonteCarloSimulationTest.Pageinit(f.Id).goalInitialValues;
         Integer fSize = goalDetails.size();
