@@ -242,13 +242,24 @@
         var idx=event.getSource().get("v.value");
         component.set("v.editrecidGoal",idx);
         var clntId = component.get("v.cid");
-        var action = component.get("c.getGoalDetail");
+        /*var action = component.get("c.getGoalDetail");
         action.setParams({
             'goalId' :idx,
             ClientId : clntId,
-        });
-        
-        action.setCallback(this, function(response) {
+        });*/
+         var evt = $A.get("e.force:navigateToComponent");
+                evt.setParams({
+                    componentDef : "c:GoalInfoTab",
+                    componentAttributes: {
+                      //  name:component.get("v.name"),
+                        editrecidGoal:component.get("v.editrecidGoal"),
+                        namespace:component.get("v.namespace"),
+                        cid:component.get("v.cid"),
+                      //  actualvalue:component.get("v.actualvalue")
+                    }
+                });
+                evt.fire();
+      /*  action.setCallback(this, function(response) {
             var state = response.getState();
             if(state==='SUCCESS'){
                 var data=response.getReturnValue();
@@ -270,7 +281,7 @@
                 evt.fire();
             }
         });     
-        $A.enqueueAction(action);
+        $A.enqueueAction(action);*/
         
         
     },
