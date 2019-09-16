@@ -76,3 +76,7 @@
 .THIS .advisory {
     color: #ff8b00;
 }
+
+.THIS .slds-progress-bar__value{
+        background: rgb(4, 132, 75);
+}

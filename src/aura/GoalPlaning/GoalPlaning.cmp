@@ -83,11 +83,11 @@
                                     <span class="slds-float_right slds-float_right1"><lightning:formattedNumber value="{!Gdetails.actualValue}" maximumFractionDigits="2" style="currency"/> of <lightning:formattedNumber value="{!Gdetails.finGoal.FinServ__TargetValue__c}" maximumFractionDigits="2" style="currency"/></span>
                                 </h3>
                                 <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
-                                    <!--<span class="slds-progress-bar__value slds-progress-bar__value_success" style="width:25%">-->
+                                    <span class="slds-progress-bar__value slds-progress-bar__value_success">
                                      
                                         <lightning:progressBar value="{!Gdetails.percentage}" title="{!Gdetails.percentage}"/>
-                                       <!-- <span class="slds-assistive-text">Progress: {!Gdetails.percentage}</span>-->
-                                    <!--/span>-->
+                                         
+                                    </span>
                                 </div>
                                 <div class="slds-grid">
                                     <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
