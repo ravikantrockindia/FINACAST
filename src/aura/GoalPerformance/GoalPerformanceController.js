@@ -33,7 +33,9 @@
 
             var chart = new CanvasJS.Chart(chartId, {
                 animationEnabled: true,
-                
+                axisY: {
+		prefix: "$"
+	},
                 data: [{
                     type: "column",
                     name: "Actual Goal Performance",
