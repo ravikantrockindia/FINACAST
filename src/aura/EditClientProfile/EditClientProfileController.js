@@ -63,7 +63,9 @@
          
     },
     handleSuccess:function(cmp,event,helper){
+        console.log('handle success in edit client profile');
         try{
+            
          var action=cmp.get("c.updateContact");
                 action.setParams({ recordId : cmp.get("v.recordId"),
                                   phone: cmp.find("phone").get("v.value"),
@@ -78,8 +80,8 @@
                     var state = response.getState();
                     // alert(state)
                     if (state === "SUCCESS") {
-                        
-                        
+                      
+                      // cmp.set("v.isEditTrue", false);   
                     }
                     
                     else if (state === "INCOMPLETE") {
@@ -102,21 +104,35 @@
                 // other server-side action calls.
                 // $A.enqueueAction adds the server-side action to the queue.
                 $A.enqueueAction(action);
-                    cmp.set("v.isEditTrue", false);  
+               	cmp.set("v.isEditTrue", false);  
 
         }catch(e){
             console.log(e.message);
         }
+        var DelCon=cmp.get("v.isFileSelected");
+            var DefaultImg=cmp.get("v.DefaultImg");
+            var tChange="";
+            if(DelCon===true){
+                if(DefaultImg===true){
+                    var tChange=cmp.get("v.TempFinalVal");
+                    cmp.set("v.TempFinalVal",'');
+                }else{
+                    var tChange=cmp.get("v.ResourceImage");
+                    cmp.set("v.TempFinalVal",tChange);
+                }
+                cmp.set("v.FinalVal",tChange);
+            }
     },
     handleSubmit: function(component,event,helper){
-        var isValidate=helper.validateData(component,event)
+        console.log('handle submit in edit client profile');
+        var isValidate=helper.validateData(component,event);
         if(!isValidate)
         {
             event.preventDefault();
             var msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);      
         }
-        var DelCon=component.get("v.isFileSelected");
+        /*var DelCon=component.get("v.isFileSelected");
         var DefaultImg=component.get("v.DefaultImg");
         var tChange="";
         if(DelCon===true){
@@ -128,7 +144,7 @@
                component.set("v.TempFinalVal",tChange);
            }
             component.set("v.FinalVal",tChange);
-        }
+        }*/
         
     },
     
@@ -149,4 +165,10 @@
     itemsChange:function(component,event,helper){
         helper.uploadHelper(component,event);
     },
+    closeModel:function(component,event,helper){
+        component.set("v.isEditTrue",false);
+    },
+    handleError:function(component,event,helper){
+        console.log('In handle error')
+    }
 })

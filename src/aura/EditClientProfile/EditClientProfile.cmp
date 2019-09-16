@@ -17,6 +17,14 @@
     <aura:attribute name="NameSpace" type="String"/>
     <aura:attribute name="dob" type="date" default=""/> 
     <!--aura:handler name="change" value="{!v.TempFinalVal}" action="{!c.itemsChange}"/-->
+    <lightning:recordEditForm
+                                      aura:id="form"
+                                      recordTypeId="{!v.recordTypeId}"
+                                      onsubmit="{!c.handleSubmit}"
+                                      recordId="{!v.recordId}"
+                                      onsuccess="{!c.handleSuccess}"
+                                      onerror="{!c.handleError}"
+                                      objectApiName="Account">
     <section role="dialog" aura:id="change" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium  ">
         <div class="slds-modal__container">
             <header class="slds-modal__header">
@@ -27,15 +35,10 @@
                                       class="slds-modal__close"/>
                 <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Demographic Details</h2>
             </header>
-            <div class="slds-modal__content slds-p-around_medium " aria-hidden="true" id="modal-content-id-1">
-                
-                <lightning:recordEditForm
-                                          aura:id="form"
-                                          recordTypeId="{!v.recordTypeId}"
-                                          onsubmit="{!c.handleSubmit}"
-                                          recordId="{!v.recordId}"
-                                          onsuccess="{!c.handleSuccess}"
-                                          objectApiName="Account">
+            
+                <div class="slds-modal__content slds-p-around_medium " aria-hidden="true" id="modal-content-id-1">
+                    
+                    
                     <div class="slds-text-body_small"> 
                         <div class="slds-grid slds-gutters">
                             <div class="slds-col slds-size_1-of-2">
@@ -149,25 +152,27 @@
                         <div class="slds-col slds-size_1-of-2">
                         </div>
                     </div>
-                </lightning:recordEditForm>
-                
-            </div>
-            <footer class="slds-modal__footer">
-                <div class="slds-grid slds-gutters">
-                    <div class="slds-col slds-size_1-of-1">
-                        <div class="slds-clearfix ">
-                            
-                            <div class="slds-float_right">
-                                <lightning:button variant="neutral" name="cancel" label="Cancel" onclick="{!c.handleCancel}" class="btn1 btn2" />
-                                <lightning:button  variant="brand" type="submit" name="save" label="Save" class="btn1"/>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-clearfix ">
                                 
-                            </div>   
+                                <div class="slds-float_right">
+                                    <lightning:button variant="neutral" name="cancel" label="Cancel" onclick="{!c.handleCancel}" class="btn1 btn2" />
+                                    <lightning:button  variant="brand" type="submit" name="save" label="Save" class="btn1"/>
+                                    
+                                </div>   
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            
+            
         </div>
     </section>
+        </lightning:recordEditForm>
     <div class="slds-backdrop slds-backdrop_open"></div>
     
     
