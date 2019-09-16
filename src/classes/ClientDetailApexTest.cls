@@ -193,6 +193,9 @@ public class ClientDetailApexTest {
         Account acc2 = [select id from Account where name ='Test2'];
         Account acc3 = [select id from Account where name = 'Test3'];
         Account acc4 = [select id from Account where name = 'Test4'];
+String finId=[select id from FinServ__FinancialAccount__c where name = 'Test Savings 1' limit 1].Id;
+        String finIds=[select id from FinServ__FinancialAccount__c where name = 'Test Credit Card 1' limit 1].Id;
+        String goalId=[select id from FinServ__FinancialGoal__c where name = 'Test Goal 1' limit 1].Id;
 
         test.startTest();
         ClientDetailApex.getGoals(acc2.id );
@@ -201,10 +204,15 @@ public class ClientDetailApexTest {
         ClientDetailApex.getData(acc.id);
         ClientDetailApex.getAccounts('init');
     ClientDetailApex.getGoals('init');
+        ClientDetailApex.getClient(acc.id);
       
         ClientDetailApex.createClientData(acc2.Id);
         ClientDetailApex.getAccounts(acc2.Id);
         ClientDetailApex.getGoals(acc2.Id);
+        ClientDetailApex.getRecordTypeIds();
+        ClientDetailApex.deleteFinAccout(finId);
+         ClientDetailApex.deleteFinAccout(finIds);
+        ClientDetailApex.deleteGoals(goalid);
         ClientDetailApex.isportalEnabled =true;
          ClientDetailApex.NumberOfMonths(system.today(), system.today());
          ClientDetailApex.curentgoalestimation(250, system.today(), system.today()); 

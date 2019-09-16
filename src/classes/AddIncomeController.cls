@@ -124,11 +124,7 @@ public with sharing class AddIncomeController {
                     acc = [Select id,name ,recordtype.developername from account where id=: clientId];
                 } 
             }
-            else
-            {
-                isportalEnabled = true;
-                acc = [select id,name,recordtype.developername from account where id=: us.accountid];
-            }
+            
             
             List<Budget__c> budgetList= new List<Budget__c>();
             List<Budget__c> IncomeRecord= new List<Budget__c>();
@@ -371,10 +367,7 @@ public with sharing class AddIncomeController {
         String expenseRecTypeId = getRecordType('Expense_Record_Type');
         User us = [select contactid , accountid from user where id=: userinfo.getUserId()];
         try{
-            if(us.ContactId != null)
-            {
-                isportalEnabled = true;
-            }
+           
             List<Budget__c> incomeList = new List<Budget__c>();
             List<Budget__c> expenseList = new List<Budget__c>();
             List<Budget__c> budgetList= new List<Budget__c>();

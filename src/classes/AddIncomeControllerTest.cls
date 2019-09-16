@@ -100,6 +100,17 @@ public class AddIncomeControllerTest {
         bg.Primary_Owner__c= acc1.Id;
         bg.Frequency__c='Bi-Weekly';
         insert bg;
+        
+        bg = new Budget__c();
+        bg.name = 'Test';
+        rcc2 =[Select Id From RecordType Where SobjectType=:sObject1 And DeveloperName ='Income_Record_Type' limit 1];
+        bg.RecordtypeId = rcc2[0].Id;
+        bg.Start_Date__c = date.newInstance(2019, 1, 1);
+        bg.End_Date__c = date.newInstance(2019, 31, 1);
+        bg.Amount__c = 1000;
+        bg.Primary_Owner__c= acc1.Id;
+        bg.Frequency__c='Weekly';
+        insert bg;
 
         
         
@@ -146,7 +157,7 @@ public class AddIncomeControllerTest {
         FinServ__FinancialAccountTransaction__c ftrans1 = [Select id, FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__Amount__c = 4000];
         DateTime d = fGoal1.FinServ__TargetDate__c;
         String targetDate = d.format('YYYY-MM-dd');
-        //String targetAmt = String.valueOf(fGoal1.Required_Monthly_Saving__c);
+        String targetAmt = String.valueOf(fGoal1.Required_Monthly_Saving__c);
         String currentAmount  = String.valueOf(fGoal1.Start_Value__c);       
         AddIncomeController.getRecordType('Income_Record_Type');
         AddIncomeController.getLoanRecordType('LoanAccount');       
@@ -164,14 +175,8 @@ public class AddIncomeControllerTest {
         AddIncomeController.deleteIncome(bg.id);
         AddIncomeController.deleteGoals(fGoal1.id);
         AddIncomeController.deleteLoan(fAcc1.id);
+        AddIncomeController.loanRecord(financial1.id);
         AddIncomeController.deleteTransaction(ftrans1.id);
-        // GoalsApexController.getGoals();
-        /*List<Budget__c> bd = [select id from Budget__c];
-Set<Id> bdId = new Set<Id>();
-for(Budget__c b : bd) {
-bdId.add(b.Id);
-}
-FinacastBudgetHelper.shareBudget(bdId);*/
         SummaryCashFlowController.getMonth('Jan');
         System.assertEquals('1', '1');
     }

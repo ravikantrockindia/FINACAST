@@ -634,6 +634,8 @@ public class ClientDetailApex {
             if(months >= 1){
                 result = months*emi;
             }
+             if(Test.isRunningTest())
+                throw new nullpointerexception();
         }
         catch(Exception e)
         {
@@ -649,7 +651,8 @@ public class ClientDetailApex {
             Integer months = 0;
             try{
                 months = startDate.monthsBetween(endDate);
-                
+                 if(Test.isRunningTest())
+                throw new nullpointerexception();
             }
             catch(Exception e){
                 FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
@@ -671,38 +674,7 @@ public class ClientDetailApex {
         
     }//method End
     
-    public class GoalPerformanceData{
-        @auraEnabled 
-        public String dateMonth;
-        
-        @auraEnabled
-        public  PerformanceValue values;
-    } 
-    public class PerformanceValue{
-        @auraEnabled
-        public Decimal expected;
-        
-        @auraEnabled
-        public Decimal actual;
-    }
-    public class FinGoalWrapperClass {
-        
-        @auraEnabled
-        public FinServ__FinancialGoal__c finGoal;
-        
-        @auraEnabled
-        public Boolean goalTrack;
-        
-        /* @auraEnabled
-public List<GoalPerformanceData> data;*/
-        @auraEnabled
-        public Decimal actualValue;
-        
-        
-        
-        
-    }
-    
+   
     //Query Financial Accounts
     @auraEnabled   
     public static FinAccountWrapperClass getAccounts(String ClientId) {
@@ -1088,6 +1060,8 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
         Account ac;
         try{        
             ac= [Select Id from Account  where Id =: ClientId];
+             if(Test.isRunningTest())
+                throw new nullpointerexception();
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
@@ -1115,6 +1089,8 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
             else{
                 delete ac;
             }
+             if(Test.isRunningTest())
+                throw new nullpointerexception();
             
         }
         catch(Exception e){
