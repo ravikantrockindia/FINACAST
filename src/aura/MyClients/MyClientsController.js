@@ -225,7 +225,7 @@
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": namespace+"__CreateNewClient"
+                    "componentName": "Finsol__CreateNewClient"
                 },
                 "state": {}
             },
