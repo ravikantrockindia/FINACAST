@@ -101,6 +101,7 @@
                                          sortedBy="{!v.sortBy}"
                                          sortedDirection="{!v.sortDirection}"
                                          onsort="{!c.handleSort}"
+                                         onrowaction="{!c.viewRecord}"
                                          hideCheckboxColumn="true"/>
                 </div>
                 <!-- adding filter component-->

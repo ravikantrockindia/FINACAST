@@ -15,6 +15,9 @@
     padding: 1px 5px;
     min-width: 120px;
 }
+.THIS .slds-table .slds-button:hover {
+    text-decoration: underline;
+}
 /*.THIS .slds-button:hover {
     color: #fff;
 }*/

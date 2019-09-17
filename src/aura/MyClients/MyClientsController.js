@@ -11,9 +11,7 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 component.set("v.namespace", response.getReturnValue())
-                
-                
-                
+         
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
@@ -82,10 +80,11 @@
                                 "label" :  'Client Name',
                                 "fieldName" : 'linkName',
                                 "sortable" : 'true',
-                                "type" :  'url',
+                                "type" :  'button',
                                 "typeAttributes" :  {
                                     label: { fieldName: 'Name' },
-                                    target: '_self'}
+                                    target: '_blank'}
+                                
                             });
                         }
                     
@@ -114,9 +113,10 @@
                 }
                 
                 helper.setDisplayColumns(component, event, helper,showColumns);
-                
+                //var setColumns = [];
                 
                 data.forEach(function(record){
+                    
                     record.linkName = '/'+record.Id;
                 }); 
                 
@@ -134,6 +134,17 @@
         
     },
     
+       viewRecord : function(component, event, helper) {
+           var recId = event.getParam('row').Id;
+           //alert(recId);
+           var navEvt = $A.get("e.force:navigateToSObject");
+           navEvt.setParams({
+               "recordId": recId,
+               "slideDevName": "Client Detail"
+           });
+           navEvt.fire();
+        
+    },
     
     onNext : function(component, event, helper) {        
         var pageNumber = component.get("v.currentPageNumber");
@@ -183,6 +194,7 @@
                 component.find("Id_spinner").set("v.class" , 'slds-hide');
                 var data = response.getReturnValue();
                 data.forEach(function(record){
+
                     record.linkName = '/'+record.Id;
                     
                 });
@@ -198,7 +210,12 @@
     
     //onclick functionality for button "Add New"
     addclient: function(component,event,helper){
-        
+        /* var evt = $A.get("e.force:navigateToURL");
+        evt.setParams({
+            "url"  : "/lightning/n/create_client",
+            
+        });       
+        evt.fire(); */
         var namespace = component.get("v.namespace");
         if(namespace == ""){
             namespace = 'c';
@@ -208,7 +225,7 @@
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": "Finsol__CreateNewClient"
+                    "componentName": namespace+"__CreateNewClient"
                 },
                 "state": {}
             },

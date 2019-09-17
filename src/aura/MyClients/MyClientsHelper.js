@@ -5,7 +5,7 @@
             var newColumns = [];
             var originalColumns = JSON.parse(JSON.stringify(component.get("v.mycolumns")));
             
-            newColumns.push({label: 'Client Name', fieldName: 'linkName',sortable : 'true', type: 'url' , typeAttributes:  
+            newColumns.push({label: 'Client Name', fieldName: 'linkName',sortable : 'true', type: 'button' , typeAttributes:  
                              {label: { fieldName: 'Name' }, target: '_blank' , name: 'details',variant:'Base'}  });
             for(var i in showColumns){
                 for(var j in originalColumns){
