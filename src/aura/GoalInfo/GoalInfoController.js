@@ -148,11 +148,11 @@
             
             if (financialscore>=30 && financialscore<60)
                 if(!gauge.data.color)
-                    gauge.data.color = "#ff8400";
+                    gauge.data.color = "#538f56";
             
             if (financialscore<30 )
                 if(!gauge.data.color)
-                    gauge.data.color = "#8B0000";
+                    gauge.data.color = "#538f56";
             
             if (financialscore>=60 )
                 if(!gauge.data.color)
