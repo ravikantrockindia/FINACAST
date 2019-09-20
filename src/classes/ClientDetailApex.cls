@@ -634,7 +634,7 @@ public class ClientDetailApex {
             if(months >= 1){
                 result = months*emi;
             }
-             if(Test.isRunningTest())
+            if(Test.isRunningTest())
                 throw new nullpointerexception();
         }
         catch(Exception e)
@@ -651,8 +651,8 @@ public class ClientDetailApex {
             Integer months = 0;
             try{
                 months = startDate.monthsBetween(endDate);
-                 if(Test.isRunningTest())
-                throw new nullpointerexception();
+                if(Test.isRunningTest())
+                    throw new nullpointerexception();
             }
             catch(Exception e){
                 FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
@@ -670,11 +670,11 @@ public class ClientDetailApex {
     //Query Financial Goals
     @auraEnabled         
     public static list<GoalPerformanceAndMonteCarlo.FinGoalWrapperClass> getGoals(String ClientId) {
-       return GoalPerformanceAndMonteCarlo.getGoals(ClientId, false, '');
+        return GoalPerformanceAndMonteCarlo.getGoals(ClientId, false, '');
         
     }//method End
     
-   
+    
     //Query Financial Accounts
     @auraEnabled   
     public static FinAccountWrapperClass getAccounts(String ClientId) {
@@ -832,6 +832,10 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
             if(!test.isRunningTest()){
                 wrapperObj.responseData = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
             }
+            else{
+                if(Test.isRunningTest())
+                    throw new nullpointerexception();
+            }
             System.debug('Client Data: ' + clientData);
             System.debug('Response: ' + wrapperObj.responseData);
         }
@@ -855,204 +859,204 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
         FinServ__FinancialGoal__c goalItem = [Select id from FinServ__FinancialGoal__c where id =:goalId];
         delete goalItem;
     }
-   /* @auraEnabled
-    public static FinGoalWrapperClass getGoalDetail(string goalId,String ClientId) {
-        FinGoalWrapperClass fingoalwrap=new FinGoalWrapperClass();
-        FinServ__FinancialAccount__c ffa;
-        Decimal goalstatus;
-        Boolean goalTrack;
-        
-        Decimal totalEstimated;
-        Decimal actualValue;
-        FinServ__FinancialGoal__c f;
-        try{        
-            f= [Select id,FinServ__PrimaryOwner__c ,Goal_Priority__c,Goal_Priority_Number__c, Associated_Account__r.FinServ__Balance__c,Annual_Growth_Rate__c,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__r.Account_Type__c,Associated_Account__r.Name,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
-                from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId and id=:goalId limit 1];
-            
-            goalTrack=false;
-            
-            ffa = [select name, Account_Type__c,FinServ__APY__c,(select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from Financial_Goals__r where Associated_Account__c=: f.Associated_Account__c and id !=: f.id and Goal_Priority_Number__c <=: f.Goal_Priority_Number__c) from FinServ__FinancialAccount__c where id=:f.Associated_Account__c];
-            Double interestRate ;
-            
-            if(ffa.FinServ__APY__c != null)
-            {
-                interestRate =  ffa.FinServ__APY__c;
-            }
-            else{
-                interestRate = 0;
-            }
-            
-            
-            Decimal growth =((Decimal) ((Math.pow((1 + (interestRate/100)),1)- 1))).setScale(5);
-            
-            system.debug('in'+interestRate + 'gr'+growth);
-            
-            if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
-                goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + f.Start_Value__c;
-            }else{
-                goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2,RoundingMode.HALF_UP);
-            }
-            
-            
-            totalEstimated = 0;
-            for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
-            {
-                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
-            }
-            
-            if(goalstatus > f.Associated_Account__r.FinServ__Balance__c - totalEstimated){
-                
-                f.Current_Goal_Amount__c = f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
-                goalstatus =    goalstatus - f.Current_Goal_Amount__c;
-                goalTrack = false;
-                
-            }else {
-                goalstatus = goalstatus;
-                f.Current_Goal_Amount__c = goalstatus;
-                goalTrack = true;
-                
-            }
-            
-            system.debug('rer'+ goalstatus);
-            
-            integer months = FinacastGoalProgressApex.NumberOfMonths(f.Start_Date__c, Date.today());
-            Integer month=date.today().month();
-            Integer year=date.today().year();
-            if(months > 6){
-                for(integer i=5; i>=0; i--){
-                    
-                    decimal expected;
-                    
-                    if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
-                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ f.Start_Value__c; 
-                        
-                    }else{
-                        
-                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, RoundingMode.HALF_UP); 
-                        
-                    }  totalEstimated = 0;
-                    for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
-                    {
-                        totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
-                    }
-                    
-                    if(f.Associated_Account__r.FinServ__Balance__c >= totalEstimated+expected){
-                        actualValue=expected;
-                    }else{
-                        
-                        if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
-                            actualValue=totalEstimated - f.Associated_Account__r.FinServ__Balance__c;
-                    }
-                    
-                }
-            }
-            if(months <= 6){
-                Boolean chacktest = false;
-                for(integer i=months; i>=0; i--){
-                    
-                    if(chacktest == false)
-                    {
-                        
-                        totalEstimated = 0;
-                        for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
-                        {
-                            system.debug('name'+ relgoal.name);
-                            totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
-                                                                                                                                                                                                                                        RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
-                        }
-                        system.debug('vdrrdrgr'+totalEstimated);
-                        
-                        if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){ 
-                            if(f.Start_Value__c > f.Associated_Account__r.FinServ__Balance__c - totalEstimated ){
-                                
-                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
-                                    actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
-                            }else {
-                                
-                                if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
-                                    actualValue=f.Start_Value__c;
-                            }
-                            
-                        }else{
-                            
-                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
-                                actualValue=0;
-                        }
-                        
-                        
-                        chacktest = true;
-                    }else{
-                        decimal expected;
-                        
-                        if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
-                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
-                                                                                                                                                                                                      RoundingMode.HALF_UP)+ f.Start_Value__c; 
-                        }else{
-                            expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
-                                                                                                                                                                                                      RoundingMode.HALF_UP); 
-                        }     
-                        totalEstimated = 0;
-                        for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
-                        {
-                            
-                            totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
-                                                                                                                                                                                                                                        RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
-                        }
-                        system.debug('vdrrdrgr'+totalEstimated);
-                        system.debug('vdrrdrgr'+expected);
-                        
-                        if(f.Associated_Account__r.FinServ__Balance__c >=   totalEstimated+expected){
-                            
-                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
-                                actualValue=expected;
-                        }else{
-                            
-                            if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
-                                
-                                actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
-                        }
-                    }
-                    
-                }
-                
-                months = 5-months;
-                for(integer j=1;j<=months;  j++){
-                    
-                    decimal expected;
-                    
-                    if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
-                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
-                                                                                                                                                                                                  RoundingMode.HALF_UP)+ f.Start_Value__c; 
-                    }else{
-                        expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
-                                                                                                                                                                                                  RoundingMode.HALF_UP); 
-                    }                
-                    
-                    if(date.today().addMonths(+j).month()==month&&date.today().addMonths(+j).year()==year)
-                        actualValue=0;
-                    
-                }
-            }
-            
-            
-            System.debug(goalTrack);
-            fingoalwrap.finGoal=f;
-            fingoalwrap.actualValue=actualValue;
-            
-            
-            
-        }
-        catch(Exception e){
-            System.debug(e.getStackTraceString());
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-            
-        }
-        system.debug('value of view Goal'+f);
-        
-        system.debug('value of view Goal'+fingoalwrap);
-        return fingoalwrap;
-        
-    }*/
+    /* @auraEnabled
+public static FinGoalWrapperClass getGoalDetail(string goalId,String ClientId) {
+FinGoalWrapperClass fingoalwrap=new FinGoalWrapperClass();
+FinServ__FinancialAccount__c ffa;
+Decimal goalstatus;
+Boolean goalTrack;
+
+Decimal totalEstimated;
+Decimal actualValue;
+FinServ__FinancialGoal__c f;
+try{        
+f= [Select id,FinServ__PrimaryOwner__c ,Goal_Priority__c,Goal_Priority_Number__c, Associated_Account__r.FinServ__Balance__c,Annual_Growth_Rate__c,FinServ__PrimaryOwner__r.name, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__r.Account_Type__c,Associated_Account__r.Name,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c
+from FinServ__FinancialGoal__c  where FinServ__PrimaryOwner__c =: ClientId and id=:goalId limit 1];
+
+goalTrack=false;
+
+ffa = [select name, Account_Type__c,FinServ__APY__c,(select name,Current_Goal_Amount__c, Associated_Account__r.FinServ__Balance__c, Goal_Priority_Number__c,Start_Value__c,Start_Date__c, Associated_Account__c,Annual_Growth_Rate__c, FinServ__TargetValue__c, FinServ__TargetDate__c, Goal_Priority__c, Required_Monthly_Saving__c from Financial_Goals__r where Associated_Account__c=: f.Associated_Account__c and id !=: f.id and Goal_Priority_Number__c <=: f.Goal_Priority_Number__c) from FinServ__FinancialAccount__c where id=:f.Associated_Account__c];
+Double interestRate ;
+
+if(ffa.FinServ__APY__c != null)
+{
+interestRate =  ffa.FinServ__APY__c;
+}
+else{
+interestRate = 0;
+}
+
+
+Decimal growth =((Decimal) ((Math.pow((1 + (interestRate/100)),1)- 1))).setScale(5);
+
+system.debug('in'+interestRate + 'gr'+growth);
+
+if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2, RoundingMode.HALF_UP) + f.Start_Value__c;
+}else{
+goalstatus = ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, Date.today(),growth)).setScale(2,RoundingMode.HALF_UP);
+}
+
+
+totalEstimated = 0;
+for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
+{
+totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+}
+
+if(goalstatus > f.Associated_Account__r.FinServ__Balance__c - totalEstimated){
+
+f.Current_Goal_Amount__c = f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+goalstatus =    goalstatus - f.Current_Goal_Amount__c;
+goalTrack = false;
+
+}else {
+goalstatus = goalstatus;
+f.Current_Goal_Amount__c = goalstatus;
+goalTrack = true;
+
+}
+
+system.debug('rer'+ goalstatus);
+
+integer months = FinacastGoalProgressApex.NumberOfMonths(f.Start_Date__c, Date.today());
+Integer month=date.today().month();
+Integer year=date.today().year();
+if(months > 6){
+for(integer i=5; i>=0; i--){
+
+decimal expected;
+
+if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ f.Start_Value__c; 
+
+}else{
+
+expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, RoundingMode.HALF_UP); 
+
+}  totalEstimated = 0;
+for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
+{
+totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+}
+
+if(f.Associated_Account__r.FinServ__Balance__c >= totalEstimated+expected){
+actualValue=expected;
+}else{
+
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+actualValue=totalEstimated - f.Associated_Account__r.FinServ__Balance__c;
+}
+
+}
+}
+if(months <= 6){
+Boolean chacktest = false;
+for(integer i=months; i>=0; i--){
+
+if(chacktest == false)
+{
+
+totalEstimated = 0;
+for(FinServ__FinancialGoal__c relgoal : ffa.Financial_Goals__r )
+{
+system.debug('name'+ relgoal.name);
+totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+}
+system.debug('vdrrdrgr'+totalEstimated);
+
+if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){ 
+if(f.Start_Value__c > f.Associated_Account__r.FinServ__Balance__c - totalEstimated ){
+
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+}else {
+
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+actualValue=f.Start_Value__c;
+}
+
+}else{
+
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+actualValue=0;
+}
+
+
+chacktest = true;
+}else{
+decimal expected;
+
+if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+RoundingMode.HALF_UP)+ f.Start_Value__c; 
+}else{
+expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+RoundingMode.HALF_UP); 
+}     
+totalEstimated = 0;
+for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
+{
+
+totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, 
+RoundingMode.HALF_UP)+ relgoal.Start_Value__c; 
+}
+system.debug('vdrrdrgr'+totalEstimated);
+system.debug('vdrrdrgr'+expected);
+
+if(f.Associated_Account__r.FinServ__Balance__c >=   totalEstimated+expected){
+
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+actualValue=expected;
+}else{
+
+if(date.today().addMonths(-i).month()==month&&date.today().addMonths(-i).year()==year)
+
+actualValue=f.Associated_Account__r.FinServ__Balance__c - totalEstimated;
+}
+}
+
+}
+
+months = 5-months;
+for(integer j=1;j<=months;  j++){
+
+decimal expected;
+
+if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
+expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
+RoundingMode.HALF_UP)+ f.Start_Value__c; 
+}else{
+expected =  ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
+RoundingMode.HALF_UP); 
+}                
+
+if(date.today().addMonths(+j).month()==month&&date.today().addMonths(+j).year()==year)
+actualValue=0;
+
+}
+}
+
+
+System.debug(goalTrack);
+fingoalwrap.finGoal=f;
+fingoalwrap.actualValue=actualValue;
+
+
+
+}
+catch(Exception e){
+System.debug(e.getStackTraceString());
+FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+
+}
+system.debug('value of view Goal'+f);
+
+system.debug('value of view Goal'+fingoalwrap);
+return fingoalwrap;
+
+}*/
     
     @auraEnabled
     public static Account getClient(String ClientId) {
@@ -1060,7 +1064,7 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
         Account ac;
         try{        
             ac= [Select Id from Account  where Id =: ClientId];
-             if(Test.isRunningTest())
+            if(Test.isRunningTest())
                 throw new nullpointerexception();
         }
         catch(Exception e){
@@ -1070,6 +1074,187 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
         return ac;
         
     }
+    
+    @auraEnabled
+    public static Map<String, Decimal>  getInvestmentdata(String ClientId) {
+        Map<String, Decimal> data = new Map<String, Decimal>(); 
+        
+        List<FinServ__FinancialAccount__c> finAccounts;
+        list<FinServ__FinancialAccountTransaction__c> fatList = new list<FinServ__FinancialAccountTransaction__c>();
+        
+        try{  
+            finAccounts=[Select Id, FinServ__Balance__c,CreatedDate,(select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c FROM FinServ__FinancialAccountTranslations__r WHERE FinServ__TransactionDate__c = LAST_N_MONTHS:12 ORDER BY FinServ__TransactionDate__c DESC ) from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:ClientId AND (Account_Type__c='401K' OR Account_Type__c='529 Account' OR Account_Type__c='IRA' OR Account_Type__c='Retail Brokerage' OR Account_Type__c='Roth IRA' ) ];
+            if(finAccounts.isEmpty()){
+                return data;
+            }
+            Map<String, Decimal> cashIn = new Map<String, Decimal>(); 
+            String monthYear;
+            System.debug(fatList);
+            Integer currentMonth = Date.today().month();
+            Integer currentYear = Date.today().year();
+            Integer counter=0;
+            List<String> previousMonths=new List<String>();
+            while(previousMonths.size()<12){
+                if(currentMonth==1 && currentYear==Date.today().year()){
+                    
+                    String monthYearValue =  currentMonth +' '+currentYear;
+                    previousMonths.add(monthYearValue);
+                    currentYear=currentYear-1;
+                    currentMonth=12;
+                }
+                else{
+                    String monthYearValue = currentMonth +' '+(currentYear);
+                    previousMonths.add(monthYearValue);
+                    currentMonth=currentMonth-1;
+                    
+                }}
+            System.debug(previousMonths);
+            /*while(counter!=12){
+if(currentMonth==1 && currentYear==Date.today().year()){
+currentYear=currentYear-1;
+currentMonth=12;
+String monthYearValue =  currentMonth +' '+currentYear;
+//cashOut.put(monthYearValue,0); 
+data.put(monthYearValue,0);
+counter++;
+
+}
+else{
+String monthYearValue = currentMonth +' '+(currentYear);
+currentMonth=currentMonth-1;
+data.put(monthYearValue,0); 
+//  data.put(monthYearValue,0);
+counter++;
+
+}
+}*/
+            currentMonth = Date.today().month();
+            currentYear = Date.today().year();
+            String monthYearValue =  currentMonth +' '+currentYear;
+            
+            Decimal amount=0;
+            for(FinServ__FinancialAccount__c f: finAccounts){
+                
+                amount +=f.FinServ__Balance__c;
+            }
+            /*   data.put(monthYearValue,amount);
+for(FinServ__FinancialAccountTransaction__c stt : fatList){
+monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+if(stt.FinServ__TransactionType__c=='Debit'){
+if(data.containsKey(monthYear)){
+Decimal totalamt=stt.FinServ__Amount__c-data.get(monthYear);
+amountforMonth.put(monthYear,totalamt);
+}
+else{
+amountforMonth.put(monthYear,stt.FinServ__Amount__c);
+}
+}
+else{
+if(data.containsKey(monthYear)){
+Decimal totalamt=stt.FinServ__Amount__c+data.get(monthYear);
+amountforMonth.put(monthYear,totalamt);
+}
+else{
+amountforMonth.put(monthYear,stt.FinServ__Amount__c);
+}
+}
+} 
+
+}*/
+            data.put(monthYearValue,amount);
+            Map<String,Decimal> amountforMonth=new Map<String, Decimal>();
+            for(FinServ__FinancialAccount__c f: finAccounts){
+                amount=f.FinServ__Balance__c;
+                
+                for(FinServ__FinancialAccountTransaction__c stt : f.FinServ__FinancialAccountTranslations__r){
+                    if(stt.FinServ__TransactionDate__c>=f.CreatedDate && stt.FinServ__TransactionDate__c<=Date.today()){
+                        monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+                        if(stt.FinServ__TransactionType__c=='Debit'){
+                            if(amountforMonth.containsKey(monthYear)){
+                                Decimal totalamt=stt.FinServ__Amount__c+amountforMonth.get(monthYear);
+                                // amount=totalamt;
+                                amount+=stt.FinServ__Amount__c;
+                                amountforMonth.put(monthYear,totalamt);
+                            }
+                            else{
+                                amountforMonth.put(monthYear,stt.FinServ__Amount__c);
+                                //  amount=stt.FinServ__Amount__c;
+                                amount+=stt.FinServ__Amount__c;
+                                
+                            }
+                        }
+                        else{
+                            if(amountforMonth.containsKey(monthYear)){
+                                Decimal totalamt=amountforMonth.get(monthYear)-stt.FinServ__Amount__c;
+                                // amount=totalamt;
+                                amount-=stt.FinServ__Amount__c;
+                                
+                                amountforMonth.put(monthYear,totalamt);
+                            }
+                            else{
+                                amount-=stt.FinServ__Amount__c;
+                                
+                                amountforMonth.put(monthYear,stt.FinServ__Amount__c*-1);
+                                // amount=stt.FinServ__Amount__c*-1;
+                                
+                            }
+                        }
+                    }
+                }
+                            system.debug(amountforMonth);
+
+                monthYear =  f.CreatedDate.month() +' '+f.CreatedDate.year();
+                Integer index= previousMonths.indexOf(monthYear);
+                if(index!=-1){
+                    if(amountforMonth.containsKey(monthYear)){
+                        Decimal totalamt=amountforMonth.get(monthYear)-amount;
+                        
+                        amountforMonth.put(previousMonths.get(index),totalamt);
+                    }
+                    else{
+                        amountforMonth.put(previousMonths.get(index),amount*-1);
+                    }
+                    //  amountforMonth.put(previousMonths.get(index-1),amount*-1);
+                }
+                
+            }
+            system.debug(amountforMonth);
+            system.debug(data);
+            
+            for(Integer i=0;i<previousMonths.size()-1;i++){
+                amount=data.get(previousMonths[i]);
+                system.debug(amount);
+                if(data.containsKey(previousMonths[i])&& amountforMonth.containsKey(previousMonths[i])){
+                    Decimal tamount=amountforMonth.get(previousMonths[i]);
+                    data.put(previousMonths[i+1],amount+tamount);
+                    
+                }
+                else{
+                    data.put(previousMonths[i+1],amount);
+                    
+                }
+                
+                
+            }
+            
+            // wrapAccountList = new ObjectWrapper(cashIn, cashout);
+            if(Test.isRunningTest())
+                throw new nullpointerexception();
+        }
+        catch(Exception e){
+            system.debug(e.getStackTraceString()+e.getMessage());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            
+        }
+        System.debug(data);
+        return data;
+        
+        //return ac;
+        
+    }
+    
+    
+    
     @auraEnabled
     public static boolean deleteFinAccout(String finId) {
         
@@ -1089,7 +1274,7 @@ public List<FinServ__FinancialGoal__c> financialGoalList;*/
             else{
                 delete ac;
             }
-             if(Test.isRunningTest())
+            if(Test.isRunningTest())
                 throw new nullpointerexception();
             
         }

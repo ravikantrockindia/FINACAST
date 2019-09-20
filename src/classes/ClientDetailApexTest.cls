@@ -1,10 +1,10 @@
 @isTest
 public class ClientDetailApexTest {
-     @testsetup
+    @testsetup
     public static void data(){
         String namespace= NamespaceUtility.returnNamespace();
         String sObject1=namespace+'Budget__c';
-            
+        
         String cId = 'init';
         Account ac = new Account();
         ac.name = 'Test';
@@ -157,6 +157,17 @@ public class ClientDetailApexTest {
         savings2.FinServ__FinancialAccountType__c = 'Savings';
         insert savings2;
         
+        FinServ__FinancialAccount__c investment = new FinServ__FinancialAccount__c();
+        investment.FinServ__PrimaryOwner__c = ac.Id;
+        investment.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'InvestmentAccount');
+        investment.Name = 'Test Investment 1';
+        investment.FinServ__Balance__c = 98765;
+        investment.FinServ__APY__c = 0;   
+        investment.Account_Type__c = 'IRA';
+        insert investment;
+        
+        
+        
         FinServ__FinancialAccount__c card2 = new FinServ__FinancialAccount__c();
         card2.Name = 'Test Credit Card 1';
         card2.FinServ__Balance__c = 98765;
@@ -193,30 +204,35 @@ public class ClientDetailApexTest {
         Account acc2 = [select id from Account where name ='Test2'];
         Account acc3 = [select id from Account where name = 'Test3'];
         Account acc4 = [select id from Account where name = 'Test4'];
-String finId=[select id from FinServ__FinancialAccount__c where name = 'Test Savings 1' limit 1].Id;
+        String finId=[select id from FinServ__FinancialAccount__c where name = 'Test Savings 1' limit 1].Id;
         String finIds=[select id from FinServ__FinancialAccount__c where name = 'Test Credit Card 1' limit 1].Id;
         String goalId=[select id from FinServ__FinancialGoal__c where name = 'Test Goal 1' limit 1].Id;
-
+        
         test.startTest();
         ClientDetailApex.getGoals(acc2.id );
-       ClientDetailApex.getAccounts(acc.id);
-         ClientDetailApex.getAccounts(acc4.id);
+        ClientDetailApex.getAccounts(acc.id);
+        ClientDetailApex.getAccounts(acc4.id);
         ClientDetailApex.getData(acc.id);
+        ClientDetailApex.getInvestmentdata(acc.id);
+        
         ClientDetailApex.getAccounts('init');
-    ClientDetailApex.getGoals('init');
+        ClientDetailApex.getGoals('init');
         ClientDetailApex.getClient(acc.id);
-      
+        
         ClientDetailApex.createClientData(acc2.Id);
         ClientDetailApex.getAccounts(acc2.Id);
         ClientDetailApex.getGoals(acc2.Id);
         ClientDetailApex.getRecordTypeIds();
         ClientDetailApex.deleteFinAccout(finId);
-         ClientDetailApex.deleteFinAccout(finIds);
+        ClientDetailApex.deleteFinAccout(finIds);
         ClientDetailApex.deleteGoals(goalid);
+        ClientDetailApex.getNamespace();
         ClientDetailApex.isportalEnabled =true;
-         ClientDetailApex.NumberOfMonths(system.today(), system.today());
-         ClientDetailApex.curentgoalestimation(250, system.today(), system.today()); 
-         System.assertEquals(1,1);
+        ClientDetailApex.NumberOfMonths(system.today(), system.today());
+        ClientDetailApex.NumberOfMonths(null, system.today());
+        
+        ClientDetailApex.curentgoalestimation(250, system.today(), system.today()); 
+        System.assertEquals(1,1);
         test.stopTest();
     }
 }

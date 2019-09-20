@@ -1,0 +1,7 @@
+<aura:component controller="ClientDetailApex">
+    <aura:attribute type="id" name="recordId"/>
+    <aura:attribute type="Boolean" name="isData"/>
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
+    <div id="chartInvestment" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+   
+</aura:component>
