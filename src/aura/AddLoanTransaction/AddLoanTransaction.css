@@ -1,3 +1,42 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS label { font-family: 'Open Sans', sans-serif;}
+.THIS select { font-family: 'Open Sans', sans-serif; background-color: #fdfdfd; border: 1px solid #bbb; border-radius: 0;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    border: 1px solid #4e75a3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 150px;
+}
+.THIS lightning-timepicker.slds-form-element {
+    display: none;
+}
+.THIS .slds-form-element {
+    position: relative;
+    min-width: 100%;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
 .THIS label.slds-form-element__label{
     display: none !important ;     
 }
@@ -5,12 +44,15 @@
     overflow:inherit;
 }
 .THIS .slds-modal__container {
-    width: 70%;
-    max-width: 70%;
+    width: 60%;
+    max-width: 60%;
     margin: 0 auto;
 }
 .THIS .hideDiv {
     display: none;
+}
+.THIS .slds-box1 {
+    min-height: 300px !important;
 }
 .THIS .slds-box1 .slds-size_1-of-2 {
     float : left;
@@ -18,10 +60,37 @@
     font-size: 0.75rem;
     font-weight: normal;
     color: grey;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 10px;
+}
+.THIS .slds-box1 .slds-size_1-of-2 .slds-input {
+    border: 0;
+    height: 40px;
+    background-color: #f2f0f0;
+    margin-top: 8px;
+}
+.THIS .slds-box1 .slds-size_1-of-2 .slds-select {
+    border: 0;
+    height: 40px;
+    background-color: #f2f0f0;
+    margin-top: 8px;
+}
+.THIS .slds-box1 .slds-size_1-of-2 .slds-select_container:before {
+    top: 15px;
 }
 .THIS .slds-text-heading_small {
     font-weight: 300;
 }
+.THIS .slds-form-element_horizontal .slds-form-element__control {
+    padding-left: 0;
+}
+.THIS .slds-form-element_horizontal:not(.slds-is-editing) {
+    padding-left: 0;
+    padding-right: 0;
+}
+.THIS .slds-fade-in-open {
+    background-color: rgba(0, 0, 0, 0.8);
+} 
 @media (max-width: 767px) {
     .THIS .slds-box1 {
         height: 380px;

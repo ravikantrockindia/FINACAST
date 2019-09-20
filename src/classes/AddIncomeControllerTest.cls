@@ -165,7 +165,9 @@ public class AddIncomeControllerTest {
         AddIncomeController.getRecordIdRecType('Account' , acc1.id);
         AddIncomeController.getTransaction(bg.Id);
         AddIncomeController.getLoanTransaction(fAcc1.id);
+         AddIncomeController.getLoanTransactionlazy(fAcc1.id,3,3);
         AddIncomeController.getSummaryTransaction(bg.Id);
+         AddIncomeController.getTransactionInfinite(bg.Id,10,10);
         AddIncomeController.getLoanSummaryTransaction(fAcc1.id);
         AddIncomeController.wrapIncome result = AddIncomeController.getBudget(acc1.Id);
         AddIncomeController.wrapIncome res = AddIncomeController.getBudget(acc2.Id);

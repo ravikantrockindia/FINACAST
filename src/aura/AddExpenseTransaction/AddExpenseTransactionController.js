@@ -11,7 +11,7 @@
             if (state === "SUCCESS") 
             {
            var data =  response.getReturnValue();
-                alert('data------'+data);
+                //alert('data------'+data);
                 component.set("v.FinancialList",data);
             }    
         });
@@ -46,12 +46,12 @@
         var msg = "";
         
         var tdate = component.find("date").get("v.value");
-        
-        var tdest = component.find("dest").get("v.value");
+       //  var tdest = component.find("dest").get("v.value");
+        var type = component.find("type").get("v.value");
         var tamt = component.find("amt").get("v.value");
         var tname = component.find("name").get("v.value");
         
-        if($A.util.isUndefinedOrNull(tname) || tname == ""|| $A.util.isUndefinedOrNull(tdate) || tdate == "" ||  $A.util.isUndefinedOrNull(tdest) || tdest == "" || $A.util.isUndefinedOrNull(tamt) || tamt =="" )
+        if($A.util.isUndefinedOrNull(tname) || tname == ""|| $A.util.isUndefinedOrNull(type) || type == ""|| $A.util.isUndefinedOrNull(tdate) || tdate == "" ||   $A.util.isUndefinedOrNull(tamt) || tamt =="" )
         {
             status1 = 0;
             event.preventDefault();

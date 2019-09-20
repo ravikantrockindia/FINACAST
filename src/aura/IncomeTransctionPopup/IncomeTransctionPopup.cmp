@@ -1,7 +1,12 @@
 <aura:component controller="AddIncomeController">
     <aura:attribute name="closeModal" type="boolean" default="false"/>
     <aura:attribute name="IncomeRecord" type="object" />
-    <aura:attribute name = "data" type = "Boolean"/>
+   <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>    
+    <aura:attribute name="initialRows" type="Integer" default="10"/>
+    <aura:attribute name="currentCount" type="Integer" default="10"/>
+    <aura:attribute name="totalRows" type="Integer" default="0"/>
+    <aura:attribute name = "data" type = "object"/>
     <aura:attribute name="addExpenseTransaction" type="Boolean"/>
      <aura:attribute name="addExpenseTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
     <aura:attribute name = "getExpenseBudgetId" type="String"/>
@@ -10,6 +15,7 @@
     <aura:attribute name="showModalExpenseTransaction" type="Boolean" />
       <aura:attribute name = "client" type = "Account"/>
      <aura:attribute name="cid" type="String"/> 
+    <aura:attribute name="loadOffset" type="Integer" default="1"/>
     <aura:attribute name="editrecidTransactionExpense" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
@@ -27,12 +33,17 @@
                                           alternativeText="close"
                                           variant="bare-inverse"
                                           class="slds-modal__close"/>
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Transction Details</h2>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Transaction Details</h2>
                 </header>
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                   
-                           <c:BudgetExpenseSummaryCashFlowImpact dataset = "{!v.data}" tansactionId ="{!v.getExpenseBudgetId}"/>
+                  
+                    <aura:iteration items="{!v.addExpenseTrans}" var="Tdetails1">
+                        
+                           <c:BudgetExpenseSummaryCashFlowImpact  tansactionId ="{!v.getExpenseBudgetId}"/>
+                       
+                    </aura:iteration>
+                       
                     <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                         <thead>
                             <tr class="slds-line-height_reset">
@@ -67,7 +78,10 @@
                                     </div>
                                 </th>
                                 <td data-label="Account Name">
-                                    <div class="slds-truncate" title="Cloudhub">{!v.IncomeRecord.Start_Date__c}</div>
+                                   <div class="slds-truncate" title="Transaction Date" style="color:black;">&nbsp;&nbsp;
+                                                        <ui:outputDate value="{!v.IncomeRecord.Start_Date__c}"/>
+                                                    </div>
+                                   
                                 </td>
                                 <td data-label="Close Date">
                                     <div class="slds-truncate" title="4/14/2015">{!v.IncomeRecord.Amount__c}</div>
@@ -82,7 +96,9 @@
                                     <div class="slds-truncate" title="20%">{!v.IncomeRecord.Tax_Rate__c}</div>
                                 </td>
                                <td data-label="Confidence">
-                                    <div class="slds-truncate" title="20%">{!v.IncomeRecord.End_Date__c}</div>
+                                   <div class="slds-truncate" title="Transaction Date" style="color:black;">&nbsp;&nbsp;
+                                                        <ui:outputDate value="{!v.IncomeRecord.End_Date__c}"/>
+                                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -99,7 +115,7 @@
                                     </div>
                          		</header>
                                    
-                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <!--table class="slds-table slds-table_cell-buffer slds-table_bordered">
                                     <thead>
                                         <tr class="slds-line-height_reset">
                                             <th class="" scope="col">
@@ -109,7 +125,7 @@
                                                 <div class="slds-truncate" title="Description">Description</div>
                                             </th>
                                             <th class="" scope="col">
-                                                <div class="slds-truncate" title="Category">Category</div>
+                                                <div class="slds-truncate" title="Category">Transaction Type</div>
                                             </th>
                                             <th class="" scope="col">
                                                 <div class="slds-truncate" title="Amount">Amount</div>
@@ -132,7 +148,7 @@
                                                     <div class="slds-truncate" title="Description" style="color:black;">{! Tdetails1.FinServ__Description__c}</div>
                                                 </td>
                                                 <td data-label="Category">
-                                                    <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails1.Destination_Financial_Account__r.Name}</div>
+                                                    <div class="slds-truncate" title="Category" style="color:black;">{!Tdetails1.FinServ__TransactionType__c}</div>
                                                 </td>
                                                 <td data-label="Amount">
                                                     <div class="slds-truncate" title="Amount" style="color:black;">$ {! Tdetails1.FinServ__Amount__c}</div>
@@ -154,9 +170,12 @@
                                               </aura:set>
                                         </aura:if>
                                     </tbody>        
-                                </table>
-                            
+                                </table-->
+                    <div class="expences_data-table">
+                          <lightning:datatable  aura:id="TransTable" enableInfiniteLoading="{!v.enableInfiniteLoading}" loadMoreOffset="{!v.loadOffset}" onrowaction="{!c.viewRecord}"
+                           onloadmore="{!c.handleLoadMore}"  columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" />  
                 </div>
+                    </div>
                 <!--Modal/Popup Box Footer Starts here-->
               
             </div>

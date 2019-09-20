@@ -4,20 +4,94 @@
         component.set("v.closeModal", false);
     },
     doInit: function(component, event, helper) {
-       var budgeteve1 = component.get("v.getExpenseBudgetId");    
-     //  alert( budgeteve1);
-        var action = component.get("c.getLoanTransaction");
-        action.setParams({
-            financialAccountId : budgeteve1
-        });
-        action.setCallback(this, function(response) {    
-            var beve1 = response.getReturnValue();
-            console.log('gdhj' , beve1);  
-          ///  alert(beve1);
+        component.set('v.columns', [
+            {label: 'Name', fieldName: 'TransactionName__c',  type: 'text'},
+            { 
+            "label" :  'Transaction Date',
+            "fieldName" : 'FinServ__TransactionDate__c',
+            "sortable" : 'true',
+            "type" :  'date',
+            typeAttributes:{
+            year: "numeric",
+            month: "short",
+            day: "2-digit",
+            } ,
+            },
+            
+            {label: 'Description', fieldName: 'FinServ__Description__c',  type: 'text'},
+            {label: 'Amount', fieldName: 'FinServ__Amount__c',  type: 'currency'},
+           {type: "button", typeAttributes: {
+                iconName: 'utility:edit',
+                label: '',
+                name: 'selectRecord',
+                title: 'selectRecord',
+                disabled: false,
+                value: 'test',
+                name: 'edit',
+                size:'medium',
+                variant: {fieldName: 'variantValue'}
+            }},
+            {type: "button", typeAttributes: {
+                iconName: 'utility:delete',
+                label: '',
+                name: 'selectRecord',
+                title: 'selectRecord',
+                disabled: false,
+                size:'medium',
+                value: 'test',
+                name: 'delete',
+                variant: {fieldName: 'variantValue'}
+            }},  
+            
+        ]);     
+            var budgeteve1 = component.get("v.getExpenseBudgetId");    
+            var limit = component.get("v.initialRows");
+            var action = component.get("c.getLoanTransactionlazy");
+            action.setParams({
+            financialAccountId : budgeteve1,
+            rowOffset : 0,
+            rowLimit :  limit
+            });
+            action.setCallback(this, function(response) {    
+            var beve1 = response.getReturnValue().TransactionList;
+            
             component.set("v.addExpenseTrans" , beve1);
-        });     
-        $A.enqueueAction(action);
+            component.set("v.totalRows" , response.getReturnValue().totalRecords);
+            });     
+            $A.enqueueAction(action);
     },
+            
+      viewRecord : function(component, event, helper) {
+       // var recId = event.getParam('row').Id;
+        var actionName = event.getParam('action').name;
+        if ( actionName == 'edit' ) {
+            var recId= event.getParam('row').Id;
+            
+         
+
+        component.set("v.showModalExpenseTransaction",true);
+        component.set("v.editrecidTransactionExpense",recId);
+        } 
+        else if ( actionName == 'delete') {
+          
+        var action = component.get("c.deleteTransaction");
+        action.setParams({
+            'transactionId' :event.getParam('row').Id
+        });
+        
+        action.setCallback(this, function(response) {      
+            var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                "title": "Delete Success!",
+                type: 'success',
+                "message": "Record has been deleted successfully"           
+            });
+            resultsToast.fire();
+             helper.helperMethod(component);   
+        });     
+        $A.enqueueAction(action); 
+        }
+    },                    
     createExpenseTransactionRecord : function(component, event, helper) {   
         component.set("v.addExpenseTransaction",true);
         component.set("v.expenseTransaction",event.getSource().get("v.value"));
@@ -40,9 +114,7 @@
         });
         
         action2.setCallback(this, function(response) {      
-           // var saveIncomeEvent = component.getEvent("saveIncomeEvent");
-          //  saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-          //  saveIncomeEvent.fire();
+
             var resultsToast = $A.get("e.force:showToast");
             resultsToast.setParams({
                 "title": "Delete Success!",
@@ -54,4 +126,18 @@
         });     
         $A.enqueueAction(action2);        
     },
+     handleLoadMore : function(component,event,helper){
+        if(!(component.get("v.currentCount") >= component.get("v.totalRows"))){
+            //To display the spinner
+            event.getSource().set("v.isLoading", true); 
+            //To handle data returned from Promise function
+            helper.loadData(component).then(function(data){ 
+                var currentData = component.get("v.addExpenseTrans");
+                var newData = currentData.concat(data);
+                component.set("v.addExpenseTrans", newData);
+                //To hide the spinner
+                event.getSource().set("v.isLoading", false); 
+            });
+        }
+    }       
 })

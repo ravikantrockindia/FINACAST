@@ -30,13 +30,42 @@ public with sharing class AddIncomeController {
         
         List<FinServ__FinancialAccountTransaction__c> transactionRecord = new List<FinServ__FinancialAccountTransaction__c>();
         
-        transactionRecord = [Select id ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c 
+        transactionRecord = [Select id,name ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c 
                              from FinServ__FinancialAccountTransaction__c 
                              where Budget_Category__c =: bg.id 
                              order by FinServ__TransactionDate__c DESC];
         
         return transactionRecord;
     }
+    
+     @AuraEnabled
+    public static TransactionWrapper getTransactionInfinite(String budgetId, Integer rowOffset,Integer rowLimit){
+        TransactionWrapper TransWrapper= new TransactionWrapper();
+        Budget__c bg = new Budget__c();
+        bg=[Select id , name from Budget__c where id =: budgetId];   
+        
+        List<FinServ__FinancialAccountTransaction__c> transactionRecord = new List<FinServ__FinancialAccountTransaction__c>();
+        
+        transactionRecord = [Select id,name ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c 
+                             from FinServ__FinancialAccountTransaction__c 
+                             where Budget_Category__c =: bg.id  
+                             order by FinServ__TransactionDate__c DESC LIMIT :rowLimit OFFSET :rowOffset];
+        
+        TransWrapper.TransactionList=[Select id,name ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c 
+                             from FinServ__FinancialAccountTransaction__c 
+                             where Budget_Category__c =: bg.id  
+                             order by FinServ__TransactionDate__c DESC LIMIT :rowLimit OFFSET :rowOffset];
+        system.debug('kk'+TransWrapper.TransactionList);
+        TransWrapper.totalRecords =[select COUNT() FROM FinServ__FinancialAccountTransaction__c where Budget_Category__c =: bg.id ];
+        return TransWrapper;
+    }
+	public class TransactionWrapper{
+        @AuraEnabled
+        public Integer totalRecords = 0;
+        @AuraEnabled
+        public List<FinServ__FinancialAccountTransaction__c> TransactionList = new List<FinServ__FinancialAccountTransaction__c>();
+       
+    }    
     //Loan transaction data
     @AuraEnabled
     public static List<FinServ__FinancialAccountTransaction__c> getLoanTransaction(String financialAccountId){
@@ -48,11 +77,37 @@ public with sharing class AddIncomeController {
         transactionLoanRecord = [Select id ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c , 	FinServ__FinancialAccount__c 
                                  from FinServ__FinancialAccountTransaction__c
                                  where FinServ__FinancialAccount__c =: fa.id
-                                 order by FinServ__TransactionDate__c DESC];
+                                 order by FinServ__TransactionDate__c DESC ];
         
         return transactionLoanRecord;
     }
     
+    @AuraEnabled
+     public static LoanTransactionWrapper getLoanTransactionlazy(String financialAccountId, Integer rowOffset,Integer rowLimit){
+         LoanTransactionWrapper TransWrapper= new LoanTransactionWrapper();
+         
+         FinServ__FinancialAccount__c fa = new FinServ__FinancialAccount__c();
+         fa = [Select id , name from FinServ__FinancialAccount__c where id =: financialAccountId];
+         
+         List<FinServ__FinancialAccountTransaction__c> transactionLoanRecord = new List<FinServ__FinancialAccountTransaction__c>();
+         
+         transactionLoanRecord = [Select id ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c , 	FinServ__FinancialAccount__c 
+                                  from FinServ__FinancialAccountTransaction__c
+                                  where FinServ__FinancialAccount__c =: fa.id
+                                  order by FinServ__TransactionDate__c DESC LIMIT :rowLimit OFFSET :rowOffset];
+         
+         TransWrapper.totalRecords =[select COUNT() FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__c =: fa.id ];
+         TransWrapper.TransactionList =transactionLoanRecord;
+         return TransWrapper;
+     }
+    public class LoanTransactionWrapper{
+        @AuraEnabled
+        public Integer totalRecords = 0;
+        @AuraEnabled
+        public List<FinServ__FinancialAccountTransaction__c> TransactionList = new List<FinServ__FinancialAccountTransaction__c>();
+       
+    }    
+
     //get summarychart income/expense transaction
     @auraEnabled
     public static List<FinServ__FinancialAccountTransaction__c> getSummaryTransaction(String Id) {
@@ -166,7 +221,7 @@ public with sharing class AddIncomeController {
                             Primary_Owner__c =:acc.id];
                  system.debug('budgetList'+budgetList);
                 loanRecord = [select id ,FinServ__PrimaryOwner__c, Name, FinServ__PrimaryOwner__r.name,FinServ__APY__c, FinServ__PaymentAmount__c, FinServ__LoanAmount__c, FinServ__PaymentFrequency__c,CreatedDate,FinServ__LoanEndDate__c,              
-                              (Select id ,name ,  FinServ__TransactionDate__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
+                              (Select id ,name ,  FinServ__TransactionDate__c,FinServ__TransactionType__c ,Destination_Financial_Account__r.name, FinServ__Amount__c ,	FinServ__FinancialAccount__r.FinServ__PaymentAmount__c
                                from Finserv__FinancialAccountTranslations__r
                                where FinServ__TransactionDate__c = THIS_MONTH)
                               from FinServ__FinancialAccount__c 
@@ -378,6 +433,7 @@ public with sharing class AddIncomeController {
                          from Financial_Account_Transactions__r
                          where FinServ__TransactionDate__c = THIS_MONTH) from Budget__c
                         where (((Start_Date__c <=: stdate ) or(Start_Date__c >=: stdate and 
+                                                               
                                                                Start_Date__c <=: enddate)) and ((End_Date__c >=: stdate) or End_Date__c = null)) and 
                         Primary_Owner__c =:clientId];			
             

@@ -1,75 +1,89 @@
 ({
-    doInit : function(component, event, helper) {
-        var chartDataArray = [];
-        var chartLabelArray = [];
-      component.get("v.loanId");
-        var action = component.get("c.getLoanSummaryTransaction");  
+	generateChart : function(component, event, helper) {
+        var chartLabels = new Array();
+        var chartDataSet = new Array();
+        
+        var id = component.get("v.loanId");
+        var action = component.get("c.getTransctionLoanSavingAmount");
         action.setParams({
-            Id: component.get("v.loanId")
+            clientId: component.get("v.loanId")
         })
         
-        var temp=[];
         action.setCallback(this, function(response) {
-            
-            //Last Six Months here
-            var dataMap={};
-            var today=new Date();
-            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];        
-        	for(var i=5;i>-1;i--){
-	            var	d=new Date(today.getFullYear(),today.getMonth()-i,1);
-                var currMonth=monthNames[d.getMonth()];
-                dataMap[currMonth]=0;
-            }
-            
-            var apexResponse = response.getReturnValue();
-            
-            //extract response against last six months and cummulate them
-            for( var i=0; i<apexResponse.length; i++)
-            {
-                var str = apexResponse[i].FinServ__TransactionDate__c;
-                var index = parseInt(str.substring(5, 7));
-				temp.push(monthNames[index-1]);
-                var sum = dataMap[monthNames[index-1]] + parseInt(apexResponse[i].FinServ__Amount__c);
-                dataMap[monthNames[index-1]]=sum;
-            }
-
-            //Push Map keys and Values in seperate Arrays
-            for(var d in dataMap){
-                chartDataArray.push(dataMap[d]);
-                chartLabelArray.push(d);
-            }
-            
-            console.log('Data: ' + chartDataArray);
-            console.log('Label: ' + chartLabelArray);
-            
-                      
-           var dps =new Array();       
-            for(var i=0; i<chartLabelArray.length; i++){
-                dps.push({label: chartLabelArray[i] , y: chartDataArray[i],color:"skyblue"});
-            }
-            console.log('dps: ' + JSON.stringify(dps));            
-            var chart = new CanvasJS.Chart("Canvas02", {
-                theme: "light1", // "light2", "dark1", "dark2"
-                animationEnabled: true, // change to true		
-                axisY:{
-                    //  valueFormatString:"#0K",
-                    gridColor: "#ffffff",
-                    tickColor: "#ffffff"
-                },
-                data: [
-                    {
-                        // Change type to "bar", "area", "spline", "pie",etc.
-                        yValueFormatString: "$ #,### ",
-                        type: "column",
+                    var state = response.getState();
+                    if (state === "SUCCESS") {
+                       var data = response.getReturnValue();
                         
-                        dataPoints:dps
-                    }
-                ]
-            });
-            
-            chart.render();
-  
-        })
-        $A.enqueueAction(action);
-    }                      
+                        var dps =new Array();  
+                       var dps1 =new Array();
+                         
+                        for( var key in data.cashInValue){
+                            console.log('key-----', data.cashInValue[key]);
+                     
+                            dps.push({label: key, y:data.cashInValue[key]});
+                            
+                        }
+                        for( var key in data.cashOutValue){
+                          
+                            dps1.push({label: key, y:data.cashOutValue[key] });  
+                            
+                        }
+                  
+              var chart = new CanvasJS.Chart("Canvas03", {
+            animationEnabled: true,
+            title:{
+            //    text: "Cash Flow"
+            },
+                  axisY:{
+                      //  valueFormatString:"#0K",
+                      gridColor: "#ffffff",
+                      tickColor: "#ffffff"
+                  },
+            axisX: {
+		valueFormatString: "MMM YYYY",
+                intervalType: "month"
+	      },
+           toolTip:{
+                contentFormatter: function ( e ) {
+                    var value = e.entries[0].dataPoint.y;
+                    if(value > 999)
+                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value)
+                    else if(value < 10000000)
+                     return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
+                      else if(value < 1000000000000)
+                           return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
+                }
+            }, 
+            legend: {
+                cursor:"pointer",
+                //itemclick : toggleDataSeries
+            },
+            //toolTip: {
+               // shared: false,
+                //content: toolTipFormatter
+            //},
+            data: [{
+                 
+                type: "column",
+                showInLegend: true,
+                name: "Cash in",
+                //valueFormatString: "MMM",
+                color: "#49a2ad",
+                dataPoints: dps1
+            },
+                   {
+                       type: "column",
+                       showInLegend: true,
+                      // valueFormatString: "MMM",
+                       name: "Cash out",
+                       color: "#59c96f",
+                       dataPoints: dps
+                   },
+                  ]
+                   });
+                   chart.render();
+                   }
+                   });
+                    $A.enqueueAction(action);
+                   }
 })

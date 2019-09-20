@@ -4,9 +4,10 @@
         //$A.util.addClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",false);
 		var saveIncomeEvent = component.getEvent("saveIncomeEvent");
-        //   alert(saveIncomeEvent);
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         saveIncomeEvent.fire();
+           
+
            
        },
     

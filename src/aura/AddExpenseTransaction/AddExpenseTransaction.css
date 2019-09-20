@@ -17,6 +17,13 @@
     padding: 1px 5px;
     min-width: 150px;
 }
+.THIS lightning-timepicker.slds-form-element {
+    display: none;
+}
+.THIS .slds-form-element {
+    position: relative;
+    min-width: 100%;
+}
 .THIS .btn1:hover {
     color: #fff;
 }

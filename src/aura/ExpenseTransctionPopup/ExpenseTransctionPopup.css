@@ -17,6 +17,12 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+.THIS .cBudgetExpenseSummaryCashFlowImpact {
+    display: none;
+}
+.THIS .cBudgetExpenseSummaryCashFlowImpact:first-child {
+    display: block;
+}
 .THIS .slds-modal__container {
     width: 60%;
     max-width: 60%;

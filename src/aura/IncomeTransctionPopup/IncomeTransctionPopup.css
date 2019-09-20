@@ -17,6 +17,12 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+.THIS .cBudgetExpenseSummaryCashFlowImpact {
+    display: none;
+}
+.THIS .cBudgetExpenseSummaryCashFlowImpact:first-child {
+    display: block;
+}
 .THIS .slds-modal__container {
     width: 60%;
     max-width: 60%;
@@ -43,4 +49,41 @@
 }
 .THIS .slds-modal__content:last-child {
     height: 410px;
+}
+.THIS .expences_data-table {
+    margin-top: 15px;
+}
+.THIS .expences_data-table .slds-table_header-fixed_container.slds-scrollable_x {
+    padding-top: 0;
+}
+.THIS .expences_data-table .slds-table {
+    padding: 0px 0 10px 0;
+}
+.THIS .expences_data-table .slds-button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+}
+.THIS .expences_data-table .slds-grid_align-end {
+    justify-content: flex-start;
+}
+.THIS .expences_data-table .slds-table .slds-cell-fixed {
+    background-color: #f6f9fc;
+    margin-top: 6px;
+    font-weight: #000;
+    font-weight: 600;
+}
+.THIS .expences_data-table .slds-table_header-fixed_container:before {
+    border-bottom: none;
+    border: 1px solid #f6f9fc;
+}
+.THIS .expences_data-table .slds-table thead tr th {
+    padding: 22px 5px;
+    color: #000;
+}
+.THIS .expences_data-table .slds-table thead tr th:nth-child(5) {
+    width: 40px !important;
+}
+.THIS .expences_data-table .slds-table thead tr th:last-child {
+    width: 40px !important;
 }

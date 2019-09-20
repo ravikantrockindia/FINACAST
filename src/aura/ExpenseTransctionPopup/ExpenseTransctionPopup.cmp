@@ -3,13 +3,20 @@
     <aura:attribute name="IncomeRecord" type="object" />
     <aura:attribute name = "data" type = "Object"/>
     <aura:attribute name="addExpenseTransaction" type="Boolean"/>
-     <aura:attribute name="addExpenseTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
+    <aura:attribute name="addExpenseTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
+      <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>
+    <aura:attribute name="initialRows" type="Integer" default="10"/>
+    <aura:attribute name="currentCount" type="Integer" default="10"/>
+    <aura:attribute name="totalRows" type="Integer" default="0"/>
+    <aura:attribute name="loadOffset" type="Integer" default="1"/><!--Set when to trigger loading of more rows-->
+    
     <aura:attribute name = "getExpenseBudgetId" type="String"/>
     <aura:attribute name= "expenseTransaction" type="string"/>
     <aura:attribute name = "namespace" type = "String"/>
-     <aura:attribute name="cid" type="String"/>  
+    <aura:attribute name="cid" type="String"/>  
+    <aura:attribute name="columns" type="List"/>
     <aura:attribute name="showModalExpenseTransaction" type="Boolean" />
-      <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name = "client" type = "Account"/>
     <aura:attribute name="editrecidTransactionExpense" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
@@ -27,18 +34,18 @@
                                           alternativeText="close"
                                           variant="bare-inverse"
                                           class="slds-modal__close"/>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Transction Details</h3>
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Transaction Details</h3>
                 </header>
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                   
-               
-                           <c:BudgetExpenseSummaryCashFlowImpact dataset = "{!v.data}" tansactionId ="{!v.getExpenseBudgetId}"/>
-                   
-                   <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
+                    
+                    <aura:iteration items="{!v.addExpenseTrans}" var="Tdetails1">
+                        <c:BudgetExpenseSummaryCashFlowImpact dataset = "{!v.data}" tansactionId ="{!v.getExpenseBudgetId}"/>
+                    </aura:iteration>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                         <thead>
                             <tr class="slds-line-height_reset">
-                                 <th class="" scope="col">
+                                <th class="" scope="col">
                                     <div class="slds-truncate" title="Opportunity Name">Name</div>
                                 </th>
                                 <th class="" scope="col">
@@ -69,7 +76,10 @@
                                     </div>
                                 </th>
                                 <td data-label="Account Name">
-                                    <div class="slds-truncate" title="Cloudhub">{!v.IncomeRecord.Start_Date__c}</div>
+                                    <div class="slds-truncate" title="Transaction Date" style="color:black;">&nbsp;&nbsp;
+                                                        <ui:outputDate value="{!v.IncomeRecord.Start_Date__c}"/>
+                                                    </div>
+                                   
                                 </td>
                                 <td data-label="Close Date">
                                     <div class="slds-truncate" title="4/14/2015">{!v.IncomeRecord.Amount__c}</div>
@@ -80,29 +90,32 @@
                                 <td data-label="Confidence">
                                     <div class="slds-truncate" title="20%">{!v.IncomeRecord.Yearly_growth__c}</div>
                                 </td>
-                                  <td data-label="Confidence">
+                                <td data-label="Confidence">
                                     <div class="slds-truncate" title="20%">{!v.IncomeRecord.Tax_Rate__c}</div>
                                 </td>
-                               <td data-label="Confidence">
-                                    <div class="slds-truncate" title="20%">{!v.IncomeRecord.End_Date__c}</div>
+                                <td data-label="Confidence">
+                                    <div class="slds-truncate" title="Transaction Date" style="color:black;">&nbsp;&nbsp;
+                                                        <ui:outputDate value="{!v.IncomeRecord.End_Date__c}"/>
+                                                    </div>
+                                  
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                   
-                              
-                            
-                                <!--Transaction for expenses-->
-                                <header class="slds-grid slds-gutters slds-p-top_small">
-                                    <div class="slds-col slds-size_2-of-12 slds-p-top_x-small">
-                                    	<span class="slds-page-header__title slds-truncate" title="transaction"><h3>Transactions</h3></span>
-                                    </div>
-                                    <div class="slds-col slds-size_10-of-12">
-                                    	<lightning:button class="btn1" value="{!v.getExpenseBudgetId}" label="+ Add Transaction" title="+ Add Transaction" onclick="{!c.createExpenseTransactionRecord}"/>
-                                    </div>
-                         		</header>
-                                   
-                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    
+                    
+                    
+                    <!--Transaction for expenses-->
+                    <header class="slds-grid slds-gutters slds-p-top_small">
+                        <div class="slds-col slds-size_2-of-12 slds-p-top_x-small">
+                            <span class="slds-page-header__title slds-truncate" title="transaction"><h3>Transactions</h3></span>
+                        </div>
+                        <div class="slds-col slds-size_10-of-12">
+                            <lightning:button class="btn1" value="{!v.getExpenseBudgetId}" label="+ Add Transaction" title="+ Add Transaction" onclick="{!c.createExpenseTransactionRecord}"/>
+                        </div>
+                    </header>
+                    
+                    <!--table class="slds-table slds-table_cell-buffer slds-table_bordered">
                                     <thead>
                                         <tr class="slds-line-height_reset">
                                             <th class="" scope="col">
@@ -157,15 +170,17 @@
                                              </aura:set>
                                         </aura:if>
                                     </tbody>        
-                                </table>
-                            
-                        
+                                </table-->
+                   <lightning:datatable  aura:id="TransTable" enableInfiniteLoading="{!v.enableInfiniteLoading}" loadMoreOffset="{!v.loadOffset}"  onrowaction="{!c.viewRecord}"
+                           onloadmore="{!c.handleLoadMore}"  columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" /> 
+                    
+                    
                 </div>
                 <!--Modal/Popup Box Footer Starts here-->
-              
+                
             </div>
         </section>
-                <aura:if isTrue="{!v.addExpenseTransaction}">
+        <aura:if isTrue="{!v.addExpenseTransaction}">
             
             <c:AddExpenseTransaction cid="{!v.cid}"  namespace="{!v.namespace}" expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}"  isActive = "{!v.addExpenseTransaction}"  />
             
