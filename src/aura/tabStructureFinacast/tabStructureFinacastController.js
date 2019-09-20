@@ -6,7 +6,7 @@
         evt.setParams({
             componentDef:"c:transactionHistory",
             componentAttributes: {
-                cid : Id
+                clientId : Id
             }
         });
         evt.fire();
@@ -86,9 +86,10 @@
         var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
-            componentDef:"c:AccountTabInReport",
+            componentDef:"c:Finacast_Accounts",
             componentAttributes: {
-                cid : Id,
+                recordId : Id,
+                isAccount:true,
                 namespace : namespace
             }
         });

@@ -1,0 +1,14 @@
+<aura:component controller="AccountTabReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 
+    <ltng:require scripts="{!$Resource.CanvasJS}"/> 
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:attribute name="name" type="String"/>
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="Tid" type="String"/>
+    <aura:handler name="change" value="{!v.Tid}" action="{!c.doInit}"/>
+     <aura:attribute name = "data" type = "FinServ__FinancialAccountTransaction__c"/>
+    <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>
+          
+      <div id="chartContainer" style="height: 400px; width: auto; margin-left: 0px; margin-top: 0px;">
+      </div> 
+    </aura:component>

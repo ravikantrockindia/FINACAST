@@ -3,9 +3,15 @@
     <aura:attribute name="namespace" type="String" default=""/>
     <aura:attribute name="recordId" type="String" default=""/>
     <aura:attribute name="loanId" type="String" default=""/>
+    <aura:registerEvent name="rTid" type="c:AccountReport"/>
+    
+    <aura:attribute name="isAccount" type="boolean" default="false"/>
+    <aura:attribute name="Tid" type="String"/>
+    <aura:attribute name="FinaId" type="String"/>
+   <!--<aura:attribute name="tabName" type="String" default="Financial Account"/>
+    <lightning:workspaceAPI aura:id="workspace"/> -->
     
     <aura:attribute name="client" type="Account" default=""/>
-    
     <aura:attribute name="cash" type="List"/>
     <aura:attribute name="investment" type="List" />
     <aura:attribute name="credit" type="List"/>
@@ -27,7 +33,7 @@
     <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
     
     
-    
+      
     <div class="client_managed slds-m-bottom_large">
         <div>
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
@@ -71,7 +77,12 @@
                         <div class="slds-card card" >
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <span class="loanrate">{!s.Name} </span>
+                                    <aura:if isTrue="{!v.isAccount}">
+                                        <lightning:button  variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }" />
+                                        <aura:set attribute="else">     
+                                            <span class="loanrate">{!s.Name} </span>
+                                        </aura:set>
+                                    </aura:if>
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
@@ -129,7 +140,15 @@
                         <div class="slds-card card" >
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <span class="loanrate">{!s.Name} </span>
+                                    
+                                    <aura:if isTrue="{!v.isAccount}">
+                                        <lightning:button  variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }" />
+                                        <aura:set attribute="else">     
+                                            <span class="loanrate">{!s.Name} </span>
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                    <!--<span class="loanrate">{!s.Name} </span> -->
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
@@ -186,7 +205,15 @@
                         <div class="slds-card card" >
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <span class="loanrate">{!s.Name} </span>
+                                    
+                                    <aura:if isTrue="{!v.isAccount}">
+                                        <lightning:button  variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }" />
+                                        <aura:set attribute="else">     
+                                            <span class="loanrate">{!s.Name} </span>
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                   <!-- <span class="loanrate">{!s.Name} </span> -->
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
@@ -244,8 +271,14 @@
                             <!--  <aura:if isTrue="{!s.FinServ__APY__c}"> -->
                             <div class="slds-grid slds-gutters slds-p-around_x-small">
                                 <div class="slds-col slds-size_8-of-12">
-                                    <!--  <lightning:button variant="Base" label="{!s.Name}" value="{!s.Id}"/>-->
-                                    <span class="loanrate">{!s.Name} </span>
+                                    
+                                    <aura:if isTrue="{!v.isAccount}">
+                                        <lightning:button  variant="" label="{!s.Name}" value="{!s.Id}"  onclick="{! c.handleAccount }" />
+                                        <aura:set attribute="else">     
+                                            <span class="loanrate">{!s.Name} </span>
+                                        </aura:set>
+                                    </aura:if>
+                                     
                                 </div>
                                 <div class="slds-col slds-size_4-of-12">
                                     <div class="balance">
