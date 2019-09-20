@@ -130,7 +130,7 @@
                     record.linkName = '/'+record.Id;
                 });
                 
-                component.set("v.totalPages", Math.floor(data.length/component.get("v.pageSize")));            
+                component.set("v.totalPages", Math.ceil(data.length/component.get("v.pageSize")));            
                 component.set("v.allData", data );  
                 component.set("v.currentPageNumber",1);
                 helper.buildData(component, helper);

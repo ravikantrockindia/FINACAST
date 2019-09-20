@@ -121,7 +121,7 @@
                 }); 
                 
                 
-                component.set("v.totalPages", Math.round(data.length/component.get("v.pageSize")));            
+                component.set("v.totalPages", Math.ceil(data.length/component.get("v.pageSize")));            
                 component.set("v.allData", data ); 
                 component.set("v.currentPageNumber",1);
                 helper.buildData(component, helper);
@@ -200,7 +200,7 @@
                 });
                 component.set("v.allData", data); 
                 
-                component.set("v.totalPages", Math.floor(data.length/component.get("v.pageSize")));            
+                component.set("v.totalPages", Math.ceil(data.length/component.get("v.pageSize")));            
                 component.set("v.currentPageNumber",1);
                 helper.buildData(component, helper);
             }
@@ -225,7 +225,7 @@
             pageReference: {
                 "type": "standard__component",
                 "attributes": {
-                    "componentName": "Finsol__CreateNewClient"
+                    "componentName": namespace+"__CreateNewClient"
                 },
                 "state": {}
             },
