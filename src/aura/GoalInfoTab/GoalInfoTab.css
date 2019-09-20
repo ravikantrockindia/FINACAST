@@ -24,7 +24,6 @@
 .THIS .slds-is-active .slds-tabs_default__link {
     color: #4e75a3;
     font-weight: 700 !important;
-    padding-left: 20px;
 }
 .THIS .client_managed {
     background-color: #fff;
@@ -127,4 +126,10 @@
 }
 .THIS .footer ul li a:hover {
     text-decoration: none;
+}
+.THIS .slds-tabs_default__nav {
+    padding: 10px;
+}
+.THIS .slds-tabs_default__nav {
+    border-bottom: none;
 }

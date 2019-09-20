@@ -10,10 +10,11 @@
     <aura:attribute name="data" type="List"/>
         <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>
 
-    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.doInit}"/> 
-    <div class="client_managed slds-m-top_large slds-p-bottom_xx-small">
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.doInit}"/>
+    <div class="slds-p-left_small slds-p-right_small">
+    <div class="client_managed  slds-p-bottom_xx-small">
         <div class="slds-grid slds-gutter ">
-            <div class="slds-col slds-size_12-of-12 slds-p-top_small">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_small slds-m-bottom_medium">
                 <h3 class="slds-m-left_small">Goal Performance</h3>
             </div>
         </div>
@@ -76,5 +77,5 @@
             </div>
         </div>
     </div>
-    
+    </div>
 </aura:component>

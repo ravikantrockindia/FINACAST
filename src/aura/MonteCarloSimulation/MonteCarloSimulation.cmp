@@ -9,8 +9,8 @@
     <aura:attribute name="picklistValues" type="String[]" />
         <aura:attribute name="standardDeviationValueMap" type="Object" />
         <lightning:spinner aura:id="mySpinner" size="medium" class="slds-hide"/>
-
-    <div class="client_managed monte_carlo-form slds-m-top_large slds-p-bottom_xx-small">
+	<div class="slds-p-left_small slds-p-right_small">
+    <div class="client_managed monte_carlo-form slds-p-bottom_xx-small">
         <div class="slds-grid slds-gutter ">
             <div class="slds-col slds-size_12-of-12 slds-p-top_small">
                 <h3 class="slds-m-left_small">Monte Carlo Simulation</h3>
@@ -84,8 +84,9 @@
             </div>
         </div>
     </div>
+    </div>
             <aura:if isTrue="{!!(v.standardDeviationValueMap==null)}">
-
+	<div class="slds-p-left_small slds-p-right_small">
     <div class="client_managed slds-m-top_large slds-p-bottom_xx-small">
         <div class="slds-grid slds-gutter ">
             <div class="slds-col slds-size_12-of-12 slds-p-top_small">
@@ -117,5 +118,6 @@
             </div>
         </div>
     </div>
+                </div>
     </aura:if>
 </aura:component>

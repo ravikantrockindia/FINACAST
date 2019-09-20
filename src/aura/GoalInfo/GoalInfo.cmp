@@ -33,7 +33,7 @@
             </div>
         </div>
         </div>-->
-    <div class="slds-grid slds-gutter slds-m-top_large">
+    <div class="slds-grid">
         <div class="slds-col slds-size_12-of-12">
             <div class="slds-tabs_default active_goal-tab">
                 <!--<ul class="slds-tabs_default__nav" role="tablist">
@@ -48,14 +48,15 @@
                         </li>
                     </ul> -->
                 <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
-                    <div class="client_managed slds-m-top_large">
-                        <div class="slds-grid slds-gutter ">
+                    <div class="slds-p-left_small slds-p-right_small">
+                    <div class="client_managed">
+                        <div class="slds-grid ">
                             <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-border_right">
                                 <h3 class="slds-m-left_small slds-grid">
-                                    <div class="slds-col slds-size_8-of-12">
+                                    <div class="slds-col slds-size_8-of-12 slds-p-top_xx-small">
                                         <b>Goal Information</b>
                                     </div>
-                                    <div class="slds-col slds-size_4-of-12">
+                                    <div class="slds-col slds-size_4-of-12 slds-p-right_small">
                                         <Lightning:button class="slds-button btn1 slds-float_right" label="+ Edit Goal" onclick="{!c.onClickEditGoals}"/>            
                                     </div>   
                                 </h3>
@@ -153,6 +154,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div></div>
