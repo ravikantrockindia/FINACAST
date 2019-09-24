@@ -115,7 +115,7 @@
                 // chartLabels[i] = dataSeriesGoal[0]["data"][i][0];
                 chartDataSet[i] = dataSeriesGoal[0]["data"][i][1];
                  moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
-                 moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
+                 moneytobepaid = Math.floor(parseFloat(chartDataSet[7]));
                         if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
                         }     

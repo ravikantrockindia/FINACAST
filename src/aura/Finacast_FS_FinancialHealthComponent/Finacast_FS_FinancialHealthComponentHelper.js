@@ -29,9 +29,7 @@
                     chartLabels.push(offset+i);
                     chartDataSet.push(data.financialHealthAnalysis[i].score.toPrecision(2));
                 }
-                console.log('offset---'+offset);
-                console.log('chartDataSet---'+chartDataSet);
-                console.log('chartLabels---'+chartLabels);
+              
                 var greenGoalMsg=false;
                 var greenGoalMsgCounter=-1;
                 var diagnosis = data;

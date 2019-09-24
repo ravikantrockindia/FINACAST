@@ -43,14 +43,15 @@
             </div>
             <div class="slds-col slds-size_1-of-2">
                 <div class="client_managed">
-                    <c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                       <c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                    
                 </div>
             </div>
         </div>        
         <div class="slds-grid slds-gutters future_simulation">
             <div class="slds-col slds-size_1-of-2">
                 <div class="client_managed">
-                    <c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
+                   <c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
                 </div>
             </div>
             <div class="slds-col slds-size_1-of-2" >
