@@ -1,6 +1,7 @@
 ({
     handleRadio: function (component, event) {                
-        component.set("v.displaySection" ,  true);        
+        component.set("v.displaySection" ,  true); 
+        component.set("v.isPaymentPlan" ,  true);
     },
     tabchange: function (component, event) {                
         component.set("v.compareTabselected" ,  "compareTabOpen");        
@@ -25,7 +26,7 @@
             });
         })
         .catch(function(error) {
-            console.log(error);
+          //  console.log(error);
         });
     }
     ,
@@ -54,7 +55,7 @@
     
     handleRadio2: function (component, event) {
         component.set("v.displayTax" ,  true);
-        
+        component.set("v.isTaxBenefit" ,  true);
         
     },
     handleRadio4: function (component, event) {
@@ -65,6 +66,7 @@
     handleRadio3: function (component, event) 
     {
         component.set("v.TaxDeduction" ,  true);
+        component.set("v.taxMonthly" ,  true);
     },
     handleRadio5: function (component, event) 
     {
@@ -75,15 +77,28 @@
         var action = component.get("c.getData");
         var clientId = component.get("v.cid");  
         var Name = component.get("v.Name");
+      //  alert(Name);
         var totalAmount = component.get("v.totalAmount");
+     //   alert(totalAmount);
         var downPayment = component.get("v.downPayment");
+      //  alert(downPayment);
         var installments = component.get("v.installments");
+      //  alert(installments);
         var startDate = component.get("v.startDate");
+     //   alert(startDate);
         var endDate = component.get("v.endDate");
+     //   alert(endDate);
         var isTaxBenefit = component.get("v.isTaxBenefit");
+      //  alert(isTaxBenefit);
         var isPaymentPlan = component.get("v.isPaymentPlan");
+      //  alert(isPaymentPlan);
         var rainyDayMonths = component.get("v.rainyDayMonths");
-        
+      //  alert(rainyDayMonths);
+        var taxContribution = component.get("v.taxContribution");
+      //  alert(taxContribution);
+         var taxMonthly = component.get("v.taxMonthly");
+       // alert(taxMonthly);
+        var taxDeduct = component.get("v.taxDeduct");
         action.setParams({
             "clientId": clientId,
             "name": Name,
@@ -94,6 +109,9 @@
             "endDate":endDate,
             "isTaxBenefit":isTaxBenefit,
             "isPaymentPlan":isPaymentPlan,
+            "taxContribution":taxContribution,
+            "taxMonthly":taxMonthly,
+            "taxDeduct":taxDeduct,
             "rainyDayMonths":rainyDayMonths
         });
         action.setCallback(this, function(response) {
@@ -304,15 +322,29 @@
         var action = component.get("c.getData");
         var clientId = component.get("v.cid");  
         var Name = component.get("v.Name");
+      //  alert(Name);
         var totalAmount = component.get("v.totalAmount");
+     //   alert(totalAmount);
         var downPayment = component.get("v.downPayment");
+    //    alert(downPayment);
         var installments = component.get("v.installments");
+     //   alert(installments);
         var startDate = component.get("v.startDate");
+    //    alert(startDate);
         var endDate = component.get("v.endDate");
+   //     alert(endDate);
         var isTaxBenefit = component.get("v.isTaxBenefit");
+    //    alert('isTaxBenefit'+isTaxBenefit);
         var isPaymentPlan = component.get("v.isPaymentPlan");
+   //     alert('isPaymentPlan'+isPaymentPlan);
         var rainyDayMonths = component.get("v.rainyDayMonths");
-         
+   //     alert(rainyDayMonths);
+        var taxContribution = component.get("v.taxContribution");
+   //     alert(taxContribution);
+         var taxMonthly = component.get("v.taxMonthly");
+   //     alert(taxMonthly); 
+        var taxDeduct = component.get("v.taxDeduct");
+  //      alert(taxDeduct); 
 		helper.resetCompareHelper(component, event, helper);    //Reset Component Options
         
         action.setParams({
@@ -325,6 +357,9 @@
             "endDate":endDate,
             "isTaxBenefit":isTaxBenefit,
             "isPaymentPlan":isPaymentPlan,
+            "taxContribution":taxContribution,
+            "taxMonthly":taxMonthly,
+            "taxDeduct":taxDeduct,
             "rainyDayMonths":rainyDayMonths
         });
         action.setCallback(this, function(response) {

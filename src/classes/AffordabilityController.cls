@@ -26,7 +26,7 @@ public class AffordabilityController {
     }
     
     @auraEnabled
-    public static String ShowAffordabilityResult(String clientId,String name,double totalAmount, double downPayment, double installments, Date startDate, Date endDate, Boolean isTaxBenefit, Boolean isPaymentPlan, Integer rainyDayMonths ){
+    public static String ShowAffordabilityResult(String clientId,double taxDeduct,Boolean taxMonthly, double taxContribution,String name,double totalAmount, double downPayment, double installments, Date startDate, Date endDate, Boolean isTaxBenefit, Boolean isPaymentPlan, Integer rainyDayMonths ){
         System.debug('inside Method create Client'); 
        // String clientId ='0014600001ePIu5AAG';
         Boolean showClientLookup = false;
@@ -48,7 +48,7 @@ public class AffordabilityController {
         }
         
         /************ For Household Accounts ********/
-        if(isHousehold){            
+    /*    if(isHousehold){            
             List<account> householdMembersList = new List<Account>();
             //householdMembersList = [select id, name from FinServ__AccountAccountRelation__c where FinServ__RelatedAccount__c =: clientId];           
             system.debug('Inside Household');       
@@ -184,7 +184,7 @@ public class AffordabilityController {
                             FinServ__Household__c =: clientId 
                             limit 1000];
                 
-                /*********** NOTE: Outstanding Payment and Loan End Date *********/
+                
                 
                 
                 System.debug('Debt Accounts: ' + FFDAList.size());
@@ -353,10 +353,10 @@ public class AffordabilityController {
             }
             System.debug('HouseHold Request Data:' + setData);
             return setData;                                
-        }
+        }               */
         
         /******** Normal non - Household Code goes here *******/
-        else {            	
+                   	
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
             if(clientId != null && clientId != '' && FSK.length() > 0 && FSK != Null) { 
@@ -477,7 +477,7 @@ public class AffordabilityController {
                 }
                 
                 // Loan and debt accounts
-                System.debug('above');
+               // System.debug('above');
                 FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
                             Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c,
                             What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c, Do_tax_benefits_realize_monthly__c
@@ -493,7 +493,7 @@ public class AffordabilityController {
                 
                 /*********** NOTE: Outstanding Payment and Loan End Date *********/
                 
-                System.debug('Debt Accounts: ' + FFDAList.size());
+               // System.debug('Debt Accounts: ' + FFDAList.size());
                 if(FFDAList.size() > 0){
                     for(FinServ__FinancialAccount__c FFDA : FFDAList){
                         accountNameMap.put(FFDA.Id, FFDA.Name);
@@ -547,7 +547,7 @@ public class AffordabilityController {
                                                             RecordType.DeveloperName !='Scenario_Goal_Record_Type' and
                                                             FinServ__PrimaryOwner__c =: clientId
                                                             limit 1000];
-                System.debug('Goal List: ' + goalList);
+              //  System.debug('Goal List: ' + goalList);
                 if(goalList.size() > 0){
                     for(FinServ__FinancialGoal__c goal : goalList){
                         
@@ -587,7 +587,7 @@ public class AffordabilityController {
                 expList = [Select id, Name, Amount__c, Start_Date__c, End_Date__c,Does_contribution_bring_tax_benifit__c, Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c from Budget__c where Primary_Owner__c =: clientId 
                            and recordType.developerName = 'Expense_Record_Type']; 
                 //set expenses here    
-                System.debug('Expense List: ' + expList);
+               // System.debug('Expense List: ' + expList);
                 double monthlyExpenses = 0;
                 //set expenses here    
                 if(expList!=null && expList.size() > 0){
@@ -634,14 +634,14 @@ public class AffordabilityController {
                 }
                 
                 // setData += ']"}';
-                setData += '{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate+'\',\'endDate\' :\''+endDate+'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
+                setData += '{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\',\'maxLimit\' :\''+taxDeduct+'\',\'isMonthly\' :\''+taxMonthly+'\',\'percentContribution\' :\''+taxContribution+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate.month() + '/' + startDate.year() +'\',\'endDate\' :\''+endDate.month() + '/' + endDate.year() +'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
                 clientData = setData;
-                System.debug('Client Data from Future Simulation: ' + clientData);
+               // System.debug('Client Data from Future Simulation: ' + clientData);
                 
             }
             System.debug('setdata--' + setData);
             return setData;
-        }
+        
     }
     
     public class WrapperResponse{
@@ -658,9 +658,9 @@ public class AffordabilityController {
     
     
     @auraEnabled
-    public static WrapperResponse getData(String clientId, String name,double totalAmount, double downPayment, double installments, Date startDate, Date endDate, Boolean isTaxBenefit, Boolean isPaymentPlan, Integer rainyDayMonths) {
+    public static WrapperResponse getData(String clientId,double taxDeduct,Boolean taxMonthly, double taxContribution, String name,double totalAmount, double downPayment, double installments, Date startDate, Date endDate, Boolean isTaxBenefit, Boolean isPaymentPlan, Integer rainyDayMonths) {
         WrapperResponse wrap = new WrapperResponse();
-        System.debug('clId: '+clientId);
+        //System.debug('clId: '+clientId);
         
         String getData;
         Account acc  = new Account();
@@ -668,10 +668,10 @@ public class AffordabilityController {
         acc = [Select id, Name from account where id = :clientId];
     
         wrap.clientAcc =  acc;
-        AffordabilityController.ShowAffordabilityResult(clientId, name, totalAmount,  downPayment,  installments,  startDate,  endDate,  isTaxBenefit,  isPaymentPlan,  rainyDayMonths);
+        AffordabilityController.ShowAffordabilityResult(clientId,taxDeduct, taxMonthly,taxContribution,  name, totalAmount, downPayment, installments,  startDate,  endDate,  isTaxBenefit,  isPaymentPlan,  rainyDayMonths);
         if(!test.isRunningTest())
             wrap.response = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
-        System.debug('Future Simulation Response Data: ' + wrap.response);
+       // System.debug('Future Simulation Response Data: ' + wrap.response);
         
         return wrap;
     }

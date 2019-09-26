@@ -195,10 +195,11 @@ public class AffordabilityControllerTest {
         Account acc4 = [select id from Account where name = 'Test4'];
         
         test.startTest();
-        AffordabilityController.ShowAffordabilityResult(acc2.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
-        AffordabilityController.ShowAffordabilityResult(acc3.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
-        AffordabilityController.ShowAffordabilityResult(acc4.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
-        AffordabilityController.getData(acc.id, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
+        
+        AffordabilityController.ShowAffordabilityResult(acc2.id, 2, false, 3, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
+        AffordabilityController.ShowAffordabilityResult(acc3.id,2 ,false, 3, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
+        AffordabilityController.ShowAffordabilityResult(acc4.id,2 ,false,2 , 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
+        AffordabilityController.getData(acc.id,2 ,false,2 , 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.NumberOfMonths(system.today(), system.today());
         AffordabilityController.curentgoalestimation(250, system.today(), system.today()); 
         

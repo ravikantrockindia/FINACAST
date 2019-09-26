@@ -7,6 +7,8 @@
     <aura:attribute name= "score" type="Double"/>
     <aura:attribute name="NameSpace" type="string" />
     <aura:attribute type="Double" name="downPayment"  default="0"/>
+    <aura:attribute type="Double" name="taxDeduct"  default="0"/>
+     <aura:attribute type="Double" name="taxContribution"  default="0"/>
     <aura:attribute name = "Tabledata" type="Object"/>   
     <aura:attribute name = "displayMonthList" type="list"/>   
     <aura:attribute name = "monthlySavingList" type="list"/>
@@ -53,6 +55,7 @@
     <aura:attribute name = "data" type="Object"/>
     <aura:attribute name = "financialHealthMessage" type="Object[]"/>
     <aura:attribute type="boolean" name="isTaxBenefit" default="false" />
+    <aura:attribute type="boolean" name="taxMonthly" default="false" />
     <aura:attribute type="boolean" name="isPaymentPlan" default="false" />
     <aura:attribute type="boolean" name="Comparetab" default="false" />
     <aura:attribute type="Integer" name="rainyDayMonths" default="6"/>
@@ -174,14 +177,14 @@
                                                      
                                                 <label class="slds-form-element__label slds-p-top_large">What %of contribution bring tax benefit?</label>
                                                      <div class="slds-form-element__control">
-                                                     <lightning:input   />
+                                                     <lightning:input type="double" value="{!v.taxContribution}" />
                                                      </div>  
                                                 </aura:if>
                                              </div>
                                             <label class="slds-form-element__label slds-p-top_large">Are tax benefit realized monthly</label>  
                                             <fieldset id="group2">
                                                 <div class="slds-form-element__control">
-                                            <input type="radio" onclick = "{!c.handleRadio3}" name="group2"  /> Yes 
+                                            <input type="radio" onclick = "{!c.handleRadio3}" name="group2" value="{v.taxMonthly}"  /> Yes 
                                             <input type="radio" onclick = "{!c.handleRadio5}"  name="group2" /> No
                                                 </div>
                                             </fieldset>
@@ -191,7 +194,7 @@
                                         
                                                 <label class="slds-form-element__label slds-p-top_large">Maximum yearly tax deduction allowed</label>
                                                        <div class="slds-form-element__control">
-                                                       <lightning:input   />
+                                                       <lightning:input type="double" value="{!v.taxDeduct}" />
                                                        </div>
                                                 </aura:if>
                                             </div>
