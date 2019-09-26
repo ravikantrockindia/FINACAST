@@ -23,10 +23,15 @@
                             <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.title}</h2>                            
-                        <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate">A debt is money that you owe to someone. At the top level, Finacast divides your debts into term debts and non-term debts.
-                            <br/>                     
-                        </h3>
+                        <div class="slds-grid slds-gutters" style="border: none;">                                        
+                            <div class="slds-col slds-size_1-of-12 slds-text-align--left">
+                                <img src="/resource/1567574767000/loans" />
+                            </div>
+                            <div class="slds-col slds-size_11-of-12 slds-text-align--left slds-p-top_medium">
+                              	<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.title}</h2>                            
+                        		<!--<h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate">A debt is money that you owe to someone. At the top level, Finacast divides your debts into term debts and non-term debts.</h3>-->  
+                            </div>
+                        </div>
                     </header>
                     <lightning:recordEditForm 
                                               recordTypeId="{!v.Loan}"

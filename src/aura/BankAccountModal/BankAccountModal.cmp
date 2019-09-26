@@ -13,7 +13,14 @@
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.Add_Bank_Account}</h2>
+                    <div class="slds-grid slds-gutters slds-p-left_xx-large">
+                        <div class="slds-col slds-size_1-of-12 ">
+                            <img src="/resource/1567574718000/dollar" />
+                        </div>
+                        <div class="slds-col slds-size_11-of-12 slds-text-align--left slds-p-top_x-large">
+                        	<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.Add_Bank_Account}</h2>
+                        </div>
+                    </div>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <c:BankAccountForm accountRecordId="{#v.accountRecordId}" recordTypeIds="{!v.recordTypeIds}" financialAccount="{!v.financialAccount}" showInModal="{!v.showInModal}" namespace="{!v.namespace}" selectedAccountType="{!v.selectedAccountType}"></c:BankAccountForm>
