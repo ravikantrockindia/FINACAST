@@ -10,58 +10,58 @@
                 
                 var sum=0; 
                 var sumBonds=0;
-                var sumStocks=0;
-                var sumOther=0;
+                var sumLoan=0;
+                //var sumStocks=0;
+              //  var sumOther=0;
                 var sumCash=0;
-                var sumAlt=0;
+             //   var sumAlt=0;
                 
                 for (var i = 0; i < DataList.length; i++) { 
-                    sum += DataList[i].FinServ__Amount__c;
+                    if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Cash' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Auto Loan'|| DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Others' ){
+                    	sum += DataList[i].FinServ__Amount__c;
                     if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds'){
                         sumBonds+=DataList[i].FinServ__Amount__c;
                     }
-                    else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Cash' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Gold' ){
+                    else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Cash'){
                         sumCash+=DataList[i].FinServ__Amount__c;
                     }
-                        else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Stocks'){
-                            sumStocks+=DataList[i].FinServ__Amount__c;
+                        else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Auto Loan'){
+                            sumLoan+=DataList[i].FinServ__Amount__c;
                         }
-                            else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Other'){
+                           /* else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Others'){
                                 sumOther+=DataList[i].FinServ__Amount__c;
-                            }
-                                else{
-                                    sumAlt+=DataList[i].FinServ__Amount__c;
-                                }
-                    
-                    
+                            }*/
+                         
+                	}
                 }
                 component.set("v.sumCash",sumCash);
                 component.set("v.sumBonds",sumBonds);
-                component.set("v.sumStocks",sumStocks);
-                component.set("v.sumOther",sumOther);
-                component.set("v.sumAlt",sumAlt);
+                component.set("v.sumLoan",sumLoan);
+              //  component.set("v.sumStocks",sumStocks);
+               // component.set("v.sumOther",sumOther);
+              //  component.set("v.sumAlt",sumAlt);
                 
                 
-                if(sumAlt < 9999) {
-                    component.set("v.sumAlt2",sumStocks);
+                if(sumLoan < 9999) {
+                    component.set("v.sumLoan2",sumLoan);
                 }                
-                else if(sumAlt < 1000000) {
-                    component.set("v.sumAlt2",Math.round(sumOther/1000) + "K"); 
+                else if(sumLoan < 1000000) {
+                    component.set("v.sumLoan2",Math.round(sumLoan/1000) + "K"); 
                 }
-                    else if( sumAlt < 10000000) {
-                        component.set("v.sumAlt2",(sumOther/1000000).toFixed(2) + "M");
+                    else if( sumLoan < 10000000) {
+                        component.set("v.sumLoan2",(sumLoan/1000000).toFixed(2) + "M");
                     }                
-                        else  if(sumAlt < 1000000000) {
-                            component.set("v.sumAlt2",Math.round((sumAlt/1000000)) + "M");
+                        else  if(sumLoan < 1000000000) {
+                            component.set("v.sumLoan2",Math.round((sumLoan/1000000)) + "M");
                         }                
-                            else if(sumAlt < 1000000000000) {
-                                component.set("v.sumAlt2",Math.round((sumAlt/1000000000)) + "B");
+                            else if(sumLoan < 1000000000000) {
+                                component.set("v.sumLoan2",Math.round((sumLoan/1000000000)) + "B");
                             }
                 
                 
                 
-                if(sumOther < 9999) {
-                    component.set("v.sumOther2",sumStocks);
+            /*    if(sumOther < 9999) {
+                    component.set("v.sumOther2",sumOther);
                 }                
                 else if(sumOther < 1000000) {
                     component.set("v.sumOther2",Math.round(sumOther/1000) + "K"); 
@@ -75,10 +75,10 @@
                             else if(sumOther < 1000000000000) {
                                 component.set("v.sumStocks2",Math.round((sumOther/1000000000)) + "B");
                             }
+                */
                 
                 
-                
-                if(sumStocks < 9999) {
+         /*       if(sumStocks < 9999) {
                     component.set("v.sumStocks2",sumStocks);
                 }                
                 else if(sumStocks < 1000000) {
@@ -93,7 +93,7 @@
                             else if(sumStocks < 1000000000000) {
                                 component.set("v.sumStocks2",Math.round((sumStocks/1000000000)) + "B");
                             }
-                
+                */
                 
                 
                 if(sumBonds < 9999) {
@@ -198,9 +198,7 @@
                 dataPoints: [
                     { y: component.get("v.sumCash"), label: "Cash", name:"Cash",markerType:component.get("v.sumCash2")},
                     { y: component.get("v.sumBonds"), label: "Bonds", name:"Bonds" ,markerType:component.get("v.sumBonds2")},
-                    { y: component.get("v.sumStocks"), label: "Stocks" ,name:"Stocks",markerType:component.get("v.sumStocks2")},
-                    { y: component.get("v.sumOther") , label: "Others", name:"Others",markerType:component.get("v.sumOther2")},
-                    { y: component.get("v.sumAlt") , label: "Miscellaneous", name:"Miscellaneous",markerType:component.get("v.sumAlt2")}
+                    { y: component.get("v.sumLoan") , label: "Loan", name:"Loan",markerType:component.get("v.sumLoan2")}
                     
                 ]
             }]

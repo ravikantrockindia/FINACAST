@@ -34,7 +34,7 @@ public class updateOfFinancialAccount {
         
         FinServ__FinancialAccount__c fa2=new FinServ__FinancialAccount__c();
         fa2.RecordTypeId=Schema.SObjectType.FinServ__FinancialAccount__c.getRecordTypeInfosByName().get('Bank Account').getRecordTypeId();
-        fa2.Account_Type__c='Checking';
+        fa2.Account_Type__c='Loan';
         fa2.FinServ__Balance__c=7000;
         fa2.FinServ__PrimaryOwner__c=ac1.Id;
   //      fa.FinServ__JointOwner__c=ac1.Id;
@@ -56,6 +56,7 @@ public class updateOfFinancialAccount {
         ast.FinServ__PrimaryOwner__c=fa.FinServ__PrimaryOwner__c;
         ast.FinServ__AssetsAndLiabilitiesType__c='cash';
         ast.Name=fa.Name;
+      //  ast.RecordTypeId=Schema.SObjectType.FinServ__AssetsAndLiabilities__c.getRecordTypeInfosByName().get('NonfinancialAsset').getRecordTypeId();
         insert ast;
         
         FinServ__AssetsAndLiabilities__c ast1=new FinServ__AssetsAndLiabilities__c();
@@ -70,7 +71,7 @@ public class updateOfFinancialAccount {
         ast2.FinServ__FinancialAccount__c=fa2.Id;
         ast2.FinServ__Amount__c=fa2.FinServ__Balance__c;
         ast2.FinServ__PrimaryOwner__c=fa2.FinServ__PrimaryOwner__c;
-        ast2.FinServ__AssetsAndLiabilitiesType__c='Stocks';
+        ast2.FinServ__AssetsAndLiabilitiesType__c='Auto Loan';
         ast2.Name=fa2.Name;
         insert ast2;
         

@@ -2,15 +2,15 @@
  <aura:attribute name="Data" Type="Object"/>
     <aura:attribute name="Amount" type="Integer"/>     
     <aura:attribute name="sumBonds" type="Integer"/>
-    <aura:attribute name="sumStocks" type="Integer"/>
-    <aura:attribute name="sumOther" type="Integer"/>
+   <!-- <aura:attribute name="sumStocks" type="Integer"/> -->
+    <!--<aura:attribute name="sumOther" type="Integer"/> -->
     <aura:attribute name="sumCash" type="Integer"/>
-    <aura:attribute name="sumAlt" type="Integer"/>
+    <aura:attribute name="sumLoan" type="Integer"/>
     <aura:attribute name="sumBonds2" type="Integer"/>
-    <aura:attribute name="sumStocks2" type="Integer"/>
-    <aura:attribute name="sumOther2" type="Integer"/>
+   <!-- <aura:attribute name="sumStocks2" type="Integer"/>-->
+   <!-- <aura:attribute name="sumOther2" type="Integer"/>-->
     <aura:attribute name="sumCash2" type="Integer"/>
-    <aura:attribute name="sumAlt2" type="Integer"/>
+    <aura:attribute name="sumLoan2" type="Integer"/>
      <ltng:require  scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.plotGraph}" />
      <aura:registerEvent name="Amtval" type="c:amountpass"/>
 
@@ -18,12 +18,12 @@
     <div class="client_managed client_managed1 slds-clearfix total_invstment-value-f">
                     <h3 class="slds-float_left slds-text-align_left">Client Investment Distribution</h3>
         <div id="CanvasContainer" style="height: 203px; width: 100%; margin-top: 15px;"></div>
-                    <div class="total_invstment-value-c">
+                   <div class="total_invstment-value-c">
                     	<h2>${!v.Amount}</h2>
                       
                         
                       <p><b>Total Investment Value</b></p>
-                    </div>
-                </div>        	
+                    </div> 
+                </div>   
     
 </aura:component>
