@@ -49,8 +49,8 @@
     <aura:attribute name = "cid" type = "String" default="0014600001ePIu5AAG"/>
     <aura:attribute name = "futureSim" type="Boolean"/>
     <aura:attribute type="Double" name="installments" default="0" />
-    <aura:attribute type="Date" name="startDate" />
-    <aura:attribute type="Date" name="endDate" />
+    <aura:attribute type="Date" name="startDate" default="null" />
+    <aura:attribute type="Date" name="endDate" default="null"/>
     <aura:attribute name = "chartDataObject" type = "Object" />
     <aura:attribute name = "data" type="Object"/>
     <aura:attribute name = "financialHealthMessage" type="Object[]"/>

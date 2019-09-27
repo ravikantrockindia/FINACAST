@@ -27,7 +27,19 @@ public class AffordabilityController {
     
     @auraEnabled
     public static String ShowAffordabilityResult(String clientId,double taxDeduct,Boolean taxMonthly, double taxContribution,String name,double totalAmount, double downPayment, double installments, Date startDate, Date endDate, Boolean isTaxBenefit, Boolean isPaymentPlan, Integer rainyDayMonths ){
-        System.debug('inside Method create Client'); 
+        System.debug('clientId'+clientId); 
+        System.debug('taxDeduct'+taxDeduct);
+        System.debug('taxMonthly'+taxMonthly);
+        System.debug('taxContribution'+taxContribution);
+        System.debug('name'+name);
+        System.debug('totalAmount'+totalAmount);
+        System.debug('downPayment'+downPayment);
+        System.debug('installments'+installments);
+        System.debug('startDate'+startDate);
+        System.debug('endDate'+endDate);
+        System.debug('isTaxBenefit'+isTaxBenefit);
+         System.debug('isPaymentPlan'+isPaymentPlan);
+ //       System.debug('rainyDayMonths'+rainyDayMonth);
        // String clientId ='0014600001ePIu5AAG';
         Boolean showClientLookup = false;
         Boolean fadeOut = false; 
@@ -452,7 +464,7 @@ public class AffordabilityController {
                            FinServ__PrimaryOwner__c =: clientId 
                            limit 1000];
                 
-                System.debug('FFA List: '+FFAList.size());
+               // System.debug('FFA List: '+FFAList.size());
                 
                 if(FFAList.size() > 0){
                     for(FinServ__FinancialAccount__c FFA : FFAList){
@@ -556,7 +568,7 @@ public class AffordabilityController {
                         setData +='\'id\':\''+flag+'\',';
                         setData +='\'type\':\'goals\',';
                         Decimal getcurrentEstimation = ((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
-                        System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
+                     //   System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
                         setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
                         setData +='\'name\':\''+goal.Name+'\',';
                         setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
@@ -565,9 +577,9 @@ public class AffordabilityController {
                         setData +='\'priority\':'+goal.Goal_Priority__c+',';
                         setData +='\'growth\':'+goal.Annual_Growth_Rate__c+',';
                         setData +='\'targetdate\':\''+goal.FinServ__TargetDate__c.month()+'/'+goal.FinServ__TargetDate__c.year()+'\',';
-                        System.debug('@@@@@@@@FFAMap: '+FFAMap);
-                        System.debug('goal.Associated_Account__c: '+goal.Associated_Account__c);
-                        System.debug('value: '+FFAMap.get(goal.Associated_Account__c));
+                       // System.debug('@@@@@@@@FFAMap: '+FFAMap);
+                       // System.debug('goal.Associated_Account__c: '+goal.Associated_Account__c);
+                       // System.debug('value: '+FFAMap.get(goal.Associated_Account__c));
                         setData +='\'savingid\':\''+FFAMap.get(goal.Associated_Account__c)+'\',';
                         setData +='\'startvalue\':\''+goal.Start_Value__c+'\',';
                         setData +='\'isTaxBenefit\':'+goal.Does_the_contribution_bring_tax_benefit__c+',';
@@ -634,12 +646,19 @@ public class AffordabilityController {
                 }
                 
                 // setData += ']"}';
+                if(startDate == null && endDate == null){
+                   //   System.debug('setdata--' );
+                setData += '{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\',\'maxLimit\' :\''+taxDeduct+'\',\'isMonthly\' :\''+taxMonthly+'\',\'percentContribution\' :\''+taxContribution+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate+'\',\'endDate\' :\''+endDate+'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
+                   // System.debug('setdata--' + setData);
+                    clientData = setData;
+                }
+                else{
                 setData += '{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\',\'maxLimit\' :\''+taxDeduct+'\',\'isMonthly\' :\''+taxMonthly+'\',\'percentContribution\' :\''+taxContribution+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate.month() + '/' + startDate.year() +'\',\'endDate\' :\''+endDate.month() + '/' + endDate.year() +'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
                 clientData = setData;
-               // System.debug('Client Data from Future Simulation: ' + clientData);
-                
+               
+                }
             }
-            System.debug('setdata--' + setData);
+            
             return setData;
         
     }
