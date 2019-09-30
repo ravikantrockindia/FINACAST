@@ -20,7 +20,7 @@
                 var networth=0;
                 networth=data.cashAmount+data.investmentAmount - data.creditAmount -data.loanAmount;
                 component.set("v.netWorth", networth);
-                
+                debugger;
                 var AccTrue=component.get("v.isAccount");
                 console.log('AccTrue'+AccTrue);
                 if(AccTrue){
@@ -29,28 +29,28 @@
                     
                     if(data.cashAccountList.length>0){
                         FinaId= data.cashAccountList[0].Id;
-                        var sectionDiv = component.find('cashSection');
-       
+                      /*  var sectionDiv = component.find('cashSection');
+                        
                         $A.util.removeClass(sectionDiv, 'slds-is-collapsed');
                         $A.util.addClass(sectionDiv, 'slds-is-expanded');
                         var button=component.find("cashSectionButton");
-                        button.set("v.iconName",'utility:chevrondown');
-
+                        button.set("v.iconName",'utility:chevrondown');*/
+                        
                     }else if(data.creditAccountList.length>0){
                         FinaId= data.creditAccountList[0].Id;
                         
-                        var sectionDiv = component.find('creditSection');
-       
+                      /*  var sectionDiv = component.find('creditSection');
+                        
                         $A.util.removeClass(sectionDiv, 'slds-is-collapsed');
                         $A.util.addClass(sectionDiv, 'slds-is-expanded');
                         var button=component.find("creditSection");
-                        button.set("v.iconName",'utility:chevrondown');
+                        button.set("v.iconName",'utility:chevrondown');*/
                         
                     }else if(data.investmentAccountList.length>0){
                         FinaId= data.investmentAccountList[0].Id;
                         
                         var sectionDiv = component.find('investmentSection');
-       
+                        
                         $A.util.removeClass(sectionDiv, 'slds-is-collapsed');
                         $A.util.addClass(sectionDiv, 'slds-is-expanded');
                         var button=component.find("investmentSection");
@@ -59,7 +59,7 @@
                     }else if(data.loanAccountList.length>0){
                         FinaId= data.loanAccountList[0].Id;
                         var sectionDiv = component.find('loanSection');
-       
+                        
                         $A.util.removeClass(sectionDiv, 'slds-is-collapsed');
                         $A.util.addClass(sectionDiv, 'slds-is-expanded');
                         var button=component.find("loanSection");
@@ -102,13 +102,22 @@
             console.log(e.message)
         }
     },
+    showToast : function(component, event, helper) {
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            "type":"success",
+            "title": "Success!",
+            "message": "The record has been deleted successfully."
+        });
+        toastEvent.fire();
+    },
     handleFinaID: function(component){
+        debugger;
         var  FinaId=component.get("v.FinaId");
         console.log('handle FinaId '+FinaId);
         var cmpEvent = component.getEvent("rTid");
         cmpEvent.setParams( { "eTid" :  FinaId} );
         cmpEvent.fire();  
-    }  
-    
+    },
     
 })

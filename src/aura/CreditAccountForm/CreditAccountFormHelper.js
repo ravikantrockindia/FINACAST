@@ -51,7 +51,7 @@
         var fields = event.getParam('fields');
         
         console.log(JSON.stringify(fields));
-        fields.Finsol__FinacastOpeningBalance__c = component.find("loanamt").get("v.value");
+        fields.FinacastOpeningBalance__c = component.find("loanamt").get("v.value");
         component.find('form').submit(fields);
         //  return true;
         

@@ -322,7 +322,7 @@
         <c:BankAccountModal showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Loan')}" >
-        <c:AddLoan isActive="{!v.isModalOpen}" client="{!v.client}" loanId="{!v.financialAccount.Id}" namespace="{!v.namespace}" Loan="{!v.recordTypeId}"/>
+        <c:AddLoan title="Edit Loan" isActive="{!v.isModalOpen}" client="{!v.client}" loanId="{!v.financialAccount.Id}" namespace="{!v.namespace}" Loan="{!v.recordTypeId}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Credit')}" >
         <c:CreditAccountForm showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeId="{!v.recordTypeId}" namespace="{!v.namespace}"/>

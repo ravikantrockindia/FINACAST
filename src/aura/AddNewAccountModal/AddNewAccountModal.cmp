@@ -58,7 +58,7 @@
                 <c:CreditAccountForm  accountRecordId="{!v.clientid}" showInModal="{!v.showInModal}" namespace="{!v.namespace}" recordTypeId="{!v.recordTypeId}"/>
             </aura:if>
             <aura:if isTrue="{!v.value=='Loan'}">
-                <c:AddLoan  namespace="{!v.namespace}" client="{!v.client}" Loan="{!v.recordTypeId}" accLoanRecType="IndustriesIndividual" isActive="{!v.showInModal}" />
+                <c:AddLoan title="Add Loan" namespace="{!v.namespace}" client="{!v.client}" Loan="{!v.recordTypeId}" accLoanRecType="IndustriesIndividual" isActive="{!v.showInModal}" />
             </aura:if> 
             
     </aura:if>    

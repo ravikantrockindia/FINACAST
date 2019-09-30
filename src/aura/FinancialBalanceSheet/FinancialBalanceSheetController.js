@@ -143,6 +143,7 @@
         }
     },
     onClickDelete:function(component,event,helper){
+        debugger;
         if(confirm('Are you sure?')){
             var spinner = component.find("mySpinner");
             $A.util.removeClass(spinner, "slds-hide");
@@ -180,18 +181,18 @@
                 var state = response.getState();
                 if (state === "SUCCESS") {
                     var data=response.getReturnValue();
-                    if(data){
+                    if($A.util.isUndefinedOrNull(data)){
+                        helper.showToast(component, event, helper);
                         helper.getAllAccounts(component);
                         $A.util.removeClass(spinner, "slds-show");
                         $A.util.addClass(spinner, "slds-hide");
                         $A.get('e.force:refreshView').fire();
                         
-                        
                     }
                     else{
                         $A.util.removeClass(spinner, "slds-show");
                         $A.util.addClass(spinner, "slds-hide");
-                        helper.showNotfication(component,'This account is linked to one or more goals. Unlink those goals before deleting this account.','error','Error!');
+                        helper.showNotfication(component,data,'error','Error!');
                         
                     }
                     
@@ -214,7 +215,8 @@
         }
     },
     handleAccount:function(component,event,helper){
-        var cmpEvent = component.getEvent("rTid");
+        debugger;
+       var cmpEvent = component.getEvent("rTid");
         var eventSource= event.getSource();
         var txnId=eventSource.get("v.value");
         component.set("v.Tid",txnId);
