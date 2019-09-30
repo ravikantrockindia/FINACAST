@@ -20,7 +20,6 @@
                 var networth=0;
                 networth=data.cashAmount+data.investmentAmount - data.creditAmount -data.loanAmount;
                 component.set("v.netWorth", networth);
-                debugger;
                 var AccTrue=component.get("v.isAccount");
                 console.log('AccTrue'+AccTrue);
                 if(AccTrue){
@@ -112,7 +111,6 @@
         toastEvent.fire();
     },
     handleFinaID: function(component){
-        debugger;
         var  FinaId=component.get("v.FinaId");
         console.log('handle FinaId '+FinaId);
         var cmpEvent = component.getEvent("rTid");

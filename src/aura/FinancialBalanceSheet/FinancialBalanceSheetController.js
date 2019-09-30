@@ -143,7 +143,6 @@
         }
     },
     onClickDelete:function(component,event,helper){
-        debugger;
         if(confirm('Are you sure?')){
             var spinner = component.find("mySpinner");
             $A.util.removeClass(spinner, "slds-hide");
@@ -215,7 +214,6 @@
         }
     },
     handleAccount:function(component,event,helper){
-        debugger;
        var cmpEvent = component.getEvent("rTid");
         var eventSource= event.getSource();
         var txnId=eventSource.get("v.value");
