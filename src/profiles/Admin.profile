@@ -54,10 +54,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Finacast_ScenarioApex</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FutureSimulationMockHttpResponse</apexClass>
         <enabled>true</enabled>
     </classAccesses>
