@@ -54,14 +54,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Finacast_FutureSimulationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Finacast_FutureSimulationControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Finacast_ScenarioApex</apexClass>
         <enabled>true</enabled>
     </classAccesses>
