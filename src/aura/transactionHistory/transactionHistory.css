@@ -1,0 +1,101 @@
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 22px; font-weight: 600;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 80px;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
+.THIS .btn1:focus {
+    color: #fff;
+}
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+    color: #4e75a3;
+}
+.THIS .slds-button:focus {
+    box-shadow: none;
+}
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+}
+
+.THIS .journal-entry-heading .slds-table thead th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #f6f9fc;
+}
+.THIS .journal-entry-heading .slds-table thead td {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f1f2f3;
+}
+.THIS .journal-entry-heading .slds-table thead th .slds-select {
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .journal-entry-heading .slds-table thead th:first-child {
+    padding-left: .75rem;
+}
+.THIS .journal-entry-heading .slds-table thead th:last-child {
+    padding-right: .75rem;
+    width: 165px;
+}
+.THIS .journal-entry-heading .slds-table thead td:first-child {
+    padding-left: .75rem;
+}
+.THIS .journal-entry-heading .slds-table thead td:last-child {
+    padding-right: .75rem;
+}
+.THIS .form_label {
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+}
+.THIS .slds-select {
+    background-color: #fdfdfd;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-input {
+    background-color: #fdfdfd;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-datepicker h2 {
+    font-size: 16px;
+}
+.THIS .slds-datepicker .slds-select {
+    height: 30px;
+} 
+.THIS .slds-form-element__label {
+    display: none;
+}
+.THIS .to_date:before {
+    content: "To";
+    position: absolute;
+    left: -19px;
+    top: 11px;
+    font-weight: 700;
+}
+.THIS .slds-p-right_large {
+    padding-right: 1.5rem !important;
+}

@@ -1,0 +1,169 @@
+<aura:component  controller="TransactionHistoryController" access="global" >
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <aura:attribute name="columnList" type="List" default="[]"/>
+    <aura:attribute name="clientId" type="String" default=""/>
+    <aura:attribute name="data" type="List" default="[]"/>
+    <aura:attribute name="totaldata" type="List" default="[]"/>
+    <aura:attribute name="rowsToDelete" type="List" default="[]"/>
+    <aura:attribute name="subOptions" type="List" default="[]"/>
+    
+    <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>
+    <aura:attribute name="isRecentDays" type="Boolean" default="false"/>
+    <aura:attribute name="isDateRange" type="Boolean" default="false"/>
+    
+    <aura:attribute name="disabled" type="Boolean" default="true"/>
+    
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    <aura:attribute name="defaultSortDirection" type="String"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="totalRows" type="Integer" default="0"/>
+    <aura:attribute name="rowLimit" type="Integer" default="20"/>
+    <aura:attribute name="rowOffSet" type="Integer" default="0"/>
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <lightning:spinner alternativeText="Loading" class="slds-hide" aura:id="spinner"/>
+    <div class="slds-card slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
+        <div class="client_managed">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_12-of-12">
+                    <h3 class="slds-m-left_x-small slds-m-top_x-small">Transaction History</h3>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-p-top_x-small">
+                <div class="slds-col slds-size_2-of-12 ">
+                    <div class="slds-form-element__control slds-m-top_small slds-p-left_x-small">
+                        <span class="slds-radio">
+                            <input type="radio" id="radio-42" value="days" name="options" onchange="{!c.recentDays}"/>
+                            <label class="slds-radio__label" for="radio-42">
+                                <span class="slds-radio_faux"></span>
+                                <span class="form_label">Recent Days</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12 slds-p-left_none">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="filterbydays" onchange="{! c.filter }" disabled="{!!v.isRecentDays}">
+                                <option value="">--Please select--</option>
+                                <option value="15">Last 15 Days</option>
+                                <option value="30">Last 30 Days</option>
+                                <option value="45">Last 45 Days</option>
+                                <option value="60">Last 60 Days</option>
+                            </lightning:select>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-12"></div>
+                <div class="slds-col slds-size_2-of-12 slds-p-top_small">
+                    <label class="form_label">Filter By Type</label>
+                </div>
+                <div class="slds-col slds-size_4-of-12 slds-p-left_none slds-p-right_large">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="filterbytype" onchange="{! c.filterByTransactionType }">
+                                
+                                <option value="">--Please select--</option>
+                                <option value="Credit">Credit</option>
+                                <option value="Debit">Debit</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-gutters slds-p-top_small">
+                <div class="slds-col slds-size_2-of-12">
+                    <div class="slds-form-element__control slds-m-top_small slds-p-left_x-small">
+                        <span class="slds-radio">
+                            <input type="radio" id="radio-41" value="dateRange" name="options" onchange="{!c.recentDays}"/>
+                            <label class="slds-radio__label" for="radio-41">
+                                <span class="slds-radio_faux"></span>
+                                <span class="form_label">Date Range</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-p-left_none">
+                    <lightning:input type="date" aura:id="startDate" class="label-hidden" disabled="{!!v.isDateRange}"/>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                    <lightning:input type="date" aura:id="endDate" class="label-hidden to_date" disabled="{!!v.isDateRange}"/>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-p-right_none slds-text-align--right">
+                    <button class="slds-button btn1" onclick="{!c.dateSearch}" disabled="{!!v.isDateRange}">Search</button>
+                </div>
+                <div class="slds-col slds-size_1-of-12"></div>
+                <div class="slds-col slds-size_2-of-12 slds-p-top_small">
+                    <label class="form_label">Filter By Category</label>
+                </div>
+                <div class="slds-col slds-size_2-of-12 slds-p-left_none">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="options" onchange="{! c.filterWithOptions }">
+                                
+                                <option value="">--Please select--</option>
+                                <option value="Debt">Debt Acount</option>
+                                <option value="Bank">Bank Account</option>
+                                <option value="Income">Income</option>
+                                <option value="Expense">Expense</option>
+                                
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_2-of-12 slds-p-right_large">
+                    <aura:if isTrue="{!not(empty(v.subOptions))}">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <lightning:select aura:id="sub-options" onchange="{! c.filterWithSubOptions }">
+                                    
+                                    <option value="">--Please select--</option>
+                                    <aura:iteration items="{!v.subOptions}" var="item">
+                                        <option value="{!item.soId}">{!item.name}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                </div>
+            </div>
+            <aura:if isTrue="{!not(empty(v.data))}">
+                
+                <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                    <div class="slds-col slds-size_2-of-12  slds-p-top_small"></div>
+                    <div class="slds-col slds-size_9-of-12 slds-p-top_x-small">
+                        <!--  <button class="slds-button btn1 slds-float_right ">Add Transaction</button>-->
+                        <button class="slds-button btn1 btn2 slds-float_right " disabled="{!v.disabled}" onclick="{!c.deleteTransaction}">Delete Transaction(s)</button>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12  slds-p-top_small"></div>
+                </div>
+            </aura:if>
+            <div class="journal-entry-heading">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!not(empty(v.data))}">
+        <lightning:datatable
+                             columns="{! v.columnList }"
+                             data="{! v.data }"
+                             keyField="Id"
+                             sortedBy="{! v.sortedBy }"
+                             sortedDirection="{! v.sortedDirection }"
+                             defaultSortDirection="{! v.defaultSortDirection }"
+                             onsort="{! c.updateColumnSorting }"
+                             enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                             loadMoreOffset="{!v.rowOffSet}"
+                             onloadmore="{! c.loadMoreData }"
+                             onrowselection="{! c.handleRowAction }"
+                             /> 
+    </aura:if>
+</aura:component>
