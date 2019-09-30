@@ -30,7 +30,7 @@
                     <h3 class="slds-m-left_x-small slds-m-top_x-small">Transaction History</h3>
                 </div>
             </div>
-            <div class="slds-grid slds-gutters slds-p-top_x-small">
+            <div class="slds-grid slds-gutters  slds-p-top_medium">
                 <div class="slds-col slds-size_2-of-12 ">
                     <div class="slds-form-element__control slds-m-top_small slds-p-left_x-small">
                         <span class="slds-radio">
@@ -42,7 +42,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="slds-col slds-size_3-of-12 slds-p-left_none">
+                <div class="slds-col slds-size_3-of-12 slds-p-left_none slds-p-right_none">
                     <div class="slds-form-element">
                         <div class="slds-form-element__control">
                             <lightning:select aura:id="filterbydays" onchange="{! c.filter }" disabled="{!!v.isRecentDays}">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             
-            <div class="slds-grid slds-gutters slds-p-top_small">
+            <div class="slds-grid slds-gutters  slds-p-top_medium slds-p-bottom_small">
                 <div class="slds-col slds-size_2-of-12">
                     <div class="slds-form-element__control slds-m-top_small slds-p-left_x-small">
                         <span class="slds-radio">
@@ -87,10 +87,10 @@
                     </div>
                 </div>
                 <div class="slds-col slds-size_1-of-12 slds-p-left_none">
-                    <lightning:input type="date" aura:id="startDate" class="label-hidden" disabled="{!!v.isDateRange}"/>
+                    <lightning:input type="date" aura:id="startDate" class="label-hidden" disabled="{!!v.isDateRange}" value="mm/dd/yyyy" />
                 </div>
                 <div class="slds-col slds-size_1-of-12 slds-p-right_none">
-                    <lightning:input type="date" aura:id="endDate" class="label-hidden to_date" disabled="{!!v.isDateRange}"/>
+                    <lightning:input type="date" aura:id="endDate" class="label-hidden to_date" disabled="{!!v.isDateRange}"  value="mm/dd/yyyy"/>
                 </div>
                 <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-p-right_none slds-text-align--right">
                     <button class="slds-button btn1" onclick="{!c.dateSearch}" disabled="{!!v.isDateRange}">Search</button>
@@ -103,7 +103,6 @@
                     <div class="slds-form-element">
                         <div class="slds-form-element__control">
                             <lightning:select aura:id="options" onchange="{! c.filterWithOptions }">
-                                
                                 <option value="">--Please select--</option>
                                 <option value="Debt">Debt Acount</option>
                                 <option value="Bank">Bank Account</option>
@@ -133,13 +132,12 @@
             </div>
             <aura:if isTrue="{!not(empty(v.data))}">
                 
-                <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                <div class="slds-grid slds-gutters slds-p-bottom_small">
                     <div class="slds-col slds-size_2-of-12  slds-p-top_small"></div>
-                    <div class="slds-col slds-size_9-of-12 slds-p-top_x-small">
+                    <div class="slds-col slds-size_10-of-12 slds-p-top_xxx-small slds-p-right_large">
                         <!--  <button class="slds-button btn1 slds-float_right ">Add Transaction</button>-->
-                        <button class="slds-button btn1 btn2 slds-float_right " disabled="{!v.disabled}" onclick="{!c.deleteTransaction}">Delete Transaction(s)</button>
+                        <button class="slds-button btn1 slds-float_right " disabled="{!v.disabled}" onclick="{!c.deleteTransaction}">Delete Transaction(s)</button>
                     </div>
-                    <div class="slds-col slds-size_1-of-12  slds-p-top_small"></div>
                 </div>
             </aura:if>
             <div class="journal-entry-heading">

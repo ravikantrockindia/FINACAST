@@ -24,6 +24,8 @@
     },
     
     getTransactions: function(component,event){
+        var spinner =component.find("spinner");
+        
         var action=component.get("c.retrieveTransactions");
         var clientId=component.get("v.clientId");
         var rowLimit=component.get("v.rowLimit");
@@ -72,14 +74,18 @@
                     event.getSource().set("v.isLoading", false);
                 }
                 
-            }
-            else{
-                if(!$A.util.isUndefinedOrNull(event)){
-                    
-                    event.getSource().set("v.isLoading", false);
-                }
                 
+                else{
+                    if(!$A.util.isUndefinedOrNull(event)){
+                        
+                        event.getSource().set("v.isLoading", false);
+                    }
+                    
+                }
             }
+            $A.util.removeClass(spinner, 'slds-show');
+            
+            $A.util.addClass(spinner, 'slds-hide'); 
         });
         $A.enqueueAction(action);
         

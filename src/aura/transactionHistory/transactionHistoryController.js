@@ -23,9 +23,7 @@
             {label: 'Type', fieldName: 'FinServ__TransactionType__c', type: 'text', sortable: true} ];  
         component.set("v.columnList", columns);
         helper.getTransactions(component,event);
-        $A.util.removeClass(spinner, 'slds-show');
-        
-        $A.util.addClass(spinner, 'slds-hide');
+      
         /* var action=component.get("c.allTransactions");
         var clientId=component.get("v.clientId")
         var rows=component.get("v.rowLimit")
@@ -117,9 +115,7 @@
             component.set("v.data",empty);
             
             helper.getTransactions(component);
-            $A.util.removeClass(spinner, 'slds-show');
-            
-            $A.util.addClass(spinner, 'slds-hide');
+       
             
         }
         else if(changeValue=='dateRange'){
@@ -137,9 +133,7 @@
             component.set("v.data",empty);
             
             helper.getTransactions(component);
-            $A.util.removeClass(spinner, 'slds-show');
-            
-            $A.util.addClass(spinner, 'slds-hide');
+  
         }
         
         console.log(component.get("v.isRecentDays"))
@@ -155,10 +149,7 @@
         component.set("v.data",empty);
         
         helper.getTransactions(component);
-        $A.util.removeClass(spinner, 'slds-show');
-        
-        $A.util.addClass(spinner, 'slds-hide');
-        console.log(value)
+
         /* var action=component.get("c.transactionsfilterbydays");
         var clientId=component.get("v.clientId")
         var rows=component.get("v.rowLimit")
@@ -234,9 +225,7 @@
                 component.set("v.rowOffSet",0);
                 component.set("v.rowLimit",20);
                 helper.getTransactions(component);
-                $A.util.removeClass(spinner, 'slds-show');
-                
-                $A.util.addClass(spinner, 'slds-hide'); 
+               
             }
             
         });
@@ -251,9 +240,7 @@
         component.set("v.rowOffSet",0);
         component.set("v.rowLimit",20);
         helper.getTransactions(component);
-        $A.util.removeClass(spinner, 'slds-show');
-        
-        $A.util.addClass(spinner, 'slds-hide'); 
+
         /*var action=component.get("c.transactionByDateRange");
         var clientId=component.get("v.clientId")
         var rows=component.get("v.rowLimit")
@@ -302,9 +289,7 @@
         component.set("v.rowOffSet",0);
         component.set("v.rowLimit",20);
         helper.getTransactions(component);
-        $A.util.removeClass(spinner, 'slds-show');
-        
-        $A.util.addClass(spinner, 'slds-hide'); 
+
         /* var action=component.get("c.transactionByType");
         var clientId=component.get("v.clientId")
         var rows=component.get("v.rowLimit")
@@ -350,7 +335,6 @@
         component.set("v.data",empty);
         component.set("v.rowOffSet",0);
         component.set("v.rowLimit",20);
-        helper.getTransactions(component);
         var data=component.get("v.data");
         var clientId=component.get("v.clientId")
         
@@ -371,9 +355,9 @@
                 component.set("v.subOptions",response.getReturnValue() )
                 if(component.get("v.subOptions").length>0){
                     component.find("sub-options").set("v.value","");
-                }                $A.util.removeClass(spinner, 'slds-show');
-                
-                $A.util.addClass(spinner, 'slds-hide'); 
+                }               
+                        helper.getTransactions(component);
+
                 // component.set("v.data", response.getReturnValue().transactionList)
                 
                 
@@ -394,9 +378,7 @@
         component.set("v.rowOffSet",0);
         component.set("v.rowLimit",20);
         helper.getTransactions(component);
-        $A.util.removeClass(spinner, 'slds-show');
-        
-        $A.util.addClass(spinner, 'slds-hide'); 
+         
     },
     
 })
