@@ -200,7 +200,7 @@
                 var fields = event.getParam('fields');
                 
                 console.log(JSON.stringify(fields));
-                fields.FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");
+                fields.Finsol__FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");
                 component.find('form').submit(fields);
                 //  return true;
                 

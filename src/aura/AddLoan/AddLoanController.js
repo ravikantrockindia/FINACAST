@@ -92,7 +92,7 @@
         var fields = event.getParam('fields');
         
         console.log(JSON.stringify(fields));
-        fields.FinacastOpeningBalance__c = amn;
+        fields.Finsol__FinacastOpeningBalance__c = amn;
         component.find('form').submit(fields);
     }, 
     handleRadio: function(component, event) {
