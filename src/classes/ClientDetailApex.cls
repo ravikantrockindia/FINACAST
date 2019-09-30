@@ -1256,15 +1256,24 @@ amountforMonth.put(monthYear,stt.FinServ__Amount__c);
     
     
     @auraEnabled
-    public static boolean deleteFinAccout(String finId) {
-        
+    public static String deleteFinAccout(String finId) {
+        String ret;
         FinServ__FinancialAccount__c ac;
         try{        
             ac= [Select Id,RecordType.DeveloperName from FinServ__FinancialAccount__c  where Id =: finId limit 1];
             if(ac.RecordType.DeveloperName !='LoanAccount' && ac.Recordtype.DeveloperName!='CreditCard'){
                 List<FinServ__FinancialGoal__c> fl= [Select id from FinServ__FinancialGoal__c  where Associated_Account__c =: finId];
-                if(fl.size()>0){
-                    return false;
+                
+                List<FinServ__FinancialAccountTransaction__c> fal= [Select id from FinServ__FinancialAccountTransaction__c  where FinServ__FinancialAccount__r.id=: finId];
+                if(fl.size()>0 && fal.size()>0){
+                    ret='Sorry! This account can not be deleted as there are transactions as well as goals associated with this account.';
+                    return ret;
+                }else if(fl.size()>0){
+                    ret='Sorry! This account can not be deleted as there are goals associated with this account.';
+                    return ret;
+                }else if(fal.size()>0){
+                    ret='Sorry! This account can not be deleted as there are transactions associated with this account.';
+                    return ret;
                 }
                 else{
                     delete ac;
@@ -1283,7 +1292,7 @@ amountforMonth.put(monthYear,stt.FinServ__Amount__c);
             new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
             
         }
-        return true;
+        return ret;
         
     }
 }//Outer Class

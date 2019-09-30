@@ -15,14 +15,14 @@ public class CashFlowGraphData {
             ids.add(idd.id);
         }
         fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id IN :ids AND FinServ__TransactionDate__c = LAST_N_MONTHS:12 ORDER BY FinServ__TransactionDate__c ];
-        
+        System.debug('fatList----' +fatList);
         Map<String, Decimal> cashIn = new Map<String, Decimal>(); 
         Map<String, Decimal> cashOut = new Map<String, Decimal>(); 
         
         Integer currentMonth = Date.today().month();
         Integer currentYear = Date.today().year();
         List<String> previousMonths=new List<String>();
-        while(previousMonths.size()<12){
+        while(previousMonths.size()<6){
             if(currentMonth==1 && currentYear==Date.today().year()){
                 currentYear=currentYear-1;
                 currentMonth=12;
@@ -30,7 +30,7 @@ public class CashFlowGraphData {
                 previousMonths.add(monthYearValue);
             }
             else{
-                String monthYearValue = (currentMonth-1) +' '+(currentYear);
+                String monthYearValue = currentMonth +' '+(currentYear);
                 previousMonths.add(monthYearValue);
                 currentMonth=currentMonth-1;
                 
@@ -46,18 +46,14 @@ public class CashFlowGraphData {
                     Decimal totalamt=stt.FinServ__Amount__c+cashout.get(monthYear);
                     cashOut.put(monthYear,totalamt);
                 }
-               else{
-                    cashOut.put(monthYear,stt.FinServ__Amount__c);
-                }
+                
             }
             else{
                 if(cashIn.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashIn.get(monthYear);
                     cashIn.put(monthYear,totalamt);
                 }
-                else{
-                    cashIn.put(monthYear,stt.FinServ__Amount__c);
-                }
+                
             }
         }
         wrapAccountList = new ObjectWrapper(cashIn, cashout);

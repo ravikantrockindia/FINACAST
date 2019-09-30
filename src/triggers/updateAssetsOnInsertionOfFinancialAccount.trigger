@@ -1,7 +1,9 @@
 trigger updateAssetsOnInsertionOfFinancialAccount on FinServ__FinancialAccount__c (after insert,before delete, after update) {
-    List<RecordType> recordtype=[Select Id, Name from RecordType where sObjectType='FinServ__AssetsAndLiabilities__c'];
+    List<RecordType> recordtype=[Select Id, Name from RecordType where sObjectType='FinServ__AssetsAndLiabilities__c' order by Name Asc];
+     
     if(Trigger.isInsert){
         List<FinServ__AssetsAndLiabilities__c> c=new List<FinServ__AssetsAndLiabilities__c>();
+        
         for(FinServ__FinancialAccount__c fa:Trigger.new){
             if(Trigger.isInsert){
                 FinServ__AssetsAndLiabilities__c ast=new FinServ__AssetsAndLiabilities__c();
@@ -10,38 +12,34 @@ trigger updateAssetsOnInsertionOfFinancialAccount on FinServ__FinancialAccount__
                 ast.FinServ__PrimaryOwner__c=fa.FinServ__PrimaryOwner__c;
                 ast.FinServ__JointOwner__c=fa.FinServ__JointOwner__c;
                 string type;
-                string typeRecType;
-                if(recordtype[0].Name=='Asset'){
-                	 typeRecType=Schema.SObjectType.FinServ__AssetsAndLiabilities__c.getRecordTypeInfosByName().get('Asset').getRecordTypeId();
-                }else{
-                    typeRecType=Schema.SObjectType.FinServ__AssetsAndLiabilities__c.getRecordTypeInfosByName().get('Liability').getRecordTypeId();
-                }
-                String typeast=ast.FinServ__AssetsAndLiabilitiesType__c;   
+              
                 String  typefa=fa.Account_Type__c;
                 if(typefa=='Savings' || typefa=='Cash' || typefa=='CD' || typefa=='Checking' || typefa=='Money Market'){
                     type='Cash';
-                    ast.RecordTypeId=typeRecType;
+                    system.debug('cash'+recordtype[0].id);
+                    ast.RecordTypeId=recordtype[0].id;
                     ast.FinServ__AssetsAndLiabilitiesType__c=type;
                     ast.FinServ__Amount__c=fa.FinServ__Balance__c; 
                 } else if(typefa=='IRA' || typefa=='529 Account' || typefa=='Roth IRA' || typefa=='401K' || typefa=='Retail Brokerage'){
                     type='Bonds';
-                    ast.RecordTypeId=typeRecType;
+                      system.debug('Bond'+recordtype[0].id);
+                    ast.RecordTypeId=recordtype[0].id;
                     ast.FinServ__AssetsAndLiabilitiesType__c=type;
                     ast.FinServ__Amount__c=fa.FinServ__Balance__c; 
                 }else if(typefa=='Loan' || typefa=='Debt' || typefa=='Credit Card' || typefa=='Mortgage'){
                     type='Auto Loan';
-                    ast.RecordTypeId=typeRecType;
-                    ast.RecordTypeId=typeRecType;
+                       system.debug('Loan'+recordtype[1].id);
+                    ast.RecordTypeId=recordtype[1].id;
                     ast.FinServ__AssetsAndLiabilitiesType__c=type;
                     ast.FinServ__Amount__c=fa.FinServ__LoanAmount__c; 
-                }else{
-                    
-                }
-                
+                }                
                 c.add(ast);
             }
+            
         }
+        system.debug('c value'+c);
         insert c;
+        system.debug('c value'+c);
     } 
     
     if(Trigger.isDelete){
@@ -73,27 +71,21 @@ trigger updateAssetsOnInsertionOfFinancialAccount on FinServ__FinancialAccount__
         c.FinServ__PrimaryOwner__c=obj.FinServ__PrimaryOwner__c;
                 c.FinServ__JointOwner__c=obj.FinServ__JointOwner__c;
                 string type;
-        		string typeRecType;
-                if(recordtype[0].Name=='Asset'){
-                	 typeRecType=Schema.SObjectType.FinServ__AssetsAndLiabilities__c.getRecordTypeInfosByName().get('Asset').getRecordTypeId();
-                }else{
-                    typeRecType=Schema.SObjectType.FinServ__AssetsAndLiabilities__c.getRecordTypeInfosByName().get('Liability').getRecordTypeId();
-                }
                 String typeast=c.FinServ__AssetsAndLiabilitiesType__c;   
                 String  typefa=obj.Account_Type__c;
                 if(typefa=='Savings' || typefa=='Cash' || typefa=='CD' || typefa=='Checking' || typefa=='Money Market'){
                     type='Cash';
-                   	c.RecordTypeId=typeRecType;
+                   	c.RecordTypeId=recordtype[0].Id;
                     c.FinServ__AssetsAndLiabilitiesType__c=type;
                     c.FinServ__Amount__c=obj.FinServ__Balance__c; 
                 } else if(typefa=='IRA' || typefa=='529 Account' || typefa=='Roth IRA' || typefa=='401K'){
                     type='Bonds';
-                    c.RecordTypeId=typeRecType;
+                   	c.RecordTypeId=recordtype[0].Id;
                     c.FinServ__AssetsAndLiabilitiesType__c=type;
                     c.FinServ__Amount__c=obj.FinServ__Balance__c; 
                 }else if(typefa=='Loan' || typefa=='Debt' || typefa=='Credit Card' || typefa=='Mortgage'){
                     type='Auto Loan';
-                    c.RecordTypeId=typeRecType;
+                    c.RecordTypeId=recordtype[1].Id;
                     c.FinServ__AssetsAndLiabilitiesType__c=type;
                     c.FinServ__Amount__c=obj.FinServ__LoanAmount__c; 
                 }else{

@@ -29,22 +29,27 @@ public class AccountTabReport {
         system.debug('currentYear'+currentYear);
         
         List<String> previousMonths=new List<String>();
-        while(previousMonths.size()<12){
+        while(previousMonths.size()<6){
             if(currentMonth==1 && currentYear==Date.today().year()){
+                
+                String monthYearValue =  currentMonth +' '+currentYear;
+                 system.debug('monthYearValue if'+monthYearValue);
+                previousMonths.add(monthYearValue);
                 currentYear=currentYear-1;
                 currentMonth=12;
-                String monthYearValue =  currentMonth +' '+currentYear;
-                 system.debug('monthYearValue'+monthYearValue);
-                previousMonths.add(monthYearValue);
+                
                
             }
             else{
-                String monthYearValue = (currentMonth-1) +' '+(currentYear);
+                String monthYearValue = currentMonth+' '+currentYear;
+                system.debug('monthYearValue else'+monthYearValue);
                 previousMonths.add(monthYearValue);
                 currentMonth=currentMonth-1;
                 
             }
+            system.debug('previous month value'+previousMonths);
         }
+        system.debug('previous month value'+previousMonths);
         for(Integer i=previousMonths.size()-1;i>=0;i--){
             cashOut.put(previousMonths[i],0); 
             cashIn.put(previousMonths[i],0);
@@ -56,35 +61,52 @@ public class AccountTabReport {
                     Decimal totalamt=stt.FinServ__Amount__c+cashout.get(monthYear);
                     cashOut.put(monthYear,totalamt);
                 }
-               else{
-                    cashOut.put(monthYear,stt.FinServ__Amount__c);
-                }
+              
             }
             else{
                 if(cashIn.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashIn.get(monthYear);
                     cashIn.put(monthYear,totalamt);
                 }
-                else{
-                    cashIn.put(monthYear,stt.FinServ__Amount__c);
-                }
+               
             }
         }
         wrapAccountList = new ObjectWrapper(cashIn, cashout);
         system.debug('wrapAccountList'+wrapAccountList);
         return wrapAccountList;
     } 
+   // LAZY LOADING //
+    @AuraEnabled
+    public static FinancialAccountWrapper  getTotalNumber(String AccountId,Integer rowOffset,Integer rowLimit){
+        system.debug('rowOffset'+rowLimit); 
+        FinancialAccountWrapper faw=new FinancialAccountWrapper();
+        List<FinServ__FinancialAccountTransaction__c> result;
+        try{
+            faw.FinancialAccountList  =[Select Id,TransactionName__c,FinServ__Amount__c,FinServ__Description__c,FinServ__TransactionDate__c, FinServ__TransactionType__c from FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  order by FinServ__TransactionDate__c DESC LIMIT :rowLimit OFFSET :rowOffset];
+            system.debug('faw.FinancialAccountList'+faw.FinancialAccountList);
+            system.debug('size of list'+faw.FinancialAccountList.size());
+            faw.FinancialAccountTotalRecords=[Select COUNT() from FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId];
+            system.debug('faw.FinancialAccountTotalRecords'+faw.FinancialAccountTotalRecords);
+       	 
+        }catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+        }
+        return faw; 
+
+    }
+    
     @auraEnabled
-    public static List<FinServ__FinancialAccountTransaction__c> getTransctionList(String AccountId ){
+    public static List<FinServ__FinancialAccountTransaction__c> getTransctionList(String AccountId ,Integer rowLimit,Integer rowOffset){
         List<FinServ__FinancialAccountTransaction__c> ftl;
         try{
-            ftl=[select  id, FinServ__Amount__c,FinServ__Description__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId ORDER BY FinServ__TransactionDate__c ];
+            ftl=[select  id,TransactionName__c, FinServ__Amount__c,FinServ__Description__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId ORDER BY FinServ__TransactionDate__c LIMIT :rowLimit OFFSET :rowOffset ];
         }catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             
         }
         return ftl;
     }
+    
     @auraEnabled
     public static String getFinanaceAccountName(String AccountId ){
          
@@ -111,6 +133,14 @@ public class AccountTabReport {
         }
         system.debug('name'+fl);
         delete fl;
+    }
+    public class FinancialAccountWrapper{
+        @AuraEnabled
+       // public List<FinServ__FinancialAccountTransaction__c> FinancialAccountTotalRecords = new List<FinServ__FinancialAccountTransaction__c>();
+        public Integer FinancialAccountTotalRecords = 0;
+        @AuraEnabled
+        public List<FinServ__FinancialAccountTransaction__c> FinancialAccountList = new List<FinServ__FinancialAccountTransaction__c>();
+        
     }
     
   
