@@ -16,7 +16,7 @@
                 component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
                 
             }
-           else{
+                else{
                     component.set("v.TypeOfAccounts",[{label:'--None--', value: ''},{label:'Checking', value:'Checking'},{label:'Savings', value:'Savings'},{label:'Money Market', value:'Money Market'},{label:'CD', value:'CD'},{label:'Retail Brokerage', value:'Retail Brokerage'},{label:'401K', value:'401K'},{label:'IRA', value:'IRA'},{label:'Roth IRA', value:'Roth IRA'},{label:'529 Account', value:'529 Account'}])
                 }
             var accountType=component.get(field)
@@ -42,6 +42,10 @@
             
             $A.util.addClass(spinner, "slds-show");
             helper.validateInput(component,event);
+           /* event.preventDefault();       // stop the form from submitting
+            var fields = event.getParam('fields');
+            fields.FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");
+            component.find('form').submit(fields);*/
         }catch(e){
             console.log(e.message)
         }        
@@ -83,10 +87,13 @@
         
         $A.util.addClass(spinner, "slds-show");
         var validate= helper.validateInput(component,event); 
-        if(validate){
+       /* if(validate){
+               event.preventDefault();       // stop the form from submitting
+            var fields = event.getParam('fields');
+            fields.FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");
             component.find('form').submit();
             
-        }
+        }*/
         
         
     }

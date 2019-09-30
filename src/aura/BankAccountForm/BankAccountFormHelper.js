@@ -196,8 +196,13 @@
                         return;
                     }
                 }
+                event.preventDefault();       // stop the form from submitting
+                var fields = event.getParam('fields');
                 
-                return true;
+                console.log(JSON.stringify(fields));
+                fields.FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");
+                component.find('form').submit(fields);
+                //  return true;
                 
             }
         }catch(e){

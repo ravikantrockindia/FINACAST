@@ -88,6 +88,12 @@
         {
             status3 = 1;
         }
+        event.preventDefault();       // stop the form from submitting
+        var fields = event.getParam('fields');
+        
+        console.log(JSON.stringify(fields));
+        fields.FinacastOpeningBalance__c = amn;
+        component.find('form').submit(fields);
     }, 
     handleRadio: function(component, event) {
         // component.set("v.displaySection" ,  true);
@@ -126,15 +132,15 @@
         }
     },
     recordLoaded: function(component,event,helper){
-   
+        
         var loanId=component.get("v.loanId")
         console.log('loanId'+loanId)
         if(!(loanId=="" || $A.util.isUndefinedOrNull(loanId))){
-         var action = component.get("c.loanRecord");
+            var action = component.get("c.loanRecord");
             action.setParams({
                 clientId : loanId
             });
-           
+            
             action.setCallback(this, function(a) {
                 var state  = a.getState();
                 //console.log('state',state);
@@ -142,32 +148,32 @@
                 component.set("v.loandata",loanRec);
                 console.log('loanRec',loanRec);
                 var tabledata = component.get("v.loandata");
-               // tabledata = JSON.parse(tabledata);
+                // tabledata = JSON.parse(tabledata);
                 console.log('tabledata',tabledata);
                 var taxDeduction =tabledata.Do_you_get_tax_benefit_from_interest_pay__c;
-                 console.log('taxDeduction',taxDeduction);
+                console.log('taxDeduction',taxDeduction);
                 if (taxDeduction){
-                component.set("v.isTaxDeduction",true);              
-                component.set("v.getYes",true);
-            }
-            else{
-                
-                component.set("v.getNo",true);
-            }
+                    component.set("v.isTaxDeduction",true);              
+                    component.set("v.getYes",true);
+                }
+                else{
+                    
+                    component.set("v.getNo",true);
+                }
                 var ismonthly =tabledata.Do_tax_benefits_realize_monthly__c;
-                 console.log('ismonthly',ismonthly);
-                 if (ismonthly){
-                component.set("v.isMonthly",true);
-            }
-            else{
-                component.set("v.isMonthly",false);
-                
-            }
+                console.log('ismonthly',ismonthly);
+                if (ismonthly){
+                    component.set("v.isMonthly",true);
+                }
+                else{
+                    component.set("v.isMonthly",false);
+                    
+                }
                 
             }); 
             $A.enqueueAction(action); 
-        
-    /*    if(!(loanId=="" || $A.util.isUndefinedOrNull(loanId))){
+            
+            /*    if(!(loanId=="" || $A.util.isUndefinedOrNull(loanId))){
            // var recUi = event.getParam("recordUi");
             //console.log('recUi'+recUi)
             var taxDeduction=event.getParam('recordUi').record.fields["Finsol__Do_you_get_tax_benefit_from_interest_pay__c"].value;
@@ -194,6 +200,6 @@
                 
             }
         }*/
-    }
+        }
     }
 })
