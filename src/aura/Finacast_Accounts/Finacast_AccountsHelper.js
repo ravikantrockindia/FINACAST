@@ -1,32 +1,30 @@
 ({
     fetchTransactionList:function(component, event, helper){
-        debugger;
-        var action=component.get('c.getTransctionList');
+        
+        var limit = component.get("v.initialRows");
+        console.log('ir'+limit);
+        var action = component.get("c.getTotalNumber");
         action.setParams({
-            AccountId: component.get('v.Tid')
+            AccountId: component.get('v.Tid'),
+            rowOffset : 0,
+            rowLimit :  limit
         });
-        action.setCallback(this, function(response) {
+        action.setCallback(this,function(response){
             var state = response.getState();
-            if (state === "SUCCESS") {
-                var data=JSON.parse(JSON.stringify(response.getReturnValue()));
-                var data1=JSON.stringify(response.getReturnValue());
-                component.set("v.data", data);
-            }
-            else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + 
-                                    errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
+            
+            if(state == "SUCCESS"){
+                var accountlist = response.getReturnValue();
+                console.log('accountlist'+accountlist.FinancialAccountList);
+                component.set("v.totalRows",accountlist.FinancialAccountTotalRecords);   
+                console.log('total rows'+component.get("v.totalRows"));
+                component.set("v.data",accountlist.FinancialAccountList);
+                
             }
         });
-        $A.enqueueAction(action); 
+        $A.enqueueAction(action);   
+        
     },
-      showAlertEmptyInvalidVal : function(component,msg)
+    showAlertEmptyInvalidVal : function(component,msg)
     {
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
@@ -37,5 +35,74 @@
         toastEvent.fire();
         
     },
-      
+            
+    loadData : function(component){
+        
+        return new Promise($A.getCallback(function(resolve){
+            var limit = component.get("v.initialRows");
+            var offset = component.get("v.currentCount");
+            var totalRows = component.get("v.totalRows");
+            console.log('Total rows in load data',totalRows);
+            if(limit + offset > totalRows){
+                limit = totalRows - offset;
+            }
+            
+            var action = component.get("c.getTotalNumber");
+            action.setParams({
+                AccountId: component.get('v.Tid'),
+                rowOffset : offset,
+                rowLimit :  limit
+            });
+            action.setCallback(this,function(response){
+                var state = response.getState();
+                var newData = response.getReturnValue().FinancialAccountList;
+                console.log('new data in load Data Method'+newData);
+                
+                resolve(newData);
+                var currentCount = component.get("v.currentCount");
+                currentCount += component.get("v.initialRows");
+                // set the current count with number of records loaded 
+                component.set("v.currentCount",currentCount);
+            });
+            $A.enqueueAction(action);
+        }));
+    },
+    
+    onClickDeleteTransaction:function(component, event, helper){
+        if(confirm('Are you sure?')){
+            var spinner = component.find("mySpinner");
+            $A.util.removeClass(spinner, "slds-hide");
+            $A.util.addClass(spinner, "slds-show");
+            var clnt = component.get("v.recordId") 
+            console.log('getName'+getId);
+            var action=component.get("c.DeleteFinanceAccountTransaction");
+            action.setParams({
+                FinanceAccountTxnId: getId
+            });
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    $A.util.removeClass(spinner, "slds-show");
+                    $A.util.addClass(spinner, "slds-hide");
+                    helper.fetchTransactionList(component,event,helper); 
+                }
+                else if (state === "ERROR") {
+                    $A.util.removeClass(spinner, "slds-show");
+                    $A.util.addClass(spinner, "slds-hide");
+                    var errors = response.getError();
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + 
+                                        errors[0].message);
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
+                }
+            });
+            $A.enqueueAction(action); 
+            
+        }
+
+},
 })

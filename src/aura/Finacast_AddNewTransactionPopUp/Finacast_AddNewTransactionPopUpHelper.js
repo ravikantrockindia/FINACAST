@@ -41,7 +41,7 @@
          	},
             axisX: {
 		valueFormatString: "MMM YYYY",
-                intervalType: "month"
+         intervalType: "month"
 	      },
            toolTip:{
                 contentFormatter: function ( e ) {

@@ -5,7 +5,7 @@
     <aura:attribute name="name" type="String"/>
     <aura:attribute name="namespace" type="String" default=""/>
     <aura:attribute name="Tid" type="String"/>
-    <aura:handler name="change" value="{!v.Tid}" action="{!c.doInit}"/>
+   
      <aura:attribute name = "data" type = "FinServ__FinancialAccountTransaction__c"/>
     <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>
           

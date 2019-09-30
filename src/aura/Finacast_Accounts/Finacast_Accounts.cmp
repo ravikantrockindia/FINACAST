@@ -1,5 +1,6 @@
 <aura:component controller="AccountTabReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <ltng:require scripts="{!$Resource.CanvasJS}" /> 
+	<lightning:spinner aura:id="mySpinner" class="slds-hide"/>
     <aura:attribute name="tabName" type="String" default="Financial Account"/>
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="isAddNewTransaction" type="boolean"/>
@@ -12,13 +13,21 @@
     <aura:attribute name="TxnEditId" type="String"/>
     <aura:attribute name="isEditTransaction" type="Boolean"/>
   	
-    <aura:attribute name = "data" type = "FinServ__FinancialAccountTransaction__c"/>
-    <!--<aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/> -->
+  	 
+    <!-- <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>-->
     <aura:handler name="rTid" event="c:AccountReport" action="{!c.doInit}"/>
-    <aura:handler name="rId" event="c:AccountReport" action="{!c.doInit}"/>
-     
-     <!--<aura:handler name="change" value="{!v.Tid}" action="{!c.doGraph}"/> -->
- 
+    
+     <!--for Infinite rolling -->
+    <aura:attribute name="columnList" type="List" default="[]"/>
+    <aura:attribute name="data" type="object"/>
+   <!-- <aura:attribute name="totaldata" type="List" default="[]"/> -->
+    <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/> 
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="initialRows" type="Integer" default="10"/>
+    <aura:attribute name="currentCount" type="Integer" default="10"/>
+    <aura:attribute name="totalRows" type="Integer" default="0"/>
+    <aura:attribute name="loadOffset" type="Integer" default="1"/>
+    
     <div class="slds-card slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_3-of-12">
@@ -27,53 +36,29 @@
             <div class="slds-col slds-size_9-of-12">
                 <div class="client_managed slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
                     <div class="slds-m-bottom_x-small"><h2 class="slds-m-top_none">{!v.name}</h2></div>
-                    <lightning:tabset>
-                        <lightning:tab  label="Summary" title="Summary">
+                    <lightning:tabset selectedTabId="one" >
+                        <lightning:tab  label="Summary" title="Summary" id="one" >
                   			<c:Finacast_AddNewTransactionPopUp   Tid="{!v.Tid}" name="{!v.name}" namespace="{!v.namespace}" data="{!v.data}"/>
                         </lightning:tab>
-                        <lightning:tab  label="Transaction History" title="Journal Entries">
+                        <lightning:tab  label="Transaction History"  id="two" onactive="{!c.ShowList}">
                             
                             <div class="journal-entry-heading">
                                 <h3 class="slds-clearfix">
                                    <!-- <span class="">Journal Entries</span> -->
                                     <Lightning:button class="btn1 slds-button" onclick="{!c.addNewTransaction}" label="+ Add New Transaction"/> 
                                 </h3>
-                                <div class="slds-grid slds-gutters">
-                                    <table class="slds-table slds-m-top_small">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Description</th>               
-                                                <th>Amount($)</th>
-                                                <th>Transaction Type</th>
-                                                <th>Option</th>
-                                             </tr>
-                                            </thead>
-                                        <tbody>
-                                          <aura:if isTrue="{!not(empty(v.data))}">  
-                                            <aura:iteration items="{!v.data}" var="tdata">
-                                            <tr>
-                                                <td><lightning:formattedDateTime value="{!tdata.FinServ__TransactionDate__c}"/></td>
-                                                <td>{!tdata.FinServ__Description__c}</td>
-                                                <td>{!tdata.FinServ__Amount__c}</td>
-                                                <td>{!tdata.FinServ__TransactionType__c}</td>
-                                                <td data-label="Option" scope="col">
-                                                    <div class="slds-truncate" title="Action">
-                                                        &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" value="{!tdata.Id}" onclick="{!c.onClickEditTransaction}"/>                       
-                                                        
-                                                        &nbsp;
-                                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" value="{!tdata.Id}" onclick="{!c.onClickDeleteTransaction}"/>                                   
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                      
-                                           </aura:iteration>
-                                              <aura:set attribute="else">
-                                              <h2><center>There is no transaction Related to this Account!!</center></h2>
-                                              </aura:set>
-                                            </aura:if>
-                                        </tbody>
-                                    </table>
+                                <div class="slds-grid slds-gutters" style="height: 400px">
+								            <lightning:datatable
+                                                         columns="{! v.columnList }"
+                                                         data="{!v.data}"
+                                                         keyField="Id"
+                                                         hideCheckboxColumn="true"
+                                                         enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                                                         loadMoreOffset="{!v.loadOffset}"
+                                                         onloadmore="{!c.handleLoadMore}"
+                                                         onrowaction="{!c.viewRecord}"
+                                                           
+                                                         />
                                 </div>
                             </div>
                         </lightning:tab>
@@ -103,8 +88,7 @@
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                         
                         <div class="slds-gutters" style="border: none;">
-                            <div class="slds-box1">
-                                 {!v.name}
+                            <div class="slds-box1">        
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name"  variant="label-hidden"/>
@@ -116,7 +100,8 @@
                                 
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                        Transaction Date &amp; Time<lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden"/>
+                                        
+                                        Transaction Date <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden" />
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" variant="label-hidden"/>
@@ -152,7 +137,7 @@
     </div>
     </aura:if>
     <aura:if isTrue="{!v.isEditTransaction}" >
-       <!-- <c:Finacast_AddNewTransactionPOpUp   Tid="{!v.Tid}" name="{!v.name}" namespace="{!v.namespace}"/>-->
+      
         <div class="slds-m-around_xx-large">
         <div role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
             <div class="slds-modal__container">                        
@@ -173,28 +158,36 @@
                         
                         <div class="slds-gutters" style="border: none;">
                             <div class="slds-box1">
-                                 {!v.name}
-                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name"  variant="label-hidden"/>
-                                </div>
-                               <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                 <span class = "highlight">* </span>   Transaction For <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.Tid}" variant="label-hidden" disabled="true"/> 
-                                </div>  
-                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    Transaction Date &amp; Time<lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden"/>
-                                </div>
-                               <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                   <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" variant="label-hidden"/>
-                                </div>
-                                 <div style="clear:both;"></div>
-                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
+                                  
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name"  variant="label-hidden"/>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span>   Transaction For <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.Tid}" variant="label-hidden" disabled="true" /> 
+                                    </div> 
                                 </div>
                                 
-                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">   
+                                        Transaction Date <lightning:inputField  type="date" fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden" />
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" variant="label-hidden"/>
+                                    </div>
                                 </div>
                                 
+                                <div class="slds-grid slds-gutters">
+                                    <div style="clear:both;"></div>
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
+                                    </div>
+                                    
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
