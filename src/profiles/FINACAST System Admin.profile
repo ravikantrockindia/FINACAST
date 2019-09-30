@@ -42,10 +42,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FinacastBudgetHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FinacastGoalProgressApex</apexClass>
         <enabled>true</enabled>
     </classAccesses>
