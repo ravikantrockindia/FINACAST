@@ -17,7 +17,7 @@
              //   var sumAlt=0;
                 
                 for (var i = 0; i < DataList.length; i++) { 
-                    if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Cash' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Auto Loan'|| DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Others' ){
+                    if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Cash' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Auto Loan'){
                     	sum += DataList[i].FinServ__Amount__c;
                     if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds'){
                         sumBonds+=DataList[i].FinServ__Amount__c;
