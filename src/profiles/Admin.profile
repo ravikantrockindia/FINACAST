@@ -683,11 +683,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Budget__c.Client__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Budget__c.CurrentMonth__c</field>
         <readable>true</readable>
     </fieldPermissions>
