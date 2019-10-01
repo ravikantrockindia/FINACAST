@@ -114,7 +114,7 @@
                                             <div class="slds-col slds-size_1-of-2">
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
-                                                        Contribution bring tax benefit ? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"  style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="true" name="yesno" id="noCheck"   style="height: 10px;" />
+                                                        Contribution bring tax benefit ? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}"  style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"   style="height: 10px;" />
                                                     </div>
                                                    <lightning:inputField fieldName ="{!v.namespace+'Does_contribution_bring_tax_benifit__c'}" value="{!v.isTaxDeduction}" class="slds-hide"/> 
                                                 </div>

@@ -72,7 +72,7 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                        Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}" value="{!v.getYes}" style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="true" name="yesno" id="noCheck"  style="height: 10px;" />
+                                        Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.getYes}" value="{!v.getYes}" style="height: 10px;"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!v.getNo}" name="yesno" id="noCheck"  style="height: 10px;" />
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                         <aura:if isTrue="{!v.accLoanRecType == 'IndustriesHousehold'}">

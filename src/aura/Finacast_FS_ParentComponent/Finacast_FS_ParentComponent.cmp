@@ -21,8 +21,7 @@
     
     <!-- Scipts loaded onto the component along with data-->
     <ltng:require scripts="{!$Resource.ChartJs}"/>
-    <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>
+    
     <!--loading spinner start... style=Brand Medium (blue dots)-->
     <aura:if isTrue="{!v.Spinner}">
         <div aura:id="spinnerId" class="slds-spinner_container">

@@ -1,15 +1,12 @@
 ({
-    
+
     transactionHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
-        var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
             componentDef:"c:transactionHistory",
             componentAttributes: {
-                clientId : Id,
-                namespace : namespace
-                
+                clientId : Id
             }
         });
         evt.fire();
@@ -17,12 +14,15 @@
     },
     ClientInformHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
-        // var namespace= component.get("v.namespace");
-        var evt = $A.get("e.force:navigateToSObject");
+        var namespace= component.get("v.namespace");
+        var evt = $A.get("e.force:navigateToComponent");
         evt.setParams({
-            "recordId": Id
+            componentDef:"c:MyClients",
+            componentAttributes: {
+                cid : Id,
+                namespace : namespace
+            }
         });
-        
         evt.fire();
     },
     BudgetHandler: function(component,event,helper){
@@ -53,7 +53,7 @@
         });
         evt.fire();
     },
-    /* GoalHandler: function(component,event,helper){
+   /* GoalHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
         var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
@@ -67,7 +67,7 @@
         evt.fire();
     },*/
     /* Goal Planning ----------*/
-    GoalHandler: function(component,event,helper){
+     GoalHandler: function(component,event,helper){
         var Id= component.get("v.ccid");
         var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
@@ -116,11 +116,10 @@
             componentDef:"c:Affordability",
             componentAttributes: {
                 cid : Id,
-                
+                namespace : namespace
             }
         });
         evt.fire();
-        
     },
     
     childComponentEvent: function(component,event,helper){

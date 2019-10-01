@@ -256,10 +256,8 @@ public with sharing class AddIncomeController {
                     sum = sum + (tIncome.Amount__c *4.33) ; 
                     
                 }
-               
+                num = '$' + sum.format();
             }
-            		 num = '$' + sum.format();
-            
             for ( Budget__c tExpense  : expenseRecord){
                 sumExpense = sumExpense + tExpense.Amount__c ;  
             }
@@ -281,9 +279,8 @@ public with sharing class AddIncomeController {
                     sumLoan = sumLoan + (tLoan.FinServ__PaymentAmount__c*4.33) ;  
                     
                 }
-               
+                loanSum = '$' + sumLoan.format();
             }
-            	  loanSum = '$' + sumLoan.format();
             for (FinServ__FinancialGoal__c tGoal  : goalRecord){
                 sumGoal = sumGoal + tGoal.Required_Monthly_Saving__c ; 
             }

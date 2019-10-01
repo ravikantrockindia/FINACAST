@@ -51,9 +51,9 @@
     <aura:attribute name="editrecidTransactionExpense" type="String"/>
     <aura:attribute name="editrecidTransactionLoan" type="String"/>
     <aura:attribute name="selectedValue" type="String"/>
-    <aura:attribute name = "tInc" type = "Double" default="0"/>
-    <aura:attribute name = "tExp" type = "Double"/> 
-    <aura:attribute name = "tLoan" type = "Double" default="$0"/>
+    <aura:attribute name = "tInc" type = "Double"/>
+    <aura:attribute name = "tExp" type = "Double"/>
+    <aura:attribute name = "tLoan" type = "Double"/>
     <aura:attribute name = "tGoal" type = "Double"/>
     <aura:attribute name = "Inc" type = "Decimal"/>   
     <aura:attribute name = "client" type="Account"/>
@@ -115,8 +115,7 @@
     <!--Change client card ends-->
     
     <!--Income Bar starts-->
-     <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>
+    
     <div class="slds-box slds-theme_default" style="height:auto;" >
         <div class="slds-page-header__name-title bud-months">
             <div class="slds-grid ">
@@ -285,8 +284,8 @@
                                     <tr>
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
                                             <lightning:buttonIcon iconName="{!rec.iconName}" variant="bare"  name="{!rec.Id}" onclick="{!c.handleClickExpand}" />
-                                            INCOME :<span style="color: #4e75a3;">{!rec.Name} OF  {!rec.Primary_Owner__r.Name}</span></td>
-                                        <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec.trIncome }" style="currency" currencyCode="USD"/>of <lightning:formattedNumber value="{!rec.amount}" style="currency" currencyCode="USD"/></td>
+                                            INCOME :<span style="color: #4e75a3;"> {!rec.Name} OF  {!rec.Primary_Owner__r.Name}</span></td>
+                                        <td style="text-align: right; color:black; font-weight: 700 ">${!rec.trIncome } of ${!rec.amount}</td>
                                         <!--<td scope="col" class="slds-truncate" role="gridcell" style="color:black;"> {!v.Inc}</td>-->
                                         
                                     </tr>
@@ -409,8 +408,8 @@
                                         
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">                                         
                                             <lightning:buttonIcon iconName="{!rec1.iconName}" variant="bare"  name="{!rec1.Id}" onclick="{!c.handleClickExpandExpense}" />
-                                            EXPENSE : <span style="color: #4e75a3;">{!rec1.Name} OF  {!rec1.Primary_Owner__r.Name}</span></td>
-                                        <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec1.trExpense}" style="currency" currencyCode="USD"/>of <lightning:formattedNumber value="{!rec1.Amount__c}" style="currency" currencyCode="USD"/></td>
+                                            EXPENSE : <span style="color: #4e75a3;">{!rec1.Name} OF  {!rec1.Primary_Owner__r.Name}</span></td> 
+                                        <td style="text-align: right; color:black; font-weight: 700 ">${!rec1.trExpense } of ${!rec1.Amount__c}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
@@ -512,8 +511,7 @@
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
                                             <lightning:buttonIcon iconName="{!rec2.iconName}" variant="bare"  name="{!rec2.Id}" onclick="{!c.handleClickExpandLoan}" />
                                             Loan : <span style="color: #4e75a3;">{!rec2.Name}</span></td>
-                                        <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec2.trLoan }" style="currency" currencyCode="USD"/>of <lightning:formattedNumber value="{!rec2.amount}" style="currency" currencyCode="USD"/></td>
-                                         
+                                        <td style="text-align: right; color:black; font-weight: 700 ">${!rec2.trLoan } of ${!rec2.amount}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
@@ -654,7 +652,7 @@
                 </div>-->
                 <aura:set attribute="else">
                     <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <h3>No Goal Data</h3>
+                        <h2>No Goal Data</h2>
                     </div>
                 </aura:set>
             </aura:if>

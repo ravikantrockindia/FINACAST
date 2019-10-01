@@ -98,59 +98,10 @@
             var objMainArr=data.netWorthAnalysis;
             var   currentNetWorthYear = offset;      
             // currentNetWorthYear++;
-            debugger;
             if(currentNetWorthYear == offset){
-                var TotalSavRes=(Math.floor(parseFloat(objSavingArr[currentNetWorthYear-offset])));
-                var TotalDebtRes=(Math.floor(parseFloat(objDebtArr[currentNetWorthYear-offset])));
-                var NetWorthRes=(Math.floor(parseFloat(objNetworthArr[currentNetWorthYear-offset])));
-                 if(TotalSavRes < 9999) {
-                    component.set("v.totalSavings",TotalSavRes);                   
-                }
-                else if(TotalSavRes < 1000000) {
-                    component.set("v.totalSavings",Math.round(TotalSavRes/1000) + " K"); 
-                }
-                    else if( TotalSavRes < 10000000) {
-                        component.set("v.totalSavings",(TotalSavRes/1000000).toFixed(2) + " M");
-                    }
-                        else  if(TotalSavRes < 1000000000) {
-                            component.set("v.totalSavings",Math.round((TotalSavRes/1000000)) + " M");
-                        }
-                            else if(TotalSavRes < 1000000000000) {
-                                component.set("v.totalSavings",Math.round((TotalSavRes/1000000000)) + " B");
-                            }                
-                if(TotalDebtRes < 9999) {
-                    component.set("v.totalDebts",TotalDebtRes);                   
-                }
-                else if(TotalDebtRes < 1000000) {
-                    component.set("v.totalDebts",Math.round(TotalDebtRes/1000) + " K"); 
-                }
-                    else if( TotalDebtRes < 10000000) {
-                        component.set("v.totalDebts",(TotalDebtRes/1000000).toFixed(2) + " M");
-                    }
-                        else  if(TotalDebtRes < 1000000000) {
-                            component.set("v.totalDebts",Math.round((TotalDebtRes/1000000)) + " M");
-                        }
-                            else if(TotalDebtRes < 1000000000000) {
-                                component.set("v.totalDebts",Math.round((TotalDebtRes/1000000000)) + " B");
-                            }     
-                 if(NetWorthRes < 9999) {
-                    component.set("v.networth",NetWorthRes);                   
-                }
-                else if(NetWorthRes < 1000000) {
-                    component.set("v.networth",Math.round(NetWorthRes/1000) + " K"); 
-                }
-                    else if( NetWorthRes < 10000000) {
-                        component.set("v.networth",(NetWorthRes/1000000).toFixed(2) + " M");
-                    }
-                        else  if(NetWorthRes < 1000000000) {
-                            component.set("v.networth",Math.round((NetWorthRes/1000000)) + " M");
-                        }
-                            else if(NetWorthRes < 1000000000000) {
-                                component.set("v.networth",Math.round((NetWorthRes/1000000000)) + " B");
-                            }     
-
-            //    component.set("v.totalDebts",(Math.floor(parseFloat(objDebtArr[currentNetWorthYear-offset]))).toLocaleString());
-            //    component.set("v.networth",(Math.floor(parseFloat(objNetworthArr[currentNetWorthYear-offset]))).toLocaleString());
+                component.set("v.totalSavings",(Math.floor(parseFloat(objSavingArr[currentNetWorthYear-offset]))).toLocaleString());
+                component.set("v.totalDebts",(Math.floor(parseFloat(objDebtArr[currentNetWorthYear-offset]))).toLocaleString());
+                component.set("v.networth",(Math.floor(parseFloat(objNetworthArr[currentNetWorthYear-offset]))).toLocaleString());
                 component.set("v.year", currentNetWorthYear);           
             }            
             
