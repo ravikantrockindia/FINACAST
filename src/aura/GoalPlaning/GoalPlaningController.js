@@ -1,21 +1,21 @@
 ({
     doInit : function(component, event, helper) {
         if(!component.get("v.budgetScreen")){
-        var workspaceAPI = component.find("workspace");
+            var workspaceAPI = component.find("workspace");
             var namespace = component.get("v.namespace");
             console.log('namespace value----'+ namespace);
-        var tab=component.get("v.tabName")
-        console.log('tab',tab)
-        workspaceAPI.getFocusedTabInfo().then(function(response) {
-            var focusedTabId = response.tabId;
-            console.log('tab id',focusedTabId )
-            workspaceAPI.setTabLabel({
-                label: tab
-            });
-        })
-        .catch(function(error) {
-            console.log(error);
-        });  
+            var tab=component.get("v.tabName")
+            console.log('tab',tab)
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                var focusedTabId = response.tabId;
+                console.log('tab id',focusedTabId )
+                workspaceAPI.setTabLabel({
+                    label: tab
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });  
         }
         var clntId = component.get("v.cid");
         component.set("v.addGoals",false);
@@ -24,8 +24,8 @@
         action.setParams({
             ClientId : clntId,
             budgetScreen:component.get("v.budgetScreen"),
-                        monthBudget: component.get("v.month"),
-
+            monthBudget: component.get("v.month"),
+            
             
         });
         
@@ -49,7 +49,7 @@
         });
         
         $A.enqueueAction(action); 
-     /*   if(component.get("v.budgetScreen")){
+        /*   if(component.get("v.budgetScreen")){
        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
                 saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
                 saveIncomeEvent.fire();
@@ -202,22 +202,22 @@
         var idx=event.getSource().get("v.value");
         component.set("v.editrecidGoal",idx);
         var clntId = component.get("v.cid");
-       /* var action = component.get("c.getGoalDetail");
+        /* var action = component.get("c.getGoalDetail");
         action.setParams({
             'goalId' :idx,
             ClientId : clntId,
         });*/
         var evt = $A.get("e.force:navigateToComponent");
-                evt.setParams({
-                    componentDef : "c:GoalInfoTab",
-                    componentAttributes: {
-                      //  name:component.get("v.name"),
-                        editrecidGoal:component.get("v.editrecidGoal"),
-                        namespace:component.get("v.namespace"),
-                        cid:component.get("v.cid") 
-                    }
-                });
-                evt.fire();
+        evt.setParams({
+            componentDef : "c:GoalInfoTab",
+            componentAttributes: {
+                //  name:component.get("v.name"),
+                editrecidGoal:component.get("v.editrecidGoal"),
+                namespace:component.get("v.namespace"),
+                cid:component.get("v.cid") 
+            }
+        });
+        evt.fire();
         /*action.setCallback(this, function(response) {
             var state = response.getState();
             if(state==='SUCCESS'){

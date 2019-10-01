@@ -27,7 +27,8 @@
     <aura:attribute name="currentCount" type="Integer" default="10"/>
     <aura:attribute name="totalRows" type="Integer" default="0"/>
     <aura:attribute name="loadOffset" type="Integer" default="1"/>
-    
+    <c:tabStructureFinacast ccid="{!v.recordId}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>
     <div class="slds-card slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_3-of-12">

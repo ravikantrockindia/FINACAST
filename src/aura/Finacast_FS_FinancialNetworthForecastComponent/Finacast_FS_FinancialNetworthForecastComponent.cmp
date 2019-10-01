@@ -2,9 +2,9 @@
     
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="data" type="Object"/>
-    <aura:attribute name = "totalSavings" type = "Double"/>
-    <aura:attribute name = "totalDebts" type="Double"/>
-    <aura:attribute name = "networth" type="Double"/>
+    <aura:attribute name = "totalSavings" type ="String"/>
+    <aura:attribute name = "totalDebts" type ="String"/>
+    <aura:attribute name = "networth" type ="String"/>
     <aura:attribute name = "year" type="Integer"/>
      <aura:attribute name = "helpBox" type="Boolean"/>
     <aura:attribute name = "isEmptyData" type="Boolean" default="true"/>
