@@ -15,51 +15,51 @@
     
     <div class="slds-tabs_scoped" id="navDiv">
             <ul class="slds-tabs_scoped__nav" role="tablist" id="nav">
-                <li class="bigIcons  slds-shrink-none" aura:id="articleOne" title="Admission Forms" role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Financial Relationship Forms" onclick="{!c.ClientInformHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                <li class="bigIcons  slds-shrink-none" aura:id="articleOne" title="Overview " role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Overview " onclick="{!c.ClientInformHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
                             
                         </div>Overview</a>
                 </li>               
                 <li class="bigIcons  slds-shrink-none" aura:id="articleTwo" title="Admission Forms" role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Report " onclick="{!c.BudgetHandler}"  role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                    <a class="slds-tabs_scoped__link" href="" title="Budget " onclick="{!c.BudgetHandler}"  role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
                         </div>Budget</a>
                     
                 </li>
-                <li class="bigIcons  slds-shrink-none" aura:id="articleThree" title="Plan" role="presentation">
+                <li class="bigIcons  slds-shrink-none" aura:id="articleThree" title="Goals" role="presentation">
                     <a class="slds-tabs_scoped__link " href="" onclick="{!c.GoalHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left ">
                         </div>Goals</a>
                     
                 </li>                
-                <li class=" slds-shrink-none" aura:id="articleFour" title="Forecast" role="presentation">
+                <li class=" slds-shrink-none" aura:id="articleFour" title="Financial Simulator" role="presentation">
                     <a class="slds-tabs_scoped__link " href="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" onclick="{!c.FutureHandler}" id="tab-scoped-3__item">
                         <div class="slds-float_left ">
                         </div>Financial Simulator</a>
                     
                 </li>               
-                <li class="bigIcons  slds-shrink-none" aura:id="articleFive" title="Advise " role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Advise " onclick="{!c.ScenarioHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                <li class="bigIcons  slds-shrink-none" aura:id="articleFive" title="Scenarios " role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Scenarios " onclick="{!c.ScenarioHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
                         </div>Scenarios</a>
                     
                 </li>
-                <li class="bigIcons  slds-shrink-none" aura:id="articlesix" title="Advise " role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Advise " onclick="{!c.AffordHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                <li class="bigIcons  slds-shrink-none" aura:id="articlesix" title="Affordability " role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Affordability " onclick="{!c.AffordHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
                         </div>Affordability</a>
                     
                 </li>
-                <li class="bigIcons  slds-shrink-none" aura:id="articleseven" title="Advise " role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Advise " onclick="{!c.transactionHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                <li class="bigIcons  slds-shrink-none" aura:id="articleseven" title="Transactions " role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Transactions " onclick="{!c.transactionHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
                         </div>Transactions</a>
                     
                 </li>
                 
-                <li class="bigIcons  slds-shrink-none" aura:id="articleeight" title="Advise " role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Advise " onclick="{!c.AccountHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                <li class="bigIcons  slds-shrink-none" aura:id="articleeight" title="Accounts " role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Accounts " onclick="{!c.AccountHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">  
                         </div>Accounts</a>
                 </li>

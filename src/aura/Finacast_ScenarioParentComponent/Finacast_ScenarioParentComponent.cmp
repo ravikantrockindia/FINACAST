@@ -1,8 +1,12 @@
-<!-- Developer Name:  Aditya Kaushal -->	
-	<aura:component controller="Finacast_ScenarioParentApex" 
+<aura:component controller="Finacast_ScenarioParentApex"  
                 implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" 
                 access="global">
-    
+    <aura:attribute name = "EditScenario" type = "boolean" default = "false"/> 
+    <aura:attribute name = "manageScenarioStatus" type = "boolean" default = "false"/>
+    <aura:attribute name = "addScenarioButtonStatus" type = "boolean" default ="false"/>   
+    <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />  
+    <aura:attribute name="scenario" type="list"/>   
+    <aura:attribute name="scenarioId" type="Id"/>
     <aura:attribute name="namespace" type="string"/>
     <!-- attribute list -->
     <aura:attribute name="data1" type="Object"/>
@@ -14,7 +18,8 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->
     <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
-    
+    <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>
     <!--loading spinner start... style=Brand Medium (blue dots)-->
     <aura:if isTrue="{!v.Spinner}">
         <div aura:id="spinnerId" class="slds-spinner_container">
@@ -45,68 +50,7 @@
                 </div>
             </div>
         </lightning:tab>
-        <div class="view-scenario slds-p-top_small" >
-            <div class="slds-grid slds-gutter">
-                <div class="slds-col slds-size_6-of-12 slds-p-right_small">
-                    <div class="slds-grid slds-gutter">
-                        <div class="slds-col slds-size_3-of-12 slds-p-top_small">
-                            <label>Viewing Scenario</label>
-                        </div>
-                        <div class="slds-col slds-size_6-of-12">
-                            <div class="slds-form-element">
-                                <div class="slds-form-element__control" >
-                                    <div class="slds-form-element">
-                                        <label class="slds-form-element__label" >
-                                            <!--render facet: 4027:0-->
-                                            <span class="" ></span>
-                                        </label>
-                                        <div class="slds-form-element__control slds-grow">
-                                            <div class="slds-select_container">
-                                                <select class="slds-select">
-                                                    <option value="buy">Buy Now</option>
-                                                    <option value="nobuy">Don't Buy Now</option>
-                                                    <option value="recommend">Buy When Recommended</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!--render facet: 4034:0-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slds-col slds-size_6-of-12 slds-p-left_small">
-                    <div class="slds-grid slds-gutter">
-                        <div class="slds-col slds-size_3-of-12 slds-p-top_small">
-                            <label>Viewing Scenario</label>
-                        </div>
-                        <div class="slds-col slds-size_6-of-12 ">
-                            <div class="slds-form-element">
-                                <div class="slds-form-element__control" >
-                                    <div class="slds-form-element" >
-                                        <label class="slds-form-element__label" >
-                                            <!--render facet: 4051:0-->
-                                            <span class="" ></span>
-                                        </label>
-                                        <div class="slds-form-element__control slds-grow">
-                                            <div class="slds-select_container">
-                                                <select class="slds-select" >
-                                                    <option value="buy" >Buy Now</option>
-                                                    <option value="nobuy">Don't Buy Now</option>
-                                                    <option value="recommend" >Buy When Recommended</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!--render facet: 4058:0-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+     
         <lightning:tab onactive="{! c.handleActive }" label="Compare" title="Compare to current state">
             <!--Compare to Current State-->
             
@@ -163,13 +107,13 @@
                 
             </div>
         </lightning:tab>
-           <lightning:tab onactive="{! c.handleActive }" label="ManageScenario" title="Compare to current state">
+           <lightning:tab onactive="{! c.handleManaged }" label="Manage Scenarios" title="Compare to current state">
                	<div class="slds-grid slds-gutters">
                 	<div class="slds-col  slds-size_12-of-12 slds-m-top_medium  slds-m-bottom_medium">
                     	<div class="client_managed">
                         	<h3 class="slds-p-top_small slds-p-bottom_small slds-p-left_small">
                                 Scenarios 
-                                <button class="slds-button btn1 slds-m-left_small">+Add New Scenarios</button>
+                                <button class="slds-button btn1 slds-m-left_small"  onclick = "{!c.manageScenarioButton}">+Add New Scenarios</button>
                             </h3>
                             <table class="slds-table">
                             	<thead>
@@ -179,39 +123,89 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                     <aura:iteration items="{!v.scenario}" var="sceneItems">
                                 	<tr>
-                                    	<td>Buying a Ferrari</td>
+                                    	<td> {!sceneItems.Name}</td>
                                         <td>
-                                            <lightning:icon iconName="utility:edit" size="xx-small"/>
-                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
+                                            <lightning:Buttonicon variant="bare" iconName="utility:edit" size="small" value="{!sceneItems.Id}" onclick="{!c.onScenarioEditIcon}"/>
+                                            <lightning:Buttonicon variant="bare" iconName="utility:delete" onclick="{!c.onScenarioDeleteIcon}" size="small" value="{!sceneItems.Id}" class="slds-m-left_small"/>
                                         </td>
                                     </tr>
-                                    <tr>
-                                    	<td>Producing a Movie</td>
-                                        <td>
-                                        	<lightning:icon iconName="utility:edit" size="xx-small"/>
-                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    	<td>Buying a House</td>
-                                        <td>
-                                        	<lightning:icon iconName="utility:edit" size="xx-small"/>
-                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    	<td>Buying a 6 Acre Land</td>
-                                        <td>
-                                        	<lightning:icon iconName="utility:edit" size="xx-small"/>
-                                            <lightning:icon iconName="utility:delete" size="xx-small"  class="slds-m-left_small"/>
-                                        </td>
-                                    </tr>
+                                    </aura:iteration>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+               <aura:if isTrue = "{!v.EditScenario}">
+                                     <c:EditScenario  namespace="{!v.namespace}" scenarioId="{!v.scenarioId}" cid="{!v.cid}" isActive="{!v.EditScenario}" />
+                                </aura:if>
+                   <aura:if isTrue = "{!v.manageScenarioStatus}" >
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Add Scenario</b>
+                            </h2>   
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <b> Scenario Name </b>
+                            <!--aura:iteration items="{!v.scenario}" var="sceneItems">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col" >
+                                        {!sceneItems.Name}
+                                    </div>
+                                    <div class="slds-col" >
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="large" 
+                                                              title="Delete" value = "{!sceneItems.Id}" 
+                                                              onclick="{!c.onScenarioDeleteIcon}"/>  
+                                    </div>
+                                </div>
+                            </aura:iteration-->
+                            
+                            <div class = "scenarioLabel">
+                                 
+                                <aura:if isTrue = "{!v.addScenarioButtonStatus}">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col" >
+                                            <lightning:input aura:id = "sceneName" variant="label-hidden" />
+                                        </div>
+                                        <div class="slds-col" >
+                                            <div class = "slds-save-icon" >
+                                                <lightning:buttonicon variant="bare" iconName="utility:save" size="large" 
+                                                                      title="Save"
+                                                                      onclick="{!c.onNewScenarioSaveSuccess}"
+                                                                      />    
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </aura:if>
+                                
+                                <lightning:button label = "Add Another Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" 
+                                                  onclick="{!c.onScenarioAddButton}"/>
+                            </div>
+                        </div>
+                        
+                        <footer class="slds-modal__footer">
+                            <div class="button" align ="right"> 
+                                <lightning:button label ="Done" variant ="neutral"  onclick = "{!c.onDoneScenarioButton}"/>   
+                            </div>
+                        </footer>  
+                        
+                    </div>
+                </div>
+                <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}">
+                </div>
+            </div>
+        </aura:if>
         </lightning:tab>
     </lightning:tabset>
         </div>

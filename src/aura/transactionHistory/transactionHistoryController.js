@@ -5,11 +5,12 @@
         $A.util.removeClass(spinner, 'slds-hide');
         $A.util.addClass(spinner, 'slds-show');
         var workspaceAPI = component.find("workspace");
+                var tab=component.get("v.tabName")
+
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             var focusedTabId = response.tabId;
             workspaceAPI.setTabLabel({
-                tabId: focusedTabId,
-                label: "Transaction History"
+                label: tab
             });
         })
         .catch(function(error) {
