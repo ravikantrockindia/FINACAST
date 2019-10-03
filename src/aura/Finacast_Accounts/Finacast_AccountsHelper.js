@@ -3,7 +3,7 @@
         
         var limit = component.get("v.initialRows");
         console.log('ir'+limit);
-        var action = component.get("c.getTotalNumber");
+        var action = component.get("c.getTotalRecords");
         action.setParams({
             AccountId: component.get('v.Tid'),
             rowOffset : 0,
@@ -13,11 +13,22 @@
             var state = response.getState();
             
             if(state == "SUCCESS"){
+                
                 var accountlist = response.getReturnValue();
-                console.log('accountlist'+accountlist.FinancialAccountList);
-                component.set("v.totalRows",accountlist.FinancialAccountTotalRecords);   
-                console.log('total rows'+component.get("v.totalRows"));
-                component.set("v.data",accountlist.FinancialAccountList);
+                if(accountlist.FinancialAccountList.length >0){
+                    component.set("v.showDatatable",true);
+                    console.log('accountlist'+accountlist.FinancialAccountList);
+                    component.set("v.totalRows",accountlist.FinancialAccountTotalRecords);   
+                    console.log('total rows'+component.get("v.totalRows"));
+                    component.set("v.data",accountlist.FinancialAccountList);
+                }else{
+                    component.set("v.showDatatable",false);
+                    console.log('accountlist'+accountlist.FinancialAccountList);
+                    component.set("v.totalRows",accountlist.FinancialAccountTotalRecords);   
+                    console.log('total rows'+component.get("v.totalRows"));
+                    component.set("v.data",accountlist.FinancialAccountList);
+                }
+                
                 
             }
         });
@@ -47,7 +58,7 @@
                 limit = totalRows - offset;
             }
             
-            var action = component.get("c.getTotalNumber");
+            var action = component.get("c.getTotalRecords");
             action.setParams({
                 AccountId: component.get('v.Tid'),
                 rowOffset : offset,

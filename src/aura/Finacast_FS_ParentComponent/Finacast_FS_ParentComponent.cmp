@@ -5,7 +5,7 @@
     
     <!--Attribute List -->
     <lightning:workspaceAPI aura:id="workspace"/>
-    <aura:attribute name="tabName" type="String" default=" Future Simulation"/>
+    <aura:attribute name="tabName" type="String" default="Financial Simulator"/>
     <aura:attribute name="data" type="Object"/> 
     <aura:attribute name="client" type="Account"/>
     <aura:attribute name="namespace" type="string"/>
