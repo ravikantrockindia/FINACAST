@@ -92,7 +92,7 @@
             </aura:if>
             <div class="slds-col slds-size_1-of-2">
                 <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="{!v.selectedAccount}" class="slds-hide"/>
-                <!-- <lightning:inputField fieldName="{!v.namespace+'FinacastOpeningBalance__c'}" class="slds-hide"/>-->
+                 <lightning:inputField fieldName="{!v.namespace+'FinacastOpeningBalance__c'}" aura:id="openingbalance" class="slds-hide"/>
 
             </div>
         </div>

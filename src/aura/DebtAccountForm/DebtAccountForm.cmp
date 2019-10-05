@@ -14,8 +14,8 @@
     <aura:attribute name="isMonthly" type="Boolean" default="true"/>
     <aura:attribute name="disabled" type="Boolean" default="false"/>
     <aura:attribute name="recordTypeIds" type="List" default="[]"/>
-        <aura:attribute name="namespace" type="String" default=""/>
-
+    <aura:attribute name="namespace" type="String" default=""/>
+    
     <lightning:notificationsLibrary aura:id="notifLib"/>
     
     <aura:method name="saveDebtAccount" action="{!c.createDebtAccount}" access="PUBLIC"/>
@@ -77,6 +77,7 @@
             </aura:if>
         </aura:if>
         <lightning:inputField fieldName ="{!v.namespace+'Account_Type__c'}" value="{!v.accountType}" aura:id="accountType" class="slds-hide"/> 
+        <lightning:inputField fieldName="{!v.namespace+'FinacastOpeningBalance__c'}" aura:id="openingbalance" class="slds-hide"/>
         <div class="custom_card slds-gutters">
             <div class="slds-col slds-size_1-of-1">
                 <div class="slds-m-top_medium slds-clearfix ">

@@ -11,10 +11,10 @@ public class TransactionHistoryControllerTest {
         Id expenseRecordTypeId =[select Id,DeveloperName  from RecordType where sObjectType=:objectName AND DeveloperName='Expense_Record_Type'].Id;
         Account a=new Account(Name='test', RecordTypeId=devRecordTypeId);
         insert a;
-        List<FinServ__FinancialAccount__c> fa=new List<FinServ__FinancialAccount__c>();
-        fa.add(new FinServ__FinancialAccount__c(Name='testfa', FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Savings'));
-        fa.add(new FinServ__FinancialAccount__c(Name='testfa', FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Loan'));
-        
+        List<FinServ__FinancialAccount__c> fa=new List<FinServ__FinancialAccount__c>(); 
+        fa.add(new FinServ__FinancialAccount__c(Name='testfa',FinServ__Balance__c=2000, FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Savings'));
+        fa.add(new FinServ__FinancialAccount__c(Name='testfa',FinServ__LoanAmount__c=2000, FinServ__PrimaryOwner__c=a.Id, Account_Type__c='Loan'));
+     
         insert fa;
         List<Budget__c> budget =new List<Budget__c>();
         budget.add(new Budget__c(Name='testi', Primary_Owner__c=a.Id, RecordTypeId=incomeRecordTypeId));
@@ -28,7 +28,7 @@ public class TransactionHistoryControllerTest {
         fat.add(new FinServ__FinancialAccountTransaction__c(FinServ__Amount__c=2000, FinServ__TransactionDate__c=Date.today(),FinServ__FinancialAccount__c=fa[1].Id));
         fat.add(new FinServ__FinancialAccountTransaction__c(FinServ__Amount__c=2000, FinServ__TransactionDate__c=Date.today(),Budget_Category__c=budget[0].Id));
         fat.add(new FinServ__FinancialAccountTransaction__c(FinServ__Amount__c=2000, FinServ__TransactionDate__c=Date.today(),Budget_Category__c=budget[1].Id));
-        
+       
         insert fat;
         
         
