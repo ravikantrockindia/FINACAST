@@ -122,11 +122,8 @@
         $A.util.removeClass(spinner, "slds-hide");
         
         $A.util.addClass(spinner, "slds-show");
-        var validate=helper.validateInput(component, event, "firstAccount"); 
-        if(validate){
-            component.find('form').submit();
-            
-        }
+        helper.validateInput(component, event, "firstAccount"); 
+       
         
     }
 })

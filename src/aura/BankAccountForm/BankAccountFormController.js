@@ -86,7 +86,7 @@
         $A.util.removeClass(spinner, "slds-hide");
         
         $A.util.addClass(spinner, "slds-show");
-        var validate= helper.validateInput(component,event); 
+       helper.validateInput(component,event); 
        /* if(validate){
                event.preventDefault();       // stop the form from submitting
             var fields = event.getParam('fields');
