@@ -12,7 +12,7 @@
     <aura:attribute name="name" type="String"/>
     <aura:attribute name="TxnEditId" type="String"/>
     <aura:attribute name="isEditTransaction" type="Boolean"/>
-  	
+    <aura:attribute name="showDatatable" type="Boolean"/>
   	 
     <!-- <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>-->
     <aura:handler name="rTid" event="c:AccountReport" action="{!c.doInit}"/>
@@ -49,17 +49,23 @@
                                     <Lightning:button class="btn1 slds-button" onclick="{!c.addNewTransaction}" label="+ Add New Transaction"/> 
                                 </h3>
                                 <div class="slds-grid slds-gutters" style="height: 400px">
-								            <lightning:datatable
-                                                         columns="{! v.columnList }"
-                                                         data="{!v.data}"
-                                                         keyField="Id"
-                                                         hideCheckboxColumn="true"
-                                                         enableInfiniteLoading="{!v.enableInfiniteLoading}"
-                                                         loadMoreOffset="{!v.loadOffset}"
-                                                         onloadmore="{!c.handleLoadMore}"
-                                                         onrowaction="{!c.viewRecord}"
-                                                           
-                                                         />
+                                    <aura:if isTrue="{!v.showDatatable}">
+                                        <lightning:datatable
+                                                             columns="{! v.columnList }"
+                                                             data="{!v.data}"
+                                                             keyField="Id"
+                                                             hideCheckboxColumn="true"
+                                                             enableInfiniteLoading="{!v.enableInfiniteLoading}"
+                                                             loadMoreOffset="{!v.loadOffset}"
+                                                             onloadmore="{!c.handleLoadMore}"
+                                                             onrowaction="{!c.viewRecord}"
+                                                             
+                                                             />
+                                        
+                                        <aura:set attribute="else">
+                                            <h3><center>There is no transaction related to this Account!!</center></h3>
+                                        </aura:set>
+                                    </aura:if> 
                                 </div>
                             </div>
                         </lightning:tab>

@@ -10,7 +10,7 @@ public class AccountTabReport {
     }
     @auraEnabled
     public static ObjectWrapper getTransction(String AccountId ){  
-        system.debug(AccountId);
+      //  system.debug(AccountId);
         ObjectWrapper wrapAccountList;
         
    
@@ -18,27 +18,25 @@ public class AccountTabReport {
         
         String monthYear;
        
-        fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  AND FinServ__TransactionDate__c = LAST_N_MONTHS:12 ORDER BY FinServ__TransactionDate__c ];
-        System.debug('fatList----' +fatList);
+        fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  AND (FinServ__TransactionDate__c = LAST_N_MONTHS:11 OR FinServ__TransactionDate__c= THIS_MONTH) ORDER BY FinServ__TransactionDate__c ];
+      //  System.debug('fatList----' +fatList);
         Map<String, Decimal> cashIn = new Map<String, Decimal>(); 
         Map<String, Decimal> cashOut = new Map<String, Decimal>(); 
         
         Integer currentMonth = Date.today().month();
-        system.debug('currentMonth'+currentMonth);
+       // system.debug('currentMonth'+currentMonth);
         Integer currentYear = Date.today().year();
-        system.debug('currentYear'+currentYear);
+      //  system.debug('currentYear'+currentYear);
         
         List<String> previousMonths=new List<String>();
         while(previousMonths.size()<6){
             if(currentMonth==1 && currentYear==Date.today().year()){
-                
                 String monthYearValue =  currentMonth +' '+currentYear;
-                 system.debug('monthYearValue if'+monthYearValue);
+            //     system.debug('monthYearValue if'+monthYearValue);
                 previousMonths.add(monthYearValue);
                 currentYear=currentYear-1;
                 currentMonth=12;
                 
-               
             }
             else{
                 String monthYearValue = currentMonth+' '+currentYear;
@@ -47,9 +45,9 @@ public class AccountTabReport {
                 currentMonth=currentMonth-1;
                 
             }
-            system.debug('previous month value'+previousMonths);
+        //    system.debug('previous month value'+previousMonths);
         }
-        system.debug('previous month value'+previousMonths);
+     //   system.debug('previous month value'+previousMonths);
         for(Integer i=previousMonths.size()-1;i>=0;i--){
             cashOut.put(previousMonths[i],0); 
             cashIn.put(previousMonths[i],0);
@@ -72,21 +70,18 @@ public class AccountTabReport {
             }
         }
         wrapAccountList = new ObjectWrapper(cashIn, cashout);
-        system.debug('wrapAccountList'+wrapAccountList);
+     //   system.debug('wrapAccountList'+wrapAccountList);
         return wrapAccountList;
     } 
    // LAZY LOADING //
     @AuraEnabled
-    public static FinancialAccountWrapper  getTotalNumber(String AccountId,Integer rowOffset,Integer rowLimit){
-        system.debug('rowOffset'+rowLimit); 
+    public static FinancialAccountWrapper  getTotalRecords(String AccountId,Integer rowOffset,Integer rowLimit){
+        
         FinancialAccountWrapper faw=new FinancialAccountWrapper();
         List<FinServ__FinancialAccountTransaction__c> result;
         try{
             faw.FinancialAccountList  =[Select Id,TransactionName__c,FinServ__Amount__c,FinServ__Description__c,FinServ__TransactionDate__c, FinServ__TransactionType__c from FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  order by FinServ__TransactionDate__c DESC LIMIT :rowLimit OFFSET :rowOffset];
-            system.debug('faw.FinancialAccountList'+faw.FinancialAccountList);
-            system.debug('size of list'+faw.FinancialAccountList.size());
             faw.FinancialAccountTotalRecords=[Select COUNT() from FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId];
-            system.debug('faw.FinancialAccountTotalRecords'+faw.FinancialAccountTotalRecords);
        	 
         }catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());

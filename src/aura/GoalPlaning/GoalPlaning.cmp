@@ -19,8 +19,11 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
+                <aura:if isTrue="{!!v.budgetScreen}">
+
     <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
     <br/>
+    </aura:if>
     <div class="slds-theme_default">
         <div class="slds-card__header">
             <aura:if isTrue="{!!v.budgetScreen}">
@@ -38,6 +41,7 @@
                     <c:GoalModal namespace="{!v.namespace}" client ="{!v.cid}" />
                 </aura:if> 
             </aura:if>
+            <aura:if isTrue="{!not(empty(v.goalList))}">
             <aura:iteration items="{!v.goalList}" var="Gdetails">
                 <div class="slds-grid slds-gutters slds-p-bottom_medium">
                     <div class="slds-col slds-size_12-of-12 slds-m-top_medium">
@@ -84,7 +88,7 @@
                                         
                                         <span class="slds-float_right slds-float_right1"><lightning:formattedNumber value="{!Gdetails.actualValue}" maximumFractionDigits="2" style="currency"/> of <lightning:formattedNumber value="{!Gdetails.finGoal.FinServ__TargetValue__c}" maximumFractionDigits="2" style="currency"/></span>
                                     </h3>
-                                    <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
+                                    <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
                                         <span class="slds-progress-bar__value slds-progress-bar__value_success">
                                             
                                             <lightning:progressBar value="{!Gdetails.percentage}" title="{!Gdetails.percentage}"/>
@@ -112,6 +116,10 @@
                     </div>
                 </div>
             </aura:iteration>
+                <aura:set attribute="else">
+                    <h2><center>You have not created any goal in the System!!!</center></h2>
+                </aura:set>
+            </aura:if>
             <aura:if isTrue="{!v.showModalGoal}">
                 <aura:if isTrue="{!v.isRetirement}">       
                     <c:GoalformRetirement  namespace="{!v.namespace}" retirementGoalId ="{!v.editrecidGoal}"  client ="{!v.cid}" editModal="true"/>  
