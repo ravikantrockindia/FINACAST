@@ -303,7 +303,7 @@
                                                     </li>
                                                     <li>
                                                         <lightning:buttonicon iconName="utility:delete" size="x-small" class="slds-button__icon_left"
-                                                                              alternativeText="Delete"  value="{!rec.Id}" onclick="{!c.onClickDelete}"
+                                                                              alternativeText="Delete"  value="{!rec.Id}" onclick="{!c.incomeClickDelete}"
                                                                               />
                                                     </li>
                                                 </ul>
@@ -429,7 +429,7 @@
                                                     </li>
                                                     <li>
                                                         <lightning:buttonicon iconName="utility:delete" size="x-small" class="slds-button__icon_left"
-                                                                              alternativeText="Delete"  value="{!rec1.Id}" onclick="{!c.onClickDelete}"
+                                                                              alternativeText="Delete"  value="{!rec1.Id}" onclick="{!c.expenseClickDelete}"
                                                                               />
                                                     </li>
                                                 </ul>

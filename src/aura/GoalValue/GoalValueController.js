@@ -1,5 +1,6 @@
 ({
     doInit : function(component, event, helper) {
+        debugger;
         var action =component.get("c.getTotalGoal");
         action.setCallback(this,function(response) {
             var state=response.getState();
@@ -13,7 +14,7 @@
                     }
                 }
            
-                
+                console.log('sum'+sum);
                 if(sum < 9999) {
                     component.set("v.GoalTarget",sum);
                 }
@@ -29,9 +30,18 @@
                             component.set("v.GoalTarget",Math.round((sum/1000000)) + " M");
                         }
                 
-                            else if(sum < 1000000000000) {
-                                component.set("v.GoalTarget",Math.round((sum/1000000000)) + " B");
-                            }                
+                            else if(sum < 10000000000) {
+                                component.set("v.GoalTarget", (sum/1000000000).toFixed(2) + " B");
+                            }
+                                else if(sum<1000000000000) {
+                                   component.set("v.GoalTarget",Math.round((sum/1000000000)) + " B"); 
+                                }  
+                                    else if(sum < 10000000000000) {
+                                        component.set("v.GoalTarget", (sum/1000000000000).toFixed(2) + " T");
+                                    }
+                                        else if(sum<1000000000000000) {
+                                            component.set("v.GoalTarget",Math.round((sum/1000000000000)) + " T"); 
+                                        }   
                 
             }
             

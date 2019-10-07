@@ -60,9 +60,21 @@
         action.setCallback(this, function(response) {  
             console.log(response.getReturnValue())
             var beve1 = response.getReturnValue().TransactionList;
-           
-            component.set("v.addExpenseTrans" , beve1);
-            component.set("v.totalRows" , response.getReturnValue().totalRecords);
+            
+               if(beve1.length >0){
+                component.set("v.showDatatable",true);
+                component.set("v.addExpenseTrans" , beve1);
+                component.set("v.totalRows" , response.getReturnValue().totalRecords);
+       
+                }else{
+                component.set("v.showDatatable",false);
+                component.set("v.addExpenseTrans" , beve1);
+                component.set("v.totalRows" , response.getReturnValue().totalRecords);
+                
+                }
+                
+       //    component.set("v.addExpenseTrans" , beve1);
+        //   component.set("v.totalRows" , response.getReturnValue().totalRecords);
             
             // alert(   component.get("v.totalRows"));
         });     

@@ -67,31 +67,29 @@
                         component.set("v.clientName",data.client);
                         // console.log('the client is' , component.get("v.clientName"));
                         component.set("v.accountRecTypeName" , data.client.RecordType.DeveloperName);*/
-                        
-                        
-                        
-                        
-                    }
+                    
+                    
+                    
+                    
+                }
                 else{
                     console.log("abc")
                 }
-                }
-                catch(e){
-                    
-                    
-                    
-                }
-            });
-
-         
+            }
+            catch(e){
+                
+                
+                
+            }
+        });
+        
+        
         $A.enqueueAction(action); 
         
         
     },
     createGoal : function(component , event , helper){
-        debugger;
-                component.set("v.addGoals",false)
-
+        component.set("v.addGoals",false)
         component.set("v.addGoals" , true);
     },
     
@@ -100,7 +98,7 @@
         var getName = event.getSource().get("v.value");
         
         var action = component.get("c.getRecordTypeIdbyName");
-	  //  component.set("v.editrecidGoal",event.getSource().get("v.value"));
+        //  component.set("v.editrecidGoal",event.getSource().get("v.value"));
         action.setParams({     
             objectName  : "FinServ__FinancialGoal__c",
             strRecordTypeName : getName,
@@ -210,7 +208,7 @@
     
     onClickDeletegoals : function(component,event,helper) { 
         
-        var retVal = confirm("Are you sure ?");
+        var retVal = confirm("Are you sure you want to delete the goal??");
         if( retVal == true ) {
             var action2 = component.get("c.deleteGoals");
             action2.setParams({
@@ -247,19 +245,19 @@
             'goalId' :idx,
             ClientId : clntId,
         });*/
-         var evt = $A.get("e.force:navigateToComponent");
-                evt.setParams({
-                    componentDef : "c:GoalInfoTab",
-                    componentAttributes: {
-                      //  name:component.get("v.name"),
-                        editrecidGoal:component.get("v.editrecidGoal"),
-                        namespace:component.get("v.namespace"),
-                        cid:component.get("v.cid"),
-                      //  actualvalue:component.get("v.actualvalue")
-                    }
-                });
-                evt.fire();
-      /*  action.setCallback(this, function(response) {
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef : "c:GoalInfoTab",
+            componentAttributes: {
+                //  name:component.get("v.name"),
+                editrecidGoal:component.get("v.editrecidGoal"),
+                namespace:component.get("v.namespace"),
+                cid:component.get("v.cid"),
+                //  actualvalue:component.get("v.actualvalue")
+            }
+        });
+        evt.fire();
+        /*  action.setCallback(this, function(response) {
             var state = response.getState();
             if(state==='SUCCESS'){
                 var data=response.getReturnValue();
