@@ -6,7 +6,7 @@ public class CashFlowGraphLoanTest {
         acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
         insert acc;
         
-        FinServ__FinancialAccount__c act = new FinServ__FinancialAccount__c(Name='Testgraph', RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount'),Account_Type__c='Loan', FinServ__PrimaryOwner__c=acc.id);
+        FinServ__FinancialAccount__c act = new FinServ__FinancialAccount__c(Name='Testgraph', RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount'),FinServ__LoanAmount__c=10000,Account_Type__c='Loan', FinServ__PrimaryOwner__c=acc.id);
 		insert act;
         
         
