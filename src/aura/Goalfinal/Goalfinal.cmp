@@ -18,8 +18,8 @@
     <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
-        <aura:handler name="openModal" event="c:SaveIncomeEvent" action="{!c.createGoal}"/>
-
+    <aura:handler name="openModal" event="c:SaveIncomeEvent" action="{!c.createGoal}"/>
+    
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>  
     <aura:attribute name="icon" type="String" default="String"/>
     <aura:attribute name="heading" type="string"/>
@@ -91,10 +91,10 @@
                                 <td data-label="Track" scope="col">
                                     <div class="slds-truncate" title="Track">
                                         <aura:if isTrue="{!Gdetails.goalTrack}">
-                                            <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></p>
+                                            <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span> On Track</span></p>
                                             
                                             <aura:set attribute="else">
-                                                <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></p>
+                                                <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span> Not On Track</span></p>
                                                 
                                             </aura:set>
                                         </aura:if>

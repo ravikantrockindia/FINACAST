@@ -462,8 +462,9 @@
     
     
  // --------------------Method to Delete Income and Expense records-----------------------------
-    onClickDelete : function(component,event,helper) {  
-        
+    incomeClickDelete : function(component,event,helper) {  
+      var retVal = confirm("Are you sure you want to delete the income??");
+        if( retVal == true ) {  
         var action2 = component.get("c.deleteIncome");
         action2.setParams({
             'IncomeId' : event.getSource().get('v.value')
@@ -483,12 +484,45 @@
             });
             resultsToast.fire();  
         });     
-        $A.enqueueAction(action2);        
+        $A.enqueueAction(action2);   
+            return true;
+        }else{
+            return false;
+        }
+    },
+    expenseClickDelete : function(component,event,helper) {  
+      var retVal = confirm("Are you sure you want to delete the expense??");
+        if( retVal == true ) {  
+        var action2 = component.get("c.deleteIncome");
+        action2.setParams({
+            'IncomeId' : event.getSource().get('v.value')
+        });
+        
+        action2.setCallback(this, function(response) {   
+            
+            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+            saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+            saveIncomeEvent.fire();
+            var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                "title": "Delete Success!",
+                type: 'success',
+                "message": "Record has been deleted successfully"           
+
+            });
+            resultsToast.fire();  
+        });     
+        $A.enqueueAction(action2);   
+            return true;
+        }else{
+            return false;
+        }
     },
     
     //----------------------Method to Delete Transaction records-----------------------------//
     onClickDeleteTransaction : function(component,event,helper) {  
-        
+         var retVal = confirm("Are you sure you want to delete the transaction??");
+        if( retVal == true ) { 
         var action2 = component.get("c.deleteTransaction");
         action2.setParams({
             'transactionId' : event.getSource().get('v.value')
@@ -506,13 +540,19 @@
             });
             resultsToast.fire();
         });     
-        $A.enqueueAction(action2);        
+        $A.enqueueAction(action2);  
+        return true;
+        }else{
+            return false;
+        }
     },
     
     
     
     //----------------------Method to Delete Loan records-----------------------------//
-    onClickDeleteLoan : function(component,event,helper) {   
+    onClickDeleteLoan : function(component,event,helper) {  
+        var retVal = confirm("Are you sure you want to delete the Loan??");
+        if( retVal == true ) { 
         var action2 = component.get("c.deleteLoan");
         action2.setParams({
             'loanId' : event.getSource().get('v.value')
@@ -531,6 +571,10 @@
             resultsToast.fire();
         });     
         $A.enqueueAction(action2);
+            return true;
+        }else{
+            return false;
+        }
         
     },
     

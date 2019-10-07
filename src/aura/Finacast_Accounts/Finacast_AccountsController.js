@@ -90,7 +90,7 @@
 
         } 
         else if ( actionName == 'delete') {
-            if(confirm('Are you sure?')){
+            if(confirm('Are you sure you want to delete the Transaction??')){
                 var spinner = component.find("mySpinner");
                 $A.util.removeClass(spinner, "slds-hide");
                 $A.util.addClass(spinner, "slds-show");

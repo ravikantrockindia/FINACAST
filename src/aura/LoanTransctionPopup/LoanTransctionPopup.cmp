@@ -21,6 +21,7 @@
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
+    <aura:attribute name="showDatatable" type="Boolean"/>
     <div class="slds-m-around_xx-large">
         
         <!-- Modal/Popup Box starts here-->
@@ -164,9 +165,13 @@
                                         </aura:if> 
                                     </tbody>        
                                 </table-->
+                     <aura:if isTrue="{!v.showDatatable}">
                          <lightning:datatable  aura:id="TransTable"  onrowaction="{!c.viewRecord}" onloadmore="{!c.handleLoadMore}" enableInfiniteLoading="{!v.enableInfiniteLoading}" loadMoreOffset="{!v.loadOffset}"
                             columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" />  
-   
+                    <aura:set attribute="else">
+                            <h3><center>There is no transaction related to this loan!!</center></h3>
+                        </aura:set>
+                    </aura:if>
                          
                 </div>
                 <!--Modal/Popup Box Footer Starts here-->

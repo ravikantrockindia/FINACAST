@@ -80,9 +80,9 @@
                                         <a>    <lightning:button variant="base" label="{!Gdetails.finGoal.Name}" value="{!Gdetails.finGoal.Id}"  onclick="{! c.viewGoal }"/></a>
                                         
                                         <aura:if isTrue="{!Gdetails.goalTrack}">
-                                            <span class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>On Track</span></span>
+                                            <span class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span> On Track</span></span>
                                             <aura:set attribute="else">
-                                                <span class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>Not On Track</span></span>
+                                                <span class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span> Not On Track</span></span>
                                             </aura:set>
                                         </aura:if>
                                         

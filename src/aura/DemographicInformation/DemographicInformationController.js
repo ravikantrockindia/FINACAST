@@ -184,7 +184,18 @@
             else{
                 var d=new Date()
                 var dob=new Date(dob)
-                
+                //
+                if(dob>d){
+                   event.preventDefault();
+                    component.set("v.disabled",false)
+                    $A.util.removeClass(spinner, "slds-show");
+                    
+                    $A.util.addClass(spinner, "slds-hide");
+                    var msg = "You cannot enter a future DoB!"
+                    helper.showNotfication(component,msg,"error","Error!");
+					return;
+                }              
+                //
                 var timediff=new Date().getTime() - dob.getTime();
                 if(timediff<0){
                     event.preventDefault();
@@ -203,9 +214,11 @@
                     $A.util.removeClass(spinner, "slds-show");
                     
                     $A.util.addClass(spinner, "slds-hide");
-                    var msg = "Age must be atleast 18!"
+                    var msg = "Age must be atleast 18 to proceed further!"
                     helper.showNotfication(component,msg,"error","Error!");  
                 }
+                
+                
                 
             }
         }catch(e){
