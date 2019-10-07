@@ -1083,7 +1083,7 @@ return fingoalwrap;
         list<FinServ__FinancialAccountTransaction__c> fatList = new list<FinServ__FinancialAccountTransaction__c>();
         
         try{  
-            finAccounts=[Select Id, FinServ__Balance__c,CreatedDate,(select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c FROM FinServ__FinancialAccountTranslations__r WHERE FinServ__TransactionDate__c = LAST_N_MONTHS:12 ORDER BY FinServ__TransactionDate__c DESC ) from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:ClientId AND (Account_Type__c='401K' OR Account_Type__c='529 Account' OR Account_Type__c='IRA' OR Account_Type__c='Retail Brokerage' OR Account_Type__c='Roth IRA' ) ];
+            finAccounts=[Select Id, FinServ__Balance__c,FinServ__OpenDate__c,(select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c FROM FinServ__FinancialAccountTranslations__r WHERE FinServ__TransactionDate__c = LAST_N_MONTHS:12 OR FinServ__TransactionDate__c<=:Date.today() ORDER BY FinServ__TransactionDate__c DESC ) from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:ClientId AND (Account_Type__c='401K' OR Account_Type__c='529 Account' OR Account_Type__c='IRA' OR Account_Type__c='Retail Brokerage' OR Account_Type__c='Roth IRA' ) ];
             if(finAccounts.isEmpty()){
                 return data;
             }
@@ -1167,7 +1167,7 @@ amountforMonth.put(monthYear,stt.FinServ__Amount__c);
                 amount=f.FinServ__Balance__c;
                 
                 for(FinServ__FinancialAccountTransaction__c stt : f.FinServ__FinancialAccountTranslations__r){
-                    if(stt.FinServ__TransactionDate__c>=f.CreatedDate && stt.FinServ__TransactionDate__c<=Date.today()){
+                    if(stt.FinServ__TransactionDate__c>=f.FinServ__OpenDate__c && stt.FinServ__TransactionDate__c<=Date.today()){
                         monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
                         if(stt.FinServ__TransactionType__c=='Debit'){
                             if(amountforMonth.containsKey(monthYear)){
@@ -1201,9 +1201,9 @@ amountforMonth.put(monthYear,stt.FinServ__Amount__c);
                         }
                     }
                 }
-                            system.debug(amountforMonth);
-
-                monthYear =  f.CreatedDate.month() +' '+f.CreatedDate.year();
+                system.debug(amountforMonth);
+                
+                monthYear =  f.FinServ__OpenDate__c.month() +' '+f.FinServ__OpenDate__c.year();
                 Integer index= previousMonths.indexOf(monthYear);
                 if(index!=-1){
                     if(amountforMonth.containsKey(monthYear)){
@@ -1254,7 +1254,133 @@ amountforMonth.put(monthYear,stt.FinServ__Amount__c);
     }
     
     
-    
+    @auraEnabled
+    public static List<DebtData> getDebtData(String ClientId) {
+        List<DebtData> data=new List<DebtData>();
+        List<FinServ__FinancialAccount__c> finAccounts;
+        list<FinServ__FinancialAccountTransaction__c> fatList = new list<FinServ__FinancialAccountTransaction__c>();
+        
+        try{  
+            finAccounts=[Select Id,Name, FinServ__LoanAmount__c,FinServ__OpenDate__c	,(select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c FROM FinServ__FinancialAccountTranslations__r WHERE FinServ__TransactionDate__c = LAST_N_MONTHS:12 OR FinServ__TransactionDate__c<=:Date.today() ORDER BY FinServ__TransactionDate__c DESC ) from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:ClientId AND (Account_Type__c='Credit Card' OR Account_Type__c='Loan') ];
+            if(finAccounts.isEmpty()){
+                return data;
+            }
+            String monthYear;
+            Integer currentMonth = Date.today().month();
+            Integer currentYear = Date.today().year();
+            Integer counter=0;
+            List<String> previousMonths=new List<String>();
+            while(previousMonths.size()<12){
+                if(currentMonth==1 && currentYear==Date.today().year()){
+                    
+                    String monthYearValue =  currentMonth +' '+currentYear;
+                    previousMonths.add(monthYearValue);
+                    currentYear=currentYear-1;
+                    currentMonth=12;
+                }
+                else{
+                    String monthYearValue = currentMonth +' '+currentYear;
+                    previousMonths.add(monthYearValue);
+                    currentMonth=currentMonth-1;
+                    
+                }}
+            System.debug(previousMonths);
+            currentMonth = Date.today().month();
+            currentYear = Date.today().year();
+            String monthYearValue =  currentMonth +' '+currentYear;
+            
+            Decimal amount=0;
+           
+            
+            Map<String,Decimal> amountforMonth=new Map<String, Decimal>();
+            for(FinServ__FinancialAccount__c f: finAccounts){
+                DebtData d=new DebtData();
+            Map<String, Decimal> tempdata = new Map<String, Decimal>(); 
+                System.debug(tempdata);
+                amountforMonth.clear();
+                tempdata.put(monthYearValue, f.FinServ__LoanAmount__c);
+                for(FinServ__FinancialAccountTransaction__c stt : f.FinServ__FinancialAccountTranslations__r){
+                    System.debug(stt);
+                    if(stt.FinServ__TransactionDate__c>=f.FinServ__OpenDate__c && stt.FinServ__TransactionDate__c<=Date.today()){
+                        monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+                        if(stt.FinServ__TransactionType__c=='Debit'){
+                            if(amountforMonth.containsKey(monthYear)){
+                                Decimal totalamt=amountforMonth.get(monthYear)-stt.FinServ__Amount__c;
+                                amountforMonth.put(monthYear,totalamt);
+                            }
+                            else{
+                                amountforMonth.put(monthYear,stt.FinServ__Amount__c*-1);
+                                
+                            }
+                        }
+                        else{
+                            if(amountforMonth.containsKey(monthYear)){
+                                Decimal totalamt=amountforMonth.get(monthYear)+stt.FinServ__Amount__c;                                
+                                amountforMonth.put(monthYear,totalamt);
+                            }
+                            else{
+                                
+                                amountforMonth.put(monthYear,stt.FinServ__Amount__c);                                
+                            }
+                        }
+                    }
+                }
+                System.debug(amountforMonth);
+                monthYear =  f.FinServ__OpenDate__c.month() +' '+f.FinServ__OpenDate__c.year();
+                Integer index= previousMonths.indexOf(monthYear);
+                System.debug(index);
+                for(Integer i=1;i<previousMonths.size();i++){
+                    
+                    
+                    if(index==-1 || index>=i){
+                        if(amountforMonth.containsKey(previousMonths.get(i-1))){
+                            tempdata.put(previousMonths.get(i),tempdata.get(previousMonths.get(i-1))+amountforMonth.get(previousMonths.get(i-1)));
+                            
+                        }
+                        else{
+                            tempdata.put(previousMonths.get(i),tempdata.get(previousMonths.get(i-1)));
+                        }                
+                    }
+                    else{
+                        tempdata.put(previousMonths.get(i),0);
+                        
+                    }
+                }
+                System.debug(tempdata);
+                System.debug(d);
+                
+                d.debtName=f.Name;
+                d.datapoints=tempdata;
+                System.debug(d);
+                
+                data.add(d);
+                System.debug(data);
+                
+            }
+            system.debug(amountforMonth);
+
+            if(Test.isRunningTest())
+                throw new nullpointerexception();
+        }
+        catch(Exception e){
+            system.debug(e.getStackTraceString()+e.getMessage());
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            
+        }
+        System.debug(data);
+        return data;
+                
+    }
+    public class DebtData {
+        
+        @auraEnabled
+        public String debtName;
+        
+        @auraEnabled
+        public Map<String, Decimal> datapoints;
+        
+        
+    } 
     @auraEnabled
     public static String deleteFinAccout(String finId) {
         String ret;

@@ -36,14 +36,11 @@
                     <div class="slds-m-top_large slds-m-bottom_medium">
                         <div class="client_managed">
                             <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                                <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-col slds-size_12-of-12">
                                     <h3 class="slds-m-top_none">Debt</h3>
-                                  <!--  <c:DashboardDebtGraph recordId="{!v.recordId}"/>-->
+                                    <c:DashboardDebtGraph recordId="{!v.recordId}"/>
                                 </div>
-                                <div class="slds-col slds-size_6-of-12 what-is">
-                                    <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
-                                </div>
-                            </div>
+                                                           </div>
                             
                         </div>                
                     </div>
