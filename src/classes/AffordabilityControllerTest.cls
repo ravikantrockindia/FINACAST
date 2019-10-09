@@ -18,26 +18,7 @@ public class AffordabilityControllerTest {
         ac2.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
         insert ac2;
         
-        Account hac = new Account();
-        hac.name = 'Test2';
-        hac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
-        insert hac;
-        
-        
-        Account hac2 = new Account();
-        hac2.name = 'Test4';
-        hac2.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
-        insert hac2;
-        
-        AccountContactRelation acr = new AccountContactRelation();
-        acr.accountid = hac.id;
-        acr.contactid = [select id from contact where accountid =: ac.id].Id;
-        acr.IsActive = true;
-        acr.FinServ__PrimaryGroup__c = true;
-        acr.FinServ__Rollups__c = 'All';
-        acr.FinServ__Primary__c = true;
-        insert acr;
-        String cId2 = hac.id;
+       
         
         
         Budget__c income = new Budget__c();
@@ -115,90 +96,21 @@ public class AffordabilityControllerTest {
         
         //Household Account
         
-        Budget__c income2 = new Budget__c();
-        income2.Name = 'test income';
-        income2.Start_Date__c = system.today();
-        income2.End_Date__c = system.today();
-        income2.Amount__c = 4234;
-        income2.Primary_Owner__c = ac.Id;
-        income2.HouseHold__c = hac.id;
-        income2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
-        insert income2;
-        
-        Budget__c expense2 = new Budget__c();
-        expense2.Name = 'test expense';
-        expense2.Start_Date__c = system.today();
-        expense2.End_Date__c = system.today();
-        expense2.Amount__c = 1234;
-        expense2.Primary_Owner__c = ac.Id;
-        expense2.HouseHold__c = hac.id;
-        expense2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
-        insert expense2;
-        
-        FinServ__FinancialAccount__c financial2 = new FinServ__FinancialAccount__c();
-        financial2.Name = 'Test Financial Account 1';
-        financial2.FinServ__PaymentAmount__c = 6000;
-        financial2.FinServ__PrimaryOwner__c= ac.Id;
-        financial2.FinServ__LoanAmount__c = 6000;
-        financial2.FinServ__APY__c = 4;
-        financial2.FinServ__Household__c = hac.id;
-        financial2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
-        financial2.Account_Type__c = 'Loan';
-        insert financial2;
-        
-        FinServ__FinancialAccount__c savings2 = new FinServ__FinancialAccount__c();
-        savings2.FinServ__PrimaryOwner__c = ac.Id;
-        savings2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'SavingsAccount');
-        savings2.Name = 'Test Savings 1';
-        savings2.FinServ__Balance__c = 98765;
-        savings2.FinServ__Household__c = hac.id;
-        savings2.FinServ__APY__c = 0;   
-        savings2.FinServ__LoanEndDate__c = Date.today();
-        savings2.FinServ__FinancialAccountType__c = 'Savings';
-        insert savings2;
-        
-        FinServ__FinancialAccount__c card2 = new FinServ__FinancialAccount__c();
-        card2.Name = 'Test Credit Card 1';
-        card2.FinServ__Balance__c = 98765;
-        card2.FinServ__PaymentAmount__c = 5000;
-        card2.FinServ__PrimaryOwner__c= ac.Id;
-        card2.FinServ__LoanAmount__c = 5000;
-        card2.FinServ__Household__c = hac.id;
-        card2.FinServ__APY__c = 4;
-        card2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'CreditCard');
-        card2.FinServ__FinancialAccountType__c  = 'Credit Card';
-        insert card2;
-        
-        list<FinServ__FinancialGoal__c> goals4 = new  list<FinServ__FinancialGoal__c>();
-        FinServ__FinancialGoal__c goals2 = new  FinServ__FinancialGoal__c();
-        goals2.FinServ__PrimaryOwner__c = ac.Id;
-        goals2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
-        goals2.Name = 'Test Goal 1';
-        goals2.FinServ__TargetValue__c = 10000;
-        goals2.FinServ__TargetDate__c = Date.today()+900;
-        goals2.Start_Value__c = 2000;
-        goals2.FinServ__Household__c = hac.id;
-        goals2.Goal_Priority__c = '1';
-        goals2.Start_Date__c = system.today();
-        goals2.Max_yearly_tax_deduction_allowed__c=5;
-        goals2.Required_Monthly_Saving__c = 2000;
-        goals2.Associated_Account__c = savings1.Id;
-        goals4.add(goals2);
-        insert goals4;
+   
     }
     
     @istest
     public static void TestAffordablity() {
         Account acc = [select id from Account where name = 'Test'];
-        Account acc2 = [select id from Account where name ='Test2'];
+       // Account acc2 = [select id from Account where name ='Test2'];
         Account acc3 = [select id from Account where name = 'Test3'];
-        Account acc4 = [select id from Account where name = 'Test4'];
+       // Account acc4 = [select id from Account where name = 'Test4'];
         
         test.startTest();
         
-        AffordabilityController.ShowAffordabilityResult(acc2.id, 2, false, 3, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
+       // AffordabilityController.ShowAffordabilityResult(acc2.id, 2, false, 3, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.ShowAffordabilityResult(acc3.id,2 ,false, 3, 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
-        AffordabilityController.ShowAffordabilityResult(acc4.id,2 ,false,2 , 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
+       // AffordabilityController.ShowAffordabilityResult(acc4.id,2 ,false,2 , 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.getData(acc.id,2 ,false,2 , 'test', 2000, 100, 50, system.today(), system.today(), true, false, 6);
         AffordabilityController.NumberOfMonths(system.today(), system.today());
         AffordabilityController.curentgoalestimation(250, system.today(), system.today()); 
