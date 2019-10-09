@@ -40,8 +40,8 @@ public class ClientDetailApex {
         }
         
         /************ For Household Accounts ********/
-        if(isHousehold){            
-            List<account> householdMembersList = new List<Account>();
+      if(isHousehold){            
+           /* List<account> householdMembersList = new List<Account>();
             
             String FSK ='a22955a47eff160d4ba3ee2bc35581818336cd8d3c73ea789b52c14d6eeba212c6a572097cbb1bf11e29422cefc2f89as';
             
@@ -167,7 +167,7 @@ public class ClientDetailApex {
                 
                 
                 
-                if(FFDAList.size() > 0){
+           /*     if(FFDAList.size() > 0){
                     for(FinServ__FinancialAccount__c FFDA : FFDAList){
                         Double loanFrequency = 1;
                         switch on FFDA.FinServ__PaymentFrequency__c {
@@ -331,7 +331,7 @@ public class ClientDetailApex {
                 System.debug('Client Data from Future Simulation: ' + clientData);
             }
             System.debug('HouseHold Request Data:' + setData);
-            return setData;                                
+            return setData;    */                            
         }
         
         /******** Normal non - Household Code goes here *******/
@@ -619,8 +619,9 @@ public class ClientDetailApex {
                 
             }
             System.debug('Non-HouseHold Request Data:$%' + setData);
-            return setData;
         }
+                    return setData;
+
     } //method end
     
     
