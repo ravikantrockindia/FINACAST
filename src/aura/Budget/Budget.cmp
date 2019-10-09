@@ -115,8 +115,8 @@
     <!--Change client card ends-->
     
     <!--Income Bar starts-->
-     <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>
+    <!-- <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>-->
     <div class="slds-box slds-theme_default" style="height:auto;" >
         <div class="slds-page-header__name-title bud-months">
             <div class="slds-grid ">
@@ -678,14 +678,14 @@
         <!--Edit modal for goal ends--> 
         <!--Goal part ends-->
         <aura:if isTrue="{!v.isOpen}">
-             <c:IncomeTransctionPopup cid="{!v.cid}"  client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.isOpen}" data = "{!v.data}" getExpenseBudgetId ="{!v.getBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" />
+             <c:IncomeTransctionPopup cid="{!v.cid}"  namespace="{!v.namespace}"  client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.isOpen}" data = "{!v.data}" getExpenseBudgetId ="{!v.getBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" />
         <!--c:BudgetIncomeCashFlowGraph tansactionId="{!v.incomeId}"  IncomeRecord="{!v.IncomeRecord}" namespace="{!v.namespace}" Transaction = "{!v.Transaction}" client="{!v.client}" cid="{!v.cid}" isActive = "{!v.activeModal}" addTrans="{!v.addTrans}"  closeModal="{!v.isOpen}"/-->
     </aura:if> 
 	<aura:if isTrue="{!v.expensePopup}">
-        <c:ExpenseTransctionPopup cid="{!v.cid}" client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.expensePopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getExpenseBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" />
+        <c:ExpenseTransctionPopup cid="{!v.cid}" client="{!v.client}"  namespace="{!v.namespace}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.expensePopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getExpenseBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" />
         </aura:if> 
         <aura:if isTrue="{!v.LoanPopup}">
-        <c:LoanTransctionPopup cid="{!v.cid}" client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.LoanPopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getLoanId}" IncomeRecord="{!v.selectedLoanRecord}" />
+        <c:LoanTransctionPopup cid="{!v.cid}"  namespace="{!v.namespace}" client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.LoanPopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getLoanId}" IncomeRecord="{!v.selectedLoanRecord}" />
         </aura:if>
     </div>   
     

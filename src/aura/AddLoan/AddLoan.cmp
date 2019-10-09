@@ -13,7 +13,8 @@
     <aura:attribute name="isMonthly" type="Boolean" default = "false"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <aura:attribute name = "accLoanRecType"  type = "String"/>    
+    <aura:attribute name = "accLoanRecType"  type = "String"/>
+    
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">
             <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
@@ -33,6 +34,7 @@
                             </div>
                         </div>
                     </header>
+                    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
                     <lightning:recordEditForm 
                                               aura:id="form"
                                               
@@ -55,7 +57,7 @@
                                     </div>
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
-                                        <span class = "highlight">* </span>APY<lightning:inputField fieldName="FinServ__APY__c" aura:id = "apr" variant="label-hidden"/>
+                                        <span class = "highlight">* </span>APR<lightning:inputField fieldName="FinServ__APY__c" aura:id = "apr" variant="label-hidden"/>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                         <span class = "highlight">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c" aura:id = "payfreq" variant="label-hidden"></lightning:inputField>
@@ -99,7 +101,7 @@
                                 </aura:if>
                                 <div style="clear: both;"></div> 
                             </div> 
-                            <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="Loan" class="slds-hidden"/>
+                            <lightning:inputField fieldName="{!v.namespace+'Account_Type__c'}" variant="label-hidden" value="Loan" class="slds-hide"/>
                             
                         </div>   
                         

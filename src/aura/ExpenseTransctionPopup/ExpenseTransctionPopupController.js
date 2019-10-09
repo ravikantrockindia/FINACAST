@@ -4,9 +4,11 @@
         component.set("v.closeModal", false);
     },
     doInit: function(component, event, helper) {
+       var namespace=component.get("v.namespace");
+        console.log('namespace doinit loan '+namespace);
         
         component.set('v.columns', [
-            {label: 'Name', fieldName: 'TransactionName__c',  type: 'text'},
+            {label: 'Name', fieldName: namespace+'TransactionName__c',  type: 'text'},
             { 
                 "label" :  'Transaction Date',
                 "fieldName" : 'FinServ__TransactionDate__c',

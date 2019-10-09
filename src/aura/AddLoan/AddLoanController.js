@@ -10,6 +10,7 @@
     },
     
     saveAndCloseBtn : function(component, event, helper) {
+        
         // Display a "toast" status message        
         var resultsToast = $A.get("e.force:showToast");
         resultsToast.setParams({
@@ -22,6 +23,7 @@
         
         helper.hideExampleModal(component);
         //console.log( 'value',event.getSource().get("v.value"));   
+       
     },
     
     hideExampleModal : function(component, event, helper) {
@@ -31,7 +33,10 @@
     
     handleSubmit : function(component, event, helper)
     { 
-        
+
+     component.find("Id_spinner").set("v.class" , 'slds-show');
+ 
+      //  $A.util.removeClass(spinner, "slds-hide");
         var status3 = 0;
         
         var msg = "";
@@ -94,6 +99,10 @@
         console.log(JSON.stringify(fields));
         fields.FinacastOpeningBalance__c = amn;
         component.find('form').submit(fields);
+        
+        var spinner = component.find("mySpinner");
+        // $A.util.removeClass(spinner, "slds-hide");
+         $A.util.addClass(spinner, "slds-show");
     }, 
     handleRadio: function(component, event) {
         // component.set("v.displaySection" ,  true);

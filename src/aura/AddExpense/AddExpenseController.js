@@ -150,7 +150,50 @@
         }
     },
     recordLoaded: function(component,event,helper){
+   
         var expId = component.get("v.expId");
+        console.log('expId'+expId)
+        if(!(expId=="" || $A.util.isUndefinedOrNull(expId))){
+            var action = component.get("c.Budgetlist");
+            action.setParams({
+                expId : expId
+            });
+            
+            action.setCallback(this, function(a) {
+                var ExpRec=a.getReturnValue();
+                component.set("v.Expensedata",ExpRec);               
+                var tabledata = component.get("v.Expensedata");
+                var taxDeduction =tabledata.Does_contribution_bring_tax_benifit__c;
+                console.log('taxDeduction',taxDeduction);
+                if (taxDeduction){
+                    component.set("v.isTaxDeduction",true);              
+                    component.set("v.getYes",true);
+                }
+                else{
+                    
+                    component.set("v.getNo",true);
+                }
+                var ismonthly =tabledata.Does_tax_benifit_realize_really__c;
+                console.log('ismonthly',ismonthly);
+                if (ismonthly){
+                    component.set("v.isMonthly",true);
+                }
+                else{
+                    component.set("v.isMonthly",false);
+                    
+                }
+                
+            }); 
+            $A.enqueueAction(action);      
+        
+        
+        
+        
+        
+        
+        
+        
+      /*  var expId = component.get("v.expId");
         if(!(expId=="" || $A.util.isUndefinedOrNull(expId))){
              var recUi = event.getParam("recordUi");
         console.log(JSON.stringify(recUi));
@@ -176,7 +219,7 @@
             component.set("v.isMonthly",false);
             
         }
+        }    */
         }
-       
-    }
+        }
 })

@@ -72,9 +72,7 @@
                 }
             }
             
-            //console.log("dataSeriesGoal" + JSON.stringify(dataSeriesGoal));
-            
-            //create Data and Y-axis labels because data is dynamic
+
             var datasetArray=[];
             var labelsArray = [];             
             for(var j in dataSeriesGoal) {
@@ -107,21 +105,28 @@
             }
             //make chart Label and set points
              var moneyOwned=0;
-        var moneytobepaid=0;
-            chartLabels = labelsArray;
-                    if($A.util.isUndefinedOrNull(dataSeriesGoal[0]) != true) {
-            for(var i = 0; i<dataSeriesGoal[0].data.length; i++)
-            {
-                // chartLabels[i] = dataSeriesGoal[0]["data"][i][0];
-                chartDataSet[i] = dataSeriesGoal[0]["data"][i][1];
-                 moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
-                 moneytobepaid = Math.floor(parseFloat(chartDataSet[7]));
-                        if(isNaN(moneytobepaid)){
-                            moneytobepaid =0;
-                        }     
-               
-                        }
-            }
+             var moneytobepaid=0;
+             chartLabels = labelsArray;
+              var dataPoints1=new Array();
+             if($A.util.isUndefinedOrNull(dataSeriesGoal[0]) != true) {
+                 for(var i = 0; i<dataSeriesGoal.length; i++)
+                 {
+                     var dataPoints=new Array();
+                     // chartLabels[i] = dataSeriesGoal[0]["data"][i][0];
+                     // chartDataSet[i] = dataSeriesGoal[0]["data"][i][1];
+                     moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
+                     moneytobepaid = Math.floor(parseFloat(chartDataSet[7]));
+                     if(isNaN(moneytobepaid)){
+                         moneytobepaid =0;
+                     }     
+                     for(var j=0;j<dataSeriesGoal[i].data.length;j++){
+                         dataPoints.push({x: new Date(dataSeriesGoal[i].data[j][0], 0) , y:dataSeriesGoal[i].data[j][1]});
+                     }
+                     
+                     var d = { type: "stackedColumn", showInLegend:true, name:dataSeriesGoal[i].label ,yValueFormatString: "$ ",dataPoints:dataPoints };
+                     dataPoints1.push(d);
+                 }
+             }
         	  if(moneyOwned < 999) {
                     component.set("v.moneyOwned",moneyOwned);
                 }
@@ -227,7 +232,7 @@
             //Chart plotting Starts here
         var dps=new Array();
         for(var i=0; i<chartLabels.length; i++){
-            dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i],color: "lightgreen"});
+            dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i]});
         }
         
         
@@ -244,6 +249,7 @@
                 interval: 1,
                 intervalType: "year"
             },
+            
             axisY:{
                 // valueFormatString:"#0K",
                 gridColor: "#ffffff",
@@ -252,21 +258,23 @@
             toolTip:{
                 contentFormatter: function ( e ) {
                     var value = e.entries[0].dataPoint.y;
-                    if(value > 999)
-                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value)
-                    else if(value < 10000000)
-                     return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
-                      else if(value < 1000000000000)
-                           return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
-                }  
+                    if(value < 999)
+                        return Math.round(value)
+                        if(value > 999)
+                            return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value)
+                            else if(value < 10000000)
+                                return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
+                                else if(value < 1000000000000)
+                                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
+                                    }  
             },
-            data: [{
+            data:dataPoints1 /*[{
                 yValueFormatString: "$ #,### ",
                 type: "stackedColumn",
                 dataPoints: dps
             },
                    
-                  ]
+                  ]*/
                    });
          chart.render();
         

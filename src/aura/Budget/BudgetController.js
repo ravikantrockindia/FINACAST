@@ -463,7 +463,7 @@
     
  // --------------------Method to Delete Income and Expense records-----------------------------
     incomeClickDelete : function(component,event,helper) {  
-      var retVal = confirm("Are you sure you want to delete the income??");
+      var retVal = confirm("Are you sure you want to delete the income?");
         if( retVal == true ) {  
         var action2 = component.get("c.deleteIncome");
         action2.setParams({
@@ -491,7 +491,7 @@
         }
     },
     expenseClickDelete : function(component,event,helper) {  
-      var retVal = confirm("Are you sure you want to delete the expense??");
+      var retVal = confirm("Are you sure you want to delete the expense?");
         if( retVal == true ) {  
         var action2 = component.get("c.deleteIncome");
         action2.setParams({
@@ -551,7 +551,7 @@
     
     //----------------------Method to Delete Loan records-----------------------------//
     onClickDeleteLoan : function(component,event,helper) {  
-        var retVal = confirm("Are you sure you want to delete the Loan??");
+        var retVal = confirm("Are you sure you want to delete the Loan?");
         if( retVal == true ) { 
         var action2 = component.get("c.deleteLoan");
         action2.setParams({

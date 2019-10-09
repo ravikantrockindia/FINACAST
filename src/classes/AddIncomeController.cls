@@ -11,6 +11,11 @@ public with sharing class AddIncomeController {
         return FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c',recName1);         
     } 
     @auraEnabled
+   public static Budget__C Budgetlist(String expId){
+        Budget__C budgetRecord =[select Does_contribution_bring_tax_benifit__c,Does_tax_benifit_realize_really__c from Budget__c where id =:expId];
+         return budgetRecord;
+    } 
+    @auraEnabled
     public static String getRecordTypeIdbyName(String objectName , String strRecordTypeName)
     {      
         FinServ__FinancialGoal__c finGoal  = [select recordtypeid,recordtype.developername  from FinServ__FinancialGoal__c where id=:strRecordTypeName];       

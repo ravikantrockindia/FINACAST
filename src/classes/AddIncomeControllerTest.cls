@@ -177,7 +177,8 @@ public class AddIncomeControllerTest {
         AddIncomeController.deleteIncome(bg.id);
         AddIncomeController.deleteGoals(fGoal1.id);
         AddIncomeController.deleteLoan(fAcc1.id);
-        AddIncomeController.loanRecord(financial1.id);
+        AddIncomeController.Budgetlist(bg1.id);
+         AddIncomeController.loanRecord(financial1.id);
         AddIncomeController.deleteTransaction(ftrans1.id);
         SummaryCashFlowController.getMonth('Jan');
         System.assertEquals('1', '1');

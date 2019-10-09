@@ -5,6 +5,7 @@
     <aura:attribute name = "year" type="Integer" />
     <aura:attribute name = "shortTermYearlyInterest" type="String[]"/>
     <aura:attribute name = "longTermLoans"  type="Double" default="0"/>
+     <aura:attribute name = "intrestTermDebt"  type="Double" default="0"/>
     <aura:attribute name = "shortTermLoans"  type="Double" default="0"/>
     <aura:attribute name = "debtStatus" type="Object"/>
     <aura:attribute name = "chartDataObject" type = "Object" />
@@ -98,22 +99,23 @@
     <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <div class="networth-fea">
-                        <p>Money Owed</p>
-                        <h4>${!v.moneyOwned}</h4>
+                        <p>Long Term Loans </p>
+                        <h4>${!v.longTermLoans}</h4>
                     </div>
                 </div>
-                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+        <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <div class="networth-fea">
-                        <p>Money Paid</p>
-                        <h4>$0</h4>
+                        <p>Short Term Loans</p>
+                        <h4>${!v.shortTermLoans}</h4>
                     </div>
                 </div>
-                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                <!--div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <div class="networth-fea">
-                        <p>Money to be Paid</p>
-                        <h4>${!v.moneytobepaid}</h4>
+                        <p>Interest On Debt </p>
+                        <h4>${!v.intrestTermDebt}</h4>
                     </div>
-                </div>
+                </div-->
+                
             </div>
     			<div class="slds-grid slds-gutters">
                     <div class="slds-col  slds-size_12-of-12">
