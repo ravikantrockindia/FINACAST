@@ -27,8 +27,8 @@
                         dp.push({x: new Date(parseInt(s[1]),parseInt(s[0])-1), y:data[e]["datapoints"][key]});
                         
                     }
-                    var d = {	type: "stackedColumn",	   showInLegend:true,                     yValueFormatString: "#,##0,.##K",
-
+                    var d = {	type: "stackedColumn",	   showInLegend:true,   yValueFormatString: "$#,##0,.##K",
+                             
                              name: data[e]["debtName"],dataPoints:dp
                             };
                     dps1.push(d);
@@ -74,6 +74,9 @@
                 var chart = new CanvasJS.Chart("chartContainer111", {
                     theme: "light1", // "light2", "dark1", "dark2"
                     animationEnabled: true, // change to true	
+                    toolTip: {
+                        content: "{name}: {y}"      
+                    },
                     legend:{
                         cursor: "pointer",
                         itemclick: function (e) {
@@ -87,8 +90,8 @@
                         }
                     },
                     axisY:{
-                                                valueFormatString: "#,##0,.##K",
-
+                        valueFormatString: "$#,##0,.##K",
+                        
                         //  valueFormatString:"#0K",
                         gridColor: "#ffffff",
                         tickColor: "#ffffff"
