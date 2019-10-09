@@ -20,7 +20,8 @@ public class AccountTabReportTest {
         test.startTest();
         System.assert(acId != null);
         AccountTabReport.getTransction(act.id);
-        AccountTabReport.getTransctionList(act.id);
+        AccountTabReport.getTotalRecords(act.id,0,1);
+        AccountTabReport.getTransctionList(act.id,0,1);
         AccountTabReport.getFinanaceAccountName(act.id);
          AccountTabReport.DeleteFinanceAccountTransaction(act.id);
         test.stopTest();

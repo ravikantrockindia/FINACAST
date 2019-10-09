@@ -14,16 +14,24 @@ public class CashFlowGraphData {
         for(FinServ__FinancialAccount__c idd : Facclist){    
             ids.add(idd.id);
         }
-        fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id IN :ids AND FinServ__TransactionDate__c = LAST_N_MONTHS:12 ORDER BY FinServ__TransactionDate__c ];
+        fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id IN :ids AND  (FinServ__TransactionDate__c = LAST_N_MONTHS:11 OR FinServ__TransactionDate__c= THIS_MONTH) ORDER BY FinServ__TransactionDate__c ];
         System.debug('fatList----' +fatList);
         Map<String, Decimal> cashIn = new Map<String, Decimal>(); 
         Map<String, Decimal> cashOut = new Map<String, Decimal>(); 
         
+         Map<Integer,String> monthNameMap=new Map<Integer, String>{1 =>'January', 2=>'February', 3=>'March', 4=>'April', 5=>'May',
+                                                                    6=>'June', 7=>'July', 8=>'August', 9=>'September',10=>'October',
+                                                                    11=>'November', 12=>'December'};
+                                                                        
         Integer currentMonth = Date.today().month();
+        DateTime dt = DateTime.now();
+        String monthName = dt.format('MMMMM');
+        System.debug('Month Name : ' + monthName);
+        
         Integer currentYear = Date.today().year();
         List<String> previousMonths=new List<String>();
         while(previousMonths.size()<6){
-            if(currentMonth==1 && currentYear==Date.today().year()){
+           /* if(currentMonth==1 && currentYear==Date.today().year()){
                 currentYear=currentYear-1;
                 currentMonth=12;
                 String monthYearValue =  currentMonth +' '+currentYear;
@@ -34,13 +42,40 @@ public class CashFlowGraphData {
                 previousMonths.add(monthYearValue);
                 currentMonth=currentMonth-1;
                 
-            }}
+            }*/
+            if(monthName=='January' && currentYear==Date.today().year()){
+                String monthYearValue =  monthName +' '+currentYear;
+            //     system.debug('monthYearValue if'+monthYearValue);
+                previousMonths.add(monthYearValue);
+                currentYear=currentYear-1;
+                currentMonth=12;
+                 monthName = monthNameMap.get(currentMonth);
+                
+            }
+            else{
+                String monthYearValue = monthName+' '+currentYear;
+                system.debug('monthYearValue else'+monthYearValue);
+                previousMonths.add(monthYearValue);
+                currentMonth=currentMonth-1;
+                monthName = monthNameMap.get(currentMonth);
+                
+                
+            }
+
+}
+        
         for(Integer i=previousMonths.size()-1;i>=0;i--){
             cashOut.put(previousMonths[i],0); 
             cashIn.put(previousMonths[i],0);
         }
         for(FinServ__FinancialAccountTransaction__c stt : fatList){
             monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+            System.debug('month year----'+monthYear);
+           	Integer mon=stt.FinServ__TransactionDate__c.month();
+            String smon=monthNameMap.get(mon);
+             //  monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+             monthYear = smon  +' '+stt.FinServ__TransactionDate__c.year();
+            System.debug('month year----'+monthYear);
             if(stt.FinServ__TransactionType__c=='Debit'){
                 if(cashOut.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashout.get(monthYear);

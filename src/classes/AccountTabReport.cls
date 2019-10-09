@@ -10,7 +10,7 @@ public class AccountTabReport {
     }
     @auraEnabled
     public static ObjectWrapper getTransction(String AccountId ){  
-      //  system.debug(AccountId);
+        system.debug(AccountId);
         ObjectWrapper wrapAccountList;
         
    
@@ -19,44 +19,67 @@ public class AccountTabReport {
         String monthYear;
        
         fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  AND (FinServ__TransactionDate__c = LAST_N_MONTHS:11 OR FinServ__TransactionDate__c= THIS_MONTH) ORDER BY FinServ__TransactionDate__c ];
-      //  System.debug('fatList----' +fatList);
+        System.debug('fatList----' +fatList);
         Map<String, Decimal> cashIn = new Map<String, Decimal>(); 
         Map<String, Decimal> cashOut = new Map<String, Decimal>(); 
         
+        Map<Integer,String> monthNameMap=new Map<Integer, String>{1 =>'January', 2=>'February', 3=>'March', 4=>'April', 5=>'May',
+                                                                    6=>'June', 7=>'July', 8=>'August', 9=>'September',10=>'October',
+                                                                    11=>'November', 12=>'December'};
+                                                                        
+                                                                        
+      //  String cMonth=String.valueOf(Date.today().month());
+      //  system.debug('cMonth'+cMonth
         Integer currentMonth = Date.today().month();
+        DateTime dt = DateTime.now();
+        String monthName = dt.format('MMMMM');
+        System.debug('Month Name : ' + monthName);
        // system.debug('currentMonth'+currentMonth);
         Integer currentYear = Date.today().year();
       //  system.debug('currentYear'+currentYear);
         
         List<String> previousMonths=new List<String>();
         while(previousMonths.size()<6){
-            if(currentMonth==1 && currentYear==Date.today().year()){
-                String monthYearValue =  currentMonth +' '+currentYear;
+            if(monthName=='January' && currentYear==Date.today().year()){
+                String monthYearValue =  monthName +' '+currentYear;
             //     system.debug('monthYearValue if'+monthYearValue);
                 previousMonths.add(monthYearValue);
                 currentYear=currentYear-1;
                 currentMonth=12;
+                 monthName = monthNameMap.get(currentMonth);
                 
             }
             else{
-                String monthYearValue = currentMonth+' '+currentYear;
+                String monthYearValue = monthName+' '+currentYear;
                 system.debug('monthYearValue else'+monthYearValue);
                 previousMonths.add(monthYearValue);
                 currentMonth=currentMonth-1;
+                monthName = monthNameMap.get(currentMonth);
+                
                 
             }
         //    system.debug('previous month value'+previousMonths);
         }
-     //   system.debug('previous month value'+previousMonths);
+       system.debug('previous month value'+previousMonths);
         for(Integer i=previousMonths.size()-1;i>=0;i--){
             cashOut.put(previousMonths[i],0); 
             cashIn.put(previousMonths[i],0);
+            
         }
+        system.debug('cashout'+cashOut);
+        system.debug('cashIn'+cashIn);
         for(FinServ__FinancialAccountTransaction__c stt : fatList){
             monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+            System.debug('month year----'+monthYear);
+           	Integer mon=stt.FinServ__TransactionDate__c.month();
+            String smon=monthNameMap.get(mon);
+             //  monthYear =  stt.FinServ__TransactionDate__c.month() +' '+stt.FinServ__TransactionDate__c.year();
+             monthYear = smon  +' '+stt.FinServ__TransactionDate__c.year();
+            System.debug('month year----'+monthYear);
             if(stt.FinServ__TransactionType__c=='Debit'){
                 if(cashOut.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashout.get(monthYear);
+                    system.debug('asdfgh DEBIT'+totalamt);
                     cashOut.put(monthYear,totalamt);
                 }
               
@@ -64,13 +87,15 @@ public class AccountTabReport {
             else{
                 if(cashIn.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashIn.get(monthYear);
+                    system.debug('credit'+totalamt);
                     cashIn.put(monthYear,totalamt);
                 }
                
             }
         }
         wrapAccountList = new ObjectWrapper(cashIn, cashout);
-     //   system.debug('wrapAccountList'+wrapAccountList);
+        system.debug('wrapAccountList'+wrapAccountList);
+        
         return wrapAccountList;
     } 
    // LAZY LOADING //
