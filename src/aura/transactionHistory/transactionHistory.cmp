@@ -24,8 +24,8 @@
     <aura:attribute name="rowOffSet" type="Integer" default="0"/>
     
     <lightning:workspaceAPI aura:id="workspace"/>
-     <c:tabStructureFinacast ccid="{!v.clientId}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>
+    <!-- <c:tabStructureFinacast ccid="{!v.clientId}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>-->
     <lightning:spinner alternativeText="Loading" class="slds-hide" aura:id="spinner"/>
     
     <div class="slds-card slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">

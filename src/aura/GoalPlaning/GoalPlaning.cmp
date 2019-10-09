@@ -21,8 +21,8 @@
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
                 <aura:if isTrue="{!!v.budgetScreen}">
 
-    <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>
+   <!-- <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>-->
     </aura:if>
     <div class="slds-theme_default">
         <div class="slds-card__header">
