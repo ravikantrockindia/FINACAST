@@ -1,11 +1,24 @@
 ({
     doInit : function(component, event, helper) {
+         
         var cmpTarget = component.find('exampleModal');
         $A.util.removeClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",true);
         var loanId=component.get("v.loanId")
         console.log('loanI-0d'+loanId)
         
+        var ClientId=component.get("v.client.Id");
+        //var ClientId=Client.Id;
+        var action = component.get("c.ClientLoanRecord");
+        action.setParams({
+            clientId : ClientId
+        });
+        action.setCallback(this, function(a) {
+            var state  = a.getState();
+            var loanRec=a.getReturnValue();
+            component.set("v.loanRec",loanRec);
+        });
+        $A.enqueueAction(action);
         
     },
     
@@ -23,7 +36,7 @@
         
         helper.hideExampleModal(component);
         //console.log( 'value',event.getSource().get("v.value"));   
-       
+        
     },
     
     hideExampleModal : function(component, event, helper) {
@@ -33,79 +46,94 @@
     
     handleSubmit : function(component, event, helper)
     { 
-
-     component.find("Id_spinner").set("v.class" , 'slds-show');
- 
-      //  $A.util.removeClass(spinner, "slds-hide");
-        var status3 = 0;
+        component.find("Id_spinner").set("v.class" , 'slds-show');
         
         var msg = "";
-        
+        var ispresent=false;
         var priowner = component.find("owner").get("v.value");
         var ap = component.find("apr").get("v.value");
         var amon = component.find("amount").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
         var pf = component.find("payfreq").get("v.value");
-        console.log('amon'+amon);
+         
         
-        if($A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(ap) || ap == "" ||  $A.util.isUndefinedOrNull(amon) || amon == "" || $A.util.isUndefinedOrNull(amn) || amn =="" || $A.util.isUndefinedOrNull(pf) || pf == "" )
-        {
-            status3 = 0;
-            event.preventDefault();
-            msg = "Please fill mandatory fields."
-            helper.showAlertEmptyInvalidVal(component,msg);       
-        }
-        else if (amon <=0 ){
-            status3 =0;
-            event.preventDefault();
-            msg = "Payment Amount cannot be negative or zero."
-            helper.showAlertEmptyInvalidVal(component,msg);
-        }
-            else if (amn <0 ){
-                status3 =0;
+         var loanRec=component.get("v.loanRec");
+        
+        for (var i = 0; i < loanRec.length; i++) { 
+            
+            if(priowner==loanRec[i].Name){
                 event.preventDefault();
-                msg = "Loan Amount cannot be negative."
-                helper.showAlertEmptyInvalidVal(component,msg);
+                msg = "'loan name with this name already exist'."
+                helper.showAlertEmptyInvalidVal(component,msg); 
+                ispresent=true;
+                break;
+                 
             }
-                else if (ap <0 ){
+        }
+        if(ispresent){
+            component.find("Id_spinner").set("v.class" , 'slds-hide');
+            return;
+            
+        }
+        else{
+            if($A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(ap) || ap == "" ||  $A.util.isUndefinedOrNull(amon) || amon == "" || $A.util.isUndefinedOrNull(amn) || amn =="" || $A.util.isUndefinedOrNull(pf) || pf == "" ){
+                event.preventDefault();
+                msg = "Please fill mandatory fields."
+                helper.showAlertEmptyInvalidVal(component,msg); 
+                component.find("Id_spinner").set("v.class" , 'slds-hide');
+                return;
+                
+            }
+            else if (amon <=0 ){
+                event.preventDefault();
+                msg = "Payment Amount cannot be negative or zero."
+                helper.showAlertEmptyInvalidVal(component,msg);
+                component.find("Id_spinner").set("v.class" , 'slds-hide');
+                return; 
+                
+            }
+                else if (amn <0 ){
                     status3 =0;
                     event.preventDefault();
-                    msg = "APR cannot be negative."
+                    msg = "Loan Amount cannot be negative."
                     helper.showAlertEmptyInvalidVal(component,msg);
+                    component.find("Id_spinner").set("v.class" , 'slds-hide');
+                    return;
+                    
                 }
-        if (component.get("v.isTaxDeduction")){
-            if(component.find("taxbenfit").get("v.value") < 0){
-                status3 = 0;
-                event.preventDefault();
-                msg= "What % of contribution bring tax benefits? canot is negative"
-                helper.showAlertEmptyInvalidVal(component,msg);    
+                    else if (ap <0 ){
+                        status3 =0;
+                        event.preventDefault();
+                        msg = "APR cannot be negative."
+                        helper.showAlertEmptyInvalidVal(component,msg);
+                        component.find("Id_spinner").set("v.class" , 'slds-hide');
+                        return;
+                    }
+            if (component.get("v.isTaxDeduction")){
+                if(component.find("taxbenfit").get("v.value") < 0){
+                    event.preventDefault();
+                    msg= "What % of contribution bring tax benefits? cannot is negative"
+                    helper.showAlertEmptyInvalidVal(component,msg); 
+                    component.find("Id_spinner").set("v.class" , 'slds-hide');
+                    return;
+                }
+                else if(component.find("deducationtax").get("v.value") < 0){
+                    event.preventDefault();
+                    msg = "Max yearly tax deduction allowed ($ )? cannot is negative"
+                    helper.showAlertEmptyInvalidVal(component,msg); 
+                    component.find("Id_spinner").set("v.class" , 'slds-hide');
+                    return;
+                }
             }
-            else if(component.find("deducationtax").get("v.value") < 0){
-                status3= 0;
-                event.preventDefault();
-                msg = "Max yearly tax deduction allowed ($ )? canot is negative"
-                helper.showAlertEmptyInvalidVal(component,msg);    
-            }
-        }
-        
-        
-        else
-        {
-            status3 = 1;
         }
         event.preventDefault();       // stop the form from submitting
         var fields = event.getParam('fields');
-        
         console.log(JSON.stringify(fields));
         fields.FinacastOpeningBalance__c = amn;
         component.find('form').submit(fields);
-        
-        var spinner = component.find("mySpinner");
-        // $A.util.removeClass(spinner, "slds-hide");
-         $A.util.addClass(spinner, "slds-show");
+ 
     }, 
     handleRadio: function(component, event) {
-        // component.set("v.displaySection" ,  true);
         
         console.log('handle')
         if(event.target.id=="yesCheck"){
@@ -117,7 +145,7 @@
         }
     },
     handleRadio: function(component, event) {
-        // component.set("v.displaySection" ,  true);
+        
         
         console.log('handle')
         if(event.target.id=="yesCheck"){
@@ -141,7 +169,7 @@
         }
     },
     recordLoaded: function(component,event,helper){
-        
+        debugger;
         var loanId=component.get("v.loanId")
         console.log('loanId'+loanId)
         if(!(loanId=="" || $A.util.isUndefinedOrNull(loanId))){

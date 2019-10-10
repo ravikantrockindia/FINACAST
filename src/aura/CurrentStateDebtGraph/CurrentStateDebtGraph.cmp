@@ -22,7 +22,7 @@
         <div class="slds-col slds-size_12-of-12 what-is slds-p-top_medium slds-p-bottom_small slds-p-left_large slds-p-right_small">
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_6-of-12 slds-p-left_none">
-                    <h3>Debt Forecast</h3>
+                    <h3>Your Debt Forecast</h3>
                 </div>
                 <div class="slds-col slds-size_6-of-12 slds-p-right_none slds-text-align_right">            
                     <span>
@@ -44,24 +44,18 @@
         </div>
     </div>
     <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                    <div class="networth-fea">
+                        <p>Long Term Loans </p>
+                        <h4>${!v.longTermLoans}</h4>
+                    </div>
+                </div>
         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-            <div class="networth-fea">
-                <p>Money Owed</p>
-                <h4>${!v.moneyOwned}</h4>
-            </div>
-        </div>
-        <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-            <div class="networth-fea">
-                <p>Money Paid</p>
-                <h4>$0</h4>
-            </div>
-        </div>
-        <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-            <div class="networth-fea">
-                <p>Money to be Paid</p>
-                <h4>${!v.moneytobepaid}</h4>
-            </div>
-        </div>
+                    <div class="networth-fea">
+                        <p>Short Term Loans</p>
+                        <h4>${!v.shortTermLoans}</h4>
+                    </div>
+                </div>
     </div>
     <div class="slds-grid slds-gutters">
         <div class="slds-col  slds-size_12-of-12">
@@ -73,7 +67,8 @@
                 </div>
                 <div class="slds-grid slds-gutter ">
                     <div class="slds-col slds-size_12-of-12  slds-p-left_small">
-                        <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+                        <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt"> <span>{!debt.message}.</span>
+                        </aura:iteration></p>
                     </div>
                 </div>
                 

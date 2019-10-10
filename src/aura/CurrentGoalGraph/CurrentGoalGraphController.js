@@ -122,17 +122,24 @@
         var moneytobepaid=0;
         //make chart Label and set points
         chartLabels = labelsArray;
+        var dataPoints1=new Array();
         if($A.util.isUndefinedOrNull(dataSeriesGoal[0]) != true) {
-            for(var i = 0; i<dataSeriesGoal[0].objectDisplay.length; i++)
+            for(var i = 0; i<dataSeriesGoal.length; i++)
             {
+                 var dataPoints=new Array();
                 // chartLabels[i] = dataSeriesGoal[0]["objectDisplay"][i][0];
-                chartDataSet[i] = dataSeriesGoal[0]["objectDisplay"][i][1];
+               // chartDataSet[i] = dataSeriesGoal[0]["objectDisplay"][i][1];
                  moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
                  moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
                         if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
                         }     
-                       
+                for(var j=0;j<dataSeriesGoal[i].objectDisplay.length;j++){
+                         dataPoints.push({x: new Date(dataSeriesGoal[i].objectDisplay[j][0], 0) , y:dataSeriesGoal[i].objectDisplay[j][1]});
+                     }
+                     
+                     var d = { type: "stackedColumn", toolTipContent: " {label} $: {y}", showInLegend:true, name:dataSeriesGoal[i].label,label:dataSeriesGoal[i].label ,yValueFormatString: "#,##0,.##K",dataPoints:dataPoints };
+                     dataPoints1.push(d);        
             }
         }
           component.set("v.moneyOwned",moneyOwned.toLocaleString());
@@ -212,7 +219,7 @@
         
         var dps=new Array();
         for(var i=0; i<chartLabels.length; i++){
-            dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i],color: "lightgreen"});
+            dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i]});
         }
         
         
@@ -245,13 +252,7 @@
                            return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
                 }  
             },
-            data: [{
-                yValueFormatString: "$ #,### ",
-                type: "stackedColumn",
-                dataPoints: dps
-            },
-                   
-                  ]
+            data: dataPoints1
                    });
                    chart.render();
                    

@@ -7,7 +7,7 @@
         console.log("clientId from loan",JSON.stringify(component.get("v.client")))
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         saveIncomeEvent.fire();
-     component.find("Id_spinner").set("v.class" , 'slds-hide');
+     	component.find("Id_spinner").set("v.class" , 'slds-hide');
 	
     },
     

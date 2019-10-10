@@ -39,6 +39,7 @@
             if(isNaN(longtermInterest)){
                 longtermInterest = 0;
             }
+            
             if(isNaN(shorttermInterest)) {
                 shorttermInterest = 0;
             }
@@ -89,68 +90,131 @@
                     }
                 }
                 
-                console.log('chartLabels-->'+chartLabels);
-                console.log('chartDataSet--'+chartDataSet);
+                
                 component.set("v.shortTermYearlyInterest", shortTermYearlyInterest);
                 
                 //make chart Label and set points
                 var moneyOwned = 0;
-            var moneytobepaid = 0;
+                var moneytobepaid = 0;
+                var dataPoints1=new Array();
+                console.log(dataSeriesDebt);
                 if($A.util.isUndefinedOrNull(dataSeriesDebt[0]) != true) {
-                    for(var i = 0; i<dataSeriesDebt[0].data.length; i++)
+                    for(var i = 0; i<dataSeriesDebt.length; i++)
                     {
-                        chartLabels[i] = dataSeriesDebt[0]["data"][i][0];
-                        chartDataSet[i] = dataSeriesDebt[0]["data"][i][1];
-                         moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
-                         moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
+                                        var dataPoints=new Array();
+
+                        //chartLabels[i] = dataSeriesDebt[i]["data"][i][0];
+                       // chartDataSet[i] = dataSeriesDebt[i]["data"][i][1];
+                        console.log(dataSeriesDebt[i])
+                        moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
+                        moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
                         if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
                         }
+                        for(var j=0;j<dataSeriesDebt[i].data.length;j++){
+                            dataPoints.push({x: new Date(dataSeriesDebt[i].data[j][0], 0) , y:dataSeriesDebt[i].data[j][1]});
+                        }
+                        
+                        var d = { type: "stackedColumn", toolTipContent: " {label} $: {y}", showInLegend:true,name:dataSeriesDebt[i].label, label:dataSeriesDebt[i].label ,yValueFormatString: "#,##0,.##K",dataPoints:dataPoints };
+                        dataPoints1.push(d);
                     }
+                  
                 }
-                 component.set("v.moneyOwned",moneyOwned.toLocaleString());    
                
-                      component.set("v.moneytobepaid",moneytobepaid.toLocaleString());
+                  if(moneyOwned < 999) {
+                    component.set("v.moneyOwned",moneyOwned);
+                }
+               
+                else if(moneyOwned < 1000000) {
+                    component.set("v.moneyOwned",Math.round(moneyOwned/1000) + " K");
+                }
+                    else if( moneyOwned < 10000000) {
+                        component.set("v.moneyOwned",(moneyOwned/1000000).toFixed(2) + " M");
+                    }
+               
+                        else  if(moneyOwned < 1000000000) {
+                            component.set("v.moneyOwned",Math.round((moneyOwned/1000000)) + " M");
+                        }
+               
+                            else if(moneyOwned < 1000000000000) {
+                                component.set("v.moneyOwned",Math.round((moneyOwned/1000000000)) + " B");
+                            }            
+              //  component.set("v.moneyOwned",moneyOwned.toLocaleString());    
+                
+                   if(moneytobepaid < 999) {
+                    component.set("v.moneytobepaid",moneytobepaid);
+                }
+               
+                else if(moneytobepaid < 1000000) {
+                    component.set("v.moneytobepaid",Math.round(moneytobepaid/1000) + " K");
+                }
+                    else if( moneytobepaid < 10000000) {
+                        component.set("v.moneytobepaid",(moneytobepaid/1000000).toFixed(2) + " M");
+                    }
+               
+                        else  if(moneytobepaid < 1000000000) {
+                            component.set("v.moneytobepaid",Math.round((moneytobepaid/1000000)) + " M");
+                        }
+               
+                            else if(moneytobepaid < 1000000000000) {
+                                component.set("v.moneytobepaid",Math.round((moneytobepaid/1000000000)) + " B");
+                            } 
+              //  component.set("v.moneytobepaid",moneytobepaid.toLocaleString());
                 //Chart plotting Starts here
-var dps=new Array();
+                var dps=new Array();
                 for(var i=0; i<chartLabels.length; i++){
-                    dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i],color: "lightblue"});
+                    dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i]});
                 }
                 var chart = new CanvasJS.Chart("chartContainer0776", {
-            animationEnabled: true,
-            title:{
-                //text: "Debt Forecast",
-                fontFamily: "arial black",
-                fontColor: "#695A42"
-            },
-            dataPointWidth: 35,
-            axisX: {
-                interval: 1,
-                intervalType: "year"
-            },
-            axisY:{
-              //  valueFormatString:"#0K",
-                gridColor: "#ffffff",
-                tickColor: "#ffffff"
-            },
-            toolTip:{
-                contentFormatter: function ( e ) {
-                    var value = e.entries[0].dataPoint.y;
-                    if(value > 999)
-                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value)
-                    else if(value < 10000000)
-                     return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
-                      else if(value < 1000000000000)
-                           return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
-                }  
-            },
-            data: [{
-               yValueFormatString: "$ #,### ",
-                    //xValueFormatString: "MM YYYY",
-                    type: "stackedColumn",
-                    dataPoints: dps
-            },
-                 /*  {        
+                    animationEnabled: true,
+                    title:{
+                        //text: "Debt Forecast",
+                        fontFamily: "arial black",
+                        fontColor: "#695A42"
+                    },
+                    dataPointWidth: 35,
+                    axisX: {
+                        interval: 1,
+                        intervalType: "year"
+                    }, 
+                     legend:{
+                        cursor: "pointer",
+                        itemclick: function (e) {
+                            if(typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                e.dataSeries.visible = false;
+                            }
+                            else {
+                                e.dataSeries.visible = true;
+                            }
+                            chart.render();
+                        }
+                    },
+                    axisY:{
+                        //  valueFormatString:"#0K",
+                        gridColor: "#ffffff",
+                        tickColor: "#ffffff"
+                    },
+                    toolTip:{
+                        
+                        contentFormatter: function ( e ) {
+                            var value = e.entries[0].dataPoint.y;
+                            if(value < 999)
+                                return Math.round(value)
+                            if(value > 999)
+                                return Math.abs(value) > 999 ? Math.sign(value)*((Math.round(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value) 
+                                else if(value < 10000000)
+                                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.round(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
+                                    else if(value < 1000000000000)
+                                        return Math.abs(value) > 999 ? Math.sign(value)*((Math.round(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
+                                        }  
+                    },
+                    data: dataPoints1 /* [{
+                        yValueFormatString: "$ #,### ",
+                        //xValueFormatString: "MM YYYY",
+                        type: "stackedColumn",
+                        dataPoints: dps
+                    },
+                             {        
                        type: "stackedColumn",
                        showInLegend: true,
                        name: "Credit Cards",
@@ -209,18 +273,19 @@ var dps=new Array();
                            { y: 18.68, x: new Date(2015,0) },
                            { y: 22.45, x: new Date(2016,0) }
                        ]
-                   }*/
-                   ]
+                   }
+                  ]*/
                    });
-                  chart.render();  
-            }
-            var c = component.get('c.showDebtAnalysis');
-            $A.enqueueAction(c);
-        }//end try
-        catch(e){
-            console.log('Exception here in debt anlysis. Message: ' + e.message);
-        }
-    },
+                   chart.render();  
+                   }
+             
+                   var c = component.get('c.showDebtAnalysis');
+                   $A.enqueueAction(c);
+                   }//end try
+                   catch(e){
+                   console.log('Exception here in debt anlysis. Message: ' + e.message);
+                   }
+                   },
     
     prevYearlyInterest : function(component) {
         var data = component.get("v.data");

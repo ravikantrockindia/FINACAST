@@ -72,19 +72,11 @@
                     tickColor: "#ffffff"      
                 },
                 toolTip:{
-                contentFormatter: function ( e ) {
-                    var value = e.entries[0].dataPoint.y;
-                    if(value > 999)
-                    return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'K' : Math.sign(value)*Math.abs(value)
-                    else if(value < 10000000)
-                     return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/10000000).toFixed(1)) + 'M' : Math.sign(value)*Math.abs(value)
-                      else if(value < 1000000000000)
-                           return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
-                }  
+                
             },
                 data: [{
-                    yValueFormatString: "$ #,### ",
-                    //xValueFormatString: "MM YYYY",
+                   toolTipContent: "  $: {y}",
+                    yValueFormatString: "#,##0,.##K",
                     type: "area",
                     dataPoints: dps
                         }]

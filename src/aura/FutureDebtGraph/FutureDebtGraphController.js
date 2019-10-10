@@ -188,17 +188,24 @@
                 component.set("v.shortTermYearlyInterest", shortTermYearlyInterest);
                 //console.log('abc---'+component.get("v.shortTermYearlyInterest"));
                 //make chart Label and set points
-               
+               var dataPoints1=new Array();
                 if($A.util.isUndefinedOrNull(dataSeriesDebt[0]) != true) {
-                    for(var i = 0; i<dataSeriesDebt[0].objectDisplay.length; i++)
+                    for(var i = 0; i<dataSeriesDebt.length; i++)
                     {
-                        chartLabels[i] = dataSeriesDebt[0]["objectDisplay"][i][0];
-                        chartDataSet[i] = dataSeriesDebt[0]["objectDisplay"][i][1];
+                         var dataPoints=new Array();
+                        //chartLabels[i] = dataSeriesDebt[0]["objectDisplay"][i][0];
+                       // chartDataSet[i] = dataSeriesDebt[0]["objectDisplay"][i][1];
                        moneyOwned += Math.floor(parseFloat(chartDataSet[i]));
                          moneytobepaid = Math.floor(parseFloat(chartDataSet[9]));
                         if(isNaN(moneytobepaid)){
                             moneytobepaid =0;
                         }
+                          for(var j=0;j<dataSeriesDebt[i].objectDisplay.length;j++){
+                            dataPoints.push({x: new Date(dataSeriesDebt[i].objectDisplay[j][0], 0) , y:dataSeriesDebt[i].objectDisplay[j][1]});
+                        }
+                        
+                        var d = { type: "stackedColumn", toolTipContent: " {label} $: {y}", showInLegend:true,name:dataSeriesDebt[i].label, label:dataSeriesDebt[i].label ,yValueFormatString: "#,##0,.##K",dataPoints:dataPoints };
+                        dataPoints1.push(d); 
                     }
                 }
                 component.set("v.moneyOwned",moneyOwned.toLocaleString());
@@ -238,13 +245,13 @@
                            return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000000000000).toFixed(1)) + 'B' : Math.sign(value)*Math.abs(value)
                 }  
             },
-            data: [{
+            data:dataPoints1/* [{
                yValueFormatString: "$ #,### ",
                     //xValueFormatString: "MM YYYY",
                     type: "stackedColumn",
                     dataPoints: dps
             },
-                /*   {        
+                   {        
                        type: "stackedColumn",
                        showInLegend: true,
                        name: "Credit Cards",
@@ -303,8 +310,8 @@
                            { y: 18.68, x: new Date(2015,0) },
                            { y: 22.45, x: new Date(2016,0) }
                        ]
-                   }*/
-                   ]
+                   }
+                   ]*/
                    });
                    chart.render();
             }

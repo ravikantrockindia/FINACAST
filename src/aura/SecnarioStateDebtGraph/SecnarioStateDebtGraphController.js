@@ -3,6 +3,7 @@
     debtForecast : function(component, event, helper){
         var data = component.get("v.data");
         helper.showDebtForecast(component);
+         helper.debtAnalysis(component);
     },
     
      debtForecast2 : function(component, event, helper){

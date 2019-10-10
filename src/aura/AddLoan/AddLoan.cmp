@@ -9,11 +9,12 @@
     <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>  
     <aura:attribute name="loandata" type="FinServ__FinancialAccount__c" />
     <aura:attribute name="getNo" type="Boolean" default = "False"/>
-    <aura:attribute name="getYes" type="Boolean" default = "False"/>
+    <aura:attribute name="getYes" type="Boolean" default = "False"/> 
     <aura:attribute name="isMonthly" type="Boolean" default = "false"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name = "accLoanRecType"  type = "String"/>
+    <aura:attribute name="loanRec" type="FinServ__FinancialAccount__c"/>
     
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">
@@ -40,7 +41,8 @@
                                               
                                               recordTypeId="{!v.Loan}"
                                               recordId = "{!v.loanId}"
-                                              objectApiName="FinServ__FinancialAccount__c"  onsuccess="{!c.saveAndCloseBtn}"
+                                              objectApiName="FinServ__FinancialAccount__c"  
+                                              onsuccess="{!c.saveAndCloseBtn}"
                                               onsubmit = "{!c.handleSubmit}"
                                               onload="{!c.recordLoaded}"
                                               >
