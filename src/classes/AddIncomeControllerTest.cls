@@ -180,6 +180,9 @@ public class AddIncomeControllerTest {
         AddIncomeController.Budgetlist(bg1.id);
          AddIncomeController.loanRecord(financial1.id);
         AddIncomeController.deleteTransaction(ftrans1.id);
+        AddIncomeController.ClientLoanRecord(acc1.Id);
+        AddIncomeController.ClientIncRecord(acc1.Id);
+        AddIncomeController.ClientExpRecord(acc1.Id);
         SummaryCashFlowController.getMonth('Jan');
         System.assertEquals('1', '1');
     }

@@ -144,6 +144,23 @@ public with sharing class AddIncomeController {
         System.debug('clientId-sassa-->'+LoanRec);
         return LoanRec;
     }
+     
+    @auraEnabled   
+    public static List<Budget__c> ClientIncRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);   
+        List<Budget__c> IncRec = new List<Budget__c>();
+        IncRec = [select id ,name,recordTypeId ,recordType.developername from Budget__c  where recordType.developername='Income_Record_Type' and Primary_Owner__c=:clientId ];
+        System.debug('clientId-sassa-->'+IncRec);
+        return IncRec;
+    }
+    @auraEnabled   
+    public static List<Budget__c> ClientExpRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);   
+        List<Budget__c> ExpRec = new List<Budget__c>();
+        ExpRec = [select id ,name,recordTypeId ,recordType.developername from Budget__c where recordType.developername='Expense_Record_Type' and Primary_Owner__c=:clientId ];
+        System.debug('clientId-sassa-->'+ExpRec);
+        return ExpRec;
+    }
     //
     //get summarychart loan transaction
     //

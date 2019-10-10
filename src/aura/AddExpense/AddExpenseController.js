@@ -6,6 +6,20 @@
         console.log('init for expense:',cmpTarget);
         $A.util.removeClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",true);
+        var ClientId=component.get("v.client.Id");
+        
+        var action = component.get("c.ClientExpRecord");
+        action.setParams({
+            clientId : ClientId
+        });
+        action.setCallback(this, function(a) {
+            var state  = a.getState();
+            var expRec=a.getReturnValue();
+            component.set("v.expRec",expRec);
+        });
+        $A.enqueueAction(action);
+
+        
         
     },
     
@@ -33,6 +47,7 @@
         var status3 = 0;
         
         var msg = "";
+        var ispresent=false;   
         var priowner = component.find("owner").get("v.value");
          console.log('owner',priowner);
         
@@ -42,27 +57,47 @@
         var sDate = component.find("stDate").get("v.value");
         var eDate = component.find("endDate").get("v.value");
         
+        var expRec=component.get("v.expRec");
+        for (var i = 0; i < expRec.length; i++) { 
+            
+            if(priowner==expRec[i].Name){
+                event.preventDefault();
+                msg = "Expense name with this name already exist."
+                helper.showAlertEmptyInvalidVal(component,msg); 
+                ispresent=true;
+                break;
+                 
+            }
+        }
+        if(ispresent){
+          //  component.find("Id_spinner").set("v.class" , 'slds-hide');
+            return;
+            
+        }
+        else{
+            
         if($A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(freqcy) || freqcy == "" ||  $A.util.isUndefinedOrNull(growth) || growth == "" || $A.util.isUndefinedOrNull(amn) || amn =="" || amn == 0  )
         {
-            status3 = 0;
+           // status3 = 0;
             event.preventDefault();
             msg = "Please fill mandatory fields."
-            helper.showAlertEmptyInvalidVal(component,msg);       
+            helper.showAlertEmptyInvalidVal(component,msg);  
+            return;
         }
         else if(eDate < sDate){
-            status3 = 0;
+           // status3 = 0;
             event.preventDefault();
             msg = "	End Date cannot be less than the Start Date"
             helper.showAlertEmptyInvalidVal(component,msg);    
         }
             else if (amn <0 ){
-                status3 =0;
+               // status3 =0;
                 event.preventDefault();
                 msg = " Amount after tax per pay check($) cannot be negative."
                 helper.showAlertEmptyInvalidVal(component,msg);
             }
                 else if ( growth <0 ){
-                    status3 =0;
+                  //  status3 =0;
                     event.preventDefault();
                     msg = " Yearly growth (%) cannot be negative."
                     helper.showAlertEmptyInvalidVal(component,msg);
@@ -70,25 +105,29 @@
         
                     else
                     {
-                        status3 = 1;
+                       // status3 = 1;
                     }
+        
         if (component.get("v.isTaxDeduction")){
             if(component.find("taxbenfit").get("v.value") < 0){
-                status3 = 0;
+               // status3 = 0;
                 event.preventDefault();
                 msg= "What % of contribution bring tax benefits? canot is negative"
-                helper.showAlertEmptyInvalidVal(component,msg);    
+                helper.showAlertEmptyInvalidVal(component,msg); 
+                return;
             }
             else if(component.find("deducationtax").get("v.value") < 0){
-                status3= 0;
+              //  status3= 0;
                 event.preventDefault();
                 msg = "Max yearly tax deduction allowed ($ )? canot is negative"
-                helper.showAlertEmptyInvalidVal(component,msg);    
+                helper.showAlertEmptyInvalidVal(component,msg);  
+                return;
             }
         }
         else
         {
-            status3 = 1;
+            //status3 = 1;
+        }
         }
     }, 
     handleChange: function (cmp, event) {

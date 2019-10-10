@@ -16,7 +16,8 @@
     <aura:attribute name="isTaxDeduction" type="Boolean" default = "false"/>    
     <aura:attribute name="getNo" type="Boolean" default = "False"/>
     <aura:attribute name="getYes" type="Boolean" default = "False"/>
-    <aura:attribute name="isMonthly" type="Boolean" default = "false"/>    
+    <aura:attribute name="isMonthly" type="Boolean" default = "false"/>  
+    <aura:attribute name="expRec" type="Budget__c"/>
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">
             <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
