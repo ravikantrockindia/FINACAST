@@ -1,10 +1,10 @@
 ({
    debtAnalysis : function(component) {
-
+       
         var data = component.get("v.Tabledata");
               data = JSON.parse(data);
-         var viewingOption=component.get("v.currentselectedValue");
-        console.log('viewingOption2'+viewingOption);
+         var viewingOption=component.get("v.futureselectedValue");
+        
         var objectDisplay ='';
         if(viewingOption=='buy'){
             objectDisplay=data.simulationData.avatarData;

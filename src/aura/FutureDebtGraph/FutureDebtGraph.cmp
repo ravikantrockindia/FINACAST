@@ -3,6 +3,7 @@
     <aura:attribute name = "Name" type = "String" default="CAR"/>
     <aura:attribute name = "totalAmount" type = "double" default="30000"/>
     <aura:attribute name = "year" type="Integer"/>
+    <aura:attribute name = "debtStatus" type="Object"/>
     <aura:attribute name = "downPayment" type = "double" default="0"/>
     <aura:attribute name = "installments" type = "double" default="0"/>
     <aura:attribute name = "startDate" type = "Date" default="7/2019"/>
@@ -72,9 +73,10 @@
                     <div id="chartContainer3.29" style="height:250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                 </div>
             </div>
-            <div class="slds-grid slds-gutter ">
-                <div class="slds-col slds-size_12-of-12 slds-p-bottom_small slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+             <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-left_small">
+                    <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt"> <span>{!debt.message}.</span>
+                        </aura:iteration></p>
                 </div>
             </div>
         </div>

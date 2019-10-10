@@ -1,6 +1,7 @@
 <aura:component controller="AffordabilityController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <aura:attribute name = "cid" type = "String" default=""/>
     <aura:attribute name = "moneyOwned" type = "double" />
+    <aura:attribute name = "debtStatus" type="Object"/>
     <aura:attribute name = "moneytobepaid" type = "double" />
     <aura:attribute name = "year" type="Integer"/>
     <aura:attribute name = "Tabledata" type = "object" />
@@ -64,9 +65,10 @@
                     <div id="chartContainer3.299" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                 </div>
             </div>
-            <div class="slds-grid slds-gutter ">
-                <div class="slds-col slds-size_12-of-12 slds-p-bottom_small slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+                  <div class="slds-grid slds-gutter ">
+                <div class="slds-col slds-size_12-of-12 slds-p-left_small">
+                    <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt"> <span>{!debt.message}.</span>
+                        </aura:iteration></p>
                 </div>
             </div>
         </div>

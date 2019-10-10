@@ -135,7 +135,16 @@ public with sharing class AddIncomeController {
         System.debug('clientId-sassa-->'+LoanRec);
         return LoanRec;
     }
-    
+    //
+    @auraEnabled   
+    public static List<FinServ__FinancialAccount__c> ClientLoanRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);   
+        List<FinServ__FinancialAccount__c> LoanRec = new List<FinServ__FinancialAccount__c>();
+        LoanRec = [select id ,name,recordTypeId ,recordType.developername from FinServ__FinancialAccount__c where recordType.developername='LoanAccount' and FinServ__PrimaryOwner__c=:clientId ];
+        System.debug('clientId-sassa-->'+LoanRec);
+        return LoanRec;
+    }
+    //
     //get summarychart loan transaction
     //
     @auraEnabled

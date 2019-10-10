@@ -83,7 +83,7 @@
     },
     
     generateChart : function(component, event, helper) {
-
+	 helper.debtAnalysis(component);
         var offset;
 
                 var tabledata = component.get("v.Tabledata");
