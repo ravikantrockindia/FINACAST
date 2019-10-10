@@ -65,7 +65,7 @@
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                         
-                                        <span class = "highlight">* </span> Payment Amount<lightning:inputField fieldName="FinServ__PaymentAmount__c" variant="label-hidden" aura:id = "amount" ></lightning:inputField>
+                                        <span class = "highlight">* </span> Installment Amount<lightning:inputField fieldName="FinServ__PaymentAmount__c" variant="label-hidden" aura:id = "amount" ></lightning:inputField>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                         <aura:if isTrue="{!v.accLoanRecType == 'IndustriesIndividual'}">
