@@ -12,7 +12,15 @@
         });
         $A.enqueueAction(action); 
     },
+    editAndSimulate :function(component, event, helper){  
+        
+        component.set("v.editAndSimulate",true);
+        component.set("v.showGraph",false);
+    },
+    
     simulate : function(component, event, helper) {
+        component.set("v.editAndSimulate",false);
+        component.set("v.showGraph",true);
          var spinner = component.find("mySpinner");
         $A.util.removeClass(spinner, "slds-hide");
                 $A.util.addClass(spinner, "slds-show");

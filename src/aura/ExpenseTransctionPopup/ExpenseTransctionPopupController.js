@@ -26,8 +26,8 @@
             {type: "button", typeAttributes: {
                 iconName: 'utility:edit',
                 label: '',
-                name: 'selectRecord',
-                title: 'selectRecord',
+                name: 'Edit',
+                title: 'Edit',
                 disabled: false,
                 value: 'test',
                 name: 'edit',
@@ -37,8 +37,8 @@
             {type: "button", typeAttributes: {
                 iconName: 'utility:delete',
                 label: '',
-                name: 'selectRecord',
-                title: 'selectRecord',
+                name: 'Delete',
+                title: 'Delete',
                 disabled: false,
                 size:'medium',
                 value: 'test',

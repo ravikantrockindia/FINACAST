@@ -102,7 +102,7 @@
 }
 .THIS .chart-sticker {
     position: absolute;
-    top: 120px;
+    top: 125px;
     text-align: left;
     /*width: calc(100% - 20px);*/
     width: 100%;
@@ -112,16 +112,16 @@
     font-size: 11px;
 }
 .THIS .chart-sticker ul li:first-child {
-    margin-left:-14px;
+    margin-left: 0px;
 }
 .THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:70px;
+    margin-left:60px;
 }
 .THIS .chart-sticker ul li:last-child {
     margin-left:40px;
 }
 .THIS .chart-sticker h2 {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 600;
 }
 .THIS .client-profile h2 .slds-icon {

@@ -1,14 +1,18 @@
 <aura:component controller="MonteCarloSimulationTest" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="childgid" type="String"/>
+    <aura:attribute name="selectedValue" type="String" default=""/>
     <aura:attribute name="IA" type="Integer"/>
     <aura:attribute name="requiredMonthlySaving" type="Integer"/>
     <aura:attribute name="TA" type="Integer"/>
     <aura:attribute name="TD" type="Date"/>
-    <aura:attribute name="Vol" type="Double"/>
+    <aura:attribute name="Vol" type="Double" default="4.0"/>
+    <aura:attribute name="editAndSimulate" type="boolean" default="true"/>
+     <aura:attribute name="showGraph" type="boolean" default="true"/>
     <aura:attribute name="picklistValues" type="String[]" />
         <aura:attribute name="standardDeviationValueMap" type="Object" />
         <lightning:spinner aura:id="mySpinner" size="medium" class="slds-hide"/>
+    <aura:if isTrue="{!v.editAndSimulate}">
 	<div class="slds-p-left_small slds-p-right_small">
     <div class="client_managed monte_carlo-form slds-p-bottom_xx-small">
         <div class="slds-grid slds-gutter ">
@@ -49,7 +53,7 @@
                 <div class="slds-form-element">
                     <label class="slds-form-element__label" for="form-element-01">Volatility</label>
                     <div class="slds-form-element__control">
-                        <lightning:input type="number" name="input4" label="Volatility" aura:id="volatility" variant="label-hidden" value="4.0"/>
+                        <lightning:input type="number" name="input4" label="Volatility" aura:id="volatility" variant="label-hidden" value="{!v.Vol}"/>
                     </div>
                 </div>
             </div>
@@ -66,10 +70,10 @@
             <div class="slds-col slds-size_6-of-12 slds-p-top_small slds-p-left_small slds-p-right_small">
                 <div class="slds-form-element">
                     <label class="slds-form-element__label" for="select-01">Risk Profile</label>
-                            <lightning:select aura:id="riskProfile" class="label-hidden" variant="label-hidden">       
+                            <lightning:select aura:id="riskProfile" class="label-hidden" variant="label-hidden"  value="{!v.selectedValue}">       
                                 <option value="">Choose one</option> 
                                 <aura:iteration items="{!v.picklistValues}" var="item">
-                                    <option value="{!item.value}">
+                                    <option value="{!item.value}" selected="{!item.selected}">
                                         {!item}
                                     </option>
                                 </aura:iteration>
@@ -85,6 +89,8 @@
         </div>
     </div>
     </div>
+    </aura:if>
+     <aura:if isTrue="{!v.showGraph}">
             <aura:if isTrue="{!!(v.standardDeviationValueMap==null)}">
 	<div class="slds-p-left_small slds-p-right_small">
     <div class="client_managed slds-m-top_large slds-p-bottom_xx-small">
@@ -118,6 +124,10 @@
             </div>
         </div>
     </div>
+        <div class="slds-col slds-size_12-of-12 slds-text-align_center slds-p-top_x-large slds-p-bottom_xx-large  slds-p-left_medium slds-p-right_medium">
+                <lightning:button class="btn1" variant="brand" label="Edit and Simulate" title="Edit and Simulate" onclick="{!c.editAndSimulate}"/>
+            </div>
                 </div>
+    </aura:if>
     </aura:if>
 </aura:component>

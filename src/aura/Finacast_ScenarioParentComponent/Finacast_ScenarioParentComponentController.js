@@ -5,6 +5,48 @@
         component.set("v.data2", defaultData); 
         component.set("v.data1", defaultData); 
     },
+    onScenarioDeleteIcon: function(component, event, helper){
+        var recordId = event.getSource().get('v.value');
+         var action = component.get("c.deleteScenario");
+
+        action.setParams({
+            'ScenarioId' :event.getSource().get("v.value")
+        });
+        
+        action.setCallback(this, function(response) {     
+            var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                "title": "Delete Success!",
+                type: 'success',
+                "message": "Record has been deleted successfully"           
+            });
+            resultsToast.fire();
+             helper.helperMethod(component);
+        });     
+        $A.enqueueAction(action);   
+    },
+    onScenarioEditIcon: function(component, event, helper){
+        var recordId = event.getSource().get('v.value');
+       // alert(recordId);
+       component.set("v.scenarioId",recordId);
+        component.set("v.EditScenario",true);
+    },
+    
+    handleManaged: function(component, event, helper){
+        component.set("v.Spinner", true);
+        var action = component.get("c.ScenarioData");  
+         action.setParams({
+            clientId: component.get("v.cid")
+        });
+        action.setCallback(this, function(response) {
+            
+            component.set("v.scenario", response.getReturnValue());
+            component.set("v.Spinner", false);
+             
+        });
+      
+        $A.enqueueAction(action);
+    },
     
     handleActive: function(component, event, helper){
         component.set("v.Spinner", true);
@@ -34,12 +76,65 @@
         $A.enqueueAction(action);
         
     },
+    cancelButton : function(component,event) {
+        // component.set("v.recordName", "");
+        // component.set("v.goalButtonStatus",false);
+        // component.set("v.savingButtonStatus",false);
+        // component.set("v.debtButtonStatus",false);  
+        component.set("v.manageScenarioStatus", false);
+    },
+    
+    onDoneScenarioButton : function(component) {
+        component.set("v.manageScenarioStatus", false);
+        
+       // $A.get('e.force:refreshView').fire();
+        component.set("v.noData", true);
+    },
+    
+    onScenarioAddButton : function(component) {
+        component.set("v.addScenarioButtonStatus", true);
+        component.set("v.isAddScenarioActive", false);			//to disable add another scenario button and after click save icon enable it 
+    },
+    onNewScenarioSaveSuccess : function(component, event, helper) {
+        console.log('Scenario Saving');
+        if(($A.util.isUndefinedOrNull(component.find("sceneName").get("v.value"))) != true && component.find("sceneName").get("v.value") !="" )
+        {
+            var action = component.get("c.saveNewScenario");
+            action.setParams({
+                name : component.find("sceneName").get("v.value"),
+                clientId : component.get("v.cid"),
+            });
+            
+            action.setCallback(this, function(response){ 
+                console.log('resonse after save: ' + JSON.stringify(response.getReturnValue()));
+                var state = response.getState();
+                if(state == 'SUCCESS'){
+                    component.set("v.addScenarioButtonStatus", false);
+                    component.set("v.isAddScenarioActive", true);
+                                        
+                    component.set("v.scenario", response.getReturnValue());
+                    component.set("v.scene",component.get("v.scenario[0].Id"));
+                    // helper.showFieldsValue(component);
+                }
+                else{
+                    console.log('failed');
+                }
+                  
+                 helper.helperMethod(component);
+            });
+            $A.enqueueAction(action);
+        }   
+    },
     
 	// this function automatic call by aura:waiting event  
     showSpinner: function(component, event, helper) {
         component.set("v.Spinner", true); 
     },
-    
+    manageScenarioButton : function(component, event, helper) {     
+        //var action = component.get("c.getUserScenarios");
+        component.set("v.manageScenarioStatus", true);
+        component.set("v.isAddScenarioActive", true); 
+    },
     // this function automatic call by aura:doneWaiting event 
     hideSpinner : function(component,event,helper){   
         component.set("v.Spinner", false);

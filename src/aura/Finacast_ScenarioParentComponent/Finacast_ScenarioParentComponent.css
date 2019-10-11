@@ -31,12 +31,12 @@
 }
 .THIS.slds-card__body {
     width: 100%;
-    padding: 0 5%;
-    background-color: #fff;
+    padding: 0 2%;
+    background-color: #fafafa;
     margin-top: 0;
 }
 .THIS.slds-card__body .slds-tabs_default {
-    background-color: #fff;
+    background-color: #fafafa;
 }
 .THIS.slds-card__body .slds-tabs_default__item {
     padding: 0;
@@ -69,7 +69,6 @@
 .THIS .client_managed {
     background-color: #fff;
     box-shadow: 0 0px 5px 0px #ccc;
-    height: 100%;
 }
 .THIS .client_managed p {
     color: #8e8e8e;
@@ -78,6 +77,11 @@
 .THIS .what-is span .slds-button {
     min-width: 26px !important;
     padding: 0;
+}
+.THIS .client_managed .slds-select {
+    height: 40px;
+    border-radius: 0;
+    background-color: #f2f0f0;
 }
 .THIS .slds-card__header {
     display: none;
@@ -100,4 +104,11 @@
 }
 .THIS .slds-table tbody td:last-child {
     text-align: right;
+}
+.THIS .add_goals {
+    font-size: 14px;
+}
+.THIS .add_goals:focus {
+    border: none;
+    box-shadow: none;
 }

@@ -18,6 +18,7 @@
     
      debtForecast2 : function(component, event, helper){
         helper.showDebtForecast(component);
+        
     },
     
     //2.1 Previous Year Data Interest

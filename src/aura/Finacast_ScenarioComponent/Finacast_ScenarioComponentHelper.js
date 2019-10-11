@@ -1,5 +1,6 @@
 ({
-    showFieldsValue : function(component) {
+    showFieldsValue : function(component,helper) {
+          component.set("v.Spinner",true)
         var s = component.get("v.selectedValue");
         
         //to tell if it is the first load and set listItems again only then
@@ -14,7 +15,7 @@
         });      
         action.setCallback(this, function(response){
             //console.log("resp: ",JSON.stringify(response.getReturnValue()));
-            
+			component.set("v.Spinner",false);  
             if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioIncome)) {
                 component.set("v.income", [{'Name': 'Income 1', 'Amount' : '0'}]); 
                 component.set("v.incomeAmount", 0);}
@@ -41,19 +42,27 @@
             else{
                 component.set("v.goal", response.getReturnValue().userScenarioGoal); 
                 component.set("v.goalAmount", response.getReturnValue().totalGoalAmount);
+                component.set("v.goalProgress", 75);
+              //   component.set("v.goalProgress", Math.round(response.getReturnValue().totalGoalAmount)/100000*100);
             }
             
             if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioLoan)){
-                component.set("v.loan", [{'Name': 'Loan 1', 'Amount' : '0'}]); 
+                component.set("v.loan",null); 
                 component.set("v.loanAmount", 0)}
             else{
                 component.set("v.loan", response.getReturnValue().userScenarioLoan); 
-                component.set("v.loanAmount", response.getReturnValue().totalGoalAmount);
+                component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
+                 component.set("v.loanProgress", 60);
+                 //component.set("v.loanProgress", Math.round(response.getReturnValue().totalLoanAmount)/100000*100);
+              //  alert('kk'+component.get("v.loanProgress"));
             }
             
             //component.set("v.incomeAmount", response.getReturnValue().totalIncomeAmount);
             //component.set("v.expenseAmount", response.getReturnValue().totalExpenseAmount);
             component.set("v.savingsAmount", response.getReturnValue().totalSaveAmount);
+             component.set("v.savingProgress", 70);
+         //  component.set("v.savingProgress", Math.round(response.getReturnValue().totalSaveAmount)/1000000*100);
+             // alert('jj'+component.get("v.savingProgress"));
             //component.set("v.loan",  response.getReturnValue().userScenarioLoan);
             //component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
             //component.set("v.creditcard",  response.getReturnValue().userScenarioCard);
@@ -117,9 +126,35 @@
             else {
                 component.set("v.goalLimit",limGoal);
             }
+  
+            var sliderIncome = new Slider('#incomeSlider001', {
+                formatter: function(value) {
+                    component.set("v.val",value);
+                    
+                    return 'amount: '+value;  
+                }
+            });
             
-            //console.log('After inint in cmp markup: ' + component.get("v.scene"));
-
+            var amount = component.get("v.incomeAmount");
+            sliderIncome.setValue(amount);
+            
+            var sliderExpense = new Slider('#ExpenseSlider001', {
+                formatter: function(value) {
+                    component.set("v.expAmt",value);
+                    return 'amount: '+value;
+                }
+            });
+            var Expenseamount = component.get("v.expenseAmount");
+            sliderExpense.setValue(Expenseamount);
+            
+          /*  var sliderGoal = new Slider('#GoalSlider001', {
+                formatter: function(value) {
+                   	component.set("v.goalAmount",value);
+                    return 'amount: '+value;
+                }
+            });
+             var Goalamount = component.get("v.goalAmount");
+             sliderGoal.setValue(Goalamount);   */
         });
         $A.enqueueAction(action); 
     },
@@ -140,4 +175,25 @@
         });
         toastEvent.fire();  
     },
+    
+    sliderHelper:function(component,helper){   
+    /*    var sliderIncome = new Slider('#incomeSlider001', {
+            formatter: function(value) {
+                var amount = component.get("v.incomeAmount");
+                document.getElementById('incomeSlider001').setAttribute('data-slider-value',amount) ;
+        	    return 'amount: '+value;
+            }
+        });
+        
+        var sliderExpense = new Slider('#ExpenseSlider001', {
+            formatter: function(value) {
+                var amount = component.get("v.expenseAmount");
+               // document.getElementById('ExpenseSlider001').setAttribute('data-slider-value',amount) ;
+                return 'amount: '+value;
+            }
+        });  */
+        //sliderIncome.setValue(component.get("v.incomeAmount"));
+        //sliderExpense.setValue(component.get("v.expenseAmount"));
+        
+    }
 })

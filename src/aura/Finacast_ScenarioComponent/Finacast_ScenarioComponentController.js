@@ -1,4 +1,103 @@
 ({
+        toggleSection : function(component, event, helper) {
+        // dynamically get aura:id name from 'data-auraId' attribute
+        var sectionAuraId = event.target.getAttribute("data-auraId");
+        // get section Div element using aura:id
+        var sectionDiv = component.find(sectionAuraId).getElement();
+        /* The search() method searches for 'slds-is-open' class, and returns the position of the match.
+         * This method returns -1 if no match is found.
+        */
+        var sectionState = sectionDiv.getAttribute('class').search('slds-is-open'); 
+        
+        // -1 if 'slds-is-open' class is missing...then set 'slds-is-open' class else set slds-is-close class to element
+        if(sectionState == -1){
+            sectionDiv.setAttribute('class' , 'slds-section slds-is-open');
+        }else{
+            sectionDiv.setAttribute('class' , 'slds-section slds-is-close');
+        }
+    }
+,
+    
+    doInit1:function(component,event,helper){   
+
+      
+		 var workspaceAPI = component.find("workspace");
+        var tab = component.get("v.tabName")
+       // console.log('tab',tab)
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            var focusedTabId = response.tabId;
+            //console.log('tab id',focusedTabId )
+            workspaceAPI.setTabLabel({
+                label: tab
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+        
+        const defaultData = {"debugObj":[],"offset":2019,"debtAnalysis":{ "debtPayed": [], "debtItems": 0},"financialHealthAnalysis":[],"yearlySavings":[],"monthlySavingsTrack":[],"years":0,"goalAnalysis":{},"netWorthAnalysis":{},"monthOffset":{}};
+        component.set("v.data2", defaultData);
+		helper.showFieldsValue(component,helper); 
+        //console.log('in init : '+component.get('v.selectedValue'));
+   },
+    
+     handleSuccess : function(component,event,helper) {
+         //console.log('Goal Saved');
+        component.set("v.recordName","");
+        component.set("v.debtButtonStatus",false);  
+       
+        component.set("v.savingButtonStatus",false);
+        component.set("v.goalButtonStatus",false);
+        helper.showFieldsValue(component);
+    },
+    
+    cancelButton : function(component,event) {
+        component.set("v.recordName", "");
+        component.set("v.goalButtonStatus",false);
+        component.set("v.savingButtonStatus",false);
+        component.set("v.debtButtonStatus",false);  
+        component.set("v.manageScenarioStatus", false);        
+        
+    },
+    handleClick:function(component,event,helper){
+        
+          var recTypeName = event.getSource().get("v.name");
+//alert(recTypeName);
+         
+       // alert("Value--on change"+ component.get("v.expAmt"));
+        var recId = event.getSource().get("v.value");
+      //  alert(recId);
+        if($A.util.isUndefinedOrNull(recId)) {
+            recId = "init";
+        }
+        //console.log(component.get("v.expenseSlider"));
+        var action = component.get("c.saveRecord")
+        action.setParams({
+            clientId : component.get("v.cid"),
+            recType : recTypeName,
+            sceneId : component.get("v.scene"),
+            incomeAmount : component.get("v.val"),
+            expenseAmount : component.get("v.expAmt"),
+            recordId : recId
+        });
+        action.setCallback(this, function(response) {
+            console.log('response after save button: ' + JSON.stringify(response.getReturnValue()));
+            if(recTypeName == "scenario") {
+                //helper.showFieldsValue(component);
+            }
+            if(recTypeName == "income save") {
+                component.set("v.income", response.getReturnValue());
+            }
+            if(recTypeName == "expense save") {
+                component.set("v.expense", response.getReturnValue());
+            }
+            
+        });
+           $A.get('e.force:refreshView').fire();
+
+        $A.enqueueAction(action);
+        
+    },
     
 	doInit : function(component, event, helper) {
         var workspaceAPI = component.find("workspace");
@@ -17,9 +116,9 @@
         
         const defaultData = {"debugObj":[],"offset":2019,"debtAnalysis":{ "debtPayed": [], "debtItems": 0},"financialHealthAnalysis":[],"yearlySavings":[],"monthlySavingsTrack":[],"years":0,"goalAnalysis":{},"netWorthAnalysis":{},"monthOffset":{}};
         component.set("v.data2", defaultData);
-		helper.showFieldsValue(component); 
+		helper.showFieldsValue(component,helper); 
         //console.log('in init : '+component.get('v.selectedValue'));
-	},
+   },
     
      handleSuccess : function(component,event,helper) {
          //console.log('Goal Saved');
@@ -252,6 +351,7 @@
     
      handleSubmit : function(component, event,helper)
     {
+        component.set("v.Loanpart", true);
         var msg;
         var status1;
         var status2;
@@ -449,6 +549,7 @@
     
     onDoneScenarioButton : function(component) {
         component.set("v.manageScenarioStatus", false);
+        $A.get('e.force:refreshView').fire();
     },
     
     //new method
@@ -476,6 +577,7 @@
                     console.log('failed');
                 }
             });
+            
             $A.enqueueAction(action);
         }   
     },

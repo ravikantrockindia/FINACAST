@@ -15,7 +15,7 @@
 
     <div class="slds-grid slds-gutter ">
         <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
-        	<h2>Networth Forecast</h2>
+        	<h3>Networth Forecast</h3>
         </div>
     <div class="slds-col slds-size_6-of-12 what-is slds-p-top_medium slds-p-bottom_medium slds-p-left_large slds-p-right_small">
                     <div class="slds-clearfix">

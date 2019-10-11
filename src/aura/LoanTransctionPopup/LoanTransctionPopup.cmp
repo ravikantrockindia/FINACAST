@@ -165,6 +165,7 @@
                                         </aura:if> 
                                     </tbody>        
                                 </table-->
+                    <br/>
                      <aura:if isTrue="{!v.showDatatable}">
                          <lightning:datatable  aura:id="TransTable"  onrowaction="{!c.viewRecord}" onloadmore="{!c.handleLoadMore}" enableInfiniteLoading="{!v.enableInfiniteLoading}" loadMoreOffset="{!v.loadOffset}"
                             columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" />  

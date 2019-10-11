@@ -136,9 +136,9 @@
                                             <div>   
                                                 <div class="chart-sticker">
                                                     <ul>
-                                                        <li><span>0 - Bad</span></li>
+                                                        <li><span>0 - Getting Started</span></li>
                                                         <li><h2>{!v.res}%</h2></li>
-                                                        <li><span>100 - Excellent</span></li>
+                                                        <li><span>100 - Met the Goal</span></li>
                                                     </ul>
                                                 </div>
                                             </div>

@@ -29,7 +29,7 @@
             
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small slds-border_right">
-                    <h2>FinancialHealth</h2>       
+                    <h3>FinancialHealth</h3>       
                     <h4>Overall Score</h4>                            
                     <div class="half-chart half-chart-sticker">
                         <div class="slds-grid slds-p-top_large slds-p-bottom_large">

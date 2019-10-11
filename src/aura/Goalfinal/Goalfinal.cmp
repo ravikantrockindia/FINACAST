@@ -91,10 +91,10 @@
                                 <td data-label="Track" scope="col">
                                     <div class="slds-truncate" title="Track">
                                         <aura:if isTrue="{!Gdetails.goalTrack}">
-                                            <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span> On Track</span></p>
+                                            <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>  On Track</span></p>
                                             
                                             <aura:set attribute="else">
-                                                <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span> Not On Track</span></p>
+                                                <p class="non-track"><lightning:icon iconName="action:close" size="xx-small"/> <span>  Not On Track</span></p>
                                                 
                                             </aura:set>
                                         </aura:if>

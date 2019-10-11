@@ -7,7 +7,7 @@
     <aura:attribute name = "longTermLoans"  type="Double" default="0"/>
      <aura:attribute name = "intrestTermDebt"  type="Double" default="0"/>
     <aura:attribute name = "shortTermLoans"  type="Double" default="0"/>
-    <aura:attribute name = "debtStatus" type="Object"/>
+    <aura:attribute name = "debtStatus" type="object"/>
     <aura:attribute name = "chartDataObject" type = "Object" />
     <aura:attribute name = "helpBox" type="Boolean"/>
     <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
@@ -133,7 +133,10 @@
                     </div-->
                      <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <span> Your debt forecast is ${!v.moneyOwned}.</span></p>
+                    <p class="networth-msg">
+                        
+                        <i><b>Insight:</b></i><aura:iteration items="{!v.debtStatus}" var="debt"> <span>{!debt.message}.</span>
+                        </aura:iteration></p>
                 </div>
             </div>
                     <!--div class="slds-wrap slds-grid tab3-message" style="margin: 0 0;">
