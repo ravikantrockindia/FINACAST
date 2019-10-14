@@ -18,7 +18,7 @@
     <aura:attribute name = "isNonRetirement" type = "Boolean" default = "False"/>
     <aura:attribute name="recordTypeId" type="String"/>
     <aura:attribute name="recordTypeIdName" type="String"/>
-    <!--<aura:handler name="openModal" event="c:OpenAddModal" action="{!c.doInit}"/>-->
+    <aura:handler name="openModal" event="c:OpenAddModal" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
     
     <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >

@@ -75,10 +75,10 @@
     font-family: 'Work Sans', sans-serif;
     color: #000;
     text-align: left;
-    padding-left: 27px;
+    padding-left: 1px;
 }
-.THIS .slds-modal__footer .slds-button_neutral {
-    margin-right: 27px;
+.THIS .slds-media {
+    height: 20px;
 }
 @media (max-width: 1200px) {
     .THIS .slds-col1-cover {

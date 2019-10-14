@@ -415,3 +415,10 @@
     height: 40px;
     background-color: #fdfdfd;
 }
+.THIS .label-eliminator2 {
+    width: 100%;
+}
+.THIS .slds-modal__container.Summary_cashflow {
+    width: 80%;
+    min-width: 80%;
+}

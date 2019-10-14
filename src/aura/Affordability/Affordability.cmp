@@ -154,14 +154,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="slds-size_1-of-2"> 
-                                                    <label class="slds-form-element__label slds-p-top_large">Start date</label>
-                                                    <div class="slds-form-element__control label-eliminator">
+                                                    <label class="slds-form-element__label slds-p-top_small">Start date</label>
+                                                    <div class="slds-form-element__control label-eliminator label-eliminator2">
                                                         <lightning:input type="date"  value="{!v.startDate}" />
                                                     </div>
                                                 </div>
                                                 <div class="slds-size_1-of-2"> 
-                                                    <label class="slds-form-element__label slds-p-top_large">End date</label>
-                                                    <div class="slds-form-element__control  label-eliminator">
+                                                    <label class="slds-form-element__label slds-p-top_small">End date</label>
+                                                    <div class="slds-form-element__control  label-eliminator label-eliminator2">
                                                     	<lightning:input type="date"  value="{!v.endDate}" />
                                                     </div>
                                                 </div>
@@ -185,9 +185,9 @@
                                              </div>
                                             <label class="slds-form-element__label slds-p-top_large">Are tax benefit realized monthly</label>  
                                             <fieldset id="group2">
-                                                <div class="slds-form-element__control">
-                                            <input type="radio" onclick = "{!c.handleRadio3}" name="group2" value="{v.taxMonthly}"  /> Yes 
-                                            <input type="radio" onclick = "{!c.handleRadio5}"  name="group2" /> No
+                                                <div class="slds-form-element__control slds-p-top_medium">
+                                                    <input type="radio" onclick = "{!c.handleRadio3}" name="group2" value="{v.taxMonthly}"  /> Yes 
+                                                    <input type="radio" onclick = "{!c.handleRadio5}"  name="group2" /> No
                                                 </div>
                                             </fieldset>
                                             <div > 
