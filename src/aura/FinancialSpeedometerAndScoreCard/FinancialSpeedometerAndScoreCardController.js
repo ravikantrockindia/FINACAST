@@ -8,6 +8,7 @@
         action.setCallback(this, function(response){
             try{
                 var g = response.getReturnValue();
+                 
                 var state = response.getState();
                 if(state==="SUCCESS"&& (!($A.util.isUndefinedOrNull(g)))) {
                     //check for client
@@ -87,8 +88,8 @@
                     data : { y: financialscore }, //gauge value change it
                     maximum : 10
                 };
-                
-                var chart = new CanvasJS.Chart("chartContainer2");
+                var containername=component.get('v.clientId');
+                var chart = new CanvasJS.Chart(containername);
                 createGauge(chart);
                 
                 //Function for gauge
@@ -96,7 +97,7 @@
                     //Caluculation of remaining parameters to render gauge with the help of doughnut
                     gauge.unoccupied = {
                         y: gauge.maximum - gauge.data.y , 
-                        color: "#DEDEDE", 
+                        color: "#DEDEEE", 
                         toolTipContent: null, 
                         highlightEnabled: false,
                         click : function (){ gauge.unoccupied.exploded = true; }

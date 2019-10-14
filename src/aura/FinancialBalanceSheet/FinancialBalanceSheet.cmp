@@ -51,7 +51,7 @@
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
                 <div class="slds-col slds-size_12-of-12 client_managed2">
                     <h4>Net Worth</h4>
-                    <h1> {!v.netWorth}</h1>
+                    <h1>${!v.netWorth}</h1>
                 </div>
             </div>
         </div>
