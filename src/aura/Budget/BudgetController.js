@@ -236,6 +236,7 @@
             var recordType = response.getReturnValue();
             component.set("v.recordTypeId",recordType);
             component.set("v.addIncome",true);
+            component.set("v.editRecordIncome",false);
             
         });  
         
@@ -256,6 +257,7 @@
     createLoanTransactionRecord : function(component, event, helper) {   
         component.set("v.addLoanTransaction",true);
         component.set("v.loanTransaction",event.getSource().get("v.value"));
+        
         console.log('the transaction value is as follows:', event.getSource().get("v.value"));               
     },
     
@@ -317,6 +319,7 @@
             var recordType = response.getReturnValue();
             component.set("v.recordTypeId",recordType);
             component.set("v.addExpense",true);
+            component.set("v.editRecordExpense",false);
             
         });  
         
@@ -333,7 +336,7 @@
             var recordType = response.getReturnValue();
             component.set("v.recordTypeId",recordType);
             component.set("v.addLoan",true);
-            
+            component.set("v.editRecordLoan",false);
         });  
         
         $A.enqueueAction(action); 
@@ -348,6 +351,7 @@
     onClickEdit : function(component,event,helper) {
         component.set("v.showModalIncome",true);
         component.set("v.editrecid",event.getSource().get("v.value"));
+        component.set("v.editRecordIncome",true);
     },
     
     //----------------------Method to Edit Expense records-----------------------------//
@@ -363,6 +367,7 @@
                 console.log('aaaaaaaaaaaaaaaaaaaa----'+expenseList[i].Id)
                 console.log('aaaaaaaaaaaaaaaaaaaa----'+expenseList[i].Name)
                 component.set("v.editRecNameExpense", expenseList[i].Name);
+                component.set("v.editRecordExpense",true);
                
             }
         }
@@ -372,6 +377,8 @@
     onClickEditLoan : function(component,event,helper) {
         component.set("v.showModalLoan",true);
         component.set("v.editrecidLoan",event.getSource().get("v.value"));
+        //-----------------LoanRecordEdit-----------------------------------------//
+        component.set("v.editRecordLoan",true);
     },
     //----------------------Method to Edit transaction records-----------------------------//
     onClickEditIncomeTransaction : function(component,event,helper) {

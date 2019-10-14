@@ -1422,4 +1422,56 @@ amountforMonth.put(monthYear,stt.FinServ__Amount__c);
         return ret;
         
     }
+    @auraEnabled   
+    public static List<FinServ__FinancialAccount__c> ClientCashRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);   
+        List<FinServ__FinancialAccount__c> CashRec = new List<FinServ__FinancialAccount__c>();
+        CashRec = [select id ,name,recordTypeId ,recordType.developername from FinServ__FinancialAccount__c where (recordType.developername='SavingsAccount' OR recordType.developername='CheckingAccount') and FinServ__PrimaryOwner__c=:clientId ];
+        System.debug('clientId-sassa-->'+CashRec);
+        return CashRec;
+    }
+    @auraEnabled   
+    public static String ClientCashNameRecord(String cashId){
+        System.debug('cashId-sassa-->'+cashId);  
+        string CashRecName;
+        List<FinServ__FinancialAccount__c> CashRec = new List<FinServ__FinancialAccount__c>();
+        CashRec = [select name  from FinServ__FinancialAccount__c where id=:cashId];
+        System.debug('clientId-sassa-->'+CashRec);
+        if(CashRec.size()>0){
+        cashRecName=CashRec[0].Name;
+        }
+        return cashRecName;
+    }
+    
+    @auraEnabled   
+    public static List<FinServ__FinancialAccount__c> ClientCreditRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);
+       
+        List<FinServ__FinancialAccount__c> CreditRec = new List<FinServ__FinancialAccount__c>();
+        CreditRec = [select id ,name,recordTypeId ,recordType.developername from FinServ__FinancialAccount__c where recordType.developername='CreditCard' and FinServ__PrimaryOwner__c=:clientId ];
+        System.debug('clientId-sassa-->'+CreditRec);
+        return CreditRec;
+    }
+    
+    @auraEnabled   
+    public static String ClientCreditNameRecord(String creditId){
+        System.debug('creditId-sassa-->'+creditId);
+        string CreditRecName;
+        List<FinServ__FinancialAccount__c> CreditRec = new List<FinServ__FinancialAccount__c>();
+        CreditRec = [select name from FinServ__FinancialAccount__c where  id=:creditId];
+        System.debug('clientId-sassa-->'+CreditRec);
+        if(CreditRec.size()>0){
+            CreditRecName=CreditRec[0].Name;
+        }
+        return CreditRecName;
+    }
+    
+     @auraEnabled   
+    public static List<FinServ__FinancialAccount__c> ClientInvestmentRecord(String clientId){
+        System.debug('clientId-sassa-->'+clientId);   
+        List<FinServ__FinancialAccount__c> InvestmentRec = new List<FinServ__FinancialAccount__c>();
+        InvestmentRec = [select id ,name,recordTypeId ,recordType.developername from FinServ__FinancialAccount__c where recordType.developername='InvestmentAccount' and FinServ__PrimaryOwner__c=:clientId ];
+        System.debug('clientId-sassa-->'+InvestmentRec);
+        return InvestmentRec;
+    }
 }//Outer Class

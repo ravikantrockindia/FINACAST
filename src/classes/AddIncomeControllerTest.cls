@@ -183,6 +183,11 @@ public class AddIncomeControllerTest {
         AddIncomeController.ClientLoanRecord(acc1.Id);
         AddIncomeController.ClientIncRecord(acc1.Id);
         AddIncomeController.ClientExpRecord(acc1.Id);
+        
+        AddIncomeController.ClientNameLoanRecord(financial1.Id);
+        AddIncomeController.ClientNameIncRecord(bg.Id);
+        AddIncomeController.ClientNameExpRecord(bg1.Id);
+        
         SummaryCashFlowController.getMonth('Jan');
         System.assertEquals('1', '1');
     }

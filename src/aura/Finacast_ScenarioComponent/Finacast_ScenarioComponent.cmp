@@ -7,6 +7,8 @@
     <aura:attribute name="goalProgress" type="Decimal" default = "0"/>
     <aura:attribute name="loanProgress" type="Decimal" default = "0"/>
     <aura:attribute name="savingProgress" type="Decimal" default = "0"/>
+   
+    <aura:registerEvent name="ShowGraph" type="c:ShowGraph" />
     <!-- attributes list -->
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="tabName" type="String" default=" Scenarios"/>
@@ -114,7 +116,7 @@
                     
                     <lightning:select name="scenarioList" aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
                         <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
-                            <option label="{!sceneItems.Name}"  value = "{!sceneItems.Id}"></option>
+                            <option label="{!sceneItems.Name}"  value = "{!sceneItems.Id}" selected="sceneItems.selected"></option>
                         </aura:iteration>
                     </lightning:select>
                     

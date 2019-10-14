@@ -15,6 +15,8 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name = "accLoanRecType"  type = "String"/>
     <aura:attribute name="loanRec" type="FinServ__FinancialAccount__c"/>
+    <aura:attribute name="editRecordLoan" type="Boolean"/>
+    <aura:attribute name="loanRecName" type="String"/>
     
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">

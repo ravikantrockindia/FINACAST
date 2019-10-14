@@ -73,10 +73,12 @@
     },
     
     validateInput : function(component,event, acc)
-    {
+    {	
+        debugger;
         try{
             var spinner = component.find("mySpinner");
-            
+            var ispresent=false;
+            var ispresentInv=false;
             var name=component.find("name").get('v.value');
             var accountType=component.find("accountType").get("v.value")
             var currentBal=component.find("currentBalance").get("v.value")
@@ -84,7 +86,97 @@
             var maturityDate;
             var cost;
             var withdrawalDate;
+             var cashRec=component.get("v.cashRec");
+            var editRecordCash=component.get("v.editRecordCash");
+             
+            var editRecInves=component.get("v.editRecInves");
+             
+        	var investmentRec=component.get("v.investmentRec");
+            if(editRecordCash==false){
+                for (var i = 0; i < cashRec.length; i++) { 
+                    
+                    if(name==cashRec[i].Name){
+                        $A.util.removeClass(spinner, "slds-show");
+                        
+                        $A.util.addClass(spinner, "slds-hide");
+                        component.set("v.disabled",false)
+                        event.preventDefault();
+                        var msg = "Cash Account name with this name already exist."
+                        this.showNotfication(component,msg,'error','Error!');
+                        ispresent=true;
+                        break;
+                        
+                    }
+                }
+            }
+            else if(editRecordCash==true){
+                var cashName=component.get("v.cashRecordName")
+                if(name==cashName){
+                    ispresent=false;
+                }
+                else{
+                    for (var i = 0; i < cashRec.length; i++) { 
+                        
+                        if(name==cashRec[i].Name){
+                            $A.util.removeClass(spinner, "slds-show");  
+                            $A.util.addClass(spinner, "slds-hide");
+                            component.set("v.disabled",false)
+                            event.preventDefault();                            
+                            msg = "Cash Account name with this name already exist."                             
+                            this.showNotfication(component,msg,'error','Error!'); 
+                            ispresent=true;
+                            return;
+                        }
+                    }
+                    
+                }
+            }
+             if(editRecInves==false){
+                    for (var i = 0; i < investmentRec.length; i++) { 
+                        
+                        if(name==investmentRec[i].Name){
+                            $A.util.removeClass(spinner, "slds-show");
+                            
+                            $A.util.addClass(spinner, "slds-hide");
+                            component.set("v.disabled",false)
+                            event.preventDefault();
+                            var msg = "Investment Account name with this name already exist."
+                            this.showNotfication(component,msg,'error','Error!');
+                            ispresentInv=true;
+                            break;
+                            
+                        }
+                    }
+                }
             
+            else if(editRecInves==true){
+                var cashName=component.get("v.cashRecordName")
+                if(name==cashName){
+                    ispresent=false;
+                }
+                else{
+                    for (var i = 0; i < investmentRec.length; i++) { 
+                        
+                        if(name==investmentRec[i].Name){
+                            $A.util.removeClass(spinner, "slds-show");  
+                            $A.util.addClass(spinner, "slds-hide");
+                            component.set("v.disabled",false)
+                            event.preventDefault();
+                            msg = "Investment Account name with this name already exist."                            
+                            this.showNotfication(component,msg,'error','Error!'); 
+                            ispresent=true;
+                            return;
+                        }
+                    }
+                    
+                }
+            }
+        if(ispresent==true || ispresentInv==true){
+          //  component.find("Id_spinner").set("v.class" , 'slds-hide');
+            return;
+            
+        }
+        else{  
             if ($A.util.isUndefinedOrNull(name) || name == "" ||  
                 $A.util.isUndefinedOrNull(accountType) || accountType == "" || accountType=="None" || $A.util.isUndefinedOrNull(currentBal) || currentBal =="" )
                 
@@ -196,6 +288,8 @@
                         return;
                     }
                 }
+            }
+         }
                 event.preventDefault();       // stop the form from submitting
                // var fields = event.getParam('fields');
                 
@@ -205,7 +299,7 @@
                 component.find('form').submit();
                 //  return true;
                 
-            }
+            
         }catch(e){
             console.log(e.message)
             $A.util.removeClass(spinner, "slds-show");

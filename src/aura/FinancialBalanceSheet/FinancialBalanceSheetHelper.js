@@ -1,5 +1,6 @@
 ({
     getAllAccounts : function(component) {
+        debugger;
         var action=component.get('c.getAccounts');
         action.setParams({
             ClientId: component.get('v.recordId')
@@ -19,10 +20,45 @@
                 component.set("v.creditvalue", data.creditAmount);
                 var networth=0;
                 networth=data.cashAmount+data.investmentAmount - data.creditAmount -data.loanAmount;
-                component.set("v.netWorth", networth);
-                debugger;
+                 
+                if(networth < 9999) {
+                    component.set("v.netWorth",networth);
+                      
+                }
+                
+                else if(networth < 1000000) {
+                    component.set("v.netWorth",Math.round(networth/1000) + " K"); 
+                     
+                }
+                    else if( networth < 10000000) {
+                        component.set("v.netWorth",(networth/1000000).toFixed(2) + " M");
+                         
+                    }
+                
+                        else  if(networth < 1000000000) {
+                            component.set("v.netWorth",Math.round((networth/1000000)) + " M");
+                             
+                        }
+                
+                            else if(networth < 10000000000) {
+                                component.set("v.netWorth", (networth/1000000000).toFixed(2) + " B");
+                            }
+                                else if(networth<1000000000000) {
+                                   component.set("v.netWorth",Math.round((networth/1000000000)) + " B"); 
+                                }  
+                                    else if(networth < 10000000000000) {
+                                        component.set("v.netWorth", (networth/1000000000000).toFixed(2) + " T");
+                                    }
+                                        else if(networth<1000000000000000) {
+                                            component.set("v.netWorth",Math.round((networth/1000000000000)) + " T"); 
+                                        }   
+                
+                //
+                
+             //   component.set("v.netWorth", networth);
+                
                 var AccTrue=component.get("v.isAccount");
-                console.log('AccTrue'+AccTrue);
+                 
                 if(AccTrue){
                     
                     var FinaId=null;

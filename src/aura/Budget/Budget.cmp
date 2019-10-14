@@ -80,8 +80,11 @@
      <aura:attribute name="expensePopup" type="boolean" default="false"/>
     <aura:attribute name="LoanPopup" type="boolean" default="false"/>
      <aura:attribute name = "incomeId" type = "String"/>
-   
-     <aura:method name = "changeClientData" action = "{!c.changeClientData}" >
+    <aura:attribute name="editRecordLoan" type="boolean"/>
+    <aura:attribute name="editRecordIncome" type="boolean"/>
+    <aura:attribute name="editRecordExpense" type="boolean"/>
+    
+     <aura:method name = "changeClientData" action = "{!c.changeClientData}">
         <aura:attribute name = "changeData" type = "Object" />
     </aura:method> 
        <aura:attribute name = "goalAcc"  type = "Id"/>   
@@ -331,8 +334,9 @@
                 </div>
                 
                 <aura:set attribute="else">
-                    <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <p>No Income Data</p>
+                    <div class="slds-text-heading_small slds-text-align--center no-data">
+                        <p><lightning:icon iconName="utility:classic_interface" alternativeText="Approved" /></p>
+                        <div class="slds-p-top_small slds-p-bottom_small"><h3>No Income data found</h3></div>
                     </div>
                 </aura:set>
             </aura:if>
@@ -346,7 +350,7 @@
         </div>
         <aura:if isTrue="{!v.addIncome}">
             
-            <c:AddIncome namespace="{!v.namespace}" Income = "{!v.recordTypeId}" client="{!v.client}"  title = "Add Income" isActive = "{!v.activeModal}" accRecType = "{!v.accountRecTypeName}" />
+            <c:AddIncome namespace="{!v.namespace}" editRecordIncome="{!v.editRecordIncome}" Income = "{!v.recordTypeId}" client="{!v.client}"  title = "Add Income" isActive = "{!v.activeModal}" accRecType = "{!v.accountRecTypeName}" />
             
         </aura:if>
         <!--Income record ends-->
@@ -355,7 +359,7 @@
         <!--Edit modal for income starts-->
         <aura:if isTrue="{!v.showModalIncome}">
             
-            <c:AddIncome Income = "{!v.recordTypeId}" namespace="{!v.namespace}" title = "Edit Income" isActive = "{!v.activeModal}" incmeId = "{!v.editrecid}" client="{!v.client}" />
+            <c:AddIncome Income = "{!v.recordTypeId}" editRecordIncome="{!v.editRecordIncome}" namespace="{!v.namespace}" title = "Edit Income" isActive = "{!v.activeModal}" incmeId = "{!v.editrecid}" client="{!v.client}" />
             
         </aura:if>
         
@@ -448,8 +452,9 @@
                 </div>
                 
                 <aura:set attribute="else">
-                    <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <p>No Expense Data</p>
+                    <div class="slds-text-heading_small slds-text-align--center no-data">
+                        <p><lightning:icon iconName="utility:classic_interface" alternativeText="Approved" /></p>
+                        <div class="slds-p-top_small slds-p-bottom_small"><h3>No Expense Data found</h3></div>
                     </div>
                 </aura:set>
             </aura:if>
@@ -460,14 +465,14 @@
            
         </div>
         <aura:if isTrue="{!v.addExpense}">
-            <c:AddExpense namespace="{!v.namespace}" Expense = "{!v.recordTypeId}" client="{!v.client}"  title="Add Expense" isActive = "{!v.activeModal}" accExpenseRecType = "{!v.accountRecTypeName}"/>
+            <c:AddExpense namespace="{!v.namespace}" editRecordExpense="{!v.editRecordExpense}" Expense = "{!v.recordTypeId}" client="{!v.client}"  title="Add Expense" isActive = "{!v.activeModal}" accExpenseRecType = "{!v.accountRecTypeName}"/>
             
         </aura:if>
         <!--Expense record type ends-->
         
         <!--edit modal for expense starts-->        
         <aura:if isTrue="{!v.showModalExpense}">
-            <c:AddExpense namespace="{!v.namespace}" Expense = "{!v.recordTypeId}" expId = "{!v.editrecidExpense}" selectedValue="{!v.editRecNameExpense}" title = "Edit Expense"  isActive = "{!v.activeModal}" client="{!v.client}"/>           
+            <c:AddExpense namespace="{!v.namespace}" editRecordExpense="{!v.editRecordExpense}" Expense = "{!v.recordTypeId}" expId = "{!v.editrecidExpense}" selectedValue="{!v.editRecNameExpense}" title = "Edit Expense"  isActive = "{!v.activeModal}" client="{!v.client}"/>           
         </aura:if>
         <!--Edit modal for expense ends-->
         <!--Add expense Transaction modal-->
@@ -547,9 +552,10 @@
                         </div>
                     </div>
                 </div>                
-                <aura:set attribute="else">
-                    <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <p>No Loan Data</p>
+                <aura:set attribute="else">                    
+                    <div class="slds-text-heading_small slds-text-align--center no-data">
+                        <p><lightning:icon iconName="utility:classic_interface" alternativeText="Approved" /></p>
+                        <div class="slds-p-top_small slds-p-bottom_small"><h3>No Loan Data found</h3></div>
                     </div>
                 </aura:set>
             </aura:if>
@@ -559,7 +565,7 @@
            
         </div>
         <aura:if isTrue="{!v.addLoan}">
-            <c:AddLoan Loan = "{!v.recordTypeId}" namespace="{!v.namespace}"  client="{!v.client}" title="Add Loan" isActive = "{!v.activeModal}" accLoanRecType = "{!v.accountRecTypeName}"/>        
+            <c:AddLoan Loan = "{!v.recordTypeId}" editRecordLoan="{!v.editRecordLoan}" namespace="{!v.namespace}"  client="{!v.client}" title="Add Loan" isActive = "{!v.activeModal}" accLoanRecType = "{!v.accountRecTypeName}"/>        
             
         </aura:if>
         
@@ -567,7 +573,7 @@
         
         <!--Edit Modal for loan starts-->
         <aura:if isTrue="{!v.showModalLoan}">
-            <c:AddLoan Loan = "{!v.recordTypeId}" loanId = "{!v.editrecidLoan}" namespace="{!v.namespace}"  title = "Edit Loan" isActive = "{!v.activeModal}" client="{!v.client}"/>           
+            <c:AddLoan Loan = "{!v.recordTypeId}" editRecordLoan="{!v.editRecordLoan}" loanId = "{!v.editrecidLoan}" namespace="{!v.namespace}"  title = "Edit Loan" isActive = "{!v.activeModal}" client="{!v.client}"/>           
         </aura:if>
         <!--Edit Modal for loan ends-->       
         <!--Add expense Transaction modal-->
@@ -653,8 +659,9 @@
                 </table>
                 </div>-->
                 <aura:set attribute="else">
-                    <div class="slds-text-heading_small" style="color:white;font-weight:bold ; margin-left:45%;">
-                        <h3>No Goal Data</h3>
+                    <div class="slds-text-heading_small slds-text-align--center no-data">
+                        <p><lightning:icon iconName="utility:classic_interface" alternativeText="Approved" /></p>
+                        <div class="slds-p-top_small slds-p-bottom_small"><h3>No Goal Data found</h3></div>
                     </div>
                 </aura:set>
             </aura:if>

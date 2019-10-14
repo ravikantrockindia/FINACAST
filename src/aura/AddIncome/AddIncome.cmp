@@ -10,7 +10,8 @@
     <aura:attribute name = "accRecType"  type = "String"/> 
             <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="incRec" type="Budget__c"/>
-
+	<aura:attribute name="editRecordIncome" type="boolean"/>
+    <aura:attribute name="incRecName" type="String"/>
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">
             <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >

@@ -1,6 +1,6 @@
 <!-- Created by: Megha Goel-->
 
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+<aura:component controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="recordTypeIds" type="List" default="[]"/>
     <aura:attribute name="recordTypeId" type="String"/>
@@ -22,7 +22,12 @@
     <aura:registerEvent name="lightningEvent" type="c:CreateNewClientEvent"/>
     <aura:method name="saveBankAccount" action="{!c.createBankAccount}" access="PUBLIC"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
-    
+    <aura:attribute name="cashRec" type="FinServ__FinancialAccount__c"/>
+    <aura:attribute name="investmentRec" type="FinServ__FinancialAccount__c"/>
+    <aura:attribute name="editRecordCash" type="boolean"/>
+    <aura:attribute name="editRecInves" type="boolean"/>
+    <aura:attribute name="cashRecordName" type="String"/>
+    <aura:attribute name="invRecName" type="string"/>
     
     <lightning:recordEditForm
                               aura:id="form"

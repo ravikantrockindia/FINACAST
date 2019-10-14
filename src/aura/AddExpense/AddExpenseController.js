@@ -43,32 +43,52 @@
     
     handleSubmit : function(component, event, helper)
     { 
-        
-        var status3 = 0;
-        
+       debugger;
         var msg = "";
         var ispresent=false;   
         var priowner = component.find("owner").get("v.value");
-         console.log('owner',priowner);
-        
+         
         var freqcy = component.find("freq").get("v.value");
         var growth = component.find("yeargrowth").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
         var sDate = component.find("stDate").get("v.value");
         var eDate = component.find("endDate").get("v.value");
         
+        var getRecordEdit=component.get("v.editRecordExpense");
         var expRec=component.get("v.expRec");
-        for (var i = 0; i < expRec.length; i++) { 
+        if(getRecordEdit==false){
             
-            if(priowner==expRec[i].Name){
-                event.preventDefault();
-                msg = "Expense name with this name already exist."
-                helper.showAlertEmptyInvalidVal(component,msg); 
-                ispresent=true;
-                break;
-                 
+            for (var i = 0; i < expRec.length; i++) { 
+                
+                if(priowner==expRec[i].Name){
+                    event.preventDefault();
+                    msg = "Expense name with this name already exist."
+                    helper.showAlertEmptyInvalidVal(component,msg); 
+                    ispresent=true;
+                    break;
+                    
+                }
             }
         }
+        else if(getRecordEdit==true){
+            var Eid=component.get("v.expRecName");
+            if(priowner==Eid){
+                ispresent=false;
+            }
+            else{
+                for (var i = 0; i < expRec.length; i++) { 
+                    
+                    if(priowner==expRec[i].Name){
+                        event.preventDefault();
+                        msg = "Expense name with this name already exist."
+                        helper.showAlertEmptyInvalidVal(component,msg); 
+                        ispresent=true;
+                        return;
+                    }
+                }
+                
+            }
+        }    
         if(ispresent){
           //  component.find("Id_spinner").set("v.class" , 'slds-hide');
             return;
@@ -189,9 +209,10 @@
         }
     },
     recordLoaded: function(component,event,helper){
-   
+   		
         var expId = component.get("v.expId");
         console.log('expId'+expId)
+         
         if(!(expId=="" || $A.util.isUndefinedOrNull(expId))){
             var action = component.get("c.Budgetlist");
             action.setParams({
@@ -222,15 +243,24 @@
                     
                 }
                 
-            }); 
+            });
+            var action2 = component.get("c.ClientNameExpRecord");
+            action2.setParams({
+                expId : expId
+            });
+            action2.setCallback(this, function(a) {
+                var state  = a.getState();
+                var expRecName=a.getReturnValue();
+                if(state==='SUCCESS'){
+                    component.set("v.expRecName",expRecName);
+                     
+                }
+                
+            });
+            $A.enqueueAction(action2);
+
             $A.enqueueAction(action);      
-        
-        
-        
-        
-        
-        
-        
+ 
         
       /*  var expId = component.get("v.expId");
         if(!(expId=="" || $A.util.isUndefinedOrNull(expId))){

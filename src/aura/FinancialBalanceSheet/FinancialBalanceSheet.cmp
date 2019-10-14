@@ -16,7 +16,7 @@
     <aura:attribute name="investment" type="List" />
     <aura:attribute name="credit" type="List"/>
     <aura:attribute name="loan" type="List"/>
-    <aura:attribute name="netWorth" type="Double"   default="0"/> 
+    <aura:attribute name="netWorth" type="String" default="0"/> 
     <aura:attribute name="cashvalue" type="Double"   default="0"/>
     <aura:attribute name="investmentvalue" type="Double"   default="0"/>
     <aura:attribute name="creditvalue" type="Double"   default="0"/>
@@ -31,8 +31,10 @@
     <aura:handler name="change" value="{!v.isModalOpen}" action="{!c.doInit}"/>
     <lightning:notificationsLibrary aura:id="notifLib"/>
     <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
-    
-    
+    <aura:attribute name="editRecordLoan" type="boolean" default="False"/>
+    <aura:attribute name="editRecordCash" type="boolean" default="False"/>
+    <aura:attribute name="editRecInves" type="boolean" default="False"/>
+    <aura:attribute name="editCreditRec" type="boolean" default="False"/>
       
     <div class="client_managed slds-m-bottom_large">
         <div>
@@ -49,7 +51,7 @@
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
                 <div class="slds-col slds-size_12-of-12 client_managed2">
                     <h4>Net Worth</h4>
-                    <h1><ui:outputCurrency class="networth" value="{!v.netWorth}"/></h1>
+                    <h1> {!v.netWorth}</h1>
                 </div>
             </div>
         </div>
@@ -313,19 +315,19 @@
         <!--section 4 end-->
     </div>
     <aura:if isTrue="{!v.showInModal}">
-        <c:AddNewAccountModal showInModal="{!v.showInModal}" client="{!v.client}" clientid="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}"/>
+        <c:AddNewAccountModal showInModal="{!v.showInModal}" client="{!v.client}" clientid="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" editRecordLoan="false" editRecordCash="false" editCreditRec="false"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Cash')}" >
-        <c:BankAccountModal showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
+        <c:BankAccountModal editRecordCash="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Investment')}" >
-        <c:BankAccountModal showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
+        <c:BankAccountModal editRecInves="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Loan')}" >
-        <c:AddLoan title="Edit Loan" isActive="{!v.isModalOpen}" client="{!v.client}" loanId="{!v.financialAccount.Id}" namespace="{!v.namespace}" Loan="{!v.recordTypeId}"/>
+        <c:AddLoan title="Edit Loan" editRecordLoan="true" isActive="{!v.isModalOpen}" client="{!v.client}" loanId="{!v.financialAccount.Id}" namespace="{!v.namespace}" Loan="{!v.recordTypeId}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Credit')}" >
-        <c:CreditAccountForm showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeId="{!v.recordTypeId}" namespace="{!v.namespace}"/>
+        <c:CreditAccountForm editCreditRec="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeId="{!v.recordTypeId}" namespace="{!v.namespace}"/>
     </aura:if>
     
 </aura:component>

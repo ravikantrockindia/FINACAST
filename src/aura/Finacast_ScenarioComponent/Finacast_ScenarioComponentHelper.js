@@ -71,7 +71,7 @@
             
             component.set("v.data2", JSON.parse(response.getReturnValue().response));
             
-            if(flag)
+           // if(flag)
             component.set("v.scenarioList", response.getReturnValue().scenarioList);
             
             

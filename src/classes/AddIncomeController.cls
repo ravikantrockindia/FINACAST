@@ -144,6 +144,17 @@ public with sharing class AddIncomeController {
         System.debug('clientId-sassa-->'+LoanRec);
         return LoanRec;
     }
+     @auraEnabled   
+    public static String ClientNameLoanRecord(String loanId){
+        System.debug('loanId ->>>'+loanId);   
+        List<FinServ__FinancialAccount__c> LoanName = new List<FinServ__FinancialAccount__c>();
+        string LName;
+        LoanName = [select Name from FinServ__FinancialAccount__c where Id=:loanId];
+        if(LoanName.size()>0){
+            LName=LoanName[0].Name;  
+        }
+        return LName;
+    }
      
     @auraEnabled   
     public static List<Budget__c> ClientIncRecord(String clientId){
@@ -154,12 +165,40 @@ public with sharing class AddIncomeController {
         return IncRec;
     }
     @auraEnabled   
+    public static String ClientNameIncRecord(String incId){
+        System.debug('incId-sassa-->'+incId);   
+         List<Budget__c> IncName = new List<Budget__c>();
+        string IName;
+        IncName = [select Name from Budget__c where Id=:incId];
+        if(IncName.size()>0){
+            IName=IncName[0].Name; 
+            system.debug('EpeName'+IncName);
+            system.debug('IName'+IName);
+        }
+        return IName;
+    }
+    
+    @auraEnabled   
     public static List<Budget__c> ClientExpRecord(String clientId){
         System.debug('clientId-sassa-->'+clientId);   
         List<Budget__c> ExpRec = new List<Budget__c>();
         ExpRec = [select id ,name,recordTypeId ,recordType.developername from Budget__c where recordType.developername='Expense_Record_Type' and Primary_Owner__c=:clientId ];
         System.debug('clientId-sassa-->'+ExpRec);
         return ExpRec;
+    }
+    
+    @auraEnabled   
+    public static String ClientNameExpRecord(String expId){
+        System.debug('expId ->>>'+expId);   
+        List<Budget__c> EpeName = new List<Budget__c>();
+        string EName;
+        EpeName = [select Name from Budget__c where Id=:expId];
+        if(EpeName.size()>0){
+            EName=EpeName[0].Name; 
+            system.debug('EpeName'+EpeName);
+            system.debug('EName'+EName);
+        }
+        return EName;
     }
     //
     //get summarychart loan transaction

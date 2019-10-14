@@ -99,6 +99,7 @@
             var cashList=component.get("v.cash");
             component.set("v.accountTypeforEdit",'Cash');
             component.set("v.financialAccount", cashList[value]);
+           // alert('id fa'+JSON.stringify(component.get("v.financialAccount")));
             component.set("v.isModalOpen", true);
             
         }
@@ -177,7 +178,7 @@
             action.setParams({
                 finId: id
             });
-            action.setCallback(this, function(response) {
+            action.setCallback(this, function(response) { 
                 var state = response.getState();
                 if (state === "SUCCESS") {
                     var data=response.getReturnValue();

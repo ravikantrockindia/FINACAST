@@ -64,6 +64,9 @@
     height: 250px;
     overflow-y: scroll;
 }
+.THIS .slds-media {
+    height: 20px;
+}
 @media (max-width: 767px) {
     .THIS .slds-box1 {
         height: 380px;

@@ -535,21 +535,29 @@
                     component.set("v.addScenarioButtonStatus", false);
                     component.set("v.isAddScenarioActive", true);
                     component.set("v.scenario", response.getReturnValue());
+                   // component.find("scenarioList").set("v.selectedValue", omponent.find("sceneName").get("v.value"));
                     //component.set("v.sceneId",component.get("v.scenario[0].Id"));
                     component.set("v.scene",component.get("v.scenario[0].Id"));
                 }
                 else{
                     console.log('failed');
                 }
+                 helper.showFieldsValue(component);
             });
             $A.enqueueAction(action);
         }  }
         catch(e){console.log('Inside Save: ' + e);}
     },
     
-    onDoneScenarioButton : function(component) {
+    onDoneScenarioButton : function(component, event, helper) {
         component.set("v.manageScenarioStatus", false);
-        $A.get('e.force:refreshView').fire();
+         var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                type: 'success',
+                "message": "A default scenario has been created..."           
+            });
+            resultsToast.fire();
+     //   $A.get('e.force:refreshView').fire();
     },
     
     //new method
@@ -569,9 +577,15 @@
                 if(state == 'SUCCESS'){
                     component.set("v.addScenarioButtonStatus", false);
                     component.set("v.isAddScenarioActive", true);
+                    // component.set("v.selectedValue", component.find("sceneName").get("v.value"));
                     component.set("v.scenario", response.getReturnValue());
                     component.set("v.scene",component.get("v.scenario[0].Id"));
                     helper.showFieldsValue(component);
+                     var eve = $A.get("e.c:ShowGraph");
+        eve.setParams({"showgraph":true
+                     
+                      }); 
+        eve.fire();
                 }
                 else{
                     console.log('failed');

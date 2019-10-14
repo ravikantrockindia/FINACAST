@@ -29,12 +29,49 @@
             }
             helper.handleChange(component,event,helper)
             
+            var ClientId=component.get("v.accountRecordId");
+            //var ClientId=Client.Id;
+            var action = component.get("c.ClientCashRecord");
+            action.setParams({
+                clientId : ClientId
+            });
+            action.setCallback(this, function(a) {
+                var state  = a.getState();
+                var cashRec=a.getReturnValue();
+                component.set("v.cashRec",cashRec);
+            });
+            var action2 = component.get("c.ClientInvestmentRecord");
+            action2.setParams({
+                clientId : ClientId
+            });
+            action2.setCallback(this, function(a) {
+                var state  = a.getState();
+                var investmentRec=a.getReturnValue();
+                component.set("v.investmentRec",investmentRec);
+            });
+            var cashId=component.get("v.financialAccount.Id");
+             
+            var action3 = component.get("c.ClientCashNameRecord");
+            action3.setParams({
+                cashId : cashId
+            });
+            action3.setCallback(this, function(a) {
+                var state  = a.getState();
+                var  cashRecordName=a.getReturnValue();
+                component.set("v.cashRecordName",cashRecordName);
+                 
+            });
+            $A.enqueueAction(action);
+            $A.enqueueAction(action2);
+            $A.enqueueAction(action3);
         }catch(e){
             console.log(e.message)
-        }        
+        }   
+        
     },
     
     handleSubmit:function(component,event,helper){
+        debugger;
         try{
             component.set("v.disabled",true)
             var spinner = component.find("mySpinner");
@@ -48,7 +85,8 @@
             component.find('form').submit(fields);*/
         }catch(e){
             console.log(e.message)
-        }        
+        }  
+        
     },
     handleSuccess : function(component, event, helper) {
         component.set("v.showInModal",false)

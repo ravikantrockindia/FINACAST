@@ -1,11 +1,13 @@
 <aura:component controller="Finacast_ScenarioParentApex"  
                 implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" 
                 access="global">
+     <aura:handler  event="c:ShowGraph" action="{!c.graphdata}" default = "false"/>
+     <aura:attribute name = "kk" type = "boolean"/> 
     <aura:attribute name = "EditScenario" type = "boolean" default = "false"/> 
     <aura:attribute name = "manageScenarioStatus" type = "boolean" default = "false"/>
     <aura:attribute name = "addScenarioButtonStatus" type = "boolean" default ="false"/>   
     <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />  
-    <aura:attribute name="scenario" type="list"/>   
+    <aura:attribute name="scenario" type="object"/>   
     <aura:attribute name="scenarioId" type="Id"/>
     <aura:attribute name="namespace" type="string"/>
     <!-- attribute list -->
@@ -18,8 +20,8 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->
     <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
-    <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>
+    <!--c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast-->
+   
     <!--loading spinner start... style=Brand Medium (blue dots)-->
     <aura:if isTrue="{!v.Spinner}">
         <div aura:id="spinnerId" class="slds-spinner_container">
@@ -44,6 +46,7 @@
                                                   namespace="{! v.namespace}"/>
                         </div>
                 </div>
+                 <aura:if isTrue="{!v.kk}">
                 <div class="slds-col  slds-size_6-of-12">
                     <div class="client_managed">
                     	<c:ScenarioHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
@@ -58,6 +61,11 @@
                     	<c:ScenarioGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
+                     <aura:set attribute="else">
+                            <h3><center>You do not have created any scenario yet, Click Add New Scenarios button to create a new scenario.</center></h3>
+                        </aura:set>
+                   
+                </aura:if>
             </div>
         </lightning:tab>
      

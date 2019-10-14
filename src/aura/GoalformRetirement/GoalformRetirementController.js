@@ -156,9 +156,10 @@
                 status2 = 1;
             }
             
-            var roiSplit = rateofreturn.split(".");
-            var iRateSplit = iRate.split(".");
-            console.log("iRateSplit.length",iRateSplit.length);
+          var roiSplit = rateofreturn.toString().split(".");
+           
+            var iRateSplit = iRate.toString().split(".");
+             
             if(iRateSplit.length == 1 )
             {
                 if(iRateSplit[0].length > 2 || iRateSplit[0] < 0 )
@@ -219,7 +220,7 @@
             
             
             
-            if(roiSplit.length == 1)
+          if(roiSplit.length == 1)
             {
                 if(roiSplit[0].length > 2 || roiSplit[0] < 0)
                 { 
@@ -254,7 +255,7 @@
                 status8 = 1;
             }
             
-            
+           
             
         }
         
@@ -284,7 +285,7 @@
             console.log('getdate'+getDate);
             console.log('birthDate'+birthDate);
             var retirementYear = component.find("retireAge").get("v.value");
-            console
+            
             var getYear = Number(getDate[0]);
             console.log('getYear'+getYear);
             var acclist = component.get("v.Acclist");

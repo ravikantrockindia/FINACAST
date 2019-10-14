@@ -17,9 +17,8 @@
             var incRec=a.getReturnValue();
             component.set("v.incRec",incRec);
         });
-        $A.enqueueAction(action);
-
         
+        $A.enqueueAction(action);
     },
     
     saveAndCloseBtn : function(component, event, helper) {
@@ -42,7 +41,7 @@
     
     handleSubmit : function(component, event, helper)
     { 
-		debugger;
+		 
         var msg = "";
 		var ispresent=false;        
         var priowner = component.find("owner").get("v.value");
@@ -57,26 +56,46 @@
          console.log('growth',growth);
          console.log('amount',amn);
          console.log('rate',grate);
-        
-        var incRec=component.get("v.incRec");
-        for (var i = 0; i < incRec.length; i++) { 
-            
-            if(priowner==incRec[i].Name){
-                event.preventDefault();
-                msg = "Income name with this name already exist."
-                helper.showAlertEmptyInvalidVal(component,msg); 
-                ispresent=true;
-                break;
-                 
+         var incRec=component.get("v.incRec");
+        var getTypeEdit=component.get("v.editRecordIncome");
+        if(getTypeEdit==false){
+           
+            for (var i = 0; i < incRec.length; i++) { 
+                
+                if(priowner==incRec[i].Name){
+                    event.preventDefault();
+                    msg = "Income name with this name already exist."
+                    helper.showAlertEmptyInvalidVal(component,msg); 
+                    ispresent=true;
+                    break;
+                    
+                }
             }
         }
+        else if(getTypeEdit==true){
+            var Incid=component.get("v.incRecName");
+            if(priowner==Incid){
+                ispresent=false;
+            }
+            else{
+                for (var i = 0; i < incRec.length; i++) { 
+                    
+                    if(priowner==incRec[i].Name){
+                        event.preventDefault();
+                        msg = "Income name with this name already exist."
+                        helper.showAlertEmptyInvalidVal(component,msg); 
+                        ispresent=true;
+                        return;
+                    }
+                }
+                
+            }
+        } 
         if(ispresent){
           //  component.find("Id_spinner").set("v.class" , 'slds-hide');
             return;
-            
         }
         else{
-            
         if($A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(sDate) || sDate == "" || $A.util.isUndefinedOrNull(eDate) || eDate == "" || $A.util.isUndefinedOrNull(freqcy) || freqcy == "" ||  $A.util.isUndefinedOrNull(growth) || growth == "" || $A.util.isUndefinedOrNull(amn) || amn ==""  || $A.util.isUndefinedOrNull(grate) || grate == "" )
         {
             
@@ -120,6 +139,26 @@
            
         }
         }
-    },  
+    },
+    handleonloan:function(component, event, helper){
+        var incId=component.get("v.incmeId");
+        
+        var action2 = component.get("c.ClientNameIncRecord");
+        action2.setParams({
+            incId : incId
+        });
+        action2.setCallback(this, function(a) {
+            var state  = a.getState();
+            var incRecName=a.getReturnValue();
+            if(state==='SUCCESS'){
+                component.set("v.incRecName",incRecName);
+                 
+            }
+            
+        });
+        $A.enqueueAction(action2);
+
+        
+    }
     
 })

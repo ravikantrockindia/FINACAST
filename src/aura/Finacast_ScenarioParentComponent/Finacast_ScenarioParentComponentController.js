@@ -4,7 +4,38 @@
         const defaultData = {"debugObj":[],"offset":2019,"debtAnalysis":{ "debtPayed": [], "debtItems": 0},"financialHealthAnalysis":[{},{}],"yearlySavings":[],"monthlySavingsTrack":[],"years":0,"goalAnalysis":{},"netWorthAnalysis":{},"monthOffset":{}};
         component.set("v.data2", defaultData); 
         component.set("v.data1", defaultData); 
+        
+                var action = component.get("c.ScenarioData");  
+         action.setParams({
+            clientId: component.get("v.cid")
+        });
+        
+        action.setCallback(this, function(response) {
+            
+            component.set("v.scenario", response.getReturnValue());
+           //alert(JSON.stringify(response.getReturnValue()));
+             //alert('jj'+ component.get("v.scenario.id"));
+            // alert('ddd'+response.getReturnValue().length);
+            if(response.getReturnValue().length == 0){
+                 component.set("v.kk", false);
+            }
+            else{
+                 component.set("v.kk", true);
+            }
+         
+        });
+     
+        $A.enqueueAction(action);
+      
     },
+    graphdata : function(component, event, helper) {
+         var showGraph =event.getParam("showGraph");
+        console.log("kkk"+showGraph);
+        component.set("v.kk", true); 
+        //alert( component.get("v.kk"));
+      
+    }
+    ,
     onScenarioDeleteIcon: function(component, event, helper){
         var recordId = event.getSource().get('v.value');
          var action = component.get("c.deleteScenario");

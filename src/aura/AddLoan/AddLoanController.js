@@ -4,11 +4,8 @@
         var cmpTarget = component.find('exampleModal');
         $A.util.removeClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",true);
-        var loanId=component.get("v.loanId")
-        console.log('loanI-0d'+loanId)
-        
+        var loanId=component.get("v.loanId")  
         var ClientId=component.get("v.client.Id");
-        //var ClientId=Client.Id;
         var action = component.get("c.ClientLoanRecord");
         action.setParams({
             clientId : ClientId
@@ -18,6 +15,7 @@
             var loanRec=a.getReturnValue();
             component.set("v.loanRec",loanRec);
         });
+     
         $A.enqueueAction(action);
         
     },
@@ -47,7 +45,7 @@
     handleSubmit : function(component, event, helper)
     { 
         component.find("Id_spinner").set("v.class" , 'slds-show');
-        
+        var loanId=component.get("v.loanId")
         var msg = "";
         var ispresent=false;
         var priowner = component.find("owner").get("v.value");
@@ -56,18 +54,39 @@
         var amn = component.find("inQuantity").get("v.value");
         var pf = component.find("payfreq").get("v.value");
          
-        
-         var loanRec=component.get("v.loanRec");
-        
-        for (var i = 0; i < loanRec.length; i++) { 
+        var getTypeEdit=component.get("v.editRecordLoan");
+        var loanRec=component.get("v.loanRec");       
+        if(getTypeEdit==false){
             
-            if(priowner==loanRec[i].Name){
-                event.preventDefault();
-                msg = "'loan name with this name already exist'."
-                helper.showAlertEmptyInvalidVal(component,msg); 
-                ispresent=true;
-                break;
-                 
+            for (var i = 0; i < loanRec.length; i++) { 
+                
+                if(priowner==loanRec[i].Name){
+                    event.preventDefault();
+                    msg = "'loan name with this name already exist'."
+                    helper.showAlertEmptyInvalidVal(component,msg); 
+                    ispresent=true;
+                    break;  
+                }
+            }
+        }
+        else if(getTypeEdit==true){
+            var Lid=component.get("v.loanRecName");
+            if(priowner==Lid){
+                ispresent=false;
+            }
+            else{
+                for (var i = 0; i < loanRec.length; i++) { 
+                    
+                    if(priowner==loanRec[i].Name){
+                        event.preventDefault();
+                        msg = "'loan name with this name already exist'."
+                        helper.showAlertEmptyInvalidVal(component,msg); 
+                      	ispresent=true;
+                        break;  
+                        
+                    }
+                }
+                
             }
         }
         if(ispresent){
@@ -125,13 +144,14 @@
                     return;
                 }
             }
-        }
+        
+    
         event.preventDefault();       // stop the form from submitting
         var fields = event.getParam('fields');
         console.log(JSON.stringify(fields));
         fields.FinacastOpeningBalance__c = amn;
         component.find('form').submit(fields);
- 
+        }
     }, 
     handleRadio: function(component, event) {
         
@@ -169,7 +189,7 @@
         }
     },
     recordLoaded: function(component,event,helper){
-        debugger;
+         
         var loanId=component.get("v.loanId")
         console.log('loanId'+loanId)
         if(!(loanId=="" || $A.util.isUndefinedOrNull(loanId))){
@@ -208,6 +228,19 @@
                 }
                 
             }); 
+            var action2 = component.get("c.ClientNameLoanRecord");
+            action2.setParams({
+                loanId : loanId
+            });
+            action2.setCallback(this, function(a) {
+                var state  = a.getState();
+                var loanRecName=a.getReturnValue();
+                if(state==='SUCCESS'){
+                    component.set("v.loanRecName",loanRecName);
+                }
+                
+            });
+            $A.enqueueAction(action2);
             $A.enqueueAction(action); 
             
             /*    if(!(loanId=="" || $A.util.isUndefinedOrNull(loanId))){

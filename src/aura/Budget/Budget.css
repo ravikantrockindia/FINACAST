@@ -302,6 +302,10 @@
     background-color: transparent;
     color: #4e75a3;
 }
+.THIS .no-data .slds-icon {
+    height: 56px;
+    width: 56px;
+}
 @media (max-width: 992px) {
     .THIS .bud-months .slds-size_1-of-12 {
         width: 16%;
