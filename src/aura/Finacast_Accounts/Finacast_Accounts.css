@@ -263,3 +263,9 @@
 .THIS .journal-entry-heading .slds-table thead td:last-child {
     padding-right: .75rem;
 }
+.THIS.canvas{
+
+  width:1000px !important;
+  height:600px !important;
+
+}

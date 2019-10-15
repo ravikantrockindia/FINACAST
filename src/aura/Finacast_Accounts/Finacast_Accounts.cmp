@@ -1,7 +1,7 @@
 <aura:component controller="AccountTabReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <ltng:require scripts="{!$Resource.CanvasJS}" /> 
 	<lightning:spinner aura:id="mySpinner" class="slds-hide"/>
-    <aura:attribute name="tabName" type="String" default="Financial Account"/>
+    <aura:attribute name="tabName" type="String" default="Account"/>
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="isAddNewTransaction" type="boolean"/>
     <aura:attribute name="recordId" type="String" default=""/>
@@ -48,7 +48,7 @@
                                    <!-- <span class="">Journal Entries</span> -->
                                     <Lightning:button class="btn1 slds-button" onclick="{!c.addNewTransaction}" label="+ Add New Transaction"/> 
                                 </h3>
-                                <div class="slds-grid slds-gutters" style="height: 400px">
+                                <div class="slds-grid slds-gutters slds-text-align_center" style="height: 400px">
                                     <aura:if isTrue="{!v.showDatatable}">
                                         <lightning:datatable
                                                              columns="{! v.columnList }"
@@ -63,7 +63,7 @@
                                                              />
                                         
                                         <aura:set attribute="else">
-                                            <h3><center>There is no transaction related to this Account!!</center></h3>
+                                            <h3 style="width: 100%; margin-top: 30px;">There is no transaction related to this account</h3>
                                         </aura:set>
                                     </aura:if> 
                                 </div>

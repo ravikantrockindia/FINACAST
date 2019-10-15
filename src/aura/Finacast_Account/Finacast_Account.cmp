@@ -1,9 +1,0 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	<aura:attribute name="recordId" type="String" default=""/>
-    <aura:attribute name="namespace" type="String" default=""/>
-    <div class="demo-only demo-only--sizing slds-grid slds-wrap">
-        <div class="slds-size_1-of-4">
-            <c:FinancialBalanceSheet recordId="{!v.recordId}" namespace="{!v.namespace}"/>
-        </div>
-    </div>
-</aura:component>
