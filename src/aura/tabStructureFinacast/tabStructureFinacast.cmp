@@ -61,7 +61,7 @@
                 <li class="bigIcons  slds-shrink-none" aura:id="articleeight" title="Accounts " role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Accounts " onclick="{!c.AccountHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">  
-                        </div>Accounts</a>
+                        </div>Financial Account</a>
                 </li>
             </ul>
          </div> 
