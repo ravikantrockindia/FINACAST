@@ -23,7 +23,7 @@
                         <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Transaction</h3>                            
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.title}</h3>                            
                 </header>
                 <lightning:recordEditForm 
                                           recordId = "{!v.trExpenseId}"
@@ -43,7 +43,7 @@
                                  <span class = "highlight">* </span>   Transaction For <lightning:inputField fieldName ="{!v.namespace+'Budget_Category__c'}" value="{!v.expenseTransaction}"  disabled="true"/> 
                                 </div>
                                 <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    Transaction Date <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" />
+                                    Transaction Date <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden"/>
                                 </div>
                                <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                    <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" />

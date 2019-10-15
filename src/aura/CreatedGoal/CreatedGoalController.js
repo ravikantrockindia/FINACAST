@@ -1,5 +1,12 @@
 ({	
     doInit:function(component , event , helper){
+         var workspaceAPI = component.find("workspace");
+        workspaceAPI.getAllTabInfo().then(function(response) {
+            console.log(JSON.stringify(response));
+       })
+        .catch(function(error) {
+            console.log(error);
+        });
         component.set("v.createModal1",true);
         
         component.set("v.addGoals",false);
@@ -40,10 +47,10 @@
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         
         saveIncomeEvent.fire();
+          $A.get('e.force:refreshView').fire();
     },
     createGoal : function(component , event , helper){
         
-        debugger;
         /*var Id= component.get("v.cid");
         var namespace= component.get("v.namespace");
         var evt = $A.get("e.force:navigateToComponent");
@@ -61,14 +68,14 @@
         console.log('the cross is : '+ cmpTarget );
         $A.util.addClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",false);
-        //  component.set("v.addGoals",true);
+          component.set("v.addGoals",true);
         var saveIncomeEvent = component.getEvent("openModal");
-         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+        saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         
         saveIncomeEvent.fire();
         debugger;
-    //  component.set("v.createModal",false);
-       // component.destroy();
+        //  component.set("v.createModal",false);
+        // component.destroy();
         /*var cmpTarget = component.find('exampleModal');
         
             console.log('the cross is : '+ cmpTarget );

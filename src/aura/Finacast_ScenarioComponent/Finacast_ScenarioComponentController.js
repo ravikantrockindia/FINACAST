@@ -1,5 +1,5 @@
 ({
-        toggleSection : function(component, event, helper) {
+    toggleSection : function(component, event, helper) {
         // dynamically get aura:id name from 'data-auraId' attribute
         var sectionAuraId = event.target.getAttribute("data-auraId");
         // get section Div element using aura:id
@@ -7,23 +7,23 @@
         /* The search() method searches for 'slds-is-open' class, and returns the position of the match.
          * This method returns -1 if no match is found.
         */
-        var sectionState = sectionDiv.getAttribute('class').search('slds-is-open'); 
-        
-        // -1 if 'slds-is-open' class is missing...then set 'slds-is-open' class else set slds-is-close class to element
-        if(sectionState == -1){
-            sectionDiv.setAttribute('class' , 'slds-section slds-is-open');
-        }else{
-            sectionDiv.setAttribute('class' , 'slds-section slds-is-close');
+            var sectionState = sectionDiv.getAttribute('class').search('slds-is-open'); 
+            
+            // -1 if 'slds-is-open' class is missing...then set 'slds-is-open' class else set slds-is-close class to element
+            if(sectionState == -1){
+                sectionDiv.setAttribute('class' , 'slds-section slds-is-open');
+            }else{
+                sectionDiv.setAttribute('class' , 'slds-section slds-is-close');
+            }
         }
-    }
-,
+    ,
     
     doInit1:function(component,event,helper){   
-
-      
-		 var workspaceAPI = component.find("workspace");
+        
+        
+        var workspaceAPI = component.find("workspace");
         var tab = component.get("v.tabName")
-       // console.log('tab',tab)
+        // console.log('tab',tab)
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             var focusedTabId = response.tabId;
             //console.log('tab id',focusedTabId )
@@ -37,15 +37,15 @@
         
         const defaultData = {"debugObj":[],"offset":2019,"debtAnalysis":{ "debtPayed": [], "debtItems": 0},"financialHealthAnalysis":[],"yearlySavings":[],"monthlySavingsTrack":[],"years":0,"goalAnalysis":{},"netWorthAnalysis":{},"monthOffset":{}};
         component.set("v.data2", defaultData);
-		helper.showFieldsValue(component,helper); 
+        helper.showFieldsValue(component,helper); 
         //console.log('in init : '+component.get('v.selectedValue'));
-   },
+    },
     
-     handleSuccess : function(component,event,helper) {
-         //console.log('Goal Saved');
+    handleSuccess : function(component,event,helper) {
+        //console.log('Goal Saved');
         component.set("v.recordName","");
         component.set("v.debtButtonStatus",false);  
-       
+        
         component.set("v.savingButtonStatus",false);
         component.set("v.goalButtonStatus",false);
         helper.showFieldsValue(component);
@@ -61,16 +61,13 @@
     },
     handleClick:function(component,event,helper){
         
-          var recTypeName = event.getSource().get("v.name");
-//alert(recTypeName);
-         
-       // alert("Value--on change"+ component.get("v.expAmt"));
+        var recTypeName = event.getSource().get("v.name");
+        
         var recId = event.getSource().get("v.value");
-      //  alert(recId);
+        
         if($A.util.isUndefinedOrNull(recId)) {
             recId = "init";
         }
-        //console.log(component.get("v.expenseSlider"));
         var action = component.get("c.saveRecord")
         action.setParams({
             clientId : component.get("v.cid"),
@@ -93,8 +90,8 @@
             }
             
         });
-           $A.get('e.force:refreshView').fire();
-
+        $A.get('e.force:refreshView').fire();
+        
         $A.enqueueAction(action);
         
     },

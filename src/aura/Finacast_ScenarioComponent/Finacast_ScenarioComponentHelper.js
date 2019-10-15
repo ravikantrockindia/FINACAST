@@ -32,12 +32,15 @@
             //component.set("v.expense", response.getReturnValue().userScenarioExpense); 
             
             if($A.util.isUndefinedOrNull(response.getReturnValue().userSceneSave))
-                component.set("v.savings", [{'Name': 'Saving', 'Amount' : '0'}]);
-            else {component.set("v.savings", response.getReturnValue().userSceneSave);
-                  component.set("v.savingsAmount", response.getReturnValue().totalSaveAmount);}
+                component.set("v.savings",null);
+            else {
+                component.set("v.savings", response.getReturnValue().userSceneSave);
+                  component.set("v.savingsAmount", response.getReturnValue().totalSaveAmount);
+                  component.set("v.savingProgress", 70);
+                 }
             
             if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioGoal)){
-                component.set("v.goal", [{'Name': 'Goal 1', 'Amount' : '0'}]); 
+                component.set("v.goal", null); 
                 component.set("v.goalAmount", 0)}
             else{
                 component.set("v.goal", response.getReturnValue().userScenarioGoal); 
@@ -48,19 +51,18 @@
             
             if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioLoan)){
                 component.set("v.loan",null); 
-                component.set("v.loanAmount", 0)}
+                component.set("v.loanAmount", 0)
+            }
             else{
                 component.set("v.loan", response.getReturnValue().userScenarioLoan); 
                 component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
                  component.set("v.loanProgress", 60);
-                 //component.set("v.loanProgress", Math.round(response.getReturnValue().totalLoanAmount)/100000*100);
-              //  alert('kk'+component.get("v.loanProgress"));
             }
             
+                //   component.set("v.loan",[{'Name': 'Loan 1', 'Amount' : '0'}]);        
             //component.set("v.incomeAmount", response.getReturnValue().totalIncomeAmount);
             //component.set("v.expenseAmount", response.getReturnValue().totalExpenseAmount);
-            component.set("v.savingsAmount", response.getReturnValue().totalSaveAmount);
-             component.set("v.savingProgress", 70);
+            
          //  component.set("v.savingProgress", Math.round(response.getReturnValue().totalSaveAmount)/1000000*100);
              // alert('jj'+component.get("v.savingProgress"));
             //component.set("v.loan",  response.getReturnValue().userScenarioLoan);

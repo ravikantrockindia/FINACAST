@@ -39,7 +39,7 @@
                                     <span class = "highlight">* </span>   Transaction For <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.loanTransaction}"  disabled="true"/> 
                                 </div>
                                 <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                    Transaction Date <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" />
+                                    Transaction Date <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden"/>
                                 </div>
                                 <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                     <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" />
