@@ -557,7 +557,7 @@
                 "message": "A default scenario has been created..."           
             });
             resultsToast.fire();
-     //   $A.get('e.force:refreshView').fire();
+        $A.get('e.force:refreshView').fire();
     },
     
     //new method
