@@ -65,6 +65,9 @@
     height: 40px;
     border-radius: 0;
 }
+.THIS .slds-media {
+    height: 25px;
+}
 @media (max-width: 767px) {
     .THIS .slds-box1 {
         height: 380px;

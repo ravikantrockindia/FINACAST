@@ -43,7 +43,7 @@
     
     handleSubmit : function(component, event, helper)
     { 
-       debugger;
+       
         var msg = "";
         var ispresent=false;   
         var priowner = component.find("owner").get("v.value");

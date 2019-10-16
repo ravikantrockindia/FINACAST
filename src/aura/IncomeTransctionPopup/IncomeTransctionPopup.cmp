@@ -178,7 +178,7 @@
                                                  onloadmore="{!c.handleLoadMore}"  columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" />  
                         </div>
                         <aura:set attribute="else">
-                            <h3><center>There is no transaction related to this income!!</center></h3>
+                            <div class="slds-p-top_large"><h3><center>There is no transaction related to this income!!</center></h3></div>
                         </aura:set>
                     </aura:if>
                 </div>
@@ -188,7 +188,7 @@
         </section>
                 <aura:if isTrue="{!v.addExpenseTransaction}">
             
-            <c:AddExpenseTransaction cid="{!v.cid}"  namespace="{!v.namespace}" expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}"  isActive = "{!v.addExpenseTransaction}"  />
+            <c:AddExpenseTransaction cid="{!v.cid}"  namespace="{!v.namespace}" title = "Add Transaction" expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}"  isActive = "{!v.addExpenseTransaction}"  />
             
         </aura:if>
         <!-- Add expense Transaction Modal Ends-->

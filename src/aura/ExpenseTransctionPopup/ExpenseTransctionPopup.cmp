@@ -186,7 +186,7 @@
         </section>
         <aura:if isTrue="{!v.addExpenseTransaction}">
             
-            <c:AddExpenseTransaction cid="{!v.cid}"  namespace="{!v.namespace}" expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}"  isActive = "{!v.addExpenseTransaction}"  />
+            <c:AddExpenseTransaction cid="{!v.cid}"  namespace="{!v.namespace}" title = "Add Transaction" expenseTransaction = "{!v.expenseTransaction}" client="{!v.client}"  isActive = "{!v.addExpenseTransaction}"  />
             
         </aura:if>
         <!-- Add expense Transaction Modal Ends-->
