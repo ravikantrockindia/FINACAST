@@ -1,6 +1,4 @@
 public class AccountController {
-    
-    
     public static String columnList {get; set;}
     
     public static void getDisplayColumns()
@@ -116,7 +114,7 @@ public class AccountController {
         queryString += String.join( new List<String>(setFieldsToQuery), ',');
         queryString.removeEnd(',');
        
-            queryString += ' FROM  Account Where createdById=:currentuser' ;
+            queryString += ' FROM  Account Where createdById=:currentuser ORDER By createddate Desc' ;
                
         System.debug('queryString::'+queryString);
         list<SObject> lstSObject = Database.query(queryString);
