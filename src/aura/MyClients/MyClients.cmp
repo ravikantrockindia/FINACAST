@@ -28,7 +28,8 @@
     <aura:attribute name="Amount" type="Integer"/>  
     <aura:attribute name = "namespace" type = "String" />
     <aura:handler event="c:Fina_FilterInformationEvent" action="{!c.handleFilterEvent}"/>
-      <aura:handler event="c:amountpass" action="{!c.doInit}"/>
+    <aura:handler event="c:amountpass" action="{!c.doInit}"/>
+    <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
     <div class="slds-card__header slds-box slds-theme_default ">
         <div class="slds-grid slds-gutters">
             

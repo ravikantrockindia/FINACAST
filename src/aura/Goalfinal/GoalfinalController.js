@@ -208,7 +208,7 @@
     
     onClickDeletegoals : function(component,event,helper) { 
         
-        var retVal = confirm("Are you sure you want to delete the goal??");
+        var retVal = confirm("Are you sure you want to delete the goal?");
         if( retVal == true ) {
             var action2 = component.get("c.deleteGoals");
             action2.setParams({

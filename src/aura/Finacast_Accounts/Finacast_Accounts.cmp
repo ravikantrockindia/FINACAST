@@ -1,6 +1,6 @@
 <aura:component controller="AccountTabReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <ltng:require scripts="{!$Resource.CanvasJS}" /> 
-	<lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+	<lightning:spinner aura:id="mySpinner1" class="slds-hide"/>
     <aura:attribute name="tabName" type="String" default="FinancialAccount"/>
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="isAddNewTransaction" type="boolean"/>
@@ -13,7 +13,8 @@
     <aura:attribute name="TxnEditId" type="String"/>
     <aura:attribute name="isEditTransaction" type="Boolean"/>
     <aura:attribute name="showDatatable" type="Boolean"/>
-  	 
+  	<aura:attribute name="OpenDate" type="Date"/>
+    <aura:attribute name="todayDate" type="Date" default=""/>
     <!-- <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>-->
     <aura:handler name="rTid" event="c:AccountReport" action="{!c.doInit}"/>
     
@@ -46,7 +47,7 @@
                             <div class="journal-entry-heading">
                                 <h3 class="slds-clearfix">
                                    <!-- <span class="">Journal Entries</span> -->
-                                    <Lightning:button class="btn1 slds-button" onclick="{!c.addNewTransaction}" label="+ Add New Transaction"/> 
+                                    <Lightning:button class="btn1 slds-button slds-m-bottom_medium" onclick="{!c.addNewTransaction}" label="+ Add New Transaction"/> 
                                 </h3>
                                 <div class="slds-grid slds-gutters slds-text-align_center" style="height: 400px">
                                     <aura:if isTrue="{!v.showDatatable}">
@@ -84,8 +85,9 @@
                         <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Transaction</h3>                            
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Add Transaction</h3>                            
                 </header>
+                <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
                 <lightning:recordEditForm 
                                            
                                           objectApiName="FinServ__FinancialAccountTransaction__c"  onsuccess="{!c.saveAndCloseBtn}"
@@ -95,7 +97,7 @@
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                         
                         <div class="slds-gutters" style="border: none;">
-                            <div class="slds-box1">        
+                            <div class="slds-box1 slds-p-left_medium slds-p-right_medium">        
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name"  variant="label-hidden"/>
@@ -107,8 +109,7 @@
                                 
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                        
-                                        Transaction Date <lightning:inputField  fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden" />
+                                       Transaction Date <lightning:inputField  type="date" fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden" />
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" variant="label-hidden"/>
@@ -120,14 +121,10 @@
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
                                     </div>
-                                    
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
                                     </div>
                                 </div>
-                               
-                                
-                                
                             </div>
                         </div>
                     </div>
@@ -153,8 +150,10 @@
                         <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Transaction</h3>                            
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Transaction</h3>                            
                 </header>
+                <lightning:spinner aura:id="mySpinner2" class="slds-hide"/>
+
                 <lightning:recordEditForm 
                                           recordId="{!v.TxnEditId}"
                                           objectApiName="FinServ__FinancialAccountTransaction__c"  onsuccess="{!c.onSuccess}"

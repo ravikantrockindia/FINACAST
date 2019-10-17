@@ -31,6 +31,13 @@
                   
               var chart = new CanvasJS.Chart("chartContainer1", {
             animationEnabled: true,
+            title:{
+            //    text: "Cash Flow"
+            },
+           axisY: {
+                gridColor: "#ffffff",
+                      tickColor: "#ffffff"
+         	},
             axisX: {
 		valueFormatString: "MMM YYYY",
                 intervalType: "month"
@@ -48,18 +55,25 @@
             }, 
             legend: {
                 cursor:"pointer",
+                //itemclick : toggleDataSeries
             },
+            //toolTip: {
+               // shared: false,
+                //content: toolTipFormatter
+            //},
             data: [{
                  
                 type: "column",
                 showInLegend: true,
                 name: "Cash in",
+                //valueFormatString: "MMM",
                 color: "#49a2ad",
                 dataPoints: dps1
             },
                    {
                        type: "column",
                        showInLegend: true,
+                      // valueFormatString: "MMM",
                        name: "Cash out",
                        color: "#59c96f",
                        dataPoints: dps

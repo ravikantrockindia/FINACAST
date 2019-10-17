@@ -1,15 +1,18 @@
 ({
     doInit : function(component, event, helper) { 
+        var spinner = component.find("mySpinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.util.addClass(spinner, "slds-show");
         var amt = event.getParam("Amtval");
         
         component.set("v.Amount", amt);
-        
-        
-        
+ 
         var action=component.get('c.getNamespace');
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
+                $A.util.removeClass(spinner, "slds-show");
+                $A.util.addClass(spinner, "slds-hide");
                 component.set("v.namespace", response.getReturnValue())
          
             }
@@ -24,6 +27,7 @@
                 }
             }
         });
+       
         $A.enqueueAction(action); 
         
         component.set("v.SearchText", null );

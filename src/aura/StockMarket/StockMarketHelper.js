@@ -5,6 +5,8 @@
             "url": 'https://api.worldtradingdata.com/api/v1/stock?symbol=^INX,^DJI,^IXIC,^NYA&api_token=W3WHMBuNhqeVx5ZIMC5d5xr5nGDDxON2ubfjv5LwzLACjt92xz2m99pRVXGN'
         });
         action.setCallback(this, function(response) {
+           
+            
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {
                 component.set("v.response", response.getReturnValue());
@@ -19,7 +21,8 @@
                 component.set('v.NASDAQpercent',JSON.parse(response.getReturnValue().data[2].change_pct));
                 component.set('v.NYSEpercent',JSON.parse(response.getReturnValue().data[3].change_pct));
                 
-                var timezone = response.getReturnValue().data[0].timezone;
+                var timezone = response.getReturnValue().data[0].last_trade_time;
+                 
                 component.set("v.timezoneTime",timezone);
                 var DownJonespercent =JSON.parse(response.getReturnValue().data[0].change_pct);
                 if (DownJonespercent >0){
@@ -66,14 +69,15 @@
                 var today = new Date();
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 
-                component.set("v.timelatest",time);
+              //  component.set("v.timelatest",time);
                 
                 
                 var getAllRates = component.get("v.response")['data'];
                 var dataList = JSON.stringify(getAllRates);
             }
+            
         });
-        
+       
         $A.enqueueAction(action);
         
     }, 

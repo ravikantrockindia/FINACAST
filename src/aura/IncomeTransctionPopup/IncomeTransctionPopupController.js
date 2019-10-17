@@ -90,6 +90,7 @@
             var recId= event.getParam('row').Id;
             component.set("v.showModalExpenseTransaction",true);
             component.set("v.editrecidTransactionExpense",recId);
+                
         } 
         else if ( actionName == 'delete') {
             var action2 = component.get("c.deleteTransaction");
@@ -106,7 +107,7 @@
                     "message": "Record has been deleted successfully"           
                 });
                 resultsToast.fire();
-                helper.helperMethod(component);   
+                 
             });     
             $A.enqueueAction(action2);
         }

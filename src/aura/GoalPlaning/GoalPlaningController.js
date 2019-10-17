@@ -18,7 +18,7 @@
             });  
         }
         var clntId = component.get("v.cid");
-        component.set("v.addGoals",false);
+       component.set("v.addGoals",false);
         component.set("v.showModalGoal",false);
         var action = component.get("c.getTotalGoal");
         action.setParams({
@@ -56,6 +56,7 @@
         }*/
     },
     createGoal:function(component, event, helper) {
+        component.set("v.addGoals" , false); 
         component.set("v.addGoals" , true);
     },
     onClickEditGoals : function(component,event,helper) {
@@ -171,7 +172,7 @@
     },
     onClickDeletegoals : function(component,event,helper) { 
         
-        var retVal = confirm("Are you sure you want to delete the goal??");
+        var retVal = confirm("Are you sure you want to delete the goal?");
         if( retVal == true ) {
             var action2 = component.get("c.deleteGoals");
             action2.setParams({

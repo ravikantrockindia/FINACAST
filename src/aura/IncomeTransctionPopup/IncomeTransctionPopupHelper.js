@@ -12,8 +12,7 @@
             rowLimit :  limit
         });
         action.setCallback(this, function(response) {    
-            var beve1 = response.getReturnValue().TransactionList;
-           // console.log('gdhj' , beve1);    
+            var beve1 = response.getReturnValue().TransactionList; 
             component.set("v.addExpenseTrans" , beve1);
             component.set("v.totalRows" , response.getReturnValue().totalRecords);
         });     
@@ -30,8 +29,7 @@
             if(limit + offset > totalRows){
                 limit = totalRows - offset;
             }
-            //alert('kishan'+limit);
-           // debugger;
+
             var budgeteve1 = component.get("v.getExpenseBudgetId");    
             var action = component.get("c.getTransactionInfinite");
             action.setParams({
@@ -48,8 +46,6 @@
                 resolve(newData);
                 var currentCount = component.get("v.currentCount");
                 currentCount += component.get("v.initialRows");
-               // alert('jj'+currentCount);
-                // set the current count with number of records loaded 
                 component.set("v.currentCount",currentCount);
                
             });

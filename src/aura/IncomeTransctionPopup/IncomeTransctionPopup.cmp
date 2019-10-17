@@ -173,7 +173,7 @@
                                     </tbody>        
                                 </table-->
                     <aura:if isTrue="{!v.showDatatable}">
-                        <div class="expences_data-table">
+                        <div class="expences_data-table"  style="height: 350px">
                             <lightning:datatable  aura:id="TransTable" enableInfiniteLoading="{!v.enableInfiniteLoading}" loadMoreOffset="{!v.loadOffset}" onrowaction="{!c.viewRecord}"
                                                  onloadmore="{!c.handleLoadMore}"  columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" />  
                         </div>
@@ -194,7 +194,7 @@
         <!-- Add expense Transaction Modal Ends-->
         <aura:if isTrue="{!v.showModalExpenseTransaction}">
             
-            <c:AddExpenseTransaction cid="{!v.cid}"  namespace="{!v.namespace}"  title = "Edit Transaction" isActive = "{!v.showModalExpenseTransaction}" trExpenseId = "{!v.editrecidTransactionExpense}"/>
+            <c:AddExpenseTransaction cid="{!v.cid}" expenseTransaction = "{!v.getExpenseBudgetId}"  namespace="{!v.namespace}"   title = "Edit Transaction" isActive = "{!v.showModalExpenseTransaction}" trExpenseId = "{!v.editrecidTransactionExpense}"/>
             
         </aura:if>
         <div class="slds-backdrop slds-backdrop_open"></div>

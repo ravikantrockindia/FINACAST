@@ -32,8 +32,22 @@
                 
             }
         });
+        var action3 = component.get("c.getFinanaceAccountOpenDate");
+        action3.setParams({
+            AccountId: component.get('v.Tid')
+        });
+        action3.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+             
+                var date=response.getReturnValue();
+                component.set("v.OpenDate",date);
+              
+            }
+            
+        });
         $A.enqueueAction(action);   
-        
+        $A.enqueueAction(action3);
     },
     showAlertEmptyInvalidVal : function(component,msg)
     {

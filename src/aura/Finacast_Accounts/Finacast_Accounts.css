@@ -264,8 +264,33 @@
     padding-right: .75rem;
 }
 .THIS.canvas{
-
   width:1000px !important;
   height:600px !important;
-
+}
+.THIS .slds-box1 .slds-size_1-of-2 {
+    float: left;
+    padding: 0 15px;
+    font-size: .75rem;
+    font-weight: normal;
+    color: grey;
+    font-family: 'Open Sans',sans-serif;
+    margin-bottom: 15px;
+}
+.THIS .slds-box1 .slds-form-element__control input {
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+    margin-top: 8px;
+    font-family: 'Open Sans',sans-serif;
+}
+.THIS .slds-box1 .slds-form-element__control select {
+    background-color: #f2f0f0;
+    height: 40px;
+    margin-top: 8px;
+    border-radius: 0;
+    font-family: 'Open Sans',sans-serif;
+}
+.THIS .slds-modal__container {
+    width: 60%;
+    min-width: 60%;
 }

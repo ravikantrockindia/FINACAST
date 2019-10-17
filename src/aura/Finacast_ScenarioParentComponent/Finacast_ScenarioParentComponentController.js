@@ -55,6 +55,7 @@
              helper.helperMethod(component);
         });     
         $A.enqueueAction(action);   
+        $A.get('e.force:refreshView').fire();
     },
     onScenarioEditIcon: function(component, event, helper){
         var recordId = event.getSource().get('v.value');

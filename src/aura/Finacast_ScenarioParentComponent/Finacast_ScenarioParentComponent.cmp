@@ -67,8 +67,8 @@
                    
                 </aura:if>
             </div>
-        </lightning:tab>
-     
+        </lightning:tab>  
+      <aura:if isTrue="{!v.kk}">
         <lightning:tab onactive="{! c.handleActive }" label="Compare" title="Compare to current state">
             <!--Compare to Current State-->
             
@@ -129,10 +129,10 @@
                	<div class="slds-grid slds-gutters">
                 	<div class="slds-col  slds-size_12-of-12 slds-m-top_medium  slds-m-bottom_medium">
                     	<div class="client_managed">
-                        	<h3 class="slds-p-top_small slds-p-bottom_small slds-p-left_small">
+                        	<!--h3 class="slds-p-top_small slds-p-bottom_small slds-p-left_small">
                                 Scenarios 
                                 <button class="slds-button btn1 slds-m-left_small"  onclick = "{!c.manageScenarioButton}">+Add New Scenarios</button>
-                            </h3>
+                            </h3-->
                             <table class="slds-table">
                             	<thead>
                                 	<tr>
@@ -225,6 +225,7 @@
             </div>
         </aura:if>
         </lightning:tab>
+        </aura:if>
     </lightning:tabset>
         </div>
     

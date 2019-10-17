@@ -187,7 +187,7 @@
         <!-- Add expense Transaction Modal Ends-->
         <aura:if isTrue="{!v.showModalExpenseTransaction}">
             
-            <c:AddLoanTransaction   cid="{!v.cid}" namespace="{!v.namespace}"  title = "Edit Transaction" isActive = "{!v.showModalExpenseTransaction}" trLoanId = "{!v.editrecidTransactionExpense}"/>
+            <c:AddLoanTransaction   cid="{!v.cid}" namespace="{!v.namespace}" loanTransaction = "{!v.getExpenseBudgetId}" title = "Edit Transaction" isActive = "{!v.showModalExpenseTransaction}" trLoanId = "{!v.editrecidTransactionExpense}"/>
             
         </aura:if>
         <div class="slds-backdrop slds-backdrop_open"></div>

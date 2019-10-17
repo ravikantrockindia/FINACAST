@@ -1,6 +1,6 @@
 ({	
     doInit:function(component,event,helper){
-        
+       
         var workspaceAPI = component.find("workspace");
         var tab=component.get("v.tabName")
         console.log('tab',tab)
@@ -14,15 +14,17 @@
         .catch(function(error) {
             console.log(error);
         });
-        debugger;
+        
         var clnt = component.get("v.recordId");
         var accRec = event.getParam("eTid");
-      // alert('value return after component event fire'+accRec);  
+      	 
         component.set("v.Tid", accRec); 
-       
+        var today = $A.localizationService.formatDate(new Date(), "YYYY-MM-DD");
+        component.set('v.todayDate', today);
+    
         var txnId=component.get("v.Tid");
-     //   alert('txnId doinit parent'+txnId);
-        //TO GET THE NAME OF FINANCIAL ACCOUNT //
+        
+     
         var action2 = component.get("c.getFinanaceAccountName");
         action2.setParams({
             AccountId: txnId
@@ -34,10 +36,12 @@
             }
             
         });
+      
+        
         
         $A.enqueueAction(action2);
         
-         helper.fetchTransactionList(component, event, helper);
+        helper.fetchTransactionList(component, event, helper);
         
     },
     ShowList:function(component, event, helper){
@@ -90,8 +94,8 @@
 
         } 
         else if ( actionName == 'delete') {
-            if(confirm('Are you sure you want to delete the Transaction??')){
-                var spinner = component.find("mySpinner");
+            if(confirm('Are you sure you want to delete the Transaction?')){
+                var spinner = component.find("mySpinner1");
                 $A.util.removeClass(spinner, "slds-hide");
                 $A.util.addClass(spinner, "slds-show");
                 var clnt = component.get("v.recordId") 
@@ -149,13 +153,12 @@
         
         helper.fetchTransactionList(component,event,helper); 
         var spinner = component.find("mySpinner");
-        $A.util.removeClass(spinner, "slds-show");
-        $A.util.addClass(spinner, "slds-hide");
+       $A.util.removeClass(spinner, "slds-show");
+       $A.util.addClass(spinner, "slds-hide");
     },
     handleSubmit : function(component, event, helper)
     { 
- 
-        var status1 = 0;
+ 		var status1 = 0;
         
         var msg = "";
         
@@ -165,6 +168,8 @@
         var tamt = component.find("amt").get("v.value");
         var tname = component.find("name").get("v.value");
         
+        var openDate=component.get("v.OpenDate");
+        var toDate=component.get("v.todayDate");
         if($A.util.isUndefinedOrNull(tname) || tname == ""|| $A.util.isUndefinedOrNull(type) || type == ""|| $A.util.isUndefinedOrNull(tdate) || tdate == "" ||   $A.util.isUndefinedOrNull(tamt) || tamt =="" )
         {
             status1 = 0;
@@ -172,14 +177,24 @@
             msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);       
         }
+        else if(tdate>=toDate || tdate<=openDate) {
+            status1 = 0;
+            event.preventDefault();
+            msg = "Please enter Date between "+openDate+ " and "+toDate;
+            helper.showAlertEmptyInvalidVal(component,msg);
+          	return;
+             
+        }
         else
         {
             status1 = 1;
         }
-		 var spinner = component.find("mySpinner");
+        var spinner = component.find("mySpinner");
         $A.util.removeClass(spinner, "slds-hide");
         $A.util.addClass(spinner, "slds-show");
         
+         
+       
     },
     onSuccess:function(component, event, helper) { 
         var resultsToast = $A.get("e.force:showToast");
@@ -191,12 +206,48 @@
         resultsToast.fire();  
         component.set("v.isEditTransaction",false);
         helper.fetchTransactionList(component,event,helper); 
-        var spinner = component.find("mySpinner");
+        var spinner = component.find("mySpinner2");
         $A.util.removeClass(spinner, "slds-show");
         $A.util.addClass(spinner, "slds-hide");
     },
     onSubmit:function(component, event, helper) { 
-        var spinner = component.find("mySpinner");
+        var status1 = 0;
+        
+        var msg = "";
+        
+        var tdate = component.find("date").get("v.value");
+        //  var tdest = component.find("dest").get("v.value");
+        var type = component.find("type").get("v.value");
+        var tamt = component.find("amt").get("v.value");
+        var tname = component.find("name").get("v.value");
+        
+        var openDate=component.get("v.OpenDate");
+        var toDate=component.get("v.todayDate");
+        if($A.util.isUndefinedOrNull(tname) || tname == ""|| $A.util.isUndefinedOrNull(type) || type == ""|| $A.util.isUndefinedOrNull(tdate) || tdate == "" ||   $A.util.isUndefinedOrNull(tamt) || tamt =="" )
+        {
+            status1 = 0;
+            event.preventDefault();
+            msg = "Please fill mandatory fields."
+            helper.showAlertEmptyInvalidVal(component,msg);       
+        }
+        else if(tdate>=toDate || tdate<=openDate) {
+            status1 = 0;
+            event.preventDefault();
+            msg = "Please enter Date between "+openDate+ " and "+toDate;
+            helper.showAlertEmptyInvalidVal(component,msg);
+          	return;
+             
+        }
+        else
+        {
+            status1 = 1;
+        }
+      /*  var spinner = component.find("mySpinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.util.addClass(spinner, "slds-show");*/
+        
+
+        var spinner = component.find("mySpinner2");
         $A.util.removeClass(spinner, "slds-hide");
         $A.util.addClass(spinner, "slds-show");
     },

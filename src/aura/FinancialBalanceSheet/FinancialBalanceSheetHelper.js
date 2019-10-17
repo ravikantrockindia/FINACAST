@@ -1,6 +1,6 @@
 ({
     getAllAccounts : function(component) {
-        debugger;
+        
         var action=component.get('c.getAccounts');
         action.setParams({
             ClientId: component.get('v.recordId')
@@ -53,10 +53,7 @@
                                             component.set("v.netWorth",Math.round((networth/1000000000000)) + " T"); 
                                         }   
                 
-                //
-                
-             //   component.set("v.netWorth", networth);
-                
+               
                 var AccTrue=component.get("v.isAccount");
                  
                 if(AccTrue){
@@ -148,7 +145,7 @@
         toastEvent.fire();
     },
     handleFinaID: function(component){
-        debugger;
+        
         var  FinaId=component.get("v.FinaId");
         console.log('handle FinaId '+FinaId);
         var cmpEvent = component.getEvent("rTid");
