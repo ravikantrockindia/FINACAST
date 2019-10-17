@@ -41,7 +41,7 @@
             if (state === "SUCCESS") {
              
                 var date=response.getReturnValue();
-                component.set("v.OpenDate",date);
+                component.set("v.OpenDate",date[0].FinServ__OpenDate__c);
               
             }
             
