@@ -154,6 +154,20 @@ public class AccountTabReport {
         system.debug('name'+fl);
         delete fl;
     }
+    
+    @auraEnabled
+    public static Date getFinanaceAccountOpenDate(String AccountId ){
+         
+        List<FinServ__FinancialAccount__c> fl=new List<FinServ__FinancialAccount__c>();
+        try{
+            fl=[select name, FinServ__OpenDate__c ,(select id,name from Financial_Account_Transactions__r) from FinServ__FinancialAccount__c where id=:AccountId];
+        }catch(Exception e){
+            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
+            
+        }
+         system.debug('opendate'+fl[0].FinServ__OpenDate__c);
+        return fl[0].FinServ__OpenDate__c;
+    }
     public class FinancialAccountWrapper{
         @AuraEnabled
        // public List<FinServ__FinancialAccountTransaction__c> FinancialAccountTotalRecords = new List<FinServ__FinancialAccountTransaction__c>();
