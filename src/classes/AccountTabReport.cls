@@ -42,11 +42,11 @@ public class AccountTabReport {
         while(previousMonths.size()<6){
             if(monthName=='January' && currentYear==Date.today().year()){
                 String monthYearValue =  monthName +' '+currentYear;
-            //     system.debug('monthYearValue if'+monthYearValue);
+                //     system.debug('monthYearValue if'+monthYearValue);
                 previousMonths.add(monthYearValue);
                 currentYear=currentYear-1;
                 currentMonth=12;
-                 monthName = monthNameMap.get(currentMonth);
+                monthName = monthNameMap.get(currentMonth);
                 
             }
             else{
@@ -156,7 +156,7 @@ public class AccountTabReport {
     }
     
     @auraEnabled
-    public static Date getFinanaceAccountOpenDate(String AccountId ){
+    public static List<FinServ__FinancialAccount__c> getFinanaceAccountOpenDate(String AccountId ){
          
         List<FinServ__FinancialAccount__c> fl=new List<FinServ__FinancialAccount__c>();
         try{
@@ -166,7 +166,8 @@ public class AccountTabReport {
             
         }
          system.debug('opendate'+fl[0].FinServ__OpenDate__c);
-        return fl[0].FinServ__OpenDate__c;
+        //return fl[0].FinServ__OpenDate__c;
+        return fl;
     }
     public class FinancialAccountWrapper{
         @AuraEnabled
