@@ -149,9 +149,13 @@
     },
     
     handleFilesChange: function(component, event, helper) {
+        debugger;
         var fileName = 'No File Selected..';
+        var filetype="";
         if (event.getSource().get("v.files").length > 0) {
             fileName = event.getSource().get("v.files")[0]['name'];
+             filetype = event.getSource().get("v.files")[0].type;
+            alert(filetype+'filetype');
         }
         component.set("v.fileName", fileName);
         component.set("v.isFileSelected",true);

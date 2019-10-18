@@ -39,10 +39,15 @@
         action3.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
-             
+                var tdate=component.get("v.todayDate");
                 var date=response.getReturnValue();
-                component.set("v.OpenDate",date[0].FinServ__OpenDate__c);
-              
+                if(date[0].FinServ__OpenDate__c!=null){
+                    component.set("v.OpenDate",date[0].FinServ__OpenDate__c);
+                    
+                }else{
+                    component.set("v.OpenDate",tdate);
+                }
+                
             }
             
         });

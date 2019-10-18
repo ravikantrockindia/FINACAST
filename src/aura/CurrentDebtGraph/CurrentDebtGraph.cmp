@@ -67,7 +67,8 @@
             </div>
                   <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt"> <span>{!debt.message}.</span>
+                    <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt">
+                        <div><lightning:icon iconName="utility:record" size="xx-small" /><span>{!debt.message}.</span></div>
                         </aura:iteration></p>
                 </div>
             </div>

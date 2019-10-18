@@ -70,7 +70,8 @@
         </div>
 
         <div class="slds-box" style="border: none; text-align: left;">
-          <p class="networth-msg"><i><b>Insight: </b></i> <span> {!v.NetworthMessage}</span></p>
+          <p class="networth-msg"><i><b>Insight: </b></i> 
+              <span> <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" />{!v.NetworthMessage}</div></span></p>
         </div>
     </lightning:card>
     

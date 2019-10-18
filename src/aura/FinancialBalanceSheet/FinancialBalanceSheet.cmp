@@ -40,10 +40,10 @@
         <div>
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
                 <div class="slds-col slds-size_6-of-12">
-                    <h3 class="">Financial Account</h3>                    
+                    <h3 class=""> Account</h3>                    
                 </div>
                 <div class="slds-col slds-size_6-of-12 slds-text-align_right">
-                    <lightning:button label="+Add New Account" class="btn1" variant="bare" onclick="{! c.addnewaccount}" />
+                    <lightning:button label="Add New Account" class="btn1" variant="bare" onclick="{! c.addnewaccount}" />
                 </div>
             </div>
         </div>

@@ -8,10 +8,10 @@
             <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                 <div class="slds-modal__container">
                     <header class="{!'slds-modal__header' + (empty(v.title) ? ' slds-modal__header slds-modal__header_empty' : '')}">
-                        <lightning:buttonIcon alternativeText="Close" onclick="{!c.handleCancel}" iconName="utility:close" variant="bare" size="large" class="slds-modal__close slds-button_icon-inverse" />
+                        <lightning:buttonIcon alternativeText="Close" onclick="{!c.handleCancel}" iconName="utility:close" variant="bare" size="large" class="cros_btn slds-modal__close slds-button_icon-inverse" />
 
                         <aura:renderIf isTrue="{!not(empty(v.title))}">
-                            <h2 class="slds-text-heading_medium slds-hyphenate">{!v.title}</h2>
+                            <h3 class="slds-text-heading_medium slds-hyphenate">{!v.title}</h3>
                         </aura:renderIf>
                     </header>
                     <div class="slds-modal__content slds-p-around--large" id="modal-content-id-1">
@@ -24,6 +24,6 @@
             </section>
         </aura:renderIf>
 
-        <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
 </aura:component>

@@ -46,8 +46,9 @@
                                 <div id="chartContainer21" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                                 <p class="networth-msg"><i><b>Insight:</b> At, this rate you can sustain {!v.months} months without income.</i>
                                     <br/>
-                                        <aura:iteration items="{! v.financialHealthMessage}" var="m">           
-                                            {!m.message}<br/>
+                                        <aura:iteration items="{! v.financialHealthMessage}" var="m">   
+                                            
+                                            <div><lightning:icon iconName="utility:record" size="xx-small" />  {!m.message}<br/></div>
                                         </aura:iteration> 
                                     
                                 </p>

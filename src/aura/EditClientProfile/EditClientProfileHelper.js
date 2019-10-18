@@ -33,7 +33,7 @@
         });
         toastEvent.fire();
     },
-    MAX_FILE_SIZE: 4500000, //Max file size 4.5 MB 
+    MAX_FILE_SIZE: 1500000, //Max file size 1.5 MB 
     CHUNK_SIZE: 750000,      //Chunk Max size 750Kb 
     
     uploadHelper: function(component, event) {        

@@ -48,6 +48,7 @@
                     
                     <c:GoalModal   namespace="{!v.namespace}" client ="{!v.cid}" />
                 </aura:if> 
+                 <aura:if isTrue="{!not(empty(v.addGoal))}">
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="padding: 0;">
                     <thead>
                         <tr class="slds-line-height_reset">
@@ -69,6 +70,7 @@
                         </tr>
                     </thead>               
                     <tbody>
+                       
                         <aura:iteration items="{!v.addGoal}" var="Gdetails">
                             <tr class="slds-hint-parent">
                                 <th data-label="Goal Name" scope="col">
@@ -110,10 +112,13 @@
                                 </td>
                             </tr>  
                         </aura:iteration>
-                        
+             
                     </tbody>
                 </table>
-                
+                     <aura:set attribute="else">
+                                 <h2><center>You have not created any goals yet.</center></h2>
+                            </aura:set>
+                </aura:if>
             </div>
         </div>
         

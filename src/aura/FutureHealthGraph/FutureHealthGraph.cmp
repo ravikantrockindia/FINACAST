@@ -45,7 +45,7 @@
                                 <p class="networth-msg"><i><b>Insight:</b> At, this rate you can sustain {!v.months} months without income.</i>
                                     <br/>
                                         <aura:iteration items="{! v.financialHealthMessage}" var="m">           
-                                            {!m.message}<br/>
+                                            <div><lightning:icon iconName="utility:record" size="xx-small" />{!m.message}<br/></div>
                                         </aura:iteration> 
                                     
                                 </p>

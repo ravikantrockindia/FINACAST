@@ -32,9 +32,9 @@
                 <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create a new goal</h2></header>
             
             <div class = "images">
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-modal__content slds-p-around_medium slds-col_goal-icon" id="modal-content-id-1">
                     <div class="slds-parent">
-                        <div class="slds-col slds-col1">
+                        <div class="slds-col slds-col1 ">
                             <span>
                                 <lightning:button class="slds-button" name="RetirementRecordType" onclick="{!c.onGoalClick}">
                                     <img src="{!$Resource.RetirementIcon}"  height="150" width="150" title="Retirement"/>

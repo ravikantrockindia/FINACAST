@@ -1,5 +1,6 @@
 ({	
     doInit:function(component, event, helper){
+        debugger;
         var action=component.get('c.GetData');
         action.setCallback(this, function(response) {
             var state = response.getState();
@@ -11,12 +12,9 @@
                 var sum=0; 
                 var sumBonds=0;
                 var sumLoan=0;
-                //var sumStocks=0;
-              //  var sumOther=0;
                 var sumCash=0;
-             //   var sumAlt=0;
-                
                 for (var i = 0; i < DataList.length; i++) { 
+                    if(DataList[i].FinServ__Amount__c!=null){
                     if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Cash' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds' || DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Auto Loan'){
                     	sum += DataList[i].FinServ__Amount__c;
                     if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Bonds'){
@@ -28,20 +26,17 @@
                         else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Auto Loan'){
                             sumLoan+=DataList[i].FinServ__Amount__c;
                         }
-                           /* else if(DataList[i].FinServ__AssetsAndLiabilitiesType__c=='Others'){
-                                sumOther+=DataList[i].FinServ__Amount__c;
-                            }*/
-                         
-                	}
+                           
+                    }else{
+                        
+                    }
+                   }
                 }
+               
                 component.set("v.sumCash",sumCash);
                 component.set("v.sumBonds",sumBonds);
                 component.set("v.sumLoan",sumLoan);
-              //  component.set("v.sumStocks",sumStocks);
-               // component.set("v.sumOther",sumOther);
-              //  component.set("v.sumAlt",sumAlt);
-                
-                
+ 
                 if(sumLoan < 9999) {
                     component.set("v.sumLoan2",sumLoan);
                 }                
@@ -115,22 +110,36 @@
                 
                 
                 if(sum < 9999) {
+                    
                     component.set("v.Amount",sum);
                     
                 }                
                 else if(sum < 1000000) {
+                     
                     component.set("v.Amount",Math.round(sum/1000) + "K"); 
                 }
                     else if( sum < 10000000) {
+                        
                         component.set("v.Amount",(sum/1000000).toFixed(2) + "M");
                     }                
                         else  if(sum < 1000000000) {
+                             
                             component.set("v.Amount",Math.round((sum/1000000)) + "M");
                         }                
-                            else if(sum < 1000000000000) {
-                                component.set("v.Amount",Math.round((sum/1000000000)) + "B");
-                                
-                            } 
+                            else if(sum < 10000000000) {
+                                component.set("v.Amount", (sum/1000000000).toFixed(2) + " B");
+                            }
+                                else if(sum<1000000000000) {
+                                    component.set("v.Amount",Math.round((sum/1000000000)) + " B"); 
+                                }  
+                                    else if(sum < 10000000000000) {
+                                        component.set("v.Amount", (sum/1000000000000).toFixed(2) + " T");
+                                    }
+                                        else if(sum<1000000000000000) {
+                                            component.set("v.Amount",Math.round((sum/1000000000000)) + " T"); 
+                                        }   
+
+                //
                if(sumCash < 9999) {
                     component.set("v.sumCash2",sumCash);
                     

@@ -142,13 +142,14 @@
                                         <span class = "highlight">* </span>Current Amount<lightning:inputField aura:id = "currVal" fieldName="{!v.namespace+'Start_Value__c'}" onchange = "{!c.getChangeMonthlyConti}"/>
                                         
                                     </div>
-                                    <div class="slds-col slds-size_1-of-2" style="padding-top: 30px; padding-bottom: 0; margin-bottom: 0;">
-                                    	Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.isTaxDeduction}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!!v.isTaxDeduction}" name="yesno" id="noCheck"/><br/>
-                                        <lightning:inputField fieldName ="{!v.namespace+'Does_the_contribution_bring_tax_benefit__c'}" value="{!v.isTaxDeduction}" class="slds-hidden"/> 
-                                    </div>
                                     <div class="slds-col slds-size_1-of-2">
                                     	<span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="{!v.namespace+'Required_Monthly_Saving__c'}" onchange = "{!c.changeMonthlyContribution}"/>                                    
                                     </div>
+                                    <div class="slds-col slds-size_1-of-2" style="padding-top: 30px; padding-bottom: 0; margin-bottom: 0;">
+                                    	Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.isTaxDeduction}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!!v.isTaxDeduction}" name="yesno" id="noCheck"/><br/>
+                                        <lightning:inputField fieldName ="{!v.namespace+'Does_the_contribution_bring_tax_benefit__c'}" value="{!v.isTaxDeduction}" class="slds-hide"/> 
+                                    </div>
+                                    
                                     <aura:if isTrue="{!v.isTaxDeduction}">
                                         <div class="slds-col  slds-size_1-of-2"> 
                                             <span class = "highlight">* </span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="{!v.namespace+'What_of_contribution_bring_tax_benefit__c'}" aura:id="taxcontri"/><br/>

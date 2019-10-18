@@ -20,6 +20,9 @@
 .THIS container.slds-template__container{
     background-color: white;
 }
+.THIS .slds-col_goal-icon .slds-button {
+    display: block;
+}
 .THIS .slds-modal__container {
     width: 50%;
     max-width: 70%;

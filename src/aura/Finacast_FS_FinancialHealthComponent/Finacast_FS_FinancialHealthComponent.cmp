@@ -109,7 +109,7 @@
          <div class="slds-col slds-size_6-of-12 slds-p-bottom_medium slds-p-top_medium slds-p-left_small slds-border_right">
              
              <h2>Financial Health</h2>       
-             <h4>Overall Score</h4>                            
+             <!--<h4>Overall Score</h4>-->                        
                     <div class="half-chart half-chart-sticker">
                         <div class="slds-grid slds-p-top_large slds-p-bottom_large">
                             <div class="slds-col slds-size_12-of-12">
@@ -118,7 +118,7 @@
                                 <p class="networth-msg"> 
                                     <i><b>Insight:</b></i>
                                         <aura:iteration items="{! v.financialHealthMessage}" var="m">           
-                                             {!m.message}
+                                            <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" />{!m.message}</div>
                                         </aura:iteration> 
                                     
                                 </p>

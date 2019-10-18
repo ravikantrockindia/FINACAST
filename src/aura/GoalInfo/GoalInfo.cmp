@@ -136,16 +136,16 @@
                                             <div>   
                                                 <div class="chart-sticker">
                                                     <ul>
-                                                        <li><span>0 - Getting Started</span></li>
+                                                        <li><span>0% - Getting Started</span></li>
                                                         <li><h2>{!v.res}%</h2></li>
-                                                        <li><span>100 - Met the Goal</span></li>
+                                                        <li><span>100% - Met the Goal</span></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                             
                                         </div>
                                         <!---->           
-                                        <div class="slds-p-top_small">
+                                        <div class="slds-p-top_small sameLine">
                                             <p>Target Value: <lightning:formattedNumber value="{!v.tarVal}" style="currency" /></p>
                                             <p>Target Date: <lightning:formattedDateTime value="{!v.tarDate}" timeZone="UTC" /></p>
                                         </div>

@@ -19,6 +19,11 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+.THIS .client_managed {
+    background-color: #fff;
+    box-shadow: 0 0px 5px 0px #ccc;
+    position:relative;
+}
 .THIS .slds-page-header__title.slds-truncate h2 {
     text-align: left;
 }
@@ -48,12 +53,9 @@
   background-color: red;    
 }
 .THIS .slds-button_destructive {
-   
     background-color: rgb(28, 65, 121);
     border-color: rgb(255, 255, 255);
-    
 }
-
 .THIS .summarysection{
     background-color:#E7F4E2;
    height:20px;
@@ -65,7 +67,6 @@
     Padding: 3px 5px;
     color: #36578C;
 }
-
 .THIS .subsection{
     padding:0 5px;
 }
@@ -74,9 +75,6 @@
     margin: 30px auto;
     padding: 0;
     border: none;
-}
-.THIS .slds-button_icon-bare {
-    color: #ff9933;
 }
 .THIS .bud-months .slds-button_neutral {
     line-height :15px;
@@ -100,7 +98,6 @@
         background-color: #2d4a7d;
     color: white;
 }
-
 .THIS .budget-brand {
     line-height: 30px;
     font-weight: 700;
@@ -225,6 +222,9 @@
 .THIS .slds-theme_default {
     background-color: #fafafa;
 }
+.THIS .slds-progress-bar.slds-progress-bar_large {
+    height: 18px;
+}
 .THIS .bud-months .slds-select_container:after {
     top: 14px;
     width: 6px;
@@ -277,7 +277,7 @@
 .THIS .triple_dot {
     position: absolute;
     right: -70px;
-    top: -1px;
+    top: 3px;
 }
 .THIS .triple_dot ul li {
     display: inline-block;

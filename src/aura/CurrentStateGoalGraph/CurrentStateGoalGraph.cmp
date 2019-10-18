@@ -48,7 +48,8 @@
                 <div class="slds-box" style="border: none; text-align: left;">
                     
                     <aura:iteration items="{!v.goalForecastStatus}" var="g">
-                        <i><b>Insight: </b></i> <span style="color: #2fbf9e;">{!g}</span>
+                        <i><b>Insight: </b></i> 
+                        <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /><span style="color: #2fbf9e;">{!g}</span></div>
                     </aura:iteration>
                    
                 </div>

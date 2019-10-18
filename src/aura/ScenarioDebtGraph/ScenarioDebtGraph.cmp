@@ -123,12 +123,18 @@
                            <div id="chartContainer3.2995" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                         </div>
                     </div-->
+                            
                      <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt"> <span>{!debt.message}.</span>
+                    <p class="networth-msg"><i><b>Insight:</b></i> 
+                        <aura:iteration items="{!v.debtStatus}" var="debt"> 
+                            <span><div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" />{!debt.message}.</div></span>
                         </aura:iteration></p>
                 </div>
             </div>
+                                
+
+                            
                     <!--div class="slds-wrap slds-grid tab3-message" style="margin: 0 0;">
                         
                         <div class="slds-col slds-size_4-of-12">
