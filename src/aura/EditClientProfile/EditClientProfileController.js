@@ -78,7 +78,7 @@
                 // the server-side action returns
                 action.setCallback(this, function(response) {
                     var state = response.getState();
-                    // alert(state)
+                     
                     if (state === "SUCCESS") {
                       
                       // cmp.set("v.isEditTrue", false);   
@@ -155,7 +155,7 @@
         if (event.getSource().get("v.files").length > 0) {
             fileName = event.getSource().get("v.files")[0]['name'];
              filetype = event.getSource().get("v.files")[0].type;
-            alert(filetype+'filetype');
+            
         }
         component.set("v.fileName", fileName);
         component.set("v.isFileSelected",true);
