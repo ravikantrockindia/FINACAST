@@ -105,7 +105,7 @@
                                     	<span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "{!v.namespace+'Date_Of_Birth__c'}"  value = "{!v.birthDate}" disabled="true" onchange = "{!c.nextButton}" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
-                                    	<span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today ($)<lightning:inputField aura:id = "annualIncome" fieldName="{!v.namespace+'Desired_Annual_Income_For_Retirement__c'}" onchange = "{!c.nextButton}"/>
+                                    	<span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today <lightning:inputField aura:id = "annualIncome" fieldName="{!v.namespace+'Desired_Annual_Income_For_Retirement__c'}" onchange = "{!c.nextButton}"/>
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
                                         <span class = "highlight">* </span>Years of Living After Retirement<lightning:inputField aura:id = "afterRetirement"  fieldName="{!v.namespace+'Years_Of_Living_After_Retirement__c'}"  value = "{!v.YearsLivingAfterRetirement}"  onchange = "{!c.nextButton}"/><br/>
@@ -145,23 +145,30 @@
                                     <div class="slds-col slds-size_1-of-2">
                                     	<span class = "highlight">* </span>Monthly Contribution<lightning:inputField aura:id = "goalContri" fieldName="{!v.namespace+'Required_Monthly_Saving__c'}" onchange = "{!c.changeMonthlyContribution}"/>                                    
                                     </div>
-                                    <div class="slds-col slds-size_1-of-2" style="padding-top: 30px; padding-bottom: 0; margin-bottom: 0;">
-                                    	Do you get tax benefit from interest payment? Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.isTaxDeduction}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!!v.isTaxDeduction}" name="yesno" id="noCheck"/><br/>
+                                    <div class="slds-col slds-size_1-of-2" style="padding-top: 0px; padding-bottom: 0; margin-bottom: 0;">
+                                        Do you get tax benefit from interest payment?<br/><br/> Yes <input type="radio" onclick = "{!c.handleRadio}" name="yesno" id="yesCheck" checked="{!v.isTaxDeduction}"/> No <input type="radio" onclick = "{!c.handleRadio}" checked="{!!v.isTaxDeduction}" name="yesno" id="noCheck"/><br/>
                                         <lightning:inputField fieldName ="{!v.namespace+'Does_the_contribution_bring_tax_benefit__c'}" value="{!v.isTaxDeduction}" class="slds-hide"/> 
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="padding-top: 0px; padding-bottom: 0; margin-bottom: 0;">
+                                        &nbsp;
+                                    </div>
+                                    <div style="clear:both;">
+                                        
                                     </div>
                                     
                                     <aura:if isTrue="{!v.isTaxDeduction}">
-                                        <div class="slds-col  slds-size_1-of-2"> 
+                                        
+                                        <div class="slds-col   slds-size_1-of-2 slds-p-top_x-small">
+                                            Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" aura:id="maxdeduction" />
+                                        </div>
+                                        <div class="slds-col  slds-size_1-of-2 slds-p-top_x-small"> 
                                             <span class = "highlight">* </span>What % of contribution bring tax benefits? <lightning:inputField fieldName ="{!v.namespace+'What_of_contribution_bring_tax_benefit__c'}" aura:id="taxcontri"/><br/>
                                             
                                             
                                         </div>
-                                        <div class="slds-col   slds-size_1-of-2">
-                                            Max yearly tax deduction allowed ($ )?  <lightning:inputField fieldName ="{!v.namespace+'Max_yearly_tax_deduction_allowed__c'}" aura:id="maxdeduction" />
-                                        </div>
-                                        <div class="slds-col   slds-size_1-of-2 " style="padding-top: 20px;">
+                                        <div class="slds-col   slds-size_1-of-2 " style="padding-top: 5pxpx;">
                                             <lightning:inputField fieldName ="{!v.namespace+'Do_tax_benefits_realize_monthly__c'}" value="{!v.isMonthly}" class="slds-hide"/><br/>
-                                        	Do tax benefits realize monthly? Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
+                                            Do tax benefits realize monthly? <br/><br/>Yes <input type="radio" onclick = "{!c.handleIsMonthly}" id="yesMonthly" checked="{!v.isMonthly}"/> No <input type="radio" onclick = "{!c.handleIsMonthly}" id="noMonthly" checked="{!!v.isMonthly}"/>
                                         </div>
                                         
                                     </aura:if>

@@ -48,9 +48,6 @@
 .THIS .slds-form-element {
     display: inline;
 }
-.THIS.cGoalformRetirement .slds-modal__content {
-    height: 450px;
-}
 .THIS.hideDiv {
     display: none;
 }
@@ -97,17 +94,25 @@
 .THIS .slds-select_container:before {
     top: 15px;
 }
+.THIS .highlight {
+   color: red;
+}
+.THIS .buttonClass {
+    width : 30%
+}
+.THIS .slds-modal__content {
+    height: 400px;
+} 
 @media (max-width: 767px) {
-    .THIS .slds-box1 {
-        height: 380px;
-        overflow-Y: scroll;
-    }
 	.THIS .slds-box1 .slds-size_1-of-2 {
         width: 100%;
     }
     .THIS .slds-modal__container {
         width: 80%;
         max-width: 80%;
+    }
+    .THIS .slds-modal__content {
+        height: 300px;
     }
 }
 @media (max-width: 576px) {
@@ -120,26 +125,7 @@
     .THIS .slds-p-around_medium {
         padding: 0 1rem;
     }
-}
-@media (max-height: 600px) {
-    .THIS .slds-box1 {
-        height: 300px;
-        overflow-Y: scroll;
-    }
-}
-@media (max-height: 500px) {
-    .THIS .slds-box1 {
+    .THIS .slds-modal__content {
         height: 250px;
-        overflow-Y: scroll;
     }
-}
-
-.THIS .highlight
-{
-   color: red;
-}
-
-.THIS .buttonClass
-{
-    width : 30%
 }
