@@ -86,7 +86,7 @@
                             </div>     
                         </div>
                         
-                        <div class="slds-grid slds-gutters">
+                        <div class="slds-grid slds-gutters slds-m-top--x-large">
                             <div class="slds-col slds-size_1-of-2">
                                 <span>
                                     {!$Label.c.Client_Address_City}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="BillingCity" aura:id="city" variant="label-hidden"/>
