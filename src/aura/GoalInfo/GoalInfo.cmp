@@ -145,13 +145,15 @@
                                             
                                         </div>
                                         <!---->           
-                                        <div class="slds-p-top_small sameLine">
-                                            <p>Target Value: <lightning:formattedNumber value="{!v.tarVal}" style="currency" /></p>
-                                            <p>Target Date: <lightning:formattedDateTime value="{!v.tarDate}" timeZone="UTC" /></p>
-                                        </div>
+                                        
                                     </div>
                                 </div>
+                                <div class="slds-p-top_small sameLine">
+                                            <h4 style="Float:left">Target Value: <lightning:formattedNumber value="{!v.tarVal}" style="currency" />&nbsp; &nbsp;
+                                            Target Date: <lightning:formattedDateTime value="{!v.tarDate}" timeZone="UTC" /></h4>
+                                        </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

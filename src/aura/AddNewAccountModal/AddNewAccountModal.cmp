@@ -10,10 +10,10 @@
         <aura:attribute name="recordTypeId" type="String"/>
 
     <aura:attribute name="options" type="List" default="[
-                                                        {'label': 'Cash', 'value': 'Cash'},
-                                                        {'label': 'Credit', 'value': 'Credit'},
-                                                        {'label': 'Investment', 'value': 'Investment'},
-                                                        {'label': 'Loan', 'value': 'Loan'}
+                                                        {'label': 'Bank Account', 'value': 'Cash'},
+                                                        {'label': ' Credit Card', 'value': 'Credit'},
+                                                        {'label': 'Investment Account', 'value': 'Investment'},
+                                                        {'label': 'Mortgage', 'value': 'Loan'}
                                                         ]"/>
     <aura:attribute name="value" type="String" default=""/>
     <aura:attribute name="editRecordLoan" type="boolean"/>

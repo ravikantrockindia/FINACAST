@@ -288,7 +288,8 @@
                                     <tr>
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
                                             <lightning:buttonIcon iconName="{!rec.iconName}" variant="bare"  name="{!rec.Id}" onclick="{!c.handleClickExpand}" />
-                                            INCOME :<span style="color: #4e75a3;">{!rec.Name }  OF  {!rec.Primary_Owner__r.Name}</span></td>
+                                      <!--      INCOME :<span style="color: #4e75a3;">{!rec.Name }  OF  {!rec.Primary_Owner__r.Name}</span></td>  -->
+                                             INCOME :<span style="color: #4e75a3;">{!rec.Name }  </span></td> 
                                         <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec.trIncome }" style="currency" currencyCode="USD"/> of <lightning:formattedNumber value="{!rec.amount}" style="currency" currencyCode="USD"/></td>
                                         <!--<td scope="col" class="slds-truncate" role="gridcell" style="color:black;"> {!v.Inc}</td>-->
                                         
@@ -413,7 +414,8 @@
                                         
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">                                         
                                             <lightning:buttonIcon iconName="{!rec1.iconName}" variant="bare"  name="{!rec1.Id}" onclick="{!c.handleClickExpandExpense}" />
-                                            EXPENSE : <span style="color: #4e75a3;">{!rec1.Name} OF  {!rec1.Primary_Owner__r.Name}</span></td>
+                                          <!--  EXPENSE : <span style="color: #4e75a3;">{!rec1.Name} OF  {!rec1.Primary_Owner__r.Name}</span></td>   -->
+                                             EXPENSE : <span style="color: #4e75a3;">{!rec1.Name}</span></td>
                                         <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec1.trExpense}" style="currency" currencyCode="USD"/> of <lightning:formattedNumber value="{!rec1.Amount__c}" style="currency" currencyCode="USD"/></td>
                                     </tr>
                                     <tr>
