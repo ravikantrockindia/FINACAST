@@ -11,7 +11,7 @@
         helper.fetchImage(component,event,helper);
          $A.enqueueAction(action);
           var recordId=component.get("v.recordId");
-        if(!($A.util.isUndefinedOrNull(recordId)&&recordId=="")){
+         if(!($A.util.isUndefinedOrNull(recordId)&&recordId=="")){
          var action=component.get("c.getContact");
                 action.setParams({ recordId : component.get("v.recordId")});
                 
@@ -50,10 +50,11 @@
         helper.fetchImage(component,event,helper);
     },
     handleProfile : function(component, event, helper) {
-        component.set("v.isEditTrue",true);
         component.set("v.isImageAvailable",true);
         var cmpTarget = component.find('change');
         $A.util.removeClass(cmpTarget, "slds-hide"); 
+                component.set("v.isEditTrue",true);
+
     },
     closeModel:function(component,event,helper){
         component.set("v.isEditTrue",false);

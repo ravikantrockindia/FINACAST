@@ -58,7 +58,7 @@
                                
                         </aura:if>
                         <div class="clients-details">                                  
-                            <b>DoB 
+                            <b>Birthday 
                                            <h5>     <ui:outputDate value="{!v.dob}"/>
 
                               </h5></b>	
