@@ -1,0 +1,54 @@
+<aura:component controller="FinacastGoalProgressApex" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" 
+                access="global">
+    <aura:attribute name="gid" type="String" access="global"/>
+    <aura:attribute name="currentAmt" type="Decimal" access="global"/>
+    <aura:attribute name="goalonTrack" type="Boolean" access="global"/>
+    <aura:attribute name="goalnotonTrack" type="Boolean" access="global"/>
+    <aura:attribute name="goalName" type="String" access="global"/>
+    <aura:attribute name="goalStatus" type="Double" access="global"/>
+    <aura:attribute name="increaseDate" type="Date" access="global"/> 
+    <aura:attribute name="isMonteCarloSimulation" type="String"/>
+    <ltng:require scripts="{!$Resource.ChartJs}" afterScriptsLoaded="{!c.generateChart}"/>   
+    
+    
+    <lightning:tabset class="slds-tabs_card">
+        <lightning:tab label="Goal Performance" class="gp-fsize">
+
+            <div class="msgs perfComp" >
+                <lightning:card class="msgs" >
+
+                    <aura:if isTrue="{!v.goalonTrack}">
+                        <ui:message title="Alerts:" severity="confirm" closable="false">
+                        <lightning:formattedText value="{!'You are on Track for your goal:- ' + v.goalName}" class=" slds-text-body_regular"  /> 
+                        </ui:message>
+                        </aura:if>
+                    
+                    <aura:if isTrue="{!v.goalnotonTrack}">
+                         <ui:message title="Alerts:" severity="confirm" closable="false">
+                        <lightning:formattedText value="{!'You are behind your goal  ' + v.goalName}" class="slds-text-color_success slds-text-body_regular"  /> 
+                        <lightning:formattedText value="{!' by:- $' + v.goalStatus}" class="slds-text-color_success slds-text-body_regular"  /> <br/>
+                        
+                        
+                        <lightning:formattedText value="{!'Increase your goal date to:-' + v.increaseDate}" class="slds-text-color_success slds-text-body_regular" />
+                        </ui:message>
+                        </aura:if> 
+                </lightning:card>
+            </div>
+            <br/>
+            <div class="det-bar-chart">
+                <lightning:card class="chart" >
+                    <div class="chart">
+                        <canvas aura:id="mychart" class="chart"></canvas>
+                    </div>
+                </lightning:card>
+            </div>
+         
+        </lightning:tab>
+        <aura:if isTrue="{!v.isMonteCarloSimulation}">
+        <lightning:tab label="Monte Carlo Simulation">
+            <c:MonteCarloSimulationTest childgid="{!v.gid}"/>
+        </lightning:tab>
+        </aura:if>
+        
+    </lightning:tabset>
+</aura:component>

@@ -35,6 +35,8 @@
                                  ]);
             
             var chart = new CanvasJS.Chart("chartContainer0.966", {
+                 height: 300, //in pixels
+                width: 600,
                 colorSet: "greenShades",
                 animationEnabled: true,  
                 title:{

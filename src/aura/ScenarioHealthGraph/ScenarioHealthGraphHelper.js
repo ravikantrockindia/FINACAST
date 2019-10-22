@@ -106,7 +106,10 @@
                     maximum : 10
                 };
                 
-                var chart = new CanvasJS.Chart("chartContainer2179");
+                var chart = new CanvasJS.Chart("chartContainer2179",{
+                     height: 250, //in pixels
+                width: 263,
+                });
                 createGauge(chart);
                 //Function for gauge
                 function createGauge(chart){
@@ -149,6 +152,8 @@
                     chart.options.subtitles.push(gauge.valueText);
                 }
                 chart.render();
+               
+                
             }
         }//end try
         catch(e){ 

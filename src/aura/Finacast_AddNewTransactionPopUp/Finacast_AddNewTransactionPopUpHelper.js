@@ -33,6 +33,8 @@
                 }
                 
                 var chart = new CanvasJS.Chart("chartContainer", {
+                                          height: 400, //in pixels
+                
                     animationEnabled: true,
                     title:{
                         //    text: "Cash Flow"

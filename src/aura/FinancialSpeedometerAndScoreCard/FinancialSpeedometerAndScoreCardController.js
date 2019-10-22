@@ -89,7 +89,10 @@
                     maximum : 10
                 };
                 var containername=component.get('v.clientId');
-                var chart = new CanvasJS.Chart(containername);
+                var chart = new CanvasJS.Chart(containername,{
+                    height: 250, //in pixels
+                width: 436,
+                });
                 createGauge(chart);
                 
                 //Function for gauge

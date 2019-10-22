@@ -3,5 +3,5 @@
     <aura:attribute name ="recordId" type = "Id"  />
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
     
-    <div id="chartContainer1" style="height: 400px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+    <div id="chartContainer1" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
 </aura:component>

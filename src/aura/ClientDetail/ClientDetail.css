@@ -1,5 +1,5 @@
 .THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;margin: -18px 103px;}
 .THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
 .THIS h4 { font-family: 'Work Sans', sans-serif;}
 .THIS h5 { font-family: 'Work Sans', sans-serif;}
@@ -204,7 +204,7 @@
 }
 .THIS .chart-sticker {
     position: absolute;
-    top: 105px;
+    top: 126px;
     text-align: left;
     width: calc(100% - 20px);
 }
@@ -212,15 +212,26 @@
     display: inline-block;
 }
 .THIS .chart-sticker ul li:first-child {
-    margin-left:102px;;
+    margin-left:14%;
 }
 .THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:60px;
+    margin-left:15%;
 }
 .THIS .chart-sticker ul li:last-child {
-    margin-left:61px;
+    margin-left:11%;
 }
 .THIS .chart-sticker h2 {
     font-size: 40px;
     font-weight: 600;
 }
+/*@media(max-width: 1250px) {
+    .THIS .chart-sticker ul li:first-child {
+    	margin-left:28px;;
+	}
+    .THIS .chart-sticker ul li:nth-child(2) {
+        margin-left:62px;
+    }
+    .THIS .chart-sticker ul li:last-child {
+        margin-left:56px;
+    }
+}*/

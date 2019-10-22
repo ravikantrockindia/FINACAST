@@ -123,7 +123,7 @@
                          dataPoints.push({x: new Date(dataSeriesGoal[i].data[j][0], 0) , y:dataSeriesGoal[i].data[j][1]});
                      }
                      
-                     var d = { type: "stackedColumn", showInLegend:true, name:dataSeriesGoal[i].label ,yValueFormatString: "$ ",dataPoints:dataPoints };
+                     var d = { type: "stackedColumn", toolTipContent: " {label} $: {y}", showInLegend:true, name:dataSeriesGoal[i].label,label:dataSeriesGoal[i].label ,yValueFormatString: "#,##0,.##K",dataPoints:dataPoints };
                      dataPoints1.push(d);
                  }
              }
@@ -238,6 +238,8 @@
         
         
         var chart = new CanvasJS.Chart("chartContainer3.358", {
+             height:200,
+                    width:614,
             animationEnabled: true,
             title:{
                 //text: "Debt Forecast",

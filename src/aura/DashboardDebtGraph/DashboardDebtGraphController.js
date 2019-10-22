@@ -72,6 +72,8 @@
                 console.log('dps: ' + JSON.stringify(dps1));  
                 
                 var chart = new CanvasJS.Chart("chartContainer111", {
+                    height: 300, //in pixels
+                width: 946,
                     theme: "light1", // "light2", "dark1", "dark2"
                     animationEnabled: true, // change to true	
                     toolTip: {
@@ -86,7 +88,7 @@
                             else {
                                 e.dataSeries.visible = true;
                             }
-                            chart.render();
+                             chart.render();
                         }
                     },
                     axisY:{

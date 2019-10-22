@@ -181,6 +181,8 @@
                     dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i]});
                 }
                 var chart = new CanvasJS.Chart("chartContainer3.2995", {
+                     height:200,
+                    width:614,
                     animationEnabled: true,
                     title:{
                         //text: "Debt Forecast",
@@ -386,7 +388,7 @@
         //  alert('shortTermFlag'+shortTermFlag);
             longTermFlag = parseInt(element.longTermFlag);
             if(longTermFlag > 0){
-                  messages.push({type:1, message:"You are likely to default on one or more of your long term loan payments. <span onClick='showDefaultAlertTable(event, true);' style='float: none; cursor: pointer;'>(See How)</span>"});
+                  messages.push({type:1, message:"You are likely to default on one or more of your long term loan payments. "});
             } else {
                   messages.push({type:0, message:"Congratulations! You are likely to pay off your long term loan commitments on time."});
             }
@@ -397,10 +399,10 @@
                   messages.push({type:0, message:"Congratulations! You are likely to meet all your short term loan commitments in the next 10 years and not incur any interest charge"});
             } else if(shortTermFlag == 1) {
                   messages.push({type:0, message:"You are likely to meet the minimum payments on your short term loans and  credit cards"});
-                  messages.push({type:1, message:("You are likely to incur an interest charge on your short term debt payments amounting to "+ currSymbol +interestAccumulated+" in next 10 years.<span onClick='showInterestAlertTable(event);' style='float: none; cursor: pointer;'>(See How)</span>")});
+                  messages.push({type:1, message:("You are likely to incur an interest charge on your short term debt payments amounting to "+ currSymbol +interestAccumulated+" in next 10 years.")});
             } else {
-                  messages.push({type:1, message:("You are likely to default on one or more of your credit cards in next 10 years. <span onClick='showDefaultAlertTable(event, false);' style='float: none; cursor: pointer;'>(See How)</span>")});
-                  messages.push({type:1, message:("In addition you are likely to incur an interest charge amounting to "+ currSymbol +interestAccumulated+" in next 10 years for non term debts.<span onClick='showInterestAlertTable(event);' style='float: none; cursor: pointer;'>(See How)</span>")});
+                  messages.push({type:1, message:("You are likely to default on one or more of your credit cards in next 10 years. ")});
+                  messages.push({type:1, message:("In addition you are likely to incur an interest charge amounting to "+ currSymbol +interestAccumulated+" in next 10 years for non term debts.")});
             }
       } else {
             var element2, element3, element4;

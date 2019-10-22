@@ -32,7 +32,9 @@
                                          "#90EE90"                
                                      ]);
                 var chart = new CanvasJS.Chart("chartInvestment", {
-                    colorSet: "greenShades",
+                                 height:300,
+                    width:946,
+                    //colorSet: "greenShades",
                     animationEnabled: true,  
                     title:{
                         //text: "Investment"
@@ -48,7 +50,7 @@
                         gridColor: "#edf4f5",   
                     },
                     data: [{
-                        yValueFormatString: "#,##0,.##K",
+                     //   yValueFormatString: "#,##0,.##K",
                         //                        xValueFormatString: "MMM YYYY",
                         type: "area",
                         dataPoints: dps

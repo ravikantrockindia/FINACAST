@@ -44,6 +44,8 @@
                                  ]);
             
             var chart = new CanvasJS.Chart("chartContainer3.499", {
+                 height:200,
+                    width:614,
                 colorSet: "greenShades",
                 animationEnabled: true,  
                 title:{
@@ -73,7 +75,8 @@
                                         }  */
                 },
                 data: [{
-                    yValueFormatString: "$ #,### ",
+                     toolTipContent: "  $: {y}",
+                    yValueFormatString: "#,##0,.##K",
                     //xValueFormatString: "MM YYYY",
                     type: "area",
                     dataPoints: dps

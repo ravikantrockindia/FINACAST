@@ -1,5 +1,5 @@
 <aura:component>
-    
+     
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name= "data" type="Object"/>
     <aura:attribute name = "score" type="Double"/>
@@ -22,6 +22,7 @@
     <aura:attribute name = "isEmptyData" type="Boolean" default="false"/>
     
     <aura:handler name="change" value="{!v.data}" action="{!c.finHealth}"/>    
+   
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.finHealth}"/>    
     <aura:if isTrue="{! !v.isEmptyData}">   
         <lightning:card class="chart"> 
@@ -45,9 +46,9 @@
                                 </p>
                                 <div class="chart-sticker">
                                     <ul>
-                                        <li><span>0 - Bad</span></li>
+                                        <!--li><span>0 - Bad</span></li-->
                                         <li><h2>{!v.score}/10</h2></li>
-                                        <li><span>10 - Excellent</span></li>
+                                        <!--li><span>10 - Excellent</span></li-->
                                     </ul>
                                 </div>
                             </div>

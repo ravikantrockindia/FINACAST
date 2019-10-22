@@ -10,7 +10,7 @@
     <aura:attribute name = "isEmptyData" type="Boolean" default="true"/>
 	 <aura:attribute name = "NetworthMessage" type="string"/>
     <aura:handler name="change" value="{!v.data}" action="{!c.shownetWorthData}"/>
-    
+   
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.shownetWorthData}"/> 
 
     <div class="slds-grid slds-gutter ">
