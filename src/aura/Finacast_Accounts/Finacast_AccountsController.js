@@ -1,6 +1,11 @@
 ({	
     doInit:function(component,event,helper){
-       
+        var today = new Date();
+      //  alert(today);
+        var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
+     //  alert(datestart);
+        component.set("v.maxDate",datestart);
+        // alert( component.get("v.maxDate")+"datestart");
         var workspaceAPI = component.find("workspace");
         var tab=component.get("v.tabName")
         console.log('tab',tab)
@@ -21,7 +26,7 @@
         component.set("v.Tid", accRec); 
         var today = $A.localizationService.formatDate(new Date(), "YYYY-MM-DD");
         component.set('v.todayDate', today);
-    
+
         var txnId=component.get("v.Tid");
         
      
@@ -42,6 +47,7 @@
         $A.enqueueAction(action2);
         
         helper.fetchTransactionList(component, event, helper);
+        helper.kk(component, event, helper);
         
     },
     ShowList:function(component, event, helper){
@@ -82,6 +88,7 @@
         ];  
             component.set("v.columnList", columns);
          helper.fetchTransactionList(component, event, helper);
+               
     },
     
     viewRecord:function(component, event, helper){
@@ -127,7 +134,7 @@
                             }
                         }
                     });
-
+				  $A.get('e.force:refreshView').fire();
 			  $A.enqueueAction(action);  
             }
         }
@@ -155,6 +162,7 @@
         var spinner = component.find("mySpinner");
        $A.util.removeClass(spinner, "slds-show");
        $A.util.addClass(spinner, "slds-hide");
+          $A.get('e.force:refreshView').fire();
     },
     handleSubmit : function(component, event, helper)
     { 
@@ -177,14 +185,14 @@
             msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);       
         }
-        else if(tdate>=toDate || tdate<=openDate) {
+       /* else if(tdate>=toDate || tdate<=openDate) {
             status1 = 0;
             event.preventDefault();
             msg = "Please enter Date between "+openDate+ " and "+toDate;
             helper.showAlertEmptyInvalidVal(component,msg);
           	return;
              
-        }
+        }*/
         else
         {
             status1 = 1;
@@ -209,6 +217,7 @@
         var spinner = component.find("mySpinner2");
         $A.util.removeClass(spinner, "slds-show");
         $A.util.addClass(spinner, "slds-hide");
+          $A.get('e.force:refreshView').fire();
     },
     onSubmit:function(component, event, helper) { 
         var status1 = 0;

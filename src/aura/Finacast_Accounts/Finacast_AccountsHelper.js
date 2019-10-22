@@ -42,7 +42,11 @@
                 var tdate=component.get("v.todayDate");
                 var date=response.getReturnValue();
                 if(date[0].FinServ__OpenDate__c!=null){
-                    component.set("v.OpenDate",date[0].FinServ__OpenDate__c);
+                    
+                     var today = new Date(date[0].FinServ__OpenDate__c);
+                     var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
+                    component.set("v.OpenDate",datestart);
+                    console.log(component.get("v.OpenDate")+"Kishu")
                     
                 }else{
                     component.set("v.OpenDate",tdate);
@@ -51,6 +55,7 @@
             }
             
         });
+      //  alert("OpenDate"+component.get("v.OpenDate"));
         $A.enqueueAction(action);   
         $A.enqueueAction(action3);
     },
@@ -135,4 +140,22 @@
         }
 
 },
+    kk : function(component,event,helper){
+
+        if(!(component.get("v.currentCount") >= component.get("v.totalRows"))){
+            //To display the spinner
+            event.getSource().set("v.isLoading", true); 
+            //To handle data returned from Promise function
+            helper.loadData(component).then(function(data){ 
+                var currentData = component.get("v.data");
+                var newData = currentData.concat(data);
+                
+                component.set("v.data", newData);
+                console.log('new data with concate in loadmore'+component.get("v.data"));
+                //To hide the spinner
+                event.getSource().set("v.isLoading", false); 
+            });
+        }
+
+     }
 })

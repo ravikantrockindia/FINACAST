@@ -6,6 +6,7 @@
     <aura:attribute name="isAddNewTransaction" type="boolean"/>
     <aura:attribute name="recordId" type="String" default=""/>
     <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="maxDate" type="date" default=""/>
     <aura:attribute name="isAccount" type="boolean" default="false"/>
     <aura:attribute name="FinaId" type="String"/>
     <aura:attribute name="Tid" type="String" default="{!v.FinaId}"/>
@@ -15,6 +16,7 @@
     <aura:attribute name="showDatatable" type="Boolean"/>
   	<aura:attribute name="OpenDate" type="Date"/>
     <aura:attribute name="todayDate" type="Date" default=""/>
+     <aura:attribute name="DateValue" type="Date" default=""/>
     <!-- <aura:handler name="change" value="{!v.data}" action="{!c.doInit}"/>-->
     <aura:handler name="rTid" event="c:AccountReport" action="{!c.doInit}"/>
     
@@ -28,6 +30,7 @@
     <aura:attribute name="currentCount" type="Integer" default="10"/>
     <aura:attribute name="totalRows" type="Integer" default="0"/>
     <aura:attribute name="loadOffset" type="Integer" default="1"/>
+    
    <!-- <c:tabStructureFinacast ccid="{!v.recordId}" namespace="{!v.namespace}"></c:tabStructureFinacast>
     <br/>-->
     <div class="slds-card slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
@@ -109,7 +112,8 @@
                                 
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                       Transaction Date <lightning:inputField  type="date" fieldName="FinServ__TransactionDate__c" aura:id = "date" variant="label-hidden" />
+                                        Transaction Date <lightning:input type="DateTime" min="{!v.OpenDate}" max="{!v.maxDate}" value="{!v.DateValue}" fieldName="FinServ__TransactionDate__c"  variant="label-hidden" />
+                                        <lightning:inputField  type="date" fieldName="FinServ__TransactionDate__c" aura:id = "date" value="{!v.DateValue}" variant="label-hidden" class="slds-hide"/>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" variant="label-hidden"/>
