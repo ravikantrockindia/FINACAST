@@ -138,14 +138,13 @@
                                                     <ul>
                                                         <li><span>0%</span></li>
                                                         <li><h2>{!v.res}%</h2></li>
-                                                        <li><span>100% - Completion</span></li>
+                                                        <li><span>100% -Completion</span></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                             
                                         </div>
-                                        <!---->           
-                                        
+                                         
                                     </div>
                                 </div>
                                 <div class="slds-p-top_small sameLine">
