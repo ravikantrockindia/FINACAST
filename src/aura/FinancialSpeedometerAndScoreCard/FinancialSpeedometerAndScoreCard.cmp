@@ -41,7 +41,7 @@
                                             <div class="chart-sticker">
                                             <ul>
                                               <!-- <li><span>0 - Bad</span></li> -->
-                                                <li><h2>{!v.score}/10</h2></li>
+                                                <li><h2 style="margin: -18px 103px;">{!v.score}/10</h2></li>
                                                <!-- <li><span>10 - Excellent</span></li>-->
                                             </ul>
                                         </div>
