@@ -51,12 +51,12 @@ public class FinacastUtility {
     public static void ExceptionHandle(Integer LineNumber, String Message,string StackTrace)
     {
         List<Exception_Details__c> listOfExceptionDetails = new List<Exception_Details__c>();
-		Exception_Details__c ex =new Exception_Details__c();
+        Exception_Details__c ex =new Exception_Details__c();
         ex.Message__c = Message;
         ex.Line_Number__c = LineNumber;
         ex.Stack_Trace__c = StackTrace;
-		listOfExceptionDetails.add(ex);
-        insert listOfExceptionDetails;   
+        listOfExceptionDetails.add(ex);
+        insert listOfExceptionDetails;  
     }
     
     //builds data for scenarios to make callout
@@ -187,7 +187,7 @@ public class FinacastUtility {
                     
                     // Loan and debt accounts
                     System.debug('above' + FFAMap);
-                    FFDAList = [select id, Name, APR__c,
+                    FFDAList = [select id, Name, APR__c,Frequency__c,
                                 //FinServ__Balance__c, 
                                 Current_Value__c, Client_Id__c, Payment_Amount__c
                                 from Scenario_Debt__c where
@@ -200,6 +200,24 @@ public class FinacastUtility {
                     System.debug('Debt Accounts: ' + FFDAList.size() + FFDAList);
                     if(FFDAList.size() > 0){
                         for(Scenario_Debt__c FFDA : FFDAList){
+                            Double loanFrequency = 0;
+                            switch on FFDA.Frequency__c {
+                                when 'Monthly' {
+                                    loanFrequency = 1;
+                                }   
+                                when 'Semi Monthly' {
+                                    loanFrequency = 2;
+                                }
+                                when 'Bi-Weekly' {
+                                    loanFrequency = 2;
+                                }
+                                when 'Weekly' {
+                                    loanFrequency = 4;
+                                }
+                                when else {
+                                    loanFrequency = 1;
+                                }
+                            }
                             accountNameMap.put(FFDA.Id, FFDA.Name);
                             flag++;
                             setData +='{';
@@ -211,7 +229,7 @@ public class FinacastUtility {
                             setData +='\'accountype\':\'account_loan\',';
                             setData +='\'name\':\''+FFDA.Name+'\',';
                             setData +='\'amount\':'+FFDA.Payment_Amount__c+',';
-                            
+                             setData +='\'loanfrequency\':\'' + loanFrequency + '\',';
                             setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
                             setData +='\'outstandingamt\':'+FFDA.Current_Value__c+',';
                             //  }

@@ -27,8 +27,8 @@ public class Finacast_FS_ParentApex{
             createClientData(clId);          
             wrap.response = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
             
-            System.debug('Future Simulation Request Data: ' + clientData);
-            System.debug('Future Simulation Response Data: ' + wrap.response);
+           // System.debug('Future Simulation Request Data: ' + clientData);
+         //   System.debug('Future Simulation Response Data: ' + wrap.response);
         } 
         catch(Exception e) {
             System.debug(e.getMessage()+e.getLineNumber());
@@ -164,7 +164,7 @@ public class Finacast_FS_ParentApex{
             // Loan and debt accounts
             System.debug('above');
             FFDAList = [select id, Name, FinServ__APY__c, FinServ__Balance__c, FinServ__LoanAmount__c, FinServ__PrimaryOwner__c,
-                        Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c,
+                        Account_Type__c, FinServ__PaymentAmount__c, Do_you_get_tax_benefit_from_interest_pay__c,FinServ__PaymentFrequency__c,
                         What_of_contribution_bring_tax_benefit__c,Max_yearly_tax_deduction_allowed__c, Do_tax_benefits_realize_monthly__c
                         //Is_TERM_Debt__c,  PAYMENT_AMOUNT__c
                         from FinServ__FinancialAccount__c where
@@ -200,10 +200,26 @@ public class Finacast_FS_ParentApex{
                         }
                         
                     }else if(FFDA.Account_Type__c == 'Loan'){
+                        double loanfrequency =0;
+                        switch on FFDA.FinServ__PaymentFrequency__c {
+                        when 'Monthly' {
+                            loanfrequency = 1;
+                        }   
+                        when 'Semi Monthly' {
+                            loanfrequency = 2;
+                        }
+                        when 'Bi-Weekly' {
+                            loanfrequency = 2.16;
+                        }
+                        when 'Weekly' {
+                            loanfrequency = 4.33;
+                        }
+
+                    }
                         setData +='\'accountype\':\'account_loan\',';
                         setData +='\'name\':\''+FFDA.Name+'\',';
                         setData +='\'amount\':'+FFDA.FinServ__PaymentAmount__c+',';
-                        
+                        setData +='\'loanfrequency\':\'' + loanfrequency + '\',';
                         setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
                         setData +='\'outstandingamt\':'+FFDA.FinServ__LoanAmount__c+',';
                         setData +='\'isTaxBenefit\':'+FFDA.Do_you_get_tax_benefit_from_interest_pay__c+',';
