@@ -29,6 +29,9 @@
 .THIS .networth-fea p {
     font-size: 14px;
 }
+.THIS .networth-msg span {
+    color: #2fbf9e;
+}
 .THIS .networth-msg {
     font-size: 12px;
 }
@@ -40,4 +43,8 @@
 }
 .THIS .networth-fea h4 {
     font-size: 18px;
+}
+.THIS .slds-icon_xx-small {
+    height: 9px;
+    width:9px;   
 }

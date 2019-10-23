@@ -49,7 +49,7 @@
             </div>
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-bottom_small slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <span><div><lightning:icon iconName="utility:record" size="xx-small" /> {!v.goalForecastStatus}</div></span></p>
+                    <p class="networth-msg"><i><b>Insights:</b></i> <span><div><lightning:icon iconName="utility:record" size="xx-small" /> {!v.goalForecastStatus}</div></span></p>
                 </div>
             </div>
         </div>

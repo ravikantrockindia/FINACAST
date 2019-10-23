@@ -63,7 +63,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright" aura:id="cashSectionButton" variant="bare" onclick="{! c.toggleSection }" name="cashSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate slds ">Cash</span>
+                        <span class="slds-truncate slds ">Bank Account</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.cashvalue}"/></span>
@@ -126,7 +126,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright" variant="bare" onclick="{! c.toggleSection }" name="creditSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate">Credit</span>
+                        <span class="slds-truncate">Credit Cards</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.creditvalue}"/></span>
@@ -191,7 +191,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright"  variant="bare" onclick="{! c.toggleSection }" name="investmentSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate ">Investment</span>
+                        <span class="slds-truncate ">Investment Account</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.investmentvalue}"/></span>
@@ -256,7 +256,7 @@
                     <div class="slds-float_left slds-p-left_xxx-small">
                         <lightning:buttonIcon iconName="utility:chevronright" variant="bare" onclick="{! c.toggleSection }" name="loanSection" alternativeText="Settings" />
                         
-                        <span class="slds-truncate ">Loan</span>
+                        <span class="slds-truncate ">Mortgage</span>
                     </div>
                     <div class="slds-float_right slds-p-right_large">
                         <span><ui:outputCurrency value="{!v.loanvalue}"/></span>

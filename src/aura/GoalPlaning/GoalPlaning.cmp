@@ -87,7 +87,7 @@
                                             </aura:set>
                                         </aura:if>
                                         
-                                        <span class="slds-float_right slds-float_right1"><lightning:formattedNumber value="{!Gdetails.actualValue}" maximumFractionDigits="2" style="currency"/> of <lightning:formattedNumber value="{!Gdetails.finGoal.FinServ__TargetValue__c}" maximumFractionDigits="2" style="currency"/></span>
+                                        <span class="slds-float_right slds-float_right1"><!--<lightning:formattedNumber value="{!Gdetails.actualValue}" maximumFractionDigits="2" style="currency"/>-->Target Amount : <lightning:formattedNumber value="{!Gdetails.finGoal.FinServ__TargetValue__c}" maximumFractionDigits="2" style="currency"/></span>
                                     </h3>
                                     <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
                                         <span class="slds-progress-bar__value slds-progress-bar__value_success">
@@ -101,7 +101,8 @@
                                             <p class="proj-com">Projected Completion:  <lightning:formattedDateTime value="{!Gdetails.finGoal.FinServ__TargetDate__c}" timeZone="UTC" /></p>
                                         </div>
                                         <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
-                                            <h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>
+                                            <h3><span class="slds-float_right slds-float_right1">Target Date : <lightning:formattedDateTime value="{!Gdetails.finGoal.FinServ__TargetDate__c}" timeZone="UTC" /></span></h3>
+                                            <!--<h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>-->
                                         </div>
                                     </div>
                                 </div>

@@ -106,7 +106,7 @@
     text-align: left;
     /*width: calc(100% - 20px);*/
     width: 100%;
-}
+} 
 .THIS .chart-sticker ul li {
     display: inline-block;
     font-size: 11px;
@@ -118,7 +118,9 @@
     margin-left:60px;
 }
 .THIS .chart-sticker ul li:last-child {
-    margin-left:40px;
+   /* margin-left:40px;*/
+    margin-left: 86px;
+    margin-top: -9px;
 }
 .THIS .chart-sticker h2 {
     font-size: 30px;
@@ -282,4 +284,8 @@
 }
 .THIS .slds-icon-action-approval {
     background-color: #00b088;
+}
+.THIS .slds-icon_xx-small {
+    height: 9px;
+    width:9px;   
 }

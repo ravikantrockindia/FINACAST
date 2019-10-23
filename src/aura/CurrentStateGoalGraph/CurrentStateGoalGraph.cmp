@@ -17,24 +17,24 @@
         </div>
     </div>
     <div class="slds-grid slds-gutter ">
-                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_small slds-p-left_small">
+                <!--div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_small slds-p-left_small">
                     <div class="networth-fea">
                         <p>Money Owed</p>
                         <h4>${!v.moneyOwned}</h4>
                     </div>
-                </div>
-                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_small slds-p-left_small">
+                </div-->
+                <!--div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_small slds-p-left_small">
                     <div class="networth-fea">
                         <p>Money Paid</p>
                         <h4>$0</h4>
                     </div>
-                </div>
-                <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
+                </div-->
+                <!--div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <div class="networth-fea">
                         <p>Money to be Paid</p>
                         <h4>${!v.moneytobepaid}</h4>
                     </div>
-                </div>
+                </div-->
             </div>
         <lightning:card class="chart4">
             <div style="width: 100%; height: auto;">
@@ -47,8 +47,9 @@
                 </div>
                 <div class="slds-box" style="border: none; text-align: left;">
                     
+                    
+                        <i><b>Insights: </b></i> 
                     <aura:iteration items="{!v.goalForecastStatus}" var="g">
-                        <i><b>Insight: </b></i> 
                         <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /><span style="color: #2fbf9e;">{!g}</span></div>
                     </aura:iteration>
                    

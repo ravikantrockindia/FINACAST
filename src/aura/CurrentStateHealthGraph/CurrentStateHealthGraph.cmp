@@ -38,7 +38,7 @@
                                 
                                 <div id="chartContainer6.39" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                                 <p class="networth-msg"> 
-                                    <i><b>Insight:</b></i>
+                                    <i><b>Insights:</b></i>
                                     <aura:iteration items="{! v.financialHealthMessage}" var="m">           
                                         <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /> {!m.message}</div>
                                     </aura:iteration> 

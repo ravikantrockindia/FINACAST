@@ -229,10 +229,7 @@
     text-align: left;
     font-family: 'Open Sans', sans-serif;
 }
-/*.THIS.canvas.canvasjs-chart-canvas {
-height: 250px !important;
-	width: 436px !important;
-
-
-
-}*/
+.THIS .slds-icon_xx-small {
+    height: 9px;
+    width:9px;   
+}

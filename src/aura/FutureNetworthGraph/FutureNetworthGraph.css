@@ -51,3 +51,7 @@
 .THIS .what-is span:first-child {
     float: right;
 }
+.THIS .slds-icon_xx-small {
+    height: 9px;
+    width:9px;   
+}

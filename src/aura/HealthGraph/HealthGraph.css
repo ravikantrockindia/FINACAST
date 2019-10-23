@@ -118,7 +118,8 @@
     margin-left:40px;
 }
 .THIS .chart-sticker ul li:last-child {
-    margin-left:36px;
+   /* margin-left:36px;*/
+    margin-left:72px;
 }
 .THIS .chart-sticker h2 {
     font-size: 34px;
@@ -252,4 +253,8 @@
     position: absolute;
     background-color: #fff;
     bottom: 0;
+}
+.THIS .slds-icon_xx-small {
+    height: 9px;
+    width:9px;   
 }

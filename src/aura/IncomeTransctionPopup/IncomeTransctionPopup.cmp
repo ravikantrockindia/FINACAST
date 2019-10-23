@@ -45,7 +45,7 @@
                        
                     </aura:iteration>
                        
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
+                  <!--  <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                         <thead>
                             <tr class="slds-line-height_reset">
                                  <th class="" scope="col">
@@ -103,7 +103,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table>-->
                               
                             
                                 <!--Transaction for expenses-->

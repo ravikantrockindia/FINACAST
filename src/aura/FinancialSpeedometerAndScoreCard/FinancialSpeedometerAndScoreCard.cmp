@@ -34,15 +34,15 @@
                                     <!--<div id="chartContainer2" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div> -->
                                     <div>
                                         <div>
-                                        <p><i><div><b>Insights:</b> </div>
-                                            <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /> At, this rate you can sustain {!v.months} months without income.
-                                            </div></i></p>
+                                            <p style="text-align:left;"><i><div><b>Insights:</b> </div>
+                                                <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /> At, this rate you can sustain {!v.months} months without income.
+                                                </div></i></p>
                                         </div>
-                                            <div class="chart-sticker">
+                                        <div class="chart-sticker">
                                             <ul>
-                                              <!-- <li><span>0 - Bad</span></li> -->
+                                                <!-- <li><span>0 - Bad</span></li> -->
                                                 <li><h2 style="margin: -18px 103px;">{!v.score}/10</h2></li>
-                                               <!-- <li><span>10 - Excellent</span></li>-->
+                                                <!-- <li><span>10 - Excellent</span></li>-->
                                             </ul>
                                         </div>
                                     </div>

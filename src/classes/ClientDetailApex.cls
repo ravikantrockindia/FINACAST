@@ -608,7 +608,7 @@ public class ClientDetailApex {
                         setData +='\'percentContribution\':'+e.What_of_contribution_bring_tax_benifit__c+',';
                         setData +='\'maxLimit\':'+e.May_yearly_tax_deduction_allowed__c+',';
                         setData +='\'isMonthly\':'+e.Does_tax_benifit_realize_really__c+',';
-                        setData +='}';
+                        setData +='},';
                         ++j;
                     }//end for
                 }//end if
@@ -625,7 +625,7 @@ public class ClientDetailApex {
                     setData +='\'percentContribution\':0,';
                     setData +='\'maxLimit\':0,';
                     setData +='\'isMonthly\':'+false;
-                    setData +='}';
+                    setData +='},';
                 }
                 
                 setData += ']"}';
