@@ -289,15 +289,27 @@
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
                                             <lightning:buttonIcon iconName="{!rec.iconName}" variant="bare"  name="{!rec.Id}" onclick="{!c.handleClickExpand}" />
                                       <!--      INCOME :<span style="color: #4e75a3;">{!rec.Name }  OF  {!rec.Primary_Owner__r.Name}</span></td>  -->
-                                             INCOME :<span style="color: #4e75a3;">{!rec.Name }  </span></td> 
-                                        <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec.trIncome }" style="currency" currencyCode="USD"/> of <lightning:formattedNumber value="{!rec.amount}" style="currency" currencyCode="USD"/></td>
+                                             <span style="color: #4e75a3;">{!rec.Name }  </span></td> 
+                                        <td style="text-align: right; color:black; font-weight: 700 "><!--<lightning:formattedNumber value="{!rec.trIncome }" style="currency" currencyCode="USD"/>-->Budget : <lightning:formattedNumber value="{!rec.amount}" style="currency" currencyCode="USD"/></td>
                                         <!--<td scope="col" class="slds-truncate" role="gridcell" style="color:black;"> {!v.Inc}</td>-->
                                         
                                     </tr>
                                     <tr>
                                         <td colspan="2">
                                             <lightning:progressBar value="{!rec.ariavaluenow }" size="large"/>
-                                            <div style="text-align: right; color:black; font-weight: 700;">${!rec.trIncome } so far this month</div>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col">
+                                                      <a style="padding-top:10px;">  <lightning:button  label="View Transaction" 
+                                                                     value="{!index}" onclick="{!c.openModelIncome2}" 
+                                                                              /></a>
+                                                </div>
+                                                <div class="slds-col">
+                                                   <div style="text-align: right; color:black; font-weight: 700;">${!rec.trIncome } so far this month</div> 
+                                                </div>
+                                            </div>
+                                           
+                                            
+                                            
                                             <div class="triple_dot">  
                                                 <ul>
                                                     <li>
@@ -317,9 +329,9 @@
                                                 <lightning:button label="Delete" class="btn_destructive"  value="{!rec.Id}" onclick="{!c.onClickDelete}" />
                                             
                                             </div-->
-                                           <a>  <lightning:button  label="View Transaction" 
+                                          <!-- <a style="padding-top:10px;">  <lightning:button  label="View Transaction" 
                                                                      value="{!index}" onclick="{!c.openModelIncome2}" 
-                                                                              /></a>
+                                                                              /></a>-->
                                         
                                             <!--a onclick="{!c.openModel }"  class="slds-text-link_reset"><span class="slds-text-link">View Transction</span></a-->
                                            <!--a>View Transction</a-->     
@@ -415,17 +427,27 @@
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">                                         
                                             <lightning:buttonIcon iconName="{!rec1.iconName}" variant="bare"  name="{!rec1.Id}" onclick="{!c.handleClickExpandExpense}" />
                                           <!--  EXPENSE : <span style="color: #4e75a3;">{!rec1.Name} OF  {!rec1.Primary_Owner__r.Name}</span></td>   -->
-                                             EXPENSE : <span style="color: #4e75a3;">{!rec1.Name}</span></td>
-                                        <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec1.trExpense}" style="currency" currencyCode="USD"/> of <lightning:formattedNumber value="{!rec1.Amount__c}" style="currency" currencyCode="USD"/></td>
+                                             <span style="color: #4e75a3;">{!rec1.Name}</span></td>
+                                        <td style="text-align: right; color:black; font-weight: 700 "><!--<lightning:formattedNumber value="{!rec1.trExpense}" style="currency" currencyCode="USD"/>--> Budget : <lightning:formattedNumber value="{!rec1.Amount__c}" style="currency" currencyCode="USD"/></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
                                             <lightning:progressBar value="{!rec1.ariavaluenow }" size="large" />
-                                            <div style="text-align: right; color:black; font-weight: 700;">${!rec1.trExpense } so far this month</div>
-                                			
-                                           <a> <lightning:button  label="View Transaction" 
+                                            
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col">
+                                                      <a> <lightning:button  label="View Transaction" 
                                                                       value="{!index}" onclick="{!c.ExpensePopupOpen}" 
                                                                               /></a>
+                                                </div>
+                                                <div class="slds-col">
+                                                   <div style="text-align: right; color:black; font-weight: 700;">${!rec1.trExpense } so far this month</div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                			
+                                           
                                               <div class="triple_dot">  
                                                 <ul>
                                                     <li>
@@ -518,18 +540,28 @@
                                     <tr>
                                         <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
                                             <lightning:buttonIcon iconName="{!rec2.iconName}" variant="bare"  name="{!rec2.Id}" onclick="{!c.handleClickExpandLoan}" />
-                                            Loan : <span style="color: #4e75a3;">{!rec2.Name}</span></td>
-                                        <td style="text-align: right; color:black; font-weight: 700 "><lightning:formattedNumber value="{!rec2.trLoan }" style="currency" currencyCode="USD"/> of <lightning:formattedNumber value="{!rec2.amount}" style="currency" currencyCode="USD"/></td>
+                                           <span style="color: #4e75a3;">{!rec2.Name}</span></td>
+                                        <td style="text-align: right; color:black; font-weight: 700 "><!--<lightning:formattedNumber value="{!rec2.trLoan }" style="currency" currencyCode="USD"/>-->Budget : <lightning:formattedNumber value="{!rec2.amount}" style="currency" currencyCode="USD"/></td>
                                          
                                     </tr>
                                     <tr>
                                         <td colspan="2">
                                             <lightning:progressBar value="{!rec2.ariavaluenow }" size="large" />
-                                            <div style="text-align: right; color:black; font-weight: 700;">${!rec2.trLoan } so far this month</div>
-                                    <a>  <lightning:button  label="View Transaction" 
+                                            
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col">
+                                                      <a> <lightning:button  label="View Transaction" 
                                                                      value="{!index}" onclick="{!c.LoanPopupOpen}" 
                                                                               /> </a>
-                                            <div class="triple_dot">  
+                                                </div>
+                                                <div class="slds-col">
+                                                  <div style="text-align: right; color:black; font-weight: 700;">${!rec2.trLoan } so far this month</div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                    
+                                          <div class="triple_dot">  
                                                 <ul>
                                                     <li>
                                                         <lightning:buttonicon iconName="utility:edit" size="x-small" class="slds-button__icon_left"
