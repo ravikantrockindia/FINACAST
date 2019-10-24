@@ -63,23 +63,23 @@
                 //content: toolTipFormatter
             //},
             data: [{
-                 
-                type: "column",
-                showInLegend: true,
-                name: "Cash in",
-                //valueFormatString: "MMM",
-                color: "#49a2ad",
-                dataPoints: dps1
-            },
-                   {
-                       type: "column",
-                       showInLegend: true,
-                      // valueFormatString: "MMM",
-                       name: "Cash out",
-                       color: "#59c96f",
-                       dataPoints: dps
-                   },
-                  ]
+                        
+                        type: "column",
+                        showInLegend: true,
+                        
+                        name: "Cash out",
+                        color: "#ff6038",
+                        dataPoints: dps1
+                    },
+                           {
+                               type: "column",
+                               showInLegend: true, 
+                               valueFormatString: "MMM-YYYY",
+                               name: "Cash in",
+                               color: "#59c96f",
+                               dataPoints: dps
+                           },
+                          ]
                    });
                    chart.render();
                    }

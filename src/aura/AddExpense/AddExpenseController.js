@@ -52,8 +52,20 @@
         var growth = component.find("yeargrowth").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
         var sDate = component.find("stDate").get("v.value");
+        alert(sDate );
+        if($A.util.isUndefinedOrNull(sDate)){
+            var today = new Date();
+            var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
+            sDate= datestart;
+        }
+        //
         var eDate = component.find("endDate").get("v.value");
-        
+        alert(eDate );
+        if($A.util.isUndefinedOrNull(eDate)){
+        var todayy=new Date();
+        var datee =(todayy.getFullYear()+10)+'/'+(todayy.getMonth()+1)+'/'+(todayy.getDate()+1);
+            eDate=datee;
+        }
         var getRecordEdit=component.get("v.editRecordExpense");
         var expRec=component.get("v.expRec");
         if(getRecordEdit==false){

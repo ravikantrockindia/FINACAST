@@ -133,7 +133,7 @@
                 formatter: function(value) {
                     component.set("v.val",value);
                     
-                    return 'amount: '+value;  
+                    return 'Amount: '+value;  
                 }
             });
             
@@ -143,7 +143,7 @@
             var sliderExpense = new Slider('#ExpenseSlider001', {
                 formatter: function(value) {
                     component.set("v.expAmt",value);
-                    return 'amount: '+value;
+                    return 'Amount: '+value;
                 }
             });
             var Expenseamount = component.get("v.expenseAmount");

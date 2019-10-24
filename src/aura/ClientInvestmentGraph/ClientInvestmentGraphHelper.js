@@ -176,6 +176,8 @@
     
     donutchart : function(component,event,helper) {
         var chart = new CanvasJS.Chart("CanvasContainer", {
+            width:614,
+            height:203,
             animationEnabled: true,  
             dataPointWidth: 35,
             

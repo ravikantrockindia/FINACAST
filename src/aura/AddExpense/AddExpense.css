@@ -31,9 +31,6 @@
 .THIS label.slds-form-element__label{
     display: none!important ;     
 }
-.THIS .slds-modal__content{
-    overflow:inherit;
-}
 .THIS .slds-modal__container {
     width: 70%;
     max-width: 70%;

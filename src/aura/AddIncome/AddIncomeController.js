@@ -96,7 +96,7 @@
             return;
         }
         else{
-        if($A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(sDate) || sDate == "" || $A.util.isUndefinedOrNull(eDate) || eDate == "" || $A.util.isUndefinedOrNull(freqcy) || freqcy == "" ||  $A.util.isUndefinedOrNull(growth) || growth == "" || $A.util.isUndefinedOrNull(amn) || amn ==""  || $A.util.isUndefinedOrNull(grate) || grate == "" )
+        if($A.util.isUndefinedOrNull(priowner) || priowner == "" ||  $A.util.isUndefinedOrNull(freqcy) || freqcy == "" ||  $A.util.isUndefinedOrNull(growth) || growth == "" || $A.util.isUndefinedOrNull(amn) || amn ==""  || $A.util.isUndefinedOrNull(grate) || grate == "" )
         {
             
             event.preventDefault();

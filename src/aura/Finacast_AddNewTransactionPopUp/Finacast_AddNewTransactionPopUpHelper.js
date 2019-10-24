@@ -34,7 +34,7 @@
                 
                 var chart = new CanvasJS.Chart("chartContainer", {
                                           height: 400, //in pixels
-                
+                    width:944,
                     animationEnabled: true,
                     title:{
                         //    text: "Cash Flow"
@@ -76,7 +76,7 @@
                         showInLegend: true,
                         
                         name: "Cash out",
-                        color: "#49a2ad",
+                        color: "#ff6038",
                         dataPoints: dps1
                     },
                            {

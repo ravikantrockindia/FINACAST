@@ -81,14 +81,14 @@
                                             <div class="slds-col slds-size_1-of-2">  
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
-                                                        <span class = "highlight">* </span> Amount after tax per pay check($)<lightning:inputField fieldName="{!v.namespace+'Amount__c'}" aura:id="inQuantity" />
+                                                        <span class = "highlight">* </span> Monthly Budget <lightning:inputField fieldName="{!v.namespace+'Amount__c'}" aura:id="inQuantity" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
-                                                        <span class = "highlight">* </span> Yearly growth (%)<lightning:inputField fieldName="{!v.namespace+'Yearly_growth__c'}" aura:id = "yeargrowth" ></lightning:inputField>
+                                                        <span class = "highlight">* </span> Annual Inflation (%) <lightning:inputField fieldName="{!v.namespace+'Yearly_growth__c'}" aura:id = "yeargrowth" ></lightning:inputField>
                                                     </div>
                                                 </div>
                                             </div>
@@ -99,14 +99,14 @@
                                             <div class="slds-col slds-size_1-of-2">
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
-                                                        <span class = "highlight">* </span>   Start Date<lightning:inputField fieldName="{!v.namespace+'Start_Date__c'}" aura:id="stDate" />
+                                                        <!--span class = "highlight">* </span-->   Start Date<lightning:inputField fieldName="{!v.namespace+'Start_Date__c'}" aura:id="stDate" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="slds-col slds-size_1-of-2">
                                                 <div class="slds-form-element">
                                                     <div class="slds-form-element__control">
-                                                        <span class = "highlight">* </span>  End Date <lightning:inputField  fieldName="{!v.namespace+'End_Date__c'}" aura:id="endDate"></lightning:inputField>
+                                                        <!--span class = "highlight">* </span-->  End Date <lightning:inputField  fieldName="{!v.namespace+'End_Date__c'}" aura:id="endDate"></lightning:inputField>
                                                     </div>
                                                 </div>
                                             </div>
