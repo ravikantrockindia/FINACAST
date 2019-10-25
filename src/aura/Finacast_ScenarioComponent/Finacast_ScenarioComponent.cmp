@@ -493,7 +493,7 @@
                                 </span>
                             </button>
                             <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
-                                <b>Add/Update Avatar Debt</b>
+                                <b>Add/Update Avatar Loan</b>
                             </h3>   
                         </header> 
                         <lightning:recordEditForm         
@@ -502,8 +502,8 @@
                                                   onsuccess = "{!c.handleSuccess}"
                                                   recordId = "{!v.recordId}"                                                 
                                                   > 
-                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-                                <div class="slds-box1">
+                            <div class="slds-modal__content " id="modal-content-id-2">
+                                <div class="slds-box1 slds-p-around_medium">
                                 	                               
                                 
                                 <div class="slds-grid slds-gutters">
@@ -543,7 +543,7 @@
                             </div>
                             
                             <footer class="slds-modal__footer">
-                                <div class="button" align ="right">
+                                <div class="button slds-p-right_medium" align ="right">
                                     <lightning:button class="btn1 btn2" variant ="neutral" name = "debt button" label ="Cancel" onclick = "{!c.cancelButton}"/>
                                     <lightning:button class="btn1" variant="brand"  name = "debt button" label="Save" type = "submit" />
                                 </div>
@@ -643,9 +643,9 @@
                                     Close
                                 </span>
                             </button>
-                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                            <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
                                 <b>Add Scenario</b>
-                            </h2>   
+                            </h3>   
                         </header>
                         
                         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -681,14 +681,14 @@
                                     </div>   
                                 </aura:if>
                                 
-                                <lightning:button label = "Add Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" 
+                                <lightning:button class="add_scenario-button" label = "Add Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" 
                                                   onclick="{!c.onScenarioAddButton}"/>
                             </div>
                         </div>
                         
                         <footer class="slds-modal__footer">
                             <div class="button" align ="right"> 
-                                <lightning:button label ="Done" variant ="neutral"  onclick = "{!c.onDoneScenarioButton}"/>   
+                                <lightning:button class="btn1" label ="Done" variant ="neutral"  onclick = "{!c.onDoneScenarioButton}"/>   
                             </div>
                         </footer>  
                         

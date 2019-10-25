@@ -83,7 +83,9 @@
     <aura:attribute name="editRecordLoan" type="boolean"/>
     <aura:attribute name="editRecordIncome" type="boolean"/>
     <aura:attribute name="editRecordExpense" type="boolean"/>
-    
+    <aura:attribute name="incomeName" type="String"/>
+    <aura:attribute name="expenseName" type="String"/>
+    <aura:attribute name="loanName" type="String"/>
      <aura:method name = "changeClientData" action = "{!c.changeClientData}">
         <aura:attribute name = "changeData" type = "Object" />
     </aura:method> 
@@ -261,121 +263,108 @@
         <!--Income record starts-->
         <div class="slds-box"> 
             <div class="slds-section slds-is-open" aura:id="fruitsSection">
-        <!--section header-->
-        <h3 class="slds-section__title income_dropdown">
-            <button aria-controls="fruitsList" class="slds-button slds-section__title-action">
-                <span onclick="{!c.toggleSection}" data-auraId="fruitsSection">
-                    <lightning:icon iconName="utility:switch"
-                                    size="x-small"
-                                    class=" slds-button__icon_left slds-section__title-action-icon"
-                                    alternativeText="button icon" 
-                                    />
-                </span>
-                <span class="slds-truncate" >Income</span>
-                <lightning:button class="btn1 slds-m-left_medium" name="Income_Record_Type" label="+ Add New Income" title="Add Income +" onclick="{!c.createIncomeRecord}"/>    
-            </button>
-        </h3>
-        <!--section body-->
-        <div class="slds-section__content" id="fruitsList">
-         <aura:if isTrue="{!not(empty(v.IncomeRecord.incomeRecList))}">
-                
-                <div class="">
-                    <div class="slds-grid" >
-                        <div style="width:100%;" class="slds-scrollable_y listViewContent total_investment">                           
-                            <table class="income-tab slds-table slds-table_fixed-layout slds-table--striped slds-table_cell-buffer slds-table_bordered slds-table_resizable-cols">                                
-                                <aura:iteration items="{!v.IncomeRecord.incomeRecList}" var="rec" indexVar="index">
-                                    
-                                    <tr>
-                                        <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
-                                            <lightning:buttonIcon iconName="{!rec.iconName}" variant="bare"  name="{!rec.Id}" onclick="{!c.handleClickExpand}" />
-                                      <!--      INCOME :<span style="color: #4e75a3;">{!rec.Name }  OF  {!rec.Primary_Owner__r.Name}</span></td>  -->
-                                             <span style="color: #4e75a3;">{!rec.Name }  </span></td> 
-                                        <td style="text-align: right; color:black; font-weight: 700 "><!--<lightning:formattedNumber value="{!rec.trIncome }" style="currency" currencyCode="USD"/>-->Budget : <lightning:formattedNumber value="{!rec.amount}" style="currency" currencyCode="USD"/></td>
-                                        <!--<td scope="col" class="slds-truncate" role="gridcell" style="color:black;"> {!v.Inc}</td>-->
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <lightning:progressBar value="{!rec.ariavaluenow }" size="large"/>
-                                            <div class="slds-grid slds-gutters">
-                                                <div class="slds-col">
-                                                      <a style="padding-top:10px;">  <lightning:button  label="View Transaction" 
-                                                                     value="{!index}" onclick="{!c.openModelIncome2}" 
-                                                                              /></a>
-                                                </div>
-                                                <div class="slds-col">
-                                                   <div style="text-align: right; color:black; font-weight: 700;">${!rec.trIncome } so far this month</div> 
-                                                </div>
-                                            </div>
-                                           
+                <!--section header-->
+                <h3 class="slds-section__title income_dropdown">
+                    <button aria-controls="fruitsList" class="slds-button slds-section__title-action">
+                        <span onclick="{!c.toggleSection}" data-auraId="fruitsSection">
+                            <lightning:icon iconName="utility:switch"
+                                            size="x-small"
+                                            class=" slds-button__icon_left slds-section__title-action-icon"
+                                            alternativeText="button icon" 
+                                            />
+                        </span>
+                        <span class="slds-truncate" >Income</span>
+                        <lightning:button class="btn1 slds-m-left_medium" name="Income_Record_Type" label="+ Add New Income" title="Add Income +" onclick="{!c.createIncomeRecord}"/>    
+                    </button>
+                </h3>
+                <!--section body-->
+                <div class="slds-section__content" id="fruitsList">
+                 <aura:if isTrue="{!not(empty(v.IncomeRecord.incomeRecList))}">
+                        <div class="">
+                            <div class="slds-grid" >
+                                <div style="width:100%;" class="slds-scrollable_y listViewContent total_investment">                           
+                                    <table class="income-tab slds-table slds-table_fixed-layout slds-table--striped slds-table_cell-buffer slds-table_bordered slds-table_resizable-cols">                                
+                                        <aura:iteration items="{!v.IncomeRecord.incomeRecList}" var="rec" indexVar="index">
                                             
+                                            <tr>
+                                                <td scope="col" class="slds-truncate" role="gridcell" style="color:black; font-weight: 700; margin: 10px 0;">
+                                                    <lightning:buttonIcon iconName="{!rec.iconName}" variant="bare"  name="{!rec.Id}" onclick="{!c.handleClickExpand}" />
+                                              <!--      INCOME :<span style="color: #4e75a3;">{!rec.Name }  OF  {!rec.Primary_Owner__r.Name}</span></td>  -->
+                                                     <span style="color: #4e75a3;">{!rec.Name }  </span></td> 
+                                                <td style="text-align: right; color:black; font-weight: 700 "><!--<lightning:formattedNumber value="{!rec.trIncome }" style="currency" currencyCode="USD"/>-->Budget : <lightning:formattedNumber value="{!rec.amount}" style="currency" currencyCode="USD"/></td>
+                                                <!--<td scope="col" class="slds-truncate" role="gridcell" style="color:black;"> {!v.Inc}</td>-->
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <lightning:progressBar value="{!rec.ariavaluenow }" size="large"/>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col">
+                                                              <a style="padding-top:10px;">  <lightning:button  label="View Transaction" 
+                                                                             value="{!index}" onclick="{!c.openModelIncome2}" 
+                                                                                      /></a>
+                                                        </div>
+                                                        <div class="slds-col">
+                                                           <div style="text-align: right; color:black; font-weight: 700;">${!rec.trIncome } so far this month</div> 
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    
+                                                    
+                                                    <div class="triple_dot">  
+                                                        <ul>
+                                                            <li>
+                                                                <lightning:buttonicon iconName="utility:edit" size="x-small" class="slds-button__icon_left"
+                                                                                      alternativeText="Edit" value="{!rec.Id}" onclick="{!c.onClickEdit}" 
+                                                                                      />
+                                                            </li>
+                                                            <li>
+                                                                <lightning:buttonicon iconName="utility:delete" size="x-small" class="slds-button__icon_left"
+                                                                                      alternativeText="Delete"  value="{!rec.Id}" onclick="{!c.incomeClickDelete}"
+                                                                                      />
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--div class="editrecord" style="margin-top:3px;">
+                                                        <lightning:button label="Edit Record" class="" value="{!rec.Id}" onclick="{!c.onClickEdit}"/>
+                                                        <lightning:button label="Delete" class="btn_destructive"  value="{!rec.Id}" onclick="{!c.onClickDelete}" />
+                                                    
+                                                    </div-->
+                                                  <!-- <a style="padding-top:10px;">  <lightning:button  label="View Transaction" 
+                                                                             value="{!index}" onclick="{!c.openModelIncome2}" 
+                                                                                      /></a>-->
+                                                
+                                                    <!--a onclick="{!c.openModel }"  class="slds-text-link_reset"><span class="slds-text-link">View Transction</span></a-->
+                                                   <!--a>View Transction</a-->     
+                                                </td>
+                                                 
+                                            </tr>
                                             
-                                            <div class="triple_dot">  
-                                                <ul>
-                                                    <li>
-                                                        <lightning:buttonicon iconName="utility:edit" size="x-small" class="slds-button__icon_left"
-                                                                              alternativeText="Edit" value="{!rec.Id}" onclick="{!c.onClickEdit}" 
-                                                                              />
-                                                    </li>
-                                                    <li>
-                                                        <lightning:buttonicon iconName="utility:delete" size="x-small" class="slds-button__icon_left"
-                                                                              alternativeText="Delete"  value="{!rec.Id}" onclick="{!c.incomeClickDelete}"
-                                                                              />
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!--div class="editrecord" style="margin-top:3px;">
-                                                <lightning:button label="Edit Record" class="" value="{!rec.Id}" onclick="{!c.onClickEdit}"/>
-                                                <lightning:button label="Delete" class="btn_destructive"  value="{!rec.Id}" onclick="{!c.onClickDelete}" />
-                                            
-                                            </div-->
-                                          <!-- <a style="padding-top:10px;">  <lightning:button  label="View Transaction" 
-                                                                     value="{!index}" onclick="{!c.openModelIncome2}" 
-                                                                              /></a>-->
-                                        
-                                            <!--a onclick="{!c.openModel }"  class="slds-text-link_reset"><span class="slds-text-link">View Transction</span></a-->
-                                           <!--a>View Transction</a-->     
-                                        </td>
-                                         
-                                    </tr>
-                                    
-                                </aura:iteration>                                     
-                            </table>
-                           
-                        </div>
-                    </div>
+                                        </aura:iteration>                                     
+                                    </table>
+                                   
+                                </div>
+                            </div>
+                        
+                     	</div>
+                        <aura:set attribute="else">
+                            <div class="slds-text-heading_small slds-text-align--center no-data">
+                                <p><lightning:icon iconName="utility:classic_interface" alternativeText="Approved" /></p>
+                                <div class="slds-p-top_small slds-p-bottom_small"><h3>No Income data found</h3></div>
+                            </div>
+                        </aura:set>
+                    </aura:if>
                 </div>
-                
-                <aura:set attribute="else">
-                    <div class="slds-text-heading_small slds-text-align--center no-data">
-                        <p><lightning:icon iconName="utility:classic_interface" alternativeText="Approved" /></p>
-                        <div class="slds-p-top_small slds-p-bottom_small"><h3>No Income data found</h3></div>
-                    </div>
-                </aura:set>
-            </aura:if>
-        </div>
-    </div>
-        
-            
-               
-            
-            
+            </div>
         </div>
         <aura:if isTrue="{!v.addIncome}">
-            
             <c:AddIncome namespace="{!v.namespace}" editRecordIncome="{!v.editRecordIncome}" Income = "{!v.recordTypeId}" client="{!v.client}"  title = "Add Income" isActive = "{!v.activeModal}" accRecType = "{!v.accountRecTypeName}" />
-            
         </aura:if>
         <!--Income record ends-->
-        
-        
         <!--Edit modal for income starts-->
         <aura:if isTrue="{!v.showModalIncome}">
-            
             <c:AddIncome Income = "{!v.recordTypeId}" editRecordIncome="{!v.editRecordIncome}" namespace="{!v.namespace}" title = "Edit Income" isActive = "{!v.activeModal}" incmeId = "{!v.editrecid}" client="{!v.client}" />
-            
         </aura:if>
-        
         <!--Edit modal for Income ends-->
         <!--Add Transaction modal-->
         <!--aura:if isTrue="{!v.addTransaction}">
@@ -593,6 +582,230 @@
                     </div>
                 </aura:set>
             </aura:if>
+            
+            <h1 class="slds-m-top_medium">***********New static tables start************</h1>
+            <!--Start-new-design-of-income-->
+            <div class="slds-card__header">
+                <div class="slds-section slds-is-open" >
+                    <!--section header-->
+                    <h3 class="slds-section__title income_dropdown  slds-m-bottom_medium">
+                        <button aria-controls="VegetablesId" class="slds-button slds-section__title-action  slds-p-left_none">
+                            <span onclick="{!c.toggleSection}" data-auraId="GoalSection1">
+                                <lightning:icon iconName="utility:switch"
+                                                alternativeText="button icon"
+                                                size="x-small"
+                                                class="slds-section__title-action-icon slds-button__icon_left"/>
+                            </span>
+                            <span class="slds-truncate">Income</span>
+                            <lightning:button class="btn1 slds-m-left_medium" name="Income" label="Add New Income" title="Add Goal +" onclick="{!c.createGoalRecord}"/>
+                        </button>
+                    </h3>
+                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                        <div class="slds-col slds-size_12-of-12 slds-m-top_medium slds-p-right_none slds-p-left_none">
+                            <div class="client_managed active-goal">
+                                <div class="slds-grid">
+                                   <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                        <img src="{!$Resource.WeddingIcon}"/>
+                                   </div>
+                                   <div class="slds-col slds-size_10-of-12">
+                                       <h3 class="slds-m-top_large">
+                                           <a><lightning:button variant="base" label="Deepak" /></a>
+                                            <span class="on-track">
+                                                <lightning:icon iconName="action:approval" size="xx-small"/> 
+                                                <span> On Track</span>
+                                            </span>
+                                            <span class="slds-float_right slds-float_right1">Target Amount : </span>
+                                       </h3>
+                                        <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
+                                            <span class="slds-progress-bar__value slds-progress-bar__value_success">
+                                                <lightning:progressBar value="" size="large"/>
+                                            </span>
+                                       </div>
+                                       <div class="slds-grid">
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <p class="proj-com">Projected Completion:  </p>
+                                           </div>
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <h3><span class="slds-float_right slds-float_right1">Target Date : </span></h3>
+                                               <!--<h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>-->
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 more-btn slds-align_absolute-center">
+                                            &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" />                       
+                                            
+                                            &nbsp;
+                                            <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" />                                   
+                                            
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__header">
+                <div class="slds-section slds-is-open">
+                    <!--section header-->
+                    <h3 class="slds-section__title income_dropdown  slds-m-bottom_medium">
+                        <button aria-controls="VegetablesId" class="slds-button slds-section__title-action  slds-p-left_none">
+                            <span onclick="{!c.toggleSection}" data-auraId="GoalSection">
+                                <lightning:icon iconName="utility:switch"
+                                                alternativeText="button icon"
+                                                size="x-small"
+                                                class="slds-section__title-action-icon slds-button__icon_left"/>
+                            </span>
+                            <span class="slds-truncate">Expense</span>
+                            <lightning:button class="btn1 slds-m-left_medium" name="Expense" label="Add New Expense" title="Add Expense +" onclick="{!c.createGoalRecord}"/>
+                        </button>
+                    </h3>
+                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                        <div class="slds-col slds-size_12-of-12 slds-m-top_medium slds-p-right_none slds-p-left_none">
+                            <div class="client_managed active-goal">
+                                <div class="slds-grid">
+                                   <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                        <img src="{!$Resource.WeddingIcon}"/>
+                                   </div>
+                                   <div class="slds-col slds-size_10-of-12">
+                                       <h3 class="slds-m-top_large">
+                                           <a><lightning:button variant="base" label="Deepak" /></a>
+                                            <span class="on-track">
+                                                <lightning:icon iconName="action:approval" size="xx-small"/> 
+                                                <span> On Track</span>
+                                            </span>
+                                            <span class="slds-float_right slds-float_right1">Target Amount : </span>
+                                       </h3>
+                                        <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
+                                            <span class="slds-progress-bar__value slds-progress-bar__value_success">
+                                                <lightning:progressBar value="" size="large"/>
+                                            </span>
+                                       </div>
+                                       <div class="slds-grid">
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <p class="proj-com">Projected Completion:  </p>
+                                           </div>
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <h3><span class="slds-float_right slds-float_right1">Target Date : </span></h3>
+                                               <!--<h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>-->
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 more-btn slds-align_absolute-center">
+                                            &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" />                       
+                                            
+                                            &nbsp;
+                                            <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" />                                   
+                                            
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                    	<div class="slds-col slds-size_12-of-12 slds-m-top_medium slds-p-right_none slds-p-left_none">
+                            <div class="client_managed active-goal">
+                                <div class="slds-grid">
+                                   <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                        <img src="{!$Resource.WeddingIcon}"/>
+                                   </div>
+                                   <div class="slds-col slds-size_10-of-12">
+                                       <h3 class="slds-m-top_large">
+                                           <a><lightning:button variant="base" label="Deepak" /></a>
+                                            <span class="on-track">
+                                                <lightning:icon iconName="action:approval" size="xx-small"/> 
+                                                <span> On Track</span>
+                                            </span>
+                                            <span class="slds-float_right slds-float_right1">Target Amount : </span>
+                                       </h3>
+                                        <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
+                                            <span class="slds-progress-bar__value slds-progress-bar__value_success">
+                                                <lightning:progressBar value="" size="large"/>
+                                            </span>
+                                       </div>
+                                       <div class="slds-grid">
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <p class="proj-com">Projected Completion:  </p>
+                                           </div>
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <h3><span class="slds-float_right slds-float_right1">Target Date : </span></h3>
+                                               <!--<h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>-->
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 more-btn slds-align_absolute-center">
+                                        &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" />                       
+                                        
+                                        &nbsp;
+                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" />                                   
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__header">
+                <div class="slds-section slds-is-open">
+                    <!--section header-->
+                    <h3 class="slds-section__title income_dropdown slds-m-bottom_medium">
+                        <button aria-controls="VegetablesId" class="slds-button slds-section__title-action  slds-p-left_none">
+                            <span onclick="{!c.toggleSection}" data-auraId="GoalSection">
+                                <lightning:icon iconName="utility:switch"
+                                                alternativeText="button icon"
+                                                size="x-small"
+                                                class="slds-section__title-action-icon slds-button__icon_left"/>
+                            </span>
+                            <span class="slds-truncate">Loan</span>
+                            <lightning:button class="btn1 slds-m-left_medium" name="Loan" label="Add New Loan" title="Add Loan +" onclick="{!c.createGoalRecord}"/>
+                        </button>
+                    </h3>
+                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                        <div class="slds-col slds-size_12-of-12 slds-m-top_medium slds-p-right_none slds-p-left_none">
+                            <div class="client_managed active-goal">
+                                <div class="slds-grid">
+                                   <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                        <img src="{!$Resource.WeddingIcon}"/>
+                                   </div>
+                                   <div class="slds-col slds-size_10-of-12">
+                                       <h3 class="slds-m-top_large">
+                                           <a><lightning:button variant="base" label="Deepak" /></a>
+                                            <span class="on-track">
+                                                <lightning:icon iconName="action:approval" size="xx-small"/> 
+                                                <span> On Track</span>
+                                            </span>
+                                            <span class="slds-float_right slds-float_right1">Target Amount : </span>
+                                       </h3>
+                                        <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" role="progressbar">
+                                            <span class="slds-progress-bar__value slds-progress-bar__value_success">
+                                                <lightning:progressBar value="" size="large"/>
+                                            </span>
+                                       </div>
+                                       <div class="slds-grid">
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <p class="proj-com">Projected Completion:  </p>
+                                           </div>
+                                           <div class="slds-col slds-size_6-of-12 slds-m-bottom_large slds-p-left_none slds-p-right_none">
+                                               <h3><span class="slds-float_right slds-float_right1">Target Date : </span></h3>
+                                               <!--<h3><span class="slds-float_right slds-float_right1">$0 so for this month</span></h3>-->
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 more-btn slds-align_absolute-center">
+                                            &nbsp;<lightning:buttonicon variant="bare" iconName="utility:edit" size="medium" title="Edit" />                       
+                                            
+                                            &nbsp;
+                                            <lightning:buttonicon variant="bare" iconName="utility:delete" size="medium" title="Delete" />                                   
+                                            
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End-new-design-of-income-->
+            <h1>**********New static tables end**********</h1>
         </div>
     </div>
           
@@ -699,6 +912,7 @@
                     </div>
                 </aura:set>
             </aura:if>
+            
         </div>
     </div>
           
@@ -719,14 +933,14 @@
         <!--Edit modal for goal ends--> 
         <!--Goal part ends-->
         <aura:if isTrue="{!v.isOpen}">
-             <c:IncomeTransctionPopup cid="{!v.cid}"  namespace="{!v.namespace}"  client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.isOpen}" data = "{!v.data}" getExpenseBudgetId ="{!v.getBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" />
+             <c:IncomeTransctionPopup cid="{!v.cid}"  namespace="{!v.namespace}"  client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.isOpen}" data = "{!v.data}" getExpenseBudgetId ="{!v.getBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" incomeName="{!v.incomeName}" />
         <!--c:BudgetIncomeCashFlowGraph tansactionId="{!v.incomeId}"  IncomeRecord="{!v.IncomeRecord}" namespace="{!v.namespace}" Transaction = "{!v.Transaction}" client="{!v.client}" cid="{!v.cid}" isActive = "{!v.activeModal}" addTrans="{!v.addTrans}"  closeModal="{!v.isOpen}"/-->
     </aura:if> 
 	<aura:if isTrue="{!v.expensePopup}">
-        <c:ExpenseTransctionPopup cid="{!v.cid}" client="{!v.client}"  namespace="{!v.namespace}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.expensePopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getExpenseBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" />
+        <c:ExpenseTransctionPopup cid="{!v.cid}" client="{!v.client}"  namespace="{!v.namespace}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.expensePopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getExpenseBudgetId}" IncomeRecord="{!v.selectedIncomeRecord}" expenseName="{!v.expenseName}"/>
         </aura:if> 
         <aura:if isTrue="{!v.LoanPopup}">
-        <c:LoanTransctionPopup cid="{!v.cid}"  namespace="{!v.namespace}" client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.LoanPopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getLoanId}" IncomeRecord="{!v.selectedLoanRecord}" />
+        <c:LoanTransctionPopup cid="{!v.cid}"  namespace="{!v.namespace}" client="{!v.client}" isActive = "{!v.activeModal}" addExpenseTrans = "{!v.addExpenseTrans}"  closeModal="{!v.LoanPopup}" data = "{!v.data}" getExpenseBudgetId ="{!v.getLoanId}" IncomeRecord="{!v.selectedLoanRecord}" loanName="{!v.loanName}"/>
         </aura:if>
     </div>   
     

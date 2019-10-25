@@ -22,6 +22,7 @@
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name="showDatatable" type="Boolean"/>
+    <aura:attribute name="expenseName" type="String"/>
     <div class="slds-m-around_xx-large">
         
         <!-- Modal/Popup Box starts here-->
@@ -34,7 +35,7 @@
                                           alternativeText="close"
                                           variant="bare-inverse"
                                           class="slds-modal__close"/>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Transaction Details</h3>
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Transaction Details :{!v.expenseName}</h3>
                 </header>
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">

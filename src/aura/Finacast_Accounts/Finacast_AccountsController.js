@@ -174,16 +174,18 @@
         //  var tdest = component.find("dest").get("v.value");
         var type = component.find("type").get("v.value");
         var tamt = component.find("amt").get("v.value");
-        var tname = component.find("name").get("v.value");
+        var desc = component.find("desc").get("v.value");
+       // var tname = component.find("name").get("v.value");
         
         var openDate=component.get("v.OpenDate");
         var toDate=component.get("v.todayDate");
-        if($A.util.isUndefinedOrNull(tname) || tname == ""|| $A.util.isUndefinedOrNull(type) || type == ""|| $A.util.isUndefinedOrNull(tdate) || tdate == "" ||   $A.util.isUndefinedOrNull(tamt) || tamt =="" )
+        if($A.util.isUndefinedOrNull(desc) || desc == ""|| $A.util.isUndefinedOrNull(type) || type == ""|| $A.util.isUndefinedOrNull(tdate) || tdate == "" ||   $A.util.isUndefinedOrNull(tamt) || tamt =="" )
         {
             status1 = 0;
             event.preventDefault();
             msg = "Please fill mandatory fields."
-            helper.showAlertEmptyInvalidVal(component,msg);       
+            helper.showAlertEmptyInvalidVal(component,msg); 
+            return;
         }
        /* else if(tdate>=toDate || tdate<=openDate) {
             status1 = 0;

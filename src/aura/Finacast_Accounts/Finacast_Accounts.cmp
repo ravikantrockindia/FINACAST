@@ -50,7 +50,7 @@
                             <div class="journal-entry-heading">
                                 <h3 class="slds-clearfix">
                                    <!-- <span class="">Journal Entries</span> -->
-                                    <Lightning:button class="btn1 slds-button slds-m-bottom_medium" onclick="{!c.addNewTransaction}" label="+ Add New Transaction"/> 
+                                    <Lightning:button class="btn1 slds-button slds-m-bottom_medium" onclick="{!c.addNewTransaction}" label=" Add New Transaction"/> 
                                 </h3>
                                 <div class="slds-grid slds-gutters slds-text-align_center" style="height: 400px">
                                     <aura:if isTrue="{!v.showDatatable}">
@@ -88,7 +88,7 @@
                         <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Add Transaction</h3>                            
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Add Transaction : {!v.name}</h3>                            
                 </header>
                 <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
                 <lightning:recordEditForm 
@@ -100,14 +100,21 @@
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                         
                         <div class="slds-gutters" style="border: none;">
-                            <div class="slds-box1 slds-p-left_medium slds-p-right_medium">        
+                            <div class="slds-box1 slds-p-left_medium slds-p-right_medium"> 
+                               <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.Tid}" variant="label-hidden" disabled="true" class="slds-hide" />  
                                 <div class="slds-grid slds-gutters">
-                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    <!-- <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name"  variant="label-hidden"/>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span>   Transaction For <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.Tid}" variant="label-hidden" disabled="true" /> 
-                                    </div> 
+                                    </div> -->
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span> Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
+                                    </div>
                                 </div>
                                 
                                 <div class="slds-grid slds-gutters">
@@ -119,16 +126,7 @@
                                         <span class = "highlight">* </span>  Transaction Type<lightning:inputField  fieldName="FinServ__TransactionType__c" aura:id = "type" variant="label-hidden"/>
                                     </div>
                                 </div>
-                                
-                                <div class="slds-grid slds-gutters">
-                                    <div style="clear:both;"></div>
-                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                        Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
-                                    </div>
-                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
-                                        <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
-                                    </div>
-                                </div>
+                            
                             </div>
                         </div>
                     </div>
@@ -154,7 +152,7 @@
                         <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Transaction</h3>                            
+                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Transaction : {!v.name}</h3>                            
                 </header>
                 <lightning:spinner aura:id="mySpinner2" class="slds-hide"/>
 
@@ -168,14 +166,20 @@
                         
                         <div class="slds-gutters" style="border: none;">
                             <div class="slds-box1">
-                                  
+                             <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.Tid}" variant="label-hidden" disabled="true" class="slds-hide" />      
                                 <div class="slds-grid slds-gutters">
-                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                    <!--<div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span> Transaction Name <lightning:inputField  fieldName="{!v.namespace+'TransactionName__c'}" aura:id = "name"  variant="label-hidden"/>
                                     </div>
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span>   Transaction For <lightning:inputField fieldName ="FinServ__FinancialAccount__c" value="{!v.Tid}" variant="label-hidden" disabled="true" /> 
-                                    </div> 
+                                    </div> -->
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span> Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2" style="color:grey;">
+                                        <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
+                                    </div>
                                 </div>
                                 
                                 <div class="slds-grid slds-gutters">
@@ -187,7 +191,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="slds-grid slds-gutters">
+                               <!-- <div class="slds-grid slds-gutters">
                                     <div style="clear:both;"></div>
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         Description<lightning:inputField  fieldName="FinServ__Description__c" aura:id = "desc" variant="label-hidden"/>
@@ -196,7 +200,7 @@
                                     <div class="slds-col  slds-size_1-of-2" style="color:grey;">
                                         <span class = "highlight">* </span> Amount<lightning:inputField fieldName="FinServ__Amount__c" aura:id = "amt" variant="label-hidden" />
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>

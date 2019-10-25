@@ -18,6 +18,7 @@
     
     <!--handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
     <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->
     <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
     <!--c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast-->
@@ -37,7 +38,7 @@
     <!--Tabs set here-->
     <lightning:tabset>
         
-        <lightning:tab label="Scenario" title="Scenario">
+        <lightning:tab label="Scenarios" title="Scenarios">
             <div class="slds-grid slds-gutters">
                 <div class="slds-col  slds-size_6-of-12 slds-p-bottom_medium">
                     <div class="client_managed slds-p-left_medium slds-p-right_medium slds-p-bottom_medium slds-m-top_x-small">

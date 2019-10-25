@@ -96,16 +96,20 @@
             </div>
         </div>
     </div>
+    <div>
+            <b style="font-style: italic;font-size: 12px;font-family: 'Open Sans',sans-serif;margin-left:14px;">Interest paid</b>
+     </div>
     <div class="slds-grid slds-gutter ">
+        
                 <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <div class="networth-fea">
-                        <p>Long Term Loans </p>
+                        <p>Loans </p>
                         <h4>${!v.longTermLoans}</h4>
                     </div>
                 </div>
         <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
                     <div class="networth-fea">
-                        <p>Short Term Loans</p>
+                        <p>Credit Cards</p>
                         <h4>${!v.shortTermLoans}</h4>
                     </div>
                 </div>

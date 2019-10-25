@@ -137,6 +137,141 @@
         $A.enqueueAction(action);
         
     },
+ 	doInit1 : function(component, event, helper) { 
+        var spinner = component.find("mySpinner");
+        $A.util.removeClass(spinner, "slds-hide");
+        $A.util.addClass(spinner, "slds-show");
+        
+        var action=component.get('c.getNamespace');
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                $A.util.removeClass(spinner, "slds-show");
+                $A.util.addClass(spinner, "slds-hide");
+                component.set("v.namespace", response.getReturnValue())
+         
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        
+                    }
+                } else {
+                    
+                }
+            }
+        });
+       
+        $A.enqueueAction(action); 
+        
+        component.set("v.SearchText", null );
+        var columns = [];
+        var nameSpace = component.get("v.packageName");        
+        var action = component.get("c.ColumnSet");        
+        action.setCallback(this,function(response) {
+            var state =response.getState();
+            if (state === "SUCCESS") {
+                var allFieldList = response.getReturnValue().lstFields;
+                var allFieldList2 = response.getReturnValue().lstSObject;
+                var ClientSize=allFieldList2.length;
+                
+                component.set("v.TotalClient",ClientSize);
+                var allColumnList = [];
+                var counter = 0;
+                var referenceFieldsArray = [];              
+                //create column labels meta databu
+                for(var i in allFieldList){
+                    
+                    if (allFieldList[i].fieldName.indexOf('.') != -1){
+                        referenceFieldsArray.push(allFieldList[i].fieldName);
+                    }                    
+                    
+                    if(allFieldList[i].type == 'DATE'){
+                        allColumnList.push({ 
+                            "label" :  allFieldList[i].label.toUpperCase(),
+                            "fieldName" : allFieldList[i].fieldName,
+                            "sortable" : 'true',
+                            "type" :  'date-local',
+                            typeAttributes:{
+                                month: "2-digit",
+                                day: "2-digit"} ,
+                        });
+                    } 
+                    
+                    else if(allFieldList[i].type == 'DATETIME'){
+                        allColumnList.push({ 
+                            "label" :  allFieldList[i].label.toUpperCase(),
+                            "fieldName" : allFieldList[i].fieldName,
+                            "sortable" : 'true',
+                            "type" :  'date',
+                            typeAttributes:{
+                                year: "numeric",
+                                month: "long",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit"} ,
+                        });
+                    }
+                    
+                        else if(allFieldList[i].fieldName == 'Name'){
+                            allColumnList.push({
+                                "label" :  'Client Name',
+                                "fieldName" : 'linkName',
+                                "sortable" : 'true',
+                                "type" :  'button',
+                                "typeAttributes" :  {
+                                    label: { fieldName: 'Name' },
+                                    target: '_blank'}
+                                
+                            });
+                        }
+                    
+                            else{
+                                allColumnList.push({
+                                    "label" :  allFieldList[i].label.toUpperCase(),
+                                    "fieldName" : allFieldList[i].fieldName,
+                                    "sortable" : 'true',
+                                    "type" :  'text'
+                                });
+                            } 
+                }
+                component.set("v.mycolumns", allColumnList);
+                
+                var ListWrapper = response.getReturnValue();    
+                var data = ListWrapper.lstSObject;             
+                var updatedColumns = ListWrapper.columnsSaving;
+                var showColumns = [];
+                
+                if(!$A.util.isUndefinedOrNull(updatedColumns)){
+                    showColumns = updatedColumns.split(',');
+                    component.set("v.selectedValues",showColumns);
+                }
+                else{
+                    showColumns = [];
+                }
+                
+                helper.setDisplayColumns(component, event, helper,showColumns);
+                //var setColumns = [];
+                
+                data.forEach(function(record){
+                    
+                    record.linkName = '/'+record.Id;
+                }); 
+                
+                
+                component.set("v.totalPages", Math.ceil(data.length/component.get("v.pageSize")));            
+                component.set("v.allData", data ); 
+                component.set("v.currentPageNumber",1);
+                helper.buildData(component, helper);
+                
+                
+            }
+        });
+        
+        $A.enqueueAction(action);
+        
+    },
     
        viewRecord : function(component, event, helper) {
            var recId = event.getParam('row').Id;

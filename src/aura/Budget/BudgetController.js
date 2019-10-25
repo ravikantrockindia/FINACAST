@@ -23,19 +23,19 @@
         var loans=component.get("v.LoanRecord");
         component.set("v.selectedLoanRecord",loans[index]); 
         component.set("v.getLoanId",loans[index].Id);
+        component.set("v.loanName",loans[index].Name);
         component.set("v.LoanPopup",true);
         // alert(recId);
     },
     ExpensePopupOpen : function(component, event, helper) {
-        //alert('hey');
-        
+         
         var index=event.getSource().get("v.value");
         var records=component.get("v.IncomeRecord"); 
         var expenses=records["expenseRecList"]; 
        
       component.set("v.selectedIncomeRecord",expenses[index]);
         component.set("v.getExpenseBudgetId",expenses[index].Id);
-        
+        component.set("v.expenseName",expenses[index].Name);
        
         component.set("v.expensePopup",true);
       //  alert("budget"+recId);
@@ -873,10 +873,9 @@
         component.set("v.TransctionPart", true);
         component.set("v.IncomePart", false);
         component.set("v.incomeId",incomes[index].Id); 
-        
-
-        
-
+        component.set("v.incomeName",incomes[index].Name); 
+       // var name=incomes[index].Name;
+ 
    },
     
 })
