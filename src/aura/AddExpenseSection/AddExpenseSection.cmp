@@ -73,7 +73,7 @@
                                         
                                     </td>
                                     <td>
-                                        <div class="slds-truncate" ><lightning:input type="number" value="{!i.expense.amount}" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/></div>
+                                        <div class="slds-truncate" ><lightning:input type="number" value="{!i.expense.amount}" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" max="9999999999999999" messageWhenRangeOverflow="Budget too large" messageWhenRangeUnderflow="Budget cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/></div>
                                     </td>
                                     <td >
                                         <div class="slds-truncate" ><lightning:select aura:id="fields" name="select1" value="{!i.expense.priority}" disabled="{!i.disabled}" variant="label-hidden" class="label-hidden" required="true" messageWhenValueMissing="Select a value">

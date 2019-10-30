@@ -68,7 +68,7 @@
                                         
                                     </td>
                                     <td>
-                                        <lightning:input value="{!i.income.amount}" type="number" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/>
+                                        <lightning:input value="{!i.income.amount}" type="number" required="true" formatter="currency" disabled="{!i.disabled}" aura:id="fields" messageWhenValueMissing="Complete this field" step="0.01" min="0" max="9999999999999999" messageWhenRangeOverflow="Amount too large" messageWhenRangeUnderflow="Amount cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places"/>
                                     </td>
                                     <td>
                                         <lightning:select aura:id="fields" name="frequency" value="{!i.income.frequency}" required="true" disabled="{!i.disabled}" variant="label-hidden" messageWhenValueMissing="Select a value" class="label-hidden">
