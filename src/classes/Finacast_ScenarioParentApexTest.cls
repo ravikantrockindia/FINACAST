@@ -102,6 +102,7 @@ public class Finacast_ScenarioParentApexTest {
         Finacast_ScenarioParentApex.getData(t.Id);
         Finacast_ScenarioParentApex.saveNewScenario('New' , t.id);
         Finacast_ScenarioParentApex.ScenarioData(t.Id);
+         NewScenarioApex.saveNewScenario('New', t.Id);
         Test.stopTest();
     }
 

@@ -7,7 +7,7 @@
     <aura:attribute name="goalProgress" type="Decimal" default = "0"/>
     <aura:attribute name="loanProgress" type="Decimal" default = "0"/>
     <aura:attribute name="savingProgress" type="Decimal" default = "0"/>
-   
+   <aura:attribute name="scenario" type="object"/>   
     <aura:registerEvent name="ShowGraph" type="c:ShowGraph" />
     <!-- attributes list -->
     <aura:attribute name="namespace" type="string"/>
@@ -73,10 +73,7 @@
     <aura:attribute name="savingsAmount" type="Integer" default = "0"/> 
     <aura:attribute name = "savingLimit" type = "Integer" default = "0" />
     
-    <!--handlers-->
-  <!--  <aura:handler name="init" value="{!this}" action="{!c.doInit1}"/>-->
-    <!--aura:handler name="change" value="{! v.scene}" action="{!c.doInit}"/-->
-    
+   <aura:attribute name = "incomevalue" type = "Integer" default = "0" />
     <!--Resources-->
     <ltng:require styles="{!$Resource.multilinetoast}" />
     <ltng:require scripts="{!$Resource.ChartJs}"/>
@@ -99,12 +96,12 @@
     </aura:if>
     <!-- Loading spinner end-->
     
-    <div class ="pos">
+    <!--div class ="pos">
         <div class="slds-grid slds-gutters">
         	<div class="slds-col slds-size_12-of-12 slds-p-top_large slds-p-bottom_xx-small">
                <h3>Scenarios</h3>
             </div>
-        </div>
+        </div-->
         <div class="slds-grid slds-gutters">
         	<div class="slds-col slds-size_12-of-12 slds-p-top_large slds-p-bottom_xx-small">
                 <label><b>Name of the Scenario</b></label>
@@ -116,22 +113,18 @@
                     
                     <lightning:select name="scenarioList" aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
                         <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
-                            <option label="{!sceneItems.Name}"  value = "{!sceneItems.Id}" selected="sceneItems.selected"></option>
+                            <option label="{!sceneItems.Name}"  value = "{!sceneItems.Id}" ></option>
                         </aura:iteration>
                     </lightning:select>
                     
                 </div>
             </div>
-            <div class="slds-col slds-size_1-of-12 slds-p-top_medium slds-p-right_none" align = "right">
-            	<span>Or</span>
+            <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-right_none" style="font-size: 17px;" align = "right">
+            	<span> <a onclick = "{!c.manageScenarioButton}">Manage Scenarios</a></span>
             </div>
-            <div class="slds-col slds-size_4-of-12" style="padding-top: 2px;"  align = "right">
-                <div class = "manageScenarioPos " >
-                    <lightning:button label = "+ Add New Scenarios" class="btn1" variant = "base" onclick = "{!c.manageScenarioButton}"/>
-                </div>
-            </div>
+            
         </div>
-    </div>
+   
     <br/>
   
     <!--Page Grid-->
@@ -153,10 +146,17 @@
                             </div>
                         
                     </div>  
+                         <div class="slds-grid slds-gutters slds-m-bottom_small">
+                       <div class="slds-col " style="color:grey;">
+                           Enter Income Amount  <lightning:input value="{!v.val}" />
+                        </div> 
+                        </div>
+                        <br/>
                      <div class="fina_custom-slider">
                          <div class="slds-grid slds-gutters slds-p-left_medium slds-p-right_medium">
                              <div class="slds-col slds-size_12-of-12 ">
-                                 <input id="incomeSlider001" aura:id="IncomeSlider" data-slider-id='incomeSlider001Slider' type="text"  data-slider-max="50000" data-slider-step="1" />
+                                 
+                                 <input id="incomeSlider001" aura:id="IncomeSlider" data-slider-id='incomeSlider001Slider' type="text"  data-slider-max="1000000" data-slider-step="1" />
                              </div>
                          </div>
                         </div>
@@ -173,6 +173,9 @@
                             </div-->
                             <lightning:button iconName="utility:save" variant="bare"  name = "income save" value="{!incomeVar.Id}"  onclick="{! c.handleClick }"/>
                         </aura:iteration> 
+                        
+                        
+                       
                    </div>
                
                
@@ -188,11 +191,16 @@
                             </div>
                             
                         </div>
-                  
+                  		  <div class="slds-grid slds-gutters slds-m-bottom_small">
+                       <div class="slds-col " style="color:grey;">
+                           Enter Expense Amount  <lightning:input value="{!v.expAmt}" />
+                        </div> 
+                        </div>
+                        <br/>
                         <div class="fina_custom-slider">
                                          <div class="slds-grid slds-gutters slds-p-left_medium slds-p-right_medium">
                                              <div class="slds-col slds-size_12-of-12 ">
-                                                 <input id="ExpenseSlider001" data-slider-id='ExpenseSlider001Slider' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="1" />
+                                                 <input id="ExpenseSlider001" data-slider-id='ExpenseSlider001Slider' type="text" data-slider-min="0" data-slider-max="1000000" data-slider-step="1" />
                                                  
                                              </div>
                                          </div>
@@ -222,7 +230,7 @@
                         <div class="slds-grid slds-gutters slds-m-bottom_medium">
                             <div class="slds-col">
                                 <b> GOALS </b> 
-                                 <lightning:button  label = "+ Add New Goal" name = "goal button" variant = "base" onclick = "{!c.addGoalButton}" class="add_goals"/>
+                                 <lightning:button  label = " Add New Goal" name = "goal button" variant = "base" onclick = "{!c.addGoalButton}" class="add_goals"/>
                             </div>
                            
                             <div class="slds-col" align = "right">
@@ -265,8 +273,8 @@
                     <div class="slds-box slds-theme_default slds-m-bottom_medium">
                         <div class="slds-grid slds-gutters slds-m-bottom_medium">
                             <div class="slds-col">
-                                <b> LOANS </b> 
-                                 <lightning:button label = "+ Add New Loan" name = "loan button" variant = "base" onclick = "{!c.addLoanButton}" class="add_goals"/>
+                                <b> LOANS  </b> 
+                                 <lightning:button label = " Add New Loan" name = "loan button" variant = "base" onclick = "{!c.addLoanButton}" class="add_goals"/>
                             </div>
                              
                             <div class="slds-col" align = "right" >
@@ -309,7 +317,21 @@
                         </aura:iteration>
                         
                     </div>
-                
+                <div class="slds-box slds-theme_default slds-m-bottom_medium">
+                        <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                            <div class="slds-col">
+                                <b> CREDIT CARDS  </b> 
+                                 <lightning:button label = " Add New credit" name = "loan button" variant = "base" onclick = "" class="add_goals"/>
+                            </div>
+                             
+                            <div class="slds-col" align = "right" >
+                                <b> $ {!v.loanAmount} </b>
+                            </div>
+                        </div>
+                   
+                       
+                        
+                    </div>
                 
                 
                 
@@ -319,7 +341,7 @@
                         <div class="slds-grid slds-gutters slds-m-bottom_medium">
                             <div class="slds-col">
                                 <b> SAVINGS </b> 
-                               <lightning:button label = "+ Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" class="add_goals" />
+                               <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" class="add_goals" />
                             </div>
                             
                             <div class="slds-col" align = "right" >
@@ -644,27 +666,18 @@
                                 </span>
                             </button>
                             <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
-                                <b>Add Scenario</b>
+                                <b>Manage Scenarios</b>
                             </h3>   
                         </header>
                         
                         <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <b> Scenario Name </b>
-                            <aura:iteration items="{!v.scenario}" var="sceneItems">
-                                <div class="slds-grid slds-gutters">
-                                    <div class="slds-col" >
-                                        {!sceneItems.Name}
-                                    </div>
-                                    <div class="slds-col" >
-                                        <lightning:buttonicon variant="bare" iconName="utility:delete" size="large" 
-                                                              title="Delete" value = "{!sceneItems.Id}" 
-                                                              onclick="{!c.onScenarioDeleteIcon}"/>  
-                                    </div>
-                                </div>
-                            </aura:iteration>
-                            
+                           
+                            <div class="slds-grid slds-gutters">
+            
+                </div>
                             <div class = "scenarioLabel">
-                                
+                                <lightning:button class="add_scenario-button" label = "Add Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" 
+                                                  onclick="{!c.onScenarioAddButton}"/>
                                 <aura:if isTrue = "{!v.addScenarioButtonStatus}">
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col" >
@@ -681,9 +694,27 @@
                                     </div>   
                                 </aura:if>
                                 
-                                <lightning:button class="add_scenario-button" label = "Add Scenario" disabled = "{v.isAddScenarioActive}" variant="bare" 
-                                                  onclick="{!c.onScenarioAddButton}"/>
+                                
                             </div>
+                             <table class="slds-table">
+                            	<thead>
+                                	<tr>
+                                    	<th>Scenario Name</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <aura:iteration items="{!v.scenario}" var="sceneItems">
+                                	<tr>
+                                    	<td> {!sceneItems.Name}</td>
+                                        <td>
+                                            <!--lightning:Buttonicon variant="bare" iconName="utility:edit" size="small" value="{!sceneItems.Id}" onclick="{!c.onScenarioEditIcon}"/-->
+                                            <lightning:Buttonicon variant="bare" iconName="utility:delete" onclick="{!c.onScenarioDeleteIcon}" size="medium" value="{!sceneItems.Id}" class="slds-m-left_small"/>
+                                        </td>
+                                    </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
                         </div>
                         
                         <footer class="slds-modal__footer">

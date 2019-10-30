@@ -21,6 +21,7 @@
             }
             else{
                  component.set("v.kk", true);
+                component.set("v.NoSecnario", false);
             }
          
         });
@@ -32,6 +33,7 @@
          var showGraph =event.getParam("showGraph");
         console.log("kkk"+showGraph);
         component.set("v.kk", true); 
+        component.set("v.NoSecnario", false);
         //alert( component.get("v.kk"));
       
     }
@@ -118,8 +120,13 @@
     
     onDoneScenarioButton : function(component) {
         component.set("v.manageScenarioStatus", false);
-        
-       // $A.get('e.force:refreshView').fire();
+         var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                type: 'success',
+                "message": "A default scenario has been created..."           
+            });
+            resultsToast.fire();
+        $A.get('e.force:refreshView').fire();
         component.set("v.noData", true);
     },
     

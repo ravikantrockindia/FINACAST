@@ -332,6 +332,26 @@
     color: #000;
     font-size: 14px;
 }
+.THIS a .slds-button_neutral {
+    border: none;
+    padding: 0;
+    line-height: 0;
+}
+.THIS a .slds-button_neutral:hover {
+    text-decoration: none;
+    background: transparent;
+}
+.THIS a .slds-button_neutral:focus {
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    background: transparent;
+    color: #4e75a3;
+}
+.THIS .slds-button_icon-border {
+    border: none;
+    margin-right: 0px;
+}
 @media (max-width: 992px) {
     .THIS .bud-months .slds-size_1-of-12 {
         width: 16%;

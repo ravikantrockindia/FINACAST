@@ -80,3 +80,19 @@
 .THIS .slds-progress-bar__value{
         background: rgb(4, 132, 75);
 }
+.THIS a .slds-button {
+    border: none;
+    padding: 0;
+    line-height: 0;
+}
+.THIS a .slds-button:hover {
+    text-decoration: none;
+    background: transparent;
+}
+.THIS a .slds-button:focus {
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    background: transparent;
+    color: #4e75a3;
+}

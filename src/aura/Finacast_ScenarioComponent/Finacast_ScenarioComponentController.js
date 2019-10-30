@@ -17,7 +17,31 @@
             }
         }
     ,
-    
+    onScenarioDeleteIcon: function(component, event, helper){
+        var recordId = event.getSource().get('v.value');
+        //alert(recordId);
+         var action = component.get("c.deleteScenario");
+
+        action.setParams({
+            'ScenarioId' :event.getSource().get("v.value")
+        });
+        
+        action.setCallback(this, function(response) {   
+            var ScenarioName=response.getReturnValue();
+            //alert(ScenarioName);
+            var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                "title": "Delete Success!",
+                type: 'success',
+                "message": "Scenario "+ScenarioName+" has been deleted successfully."           
+            });
+            resultsToast.fire();
+             helper.helperMethod(component);
+          
+        });     
+        $A.enqueueAction(action);   
+       
+    },
     doInit1:function(component,event,helper){   
         
         
@@ -548,13 +572,11 @@
     
     onDoneScenarioButton : function(component, event, helper) {
         component.set("v.manageScenarioStatus", false);
-         var resultsToast = $A.get("e.force:showToast");
-            resultsToast.setParams({
-                type: 'success',
-                "message": "A default scenario has been created..."           
-            });
-            resultsToast.fire();
-        $A.get('e.force:refreshView').fire();
+        var ScenarioList=  component.get("v.scenario");
+            if($A.util.isUndefinedOrNull(ScenarioList)) {
+                $A.get('e.force:refreshView').fire();
+            }
+      //  $A.get('e.force:refreshView').fire();
     },
     
     //new method
@@ -578,6 +600,7 @@
                     component.set("v.scenario", response.getReturnValue());
                     component.set("v.scene",component.get("v.scenario[0].Id"));
                     helper.showFieldsValue(component);
+                      helper.helperMethod(component);
                      var eve = $A.get("e.c:ShowGraph");
         eve.setParams({"showgraph":true
                      

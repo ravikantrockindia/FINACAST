@@ -102,23 +102,15 @@ public class NewScenarioApexTest {
 		 NewScenarioApex.deleteRecord(ac.id, sc.id);        
       //  NewScenarioApex.getUserScenarios(hac.id, sc.id);
         //NewScenarioApex.getUserScenarios(ac.id, 'init');
-       // NewScenarioApex.getUserScenarios(hac.id, 'init');        
+       // NewScenarioApex.getUserScenarios(hac.id, 'init');  
+       NewScenarioApex.ScenarioData(ac.Id);      
         NewScenarioApex.saveRecord( ac.Id, 'scenario', sc.Id, 1200.00, 1000,scIncome.Id);
         NewScenarioApex.saveRecord( ac.Id, 'expense save', sc.Id, 1200.00, 1000,scIncome.Id);
-      
+       // NewScenarioApex.saveNewScenario('Ravi', ac.Id);
+        
         System.assert(ac != null);
     }
-     @istest
-    public static void TestUtility1() {
-        Account ac = new Account();
-        ac.name = 'Test';
-        ac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
-        insert ac;
-    	
-		System.assert(ac != null);    
-	
-        NewScenarioApex.saveNewScenario('Ravi', ac.Id);
-    }
+    
      
     
 }

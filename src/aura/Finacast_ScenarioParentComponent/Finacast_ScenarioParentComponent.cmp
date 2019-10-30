@@ -5,6 +5,7 @@
      <aura:attribute name = "kk" type = "boolean"/> 
     <aura:attribute name = "EditScenario" type = "boolean" default = "false"/> 
     <aura:attribute name = "manageScenarioStatus" type = "boolean" default = "false"/>
+    <aura:attribute name = "NoSecnario" type = "boolean" default = "true"/>
     <aura:attribute name = "addScenarioButtonStatus" type = "boolean" default ="false"/>   
     <aura:attribute name = "isActive" type="Boolean" default="true" required="true" />  
     <aura:attribute name="scenario" type="object"/>   
@@ -18,7 +19,7 @@
     
     <!--handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    
+    <aura:handler name="change" value="{!scenario}" action="{!c.doInit}"/>
     <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->
     <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
     <!--c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast-->
@@ -35,128 +36,23 @@
     </aura:if>
     <!-- Loading spinner end-->
     <div class="slds-card__body">
-    <!--Tabs set here-->
-    <lightning:tabset>
-        
-        <lightning:tab label="Scenarios" title="Scenarios">
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-p-bottom_medium">
-                    <div class="client_managed slds-p-left_medium slds-p-right_medium slds-p-bottom_medium slds-m-top_x-small">
-                    <c:Finacast_ScenarioComponent data2="{! v.data2}"
-                                                  cid="{! v.cid}"
-                                                  namespace="{! v.namespace}"/>
-                        </div>
-                </div>
-                 <aura:if isTrue="{!v.kk}">
-                <div class="slds-col  slds-size_6-of-12">
-                    <div class="client_managed">
-                    	<c:ScenarioHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                    <div class="client_managed slds-m-top_large">
-                    	<c:ScenarioDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                    <div class="client_managed slds-m-top_large">
-                    	<c:ScenarioNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                    <div class="client_managed slds-m-top_large">
-                    	<c:ScenarioGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-                     <aura:set attribute="else">
-                            <h3><center>You do not have created any scenario yet, Click Add New Scenarios button to create a new scenario.</center></h3>
-                        </aura:set>
-                   
-                </aura:if>
-            </div>
-        </lightning:tab>  
-      <aura:if isTrue="{!v.kk}">
-        <lightning:tab onactive="{! c.handleActive }" label="Compare" title="Compare to current state">
-            <!--Compare to Current State-->
-            
-            <div class="slds-grid slds-gutters">
-                
-                <!-- 1. Current State -->
-                <div class="slds-col  slds-size_6-of-12 ">
-                    <div class="client_managed">
-                    <c:CurrentStateHealthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-                <div class="slds-col  slds-size_6-of-12 ">
-                    <div class="client_managed">
-                	<c:SecnarioStateHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-            </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
-                	<c:CurrentStateDebtGraph data="{! v.data1}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
-                	<c:SecnarioStateDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-             </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
-                    <div class="client_managed">
-                	<c:CurrentStateNetWorthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
-                    <div class="client_managed">
-                	<c:ScenarioStateNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-            </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
-                	<c:CurrentStateGoalGraph data="{! v.data1}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-                <!-- Scenario State -->
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
-                    <c:ScenarioStateGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
-                    </div>
-                </div>
-                
-            </div>
-        </lightning:tab>
-           <lightning:tab onactive="{! c.handleManaged }" label="Manage Scenarios" title="Compare to current state">
-               	<div class="slds-grid slds-gutters">
+        <div class="slds-grid slds-gutters">
                 	<div class="slds-col  slds-size_12-of-12 slds-m-top_medium  slds-m-bottom_medium">
                     	<div class="client_managed">
-                        	<!--h3 class="slds-p-top_small slds-p-bottom_small slds-p-left_small">
-                                Scenarios 
-                                <button class="slds-button btn1 slds-m-left_small"  onclick = "{!c.manageScenarioButton}">+Add New Scenarios</button>
-                            </h3-->
-                            <table class="slds-table">
-                            	<thead>
-                                	<tr>
-                                    	<th>Scenario Name</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                     <aura:iteration items="{!v.scenario}" var="sceneItems">
-                                	<tr>
-                                    	<td> {!sceneItems.Name}</td>
-                                        <td>
-                                            <lightning:Buttonicon variant="bare" iconName="utility:edit" size="small" value="{!sceneItems.Id}" onclick="{!c.onScenarioEditIcon}"/>
-                                            <lightning:Buttonicon variant="bare" iconName="utility:delete" onclick="{!c.onScenarioDeleteIcon}" size="small" value="{!sceneItems.Id}" class="slds-m-left_small"/>
-                                        </td>
-                                    </tr>
-                                    </aura:iteration>
-                                </tbody>
-                            </table>
+                        	<h3 class="slds-p-top_small slds-p-bottom_small slds-p-left_small">
+                                Scenario Forecasting
+                                <!--button class="slds-button btn1 slds-m-left_small"  onclick = "{!c.manageScenarioButton}">+Add New Scenarios</button-->
+                            </h3>
+                            <div style="color:green; margin: 13px; font-size:18px;">Scenario Forecasting allows simulations to be performed to better understand your financial health and circumstances under various life-events. The simulations are run via scenarios you create, that represent certain life-events that could impact your financial circumstances.</div>
+                            <br/><br/>
+                            <aura:if isTrue = "{!v.NoSecnario}">
+                                <div style="font-size:18px;"><center>You do not have created any scenario yet, <a onclick = "{!c.manageScenarioButton}">Click here</a> to create a new scenario.</center>
+                            </div>
+                            </aura:if>
                         </div>
                     </div>
                 </div>
-               <aura:if isTrue = "{!v.EditScenario}">
+                       <aura:if isTrue = "{!v.EditScenario}">
                                      <c:EditScenario  namespace="{!v.namespace}" scenarioId="{!v.scenarioId}" cid="{!v.cid}" isActive="{!v.EditScenario}" />
                                 </aura:if>
                    <aura:if isTrue = "{!v.manageScenarioStatus}" >
@@ -225,9 +121,99 @@
                 </div>
             </div>
         </aura:if>
+    <!--Tabs set here-->
+         <aura:if isTrue="{!v.kk}">
+    <lightning:tabset>
+        
+        <lightning:tab label="Scenarios" title="Scenarios">
+            <div class="slds-grid slds-gutters">
+                
+                <div class="slds-col  slds-size_6-of-12 slds-p-bottom_medium">
+                    <div class="client_managed slds-p-left_medium slds-p-right_medium slds-p-bottom_medium slds-m-top_x-small">
+                    <c:Finacast_ScenarioComponent data2="{! v.data2}"
+                                                  cid="{! v.cid}" scenario="{!v.scenario}"
+                                                  namespace="{! v.namespace}"/>
+                        </div>
+                </div>
+                
+                <div class="slds-col  slds-size_6-of-12">
+                    <div class="client_managed">
+                    	<c:ScenarioHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                    <div class="client_managed slds-m-top_large">
+                    	<c:ScenarioDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                    <div class="client_managed slds-m-top_large">
+                    	<c:ScenarioNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                    <div class="client_managed slds-m-top_large">
+                    	<c:ScenarioGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                    
+            </div>
+        </lightning:tab>  
+            
+     
+        <lightning:tab onactive="{! c.handleActive }" label="Compare" title="Compare to current state">
+            <!--Compare to Current State-->
+            
+            <div class="slds-grid slds-gutters">
+                
+                <!-- 1. Current State -->
+                <div class="slds-col  slds-size_6-of-12 ">
+                    <div class="client_managed">
+                    <c:CurrentStateHealthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                <div class="slds-col  slds-size_6-of-12 ">
+                    <div class="client_managed">
+                	<c:SecnarioStateHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                	<c:CurrentStateDebtGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                	<c:SecnarioStateDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+             </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
+                    <div class="client_managed">
+                	<c:CurrentStateNetWorthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
+                    <div class="client_managed">
+                	<c:ScenarioStateNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                	<c:CurrentStateGoalGraph data="{! v.data1}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                <!-- Scenario State -->
+                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
+                    <div class="client_managed">
+                    <c:ScenarioStateGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
+                    </div>
+                </div>
+                
+            </div>
         </lightning:tab>
-        </aura:if>
+       
     </lightning:tabset>
+              </aura:if>
         </div>
     
 </aura:component>
