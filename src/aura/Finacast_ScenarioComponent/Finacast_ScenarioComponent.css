@@ -365,3 +365,20 @@
 .THIS .second_p-bar span.slds-progress-bar__value:after {
     top: -9px;
 }
+.THIS .income_indicator b {
+    display: inline-block; 
+    margin-top: 13px; 
+    margin-right: 5px;
+}
+.THIS .income_indicator .slds-form-element {
+    float: right; 
+    width: 100px;
+}
+.THIS .income_indicator .slds-form-element .slds-input {
+    border: none;
+    padding-left: 0;
+}
+.THIS .income_indicator .slds-form-element .slds-input:focus {
+    border: none;
+    box-shadow: none;
+}

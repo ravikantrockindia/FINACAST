@@ -68,8 +68,19 @@
             }
             else{
                 component.set("v.loan", response.getReturnValue().userScenarioLoan); 
-                //component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
+                component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
                  component.set("v.loanProgress", 60);
+            }
+            
+            if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioLoan)){
+                component.set("v.credit",null); 
+                component.set("v.creditAmount", 0)
+            }
+            else{
+                component.set("v.credit", response.getReturnValue().userScenarioCredit); 
+                
+                component.set("v.creditAmount", response.getReturnValue().totalCreditAmount);
+                // component.set("v.loanProgress", 60);
             }
             
                 //   component.set("v.loan",[{'Name': 'Loan 1', 'Amount' : '0'}]);        

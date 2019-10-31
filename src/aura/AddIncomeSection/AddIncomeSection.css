@@ -24,14 +24,14 @@
     margin-top: -2px;
 }
 .THIS .dob h2 {
-    font-size: 14px;
+    font-size: 20px;
 }
-.THIS .dob .slds-datepicker__month th {
+/*.THIS .dob .slds-datepicker__month th {
     padding: 0 5px;
 }
 .THIS .dob .slds-datepicker__month td {
     padding: 0;
-}
+}*/
 .THIS .dob .slds-datepicker__month td .slds-day {
     width: 25px;
     height: 25px;
@@ -44,12 +44,13 @@
 .THIS .label-hidden label {
     display: none !important;
 }
-.THIS .custom_card .slds-datepicker__month thead th {
+/*.THIS .custom_card .slds-datepicker__month thead th {
     padding: 5px 5px;
 }
 .THIS .custom_card .slds-datepicker__month tbody td {
     padding: 0px 0px;
 }
+*/
 .THIS .custom_card {
     margin: auto;
 }
@@ -77,6 +78,18 @@
     font-family: 'Open Sans',sans-serif;
     background-color: #f2f0f0;
     border-radius: 0;
+}
+.THIS .slds-table_col-bordered td+td {
+	border-left: none;
+}
+.THIS .slds-table_bordered tbody td {
+	border-top: none;
+}
+.THIS .slds-table_bordered tbody th {
+    border-top: none;
+}
+.THIS .slds-table_col-bordered th+th {
+    border-left: none;
 }
 @media (max-width: 992px) {
     .THIS .slds-table thead th {

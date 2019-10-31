@@ -80,6 +80,7 @@
         component.set("v.goalButtonStatus",false);
         component.set("v.savingButtonStatus",false);
         component.set("v.debtButtonStatus",false);  
+         component.set("v.CreditButtonStatus",false);  
         component.set("v.manageScenarioStatus", false);        
         
     },
@@ -293,7 +294,14 @@
      //   });
       //  $A.enqueueAction(action);
     },
-    
+      addCreditButton : function(component, event) {
+
+            component.set("v.recordName", event.getSource().get("v.name"));				//set recordName atttribute -- to use same editButton(), handleSubmit (), handleSuccess () for different records         
+            //component.set("v.isLoan",true);         
+            component.set("v.recordId",'');												// set recordId attribute to blank -- to use recordId attribute for different records 
+            component.set("v.CreditButtonStatus",true); 
+  
+    },
 
     addCardButton : function(component,event) {
         var action = component.get("c.getRecordTypeId");

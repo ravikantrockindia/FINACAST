@@ -1,6 +1,4 @@
 <!-- Created by: Megha Goel-->
-
-
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="CreateNewClient">
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="currentStep" type="String"/>

@@ -34,6 +34,7 @@
     <aura:attribute name = "recordId" type = "String" />
     <aura:attribute name = "goalButtonStatus" type = "Boolean" default = "false"/> 
     <aura:attribute name = "debtButtonStatus" type = "boolean" default = "false" />
+     <aura:attribute name = "CreditButtonStatus" type = "boolean" default = "false" />
     <aura:attribute name = "isLoan" type = "boolean" default = "false" />
     <aura:attribute name = "savingButtonStatus" type = "boolean" default = "false" /> 	
     <aura:attribute name = "changeClient" type = "account" />
@@ -62,9 +63,11 @@
     <aura:attribute name = "loanLimit" type = "Integer" />
     <aura:attribute name="loan" type="Scenario_Debt__c[]"/>
     <aura:attribute name="loanAmount" type="Decimal" default = "0"/>
+    <aura:attribute name="credit" type="Scenario_Debt__c[]"/>
+    <aura:attribute name="creditAmount" type="Decimal" default = "0"/>
     
     <!-- Credit attribute list -->
-    <aura:attribute name = "creditCardLimit" type ="Integer" />
+    <aura:attribute name = "creditCardLimit" type ="Integer" /> 
     <aura:attribute name="creditcard" type="Scenario_Debt__c[]" />
     <aura:attribute name="cardAmount" type="Decimal" default = "0"/>
     
@@ -139,24 +142,21 @@
                     <div class="slds-box slds-theme_default slds-m-bottom_medium">
                         <div class="slds-grid slds-gutters slds-m-bottom_medium">
                             <div class="slds-col">
-                                <b> INCOME </b> 
+                             <b> INCOME </b> 
                             </div>
                             <div class="slds-col" align ="right" >
-                                <b> $ {!v.incomeAmount} </b>   
+                                <b style="display: inline-block; margin-top: 13px; margin-right: 5px;">$ </b>
+                                <lightning:input  value="{!v.val}" style="float: right; width: 100px;"/>   
                             </div>
                         
                     </div>  
-                         <div class="slds-grid slds-gutters slds-m-bottom_small">
-                       <div class="slds-col " style="color:grey;">
-                           Enter Income Amount  <lightning:input value="{!v.val}" />
-                        </div> 
-                        </div>
-                        <br/>
+                     
+                       
                      <div class="fina_custom-slider">
                          <div class="slds-grid slds-gutters slds-p-left_medium slds-p-right_medium">
                              <div class="slds-col slds-size_12-of-12 ">
                                  
-                                 <input id="incomeSlider001" aura:id="IncomeSlider" data-slider-id='incomeSlider001Slider' type="text"  data-slider-max="1000000" data-slider-step="1" />
+                                 <input id="incomeSlider001" aura:id="IncomeSlider"  oninput="incomeSlider001value.value=incomeSlider001.value" data-slider-id='incomeSlider001Slider' type="text"  data-slider-max="1000000" data-slider-step="1" />
                              </div>
                          </div>
                         </div>
@@ -186,17 +186,13 @@
                             <div class="slds-col">
                                 <b> EXPENSE </b> 
                             </div>
-                            <div class="slds-col" align ="right" >
-                                <b> $ {!v.expenseAmount} </b>   
+                            <div class="slds-col income_indicator" align ="right" >
+                                <b> $  </b> 
+                                <lightning:input  value="{!v.expAmt}"/>   
                             </div>
                             
                         </div>
-                  		  <div class="slds-grid slds-gutters slds-m-bottom_small">
-                       <div class="slds-col " style="color:grey;">
-                           Enter Expense Amount  <lightning:input value="{!v.expAmt}" />
-                        </div> 
-                        </div>
-                        <br/>
+                  		 
                         <div class="fina_custom-slider">
                                          <div class="slds-grid slds-gutters slds-p-left_medium slds-p-right_medium">
                                              <div class="slds-col slds-size_12-of-12 ">
@@ -321,15 +317,47 @@
                         <div class="slds-grid slds-gutters slds-m-bottom_medium">
                             <div class="slds-col">
                                 <b> CREDIT CARDS  </b> 
-                                 <lightning:button label = " Add New credit" name = "loan button" variant = "base" onclick = "" class="add_goals"/>
+                                 <lightning:button label = " Add New credit" name = "loan button" variant = "base" onclick = "{!c.addCreditButton}" class="add_goals"/>
                             </div>
                              
                             <div class="slds-col" align = "right" >
-                                <b> $ {!v.loanAmount} </b>
+                                <b> $ {!v.creditAmount} </b>
                             </div>
                         </div>
                    
-                       
+						   <aura:iteration items = "{!v.credit}" var = "loanVar" >
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col"><b> {!loanVar.Name} </b></div>
+                                <div class="slds-col slds-text-align--right">
+                                	<lightning:button    iconName="utility:edit"  name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    <lightning:button  name = "loan button"  iconName="utility:delete"  value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                </div>
+                            </div>
+                            <lightning:progressBar  value="{!v.loanProgress}" size="medium"/>
+                            <div class = "loan-slider" >
+                              
+                                <!--lightning:slider label="{!loanVar.Name}" value="{!loanVar.Current_Value__c }" size="Medium" 
+                                                  max = "{!v.loanLimit}" disabled="true"/-->
+                            </div>
+                               <br/>
+                            	<div class="slds-grid slds-gutters second_p-bar">
+                                    <div class="slds-col  slds-size_8-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <b> APR(%)  </b> 
+                                        </div>
+                                        <div class="slds-col" align = "right" >
+                                            <b>{!loanVar.APR__c}%</b>
+                                        </div>
+                                    </div>
+                                 	<lightning:progressBar  value="{!loanVar.APR__c}" size="small"/>
+                                    </div>
+                                </div>
+                                
+                            <!--lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!loanVar.APR__c}" size="Medium" max = "100" disabled="true"/-->
+                           
+                            <br/>
+                        </aura:iteration>                    
                         
                     </div>
                 
@@ -425,7 +453,7 @@
                                                   > 
                             <lightning:messages/>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                                <div class="slds-box1">
+                                <div class="slds-box1  slds-p-left_small slds-p-right_small">
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col slds-size_1-of-2">
                                             <span class = "highlight">* </span>
@@ -575,7 +603,79 @@
             </div>
         </aura:if>   
     </div>
-    
+     <div class = "form-label">
+        <aura:if isTrue = "{!v.CreditButtonStatus}">
+            <div class="slds-m-around_xx-large">
+                <div aura:id="exampleModal1" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-2"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">   
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">
+                                    Close
+                                </span>
+                            </button>
+                            <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif">
+                                <b>Add/Update Avatar Credit</b>
+                            </h3>   
+                        </header> 
+                        <lightning:recordEditForm         
+                                                  objectApiName = "{! v.namespace + 'Scenario_Debt__c'}"
+                                                  onsubmit = "{!c.handleSubmit}"
+                                                  onsuccess = "{!c.handleSuccess}"
+                                                  recordId = "{!v.recordId}"                                                 
+                                                  > 
+                            <div class="slds-modal__content " id="modal-content-id-2">
+                                <div class="slds-box1 slds-p-around_medium">
+                                	                               
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">                                                 
+                                        <span class = "highlight">* </span>
+                                        Name
+                                        <lightning:inputField aura:id = "debtName" fieldName="Name" variant="label-hidden"  />
+                                        <br/>  
+                                        <span class = "highlight">* </span>Total Debt Amount ($)<lightning:inputField aura:id = "debtAmount"
+                                                                                                                      fieldName = "{! v.namespace + 'Current_Value__c'}" 
+                                                                                                                      variant="label-hidden"  />
+                                        <br/> 
+                                        <span class = "highlight">* </span> APR (%) <lightning:inputField aura:id = "debtInterest"
+                                                                                                          fieldName="{! v.namespace + 'APR__c'}" variant="label-hidden"  />
+                                        <br/>
+                                    </div>
+                                    
+                                    <div class="slds-col">   
+                                        <!--aura:if isTrue = "{!v.isLoan}" >
+                                            <span class = "highlight">* </span> Payment Amount ($) <lightning:inputField aura:id = "debtPayment" 
+                                                                                                                         fieldName="{! v.namespace + 'Payment_Amount__c'}" 
+                                                                                                                         variant="label-hidden"  />
+                                            <br/>
+                                            <span class = "highlight">* </span> Frequency <lightning:inputField aura:id = "debtFrequency" 
+                                                                                                                fieldName="{! v.namespace + 'Frequency__c'}" variant="label-hidden"  />
+                                            <br/>
+                                        </aura:if-->                
+                                        <div class = "slds-hidden"> 
+                                            <lightning:inputField aura:id = "debtScene" value = "{!v.scene}" fieldName = "{! v.namespace + 'Scenario_Id__c'}" />
+                                        </div>
+                                        <div class = "slds-hidden">
+                                            <lightning:inputField aura:id = "debtClient" value = "{!v.primaryOwner}" fieldName = "{! v.namespace + 'Client_Id__c'}" />
+                                        </div>                                                                       
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            
+                            <footer class="slds-modal__footer">
+                                <div class="button slds-p-right_medium" align ="right">
+                                    <lightning:button class="btn1 btn2" variant ="neutral" name = "debt button" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                                    <lightning:button class="btn1" variant="brand"  name = "debt button" label="Save" type = "submit" />
+                                </div>
+                            </footer>      
+                        </lightning:recordEditForm>
+                    </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+            </div>
+        </aura:if>   
+    </div>
     
     <!-- SAVING FORM, set savingButtonStatus true when usr click on add another saving -->
     <div class = "form-label">
@@ -735,35 +835,7 @@
 <!-- *************************************************     Component End    ******************************************************************   -->
 
                 <!-- 5. slider for credit cards -->
-                <!-- div class="slds-box slds-theme_default">
-                    <div class="slds-box slds-theme_default"> 
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col">
-                                <b> CREDIT CARD </b> 
-                            </div>
-                            <div class="slds-col" align = "right" >
-                                <b> {!v.savingsAmount} </b> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-box slds-theme_default">
-                        <aura:iteration items = "{!v.savings}" var = "savingList" >
-                            <div class = "saving-slider" >
-                                <lightning:slider label="{!savingList.Name}" value="{!savingList.FinServ__Balance__c}" size="small" max = "{!v.savingLimit}"/>
-                            </div>
-                            <lightning:slider style="margin-top: 10px;" label="Interest Rate" value="{!v.savingList.FinServ__APY__c}" size="x-small" max = "100"/>
-                            <div class="slds-page-header__row" style="margin-top: 5px;">
-                                <div class="slds-size_6-of-12">
-                                    <lightning:button label = "Edit" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c. onEditButton}" />
-                                    <lightning:button label = "Delete" name = "saving button" value = "{!savingList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
-                                </div>
-                                <div class="slds-size_6-of-12" style="text-align: right;">
-                                    <lightning:button label = "Add New Saving" name = "saving button" variant = "base" onclick = "{!c.addSavingButton}" />
-                                </div>
-                            </div>
-                        </aura:iteration>
-                    </div>
-                </div -->
+
                 
 
   <!--div class = "form-label">
