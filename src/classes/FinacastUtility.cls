@@ -157,7 +157,7 @@ public class FinacastUtility {
                                //FinServ__Balance__c,
                                APY__c from Scenario_Savings__c where
                                Client_Id__c =: clientId  
-                               AND Scenario__c = :sceneId
+                               AND Scenario__c = :sceneId 
                                limit 1000];
                     
                     System.debug('FFA List: '+FFAList.size());
@@ -188,10 +188,10 @@ public class FinacastUtility {
                     // Loan and debt accounts
                     System.debug('above' + FFAMap);
                     FFDAList = [select id, Name, APR__c,Frequency__c,
-                                //FinServ__Balance__c, 
+                                Account_Type__c, 
                                 Current_Value__c, Client_Id__c, Payment_Amount__c
-                                from Scenario_Debt__c where
-                                Client_Id__c =: clientId  
+                                from Scenario_Debt__c where  (Account_Type__c = 'Loan' or Account_Type__c = 'Credit Card')
+                                AND Client_Id__c =: clientId  
                                 AND Scenario_Id__c = :sceneId
                                 limit 1000];
                     
@@ -200,6 +200,27 @@ public class FinacastUtility {
                     System.debug('Debt Accounts: ' + FFDAList.size() + FFDAList);
                     if(FFDAList.size() > 0){
                         for(Scenario_Debt__c FFDA : FFDAList){
+                          accountNameMap.put(FFDA.Id, FFDA.Name);
+                             flag++;
+                            setData +='{';
+                            setData +='\'id\':\''+flag+'\',';
+                            setData +='\'type\':\'account\',';
+                            setData +='\'isTaxBenefit\':'+'false'+','; 
+                            
+                            if(FFDA.Account_Type__c == 'Credit Card'){
+                            setData +='\'accountype\':\'account_creditcard\',';
+                            setData +='\'name\':\''+FFDA.Name+'\',';
+                            
+                            //fill which ever is not empty
+                            if(FFDA.Current_Value__c != Null){
+                                setData +='\'amount\':'+FFDA.Current_Value__c+',';
+                            }else {
+                                setData +='\'amount\':'+FFDA.Payment_Amount__c+',';
+                            }
+                            
+                        }
+                            
+                              else if(FFDA.Account_Type__c == 'Loan'){ 
                             Double loanFrequency = 0;
                             switch on FFDA.Frequency__c {
                                 when 'Monthly' {
@@ -218,12 +239,8 @@ public class FinacastUtility {
                                     loanFrequency = 1;
                                 }
                             }
-                            accountNameMap.put(FFDA.Id, FFDA.Name);
-                            flag++;
-                            setData +='{';
-                            setData +='\'id\':\''+flag+'\',';
-                            setData +='\'type\':\'account\',';
-                            setData +='\'isTaxBenefit\':'+'false'+','; 
+
+                           
                             //term Loan
                             
                             setData +='\'accountype\':\'account_loan\',';
@@ -232,8 +249,8 @@ public class FinacastUtility {
                              setData +='\'loanfrequency\':\'' + loanFrequency + '\',';
                             setData +='\'startdate\':\''+Date.today().month()+'/'+Date.today().year()+'\',';
                             setData +='\'outstandingamt\':'+FFDA.Current_Value__c+',';
-                            //  }
-                            // else{}
+                             }
+                             else{}
                             setData +='\'APR\':'+FFDA.APR__c;
                             setData +='},';
                         }
