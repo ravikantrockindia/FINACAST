@@ -145,6 +145,7 @@
                             </div>
                         </div> 
                     </div>
+                    <br/>
                     <div class="slds-grid slds-gutters">
                         <div class="slds-col slds-size_1-of-2">
                             {!$Label.c.Client_Investment_Experience} <lightning:inputField class="label-hidden" fieldName="FinServ__InvestmentExperience__c" variant="label-hidden"/>

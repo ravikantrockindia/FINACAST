@@ -155,7 +155,7 @@
         if(tDate != null && tDate.split("-")[0] <= d.getFullYear() || ( tDate != null && tDate.split("-")[0] == d.getFullYear() && tDate.split("-")[2] <= d.getMonth()))
         {
             status2 = 0;
-            msg = "Invalid Date. Target date cannot be less than current date. ";
+            msg = "The planning date cannot be of current year or previous years.";
             helper.currentAmtError(component, event, helper, msg);   
         }
         else
@@ -249,23 +249,23 @@
         
         var msg = "";
         var n = component.find("owner").get("v.value");
-        console.log('hey1:-'+n)
+        //console.log('hey1:-'+n)
         var priowner = component.get("v.client.Id");
-        console.log('hey2:-'+priowner)
+        //console.log('hey2:-'+priowner)
         var targetAmt = component.find("amount").get("v.value");
-        console.log('hey3:-'+targetAmt)
+       // console.log('hey3:-'+targetAmt)
         var targetDate = component.find("tarDate").get("v.value");
-        console.log('hey4:-'+targetDate)
+        //console.log('hey4:-'+targetDate)
         var bankAcc = component.find("associateAcc").get("v.value");
-        console.log('hey5:-'+bankAcc)
+//console.log('hey5:-'+bankAcc)
         var currAmt = component.find("strtvalue").get("v.value");
-        console.log('hey6:-'+currAmt)
+        //console.log('hey6:-'+currAmt)
         var goalPriority = component.find("priority").get("v.value");
-        console.log('hey7:-'+goalPriority)
+       // console.log('hey7:-'+goalPriority)
         var contribution =  component.find("priority").get("v.value");
-        console.log('hey8:-'+contribution)
+        //console.log('hey8:-'+contribution)
         
-        console.log('the data is :' + priowner , n,targetAmt,targetDate,bankAcc,currAmt,goalPriority , contribution);
+        //console.log('the data is :' + priowner , n,targetAmt,targetDate,bankAcc,currAmt,goalPriority , contribution);
         if ($A.util.isUndefinedOrNull(n) || n == "" ||  
             $A.util.isUndefinedOrNull(targetAmt) || targetAmt == "" || $A.util.isUndefinedOrNull(targetDate) || targetDate =="" || 
             $A.util.isUndefinedOrNull(bankAcc) || bankAcc == "" || 

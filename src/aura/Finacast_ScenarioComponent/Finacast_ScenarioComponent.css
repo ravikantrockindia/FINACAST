@@ -372,13 +372,26 @@
 }
 .THIS .income_indicator .slds-form-element {
     float: right; 
-    width: 100px;
+    width: 120px;
 }
-.THIS .income_indicator .slds-form-element .slds-input {
-    border: none;
-    padding-left: 0;
+.THIS .income_indicator .slds-form-element input {
+    height: 30px;
 }
-.THIS .income_indicator .slds-form-element .slds-input:focus {
-    border: none;
-    box-shadow: none;
+.THIS .income_indicator .slds-button {
+    float: right;
+    margin-left: 4px;
+    margin-top: 0px;
+    background-color: #00b088;
+    height: 31px;
+    width: 30px;
+    border-radius: 0px;
+    border: 1px solid #01bb66;
+}
+.THIS .income_indicator .slds-button .slds-button__icon {
+    margin-left: 5px;
+    fill: #fff;
+    height: 16px;
+    width: 16px;
+    margin-top: -2px;
+    box-shadow: 0px 0 20px 0 #fff;
 }

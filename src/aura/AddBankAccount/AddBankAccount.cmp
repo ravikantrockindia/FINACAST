@@ -23,6 +23,7 @@
                     <aura:if isTrue="{!empty(v.FinancialAccountList)}">
                         <c:BankAccountForm aura:id ="bankAccountForm" accountRecordId="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" disabled="{!v.disabled}" namespace="{!v.namespace}"/>
                         <aura:set attribute="else">
+                            <div class="custom_card">
                             <div class="slds-m-top_medium slds-clearfix ">
                                 <div class="slds-float_right">
                                     <lightning:button class="slds-button slds-button_brand btn1 budget-brand" label="{!$Label.c.Add_Bank_Account}" title="Add Bank Account" onclick="{!c.createBankAccount}"/>
@@ -69,17 +70,18 @@
                                     </aura:iteration>                            
                                 </tbody>
                             </table>
+                            </div>
                         </aura:set>
                     </aura:if>
                 </div>
             </div>
             <div class="custom_card slds-gutters slds-p-top_medium">
-                <div class="slds-col slds-size_1-of-1">
+                <div class="slds-size_1-of-1">
                     <div class="slds-clearfix ">
                         <div class="slds-m-bottom_large slds-float_right">
-                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}"  class="mlr btn1"/>
+                            <lightning:button variant="neutral" label="{!$Label.c.Cancel}"  onclick="{!c.handleCancel}"  class="mlr btn1 btn2"/>
                             <aura:if isTrue="{!empty(v.FinancialAccountList)}">
-                                <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" class="mlr btn1"/>
+                                <lightning:button  variant="brand" label="{!$Label.c.Save}" onclick="{!c.saveButton}" disabled="{!v.disabled}" class="mlr btn1 btn2"/>
                                 <lightning:button  variant="brand" label="{!$Label.c.Skip}" onclick="{!c.skipButton}" class="btn1"/>
                                 <aura:set attribute="else">
                                     <lightning:button  variant="brand" label="{!$Label.c.Next}" onclick="{!c.skipButton}" class="btn1"/>

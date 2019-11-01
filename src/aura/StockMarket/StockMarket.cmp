@@ -34,7 +34,7 @@
                         </div>
                     </div>
                    
-                    <div class="slds-grid slds-gutters slds-m-top_large">
+                    <div class="slds-grid slds-gutters slds-m-top_large my-client_res">
                         <div class="slds-col slds-size_3-of-12 slds-p-right_none">
                             <h4 class="slds-text-align_left">S &amp; P 500</h4>
                             <h2 class="slds-text-align_left">{!v.SPprice}
@@ -50,7 +50,7 @@
                         </div>
                         
                         <div class="slds-col slds-size_3-of-12 slds-p-left_none">
-                            <h4 class="slds-text-align_left">Down Jones</h4>
+                            <h4 class="slds-text-align_left">Dow Jones</h4>
                             <h2 class="slds-text-align_left">{!v.DownJonesprice}
                                 <span>
                                     <aura:if isTrue="{!v.istrueDownJones}">

@@ -31,7 +31,7 @@
     <aura:handler event="c:amountpass" action="{!c.doInit}"/>
     <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
     <div class="slds-card__header slds-box slds-theme_default ">
-        <div class="slds-grid slds-gutters">
+        <div class="slds-grid slds-gutters my-client_res">
             
               <div class="slds-col slds-size_3-of-12">
                 <div class="total_assesment_abc">
@@ -122,7 +122,7 @@
                        class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
                 </span>
                 <span class="slds-p-horizontal_xxx-small">
-                    <a>...</a>
+                    
                 </span>
                 
                 <aura:iteration items="{!v.pageList}" var="item">

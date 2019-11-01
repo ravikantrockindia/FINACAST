@@ -144,9 +144,20 @@
                             <div class="slds-col">
                              <b> INCOME </b> 
                             </div>
-                            <div class="slds-col" align ="right" >
-                                <b style="display: inline-block; margin-top: 13px; margin-right: 5px;">$ </b>
-                                <lightning:input  value="{!v.val}" style="float: right; width: 100px;"/>   
+                            <div class="slds-col income_indicator" align ="right" >
+                                <b>$ </b>  
+                                <aura:iteration items = "{!v.income}" var = "incomeVar" >
+                                    <!--div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <div class = "income-slider" >
+                                                <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="medium" 
+                                                                  max = "{!v.incomeLimit}" onchange = "{!c.getIncomeSliderValue}" variant="label-hidden"/>
+                                            </div>
+                                        </div>
+                                    </div-->
+                                    <lightning:button iconName="utility:save" title="Save" variant="bare"  name = "income save" value="{!incomeVar.Id}"  onclick="{! c.handleClick }"/>
+                                </aura:iteration>
+                                <lightning:input  value="{!v.val}" />
                             </div>
                         
                     </div>  
@@ -161,18 +172,7 @@
                          </div>
                         </div>
                     
-                        <aura:iteration items = "{!v.income}" var = "incomeVar" >
-                            <!--div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <div class = "income-slider" >
-                                        <lightning:slider label="{!incomeVar.Name}" aura:id ="incomeSlider" value="{!incomeVar.Amount__c}" size="medium" 
-                                                          max = "{!v.incomeLimit}" onchange = "{!c.getIncomeSliderValue}" variant="label-hidden"/>
-                                    </div>
-                                </div>
-                               
-                            </div-->
-                            <lightning:button iconName="utility:save" variant="bare"  name = "income save" value="{!incomeVar.Id}"  onclick="{! c.handleClick }"/>
-                        </aura:iteration> 
+                         
                         
                         
                        
@@ -188,6 +188,22 @@
                             </div>
                             <div class="slds-col income_indicator" align ="right" >
                                 <b> $  </b> 
+                                <aura:iteration items = "{!v.expense}" var = "expenseVar" >
+                                    <!--div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <div class = "expense-slider" >
+                                                <lightning:slider label="{!expenseVar.Name}" aura:id ="expenseSlider" value="{!expenseVar.Amount__c}" 
+                                                                  size="medium" max = "{!v.expenseLimit}" 
+                                                                  onchange = "{!c.getExpenseSliderValue}" variant="label-hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col"  style="margin-top: 14px;">
+                                            <lightning:buttonicon variant="bare" iconName="utility:save" size="Large" title="Save" 
+                                                                  value = "{!expenseVar.Id}" name = "expense save" onclick="{!c.onClickSaveIcon}"/>  
+                                        </div>
+                                    </div-->
+                                   <lightning:button iconName="utility:save" title="Save" variant="bare"  name = "expense save" value="{!expenseVar.Id}"  onclick="{! c.handleClick }"/>
+                                </aura:iteration>
                                 <lightning:input  value="{!v.expAmt}"/>   
                             </div>
                             
@@ -201,22 +217,7 @@
                                              </div>
                                          </div>
                                     </div>
-                        <aura:iteration items = "{!v.expense}" var = "expenseVar" >
-                            <!--div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <div class = "expense-slider" >
-                                        <lightning:slider label="{!expenseVar.Name}" aura:id ="expenseSlider" value="{!expenseVar.Amount__c}" 
-                                                          size="medium" max = "{!v.expenseLimit}" 
-                                                          onchange = "{!c.getExpenseSliderValue}" variant="label-hidden"/>
-                                    </div>
-                                </div>
-                                <div class="slds-col"  style="margin-top: 14px;">
-                                    <lightning:buttonicon variant="bare" iconName="utility:save" size="Large" title="Save" 
-                                                          value = "{!expenseVar.Id}" name = "expense save" onclick="{!c.onClickSaveIcon}"/>  
-                                </div>
-                            </div-->
-                           <lightning:button iconName="utility:save" variant="bare"  name = "expense save" value="{!expenseVar.Id}"  onclick="{! c.handleClick }"/>
-                        </aura:iteration> 
+                         
                     </div>
               
                 
@@ -609,7 +610,7 @@
                 <div aura:id="exampleModal1" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-2"  class="slds-modal slds-fade-in-open" >
                     <div class="slds-modal__container">   
                         <header class="slds-modal__header">
-                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton1}">
                                 <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                                 <span class="slds-assistive-text">
                                     Close
@@ -654,10 +655,13 @@
                                                                                                                 fieldName="{! v.namespace + 'Frequency__c'}" variant="label-hidden"  />
                                             <br/>
                                         </aura:if-->                
-                                        <div class = "slds-hidden"> 
+                                        <div class = "slds-hide"> 
                                             <lightning:inputField aura:id = "debtScene" value = "{!v.scene}" fieldName = "{! v.namespace + 'Scenario_Id__c'}" />
                                         </div>
-                                        <div class = "slds-hidden">
+                                        <div class = "slds-hide"> 
+                                            <lightning:inputField aura:id = "debtScene1" value = "Credit Card" fieldName = "{! v.namespace + 'Account_Type__c'}" />
+                                        </div>
+                                        <div class = "slds-hide">
                                             <lightning:inputField aura:id = "debtClient" value = "{!v.primaryOwner}" fieldName = "{! v.namespace + 'Client_Id__c'}" />
                                         </div>                                                                       
                                     </div>
@@ -667,7 +671,7 @@
                             
                             <footer class="slds-modal__footer">
                                 <div class="button slds-p-right_medium" align ="right">
-                                    <lightning:button class="btn1 btn2" variant ="neutral" name = "debt button" label ="Cancel" onclick = "{!c.cancelButton}"/>
+                                    <lightning:button class="btn1 btn2" variant ="neutral" name = "debt button" label ="Cancel" onclick = "{!c.cancelButton1}"/>
                                     <lightning:button class="btn1" variant="brand"  name = "debt button" label="Save" type = "submit" />
                                 </div>
                             </footer>      

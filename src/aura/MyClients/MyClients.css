@@ -140,12 +140,25 @@
 .THIS .slds-scrollable_y table {
     margin-top: 15px;
 }
-.THIS span.slds-p-horizontal_xxx-small {
-    display: none;
-}
+
 /*.THIS .slds-table_header-fixed tbody tr:first-child td {
     padding-top: 22px;
 }
 .THIS .slds-table_header-fixed tbody tr:first-child th {
     padding-top: 22px;
 }*/
+@media (max-width: 992px) {
+    .THIS .my-client_res {
+        display: block;
+    }
+    .THIS .my-client_res .slds-size_3-of-12 {
+        width: 50%;
+        float: left;
+    }
+    .THIS .my-client_res .slds-size_6-of-12 {
+        width: 100%;
+        clear: both;
+        margin-top: 15px;
+        display: inline-block;
+    }
+}

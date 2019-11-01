@@ -69,7 +69,7 @@
         //console.log('Goal Saved');
         component.set("v.recordName","");
         component.set("v.debtButtonStatus",false);  
-        
+        component.set("v.CreditButtonStatus",false);
         component.set("v.savingButtonStatus",false);
         component.set("v.goalButtonStatus",false);
         helper.showFieldsValue(component);
@@ -83,6 +83,17 @@
          component.set("v.CreditButtonStatus",false);  
         component.set("v.manageScenarioStatus", false);        
         
+    },    cancelButton1 : function(component,event) {
+        //component.set("v.recordName", "");
+        //component.set("v.goalButtonStatus",false);
+        //component.set("v.savingButtonStatus",false);//
+       // component.set("v.debtButtonStatus",false);  
+         component.set("v.CreditButtonStatus",false);  
+        //component.set("v.manageScenarioStatus", false);        
+        
+    },
+    handleSave:function(component,event) {
+         component.set("v.CreditButtonStatus",false); 
     },
     handleClick:function(component,event,helper){
         

@@ -106,3 +106,12 @@
     padding-right: 10px;
  
 }
+@media (max-width: 992px) {
+    .THIS .my-client_res {
+        display: block;
+    }
+    .THIS .my-client_res .slds-size_3-of-12 {
+        width: 50%;
+        float: left;
+    }
+}

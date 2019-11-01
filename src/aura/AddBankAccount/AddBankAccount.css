@@ -20,6 +20,16 @@
     color: #fff;
     background-color: #4E75A3;
 }
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+   background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3; 
+}
 .THIS .label-hidden label {
     display: none !important;
 }

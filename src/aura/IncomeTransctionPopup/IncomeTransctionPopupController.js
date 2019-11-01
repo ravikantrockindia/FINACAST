@@ -107,7 +107,7 @@
                     "message": "Record has been deleted successfully"           
                 });
                 resultsToast.fire();
-                 
+                  helper.helperMethod(component);   
             });     
             $A.enqueueAction(action2);
         }
