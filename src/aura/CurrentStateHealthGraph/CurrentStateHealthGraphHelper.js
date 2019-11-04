@@ -123,8 +123,17 @@
                     }
                     gauge.data.click = function (){ gauge.data.exploded = true; };
                     
-                    if(!gauge.data.color )
-                        gauge.data.color = "#008000	";
+                   if (financialscore>3.1 && financialscore<6.0)
+                    if(!gauge.data.color)
+                        gauge.data.color = "#ff8400";
+                   
+                    if (financialscore<3.0 )
+                    if(!gauge.data.color)
+                        gauge.data.color = "#8B0000";
+                   
+                    if (financialscore>6.0 )
+                    if(!gauge.data.color)
+                        gauge.data.color = "#538f56";
                     
                     var data = {
                         type: "doughnut",

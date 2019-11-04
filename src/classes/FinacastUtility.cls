@@ -97,10 +97,10 @@ public class FinacastUtility {
                                     incomeFrequency = 2;
                                 }
                                 when 'Bi-Weekly' {
-                                    incomeFrequency = 2;
+                                    incomeFrequency = 2.16;
                                 }
                                 when 'Weekly' {
-                                    incomeFrequency = 4;
+                                    incomeFrequency = 4.33;
                                 }
                                 when else {
                                     incomeFrequency = 1;
@@ -230,10 +230,10 @@ public class FinacastUtility {
                                     loanFrequency = 2;
                                 }
                                 when 'Bi-Weekly' {
-                                    loanFrequency = 2;
+                                    loanFrequency = 2.16;
                                 }
                                 when 'Weekly' {
-                                    loanFrequency = 4;
+                                    loanFrequency = 4.33;
                                 }
                                 when else {
                                     loanFrequency = 1;

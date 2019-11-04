@@ -1,6 +1,8 @@
 <aura:component controller="CashFolwGraphIncome" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <aura:attribute name ="tansactionId" type="String"/>
      <aura:attribute name = "client" type = "Account"/>
+    <aura:attribute name="addExpenseTrans" type="FinServ__FinancialAccountTransaction__c[]"/>
+    <aura:handler name="change" value="{!v.addExpenseTrans}" action="{!c.generateChart}"/>
     <aura:attribute name="dataset" type="String" default="1"  description="Which set of data to display in the chart.  Will be either 1 or 2"/>
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/>  
         <div class="slds-grid slds-gutter ">

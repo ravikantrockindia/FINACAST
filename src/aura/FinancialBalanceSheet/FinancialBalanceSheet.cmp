@@ -46,6 +46,7 @@
                     <lightning:button label="Add New Account" class="btn1" variant="bare" onclick="{! c.addnewaccount}" />
                 </div>
             </div>
+            <div style="clear:both;"></div>
         </div>
         <div class="net-worth">
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">

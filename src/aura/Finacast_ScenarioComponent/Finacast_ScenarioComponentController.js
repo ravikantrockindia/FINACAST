@@ -37,7 +37,7 @@
             });
             resultsToast.fire();
              helper.helperMethod(component);
-          
+			 $A.get('e.force:refreshView').fire();          
         });     
         $A.enqueueAction(action);   
        
@@ -198,6 +198,7 @@
         //console.log('Scene id in delete' + component.get("v.scene"));
        // console.log('recANem' + event.getSource().get("v.name"));
         var recordId = event.getSource().get('v.value');
+       
         var action = component.get("c.deleteRecord");
         action.setParams({
            // clientId : component.get("v.cid"),

@@ -63,6 +63,13 @@
                         <div class="slds-float_left">  
                         </div>Financial Account</a>
                 </li>
+                
+                <li class="bigIcons  slds-shrink-none" aura:id="articlenine" title="Household" role="presentation">                    
+                    <a class="slds-tabs_scoped__link" href="" title="Accounts " onclick="{!c.HouseholdHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left">  
+                        </div>Household</a>
+                </li>
+                
             </ul>
          </div> 
 </aura:component>

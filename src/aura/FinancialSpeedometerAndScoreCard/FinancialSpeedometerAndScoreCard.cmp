@@ -20,9 +20,10 @@
     <aura:attribute name="NotTrackgoals" type="boolean" default="false" />
     <aura:attribute name="Advisegoals" type="boolean" default="false" />
     <aura:attribute name="NameSpace" type="string" />
-    <div class="slds-grid slds-m-bottom_large">
+    <div class="slds-grid ">
         <div class="slds-col slds-size_12-of-12 slds-p-left_none slds-p-right_none">
-            <div class="client_managed">
+            <div class="res_speedometer">
+            	<div class="client_managed">
                 <div class="slds-grid">
                     <div class="slds-col slds-size_6-of-12 slds-border_right slds-p-top_medium slds-p-bottom_medium">
                         <h3 class="slds-m-top_none">Financial Health</h3>
@@ -30,7 +31,8 @@
                         <div class="half-chart half-chart-sticker">
                             <div class="slds-grid slds-p-top_large slds-p-bottom_large">
                                 <div class="slds-col slds-size_12-of-12">
-                                    <div id="{!v.clientId}" style="width: 100%; height: 250px;margin-left: 0px; margin-top: 0px;"></div>
+                                    
+                                    <div id="{!v.clientId}" style="width: 100%; height: 250px !important;margin-left: 0px;position: relative; margin-top: 0px;"></div>
                                     <!--<div id="chartContainer2" style="height: 250px; width: auto; margin-left: 0px; margin-top: 0px;"></div> -->
                                     <div>
                                         <div>
@@ -88,6 +90,7 @@
                                     <h4>Credit Payments</h4>
                                 </div>
                             </div>
+                            <div style="clear:both;"></div>
                             <div class="slds-grid slds-p-top_large">
                                 <div class="slds-col slds-size_6-of-12">
                                     <aura:if isTrue="{!v.Trackloan}">
@@ -121,6 +124,7 @@
                     </div>
                     
                 </div>
+            </div>
             </div>
         </div>
     </div>

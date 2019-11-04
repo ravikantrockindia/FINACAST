@@ -56,6 +56,16 @@
             }, 
             legend: {
                 cursor:"pointer",
+                itemclick: function (e) {
+                            if(typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                e.dataSeries.visible = false;
+                            }
+                            else {
+                                e.dataSeries.visible = true;
+                            }
+                            chart.render();
+                        }
+                   
                 //itemclick : toggleDataSeries
             },
             //toolTip: {
@@ -68,7 +78,7 @@
                         showInLegend: true,
                         
                         name: "Cash out",
-                        color: "#ff6038",
+                        color: "#ff1e00",
                         dataPoints: dps1
                     },
                            {
@@ -76,7 +86,7 @@
                                showInLegend: true, 
                                valueFormatString: "MMM-YYYY",
                                name: "Cash in",
-                               color: "#59c96f",
+                               color: "#228B22",
                                dataPoints: dps
                            },
                           ]

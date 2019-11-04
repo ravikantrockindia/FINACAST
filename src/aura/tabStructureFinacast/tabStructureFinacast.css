@@ -57,3 +57,9 @@
 .THIS .demo{
      background-color:#eef2f6;
 }
+@media(max-width: 992px) {
+	.THIS #nav li a {
+        padding: 0 5px;
+        font-size: 11px;
+    }    
+}

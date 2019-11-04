@@ -30,7 +30,7 @@
     <!-- This is for Goal Info -->
     <lightning:card >
         <div class="">
-            <div class="">
+            <div class="res_goal-final">
                 <div class="slds-grid slds-p-bottom_medium">
                     <div class="slds-col slds-size_1-of-12">
                         <h3 class="slds-m-top_x-small">Goals</h3>

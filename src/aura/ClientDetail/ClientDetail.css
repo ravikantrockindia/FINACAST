@@ -235,3 +235,19 @@
         margin-left:56px;
     }
 }*/
+@media(max-width: 992px) {
+    
+    .THIS .Res_dash .slds-grid {
+        display: block;
+    }
+    .THIS .Res_dash .slds-size_3-of-12:first-child {
+        width: 100%;
+    }
+    .THIS .Res_dash .slds-size_6-of-12 {
+        float: left;
+    }
+    .THIS .Res_dash .slds-size_9-of-12 {
+        width: 100%;
+        margin-top: 15px;
+    }
+}

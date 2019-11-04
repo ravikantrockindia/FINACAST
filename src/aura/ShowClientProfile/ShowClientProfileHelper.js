@@ -8,12 +8,18 @@
     action.setCallback(this, function(response) {
             var state = response.getState();
             if( state === 'SUCCESS') {
-                component.set("v.DefaultImg",true);
                 var attId=response.getReturnValue();
-                component.set('v.attachId',attId);
-                var c=component.get('v.prefixURL') + component.get('v.attachId');
-    			component.set("v.FinalVal",c);
-                component.set("v.TempFinalVal",c);
+                if(attId!=null){
+                    component.set("v.DefaultImg",true);
+                    //       var attId=response.getReturnValue();
+                    component.set('v.attachId',attId);
+                    var c=component.get('v.prefixURL') + component.get('v.attachId');
+                    component.set("v.FinalVal",c);
+                    component.set("v.TempFinalVal",c);  
+                }else{
+                     component.set("v.DefaultImg",false);
+                }
+                
             } 
         });
     $A.enqueueAction(action);

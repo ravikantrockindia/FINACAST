@@ -233,3 +233,21 @@
     height: 9px;
     width:9px;   
 }
+@media (max-width: 992px) {
+    .THIS .res_speedometer {
+        display: block;
+        float: left;
+        width: 100%;
+    }
+    .THIS .res_speedometer .client_managed {
+        float: left;
+    	width: 100%;
+    }
+ 	.THIS .res_speedometer .slds-size_6-of-12 {
+        width: 100%;
+    } 
+    .THIS .res_speedometer .slds-size_6-of-12.what-is .slds-size_6-of-12 {
+        width: 50%;
+        float: left;
+    } 
+}

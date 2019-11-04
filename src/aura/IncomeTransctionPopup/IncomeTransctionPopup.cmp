@@ -40,12 +40,10 @@
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                   
-                    <aura:iteration items="{!v.addExpenseTrans}" var="Tdetails1">
                         
-                           <c:BudgetExpenseSummaryCashFlowImpact  tansactionId ="{!v.getExpenseBudgetId}"/>
+                           <c:BudgetExpenseSummaryCashFlowImpact addExpenseTrans = "{!v.addExpenseTrans}" tansactionId ="{!v.getExpenseBudgetId}"/>
                        
-                    </aura:iteration>
-                       
+                  
                   <!--  <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                         <thead>
                             <tr class="slds-line-height_reset">

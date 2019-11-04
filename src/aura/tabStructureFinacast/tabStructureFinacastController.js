@@ -122,7 +122,20 @@
         evt.fire();
         
     },
-    
+     HouseholdHandler: function(component,event,helper){
+        var Id= component.get("v.ccid");
+        var namespace= component.get("v.namespace");
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef:"c:relationshipMap",
+            componentAttributes: {
+                ID : Id
+              //  isAccount:true,
+              //  namespace : namespace
+            }
+        });
+        evt.fire();
+    },
     childComponentEvent: function(component,event,helper){
         var id =event.getParam("idclient");
         component.set("v.ccid ", id);

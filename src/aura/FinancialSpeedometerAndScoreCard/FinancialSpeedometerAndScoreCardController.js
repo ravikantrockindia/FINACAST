@@ -88,9 +88,21 @@
                     data : { y: financialscore }, //gauge value change it
                     maximum : 10
                 };
+                
                 var containername=component.get('v.clientId');
+                var width=0;
+              var screenwidth =  window.screen.width;
+               // alert(screenwidth)
+                if(screenwidth > 768 || screenwidth <=1023 ){
+                    width =302;
+                }
+                    if(screenwidth > 1024) 
+                   {
+                       width =436;
+                    //   alert(width);
+                   }
                 var chart = new CanvasJS.Chart(containername,{
-                    height: 250, //in pixels
+                    height:250,
                 width: 436,
                 });
                 createGauge(chart);

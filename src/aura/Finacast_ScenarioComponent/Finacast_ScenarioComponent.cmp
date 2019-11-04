@@ -240,8 +240,8 @@
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col"><b> {!goalList.Name} </b></div>
                                 <div class="slds-col slds-text-align--right">
-                                    <lightning:button  iconName="utility:edit" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
-                                    <lightning:button  iconName="utility:delete" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                    <lightning:button  iconName="utility:edit" name = "saving button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    <lightning:button  iconName="utility:delete" name = "saving button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
                             	</div>
                             </div>
                             <lightning:progressBar id="GoalProgress" value="{!v.goalProgress}" size="medium"/>

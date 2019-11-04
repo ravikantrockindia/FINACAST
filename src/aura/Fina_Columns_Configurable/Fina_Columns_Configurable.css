@@ -13,6 +13,7 @@
     color: #fff;
     padding: 1px 5px;
     min-width: 120px;
+    display: inline-block;
 }
 .THIS .btn1:hover {
     color: #fff;
