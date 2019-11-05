@@ -40,9 +40,9 @@
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     
-                    
+                    <aura:if isTrue="{!v.showDatatable}">
                         <c:BudgetExpenseSummaryCashFlowImpact addExpenseTrans = "{!v.addExpenseTrans}" dataset = "{!v.data}" tansactionId ="{!v.getExpenseBudgetId}"/>
-                   
+                    </aura:if>
                   <!--  <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                         <thead>
                             <tr class="slds-line-height_reset">

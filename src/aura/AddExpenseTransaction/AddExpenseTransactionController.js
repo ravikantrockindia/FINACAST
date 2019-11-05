@@ -1,5 +1,9 @@
 ({
     doInit : function(component, event, helper) {
+        var today = new Date();
+        var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1); 
+        component.set("v.maxDate",datestart);
+        
          var cll = component.get("v.cid");
     // alert(cll);
          var action = component.get("c.getTransction"); 
@@ -25,7 +29,7 @@
         resultsToast.setParams({
             "title": "Save Success!",
             type: 'success',
-            "message": "Income Has been Saved"           
+            "message": "Transactions has been Saved"           
         });
         resultsToast.fire();   
 		helper.hideExampleModal(component);

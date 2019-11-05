@@ -14,6 +14,8 @@ public class NewScenarioApex {
         @AuraEnabled public List<Scenario_Expense__c> userScenarioExpense;            				 // expense of user 
         @AuraEnabled public List<Scenario_Goal__c> userScenarioGoal;                // goal og user for scenario goal
         @AuraEnabled public List<Scenario__c> userScenario;                         		 // scenario of user
+        @AuraEnabled public List<Scenario_Debt__c> userScenarioCredit; 
+        @AuraEnabled public Decimal totalCreditAmount; 
         @AuraEnabled public List<Scenario_Savings__c> userSceneSave;                         // list of scenario saving
         @AuraEnabled public List<Scenario_Debt__c> userScenarioLoan;                         // list of scenario Loan
         @AuraEnabled public Decimal totalGoalAmount;                                		 // total target amount of all goals of user 
@@ -114,7 +116,7 @@ public class NewScenarioApex {
                 }//end goal if
                 
                 // 4. search scenario loans and calculate total loan amount
-                List <Scenario_Debt__c> sceneLoan = [select Name, Current_Value__c, Payment_Amount__c, APR__c,Frequency__c from Scenario_Debt__c where Scenario_Id__c = :sceneId];
+                List <Scenario_Debt__c> sceneLoan = [select Name, Current_Value__c, Payment_Amount__c, APR__c,Frequency__c from Scenario_Debt__c where Scenario_Id__c = :sceneId AND Account_Type__c ='Loan' ];
                 if(sceneLoan != null && sceneLoan.size() > 0)   {
                     totalAmount = 0;
                     wrapper.userScenarioLoan = sceneLoan; 
@@ -127,6 +129,21 @@ public class NewScenarioApex {
                         }
                     }
                     wrapper.totalLoanAmount = totalAmount;
+                }//end loan if
+                
+                List <Scenario_Debt__c> sceneCredit = [select Name, Current_Value__c, Payment_Amount__c, APR__c,Frequency__c from Scenario_Debt__c where Scenario_Id__c = :sceneId AND Account_Type__c ='Credit Card' ];
+                if(sceneCredit != null && sceneCredit.size() > 0)   {
+                    totalAmount = 0;
+                    wrapper.userScenarioCredit = sceneCredit; 
+                    for(Scenario_Debt__c loans : sceneCredit){
+                        if(loans.Current_Value__c != Null) {
+                            totalAmount += loans.Current_Value__c;
+                        }
+                        else {
+                            totalAmount += 0;
+                        }
+                    }
+                    wrapper.totalCreditAmount = totalAmount;
                 }//end loan if
                 
                 
@@ -302,30 +319,52 @@ public class NewScenarioApex {
             }
             
             insert savAcc;
-            
-            //create debt
-            Id recTypeIdCredit = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
-            list<FinServ__FinancialAccount__c> creditList = new list<FinServ__FinancialAccount__c>();           
-            creditList= [select name,FinServ__LoanAmount__c,FinServ__APY__c,FinServ__PaymentFrequency__c,FinServ__PrimaryOwner__c,FinServ__PaymentAmount__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeIdCredit];
-            list<Scenario_Debt__c> sceDebt = new list<Scenario_Debt__c>();
-            
-            
-            for(FinServ__FinancialAccount__c credit :creditList ){
+            // create CreditList Card
+             Id recTypeIdCredit = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Credit Card').getRecordTypeId();
+            list<FinServ__FinancialAccount__c> CreditList = new list<FinServ__FinancialAccount__c>();           
+            CreditList= [select name,FinServ__LoanAmount__c,FinServ__APY__c,FinServ__PaymentFrequency__c ,Account_Type__c, FinServ__PrimaryOwner__c,FinServ__PaymentAmount__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeIdCredit ];
+            list<Scenario_Debt__c> sceCredit = new list<Scenario_Debt__c>();
                 Scenario_Debt__c loan = new Scenario_Debt__c();
-                loan.Client_Id__c = credit.FinServ__PrimaryOwner__c;
+            for(FinServ__FinancialAccount__c creditcard :CreditList ){
+                 loan = new Scenario_Debt__c();
+                loan.Client_Id__c = creditcard.FinServ__PrimaryOwner__c;
                 loan.Scenario_Id__c = sceneId;                 
-                loan.Name = credit.name ;
-                loan.APR__c = credit.FinServ__APY__c;
-                loan.Current_Value__c = credit.FinServ__LoanAmount__c;
-                loan.Frequency__c = credit.FinServ__PaymentFrequency__c;
-           //   loan.Start_Date__c = startDate;
-              //  loan.End_Date__c = endDate;
-                loan.Payment_Amount__c = credit.FinServ__PaymentAmount__c;
-                sceDebt.add(loan);
+                loan.Name = creditcard.name ;
+                loan.Account_Type__c = creditcard.Account_Type__c;
+                loan.APR__c = creditcard.FinServ__APY__c;
+                loan.Current_Value__c = creditcard.FinServ__LoanAmount__c;
+                sceCredit.add(loan);
+            }
+            
+            insert sceCredit;
+            
+            system.debug('sceCredit'+sceCredit);
+            //create debt   loanList
+            Id recTypeIdLoan = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
+            list<FinServ__FinancialAccount__c> loanList = new list<FinServ__FinancialAccount__c>();           
+            loanList= [select name,FinServ__LoanAmount__c,FinServ__APY__c,FinServ__PaymentFrequency__c ,Account_Type__c, FinServ__PrimaryOwner__c,FinServ__PaymentAmount__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeIdLoan ];
+            list<Scenario_Debt__c> sceDebt = new list<Scenario_Debt__c>();
+            	System.debug('loan'+loanList);
+			
+             Scenario_Debt__c loans = new Scenario_Debt__c();
+            for(FinServ__FinancialAccount__c credit :loanList ){
+                 loans = new Scenario_Debt__c();
+                System.debug(credit);
+                loans.Client_Id__c = credit.FinServ__PrimaryOwner__c;
+                loans.Scenario_Id__c = sceneId;                 
+                loans.Name = credit.name ;
+                loans.Account_Type__c = credit.Account_Type__c;
+                loans.APR__c = credit.FinServ__APY__c;
+                loans.Current_Value__c = credit.FinServ__LoanAmount__c;
+                loans.Frequency__c = credit.FinServ__PaymentFrequency__c;
+                loans.Payment_Amount__c = credit.FinServ__PaymentAmount__c;
+                sceDebt.add(loans);
+                            System.debug('1'+sceDebt);
+
             }
            
             insert sceDebt;
-            
+            System.debug('1'+sceDebt);
             //crate goal
             List<FinServ__FinancialGoal__c> goalRecord = new List<FinServ__FinancialGoal__c>();
             goalRecord = [Select id,FinServ__PrimaryOwner__c ,Goal_Priority__c, Name, Start_Value__c , Required_Monthly_Saving__c ,Associated_Account__c,Start_Date__c,FinServ__TargetDate__c,FinServ__TargetValue__c,FinServ__ActualValue__c from FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c=:clientId];

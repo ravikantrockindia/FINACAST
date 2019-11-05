@@ -18,6 +18,7 @@
       <aura:attribute name = "client" type = "Account"/>
     <aura:attribute name="editrecidTransactionExpense" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
@@ -40,9 +41,10 @@
                 <!--Modal/Popup Box Body Starts here-->
                  
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <aura:iteration items="{!v.addExpenseTrans}" var="Tdetails1">
-                 <c:LoanSummaryCashFlowImpact  loanId ="{!v.getExpenseBudgetId}"/>
-                    </aura:iteration>
+                    
+               <aura:if isTrue="{!v.showDatatable}">
+                 <c:LoanSummaryCashFlowImpact addExpenseTrans="{!v.addExpenseTrans}"  loanId ="{!v.getExpenseBudgetId}"/>
+                    </aura:if>
                  <!--   <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                         <thead>
                             <tr class="slds-line-height_reset">
@@ -166,7 +168,7 @@
                                         </aura:if> 
                                     </tbody>        
                                 </table-->
-                    <br/>
+                   
                      <aura:if isTrue="{!v.showDatatable}">
                          <lightning:datatable  aura:id="TransTable"  onrowaction="{!c.viewRecord}" onloadmore="{!c.handleLoadMore}" enableInfiniteLoading="{!v.enableInfiniteLoading}" loadMoreOffset="{!v.loadOffset}"
                             columns="{! v.columns }"  data="{! v.addExpenseTrans }"  keyField="Id"  hideCheckboxColumn="true" />  
