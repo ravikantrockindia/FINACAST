@@ -4,6 +4,8 @@
     <aura:attribute name="simpleRecord" type="Object"/>
     <aura:attribute type="Id" name="recordId"/>
     <aura:attribute name="isEditTrue" type="Boolean" />
+    <aura:handler name="change" value="{!v.isEditTrue}" default="false" action="{!c.doInit}"/>
+    
     <aura:attribute name="isEditImage" type="Boolean" /> 
     <aura:attribute name="DefaultImg" type="Boolean" default="false" />
     <aura:attribute name="ResourceImage" type="string" default="{!$Resource.staticImageUser}"/>
@@ -11,7 +13,7 @@
     <aura:attribute name="attachId" type="String" />
     <aura:attribute name="FinalVal" type="String" default="String"/> 
     <aura:attribute name="dob" type="date" default=""/> 
-
+    
     <aura:attribute name="TempFinalVal" type="String" default="String"/> 
     <aura:attribute name="NameSpace" type="String"/>
     
@@ -53,15 +55,16 @@
                         <h2 class="EditPencil"> {!v.simpleRecord.Name} <lightning:buttonIcon iconName="utility:edit"  size="small"   onclick="{!c.handleProfile }" variant="bare" class="slds-float_right" alternativeText="Edit Profile" /> </h2>
                         <aura:if isTrue="{!v.isEditTrue}">
                             
-                          
-                                        <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" NameSpace="{!v.NameSpace}" />
-                               
+                            
+                            <c:EditClientProfile  isEditTrue="{!v.isEditTrue}" recordId="{!v.recordId}" FinalVal="{!v.FinalVal}"  DefaultImg="{!v.DefaultImg}" TempFinalVal="{!v.TempFinalVal}" NameSpace="{!v.NameSpace}" />
+                            
                         </aura:if>
                         <div class="clients-details">                                  
                             <b>Birthday 
-                                           <h5>     <ui:outputDate value="{!v.dob}"/>
-
-                              </h5></b>	
+                                <h5>     
+                                    <ui:outputDate value="{!v.dob}"/>
+                                    
+                                </h5></b>	
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
     validateData:function(component,event){
         var name=component.find("name").get("v.value")
         var category=component.find("category").get("v.value")
- 
+        
         var street=component.find("street").get("v.value")
         
         var dob=component.find("dob").get("v.value")         
@@ -10,7 +10,7 @@
         var city=component.find("city").get("v.value")
         
         var state=component.find("state").get("v.value")
-         
+        
         var code=component.find("code").get("v.value")
         
         if ($A.util.isUndefinedOrNull(name) || name == "" ||  
@@ -21,10 +21,40 @@
         {
             return false;     
         }
+        else{
+            var d=new Date()
+            var dob=new Date(dob)
+            //
+            if(dob>d){
+                event.preventDefault();
+                
+                var msg = "You cannot enter a future DoB!"
+                this.showNotfication(component,msg,"error","Error!");
+            }              
+            //
+          /*  var timediff=new Date().getTime() - dob.getTime();
+            if(timediff<0){
+                event.preventDefault();
+                var msg = "Age must be atleast 18!"
+                this.showNotfication(component,msg,"error","Error!");
+            }*/
+            var yeardiff=new Number((new Date().getTime() - dob.getTime()) / 31536000000)
+            console.log('yeardiff',yeardiff)
+            if(yeardiff<18){
+                
+                event.preventDefault();
+                
+                var msg = "Age must be atleast 18 to proceed further!"
+                this.showNotfication(component,msg,"error","Error!");    
+            }
+            
+            
+            
+        }
         return true;
     },
     showAlertEmptyInvalidVal : function(component,msg){
-         
+        
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
             type : "error",
@@ -86,13 +116,13 @@
             component.set("v.attachId",attachId);
             var DefaultImg=component.get("v.DefaultImg");
             var c=component.get('v.prefixURL') + component.get('v.attachId');
-           if(DefaultImg===true){
-            component.set("v.TempFinalVal",c);
-               var tChange=component.get("v.TempFinalVal");
-           }else{
-             component.set("v.ResourceImage",c);
-               var tChange=component.get("v.ResourceImage");
-           }
+            if(DefaultImg===true){
+                component.set("v.TempFinalVal",c);
+                var tChange=component.get("v.TempFinalVal");
+            }else{
+                component.set("v.ResourceImage",c);
+                var tChange=component.get("v.ResourceImage");
+            }
             
             var state = response.getState();
             if (state === "SUCCESS") {
@@ -107,7 +137,7 @@
                 }
                 
             } else if (state === "INCOMPLETE") {
-             } else if (state === "ERROR") {
+            } else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
@@ -121,5 +151,18 @@
         
         $A.enqueueAction(action);
         component.set("v.fileName", '');
+    },
+    showNotfication : function(component,msg,type,title){
+        try{
+            component.find('notifLib').showToast({
+                "title": title,
+                "variant":type,
+                "message": msg,
+                "mode":"dismissable"
+            });
+            
+        }catch(e){
+            console.log(e.message)
+        } 
     }
 })
