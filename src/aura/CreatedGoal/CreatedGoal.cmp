@@ -49,7 +49,7 @@
                                             </div>
                                         </div>
                                         <h1>Congratulations!<br/>You successfully created a goal.</h1>
-                                        <button class="slds-button btn-blank" type="button" onclick="{!c.viewGoal}">Go to Goals</button>
+                                        <button class="slds-button btn-blank" type="button" onclick="{!c.viewGoal}">Go to Goal Info</button>
                                         <button class="slds-button btn1" type="button" onclick="{!c.createGoal}">Create Another Goal</button>
                                     </div>
                                 </div>

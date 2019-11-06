@@ -2,7 +2,7 @@
     doInit:function(component , event , helper){
          var workspaceAPI = component.find("workspace");
         workspaceAPI.getAllTabInfo().then(function(response) {
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
        })
         .catch(function(error) {
             console.log(error);
@@ -41,13 +41,16 @@
         var cmpTarget = component.find('exampleModal1');
         
         console.log('the cross is : '+ cmpTarget );
-        $A.util.addClass(cmpTarget, 'hideDiv');
-        component.set("v.isActive",false);
-        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+       $A.util.addClass(cmpTarget, 'hideDiv');
+                        component.set("v.isActive",false);
+
+       var saveIncomeEvent = component.getEvent("saveIncomeEvent");
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         
-        saveIncomeEvent.fire();
+       saveIncomeEvent.fire();
           $A.get('e.force:refreshView').fire();
+         
+
     },
     createGoal : function(component , event , helper){
         
