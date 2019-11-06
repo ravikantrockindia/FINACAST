@@ -36,7 +36,7 @@
     <aura:attribute name="editRecInves" type="boolean" default="False"/>
     <aura:attribute name="editCreditRec" type="boolean" default="False"/>
       
-    <div class="client_managed slds-m-bottom_large">
+    <div class="client_managed client_managed-fbs slds-m-bottom_large">
         <div>
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">
                 <div class="slds-col slds-size_6-of-12">
@@ -319,10 +319,10 @@
         <c:AddNewAccountModal showInModal="{!v.showInModal}" client="{!v.client}" clientid="{!v.recordId}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" editRecordLoan="false" editRecordCash="false" editCreditRec="false"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Cash')}" >
-        <c:BankAccountModal editRecordCash="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
+        <c:BankAccountModal title="Bank Account" editRecordCash="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Investment')}" >
-        <c:BankAccountModal editRecInves="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
+        <c:BankAccountModal title="Investment Account" editRecInves="true" showInModal="{!v.isModalOpen}" accountRecordId="{!v.recordId}" financialAccount="{!v.financialAccount}" recordTypeIds="{!v.recordTypeIds}" namespace="{!v.namespace}" selectedAccountType="{!v.accountTypeforEdit}"/>
     </aura:if>
     <aura:if isTrue="{!(v.isModalOpen) &amp;&amp; (v.accountTypeforEdit=='Loan')}" >
         <c:AddLoan title="Edit Loan" editRecordLoan="true" isActive="{!v.isModalOpen}" client="{!v.client}" loanId="{!v.financialAccount.Id}" namespace="{!v.namespace}" Loan="{!v.recordTypeId}"/>

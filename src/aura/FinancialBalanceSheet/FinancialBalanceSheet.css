@@ -285,4 +285,7 @@
     .THIS .net-worth {
         margin-top: 15px;
     }
+    .THIS.client_managed-fbs .slds-grid {
+        display: flex !important;
+    }
 }

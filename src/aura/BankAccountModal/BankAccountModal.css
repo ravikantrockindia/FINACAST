@@ -1,0 +1,6 @@
+@media(max-width: 992px) {
+ 	.THIS .res_ba-modal .slds-size_1-of-12 {
+        width: 100px;
+        float: left;
+    }   
+}

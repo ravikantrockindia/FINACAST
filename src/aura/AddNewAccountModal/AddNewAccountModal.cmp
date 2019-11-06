@@ -53,16 +53,16 @@
     </div>
     <aura:if isTrue="{!v.showInModal}">
         <aura:if isTrue="{!v.value=='Cash'}">
-            <c:BankAccountModal editRecordCash="false" accountRecordId="{!v.clientid}" selectedAccountType="Cash" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
+            <c:BankAccountModal title="Bank Account" editRecordCash="false" accountRecordId="{!v.clientid}" selectedAccountType="Cash" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
         </aura:if> 
             <aura:if isTrue="{!v.value=='Investment'}">
-                <c:BankAccountModal editRecInves="false" accountRecordId="{!v.clientid}" selectedAccountType="Investment" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
+                <c:BankAccountModal title="Investment Account" editRecInves="false" accountRecordId="{!v.clientid}" selectedAccountType="Investment" recordTypeIds="{!v.recordTypeIds}" showInModal="{!v.showInModal}" namespace="{!v.namespace}"/>
             </aura:if>
             <aura:if isTrue="{!v.value=='Credit'}">
                 <c:CreditAccountForm  editCreditRec="false" accountRecordId="{!v.clientid}" showInModal="{!v.showInModal}" namespace="{!v.namespace}" recordTypeId="{!v.recordTypeId}"/>
             </aura:if>
             <aura:if isTrue="{!v.value=='Loan'}">
-                <c:AddLoan title="Add Loan" editRecordLoan="false" namespace="{!v.namespace}" client="{!v.client}" Loan="{!v.recordTypeId}" accLoanRecType="IndustriesIndividual" isActive="{!v.showInModal}" />
+                <c:AddLoan title="Loan" editRecordLoan="false" namespace="{!v.namespace}" client="{!v.client}" Loan="{!v.recordTypeId}" accLoanRecType="IndustriesIndividual" isActive="{!v.showInModal}" />
             </aura:if> 
             
     </aura:if>    
