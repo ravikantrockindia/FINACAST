@@ -1,5 +1,6 @@
 ({
     doInit : function(component, event, helper) {
+        component.find("Id_spinner").set("v.class" , 'slds-show');
         console.log('the helper is', component.get("v.accRecType"));
         var cmpTarget = component.find('exampleModal');
         $A.util.removeClass(cmpTarget, 'hideDiv');
@@ -13,6 +14,7 @@
             clientId : ClientId
         });
         action.setCallback(this, function(a) {
+            component.find("Id_spinner").set("v.class" , 'slds-hide');
             var state  = a.getState();
             var incRec=a.getReturnValue();
             component.set("v.incRec",incRec);

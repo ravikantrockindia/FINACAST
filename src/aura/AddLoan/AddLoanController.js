@@ -1,6 +1,6 @@
 ({
     doInit : function(component, event, helper) {
-         
+          component.find("Id_spinner").set("v.class" , 'slds-show');
         var cmpTarget = component.find('exampleModal');
         $A.util.removeClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",true);
@@ -11,6 +11,7 @@
             clientId : ClientId
         });
         action.setCallback(this, function(a) {
+             component.find("Id_spinner").set("v.class" , 'slds-hide');
             var state  = a.getState();
             var loanRec=a.getReturnValue();
             component.set("v.loanRec",loanRec);
@@ -31,8 +32,8 @@
         });
         
         resultsToast.fire(); 
-        
         helper.hideExampleModal(component);
+              
         //console.log( 'value',event.getSource().get("v.value"));   
         
     },
@@ -53,7 +54,22 @@
         var amon = component.find("amount").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
         var pf = component.find("payfreq").get("v.value");
-         
+      /*  var sDate = component.find("stDate").get("v.value");
+       // alert(sDate );
+        if($A.util.isUndefinedOrNull(sDate)){
+            var today = new Date();
+            var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
+            sDate= datestart;
+        }
+        //
+        var eDate = component.find("endDate").get("v.value");
+     //   alert(eDate );
+        if($A.util.isUndefinedOrNull(eDate)){
+        var todayy=new Date();
+        var datee =(todayy.getFullYear()+10)+'/'+(todayy.getMonth()+1)+'/'+(todayy.getDate()+1);
+            eDate=datee;
+        }
+        */
         var getTypeEdit=component.get("v.editRecordLoan");
         var loanRec=component.get("v.loanRec");       
         if(getTypeEdit==false){

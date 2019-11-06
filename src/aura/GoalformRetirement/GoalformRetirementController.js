@@ -22,7 +22,9 @@
     },*/
     
     doInit : function(component,event,helper) 
-    {	component.set("v.createModal",false);
+    {
+        component.find("Id_spinner").set("v.class" , 'slds-show');
+        component.set("v.createModal",false);
         console.log(component.get("v.retirementGoalId") )
         var namespace = component.get("v.namespace");
         console.log('namespace value'+namespace);
@@ -45,6 +47,7 @@
             });
             
             action.setCallback(this, function(a) {
+                component.find("Id_spinner").set("v.class" , 'slds-hide');
                 var state  = a.getState();
                 console.log('state',state);
                 var accountList=a.getReturnValue();
@@ -358,14 +361,14 @@
         var retDate =component.find("rDate").get("v.value");
         var curAmt = component.find("currVal").get("v.value");
         
-        console.log("interest",interestRate);
-        console.log("associated",associated);
-        console.log("years",years);
-        console.log("target",target);
-        console.log("curAmt",curAmt);
-        console.log("retDate",retDate);
+        //console.log("interest",interestRate);
+       // console.log("associated",associated);
+        //console.log("years",years);
+        //console.log("target",target);
+       // console.log("curAmt",curAmt);
+       // console.log("retDate",retDate);
         var action = component.get("c.getAmtAndContri");  
-        console.log(associated[0]);
+       // console.log(associated[0]);
         action.setParams
         ({
             "accId" : associated,
@@ -520,7 +523,7 @@
         
         var msg = "Please fill mandatory fields"
         if ($A.util.isUndefinedOrNull(acc) || acc == "" || $A.util.isUndefinedOrNull(amt) || amt == "" || 
-            ((start == "" || $A.util.isUndefinedOrNull(start)))|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
+            start == "" || $A.util.isUndefinedOrNull(start)|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
         {
             
             helper.currentAmtError(component, event, helper,msg);

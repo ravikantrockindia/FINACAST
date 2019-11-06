@@ -31,9 +31,6 @@
 .THIS label.slds-form-element__label{
     display: none!important ;     
 }
-.THIS .slds-modal__content{
-    overflow:inherit;
-}
 .THIS .slds-modal__container {
     width: 70%;
     max-width: 70%;
@@ -50,10 +47,19 @@
 .THIS .slds-box1 .slds-size_1-of-2 input {
     margin-top: 8px;
 }
+.THIS .slds-box1 .slds-size_1-of-2 select {
+    margin-top: 8px;
+}
 .THIS .slds-text-heading_small {
     font-weight: 300;
 }
 .THIS .slds-input {
+    font-family: 'Open Sans',sans-serif;
+    background-color: #f2f0f0;
+    height: 40px;
+    border-radius: 0;
+}
+.THIS .slds-select {
     font-family: 'Open Sans',sans-serif;
     background-color: #f2f0f0;
     height: 40px;
@@ -67,6 +73,11 @@
 }
 .THIS .slds-media {
     height: 25px;
+}
+@media (max-width: 992px) {
+    .THIS .res_add-income .slds-size_1-of-12 {
+        width: 80px;
+    }
 }
 @media (max-width: 767px) {
     .THIS .slds-box1 {

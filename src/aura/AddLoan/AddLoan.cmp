@@ -17,11 +17,12 @@
     <aura:attribute name="loanRec" type="FinServ__FinancialAccount__c"/>
     <aura:attribute name="editRecordLoan" type="Boolean"/>
     <aura:attribute name="loanRecName" type="String"/>
-    
+        <lightning:workspaceAPI aura:id="workspace"/>
+
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">
             <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
-                <div class="slds-modal__container">                        
+                <div class="slds-modal__container res_ba-modal">                        
                     <header class="slds-modal__header">
                         <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
                             <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
@@ -67,6 +68,13 @@
                                         <span class = "highlight">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c" aura:id = "payfreq" variant="label-hidden"></lightning:inputField>
                                     </div>
                                     <div style="clear:both;"></div>
+                                    <!--<div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                        <span class = "highlight"></span> Start Date<lightning:inputField fieldName="{!v.namespace+'Start_Date__c'}" aura:id="stDate" variant="label-hidden"></lightning:inputField>
+                                    </div>
+                                    <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
+                                        <span class = "highlight"></span> End Date <lightning:inputField  fieldName="{!v.namespace+'End_Date__c'}" aura:id="endDate"></lightning:inputField>
+                                    </div>
+                                    <div style="clear:both;"></div>-->
                                     <div class="slds-col  slds-size_1-of-2 add_loan-pop-up" >
                                         
                                         <span class = "highlight">* </span> Installment Amount<lightning:inputField fieldName="FinServ__PaymentAmount__c" variant="label-hidden" aura:id = "amount" ></lightning:inputField>

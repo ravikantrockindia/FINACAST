@@ -39,6 +39,7 @@
                             </div>
                         </div>
                     </header>
+                     <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
                     <lightning:recordEditForm 
                                               recordTypeId="{!v.Expense}"
                                               recordId = "{!v.expId}"

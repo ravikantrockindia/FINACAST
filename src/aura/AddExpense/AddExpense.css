@@ -80,6 +80,11 @@
 .THIS .slds-select_container:before {
     top: 15px;
 }
+@media (max-width: 992px) {
+    .THIS .res_add-income .slds-size_1-of-12 {
+        width: 80px;
+    }
+}
 @media (max-width: 767px) {
     .THIS .slds-box1 {
         height: 380px;

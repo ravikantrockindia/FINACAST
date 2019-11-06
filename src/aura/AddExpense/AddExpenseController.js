@@ -1,7 +1,7 @@
 ({
     
     doInit : function(component, event, helper) {
-        
+        component.find("Id_spinner").set("v.class" , 'slds-show');
         var cmpTarget = component.find('exampleModal');
         console.log('init for expense:',cmpTarget);
         $A.util.removeClass(cmpTarget, 'hideDiv');
@@ -13,6 +13,7 @@
             clientId : ClientId
         });
         action.setCallback(this, function(a) {
+            component.find("Id_spinner").set("v.class" , 'slds-hide');
             var state  = a.getState();
             var expRec=a.getReturnValue();
             component.set("v.expRec",expRec);
@@ -52,7 +53,7 @@
         var growth = component.find("yeargrowth").get("v.value");
         var amn = component.find("inQuantity").get("v.value");
         var sDate = component.find("stDate").get("v.value");
-        alert(sDate );
+       // alert(sDate );
         if($A.util.isUndefinedOrNull(sDate)){
             var today = new Date();
             var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
@@ -60,10 +61,10 @@
         }
         //
         var eDate = component.find("endDate").get("v.value");
-        alert(eDate );
-        if($A.util.isUndefinedOrNull(eDate)){
-        var todayy=new Date();
+     	 var todayy=new Date();
         var datee =(todayy.getFullYear()+10)+'/'+(todayy.getMonth()+1)+'/'+(todayy.getDate()+1);
+        if($A.util.isUndefinedOrNull(eDate)){
+       
             eDate=datee;
         }
         var getRecordEdit=component.get("v.editRecordExpense");

@@ -21,7 +21,7 @@
                             <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <div class="slds-grid slds-gutters" style="border: none;">                                        
+                        <div class="slds-grid slds-gutters res_add-income" style="border: none;">                                        
                             <div class="slds-col slds-size_1-of-12 slds-text-align--left">
                                 <img src="{!$Resource.dollar}" />
                             </div>
@@ -31,6 +31,8 @@
                             </div>
                         </div>
                     </header>
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+
                     <lightning:recordEditForm 
                                               recordTypeId="{!v.Income}"
                                               recordId = "{!v.incmeId}"

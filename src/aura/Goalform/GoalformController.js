@@ -22,7 +22,7 @@
         var namespace = component.get("v.namespace");
         var clientId=component.find("owner").get("v.value");
         var clientId=component.get("v.client");
-        
+         component.find("Id_spinner").set("v.class" , 'slds-show');
         
         component.find("owner").set("v.value",clientId);
         var getName = component.get("v.FinServ__PrimaryOwner__r.Name");
@@ -38,6 +38,7 @@
             });
             
             action.setCallback(this, function(a) {
+                 component.find("Id_spinner").set("v.class" , 'slds-hide');
                 var state  = a.getState();
                 
                 var goals=a.getReturnValue();

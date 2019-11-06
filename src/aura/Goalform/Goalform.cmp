@@ -65,6 +65,7 @@
                             <br/>                     
                         </h3> -->
                     </header>
+                     <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
                     <lightning:recordEditForm 
                                               aura:id="non-retirement"
                                               recordTypeId="{!v.recordTypeId}"

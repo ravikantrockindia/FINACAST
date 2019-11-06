@@ -68,15 +68,12 @@
     height: 20px;
 }
 @media (max-width: 767px) {
-    .THIS .slds-box1 {
-        height: 380px;
-        overflow-Y: scroll;
-    }
 	.THIS .slds-box1 .slds-size_1-of-2 {
        
     }  
     .THIS .slds-modal__container {
-        width: 80%;
+        width: 92%;
+        max-width: 92%;
       
     }
 }
@@ -91,19 +88,12 @@
         padding: 0 1rem;
     }
 }
-@media (max-height: 600px) {
-    .THIS .slds-box1 {
-        height: 300px;
-        overflow-Y: scroll;
-    }
-}
-@media (max-height: 500px) {
-    .THIS .slds-box1 {
-        height: 250px;
-        overflow-Y: scroll;
-    }
-}
-.THIS .highlight
-{
+.THIS .highlight {
    color: red;
+}
+@media(max-width: 992px) {
+ 	.THIS .res_ba-modal .slds-size_1-of-12 {
+        width: 100px;
+        float: left;
+    }   
 }
