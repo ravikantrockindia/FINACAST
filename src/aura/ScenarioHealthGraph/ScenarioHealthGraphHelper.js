@@ -107,8 +107,7 @@
                 };
                 
                 var chart = new CanvasJS.Chart("chartContainer2179",{
-                     height: 250, //in pixels
-                width: 263,
+                  
                 });
                 createGauge(chart);
                 //Function for gauge
@@ -127,11 +126,11 @@
                     if(!gauge.data.color)
                         gauge.data.color = "#ff8400";
                    
-                  else  if (financialscore<3.0 )  
+                    if (financialscore<3.0 )  
                     if(!gauge.data.color)
                         gauge.data.color = "#8B0000";
                    
-                else    if (financialscore>6.0 )
+                    if (financialscore>6.0 )
                     if(!gauge.data.color)
                         gauge.data.color = "#538f56";
                     

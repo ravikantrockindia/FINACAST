@@ -172,7 +172,9 @@
     
     onEditButton : function(component,event,helper) {
         component.set("v.recordName", event.getSource().get("v.name"));
+      //  alert(event.getSource().get("v.name"));
         if(component.get("v.recordName") == "goal button") {
+       //     alert(event.getSource().get("v.value"));
             component.set("v.recordId",event.getSource().get("v.value"));
             component.set("v.goalButtonStatus",true);
         }
@@ -190,15 +192,18 @@
             component.set("v.recordId",event.getSource().get("v.value"));
             component.set("v.savingButtonStatus", true);
         }
+        if(component.get("v.recordName") == "credit button") {
+            component.set("v.recordId",event.getSource().get("v.value"));
+            component.set("v.CreditButtonStatus", true);
+        }
         helper.showFieldsValue(component);
     },
     
     onDeleteButton : function(component,event,helper) {
         component.set("v.recordName", event.getSource().get("v.name"));
-        //console.log('Scene id in delete' + component.get("v.scene"));
-       // console.log('recANem' + event.getSource().get("v.name"));
+        
         var recordId = event.getSource().get('v.value');
-       
+       alert(recordId);
         var action = component.get("c.deleteRecord");
         action.setParams({
            // clientId : component.get("v.cid"),
@@ -538,7 +543,7 @@
     },
     
     onClickChangeScenario : function(component, event, helper) {
-        console.log(component.find('scenarioList').get("v.value"));
+       // alert(component.find('scenarioList').get("v.name"));
         var s = component.find('scenarioList').get("v.value");
         
         component.set("v.scene", component.find('scenarioList').get("v.value"));
@@ -576,7 +581,7 @@
                     component.set("v.addScenarioButtonStatus", false);
                     component.set("v.isAddScenarioActive", true);
                     component.set("v.scenario", response.getReturnValue());
-                   // component.find("scenarioList").set("v.selectedValue", omponent.find("sceneName").get("v.value"));
+                    component.find("scenarioList").set("v.selectedValue", component.find("sceneName").get("v.value"));
                     //component.set("v.sceneId",component.get("v.scenario[0].Id"));
                     component.set("v.scene",component.get("v.scenario[0].Id"));
                 }
@@ -596,6 +601,7 @@
             if($A.util.isUndefinedOrNull(ScenarioList)) {
                 $A.get('e.force:refreshView').fire();
             }
+        helper.showFieldsValue(component);
       //  $A.get('e.force:refreshView').fire();
     },
     

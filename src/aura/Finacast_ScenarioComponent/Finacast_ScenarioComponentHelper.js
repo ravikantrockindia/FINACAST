@@ -20,7 +20,7 @@
         //to maintain selection on the component UI. 
   		var flag = false;
         if(component.get("v.scene") == "init") flag = true;
-            
+         //  alert(component.get("v.scene"))
             var action = component.get("c.getUserScenarios"); 
         action.setParams({
             clientId : component.get("v.cid"),
@@ -71,8 +71,9 @@
                 component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
                  component.set("v.loanProgress", 60);
             }
-            
-            if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioLoan)){
+           // alert('kishan');
+           // alert(response.getReturnValue().userScenarioCredit);
+            if($A.util.isUndefinedOrNull(response.getReturnValue().userScenarioCredit)){
                 component.set("v.credit",null); 
                 component.set("v.creditAmount", 0)
             }
@@ -82,17 +83,7 @@
                 component.set("v.creditAmount", response.getReturnValue().totalCreditAmount);
                 // component.set("v.loanProgress", 60);
             }
-            
-                //   component.set("v.loan",[{'Name': 'Loan 1', 'Amount' : '0'}]);        
-            //component.set("v.incomeAmount", response.getReturnValue().totalIncomeAmount);
-            //component.set("v.expenseAmount", response.getReturnValue().totalExpenseAmount);
-            
-         //  component.set("v.savingProgress", Math.round(response.getReturnValue().totalSaveAmount)/1000000*100);
-             // alert('jj'+component.get("v.savingProgress"));
-            //component.set("v.loan",  response.getReturnValue().userScenarioLoan);
-            //component.set("v.loanAmount", response.getReturnValue().totalLoanAmount);
-            //component.set("v.creditcard",  response.getReturnValue().userScenarioCard);
-            //component.set("v.cardAmount", response.getReturnValue().totalCardAmount);
+
             component.set("v.primaryOwner", response.getReturnValue().primaryOwner);
             
             component.set("v.data2", JSON.parse(response.getReturnValue().response));
@@ -104,6 +95,8 @@
             
             //if(component.get("v.scene") == 'init')
             component.set("v.scene", response.getReturnValue().scenarioId);
+                     //  alert(component.get("v.scene"))
+
             //console.log('Inside apex response: '+ response.getReturnValue().scenarioId);   
             
             var limIncome = Number  ((response.getReturnValue().totalIncomeAmount)*2);

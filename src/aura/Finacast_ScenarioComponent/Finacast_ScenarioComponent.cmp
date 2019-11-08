@@ -114,9 +114,9 @@
             <div class="slds-col slds-size_7-of-12">
                 <div class = "scenarioListPos">
                     
-                    <lightning:select name="scenarioList" aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
+                    <lightning:select   aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
                         <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
-                            <option label="{!sceneItems.Name}"  value = "{!sceneItems.Id}" ></option>
+                            <option label="{!sceneItems.Name}"  name ="{!!sceneItems.name}" value = "{!sceneItems.Id}" ></option>
                         </aura:iteration>
                     </lightning:select>
                     
@@ -240,8 +240,8 @@
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col"><b> {!goalList.Name} </b></div>
                                 <div class="slds-col slds-text-align--right">
-                                    <lightning:button  iconName="utility:edit" name = "saving button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
-                                    <lightning:button  iconName="utility:delete" name = "saving button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
+                                    <lightning:button  iconName="utility:edit" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                    <lightning:button  iconName="utility:delete" name = "goal button" value = "{!goalList.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
                             	</div>
                             </div>
                             <lightning:progressBar id="GoalProgress" value="{!v.goalProgress}" size="medium"/>
@@ -330,7 +330,7 @@
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col"><b> {!loanVar.Name} </b></div>
                                 <div class="slds-col slds-text-align--right">
-                                	<lightning:button    iconName="utility:edit"  name = "loan button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
+                                	<lightning:button    iconName="utility:edit"  name = "credit button" value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onEditButton}" />
                                     <lightning:button  name = "loan button"  iconName="utility:delete"  value = "{!loanVar.Id}" variant = "base" onclick = "{!c.onDeleteButton}" />
                                 </div>
                             </div>
@@ -452,7 +452,7 @@
                                                   recordId = "{!v.recordId}"
                                                   onload="{!c.recordloaded}"
                                                   > 
-                            <lightning:messages/>
+                            
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                                 <div class="slds-box1  slds-p-left_small slds-p-right_small">
                                     <div class="slds-grid slds-gutters">
@@ -569,6 +569,7 @@
                                         <br/> 
                                         <span class = "highlight">* </span> APR (%) <lightning:inputField aura:id = "debtInterest"
                                                                                                           fieldName="{! v.namespace + 'APR__c'}" variant="label-hidden"  />
+                                         <lightning:inputField fieldName="{! v.namespace + 'Account_Type__c'}" variant="label-hidden" value="Loan" class="slds-hide" />
                                         <br/>
                                     </div>
                                     
