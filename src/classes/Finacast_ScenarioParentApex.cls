@@ -114,24 +114,42 @@ public class Finacast_ScenarioParentApex {
             }
             
             insert savAcc;
+            // create CreditList Card
+             Id recTypeIdCredit = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Credit Card').getRecordTypeId();
+            list<FinServ__FinancialAccount__c> CreditList = new list<FinServ__FinancialAccount__c>();           
+            CreditList= [select name,FinServ__LoanAmount__c,FinServ__APY__c,FinServ__PaymentFrequency__c ,Account_Type__c, FinServ__PrimaryOwner__c,FinServ__PaymentAmount__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeIdCredit ];
+            list<Scenario_Debt__c> sceCredit = new list<Scenario_Debt__c>();
+            for(FinServ__FinancialAccount__c creditcard :CreditList ){
+                Scenario_Debt__c loan = new Scenario_Debt__c();
+                loan.Client_Id__c = creditcard.FinServ__PrimaryOwner__c;
+                loan.Scenario_Id__c = sceneId;                 
+                loan.Name = creditcard.name ;
+                loan.Account_Type__c = creditcard.Account_Type__c;
+                loan.APR__c = creditcard.FinServ__APY__c;
+                loan.Current_Value__c = creditcard.FinServ__LoanAmount__c;
+                sceCredit.add(loan);
+            }
             
-            //create debt
-            Id recTypeIdCredit = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
-            list<FinServ__FinancialAccount__c> creditList = new list<FinServ__FinancialAccount__c>();           
-            creditList= [select name,FinServ__LoanAmount__c,FinServ__APY__c,FinServ__PaymentFrequency__c,FinServ__PrimaryOwner__c,FinServ__PaymentAmount__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeIdCredit];
+            insert sceCredit;
+            
+            //system.debug('sceCredit'+sceCredit);
+            //create debt   loanList
+            Id recTypeIdLoan = Schema.getGlobalDescribe().get('FinServ__FinancialAccount__c').getDescribe().getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
+            list<FinServ__FinancialAccount__c> loanList = new list<FinServ__FinancialAccount__c>();           
+            loanList= [select name,FinServ__LoanAmount__c,FinServ__APY__c,FinServ__PaymentFrequency__c ,Account_Type__c, FinServ__PrimaryOwner__c,FinServ__PaymentAmount__c from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c=:clientId AND RecordTypeId =:recTypeIdLoan ];
             list<Scenario_Debt__c> sceDebt = new list<Scenario_Debt__c>();
+            	
+			
             
-            
-            for(FinServ__FinancialAccount__c credit :creditList ){
+            for(FinServ__FinancialAccount__c credit :loanList ){
                 Scenario_Debt__c loan = new Scenario_Debt__c();
                 loan.Client_Id__c = credit.FinServ__PrimaryOwner__c;
                 loan.Scenario_Id__c = sceneId;                 
                 loan.Name = credit.name ;
+                loan.Account_Type__c = credit.Account_Type__c;
                 loan.APR__c = credit.FinServ__APY__c;
                 loan.Current_Value__c = credit.FinServ__LoanAmount__c;
                 loan.Frequency__c = credit.FinServ__PaymentFrequency__c;
-           //   loan.Start_Date__c = startDate;
-              //  loan.End_Date__c = endDate;
                 loan.Payment_Amount__c = credit.FinServ__PaymentAmount__c;
                 sceDebt.add(loan);
             }

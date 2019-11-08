@@ -226,6 +226,8 @@ public class NewScenarioApex {
         return wrapper;  
     }//end init  
     
+    
+    
      @auraEnabled
    public static void saveNewScenario(String name, String clientId){
         try{
