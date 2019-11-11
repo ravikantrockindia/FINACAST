@@ -116,7 +116,7 @@
                     
                     <lightning:select   aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
                         <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
-                            <option label="{!sceneItems.Name}"  name ="{!!sceneItems.name}" value = "{!sceneItems.Id}" ></option>
+                            <option label="{!sceneItems.Name}"   value = "{!sceneItems.Id}" selected="{!sceneItems.selected}" ></option>
                         </aura:iteration>
                     </lightning:select>
                     

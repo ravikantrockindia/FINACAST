@@ -74,7 +74,7 @@
         if (file.size > self.MAX_FILE_SIZE) {
             component.set("v.showLoadingSpinner", false);
             //component.set("v.fileName", 'Alert : File size cannot exceed ' + self.MAX_FILE_SIZE + ' bytes.\n' + ' Selected file size: ' + file.size);
-            component.set("v.fileName", 'File size cannot exceed 1.5MB');
+            component.set("v.fileName", 'File size cannot exceed 1.5 MB');
             return;
         }
         

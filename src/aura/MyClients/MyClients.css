@@ -1,12 +1,12 @@
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
-.THIS a { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS a { font-family: 'Open Sans', sans-serif; color: #1b253a;}
 .THIS .btn1 {
     border-radius: 25px;
     font-size: 12px;
@@ -83,8 +83,13 @@
     text-align: center;
 }
 .THIS .total_investment p {
-    color: #000;
     display: block;
+}
+.THIS .total_assesment_abc_one h3 {
+    color: #fff;
+}
+.THIS .total_assesment_abc_two h1 {
+    color: #fff;
 }
 .THIS .total_investment p span {
     font-size: 12px;
@@ -141,12 +146,6 @@
     margin-top: 15px;
 }
 
-/*.THIS .slds-table_header-fixed tbody tr:first-child td {
-    padding-top: 22px;
-}
-.THIS .slds-table_header-fixed tbody tr:first-child th {
-    padding-top: 22px;
-}*/
 @media (max-width: 992px) {
     .THIS .my-client_res {
         display: block;
@@ -160,5 +159,17 @@
         clear: both;
         margin-top: 15px;
         display: inline-block;
+    }
+    .THIS .my-client_res1 .slds-size_1-of-12 {
+        width: 20%;
+    }
+    .THIS .my-client_res1 .slds-size_7-of-12 {
+        width: 20%;
+    }
+    .THIS .my-client_res1 .slds-size_3-of-12 {
+        width: 40%;
+    }
+    .THIS .slds-table {
+        width: 100% !important;
     }
 }

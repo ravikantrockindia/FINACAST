@@ -20,7 +20,7 @@
     <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
     
     <!-- Scipts loaded onto the component along with data-->
-    <ltng:require scripts="{!$Resource.ChartJs}"/>
+    
    <!-- <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
     <br/>-->
     <!--loading spinner start... style=Brand Medium (blue dots)-->
@@ -36,26 +36,26 @@
     <!-- Loading spinner end-->
     <div class="slds-card">
         <!--SLDS Grid-->
-        <div class="slds-grid slds-gutters future_simulation">
-            <div class="slds-col  slds-size_1-of-2">
+        <div class="slds-grid slds-gutters future_simulation res_future-simulation">
+            <div class="slds-col  slds-size_1-of-2 res_future-simulation-c">
                 <div class="client_managed">
                     <c:Finacast_FS_FinancialHealthComponent data="{! v.data}" namespace="{! v.namespace}"/>
                 </div>
             </div>
-            <div class="slds-col slds-size_1-of-2">
+            <div class="slds-col slds-size_1-of-2 res_future-simulation-c">
                 <div class="client_managed">
                        <c:Finacast_FS_FinancialNetworthForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
                     
                 </div>
             </div>
         </div>        
-        <div class="slds-grid slds-gutters future_simulation">
-            <div class="slds-col slds-size_1-of-2">
+        <div class="slds-grid slds-gutters future_simulation res_future-simulation">
+            <div class="slds-col slds-size_1-of-2 res_future-simulation-c">
                 <div class="client_managed">
                    <c:Finacast_FS_FinancialDebtForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
                 </div>
             </div>
-            <div class="slds-col slds-size_1-of-2" >
+            <div class="slds-col slds-size_1-of-2 res_future-simulation-c" >
                 <div class="client_managed">
                     <c:Finacast_FS_FinancialGoalForecastComponent data="{! v.data}" namespace="{! v.namespace}"/>
                 </div>

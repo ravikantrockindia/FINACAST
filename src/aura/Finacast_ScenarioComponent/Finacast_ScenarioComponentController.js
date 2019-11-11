@@ -18,6 +18,8 @@
         }
     ,
     onScenarioDeleteIcon: function(component, event, helper){
+        var retVal = confirm("Are you sure you want to delete this scenario?");
+        if( retVal == true ) { 
         var recordId = event.getSource().get('v.value');
         //alert(recordId);
          var action = component.get("c.deleteScenario");
@@ -39,7 +41,12 @@
              helper.helperMethod(component);
 			 $A.get('e.force:refreshView').fire();          
         });     
-        $A.enqueueAction(action);   
+        $A.enqueueAction(action);  
+            return true;
+        }
+        else{
+            return false;
+        }
        
     },
     doInit1:function(component,event,helper){   

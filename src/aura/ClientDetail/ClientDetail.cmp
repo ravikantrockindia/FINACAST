@@ -1,8 +1,8 @@
 <aura:component  controller="ClientDetailApex"
-                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">   
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">   
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute type="id" name="recordId"/>
-     
+     <aura:handler name="init" value="{!v.recordId}" action="{!c.doInit}"/>
     <aura:attribute name="NameSpace" type="string" />
     <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
     <div class="slds-theme_default">

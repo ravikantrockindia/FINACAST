@@ -41,3 +41,8 @@
     min-width: 25px;
     padding: 0;
 }
+@media (max-width: 992px) {
+    .THIS .slds-modal__container{
+        width:90% !important;
+    }
+}

@@ -91,7 +91,7 @@
                                     <lightning:formattedDateTime value="{!Gdetails.finGoal.FinServ__TargetDate__c}" timeZone="UTC" />
                                 </td>
                                 <td data-label="Track" scope="col">
-                                    <div class="slds-truncate" title="Track">
+                                    <div class="slds-truncate health-features" title="Track">
                                         <aura:if isTrue="{!Gdetails.goalTrack}">
                                             <p class="on-track"><lightning:icon iconName="action:approval" size="xx-small"/> <span>  On Track</span></p>
                                             

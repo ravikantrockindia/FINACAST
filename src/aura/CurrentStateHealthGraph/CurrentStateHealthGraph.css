@@ -118,7 +118,7 @@
     margin-left:50px;
 }
 .THIS .chart-sticker ul li:last-child {
-    margin-left:30px;
+    margin-left:80px;
 }
 .THIS .chart-sticker h2 {
     font-size: 34px;
@@ -160,13 +160,14 @@
 }
 .THIS .health-features p .slds-icon {
     position: absolute;
-    top: 2px;
-    width: 20px;
-    left: 0;
+    top: 0px;
+    width: 14px;
+    left: 5px;
+    height: 14px;
 }
-.THIS .on-track .slds-icon {
+/*.THIS .on-track .slds-icon {
     left: 3px !important;
-}
+}*/
 .THIS .health-features h4 {
     font-size: 12px;
     color: #808080;

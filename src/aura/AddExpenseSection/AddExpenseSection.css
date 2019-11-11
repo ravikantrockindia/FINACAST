@@ -24,7 +24,7 @@
     margin-top: -2px;
 }
 .THIS .dob h2 {
-    font-size: 14px;
+    font-size: 18px;
 }
 .THIS lightning-input>label {
         display: none !important;
@@ -33,16 +33,13 @@
     display: none !important;
 }
 .THIS .custom_card .slds-datepicker__month thead th {
-    padding: 0px 5px;
+    border: none;
 }
 .THIS .custom_card .slds-datepicker__month tbody td {
     padding: 0px 0px;
 }
-.THIS .dob .slds-datepicker__month td .slds-day {
-    width: 25px;
-    height: 25px;
-    min-width: 25px;
-    line-height: 25px;
+.THIS .dob .slds-datepicker__month td {
+    border: none;
 }
 .THIS .custom_card {
     margin: auto;

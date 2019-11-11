@@ -17,7 +17,7 @@
     
     <div style="height:640px">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
-            <div class="slds-modal__container">
+            <div class="slds-modal__container res_ba-modal">
                 <header class="slds-modal__header">
                     <div class="slds-grid slds-gutters slds-p-left_small">
                         <div class="slds-col slds-size_1-of-12 ">
