@@ -391,7 +391,7 @@ public class ClientDetailApex {
                         setData +='\'amount\':'+incomeAmount+',';
                         setData +='\'inctaxrate\':'+inc.Tax_Rate__c+',';
                         setData +='\'incomepopupfrequency\':\'' + incomeFrequency + '\',';
-                        setData +='\'incomepopupgrowthrate\':\'0\',';
+                        setData +='\'incomepopupgrowthrate\':'+inc.Yearly_growth__c+',';
                         setData +='\'startdate\':\'' + inc.Start_Date__c.month() + '/' + inc.Start_Date__c.year() + '\',';
                         setData +='\'enddate\':\'' + inc.End_Date__c.month() + '/' + inc.End_Date__c.year() + '\'';
                         setData +='},';
@@ -502,7 +502,7 @@ public class ClientDetailApex {
                         when 'Semi Monthly' {
                             loanfrequency = 2;
                         }
-                        when 'Bi-Weekly' {
+                        when 'Biweekly' {
                             loanfrequency = 2.16;
                         }
                         when 'Weekly' {
@@ -607,6 +607,8 @@ public class ClientDetailApex {
                         setData +='\'isTaxBenefit\':'+e.Does_contribution_bring_tax_benifit__c+',';
                         setData +='\'percentContribution\':'+e.What_of_contribution_bring_tax_benifit__c+',';
                         setData +='\'maxLimit\':'+e.May_yearly_tax_deduction_allowed__c+',';
+                        setData +='\'expensepopupgrowthrate\':'+e.Yearly_growth__c+',';
+                        setData +='\'priority\':'+e.Priority__c+',';
                         setData +='\'isMonthly\':'+e.Does_tax_benifit_realize_really__c+',';
                         setData +='},';
                         ++j;

@@ -424,7 +424,7 @@ public class AffordabilityController {
                         setData +='\'amount\':'+incomeAmount+',';
                         setData +='\'inctaxrate\':'+inc.Tax_Rate__c+',';
                         setData +='\'incomepopupfrequency\':\'' + incomeFrequency + '\',';
-                        setData +='\'incomepopupgrowthrate\':\'0\',';
+                        setData +='\'incomepopupgrowthrate\':'+inc.Yearly_growth__c+',';
                         setData +='\'startdate\':\'' + inc.Start_Date__c.month() + '/' + inc.Start_Date__c.year() + '\',';
                         setData +='\'enddate\':\'' + inc.End_Date__c.month() + '/' + inc.End_Date__c.year() + '\'';
                         setData +='},';
@@ -536,7 +536,7 @@ public class AffordabilityController {
                         when 'Semi Monthly' {
                             loanfrequency = 2;
                         }
-                        when 'Bi-Weekly' {
+                        when 'Biweekly' {
                             loanfrequency = 2.16;
                         }
                         when 'Weekly' {
@@ -641,6 +641,8 @@ public class AffordabilityController {
                         setData +='\'isTaxBenefit\':'+e.Does_contribution_bring_tax_benifit__c+',';
                         setData +='\'percentContribution\':'+e.What_of_contribution_bring_tax_benifit__c+',';
                         setData +='\'maxLimit\':'+e.May_yearly_tax_deduction_allowed__c+',';
+                        setData +='\'expensepopupgrowthrate\':'+e.Yearly_growth__c+',';
+                        setData +='\'priority\':'+e.Priority__c+',';
                         setData +='\'isMonthly\':'+e.Does_tax_benifit_realize_really__c+',';
                         setData +='},';
                         ++j;
@@ -670,12 +672,12 @@ public class AffordabilityController {
                     clientData = setData;
                 }
                 else{
-                setData += '{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\',\'maxLimit\' :\''+taxDeduct+'\',\'isMonthly\' :\''+taxMonthly+'\',\'percentContribution\' :\''+taxContribution+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate.month() + '/' + startDate.year() +'\',\'endDate\' :\''+endDate.month() + '/' + endDate.year() +'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
+                setData += '{\'name\' :\''+name+'\',\'type\' :\''+'afford'+'\',\'maxLimit\' :\''+taxDeduct+'\',\'isMonthly\' :\''+taxMonthly+'\',\'percentContribution\' :\''+taxContribution+'\', \'totalAmount\' : ' + totalAmount + ',\'downPayment\' : ' + downPayment + ',\'installments\' : ' + installments + ',\'startDate\' :\''+startDate.month() + '/' + startDate.year() +'\',\'endDate\' :\'' + (endDate.month()+1) + '/' + endDate.year() +'\',\'isTaxBenefit\' : ' + isTaxBenefit + ',\'isPaymentPlan\' : ' + isPaymentPlan + ',\'rainyDayMonths\' : ' + rainyDayMonths + '}]"}';
                 clientData = setData;
                
                 }
             }
-            
+            System.debug('clientData'+clientData);
             return setData;
         
     }
@@ -707,8 +709,7 @@ public class AffordabilityController {
         AffordabilityController.ShowAffordabilityResult(clientId,taxDeduct, taxMonthly,taxContribution,  name, totalAmount, downPayment, installments,  startDate,  endDate,  isTaxBenefit,  isPaymentPlan,  rainyDayMonths);
         if(!test.isRunningTest())
             wrap.response = FinacastUtility.getCalloutResponseContents(requestEndpoint, 'POST', clientData);
-       // System.debug('Future Simulation Response Data: ' + wrap.response);
-        
+              
         return wrap;
     }
     
