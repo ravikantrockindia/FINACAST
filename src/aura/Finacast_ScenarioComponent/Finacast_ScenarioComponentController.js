@@ -553,7 +553,7 @@
     
     onClickChangeScenario : function(component, event, helper) {
          
-        alert(component.find('scenarioList').get("v.value"));
+       // alert(component.find('scenarioList').get("v.value"));
         var s = component.find('scenarioList').get("v.value");
         
         component.set("v.scene", component.find('scenarioList').get("v.value"));
@@ -696,7 +696,7 @@
         
     },
     recordloaded:function(component,event,helper){
-        alert('scene'+component.get("v.scene"));
+       // alert('scene'+component.get("v.scene"));
         var action = component.get("c.goalListScenario");
             action.setParams({
                 clientId : component.get("v.scene"),
