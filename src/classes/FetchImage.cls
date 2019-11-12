@@ -1,15 +1,18 @@
 public class FetchImage {
     @AuraEnabled
     public static String fetchLatestImage(string cid) {
+        String aa;
         List<attachment> a;
         try{
             a =  [select id from attachment where ParentId=:cid Order by LAstMOdifiedDate desc limit 1];
-            
+            System.debug('a[0].Id'+a[0].Id);
+            return a[0].Id;
         }catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
+        System.debug('aa'+aa);
+        return aa;
         
-        return a[0].Id;
     }
     @AuraEnabled
     public static String getNameSpace(){
