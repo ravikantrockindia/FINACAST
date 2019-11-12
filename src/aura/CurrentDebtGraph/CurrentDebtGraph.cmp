@@ -16,7 +16,7 @@
     <aura:handler name="change" value="{!v.currentselectedValue}" action="{!c.generateChart}"/>
     <aura:handler name="change" value="{!v.Tabledata}" action="{!c.generateChart}"/>
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
-    <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+    <div class="slds-col slds-size_6-of-12 res_affordability-col-6 slds-m-bottom_large">
         <div class="client_managed">
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
@@ -66,7 +66,7 @@
                 </div>
             </div>
                   <div class="slds-grid slds-gutter ">
-                <div class="slds-col slds-size_12-of-12 slds-p-left_small">
+                <div class="slds-col slds-size_12-of-12 slds-p-left_small slds-p-bottom_small">
                     <p class="networth-msg"><i><b>Insights:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt">
                         <div><lightning:icon iconName="utility:record" size="xx-small" /><span>{!debt.message}.</span></div>
                         </aura:iteration></p>

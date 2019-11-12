@@ -18,7 +18,7 @@
     <aura:attribute name="currentselectedValue" type="String" default="" />
     <aura:handler name="change" value="{!v.currentselectedValue}" action="{!c.generateChart}"/>
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
-    <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+    <div class="slds-col slds-size_6-of-12 res_affordability-col-6 slds-m-bottom_large">
         <div class="client_managed">
             
             <div class="slds-grid slds-gutter ">

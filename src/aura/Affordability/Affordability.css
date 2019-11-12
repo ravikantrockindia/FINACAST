@@ -1,11 +1,13 @@
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600; color: #000;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS label { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS select { font-family: 'Open Sans', sans-serif; background-color: #fdfdfd; border: 1px solid #bbb; border-radius: 0;}
 .THIS .slds-button {
     border-radius: 25px;
     font-size: 12px;
@@ -421,4 +423,28 @@
 .THIS .slds-modal__container.Summary_cashflow {
     width: 80%;
     min-width: 80%;
+}
+@media(max-width: 992px) {
+    .THIS .res_affordability {
+        display: block;
+    }
+    .THIS .res_affordability .res_affordability-col-6 {
+        width: 100%;
+    }
+    .THIS .slds-modal__container.Summary_cashflow {
+        max-width: 90%;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .THIS .res_affordability .res_affordability-col-6-1 {
+        float: left;
+    }
+    .THIS .res_affordability .res_affordability-col-6-1 .res_3 {
+        width: 45%;
+        float: left;
+    }
+    .THIS .res_affordability .res_affordability-col-6-1 .res_6 {
+        width: 55%;
+        float: left;
+    }
 }
