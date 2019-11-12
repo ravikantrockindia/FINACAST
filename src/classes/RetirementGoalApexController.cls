@@ -28,7 +28,9 @@ public class RetirementGoalApexController {
     {
         Date birthDate = Date.valueOf(birth);
         Integer currentAge = (date.today()).year()- birthDate.year();
+        system.debug('currentAge'+currentAge);
         Integer yearsTillRetire = Integer.valueOf(retireAge) - currentAge;
+         system.debug('yearsTillRetire'+yearsTillRetire);
         getDataWrapper wrapper = new getDataWrapper();
         wrapper.yearsTillRetirement = yearsTillRetire;
         try{
@@ -48,6 +50,12 @@ public class RetirementGoalApexController {
         }
         else
         {
+            /*if(parseFloat(r_apr).toFixed(2) == parseFloat(inflation).toFixed(2)){
+				inflation=parseFloat(inflation)- .01;
+				//alert("Matched");
+			}
+			savingRequiredAtRetirement = (income/Math.pow((1+(r_apr/100)), (years-1)))*(Math.pow((1+(inflation/100)), (years-1))+((1+(r_apr/100))*((Math.pow((1+(r_apr/100)), (years-1)) - Math.pow((1+(inflation/100)), (years-1)))/((r_apr-inflation)/100))));
+*/
             If(interestRate == inflationRate)
             {
                 inflationRate = inflationRate - 0.01;
@@ -59,7 +67,7 @@ public class RetirementGoalApexController {
         }
         
         
-        wrapper.retirementAmount = Math.ceil(savingRequiredAtRetirement);
+        wrapper.retirementAmount = Math.round(savingRequiredAtRetirement);
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
@@ -105,19 +113,19 @@ public class RetirementGoalApexController {
             }
             remainingAmount = bal - totalEstimated;
             double curr = Math.ceil( remainingAmount);       
-            wrapper.currentAmt = Math.ceil(curr);
+            wrapper.currentAmt = remainingAmount;
             Date retire = date.valueOf(retireDate);
             
             if(current == null)
             {
-                currentAmount = Math.ceil(curr);
+                currentAmount = remainingAmount;
             }
             else
             {
                 currentAmount = Double.valueOf(current);
             }
             
-            wrapper.monthlyContri = Math.ceil(getMonthlyContribution(currentAmount, tillRetirement, interestRate, targetAmt, retireDate));
+            wrapper.monthlyContri = Math.round(getMonthlyContribution(currentAmount, tillRetirement, interestRate, targetAmt, retireDate));
             
         } 
                          if(TEST.isRunningTest())
@@ -163,7 +171,8 @@ public class RetirementGoalApexController {
         {
             monContri = installment;
         }
-        return Math.ceil(monContri);
+        monContri++;
+        return Math.round(monContri);
         
     }    
     
