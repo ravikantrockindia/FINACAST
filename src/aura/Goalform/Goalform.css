@@ -1,11 +1,13 @@
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; text-align: left;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS label { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS select { font-family: 'Open Sans', sans-serif; background-color: #fdfdfd; border: 1px solid #bbb; border-radius: 0;}
 .THIS .btn1 {
     border-radius: 25px;
     font-size: 12px;
@@ -75,18 +77,29 @@
 .THIS .slds-select_container:before {
     top: 15px;
 } 
-.THIS .slds-box1 .slds-has-error {
+/*.THIS .slds-box1 .slds-has-error {
     position: relative;
     z-index: 0;
-}
+}*/
 .THIS .slds-box1 .slds-form-element__help {
     z-index: 1;
     position: absolute;
     bottom: -15px;
 }
+.THIS .res_goal-form .slds-size_11-of-12 {
+    text-align: left;
+}
 @media (max-width: 992px){
     .THIS .slds-size_11-of-12.slds-p-top_medium {
         padding-top: 0;
+    }
+    .THIS .res_goal-form .slds-size_11-of-12 {
+        padding-left: 15px;
+        text-align: left;
+    }
+    .THIS .slds-modal__container {
+        width: 90%;
+        max-width: 90%;
     }
 }
 @media (max-width: 767px) {
