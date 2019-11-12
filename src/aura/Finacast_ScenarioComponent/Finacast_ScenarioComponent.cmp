@@ -8,7 +8,7 @@
     <aura:attribute name="loanProgress" type="Decimal" default = "0"/>
     <aura:attribute name="savingProgress" type="Decimal" default = "0"/>
    <aura:attribute name="scenario" type="object"/>   
-    <aura:registerEvent name="ShowGraph" type="c:ShowGraph" />
+    <aura:registerEvent name="ShowGraph" type="c:ShowGraph"/>
     <!-- attributes list -->
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="tabName" type="String" default=" Scenarios"/>
@@ -59,6 +59,7 @@
     <aura:attribute name="goal" type="Scenario_Goal__c[]" default="[{'Name': 'Goal 1', 'Amount__c' : '0'}]" />
     <aura:attribute name="goalAmount" type="Decimal" default = "0"/>
     
+    
     <!-- Loan attribute list -->
     <aura:attribute name = "loanLimit" type = "Integer" />
     <aura:attribute name="loan" type="Scenario_Debt__c[]"/>
@@ -75,6 +76,8 @@
     <aura:attribute name="savings" type="Scenario_Savings__c[]" default="[{'Name': 'Saving', 'Amount__c' : '0'}]" /> 
     <aura:attribute name="savingsAmount" type="Integer" default = "0"/> 
     <aura:attribute name = "savingLimit" type = "Integer" default = "0" />
+    <aura:attribute name="savingList" type="Scenario_Savings__c[]"/> 
+    <aura:attribute name="selectedAccount" type="String"/>
     
    <aura:attribute name = "incomevalue" type = "Integer" default = "0" />
     <!--Resources-->
@@ -82,6 +85,8 @@
     <ltng:require scripts="{!$Resource.ChartJs}"/>
     <ltng:require scripts="{!$Resource.slider123+'/bootstrap-slider-master/src/js/bootstrap-slider.js'}"  afterScriptsLoaded="{!c.doInit1}"/>
     <aura:handler event="force:refreshView" action="{! c.doInit1}" />
+   <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+
 
     
     <!-- **********************************************  Component Markup Starts Here  ******************************************* -->
@@ -113,13 +118,22 @@
         <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_7-of-12">
                 <div class = "scenarioListPos">
-                    
-                    <lightning:select   aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
-                        <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
-                            <option label="{!sceneItems.Name}"   value = "{!sceneItems.Id}" selected="{!sceneItems.selected}" ></option>
+ 					
+                    <lightning:select aura:id="scenarioList" value="{!v.selectedValue}" onchange="{!c.onClickChangeScenario}">
+
+                        <aura:iteration items="{!v.scenarioList}" var="sceneItems">
+                            
+                            <option label="{!sceneItems.Name}" value="{!sceneItems.Id}" selected="{!sceneItems.Id==v.selectedValue}"/> 
+                            
                         </aura:iteration>
                     </lightning:select>
                     
+                  <!-- <lightning:select   aura:id = "scenarioList" onchange = "{!c.onClickChangeScenario}" value="{!v.selectedValue}">
+                        <aura:iteration items="{!v.scenarioList}" var = "sceneItems">
+                            <option label="{!sceneItems.Name}"   value = "{!sceneItems.Id}" selected="{!sceneItems.selected}" ></option>
+                        </aura:iteration>
+                    </lightning:select>-->
+   
                 </div>
             </div>
             <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-right_none" style="font-size: 17px;" align = "right">
@@ -464,7 +478,16 @@
                                         <div class="slds-col slds-size_1-of-2">
                                             <span class = "highlight">* </span>
                                             Associated Account
-                                            <lightning:inputField aura:id = "bankAccount" fieldName="{! v.namespace + 'Associated_Account__c'}" variant="label-hidden" onchange = "{!c.onClickAssociatedAcc}" />
+                                            <lightning:select   aura:id="bankAccount" value="{!v.selectedAccount}" onchange="{!c.onClickAssociatedAcc}">
+                                                       
+                                            <aura:iteration items="{!v.savingList}" var="item">
+                                                                
+                                                                <option label="{!item.Name}" value="{!item.Id}" selected="{!item.Id==v.selectedAccount}"/> 
+             
+                                          </aura:iteration>
+                                        </lightning:select>
+                                            
+                                            <!--<lightning:inputField aura:id = "bankAccount" fieldName="{! v.namespace + 'Associated_Account__c'}" variant="label-hidden" onchange = "{!c.onClickAssociatedAcc}" /> -->
                                         </div>
                                     </div>
                                     <div class="slds-grid slds-gutters">
