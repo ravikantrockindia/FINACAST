@@ -1,74 +1,75 @@
-<aura:component   implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+<aura:component  controller="ClientDetailApex" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute type="id" name="recordId"/>
-    <aura:attribute name="accessibilityMap" type="Map"/>
-    <aura:attribute name="oppId" type="Id"/>
-    <aura:attribute name="ccid" type="Id"/>
+ <!--   <aura:attribute name="accessibilityMap" type="Map"/>-->
+  <!--  <aura:attribute name="oppId" type="Id"/>-->
+  <!--  <aura:attribute name="ccid" type="Id"/>-->
     <aura:attribute name="namespace" type="string"/>
-    <aura:attribute name="simpleRecord" type="Object" />
-    <aura:attribute name="record" type="Object" />
-    <aura:attribute name="showNursing" type="boolean"/>
-    <aura:attribute name = "visible"  type="boolean"/>
-    <aura:registerEvent type="c:ClientIdentifier" name="transferCLiientId"/>
-    <aura:attribute name="flag" type="boolean" default="false"/>
-    <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>
-    <lightning:workspaceAPI aura:id="workspace"/>
+   <!-- <aura:attribute name="simpleRecord" type="Object" />-->
+  <!--  <aura:attribute name="record" type="Object" />-->
+   <!-- <aura:attribute name="showNursing" type="boolean"/>-->
+  <!--  <aura:attribute name = "visible"  type="boolean"/>-->
+  <!--  <aura:registerEvent type="c:ClientIdentifier" name="transferCLiientId"/>-->
+  <!--  <aura:attribute name="flag" type="boolean" default="false"/>-->
+ <!--   <aura:handler  event="c:changeclientevent" action="{!c.childComponentEvent}"/>-->
+   <!-- <lightning:workspaceAPI aura:id="workspace"/>-->
     
     <div class="slds-tabs_scoped" id="navDiv">
             <ul class="slds-tabs_scoped__nav" role="tablist" id="nav">
                 <li class="bigIcons  slds-shrink-none" aura:id="articleOne" title="Overview " role="presentation">                    
-                    <a class="slds-tabs_scoped__link" href="" title="Overview " onclick="{!c.ClientInformHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                    <a class="slds-tabs_scoped__link" href="" title="Overview " onclick="{!c.financialSummary}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
                             
-                        </div>Overview</a>
+                        </div><img src="{!$Resource.financialSummary}" /> Financial Summary</a>
                 </li>               
                 <li class="bigIcons  slds-shrink-none" aura:id="articleTwo" title="Admission Forms" role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Budget " onclick="{!c.BudgetHandler}"  role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
-                        </div>Budget</a>
+                        </div><img src="{!$Resource.budget}" /> Budget</a>
                     
                 </li>
                 <li class="bigIcons  slds-shrink-none" aura:id="articleThree" title="Goals" role="presentation">
                     <a class="slds-tabs_scoped__link " href="" onclick="{!c.GoalHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left ">
-                        </div>Goals</a>
+                        </div><img src="{!$Resource.goals}" /> Goals</a>
                     
                 </li>                
                 <li class=" slds-shrink-none" aura:id="articleFour" title="Financial Simulator" role="presentation">
                     <a class="slds-tabs_scoped__link " href="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" onclick="{!c.FutureHandler}" id="tab-scoped-3__item">
                         <div class="slds-float_left ">
-                        </div>Financial Simulator</a>
+                        </div><img src="{!$Resource.futureSimulation}" /> Financial Simulator</a>
                     
                 </li>               
                 <li class="bigIcons  slds-shrink-none" aura:id="articleFive" title="Scenarios " role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Scenarios " onclick="{!c.ScenarioHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
-                        </div>Scenarios</a>
+                        </div><img src="{!$Resource.scenario}" /> Scenarios</a>
                     
                 </li>
                 <li class="bigIcons  slds-shrink-none" aura:id="articlesix" title="Affordability " role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Affordability " onclick="{!c.AffordHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
-                        </div>Affordability</a>
+                        </div><img src="{!$Resource.affordability}" /> Affordability</a>
                     
                 </li>
                 <li class="bigIcons  slds-shrink-none" aura:id="articleseven" title="Transactions " role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Transactions " onclick="{!c.transactionHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">
-                        </div>Transactions</a>
+                        </div><img src="{!$Resource.transaction}" /> Transactions</a>
                     
                 </li>
                 
                 <li class="bigIcons  slds-shrink-none" aura:id="articleeight" title="Accounts " role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Accounts " onclick="{!c.AccountHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">  
-                        </div>Financial Account</a>
+                        </div><img src="{!$Resource.financialAccount}" /> Financial Account</a>
                 </li>
                 
-                <li class="bigIcons  slds-shrink-none" aura:id="articlenine" title="Household" role="presentation">                    
+               <!-- <li class="bigIcons  slds-shrink-none" aura:id="articlenine" title="Household" role="presentation">                    
                     <a class="slds-tabs_scoped__link" href="" title="Accounts " onclick="{!c.HouseholdHandler}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
                         <div class="slds-float_left">  
                         </div>Household</a>
-                </li>
+                </li>-->
                 
             </ul>
          </div> 
