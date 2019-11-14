@@ -14,7 +14,7 @@
     <fieldUpdates>
         <fullName>UpdateEndDate</fullName>
         <field>End_Date__c</field>
-        <formula>DATE(YEAR(DATEVALUE(CreatedDate)) + 10, MONTH(DATEVALUE(CreatedDate)), DAY(DATEVALUE(CreatedDate)))</formula>
+        <formula>DATE(YEAR(DATEVALUE(CreatedDate)) + 100, MONTH(DATEVALUE(CreatedDate)), DAY(DATEVALUE(CreatedDate)))</formula>
         <name>UpdateEndDate</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -23,29 +23,43 @@
     <fieldUpdates>
         <fullName>update_start_date</fullName>
         <field>Start_Date__c</field>
-        <formula>TODAY()</formula>
+        <formula>DATE(YEAR(DATEVALUE(CreatedDate)) - 10, MONTH(DATEVALUE(CreatedDate)), DAY(DATEVALUE(CreatedDate)))</formula>
+        <name>update start date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_startdate</fullName>
+        <field>Start_Date__c</field>
+        <formula>DATE(YEAR(DATEVALUE(CreatedDate)) - 100, MONTH(DATEVALUE(CreatedDate)), DAY(DATEVALUE(CreatedDate)))</formula>
         <name>update start date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <rules>
-        <fullName>Income and expense start date is today</fullName>
+        <fullName>Income and expense   end date is today</fullName>
         <actions>
             <name>UpdateEndDate</name>
             <type>FieldUpdate</type>
         </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Budget__c.End_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Income and expense start date is today</fullName>
         <actions>
-            <name>update_start_date</name>
+            <name>update_startdate</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <criteriaItems>
             <field>Budget__c.Start_Date__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Budget__c.End_Date__c</field>
             <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
