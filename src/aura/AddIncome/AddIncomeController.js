@@ -33,6 +33,7 @@
         });
         resultsToast.fire();   
 		helper.hideExampleModal(component);
+         
      console.log( 'value',event.getSource().get("v.value"));   
     },
     

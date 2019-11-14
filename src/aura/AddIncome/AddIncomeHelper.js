@@ -1,12 +1,24 @@
 ({
 	   hideExampleModal : function(component) {
-        var cmpTarget = component.find('exampleModal');
-        $A.util.addClass(cmpTarget, 'hideDiv');
-        component.set("v.isActive",false);
-		var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+       // var cmpTarget = component.find('exampleModal');
+       // $A.util.addClass(cmpTarget, 'hideDiv');
+       // component.set("v.isActive",false);
+		/*var saveIncomeEvent = component.getEvent("saveIncomeEvent");
            console.log("client id from income",component.get("v.client"))
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-        saveIncomeEvent.fire();
+        saveIncomeEvent.fire();*/
+           var workspaceAPI = component.find("workspace");
+           workspaceAPI.getFocusedTabInfo().then(function(response) {
+               console.log(JSON.stringify(response))
+               var focusedTabId = response.parentTabId;
+               workspaceAPI.refreshTab({
+                   tabId: focusedTabId,
+                   includeAllSubtabs: true
+               });
+           })
+           .catch(function(error) {
+               console.log(error);
+           });
        },
     
      showAlertEmptyInvalidVal : function(component,msg)

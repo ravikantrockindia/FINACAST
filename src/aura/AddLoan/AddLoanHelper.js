@@ -3,10 +3,10 @@
         var cmpTarget = component.find('exampleModal');
         $A.util.addClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",false);
-        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+       /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
         console.log("clientId from loan",JSON.stringify(component.get("v.client")))
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-        saveIncomeEvent.fire();
+        saveIncomeEvent.fire();*/
      	component.find("Id_spinner").set("v.class" , 'slds-hide');
 	
     },

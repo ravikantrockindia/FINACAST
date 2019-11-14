@@ -1,4 +1,5 @@
 <aura:component controller="AddIncomeController">
+    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="closeModal" type="boolean" default="false"/>
     <aura:attribute name="IncomeRecord" type="object" />
     <aura:attribute name = "data" type = "Object"/>
