@@ -125,7 +125,7 @@ public class RetirementGoalApexController {
                 currentAmount = Double.valueOf(current);
             }
             
-            wrapper.monthlyContri = Math.round(getMonthlyContribution(currentAmount, tillRetirement, interestRate, targetAmt, retireDate));
+            wrapper.monthlyContri = Math.round(getMonthlyContribution(accId,currentAmount, tillRetirement, targetAmt, retireDate));
             
         } 
                          if(TEST.isRunningTest())
@@ -144,17 +144,20 @@ public class RetirementGoalApexController {
 * ***/
     
     @auraEnabled
-    public static Decimal getMonthlyContribution(Double currentAmount, String tillRetirement, Double interestRate, String targetAmt, String retireDate)
+    public static Decimal getMonthlyContribution(String accId,Double currentAmount, String tillRetirement, String targetAmt, String retireDate)
     {
         Date retire = date.valueOf(retireDate);
         Integer months = (((retire.year())*12)+retire.month()) - ((((date.today()).year())*12)+date.today().month());
         Double installment = 0;
-        Double growth = (Math.pow((1 + (interestRate/ 100)), (1/12)))- 1;
+        Double temp=1;
+        Double interestRate=[Select FinServ__APY__c from FinServ__FinancialAccount__c where Id=:accId LIMIT 1].FinServ__APY__c;
+        System.debug(interestRate/100);
+        Double growth = (Math.pow((1 + (interestRate/ 100)), (temp/12))- 1);
         
         Double target = Double.valueOf(targetAmt);
         
         Decimal monContri;
-        
+        System.debug(growth);
         If (target > (currentAmount * (Math.pow((1 + growth),months))))
         {
             
@@ -172,7 +175,7 @@ public class RetirementGoalApexController {
             monContri = installment;
         }
         monContri++;
-        return Math.round(monContri);
+        return monContri;
         
     }    
     
