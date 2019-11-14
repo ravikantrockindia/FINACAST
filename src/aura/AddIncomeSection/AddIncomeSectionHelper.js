@@ -37,12 +37,12 @@
         
     },
     validateDate: function(component){
-        var data=component.get("v.IncomeList")
+    //    var data=component.get("v.IncomeList")
         
         var isAllValid=true;
         var enddate=component.find('enddate');
         
-        if(enddate.length>0){
+        /*if(enddate.length>0){
             isAllValid = enddate.reduce(function(isValidSoFar, inputCmp){
                 
                 inputCmp.showHelpMessageIfInvalid();
@@ -55,8 +55,8 @@
             
             enddate.showHelpMessageIfInvalid();
             
-        }
-        for (var e in data ){
+        }*/
+       /* for (var e in data ){
             var startdate=data[e]["income"]["startDate"]
             if($A.util.isUndefinedOrNull(startdate) || startdate==""){
                 
@@ -66,7 +66,7 @@
                 data[e]["income"]["startDate"]=date;
             }
         }
-        component.set("v.IncomeList",data)
+        component.set("v.IncomeList",data)*/
         
         var startdate=component.find('startdate');
         
@@ -81,16 +81,18 @@
                         var sdateName=startdate[i].get("v.name")
                         var edateIndex=edateName.split("_")[1]
                         var sdateIndex=sdateName.split("_")[1]
-                        if(edateIndex==sdateIndex){
-                            if(new Date(sdate)>new Date(edate)){
-                                enddate[i].setCustomValidity("End date cannot be less than start date")
-                                isAllValid=false
+                        if(!($A.util.isUndefinedOrNull(sdate) && sdate=="")){
+                            if(edateIndex==sdateIndex){
+                                if(new Date(sdate)>new Date(edate)){
+                                    enddate[i].setCustomValidity("End date cannot be less than start date")
+                                    isAllValid=false
+                                }
+                                else{
+                                    enddate[i].setCustomValidity("")
+                                }
+                                enddate[i].reportValidity();
+                                
                             }
-                            else{
-                                enddate[i].setCustomValidity("")
-                            }
-                            enddate[i].reportValidity();
-                            
                         }
                     }
                 }
@@ -98,7 +100,7 @@
         }
         else{
             var edate=enddate.get("v.value")
-            if(!($A.util.isUndefinedOrNull(edate) && edate=="")){
+            if(!($A.util.isUndefinedOrNull(edate) && edate=="") && !($A.util.isUndefinedOrNull(sdate) && sdate=="")){
                 if(new Date(startdate.get("v.value"))>new Date(edate)){
                     enddate.setCustomValidity("End date cannot be less than start date")
                     isAllValid=false;

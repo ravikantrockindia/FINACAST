@@ -91,7 +91,7 @@
                                         <div class="slds-truncate"><lightning:input type="date" disabled="{!i.disabled}" value="{!i.expense.startDate}" aura:id="startdate" name="{!'row_'+index+'_sdate'}" variant="label-hidden" onblur="{!c.onblur}"/></div>
                                     </td>
                                     <td class="dob">
-                                        <div class="slds-truncate"><lightning:input type="date" disabled="{!i.disabled}" value="{!i.expense.endDate}"  messageWhenValueMissing="Complete this field" aura:id="enddate" required="true" name="{!'row_'+index+'_edate'}"  onblur="{!c.onblur}" variant="label-hidden"/></div>
+                                        <div class="slds-truncate"><lightning:input type="date" disabled="{!i.disabled}" value="{!i.expense.endDate}" aura:id="enddate" name="{!'row_'+index+'_edate'}"  onblur="{!c.onblur}" variant="label-hidden"/></div>
                                     </td>
                                     
                                     <td>
