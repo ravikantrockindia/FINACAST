@@ -469,6 +469,18 @@
         
         
         helper.hideExampleModal(component);
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     },
     
     saveButton : function(component, event, helper) {
@@ -626,9 +638,22 @@
             $A.util.addClass(cmpTarget, 'hideDiv');
             component.set("v.createModal",true);
         }
-        else
+        else{
             
             helper.hideExampleModal(component);
+            var workspaceAPI = component.find("workspace");
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                console.log(JSON.stringify(response))
+                var focusedTabId = response.parentTabId;
+                workspaceAPI.refreshTab({
+                    tabId: focusedTabId,
+                    includeAllSubtabs: true
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
         
     },
     changeMonthlyContribution : function(component, event, helper)

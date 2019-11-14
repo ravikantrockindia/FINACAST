@@ -15,9 +15,7 @@
         .catch(function(error) {
             console.log(error);
         });   */
-        
-        
-        
+ 
         // alert(component.get("v.recordId"))
         component.set("v.addGoals",false)
         component.set("v.showModalGoal",false);
@@ -124,6 +122,7 @@
                 component.set("v.icon",icon);
                 component.set("v.isNonRetirement",true); 
                 component.set("v.isRetirement",false);
+                
             }
             else if (recordTypeName == "CarRecordType")
             {
@@ -200,9 +199,10 @@
             }  */
             component.set("v.heading",heading);
             
-            component.set("v.editrecidGoal",event.getSource().get("v.value"));            
+            component.set("v.editrecidGoal",event.getSource().get("v.value")); 
         });             
         $A.enqueueAction(action); 
+        
     },
     
     
@@ -216,9 +216,10 @@
             });
             
             action2.setCallback(this, function(response) {
-                var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+                /*var saveIncomeEvent = component.getEvent("saveIncomeEvent");
                 saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-                saveIncomeEvent.fire();
+                saveIncomeEvent.fire();*/
+                
                 var resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
                     "title": "Delete Success!",
@@ -226,6 +227,20 @@
                     "message": "Record has been deleted successfully"           
                 });
                 resultsToast.fire();
+               
+                var workspaceAPI = component.find("workspace");
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log(JSON.stringify(response))
+                    var focusedTabId = response.parentTabId;
+                    workspaceAPI.refreshTab({
+                        tabId: focusedTabId,
+                        includeAllSubtabs: true
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+                
             });     
             $A.enqueueAction(action2);
             
@@ -233,6 +248,7 @@
         } else {
             return false;
         }
+        
         
     }, 
     viewGoal : function(component, event, helper) {
