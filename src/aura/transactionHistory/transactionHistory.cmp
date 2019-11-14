@@ -20,7 +20,7 @@
     <aura:attribute name="isLoading" type="Boolean" default="false"/>
     <aura:attribute name="totalRows" type="Integer" default="0"/>
     <aura:attribute name="rowLimit" type="Integer" default="20"/>
-    <aura:attribute name="rowOffSet" type="Integer" default="10"/>
+    <aura:attribute name="rowOffSet" type="Integer" default="0"/>
     
     <lightning:notificationsLibrary aura:id="notifLib"/>
     
@@ -169,9 +169,7 @@
             </div>
         </div>
                 </div>
-    <div class="slds-card">
-	<div class="slds-p-left_small slds-p-right_small slds-card__body ">
-        <div class="client_managed">
+
     <aura:if isTrue="{!not(empty(v.data))}">
         <lightning:datatable
                              columns="{! v.columnList }"
@@ -187,13 +185,17 @@
                              onrowselection="{! c.handleRowAction }"
                              /> 
          <aura:set attribute="else">
+                 <div class="slds-card">
+	<div class="slds-p-left_small slds-p-right_small slds-card__body ">
+        <div class="client_managed">
              <div class="slds-p-around_small slds-text-align_center">
              	<h3>No Transaction found</h3>
              </div>
+                    </div>
+        </div>
+</div>
     </aura:set>
             
     </aura:if>
-        </div>
-        </div>
-</div>
+
 </aura:component>
