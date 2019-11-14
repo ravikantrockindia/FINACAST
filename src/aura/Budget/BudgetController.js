@@ -42,6 +42,7 @@
       //  alert(records);
     },
     getmonthlybudget : function(component, event, helper) {
+        debugger;
        // console.log('SAY'+component.get('v.namespace'));
        // 
         //alert(event.getSource().get("v.value"));
@@ -345,7 +346,12 @@
     
     //----------------------Method to Add Goal records-----------------------------//
     createGoalRecord : function(component , event , helper){
+        debugger;
+               component.set("v.addGoals" , false);
+
         component.set("v.addGoals" , true);
+          
+       // component.set("v.addGoals" , true);
     },
     
     //----------------------Method to Edit Income records-----------------------------//
@@ -380,6 +386,7 @@
         component.set("v.editrecidLoan",event.getSource().get("v.value"));
         //-----------------LoanRecordEdit-----------------------------------------//
         component.set("v.editRecordLoan",true);
+        
     },
     //----------------------Method to Edit transaction records-----------------------------//
     onClickEditIncomeTransaction : function(component,event,helper) {
@@ -481,11 +488,23 @@
         action2.setCallback(this, function(response) {   
             var res=response.getReturnValue();
             if(res==true){
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+           /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
             saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            saveIncomeEvent.fire();
+            saveIncomeEvent.fire();*/
+                
                  helper.showNotfication(component,'Record has been deleted successfully','success','Delete Success!');
-             
+                var workspaceAPI = component.find("workspace");
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log(JSON.stringify(response))
+                    var focusedTabId = response.parentTabId;
+                    workspaceAPI.refreshTab({
+                        tabId: focusedTabId,
+                        includeAllSubtabs: true
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
             }
             else if(res==false){
                 var action3 = component.get("c.ClientNameIncRecord");
@@ -527,10 +546,23 @@
         action2.setCallback(this, function(response) {   
             var res=response.getReturnValue();
             if(res==true){
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+           /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
             saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            saveIncomeEvent.fire();
+            saveIncomeEvent.fire();*/
+                
                 helper.showNotfication(component,'Record has been deleted successfully','success','Delete Success!');
+                var workspaceAPI = component.find("workspace");
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log(JSON.stringify(response))
+                    var focusedTabId = response.parentTabId;
+                    workspaceAPI.refreshTab({
+                        tabId: focusedTabId,
+                        includeAllSubtabs: true
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
            
             }
             else if(res==false){
@@ -605,6 +637,18 @@
                     saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
                     saveIncomeEvent.fire();
                     helper.showNotfication(component,'Record has been deleted successfully','success','Delete Success!');
+                    var workspaceAPI = component.find("workspace");
+                    workspaceAPI.getFocusedTabInfo().then(function(response) {
+                        console.log(JSON.stringify(response))
+                        var focusedTabId = response.parentTabId;
+                        workspaceAPI.refreshTab({
+                            tabId: focusedTabId,
+                            includeAllSubtabs: true
+                        });
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
                     
                 }else{
                     var action3 = component.get("c.ClientNameLoanRecord");
