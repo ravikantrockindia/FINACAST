@@ -47,7 +47,7 @@
     <aura:attribute name="icon" type="string" />
     <aura:attribute name="viewGoalId" type="String"/>
         <aura:attribute name="editModal" type="Boolean"/>
-
+	<lightning:workspaceAPI aura:id="workspace"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
     
     

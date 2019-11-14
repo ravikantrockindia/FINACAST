@@ -1,5 +1,6 @@
 <aura:component controller="Nonretirementgoalapexcontroller"
      implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name = "car" type="String"/>

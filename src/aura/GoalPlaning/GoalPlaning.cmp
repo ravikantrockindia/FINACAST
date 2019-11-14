@@ -1,5 +1,6 @@
 <aura:component Controller="GoalPlaningController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <lightning:workspaceAPI aura:id="workspace"/>
+    <lightning:workspaceAPI aura:id="workspace1"/>
     <aura:attribute name="tabName" type="String" default=" Goals"/>
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="cid" type="Id"/>
@@ -20,11 +21,11 @@
     <aura:handler name="openModal" event="c:SaveIncomeEvent" action="{!c.createGoal}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
-                <aura:if isTrue="{!!v.budgetScreen}">
+              <!--  <aura:if isTrue="{!!v.budgetScreen}">
 
-   <!-- <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>-->
-    </aura:if>
+    <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>
+    </aura:if>-->
     <div class="slds-theme_default">
         <div class="slds-card__header">
             <aura:if isTrue="{!!v.budgetScreen}">
