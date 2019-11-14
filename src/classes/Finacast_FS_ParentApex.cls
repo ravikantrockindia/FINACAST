@@ -54,7 +54,7 @@ public class Finacast_FS_ParentApex{
             System.debug('Inside try');
                 
             setData = '{"key":"'+FSK+'","formParams":"['; 
-            incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Frequency__c,Tax_Rate__c from Budget__c where Primary_Owner__c =: clientId 
+            incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Yearly_growth__c,Frequency__c,Tax_Rate__c from Budget__c where Primary_Owner__c =: clientId 
                          and recordType.developerName = 'Income_Record_Type' ]; 
             System.debug('client Id: '+ clientId);
             System.debug('Income List: ' + incmeList);
@@ -284,8 +284,8 @@ public class Finacast_FS_ParentApex{
             } //end of if
             
             expList = [Select id, Name, Amount__c, Start_Date__c, End_Date__c,Does_contribution_bring_tax_benifit__c, 
-                       Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c 
-                       from Budget__c where Primary_Owner__c =: clientId 
+                       Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c, Yearly_growth__c, 
+                       Priority__c from Budget__c where Primary_Owner__c =: clientId 
                        and recordType.developerName = 'Expense_Record_Type']; 
             //set expenses here    
             System.debug('Expense List: ' + expList);
