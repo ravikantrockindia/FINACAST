@@ -10,7 +10,8 @@
     <aura:attribute name = "isEmptyData" type="Boolean" default="true"/>
 	 <aura:attribute name = "NetworthMessage" type="string"/>
     <aura:handler name="change" value="{!v.data}" action="{!c.shownetWorthData}"/>
-   
+  
+
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.shownetWorthData}"/> 
 
     <div class="slds-grid slds-gutter ">
@@ -63,7 +64,7 @@
             <div class="slds-grid">
                 <div class="slds-col slds-size_12-of-12">
                     <div class="charts-child">
-                        <div id="chartContainer0.986" style="height: 300px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                        <div id="chartContainer0.986" style="height: 300px !important; width: auto; margin-left: 0px; margin-top: 0px;"></div>
                     </div>
                 </div>
             </div>

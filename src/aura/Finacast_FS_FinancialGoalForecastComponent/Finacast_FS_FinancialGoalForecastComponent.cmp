@@ -63,7 +63,7 @@
             </aura:if>
         </div-->
     <div class="slds-grid slds-gutter ">
-        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small">
+        <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_large slds-p-left_small" style=" margin-bottom: 101px;">
         	<h2>Goal Forecast</h2>
         </div>
     </div>
@@ -97,10 +97,10 @@
                     </div>
                 </div>
                 <div class="slds-box" style="border: none; text-align: left;">
-                     <i><b>Insights: </b></i> 
+                    <p class="networth-msg"> <i><b>Insights: </b></i> 
                     <aura:iteration items="{!v.goalForecastStatus}" var="g">
                        <span style="color: #2fbf9e;"><div><lightning:icon iconName="utility:record" size="xx-small" />{!g}</div></span>
-                    </aura:iteration>
+                        </aura:iteration></p>
                    
                 </div>
             </div>

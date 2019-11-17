@@ -238,8 +238,7 @@
         
         
         var chart = new CanvasJS.Chart("chartContainer3.3589", {
-            height: 300, //in pixels
-                width: 600,
+         
             animationEnabled: true,
             title:{
                 //text: "Debt Forecast",

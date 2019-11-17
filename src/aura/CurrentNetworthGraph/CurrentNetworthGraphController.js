@@ -56,7 +56,6 @@
             
             var chart = new CanvasJS.Chart("chartContainer3.4", {
                                          height: 250, //in pixels
-                width: 571,
                 colorSet: "greenShades",
                 animationEnabled: true,  
                 title:{

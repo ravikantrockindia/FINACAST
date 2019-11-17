@@ -47,10 +47,10 @@
                 </div>
                 <div class="slds-box" style="border: none; text-align: left;">
                     
-                   
-                        <i><b>Insight: </b></i> <aura:iteration items="{!v.goalForecastStatus}" var="g"> 
+                   <p class="networth-msg">
+                        <i><b>Insights: </b></i> <aura:iteration items="{!v.goalForecastStatus}" var="g"> 
                     <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /><span style="color: #2fbf9e;">{!g}</span></div>
-                    </aura:iteration>
+                       </aura:iteration></p>
                    
                 </div>
             </div>

@@ -108,7 +108,6 @@
                 
                 var chart = new CanvasJS.Chart("chartContainer0.356",{
                      height: 250, //in pixels
-                width: 263,
                 });
                 createGauge(chart);
                 //Function for gauge

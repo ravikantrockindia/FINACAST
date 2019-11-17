@@ -23,7 +23,7 @@
     
     <aura:handler name="change" value="{!v.data}" action="{!c.finHealth}"/>
     
-     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.finHealth}"/> 
+     <ltng:require scripts="{!$Resource.ChartJs}" afterScriptsLoaded="{!c.finHealth}"/> 
     
     <aura:if isTrue="{! !v.isEmptyData}">
     
