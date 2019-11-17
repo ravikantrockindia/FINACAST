@@ -34,12 +34,12 @@
    <!-- <c:tabStructureFinacast ccid="{!v.recordId}" namespace="{!v.namespace}"></c:tabStructureFinacast>
     <br/>-->
     <div class="slds-card slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_3-of-12">
+        <div class="slds-grid slds-gutters res_finacast-account">
+            <div class="slds-col slds-size_3-of-12 res_finacast-account-child">
                 <c:FinancialBalanceSheet recordId="{!v.recordId}" namespace="{!v.namespace}" isAccount="{!v.isAccount}"/>
             </div>
-            <div class="slds-col slds-size_9-of-12">
-                <div class="client_managed slds-p-top_small slds-p-right_small slds-p-bottom_small slds-p-left_small">
+            <div class="slds-col slds-size_9-of-12 res_finacast-account-child">
+                <div class="client_managed slds-p-top_xx-small slds-p-right_small slds-p-bottom_small slds-p-left_small">
                     <div class="slds-m-bottom_x-small"><h2 class="slds-m-top_none">{!v.name}</h2></div>
                     <lightning:tabset selectedTabId="one" >
                         <lightning:tab  label="Summary" title="Summary" id="one" >
@@ -52,9 +52,11 @@
                                    <!-- <span class="">Journal Entries</span> -->
                                     <Lightning:button class="btn1 slds-button slds-m-bottom_medium" onclick="{!c.addNewTransaction}" label=" Add New Transaction"/> 
                                 </h3>
+                            </div>
+                            <div class="journal-entry-heading1">
                                 <div class="slds-grid slds-gutters slds-text-align_center" style="height: 400px">
                                     <aura:if isTrue="{!v.showDatatable}">
-                                        <lightning:datatable
+                                        <lightning:datatable 
                                                              columns="{! v.columnList }"
                                                              data="{!v.data}"
                                                              keyField="Id"

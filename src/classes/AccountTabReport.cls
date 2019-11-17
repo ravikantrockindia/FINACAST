@@ -19,7 +19,7 @@ public class AccountTabReport {
         String monthYear;
        
         fatList= [select  id, FinServ__Amount__c,FinServ__TransactionDate__c, FinServ__TransactionType__c	 FROM FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  AND (FinServ__TransactionDate__c = LAST_N_MONTHS:11 OR FinServ__TransactionDate__c= THIS_MONTH) ORDER BY FinServ__TransactionDate__c ];
-        System.debug('fatList----' +fatList);
+         
         Map<String, Decimal> cashIn = new Map<String, Decimal>(); 
         Map<String, Decimal> cashOut = new Map<String, Decimal>(); 
         
@@ -28,21 +28,20 @@ public class AccountTabReport {
                                                                     11=>'November', 12=>'December'};
                                                                         
                                                                         
-      //  String cMonth=String.valueOf(Date.today().month());
-      //  system.debug('cMonth'+cMonth
+       
         Integer currentMonth = Date.today().month();
         DateTime dt = DateTime.now();
         String monthName = dt.format('MMMMM');
         System.debug('Month Name : ' + monthName);
-       // system.debug('currentMonth'+currentMonth);
+        
         Integer currentYear = Date.today().year();
-      //  system.debug('currentYear'+currentYear);
+       
         
         List<String> previousMonths=new List<String>();
         while(previousMonths.size()<6){
             if(monthName=='January' && currentYear==Date.today().year()){
                 String monthYearValue =  monthName +' '+currentYear;
-                //     system.debug('monthYearValue if'+monthYearValue);
+                
                 previousMonths.add(monthYearValue);
                 currentYear=currentYear-1;
                 currentMonth=12;
@@ -58,7 +57,7 @@ public class AccountTabReport {
                 
                 
             }
-        //    system.debug('previous month value'+previousMonths);
+       
         }
        system.debug('previous month value'+previousMonths);
         for(Integer i=previousMonths.size()-1;i>=0;i--){
@@ -79,7 +78,6 @@ public class AccountTabReport {
             if(stt.FinServ__TransactionType__c=='Debit'){
                 if(cashOut.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashout.get(monthYear);
-                    system.debug('asdfgh DEBIT'+totalamt);
                     cashOut.put(monthYear,totalamt);
                 }
               
@@ -87,22 +85,21 @@ public class AccountTabReport {
             else{
                 if(cashIn.containsKey(monthYear)){
                     Decimal totalamt=stt.FinServ__Amount__c+cashIn.get(monthYear);
-                    system.debug('credit'+totalamt);
                     cashIn.put(monthYear,totalamt);
                 }
                
             }
         }
         wrapAccountList = new ObjectWrapper(cashIn, cashout);
-        system.debug('wrapAccountList'+wrapAccountList);
         
         return wrapAccountList;
     } 
    // LAZY LOADING //
     @AuraEnabled
     public static FinancialAccountWrapper  getTotalRecords(String AccountId,Integer rowOffset,Integer rowLimit){
-        
         FinancialAccountWrapper faw=new FinancialAccountWrapper();
+        if(AccountId!=null){
+       // FinancialAccountWrapper faw=new FinancialAccountWrapper();
         List<FinServ__FinancialAccountTransaction__c> result;
         try{
             faw.FinancialAccountList  =[Select Id,TransactionName__c,FinServ__Amount__c,FinServ__Description__c,FinServ__TransactionDate__c, FinServ__TransactionType__c from FinServ__FinancialAccountTransaction__c where FinServ__FinancialAccount__r.id=:AccountId  order by FinServ__TransactionDate__c DESC LIMIT :rowLimit OFFSET :rowOffset];
@@ -112,7 +109,9 @@ public class AccountTabReport {
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
         return faw; 
-
+        }else{
+            return faw;
+        }
     }
     
     @auraEnabled
@@ -137,7 +136,6 @@ public class AccountTabReport {
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             
         }
-        system.debug('name'+fl[0].name);
         return fl[0].name;
     }
     
@@ -150,14 +148,14 @@ public class AccountTabReport {
         }catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             
-        }
-        system.debug('name'+fl);
+        }         
         delete fl;
     }
     
     @auraEnabled
-    public static List<FinServ__FinancialAccount__c> getFinanaceAccountOpenDate(String AccountId ){
-         
+    public static date getFinanaceAccountOpenDate(String AccountId ){
+        system.debug('accountId'+AccountId);
+        if(AccountId!=null){
         List<FinServ__FinancialAccount__c> fl=new List<FinServ__FinancialAccount__c>();
         try{
             fl=[select name, FinServ__OpenDate__c ,(select id,name from Financial_Account_Transactions__r) from FinServ__FinancialAccount__c where id=:AccountId];
@@ -165,13 +163,15 @@ public class AccountTabReport {
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
             
         }
-         system.debug('opendate'+fl[0].FinServ__OpenDate__c);
-        //return fl[0].FinServ__OpenDate__c;
-        return fl;
+            return fl[0].FinServ__OpenDate__c;
+        }
+        else{
+            return system.today();
+        }
+       
     }
     public class FinancialAccountWrapper{
         @AuraEnabled
-       // public List<FinServ__FinancialAccountTransaction__c> FinancialAccountTotalRecords = new List<FinServ__FinancialAccountTransaction__c>();
         public Integer FinancialAccountTotalRecords = 0;
         @AuraEnabled
         public List<FinServ__FinancialAccountTransaction__c> FinancialAccountList = new List<FinServ__FinancialAccountTransaction__c>();
