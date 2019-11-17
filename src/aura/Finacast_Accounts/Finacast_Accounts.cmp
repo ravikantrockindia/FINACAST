@@ -81,7 +81,7 @@
         </div>
     </div>
     <aura:if isTrue="{!v.isAddNewTransaction}" >
-       <!-- <c:Finacast_AddNewTransactionPOpUp   Tid="{!v.Tid}" name="{!v.name}" namespace="{!v.namespace}"/>-->
+        
         <div class="slds-m-around_xx-large">
         <div role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
             <div class="slds-modal__container">                        

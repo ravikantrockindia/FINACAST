@@ -119,6 +119,18 @@
                     $A.util.removeClass(spinner, "slds-show");
                     $A.util.addClass(spinner, "slds-hide");
                     helper.fetchTransactionList(component,event,helper); 
+                   var workspaceAPI = component.find("workspace");
+                   workspaceAPI.getFocusedTabInfo().then(function(response) {
+                   console.log(JSON.stringify(response))
+                   var focusedTabId = response.parentTabId;
+                   workspaceAPI.refreshTab({
+                   tabId: focusedTabId,
+                   includeAllSubtabs: true
+                   });
+                   })
+                   .catch(function(error) {
+                   console.log(error);
+                   });
                     }
                         else if (state === "ERROR") {
                             $A.util.removeClass(spinner, "slds-show");
@@ -136,18 +148,7 @@
                     });
                          
 				 //$A.get('e.force:refreshView').fire();
-                var workspaceAPI = component.find("workspace");
-                workspaceAPI.getFocusedTabInfo().then(function(response) {
-                    console.log(JSON.stringify(response))
-                    var focusedTabId = response.parentTabId;
-                    workspaceAPI.refreshTab({
-                        tabId: focusedTabId,
-                        includeAllSubtabs: true
-                    });
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
+                 
 			  $A.enqueueAction(action);  
             }
         }
@@ -280,14 +281,7 @@
             msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);       
         }
-        /*else if(tdate>=toDate || tdate<=openDate) {
-            status1 = 0;
-            event.preventDefault();
-            msg = "Please enter Date between "+openDate+ " and "+toDate;
-            helper.showAlertEmptyInvalidVal(component,msg);
-          	return;
-             
-        }*/
+         
         else
         {
             status1 = 1;
