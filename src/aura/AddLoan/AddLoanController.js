@@ -34,7 +34,7 @@
         resultsToast.fire(); 
         helper.hideExampleModal(component);
         
-        var workspaceAPI = component.find("workspace");
+      /*  var workspaceAPI = component.find("workspace");
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             console.log(JSON.stringify(response))
             var focusedTabId = response.parentTabId;
@@ -45,7 +45,7 @@
         })
         .catch(function(error) {
             console.log(error);
-        });
+        });*/
         
         //console.log( 'value',event.getSource().get("v.value"));   
         

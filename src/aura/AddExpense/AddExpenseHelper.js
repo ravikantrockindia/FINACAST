@@ -1,6 +1,6 @@
 ({
 	   hideExampleModal : function(component) {
-      var cmpTarget = component.find('exampleModal');
+     /* var cmpTarget = component.find('exampleModal');
            console.log('the cross is : '+ cmpTarget );
         $A.util.addClass(cmpTarget, 'hideDiv');
        
@@ -8,7 +8,19 @@
         var saveIncomeEvent = component.getEvent("saveIncomeEvent");
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
        // saveIncomeEvent.setParams("showModalIncome", false);
-        saveIncomeEvent.fire();
+        saveIncomeEvent.fire();*/
+           var workspaceAPI = component.find("workspace");
+           workspaceAPI.getFocusedTabInfo().then(function(response) {
+               console.log(JSON.stringify(response))
+               var focusedTabId = response.parentTabId;
+               workspaceAPI.refreshTab({
+                   tabId: focusedTabId,
+                   includeAllSubtabs: true
+               });
+           })
+           .catch(function(error) {
+               console.log(error);
+           });
        },
     
     

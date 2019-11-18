@@ -79,7 +79,7 @@
             $A.util.removeClass(sectionDiv, 'slds-is-collapsed');
             $A.util.addClass(sectionDiv, 'slds-is-expanded');
             event.getSource().set("v.iconName",'utility:chevrondown');
-            
+ 
         }
         else{
             $A.util.removeClass(sectionDiv, 'slds-is-expanded');
@@ -185,10 +185,21 @@
                     if($A.util.isUndefinedOrNull(data)){
                         helper.showToast(component, event, helper);
                         helper.getAllAccounts(component);
-                        $A.util.removeClass(spinner, "slds-show");
+                       
+                     //   $A.get('e.force:refreshView').fire();
+                        var workspaceAPI = component.find("workspace");
+                        workspaceAPI.getFocusedTabInfo().then(function(response) {
+                            var focusedTabId = response.parentTabId;
+                            workspaceAPI.refreshTab({
+                                tabId: focusedTabId,
+                                includeAllSubtabs: true
+                            });
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                         $A.util.removeClass(spinner, "slds-show");
                         $A.util.addClass(spinner, "slds-hide");
-                        $A.get('e.force:refreshView').fire();
-                        
                     }
                     else{
                         $A.util.removeClass(spinner, "slds-show");

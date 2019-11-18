@@ -1,13 +1,25 @@
 ({
     hideExampleModal : function(component) {
-        var cmpTarget = component.find('exampleModal');
+       /* var cmpTarget = component.find('exampleModal');
         $A.util.addClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",false);
-       /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
         console.log("clientId from loan",JSON.stringify(component.get("v.client")))
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-        saveIncomeEvent.fire();*/
-     	component.find("Id_spinner").set("v.class" , 'slds-hide');
+        saveIncomeEvent.fire();
+     	component.find("Id_spinner").set("v.class" , 'slds-hide');*/
+        var workspaceAPI = component.find("workspace");
+           workspaceAPI.getFocusedTabInfo().then(function(response) {
+               console.log(JSON.stringify(response))
+               var focusedTabId = response.parentTabId;
+               workspaceAPI.refreshTab({
+                   tabId: focusedTabId,
+                   includeAllSubtabs: true
+               });
+           })
+           .catch(function(error) {
+               console.log(error);
+           });
 	
     },
     

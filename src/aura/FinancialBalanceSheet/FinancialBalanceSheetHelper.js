@@ -10,6 +10,7 @@
             if (state === "SUCCESS") {
                 
                 var data=JSON.parse(JSON.stringify(response.getReturnValue()).replace(/Finsol__/g,""));
+                 
                 component.set("v.cash", data.cashAccountList);
                 component.set("v.investment", data.investmentAccountList);
                 component.set("v.credit", data.creditAccountList);
@@ -55,15 +56,15 @@
                 
                
                 var AccTrue=component.get("v.isAccount");
-                 
-                if(AccTrue){
+          //     && (data.cashAccountList.length>0 || data.creditAccountList.length>0 || data.investmentAccountList.length>0 || data.loanAccountList.length>0)  
+                if(AccTrue && (data.cashAccountList.length>0 || data.creditAccountList.length>0 || data.investmentAccountList.length>0 || data.loanAccountList.length>0)){
                     
                     var FinaId=null;
                     
                     if(data.cashAccountList.length>0){
                         FinaId= data.cashAccountList[0].Id;
                         var sectionDiv = component.find('cashSection');
-                        
+  
                         $A.util.removeClass(sectionDiv, 'slds-is-collapsed');
                         $A.util.addClass(sectionDiv, 'slds-is-expanded');
                         var button=component.find("cashSectionButton");
@@ -99,6 +100,7 @@
                         button.set("v.iconName",'utility:chevrondown');
                         
                     } 
+                         
                     console.log('BeforeFinaIdhelper',FinaId);
                     component.set("v.FinaId",FinaId);
                     this.handleFinaID(component);  

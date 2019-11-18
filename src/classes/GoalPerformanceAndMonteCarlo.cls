@@ -138,11 +138,12 @@ public class GoalPerformanceAndMonteCarlo {
                         
                         if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
                             expected =  ((Decimal)curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2,RoundingMode.HALF_UP)+ f.Start_Value__c; 
-                            
+                            System.debug(expected);
                         }else{
                             
                             expected =  ((Decimal)curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(-i),growth)).setScale(2, RoundingMode.HALF_UP); 
-                            
+                                                        System.debug(expected);
+
                         }  totalEstimated = 0;
                         for(FinServ__FinancialGoal__c relgoal :ffa.Financial_Goals__r )
                         {
@@ -231,11 +232,13 @@ public class GoalPerformanceAndMonteCarlo {
                         
                         if((f.Required_Monthly_Saving__c != 0) && (f.FinServ__TargetValue__c != 0)){
                             expected =  ((Decimal) curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
-                                                                                                                                                                              RoundingMode.HALF_UP)+ f.Start_Value__c; 
-                        }else{
+                                                                                                                                                 RoundingMode.HALF_UP)+ f.Start_Value__c; 
+                                                   System.debug(expected);
+}else{
                             expected =  ((Decimal) curentgoalestimation((double)(f.Required_Monthly_Saving__c), f.Start_Date__c, date.today().addMonths(+j),growth)).setScale(2, 
                                                                                                                                                                               RoundingMode.HALF_UP); 
-                        }                
+                                                    System.debug(expected);
+}                
                         
                         if(date.today().addMonths(+j).month()==month&&date.today().addMonths(+j).year()==year)
                             actualValue=0;
@@ -250,7 +253,7 @@ public class GoalPerformanceAndMonteCarlo {
                 fingoalwrap.finGoal=f;
                 fingoalwrap.goalTrack=goalTrack;
                 fingoalwrap.actualValue=actualValue;
-                fingoalwrap.percentage=((actualValue/f.FinServ__TargetValue__c)*100);
+                fingoalwrap.percentage=((actualValue/f.FinServ__TargetValue__c)*100).setScale(2);
                 finGoalWrapper.add(fingoalwrap);
             }
            if(Test.isRunningTest())

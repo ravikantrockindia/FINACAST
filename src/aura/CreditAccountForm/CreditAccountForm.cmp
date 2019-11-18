@@ -14,6 +14,7 @@
     <aura:attribute name="editCreditRec" type="boolean" default="False"/>
     <aura:attribute name="CreditRecName" type="String"/>
     <!-- <aura:method name="saveDebtAccount" action="{!c.createDebtAccount}" access="PUBLIC"/>-->
+    <lightning:workspaceAPI aura:id="workspace"/>
     
     <div style="height:640px">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">

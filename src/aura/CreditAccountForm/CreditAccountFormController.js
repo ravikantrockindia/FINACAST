@@ -50,8 +50,21 @@
         
         $A.util.addClass(spinner, "slds-hide");
         helper.showNotfication(component,"The record has been saved successfully.","success","Success!");    
-        component.set("v.showInModal",false);
-     
+        
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+            // component.set("v.showInModal",false);
+
     },
     handleError: function(component,event,helper){
         
