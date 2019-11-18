@@ -189,6 +189,10 @@
 }
 .THIS .clients-details h5 b {
     font-weight: 600;
+    display:block;
+}
+.THIS .clients-details h5 b span {
+    display:block;
 }
 .THIS .canvasjs-chart-credit {
     display: none;
@@ -206,21 +210,13 @@
 }
 .THIS .chart-sticker {
     position: absolute;
-    top: 126px;
+    top: 114px;
     text-align: left;
     width: calc(100% - 20px);
 }
 .THIS .chart-sticker ul li {
-    display: inline-block;
-}
-.THIS .chart-sticker ul li:first-child {
-    margin-left:14%;
-}
-.THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:15%;
-}
-.THIS .chart-sticker ul li:last-child {
-    margin-left:11%;
+    display: block;
+    text-align: center;
 }
 .THIS .chart-sticker h2 {
     font-size: 40px;
@@ -255,6 +251,9 @@
     .THIS .flexipageBaseRecordHomeTemplateDesktop {
         width: 100%;
         min-width: 100%;
+    }
+    .THIS .slds-form-element__control{
+        padding-left: 0;
     }
 }
 @media only screen and (max-width: 992px) {
