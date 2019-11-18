@@ -10,7 +10,7 @@
     <aura:attribute name="accountRecordId" type="String"/>
     <aura:attribute name="financialAccount" type="FinServ__FinancialAccount__c"/>
     <aura:attribute name="showInModal" type="boolean"/>
-    <aura:attribute name="selectedAccount" type="String"/>
+    <aura:attribute name="selectedAccount" type="String" default=""/>
     <aura:attribute name="TypeOfAccounts" type="List"/>
     <aura:attribute name="isAPY" type="boolean" default="true"/>
     <aura:attribute name="isCD" type="boolean" default="false"/>
@@ -28,6 +28,7 @@
     <aura:attribute name="editRecInves" type="boolean"/>
     <aura:attribute name="cashRecordName" type="String"/>
     <aura:attribute name="invRecName" type="string"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
     
     <lightning:recordEditForm
                               aura:id="form"
