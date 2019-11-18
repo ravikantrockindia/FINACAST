@@ -102,24 +102,14 @@
 }
 .THIS .chart-sticker {
     position: absolute;
-    top: 76px;
+    top: 85px;
     text-align: left;
-    /*width: calc(100% - 20px);*/
-    width: 100%;
+    width: calc(100% - 50px);
+    /*width: 100%;*/
 }
 .THIS .chart-sticker ul li {
-    display: inline-block;
-    font-size: 11px;
-}
-.THIS .chart-sticker ul li:first-child {
-    margin-left:0px;
-}
-.THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:40px;
-}
-.THIS .chart-sticker ul li:last-child {
-   /* margin-left:36px;*/
-    margin-left:72px;
+    display: block;
+    text-align: center;
 }
 .THIS .chart-sticker h2 {
     font-size: 34px;

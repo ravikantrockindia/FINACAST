@@ -375,25 +375,13 @@
 }
 .THIS .chart-sticker {
     position: absolute;
-    top: 126px;
+    top: 118px;
     text-align: left;
-    /*width: calc(100% - 20px);*/
-    width: 100%;
+    width: calc(100% - 30px);
 }
 .THIS .chart-sticker ul li {
-    display: inline-block;
-    font-size: 11px;
-}
-.THIS .chart-sticker ul li:first-child {
-    margin-left:-14px;
-}
-.THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:70px;
-}
-.THIS .chart-sticker ul li:last-child {
-   /* margin-left:40px;*/
-    margin-left: 83px;
-    margin-top: -15px;
+    display: block;
+    text-align: center;
 }
 .THIS .chart-sticker h2 {
     font-size: 34px;

@@ -53,7 +53,7 @@
                                     <Lightning:button class="btn1 slds-button slds-m-bottom_medium" onclick="{!c.addNewTransaction}" label=" Add New Transaction"/> 
                                 </h3>
                             </div>
-                            <div class="journal-entry-heading1">
+                            <div class="journal-entry-heading journal-entry-heading1">
                                 <div class="slds-grid slds-gutters slds-text-align_center" style="height: 400px">
                                     <aura:if isTrue="{!v.showDatatable}">
                                         <lightning:datatable 
