@@ -97,7 +97,7 @@
         $A.util.addClass(spinner, "slds-hide");
         helper.showNotfication(component,"The record has been saved successfully.","success","Success!");    
         var selectedAccountType=component.get("v.selectedAccountType");
-        alert(selectedAccountType)
+       // alert(selectedAccountType)
         if(selectedAccountType==""){
                     component.set("v.showInModal",false)
 
