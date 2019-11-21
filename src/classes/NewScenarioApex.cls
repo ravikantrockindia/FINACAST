@@ -595,10 +595,14 @@ public class NewScenarioApex {
     
      @auraEnabled
     public static string deleteScenario(id ScenarioId) {
-        
+        String name;
         Scenario__c  ScenarioItem = [Select id,name from Scenario__c  where id =:ScenarioId];
-        delete ScenarioItem;
-        return ScenarioItem.name;
+        if (Schema.sObjectType.Scenario__c.isDeletable()) {
+            name=ScenarioItem.name;
+            delete ScenarioItem;
+            
+        }
+         return name;
     }
     //to monthlyContribution called from apex function getAmtContri 
     public static Decimal getMonthlyContribution(Decimal currentAmount, Decimal tarAmt, Date targetDate, Double  iRate ) {

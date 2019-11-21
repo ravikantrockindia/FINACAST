@@ -110,7 +110,11 @@ public class TransactionHistoryControllerTest {
         transactionIds.add(f.Id);
         Test.startTest();
        TransactionHistoryController.deleteTransactions(transactionIds);
+        List<FinServ__FinancialAccountTransaction__c> li=new List<FinServ__FinancialAccountTransaction__c>();
+        li=[Select Id, FinServ__Amount__c	,FinServ__FinancialAccount__c,FinServ__TransactionDate__c,FinServ__Description__c,FinServ__TransactionType__c from FinServ__FinancialAccountTransaction__c 
+               where  Id in :transactionIds];
         Test.stopTest();
+        System.assert(li.size()==0);
         
     }
     

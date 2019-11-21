@@ -6,6 +6,9 @@ public class ClientDetailApexTest {
         String sObject1=namespace+'Budget__c';
         
         //String cId = 'init';
+        if (Schema.sObjectType.Account.isCreateable() && Schema.sObjectType.Budget__c.isCreateable() && Schema.sObjectType.FinServ__FinancialAccount__c.isCreateable() && Schema.sObjectType.FinServ__FinancialAccountTransaction__c.isCreateable() && Schema.sObjectType.FinServ__FinancialGoal__c.isCreateable() ) {
+    
+
         Account ac = new Account();
         ac.name = 'Test';
         ac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
@@ -19,25 +22,25 @@ public class ClientDetailApexTest {
         insert ac2;
         
         /*  Account hac = new Account();
-hac.name = 'Test2';
-hac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
-insert hac;
-
-
-Account hac2 = new Account();
-hac2.name = 'Test4';
-hac2.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
-insert hac2;
-
-AccountContactRelation acr = new AccountContactRelation();
-acr.accountid = hac.id;
-acr.contactid = [select id from contact where accountid =: ac.id].Id;
-acr.IsActive = true;
-acr.FinServ__PrimaryGroup__c = true;
-acr.FinServ__Rollups__c = 'All';
-acr.FinServ__Primary__c = true;
-insert acr;
-String cId2 = hac.id;*/
+            hac.name = 'Test2';
+            hac.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
+            insert hac;
+            
+            
+            Account hac2 = new Account();
+            hac2.name = 'Test4';
+            hac2.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IndustriesHousehold').getRecordTypeId();
+            insert hac2;
+            
+            AccountContactRelation acr = new AccountContactRelation();
+            acr.accountid = hac.id;
+            acr.contactid = [select id from contact where accountid =: ac.id].Id;
+            acr.IsActive = true;
+            acr.FinServ__PrimaryGroup__c = true;
+            acr.FinServ__Rollups__c = 'All';
+            acr.FinServ__Primary__c = true;
+            insert acr;
+            String cId2 = hac.id;*/
         
         List<Budget__c> budget=new List<Budget__c>();
         Budget__c income = new Budget__c();
@@ -141,86 +144,87 @@ String cId2 = hac.id;*/
         //Household Account
         
         /* Budget__c income2 = new Budget__c();
-income2.Name = 'test income';
-income2.Start_Date__c = system.today();
-income2.End_Date__c = system.today();
-income2.Amount__c = 4234;
-income2.Primary_Owner__c = ac.Id;
-income2.HouseHold__c = hac.id;
-income2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
-insert income2;
-
-Budget__c expense2 = new Budget__c();
-expense2.Name = 'test expense';
-expense2.Start_Date__c = system.today();
-expense2.End_Date__c = system.today();
-expense2.Amount__c = 1234;
-expense2.Primary_Owner__c = ac.Id;
-expense2.HouseHold__c = hac.id;
-expense2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
-insert expense2;
-
-FinServ__FinancialAccount__c financial2 = new FinServ__FinancialAccount__c();
-financial2.Name = 'Test Financial Account 1';
-financial2.FinServ__PaymentAmount__c = 6000;
-financial2.FinServ__PrimaryOwner__c= ac.Id;
-financial2.FinServ__LoanAmount__c = 6000;
-financial2.FinServ__APY__c = 4;
-financial2.FinServ__Household__c = hac.id;
-financial2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
-financial2.Account_Type__c = 'Loan';
-insert financial2;
-
-FinServ__FinancialAccount__c savings2 = new FinServ__FinancialAccount__c();
-savings2.FinServ__PrimaryOwner__c = ac.Id;
-savings2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'SavingsAccount');
-savings2.Name = 'Test Savings 1';
-savings2.FinServ__Balance__c = 98765;
-savings2.FinServ__Household__c = hac.id;
-savings2.FinServ__APY__c = 0;   
-savings2.FinServ__LoanEndDate__c = Date.today();
-savings2.FinServ__FinancialAccountType__c = 'Savings';
-insert savings2;
-
-FinServ__FinancialAccount__c investment = new FinServ__FinancialAccount__c();
-investment.FinServ__PrimaryOwner__c = ac.Id;
-investment.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'InvestmentAccount');
-investment.Name = 'Test Investment 1';
-investment.FinServ__Balance__c = 98765;
-investment.FinServ__APY__c = 0;   
-investment.Account_Type__c = 'IRA';
-insert investment;
-
-
-
-FinServ__FinancialAccount__c card2 = new FinServ__FinancialAccount__c();
-card2.Name = 'Test Credit Card 1';
-card2.FinServ__Balance__c = 98765;
-card2.FinServ__PaymentAmount__c = 5000;
-card2.FinServ__PrimaryOwner__c= ac.Id;
-card2.FinServ__LoanAmount__c = 5000;
-card2.FinServ__Household__c = hac.id;
-card2.FinServ__APY__c = 4;
-card2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'CreditCard');
-card2.FinServ__FinancialAccountType__c  = 'Credit Card';
-insert card2;
-
-list<FinServ__FinancialGoal__c> goals4 = new  list<FinServ__FinancialGoal__c>();
-FinServ__FinancialGoal__c goals2 = new  FinServ__FinancialGoal__c();
-goals2.FinServ__PrimaryOwner__c = ac.Id;
-goals2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
-goals2.Name = 'Test Goal 1';
-goals2.FinServ__TargetValue__c = 10000;
-goals2.FinServ__TargetDate__c = Date.today()+900;
-goals2.Start_Value__c = 2000;
-goals2.FinServ__Household__c = hac.id;
-goals2.Goal_Priority__c = '1';
-goals2.Start_Date__c = system.today();
-goals2.Max_yearly_tax_deduction_allowed__c=5;
-goals2.Required_Monthly_Saving__c = 2000;
-goals2.Associated_Account__c = savings1.Id;
-goals4.add(goals2);
-insert goals4;*/
+            income2.Name = 'test income';
+            income2.Start_Date__c = system.today();
+            income2.End_Date__c = system.today();
+            income2.Amount__c = 4234;
+            income2.Primary_Owner__c = ac.Id;
+            income2.HouseHold__c = hac.id;
+            income2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
+            insert income2;
+            
+            Budget__c expense2 = new Budget__c();
+            expense2.Name = 'test expense';
+            expense2.Start_Date__c = system.today();
+            expense2.End_Date__c = system.today();
+            expense2.Amount__c = 1234;
+            expense2.Primary_Owner__c = ac.Id;
+            expense2.HouseHold__c = hac.id;
+            expense2.RecordTypeId = FinacastUtility.getRecordTypeId('Budget__c','Income_Record_Type');
+            insert expense2;
+            
+            FinServ__FinancialAccount__c financial2 = new FinServ__FinancialAccount__c();
+            financial2.Name = 'Test Financial Account 1';
+            financial2.FinServ__PaymentAmount__c = 6000;
+            financial2.FinServ__PrimaryOwner__c= ac.Id;
+            financial2.FinServ__LoanAmount__c = 6000;
+            financial2.FinServ__APY__c = 4;
+            financial2.FinServ__Household__c = hac.id;
+            financial2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'LoanAccount');
+            financial2.Account_Type__c = 'Loan';
+            insert financial2;
+            
+            FinServ__FinancialAccount__c savings2 = new FinServ__FinancialAccount__c();
+            savings2.FinServ__PrimaryOwner__c = ac.Id;
+            savings2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'SavingsAccount');
+            savings2.Name = 'Test Savings 1';
+            savings2.FinServ__Balance__c = 98765;
+            savings2.FinServ__Household__c = hac.id;
+            savings2.FinServ__APY__c = 0;   
+            savings2.FinServ__LoanEndDate__c = Date.today();
+            savings2.FinServ__FinancialAccountType__c = 'Savings';
+            insert savings2;
+            
+            FinServ__FinancialAccount__c investment = new FinServ__FinancialAccount__c();
+            investment.FinServ__PrimaryOwner__c = ac.Id;
+            investment.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'InvestmentAccount');
+            investment.Name = 'Test Investment 1';
+            investment.FinServ__Balance__c = 98765;
+            investment.FinServ__APY__c = 0;   
+            investment.Account_Type__c = 'IRA';
+            insert investment;
+            
+            
+            
+            FinServ__FinancialAccount__c card2 = new FinServ__FinancialAccount__c();
+            card2.Name = 'Test Credit Card 1';
+            card2.FinServ__Balance__c = 98765;
+            card2.FinServ__PaymentAmount__c = 5000;
+            card2.FinServ__PrimaryOwner__c= ac.Id;
+            card2.FinServ__LoanAmount__c = 5000;
+            card2.FinServ__Household__c = hac.id;
+            card2.FinServ__APY__c = 4;
+            card2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialAccount__c', 'CreditCard');
+            card2.FinServ__FinancialAccountType__c  = 'Credit Card';
+            insert card2;
+            
+            list<FinServ__FinancialGoal__c> goals4 = new  list<FinServ__FinancialGoal__c>();
+            FinServ__FinancialGoal__c goals2 = new  FinServ__FinancialGoal__c();
+            goals2.FinServ__PrimaryOwner__c = ac.Id;
+            goals2.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
+            goals2.Name = 'Test Goal 1';
+            goals2.FinServ__TargetValue__c = 10000;
+            goals2.FinServ__TargetDate__c = Date.today()+900;
+            goals2.Start_Value__c = 2000;
+            goals2.FinServ__Household__c = hac.id;
+            goals2.Goal_Priority__c = '1';
+            goals2.Start_Date__c = system.today();
+            goals2.Max_yearly_tax_deduction_allowed__c=5;
+            goals2.Required_Monthly_Saving__c = 2000;
+            goals2.Associated_Account__c = savings1.Id;
+            goals4.add(goals2);
+            insert goals4;*/
+        }
     }
     
     @istest
@@ -243,9 +247,9 @@ insert goals4;*/
         // ClientDetailApex.deleteFinAccout(finId);
         //ClientDetailApex.deleteFinAccout(finIds);
         //ClientDetailApex.deleteGoals(goalid);
-        //   ClientDetailApex.getNamespace();
-        //  ClientDetailApex.isportalEnabled =true;
-        //        ClientDetailApex.NumberOfMonths(system.today(), system.today());
+        //ClientDetailApex.getNamespace();
+        // ClientDetailApex.isportalEnabled =true;
+        //ClientDetailApex.NumberOfMonths(system.today(), system.today());
         //  ClientDetailApex.NumberOfMonths(null, system.today());
         
         //  ClientDetailApex.curentgoalestimation(250, system.today(), system.today()); 
@@ -278,21 +282,25 @@ insert goals4;*/
     @istest
     public static void getAccountsTest() {
         Account acc = [select id from Account where name = 'Test'];
+        ClientDetailApex.FinAccountWrapperClass l = new ClientDetailApex.FinAccountWrapperClass();
         test.startTest();
+  
+     l= ClientDetailApex.getAccounts(acc.Id);
+       test.stopTest();
+        System.assert(l!=null);
         
-        
-        ClientDetailApex.getAccounts(acc.Id);
-        test.stopTest();
-        
+                
     }
     @istest
     public static void getRecordTypeIdsTest() {
+        List<RecordType> l=new List<RecordType>();
         test.startTest();
         
         
-        ClientDetailApex.getRecordTypeIds();
+        l=  ClientDetailApex.getRecordTypeIds();
         
         test.stopTest();
+        system.assert(l.size()!=null);
         
     }
     
@@ -312,16 +320,21 @@ insert goals4;*/
     @istest
     public static void getInvestmentDataTest() {
         Account acc = [select id from Account where name = 'Test'];
+        Map<String, Decimal> cashIn = new Map<String, Decimal>();
         Test.startTest();
-        ClientDetailApex.getInvestmentdata(acc.Id);
+        cashIn= ClientDetailApex.getInvestmentdata(acc.Id);
         Test.stopTest();
+        System.assertEquals(true, !cashIn.isEmpty());
+
     }
     @istest
     public static void deleteFinAccoutTest() {
         String finId=[select id from FinServ__FinancialAccount__c where name = 'Test Savings 1' limit 1].Id;
+        string res;
         Test.startTest();
-        ClientDetailApex.deleteFinAccout(finId);
+        res=ClientDetailApex.deleteFinAccout(finId);
         Test.stopTest();
+        System.assert(res!=null);
     }
     
     @istest
@@ -337,16 +350,35 @@ insert goals4;*/
     @istest
     public static void getRecordTypeIdbyName() {
         String goalId=[select id from FinServ__FinancialGoal__c where name = 'Test Goal 1' limit 1].Id;
+        string res;
         Test.startTest();
-        ClientDetailApex.getRecordTypeIdbyName('FinServ__FinancialGoal__c',goalId);
+        res= ClientDetailApex.getRecordTypeIdbyName('FinServ__FinancialGoal__c',goalId);
         Test.stopTest();
+        System.assert(res!=null);
     }
     
     @istest
     public static void deleteGoalsTest() {
         String goalId=[select id from FinServ__FinancialGoal__c where name = 'Test Goal 1' limit 1].Id;
+         
         Test.startTest();
         ClientDetailApex.deleteGoals(goalId);
+        List<FinServ__FinancialGoal__c> goalItem = new List<FinServ__FinancialGoal__c>();
+        goalItem=[Select id from FinServ__FinancialGoal__c where id =:goalId];
         Test.stopTest();
+        System.assert(goalItem.size()==0); 
+    }
+    @istest
+    public static void ClientRecord() {
+        Account acc = [select id from Account where name = 'Test'];
+        Account a;
+        Test.startTest();
+        ClientDetailApex.ClientCashRecord(acc.Id);
+        ClientDetailApex.ClientCreditRecord(acc.Id);
+        ClientDetailApex.ClientInvestmentRecord(acc.Id);
+  //      ClientDetailApex.ClientCreditNameRecord(card.Id);
+     //   ClientDetailApex.ClientCashNameRecord(savings1.Id);
+        Test.stopTest();
+        
     }
 }
