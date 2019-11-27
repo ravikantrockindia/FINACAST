@@ -123,6 +123,14 @@
         width: 90%;
         max-width: 90%;
     }
+    .THIS .slds-modal__content {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__footer {
+        float: left;
+        width: 100%;
+    }
 }
 @media (max-width: 767px) {
 	.THIS .slds-box1 .slds-size_1-of-2 {
@@ -134,6 +142,8 @@
     }
     .THIS .slds-modal__content {
         height: 300px;
+        float: left;
+        width: 100%;
     }
 }
 @media (max-width: 576px) {
