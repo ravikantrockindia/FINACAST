@@ -1,147 +1,152 @@
-<aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" controller="GoalTypeSelectionController"><br/><br/><br/><br/> 
-	<aura:attribute name = "namespace" type = "String"/>
-    <lightning:workspaceAPI aura:id="workspace"/>
- 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
-    <aura:attribute name="client" type="String"/>    
-    <aura:attribute name="showModalwedding" type="Boolean" default="false" />
-    <aura:attribute name="showModaleducation" type="Boolean" default="false" />
-    <aura:attribute name="car" type="String" access="global" />
-    <aura:attribute name="showModalvacation" type="Boolean" default="false" />
-    <aura:attribute name="showModalothergoals" type="Boolean" default="false" />
-    <aura:attribute name="showModalhomeimprovement" type="Boolean" default="false" />
-    <aura:attribute name="showModalhome" type="Boolean" default="false" />
-    <aura:attribute name="cid" type="String"/>
-    <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
-    <aura:attribute name = "heading" type = "String"/>
-    <aura:attribute name = "subheading" type = "String"/>
-    <aura:attribute name="icon" type="string"/>
-    <aura:attribute name = "isRetirement" type = "Boolean" default = "False"/>
-    <aura:attribute name = "isNonRetirement" type = "Boolean" default = "False"/>
-    <aura:attribute name="recordTypeId" type="String"/>
-    <aura:attribute name="recordTypeIdName" type="String"/>
- <!--  <aura:handler name="openModal" event="c:OpenAddModal" action="{!c.doInit}"/>-->
-    <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
-    
-    <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
-        <div class="slds-modal__container">
-            
-            <header class="slds-modal__header">
-                <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.closePopUp}">
-                    <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
-                    <span class="slds-assistive-text">Close</span>
-                </button>
-                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create a new goal</h2></header>
-            
-            <div class = "images">
-                <div class="slds-modal__content slds-p-around_medium slds-col_goal-icon" id="modal-content-id-1">
-                    <div class="slds-parent">
-                        <div class="slds-col slds-col1 ">
-                            <span>
-                                <lightning:button class="slds-button" name="RetirementRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.RetirementIcon}"  height="150" width="150" title="Retirement"/>
-                                    <div class = "slds-col1-cover" >
-                                        <h5>Retirement</h5>
-                                    </div>        
-                                </lightning:button>
-                            </span>
-                            
-                        </div>
-                        <div class="slds-col slds-col1">       
-                            <span>
-                                <lightning:button class="slds-button" name="CarRecordType" onclick="{!c.onGoalClick}"  >
-                                    <img src="{!$Resource.CarIcon}" height="150" width="150" title="Car"/>
-                                    <div  class = "slds-col1-cover" >
-                                        <h5>Car</h5>
-                                    </div>  
-                                </lightning:button>
-                            </span>
-                            
-                            
-                        </div>
-                        <div class="slds-col slds-col1">
-                            
-                            
-                            <lightning:button class="slds-button" name="WeddingRecordType" onclick="{!c.onGoalClick}">
-                                <img src="{!$Resource.WeddingIcon}" height="150" width="150" title="Wedding"/>
-                                <div class = "slds-col1-cover" >
-                                    <h5>Wedding</h5>
-                                </div>
-                            </lightning:button>
-                            
-                        </div>
-                        <div class="slds-col slds-col1">
-                            <span>
-                                
-                                <lightning:button class="slds-button" name="VacationRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.VacationIcon}" height="150" width="150" title="Vacation"/>
-                                    <div class = "slds-col1-cover" >
-                                        <h5>Vacation</h5>
-                                    </div>
-                                </lightning:button>
-                            </span>
-                            
-                        </div>
-                        
-                        <div class="slds-col slds-col1">       
-                            <span>
-                                <lightning:button class="slds-button" name="EducationRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.EducationIcon}" height="150" width="150" title="Education"/>
-                                    <div class = "slds-col1-cover" >
-                                        <h5>Education</h5>
-                                    </div>
-                                </lightning:button></span>
-                        </div>
-                        
-                        <div class="slds-col slds-col1">
-                            <span>
-                                <lightning:button class="slds-button" name="HomeRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.HomeIcon}" height="150" width="150" title="Home"/>
-                                    <div class = "slds-col1-cover" >
-                                        <h5>Home</h5>
-                                    </div>
-                                </lightning:button>
-                            </span>
-                        </div>
-                        <div class="slds-col slds-col1">         
-                            <span>
-                                <lightning:button class="slds-button" name="HomeImprovementRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.HomeImprovementIcon}" height="150" width="150" title="Home Improvement"/>
-                                    <div class = "slds-col1-cover" >
-                                        <h5>Home Improvement</h5>
-                                    </div>
-                                </lightning:button>
-                            </span>
-                        </div>                        
-                        <div class="slds-col slds-col1">
-                            <span>
-                                <lightning:button class="slds-button" name="OtherGoalsRecordType" onclick="{!c.onGoalClick}">
-                                    <img src="{!$Resource.OtherGoalsIcon}" height="150" width="150" title="Other Goals"/>
-                                    <div class = "slds-col1-cover" >
-                                        <h5>Other Goals</h5>
-                                    </div>
-                                </lightning:button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <footer class="slds-modal__footer">
-                <div class="button" align ="right">
-                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closePopUp}" class="btn1 btn2"/>
-                </div>
-            </footer>
-        </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
-    
-    <aura:if isTrue="{!v.isRetirement}">
-                 <c:GoalformRetirement   namespace="{!v.namespace}" client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}"  />               
-            </aura:if>
-    
-    <aura:if isTrue="{!v.isNonRetirement}">
-                 <c:Goalform  namespace="{!v.namespace}"  client = "{!v.client}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" subheading = "{!v.subheading}" icon="{!v.icon}" />               
-            </aura:if>
-    
-    
-    
-    
-</aura:component>
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
+.THIS h4 { font-family: 'Work Sans', sans-serif;}
+.THIS h5 { font-family: 'Work Sans', sans-serif;}
+.THIS h6 { font-family: 'Work Sans', sans-serif;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
+.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS .btn1 {
+    border-radius: 25px;
+    font-size: 12px;
+    background-color: #4E75A3;
+    color: #fff;
+    padding: 1px 5px;
+    min-width: 120px;
+}
+.THIS .btn1:hover {
+    color: #fff;
+}
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+   background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3; 
+}
+.THIS container.slds-template__container{
+    background-color: white;
+}
+.THIS .slds-col_goal-icon .slds-button {
+    display: block;
+}
+.THIS .slds-modal__container {
+    width: 50%;
+    max-width: 70%;
+    margin: o auto;
+}
+.THIS .slds-col1 {
+    width: 24%;
+    float: left;
+    margin: 15px 0.5%;
+    position: relative;
+    z-index: 0;
+    text-align: center;
+}
+.THIS .slds-col1 span {
+    display: block;
+    width: 100%;
+}
+.THIS.hideDiv {
+    display: none;
+}
+.THIS .slds-col1 .slds-button {
+    padding: 10px 0px 10px;
+    width: 100%;
+}
+.THIS .slds-col1 img {
+    width: 50%;
+    height: 40px;
+    transition: all 500ms;
+	-moz-transition: all 500ms;
+	-webkit-transition: all 500ms;
+}
+.THIS .slds-col1:hover img {
+    transform: scale(1.3);
+    transition: all 500ms;
+	-moz-transition: all 500ms;
+	-webkit-transition: all 500ms;
+}
+.THIS .slds-col1-cover h5 {
+    color: #000;
+    font-weight: 500;
+    line-height: 0;
+    margin: 30px 0 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+.THIS.hideouterdiv {
+  display:none;
+}
+.THIS .slds-modal__content:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.THIS #modal-heading-01 {
+    font-family: 'Work Sans', sans-serif;
+    color: #000;
+    text-align: left;
+    padding-left: 1px;
+}
+.THIS .slds-media {
+    height: 20px;
+}
+@media (max-width: 1200px) {
+    .THIS .slds-col1-cover {
+        top: 78%;
+    }
+}
+@media (max-width: 992px) {
+ 	.THIS .slds-modal__container {
+        display: block;
+    } 
+    .THIS .slds-modal__container {
+        width: 80%;
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .THIS .slds-col1-cover {
+        top: 78%;
+    }
+    .THIS .slds-modal__content {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__footer {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__header  {
+        padding: 10px 25px;
+    } 
+}
+@media (max-width: 767px) {
+ 	.THIS .slds-modal__container {
+        display: block;
+        width: 90%;
+        max-width: 90%;
+    }  
+    .THIS .slds-col1-cover {
+        top: 70%;
+    }
+    .THIS .slds-modal__content {
+        float: left;
+        width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-modal__container {
+        display: block;
+    } 
+    .THIS .slds-col1 {
+    	width: 48.5%;
+    }
+    .THIS .slds-col1-cover {
+        top: 75%;
+    }
+    .THIS .slds-text-heading_medium {
+        font-size: 1rem;
+    }
+}
