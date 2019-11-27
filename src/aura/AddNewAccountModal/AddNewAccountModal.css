@@ -41,3 +41,9 @@
 .THIS .radio-inline .slds-radio:last-child {
     text-align: right;
 }
+@media(max-width: 992px) {
+    .THIS .slds-modal__container {
+        width: 90%;
+        margin: 0 auto;
+    }
+}

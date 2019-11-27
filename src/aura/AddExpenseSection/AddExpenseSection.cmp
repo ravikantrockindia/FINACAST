@@ -26,22 +26,22 @@
                         <thead>
                             <tr class="slds-line-height_reset">
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Expense Name"><span class = "highlight"  style="color: red">* </span>Expense Name</div>
+                                    <div class="slds-truncate" title="Expense Name">Expense Name <span class = "highlight"  style="color: red"> * </span></div>
                                 </th>
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Budget($)"><span class = "highlight"  style="color: red">* </span>Budget($)</div>
+                                    <div class="slds-truncate" title="Budget($)">Budget($) <span class = "highlight"  style="color: red"> * </span></div>
                                 </th>
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Priority"><span class = "highlight"  style="color: red">* </span>Priority</div>
+                                    <div class="slds-truncate" title="Priority">Priority <span class = "highlight"  style="color: red"> * </span></div>
                                 </th>
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Yearly inflation (%)"><span class = "highlight"  style="color: red">* </span>Yearly inflation (%)</div>
+                                    <div class="slds-truncate" title="Yearly inflation (%)">Yearly inflation (%) <span class = "highlight"  style="color: red"> * </span></div>
                                 </th>
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Start Date">Start Date</div>
                                 </th>
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="End Date"><span class = "highlight"  style="color: red">* </span>End Date</div>
+                                    <div class="slds-truncate" title="End Date">End Date <span class = "highlight"  style="color: red"> * </span></div>
                                 </th>
                                 
                                 <th class="" scope="col">
@@ -113,7 +113,7 @@
                                             <div class="slds-grid slds-gutters">
                                                 <div  class="slds-col slds-size_1-of-12"></div>
                                                 <div  class="slds-col slds-size_4-of-12">
-                                                    <span class = "highlight" style="color: red">*</span> What % of contribution bring tax benefits? <lightning:input type="number" value="{!i.expense.percentageContribution}"  disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" aura:id="taxbenefit" name="{!'taxbenefit'+index}" required="true"  step="0.01" formatter="percent-fixed" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
+                                                    What % of contribution bring tax benefits? <span class = "highlight" style="color: red"> *</span><lightning:input type="number" value="{!i.expense.percentageContribution}"  disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" aura:id="taxbenefit" name="{!'taxbenefit'+index}" required="true"  step="0.01" formatter="percent-fixed" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>
                                                 </div>
                                                 <div  class="slds-col slds-size_4-of-12">
                                                     Max yearly tax deduction allowed ($ )?  <lightning:input type="number" step="0.01"  formatter="currency" value="{!i.expense.maxDeduction}" disabled="{!i.disabled}" aura:id = "deducationtax" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" />

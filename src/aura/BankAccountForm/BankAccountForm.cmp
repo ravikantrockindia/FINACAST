@@ -45,7 +45,7 @@
             <div class="slds-col slds-size_1-of-2">
                 {!$Label.c.Name}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Name" aura:id="name" variant="label-hidden"/>
             </div>
-            <div class="slds-col slds-size_1-of-2">
+            <div class="slds-col slds-size_1-of-2 p-owner-cross">
                 {!$Label.c.Primary_Owner} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__PrimaryOwner__c" value="{!v.accountRecordId}" variant="label-hidden" disabled="true"/>
             </div>  
             <div class="slds-col slds-size_1-of-2">
@@ -78,12 +78,12 @@
                     
                 </div>
             </aura:if>
-            <aura:if isTrue="{!v.is529Account}">
+           <!-- <aura:if isTrue="{!v.is529Account}">
                 <div class="slds-col slds-size_1-of-2">
                     {!$Label.c.Risk_Profile}<lightning:inputField class="label-hidden" fieldName="FinServ__ModelPortfolio__c" variant="label-hidden"/>
                     
                 </div>
-            </aura:if>
+            </aura:if>-->
             <aura:if isTrue="{!v.isCD}"> 
                 <div class="slds-col slds-size_1-of-2">
                     {!$Label.c.Maturity_Date} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="{!v.namespace+'Maturity_Date__c'}" aura:id="maturity_date" variant="label-hidden"/>

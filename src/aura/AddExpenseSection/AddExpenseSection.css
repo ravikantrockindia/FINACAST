@@ -59,5 +59,6 @@
     }
     .THIS .slds-table tbody td {
         padding: 0.25rem 5px;
+        font-size: 12px;
     }
 }

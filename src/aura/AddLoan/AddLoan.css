@@ -67,6 +67,17 @@
 .THIS .slds-media {
     height: 20px;
 }
+@media(max-width: 992px) {
+ 	.THIS .res_ba-modal .slds-size_1-of-12 {
+        width: 100px;
+        float: left;
+    } 
+    .THIS .slds-modal__container {
+        width: 92%;
+        max-width: 92%;
+      
+    }
+}
 @media (max-width: 767px) {
 	.THIS .slds-box1 .slds-size_1-of-2 {
        
@@ -90,10 +101,4 @@
 }
 .THIS .highlight {
    color: red;
-}
-@media(max-width: 992px) {
- 	.THIS .res_ba-modal .slds-size_1-of-12 {
-        width: 100px;
-        float: left;
-    }   
 }
