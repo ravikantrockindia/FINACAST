@@ -235,11 +235,14 @@
 }*/
 @media(max-width: 992px) {
     
-    .THIS .Res_dash .slds-grid {
+    .THIS .Res_dash {
         display: block;
     }
     .THIS .Res_dash .slds-size_3-of-12:first-child {
         width: 100%;
+    }
+    .THIS .Res_dash .client_managed .slds-grid {
+        display: block !important;
     }
     .THIS .Res_dash .slds-size_6-of-12 {
         float: left;
@@ -254,6 +257,9 @@
     }
     .THIS .slds-form-element__control{
         padding-left: 0;
+    }
+    .THIS .chart-sticker {
+        top: 105px;
     }
 }
 @media only screen and (max-width: 992px) {

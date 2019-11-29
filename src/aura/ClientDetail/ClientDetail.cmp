@@ -8,8 +8,8 @@
 
   <!--  <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />-->
     <div class="slds-theme_default">
-        <div class="slds-card__header Res_dash">
-            <div class="slds-grid slds-gutters">
+        <div class="slds-card__header ">
+            <div class="slds-grid slds-gutters Res_dash">
                 <div class="slds-col slds-size_3-of-12 ">
                     <c:FinancialBalanceSheet recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
                     <div class="client_managed client-profile">
