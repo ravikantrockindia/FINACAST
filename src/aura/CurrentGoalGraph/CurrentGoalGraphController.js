@@ -167,6 +167,7 @@
                         goalArrPositive.push(item.name+","+dateMY[0]+","+dateMY[1]);
                     } else if(item.onTrack == 0) {
                         flagAllMeet = false;
+                       // alert(flagAllMeet);
                         goalArrNegative.push(item.name);
                     }
                 }
@@ -175,16 +176,22 @@
                         goalArrPositive.push(item.name+","+dateMY[0]+","+dateMY[1]);
                     } else if(item.onTrack == 0){
                         flagAllMeet = false;
+                        // alert(flagAllMeet);
                         goalArrNegative.push(item.name);
                     }
                 }
             }   
         }
-        
+		// alert(flagAllMeet);        
         if(flagAllMeet) {
             // console.log("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset));
             controllerGoalForecastStatusArray.push("You will have all goals on target at the end of " + (objectDisplay.goalAnalysis.yearlyData.length + offset) +".");
-        } else {
+        component.set("v.goalForecastStatus", controllerGoalForecastStatusArray[0]);
+   	        var test = component.get("v.goalForecastStatus");
+            //console.log('Message-------'+test);
+           // alert('controllerGoalForecastStatusArray-------'+controllerGoalForecastStatusArray);
+        } 
+        else {
             var pos = "";
             var neg = "";
             for (var kh = 0; kh<goalArrPositive.length; kh++) {
@@ -210,10 +217,9 @@
                 controllerGoalForecastStatusArray.push(neg + " will not be met on time.");
             }
             component.set("v.goalForecastStatus", controllerGoalForecastStatusArray[0]);
-            debugger;
-            var test = component.get("v.goalForecastStatus");
-            console.log('Message-------'+test);
-            console.log('controllerGoalForecastStatusArray-------'+controllerGoalForecastStatusArray);
+   	        var test = component.get("v.goalForecastStatus");
+           //console.log('Message-------'+test);
+          //  alert('controllerGoalForecastStatusArray-------'+controllerGoalForecastStatusArray);
         }
         
         
@@ -226,7 +232,6 @@
         
         var chart = new CanvasJS.Chart("chartContainer3.3", {
                                      height: 250, //in pixels
-                width: 571,
             animationEnabled: true,
             title:{
                 //text: "Debt Forecast",

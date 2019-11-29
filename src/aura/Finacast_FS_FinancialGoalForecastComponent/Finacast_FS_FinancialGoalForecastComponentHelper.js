@@ -201,6 +201,7 @@
             if(flagAllMeet) {
                // console.log("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset));
                 controllerGoalForecastStatusArray.push("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset) +".");
+             component.set("v.goalForecastStatus", controllerGoalForecastStatusArray);
             } else {
                 var pos = "";
                 var neg = "";
@@ -239,7 +240,6 @@
         
         var chart = new CanvasJS.Chart("chartContainer3.358", {
              height:200,
-                    width:614,
             animationEnabled: true,
             title:{
                 //text: "Debt Forecast",

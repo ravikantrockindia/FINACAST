@@ -14,7 +14,7 @@
      <aura:attribute name = "goalForecastStatus" type="String"/>
     <aura:handler name="change" value="{!v.futureselectedValue}" action="{!c.generateChart}"/>
     <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.generateChart}"/> 
-        <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+        <div class="slds-col slds-size_6-of-12 res_affordability-col-6 slds-m-bottom_large">
         <div class="client_managed">
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_6-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
@@ -24,22 +24,13 @@
             </div>
             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-                    <div class="networth-fea">
-                        <p>Money Owed</p>
-                        <h4>$0</h4>
-                    </div>
+                   
                 </div>
                 <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-                    <div class="networth-fea">
-                        <p>Money Paid</p>
-                        <h4>$0</h4>
-                    </div>
+                   
                 </div>
                 <div class="slds-col slds-size_3-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-                    <div class="networth-fea">
-                        <p>Money to be Paid</p>
-                        <h4>${!v.moneytobepaid}</h4>
-                    </div>
+                    
                 </div>
             </div>
             <div class="slds-grid slds-gutter ">

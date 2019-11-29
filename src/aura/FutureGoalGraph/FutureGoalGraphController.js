@@ -182,6 +182,8 @@
             if(flagAllMeet) {
                // console.log("You will have all goals on target at the end of " + (data.goalAnalysis.yearlyData.length + offset));
                 controllerGoalForecastStatusArray.push("You will have all goals on target at the end of " + (objectDisplay.goalAnalysis.yearlyData.length + offset) +".");
+                 component.set("v.goalForecastStatus", controllerGoalForecastStatusArray[0]);
+                var test = component.get("v.goalForecastStatus");
             } else {
                 var pos = "";
                 var neg = "";
@@ -208,7 +210,6 @@
                     controllerGoalForecastStatusArray.push(neg + " will not be met on time.");
                 }
                 component.set("v.goalForecastStatus", controllerGoalForecastStatusArray[0]);
-             //  debugger;
                 var test = component.get("v.goalForecastStatus");
               //  console.log('Message-------'+test);
               //  console.log('controllerGoalForecastStatusArray-------'+controllerGoalForecastStatusArray);
@@ -222,7 +223,6 @@
                
                 var chart = new CanvasJS.Chart("chartContainer3.359", {
                                              height: 250, //in pixels
-                width: 571,
             animationEnabled: true,
             title:{
                 //text: "Debt Forecast",
