@@ -12,18 +12,21 @@
     <aura:attribute name="sumCash2" type="Integer"/>
     <aura:attribute name="sumLoan2" type="Integer"/>
      <ltng:require  scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.plotGraph}" />
-     <aura:registerEvent name="Amtval" type="c:amountpass"/>
-
+    <!--<ltng:require  scripts="{!join(',',$Resource.CanvasJS, $Resource.canvasjsmin)}" afterScriptsLoaded="{!c.plotGraph}" />-->
     
-    <div class="client_managed client_managed1 slds-clearfix total_invstment-value-f">
+     <aura:registerEvent name="Amtval" type="c:amountpass"/>
+	 
+    
+    <div class="client_managed client_managed1 slds-clearfix total_invstment-value-f ">
                     <h3 class="slds-float_left slds-text-align_left">Client Investment Distribution</h3>
-        <div id="CanvasContainer" style="height: 203px; width: 100%; margin-top: 15px;"></div>
+        			
+        				<div id="CanvasContainer" style="touch-action: none; height: 203px; width: 100%; margin-top: 15px;"></div>
+                    
                    <div class="total_invstment-value-c">
                     	<h2>${!v.Amount}</h2>
                       
                         
                       <p><b>Total Investment Value</b></p>
-                    </div> 
-                </div>   
-    
+                    </div>               
+                  </div>   
 </aura:component>

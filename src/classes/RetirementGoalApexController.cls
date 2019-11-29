@@ -5,24 +5,6 @@
 
 public class RetirementGoalApexController {
     
-<<<<<<< HEAD
-=======
-    //get date of birth of primary owner from contact object
-    //retirementGoalScreen2 controller function : getDateofBirth
-    /*
-    @auraEnabled
-    public static Date getDate(String clientId)
-    {
-        Account cont = [select Date_Of_Birth__c, Id from Account where Id = :clientId];
-        return cont.Date_Of_Birth__c;
-    }
-    */
-    /*wrapper class 
-* variable "Decimal retirementAmount" : return the target amount for retirement
-* variable " Integer yearsTillRetirement" : return years left until retirementreti
-* **/
-    
->>>>>>> bbbeac40002490fc88908f5587b9eaae7c26b16f
      @auraEnabled   
     public static List<FinServ__FinancialAccount__c> dample(String clientId){     
         List<FinServ__FinancialAccount__c> a = [select Id, Name from FinServ__FinancialAccount__c where FinServ__PrimaryOwner__c = :clientId AND (Account_Type__c='401K' OR Account_Type__c='529 Account' OR Account_Type__c='Cash' OR Account_Type__c='CD'
@@ -46,7 +28,9 @@ public class RetirementGoalApexController {
     {
         Date birthDate = Date.valueOf(birth);
         Integer currentAge = (date.today()).year()- birthDate.year();
+        system.debug('currentAge'+currentAge);
         Integer yearsTillRetire = Integer.valueOf(retireAge) - currentAge;
+         system.debug('yearsTillRetire'+yearsTillRetire);
         getDataWrapper wrapper = new getDataWrapper();
         wrapper.yearsTillRetirement = yearsTillRetire;
         try{
@@ -66,6 +50,12 @@ public class RetirementGoalApexController {
         }
         else
         {
+            /*if(parseFloat(r_apr).toFixed(2) == parseFloat(inflation).toFixed(2)){
+				inflation=parseFloat(inflation)- .01;
+				//alert("Matched");
+			}
+			savingRequiredAtRetirement = (income/Math.pow((1+(r_apr/100)), (years-1)))*(Math.pow((1+(inflation/100)), (years-1))+((1+(r_apr/100))*((Math.pow((1+(r_apr/100)), (years-1)) - Math.pow((1+(inflation/100)), (years-1)))/((r_apr-inflation)/100))));
+*/
             If(interestRate == inflationRate)
             {
                 inflationRate = inflationRate - 0.01;
@@ -77,7 +67,7 @@ public class RetirementGoalApexController {
         }
         
         
-        wrapper.retirementAmount = Math.ceil(savingRequiredAtRetirement);
+        wrapper.retirementAmount = Math.round(savingRequiredAtRetirement);
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
@@ -123,19 +113,19 @@ public class RetirementGoalApexController {
             }
             remainingAmount = bal - totalEstimated;
             double curr = Math.ceil( remainingAmount);       
-            wrapper.currentAmt = Math.ceil(curr);
+            wrapper.currentAmt = remainingAmount;
             Date retire = date.valueOf(retireDate);
             
             if(current == null)
             {
-                currentAmount = Math.ceil(curr);
+                currentAmount = remainingAmount;
             }
             else
             {
                 currentAmount = Double.valueOf(current);
             }
             
-            wrapper.monthlyContri = Math.ceil(getMonthlyContribution(currentAmount, tillRetirement, interestRate, targetAmt, retireDate));
+            wrapper.monthlyContri = Math.round(getMonthlyContribution(accId,currentAmount, tillRetirement, targetAmt, retireDate));
             
         } 
                          if(TEST.isRunningTest())
@@ -154,17 +144,20 @@ public class RetirementGoalApexController {
 * ***/
     
     @auraEnabled
-    public static Decimal getMonthlyContribution(Double currentAmount, String tillRetirement, Double interestRate, String targetAmt, String retireDate)
+    public static Decimal getMonthlyContribution(String accId,Double currentAmount, String tillRetirement, String targetAmt, String retireDate)
     {
         Date retire = date.valueOf(retireDate);
         Integer months = (((retire.year())*12)+retire.month()) - ((((date.today()).year())*12)+date.today().month());
         Double installment = 0;
-        Double growth = (Math.pow((1 + (interestRate/ 100)), (1/12)))- 1;
+        Double temp=1;
+        Double interestRate=[Select FinServ__APY__c from FinServ__FinancialAccount__c where Id=:accId LIMIT 1].FinServ__APY__c;
+        System.debug(interestRate/100);
+        Double growth = (Math.pow((1 + (interestRate/ 100)), (temp/12))- 1);
         
         Double target = Double.valueOf(targetAmt);
         
         Decimal monContri;
-        
+        System.debug(growth);
         If (target > (currentAmount * (Math.pow((1 + growth),months))))
         {
             
@@ -181,53 +174,16 @@ public class RetirementGoalApexController {
         {
             monContri = installment;
         }
-        return Math.ceil(monContri);
+        monContri++;
+        return monContri;
         
     }    
     
     
-<<<<<<< HEAD
-    @AuraEnabled
-    public static FinServ__FinancialGoal__c getGoalData(String goalId)
-=======
-   /* @auraEnabled
-    public static Id   saveData(String recordId,String owner,String name, String dob, String years,String inflationRate, String retireAge , String income,
-                              String returnRate, String amount, String associatedAccount, String priority, String sValue, String tDate,
-                              String contribution,String isTaxDeduction, String taxPercentageContribution, Double maxDeduction, String isMonthly)
->>>>>>> bbbeac40002490fc88908f5587b9eaae7c26b16f
-    {
-        return [SELECT Annual_Growth_Rate__c,Associated_Account__c,Current_Goal_Amount__c,Current_Monthly_Income__c,Date_Of_Birth__c,Desired_Annual_Income_For_Retirement__c,Expected_Inflation_Rate__c,FinServ__PrimaryOwner__c,FinServ__TargetDate__c,FinServ__TargetValue__c,Goal_Priority__c,Id,Name,OwnerId,Rate_Of_Return_After_Retirement__c,Required_Monthly_Saving__c,Retirement_Age__c,Start_Date__c,Start_Value__c,Years_Of_Living_After_Retirement__c , Does_the_contribution_bring_tax_benefit__c,What_of_contribution_bring_tax_benefit__c , Max_yearly_tax_deduction_allowed__c , Do_tax_benefits_realize_monthly__c FROM FinServ__FinancialGoal__c where id =: goalId];
-    }
-    
-    @AuraEnabled 
-    public static Date getContactDob(String recordId){
-        List<Contact> c;
-        Date dob;
-        try{
-            
-            c=[Select Id,Birthdate from Contact where AccountId=:recordId limit 1];
-             dob=c[0].Birthdate;
-            
-            
-        }catch(Exception e){
-            new Exception_Details__c(Line_Number__c=e.getLineNumber(), Message__c=e.getMessage(), Stack_Trace__c=e.getStackTraceString());
-        }
-<<<<<<< HEAD
-         
-        return  dob;
-        
-=======
-        catch(Exception e){
-            FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
-        }
-        return goal.id;
-    }*/
-    
     @AuraEnabled
     public static FinServ__FinancialGoal__c getGoalData(String goalId)
     {
         return [SELECT Annual_Growth_Rate__c,Associated_Account__c,Current_Goal_Amount__c,Current_Monthly_Income__c,Date_Of_Birth__c,Desired_Annual_Income_For_Retirement__c,Expected_Inflation_Rate__c,FinServ__PrimaryOwner__c,FinServ__TargetDate__c,FinServ__TargetValue__c,Goal_Priority__c,Id,Name,OwnerId,Rate_Of_Return_After_Retirement__c,Required_Monthly_Saving__c,Retirement_Age__c,Start_Date__c,Start_Value__c,Years_Of_Living_After_Retirement__c , Does_the_contribution_bring_tax_benefit__c,What_of_contribution_bring_tax_benefit__c , Max_yearly_tax_deduction_allowed__c , Do_tax_benefits_realize_monthly__c FROM FinServ__FinancialGoal__c where id =: goalId];
->>>>>>> bbbeac40002490fc88908f5587b9eaae7c26b16f
     }
     
     @AuraEnabled 

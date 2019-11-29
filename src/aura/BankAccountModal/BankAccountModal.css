@@ -1,6 +1,14 @@
+.THIS .slds-modal__container {
+    width: 70%;
+    max-width: 70%;
+}
 @media(max-width: 992px) {
  	.THIS .res_ba-modal .slds-size_1-of-12 {
         width: 100px;
         float: left;
-    }   
+    }
+    .THIS .slds-modal__container {
+        width: 92%;
+        max-width: 92%;
+    }
 }

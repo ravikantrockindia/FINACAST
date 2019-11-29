@@ -90,5 +90,8 @@
  	.THIS .res_goal-final .slds-size_1-of-12 {
     	width: 100px;
         float: left;
-	}   
+	}
+    .THIS .res_goal-final .slds-size_1-of-12 img {
+        width: 35%;
+    }
 }

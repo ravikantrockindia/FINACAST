@@ -49,14 +49,24 @@ public class FinacastUtility {
     }
     
     public static void ExceptionHandle(Integer LineNumber, String Message,string StackTrace)
-    {
+    {	
+        
         List<Exception_Details__c> listOfExceptionDetails = new List<Exception_Details__c>();
         Exception_Details__c ex =new Exception_Details__c();
+        if (Schema.sObjectType.Exception_Details__c.fields.Message__c.isCreateable()) {
         ex.Message__c = Message;
+        }
+        if (Schema.sObjectType.Exception_Details__c.fields.Line_Number__c.isCreateable()) {
         ex.Line_Number__c = LineNumber;
+        }
+        if (Schema.sObjectType.Exception_Details__c.fields.Stack_Trace__c.isCreateable()) {
         ex.Stack_Trace__c = StackTrace;
+        }
         listOfExceptionDetails.add(ex);
+         if (Schema.sObjectType.Exception_Details__c.isCreateable()) {
         insert listOfExceptionDetails;  
+         }
+        
     }
     
     //builds data for scenarios to make callout
@@ -303,6 +313,8 @@ public class FinacastUtility {
                     double monthlyExpenses = 0;  
                     if(expList!=null && expList.size() > 0){
                         Integer j=1;
+                        Integer Yearlygrowth=0;
+                        string Priority='';
                         for(Scenario_Expense__c e: expList) {
                             if(e.Amount__c != Null){
                                 monthlyExpenses+= e.Amount__c;
@@ -318,6 +330,8 @@ public class FinacastUtility {
                             }else{
                                 setData +='\'amount\':0,';
                             }
+                           // setData +='\'expensepopupgrowthrate\':'+Yearlygrowth+',';
+                           // setData +='\'priority\':'+Priority+',';
                             setData +='\'startdate\':\'' + e.Start_Date__c.month() + '/' + e.Start_Date__c.year() + '\',';
                             setData +='\'enddate\':\'' + e.End_Date__c.month() + '/' + e.End_Date__c.year() + '\'';
                             setData +='}';

@@ -64,24 +64,36 @@ public class UpdateFinancialAccountBalanceTest {
         FinServ__FinancialAccountTransaction__c f=[Select Id,FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__TransactionType__c='Credit' LIMIT 1];
         f.FinServ__Amount__c=20000;
         update f;
+        System.assertEquals(f.FinServ__Amount__c,20000);
     }
     @isTest
     static void updateTransactionDebit(){
         FinServ__FinancialAccountTransaction__c f=[Select Id,FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__TransactionType__c='Debit' LIMIT 1];
         f.FinServ__Amount__c=20000;
         update f;
+         System.assertEquals(f.FinServ__Amount__c,20000);
     }
 
     @isTest
     static void deleteTransactionCredit(){
         FinServ__FinancialAccountTransaction__c f=[Select Id,FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__TransactionType__c='Credit' LIMIT 1];
-        delete f;
+        Test.startTest();
+         delete f;
+        Database.DeleteResult result = Database.delete(f, false);
+        Test.stopTest();
+        System.debug('Result: '+ result.isSuccess());
+        System.assert(!result.isSuccess());
     }
     
      @isTest
     static void deleteTransactionDebit(){
         FinServ__FinancialAccountTransaction__c f=[Select Id,FinServ__Amount__c from FinServ__FinancialAccountTransaction__c where FinServ__TransactionType__c='Debit' LIMIT 1];
-        delete f;
+        Test.startTest();
+         delete f;
+        Database.DeleteResult result = Database.delete(f, false);
+        Test.stopTest();
+        System.assert(!result.isSuccess());
+  
     }
     
 

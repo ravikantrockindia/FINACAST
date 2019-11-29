@@ -1,5 +1,6 @@
 <aura:component controller="Nonretirementgoalapexcontroller"
      implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name = "car" type="String"/>
@@ -48,12 +49,12 @@
                             <span class="slds-assistive-text">Close</span>
                         </button>
                         
-                        <div class="slds-grid slds-wrap">
+                        <div class="slds-grid slds-wrap res_goal-form">
                             <div class="slds-size_1-of-12">
                               <img src="{!v.icon}"  height="60" width="60" />  
                             </div>
                             <div class="slds-size_11-of-12 slds-p-top_medium">
-                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>{!v.heading}</b></h2>                            
+                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif"><b>{!v.heading}</b></h2>                            
                       <!--  <h3 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate slds-text-font_Arial,sans-serif" style="color:black"><b>{!v.subheading}</b>
                             <br/>                     
                         </h3>-->
@@ -141,8 +142,7 @@
                         </footer>
                     </lightning:recordEditForm>
                 </div></div><div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
-            
-            
+      
         </div>
  
         </div>

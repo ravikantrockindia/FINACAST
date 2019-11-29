@@ -1,14 +1,16 @@
 .THIS body {
     font-family: 'Open Sans', sans-serif;
 }
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600; color: #000;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS label { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS select { font-family: 'Open Sans', sans-serif; background-color: #fdfdfd; border: 1px solid #bbb; border-radius: 0;}
 .THIS .slds-button {
     border-radius: 25px;
     font-size: 12px;
@@ -24,10 +26,13 @@
     background-color: #fff;
 }
 .THIS #nav li{
-    border-width:0px 0px 0px 0px;
-    border-style:none;
+    border-width: 0 0 0 0;
+    border-style: none;
     position: relative;
-    }
+    width: 12%;
+    border-right: 1px solid #f1f2f3;
+    border-top: 1px solid #f1f2f3;
+}
 .THIS .smallIcons{
   width:8%;  
 }
@@ -49,17 +54,49 @@
     color: black;  
 }
 .THIS #nav li a{
-    color: #000;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    padding: 0 2rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    height: 2.5rem;
+    font-weight: 500;
+    line-height: 2.5rem;
+    padding: 0 5px;
+    color: rgb(62, 62, 60);
+    background-clip: padding-box;
+    border-radius: 0;
+    text-align: center;
+    border: none;
+    background-color: #fcfcfc;
+    transition:all 500ms;
+    -moz-transition:all 500ms;
+    -webkit-transition:all 500ms;
+}
+.THIS #nav li a:hover {
+    background-color: #fff;
+    transition:all 500ms;
+    -moz-transition:all 500ms;
+    -webkit-transition:all 500ms;    
+}
+.THIS #nav li a img {
+    width: 16px;
+    margin-right: 5px;
+    margin-top: -2px;
 }
 .THIS .demo{
      background-color:#eef2f6;
 }
 @media(max-width: 992px) {
 	.THIS #nav li a {
-        padding: 0 5px;
+        padding: 0 1px;
         font-size: 11px;
+    }
+    .THIS #nav li a img {
+        width: 12px;
+        margin-right: 2px;
+        margin-top: -2px;
     }    
 }

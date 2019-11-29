@@ -45,3 +45,14 @@
 .THIS .future_simulation {
     margin: 25px auto;
 }
+@media(max-width: 992px) {
+    .THIS .res_future-simulation {
+        display: block;
+    }
+    .THIS .res_future-simulation .res_future-simulation-c {
+        width: 100%;
+    }
+    .THIS .res_future-simulation .res_future-simulation-c:nth-child(odd) {
+        margin-bottom: 25px;
+    }
+}

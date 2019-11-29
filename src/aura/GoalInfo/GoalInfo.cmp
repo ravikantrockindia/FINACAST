@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="slds-col slds-size_6-of-12 slds-p-top_small">
-                                <h3 class="slds-m-left_small slds-m-right_small">Goal Progress
+                                <h3 class="slds-m-left_small slds-m-right_small slds-p-top_xx-small">Goal Progress
                                     <!-- <lightning:icon iconName="utility:chevrondown" size="small" class="slds-float_right"/>-->
                                 </h3>
                                 <div class="slds-grid">

@@ -33,7 +33,6 @@
                                      ]);
                 var chart = new CanvasJS.Chart("chartInvestment", {
                                  height:300,
-                    width:946,
                     //colorSet: "greenShades",
                     animationEnabled: true,  
                     title:{

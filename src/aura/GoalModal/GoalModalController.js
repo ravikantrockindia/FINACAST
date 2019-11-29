@@ -237,7 +237,8 @@
             saveIncomeEvent.fire();
         }
         else{ */
-         helper.hideExampleModal(component);
+         
+        helper.hideExampleModal(component);
         
          /*   var homeEvent = $A.get("e.force:navigateToComponent");
             homeEvent.setParams({
@@ -248,6 +249,18 @@
                 
             });
             homeEvent.fire();*/
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
        
     },
      hideExampleModal : function(component, event, helper) {

@@ -56,9 +56,22 @@
             }); 
             $A.enqueueAction(action); 
         }
+        var dob;
         
-        if(!($A.util.isUndefinedOrNull(gId) || gId == ""))
-        {
+        if($A.util.isUndefinedOrNull(gId) || gId == ""){
+             var action = component.get("c.getContactDob");
+                    action.setParams({ 
+                        recordId : clientId
+                    });
+                    action.setCallback(this, function(response) {
+                        //component.set("v.birthDate",response.getReturnValue());
+                        component.find("birth").set("v.value",response.getReturnValue());
+                        // console.log('birthdate',component.get("v.birthDate"));
+                        // console.log('resp: ',response.getReturnValue());
+                    });
+                    $A.enqueueAction(action); 
+        }
+        else{
             var action = component.get("c.getGoalData");
             action.setParams({
                 goalId : component.get("v.retirementGoalId")
@@ -72,7 +85,21 @@
                 var list=JSON.stringify(a.getReturnValue()).replace(/Finsol__/g, "")
                 var goals=JSON.parse(list);
                 console.log('goaldata',JSON.stringify(goals))
-                debugger;
+                dob=goals.Date_Of_Birth__c;
+                if($A.util.isUndefinedOrNull(dob) || dob == ""){
+                    
+                    var action = component.get("c.getContactDob");
+                    action.setParams({ 
+                        recordId : clientId
+                    });
+                    action.setCallback(this, function(response) {
+                        //component.set("v.birthDate",response.getReturnValue());
+                        component.find("birth").set("v.value",response.getReturnValue());
+                        // console.log('birthdate',component.get("v.birthDate"));
+                        // console.log('resp: ',response.getReturnValue());
+                    });
+                    $A.enqueueAction(action); 
+                }
                 component.set("v.selectedAccount", goals.Associated_Account__c)
                 component.set("v.isTaxDeduction", goals.Does_the_contribution_bring_tax_benefit__c)
                 console.log(component.get("v.isTaxDeduction"))
@@ -83,16 +110,6 @@
             
         }
         
-        var action = component.get("c.getContactDob");
-        action.setParams({ 
-            recordId : clientId
-        });
-        action.setCallback(this, function(response) {
-            component.set("v.birthDate",response.getReturnValue());
-            console.log('birthdate',component.get("v.birthDate"));
-            console.log('resp: ',response.getReturnValue());
-        });
-        $A.enqueueAction(action); 
     },
     
     
@@ -159,10 +176,10 @@
                 status2 = 1;
             }
             
-          var roiSplit = rateofreturn.toString().split(".");
-           
+            var roiSplit = rateofreturn.toString().split(".");
+            
             var iRateSplit = iRate.toString().split(".");
-             
+            
             if(iRateSplit.length == 1 )
             {
                 if(iRateSplit[0].length > 2 || iRateSplit[0] < 0 )
@@ -223,7 +240,7 @@
             
             
             
-          if(roiSplit.length == 1)
+            if(roiSplit.length == 1)
             {
                 if(roiSplit[0].length > 2 || roiSplit[0] < 0)
                 { 
@@ -258,7 +275,7 @@
                 status8 = 1;
             }
             
-           
+            
             
         }
         
@@ -362,13 +379,13 @@
         var curAmt = component.find("currVal").get("v.value");
         
         //console.log("interest",interestRate);
-       // console.log("associated",associated);
+        // console.log("associated",associated);
         //console.log("years",years);
         //console.log("target",target);
-       // console.log("curAmt",curAmt);
-       // console.log("retDate",retDate);
+        // console.log("curAmt",curAmt);
+        // console.log("retDate",retDate);
         var action = component.get("c.getAmtAndContri");  
-       // console.log(associated[0]);
+        // console.log(associated[0]);
         action.setParams
         ({
             "accId" : associated,
@@ -405,7 +422,7 @@
         if(curAmt > component.get("v.initialAmount") ||curAmt < 0)
         {
             status = 0
-           // helper.currentAmtError(component, event, helper,msg);
+            // helper.currentAmtError(component, event, helper,msg);
             component.set("v.contribution", 0 );
             
         }
@@ -452,6 +469,18 @@
         
         
         helper.hideExampleModal(component);
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     },
     
     saveButton : function(component, event, helper) {
@@ -598,20 +627,33 @@
         console.log(updatedRecord);
         console.log('onsuccess: ', JSON.stringify(updatedRecord.response.id));
         var retId=updatedRecord.response.id;
-       	component.set("v.viewGoalId",retId);
+        component.set("v.viewGoalId",retId);
         var icon=$A.get("$Resource.RetirementIcon");
         component.set("v.icon",icon);
         
         if(!component.get("v.editModal")){
-              var cmpTarget = component.find('exampleModal');
-        
+            var cmpTarget = component.find('exampleModal');
+            
             console.log('the cross is : '+ cmpTarget );
             $A.util.addClass(cmpTarget, 'hideDiv');
-        component.set("v.createModal",true);
+            component.set("v.createModal",true);
         }
-        else
-        
-        helper.hideExampleModal(component);
+        else{
+            
+            helper.hideExampleModal(component);
+            var workspaceAPI = component.find("workspace");
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                console.log(JSON.stringify(response))
+                var focusedTabId = response.parentTabId;
+                workspaceAPI.refreshTab({
+                    tabId: focusedTabId,
+                    includeAllSubtabs: true
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
         
     },
     changeMonthlyContribution : function(component, event, helper)

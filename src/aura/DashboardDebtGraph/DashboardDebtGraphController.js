@@ -73,7 +73,6 @@
                 
                 var chart = new CanvasJS.Chart("chartContainer111", {
                     height: 300, //in pixels
-                width: 946,
                     theme: "light1", // "light2", "dark1", "dark2"
                     animationEnabled: true, // change to true	
                     toolTip: {

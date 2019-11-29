@@ -1,6 +1,6 @@
 <aura:component controller="Finacast_ScenarioParentApex"  
-                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" 
-                access="global">
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+                access="global" >
      <aura:handler  event="c:ShowGraph" action="{!c.graphdata}" default = "false"/>
      <aura:attribute name = "kk" type = "boolean"/> 
     <aura:attribute name = "EditScenario" type = "boolean" default = "false"/> 
@@ -20,6 +20,7 @@
     <!--handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="change" value="{!scenario}" action="{!c.doInit}"/>
+    
     <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->
     <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
     <!--c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast-->
@@ -125,10 +126,10 @@
          <aura:if isTrue="{!v.kk}">
     <lightning:tabset>
         
-        <lightning:tab label="Scenarios" title="Scenarios">
-            <div class="slds-grid slds-gutters">
+        <lightning:tab label="Scenarios" title="Scenarios" >
+            <div class="slds-grid slds-gutters res_scenario">
                 
-                <div class="slds-col  slds-size_6-of-12 slds-p-bottom_medium">
+                <div class="slds-col  slds-size_6-of-12 res_scenario-child slds-p-bottom_medium">
                     <div class="client_managed slds-p-left_medium slds-p-right_medium slds-p-bottom_medium slds-m-top_x-small">
                     <c:Finacast_ScenarioComponent data2="{! v.data2}"
                                                   cid="{! v.cid}" scenario="{!v.scenario}"
@@ -136,7 +137,7 @@
                         </div>
                 </div>
                 
-                <div class="slds-col  slds-size_6-of-12">
+                <div class="slds-col  slds-size_6-of-12 res_scenario-child">
                     <div class="client_managed">
                     	<c:ScenarioHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                     </div>
@@ -158,53 +159,56 @@
         <lightning:tab onactive="{! c.handleActive }" label="Compare" title="Compare to current state">
             <!--Compare to Current State-->
             
-            <div class="slds-grid slds-gutters">
+            <div class="slds-grid slds-gutters res_scenario">
                 
                 <!-- 1. Current State -->
-                <div class="slds-col  slds-size_6-of-12 ">
-                    <div class="client_managed">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_x-large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                     <c:CurrentStateHealthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
-                <div class="slds-col  slds-size_6-of-12 ">
-                    <div class="client_managed">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_x-large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                 	<c:SecnarioStateHealthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
             </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
+            <div style="clear:both;"></div>
+            <div class="slds-grid slds-gutters res_scenario">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_x-large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                 	<c:CurrentStateDebtGraph data="{! v.data1}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_x-large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                 	<c:SecnarioStateDebtGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
              </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
-                    <div class="client_managed">
+            <div style="clear:both;"></div>
+            <div class="slds-grid slds-gutters res_scenario">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                 	<c:CurrentStateNetWorthGraph data="{! v.data1}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_large">
-                    <div class="client_managed">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                 	<c:ScenarioStateNetWorthGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
             </div>
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
+            <div style="clear:both;"></div>
+            <div class="slds-grid slds-gutters res_scenario">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_x-large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                 	<c:CurrentStateGoalGraph data="{! v.data1}" namespace="{! v.namespace}"/>
                     </div>
                 </div>
                 <!-- Scenario State -->
-                <div class="slds-col  slds-size_6-of-12 slds-m-top_medium">
-                    <div class="client_managed">
+                <div class="slds-col  slds-size_6-of-12 slds-m-bottom_x-large res_scenario-child">
+                    <div class="client_managed" style="height: 100%;">
                     <c:ScenarioStateGoalGraph data="{! v.data2}" namespace="{! v.namespace}"/>
                     </div>
                 </div>

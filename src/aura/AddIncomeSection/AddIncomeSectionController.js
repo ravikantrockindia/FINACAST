@@ -52,7 +52,7 @@
         
     },
     saveIncomes:function(component,event,helper){
-        
+        debugger;
         var spinner = component.find("mySpinner");
         $A.util.removeClass(spinner, "slds-hide");
         
@@ -232,6 +232,7 @@
         component.set("v.IncomeList",incomes)
     },
     onblur:function(component,event,helper){
+        debugger;
         helper.validateDate(component)
     }
     

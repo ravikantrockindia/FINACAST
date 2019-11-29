@@ -1,4 +1,5 @@
 <aura:component controller="AddIncomeController" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="Income" type="String"/> 
     <aura:attribute name="isActive" type="Boolean" default="true" required="true" />
     <aura:attribute name = "incmeId" type = "String"/>
@@ -8,7 +9,6 @@
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name = "accRecType"  type = "String"/> 
-            <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="incRec" type="Budget__c"/>
 	<aura:attribute name="editRecordIncome" type="boolean"/>
     <aura:attribute name="incRecName" type="String"/>

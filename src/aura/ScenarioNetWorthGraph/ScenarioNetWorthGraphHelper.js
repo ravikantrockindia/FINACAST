@@ -35,8 +35,8 @@
                                  ]);
             
             var chart = new CanvasJS.Chart("chartContainer0.986", {
-                height: 300, //in pixels
-                width: 600,
+               
+               
                 colorSet: "greenShades",
                 animationEnabled: true,  
                 title:{
@@ -56,6 +56,7 @@
                 toolTip:{
                
             },
+               
                 data: [{
                      toolTipContent: "  $: {y}",
                    yValueFormatString: "#,##0,.##K",

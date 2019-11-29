@@ -458,16 +458,37 @@ public with sharing class AddIncomeController {
     }
     
     @auraEnabled
-    public static void deleteIncome(id IncomeId) {
+    public static boolean deleteIncome(id IncomeId) {
+        List<FinServ__FinancialAccountTransaction__c> transactionRecord = new List<FinServ__FinancialAccountTransaction__c>();
         
+        transactionRecord = [Select id,name ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c 
+                             from FinServ__FinancialAccountTransaction__c 
+                             where Budget_Category__c =:IncomeId];
+        if(transactionRecord.size()<=0){
         Budget__c IncomeItem = [Select id from Budget__c where id =:IncomeId];
         delete IncomeItem;
+         return true;
+        }
+        else {
+            return false;
+        }
         
     }
     @auraEnabled
-    public static void deleteLoan(id loanId) {
-        FinServ__FinancialAccount__c loanItem = [Select id from FinServ__FinancialAccount__c where id =:loanId];
-        delete loanItem;
+    public static boolean deleteLoan(id loanId) {
+        List<FinServ__FinancialAccountTransaction__c> transactionLoanRecord = new List<FinServ__FinancialAccountTransaction__c>();
+         
+        transactionLoanRecord = [Select id ,TransactionName__c, FinServ__TransactionDate__c , FinServ__Description__c, Destination_Financial_Account__c ,Destination_Financial_Account__r.name, FinServ__Amount__c , 	FinServ__FinancialAccount__c 
+                                 from FinServ__FinancialAccountTransaction__c
+                                 where FinServ__FinancialAccount__c =:loanId];
+        if(transactionLoanRecord.size()<=0){                          
+            FinServ__FinancialAccount__c loanItem = [Select id from FinServ__FinancialAccount__c where id =:loanId];
+            delete loanItem;
+            return true;
+        }else{
+            return false;
+        }
+        
         
     }
     

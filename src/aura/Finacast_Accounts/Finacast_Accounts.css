@@ -1,16 +1,19 @@
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 22px; font-weight: 600;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS label { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS select { font-family: 'Open Sans', sans-serif; background-color: #fdfdfd; border: 1px solid #bbb; border-radius: 0;}
 .THIS .btn1 {
     border-radius: 25px;
     font-size: 12px;
     background-color: #4E75A3;
     color: #fff;
+    display: inline-block;
     padding: 1px 5px;
     min-width: 120px;
 }
@@ -235,32 +238,35 @@
 .THIS .journal-entry-heading h3 .btn1 {
     float: right;
 }
-.THIS .journal-entry-heading .slds-table thead th {
+.THIS .journal-entry-heading .slds-table {
+    
+}
+.THIS .journal-entry-heading1 .slds-table thead th {
     padding-top: 12px;
     padding-bottom: 12px;
     background-color: #f6f9fc;
 }
-.THIS .journal-entry-heading .slds-table thead td {
+.THIS .journal-entry-heading1 .slds-table thead td {
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #f1f2f3;
 }
-.THIS .journal-entry-heading .slds-table thead th .slds-select {
+.THIS .journal-entry-heading1 .slds-table thead th .slds-select {
     background-color: #f2f0f0;
     height: 40px;
     border-radius: 0;
 }
-.THIS .journal-entry-heading .slds-table thead th:first-child {
+.THIS .journal-entry-heading1 .slds-table thead th:first-child {
     padding-left: .75rem;
 }
-.THIS .journal-entry-heading .slds-table thead th:last-child {
+.THIS .journal-entry-heading1 .slds-table thead th:last-child {
     padding-right: .75rem;
     width: 165px;
 }
-.THIS .journal-entry-heading .slds-table thead td:first-child {
+.THIS .journal-entry-heading1 .slds-table thead td:first-child {
     padding-left: .75rem;
 }
-.THIS .journal-entry-heading .slds-table thead td:last-child {
+.THIS .journal-entry-heading1 .slds-table thead td:last-child {
     padding-right: .75rem;
 }
 .THIS.canvas{
@@ -293,4 +299,32 @@
 .THIS .slds-modal__container {
     width: 60%;
     min-width: 60%;
+}
+.THIS .slds-show {
+    display: block;
+    float: left;
+    padding-top: 0;
+    width: 100%;
+}
+@media(max-width: 992px) {
+    .THIS .res_finacast-account {
+        display: inline-block;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .THIS .res_finacast-account .res_finacast-account-child .slds-border_bottom:last-child {
+        border-bottom: none;  
+    }
+    .THIS .res_finacast-account .res_finacast-account-child {
+        width: 100%;
+        float: left;
+    }
+    .THIS .res_finacast-account .res_finacast-account-child .client_managed {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__container {
+        width: 90%;
+        min-width: 90%;
+    }
 }

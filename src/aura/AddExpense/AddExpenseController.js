@@ -33,8 +33,20 @@
             "message": "Expense Has been Saved"           
         });
         resultsToast.fire();
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
         // Close the action panel
-        helper.hideExampleModal(component);
+       // helper.hideExampleModal(component);
     },
     
     hideExampleModal : function(component, event, helper) {

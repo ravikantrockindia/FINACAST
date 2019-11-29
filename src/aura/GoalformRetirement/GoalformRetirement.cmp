@@ -47,7 +47,7 @@
     <aura:attribute name="icon" type="string" />
     <aura:attribute name="viewGoalId" type="String"/>
         <aura:attribute name="editModal" type="Boolean"/>
-
+	<lightning:workspaceAPI aura:id="workspace"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>
     
     
@@ -60,7 +60,7 @@
                             <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <div class="slds-grid slds-wrap">
+                        <div class="slds-grid slds-wrap res_goal-form">
                             <div class="slds-size_1-of-12">
                               <img src="{!$Resource.RetirementIcon}"  height="60" width="60" title="Retirement"/>  
                             </div>
@@ -99,10 +99,10 @@
                                     	<span class = "highlight">* </span>Goal Name<lightning:inputField aura:id = "name" fieldName="Name" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
-                                    	<span class = "highlight">* </span>Retirement Age<lightning:inputField aura:id = "retireAge" fieldName="{!v.namespace+'Retirement_Age__c'}" value="{!v.Retiring}" onchange = "{!c.nextButton}"/>
+                                    	<span class = "highlight">* </span>Retirement Age<lightning:inputField aura:id = "retireAge" fieldName="{!v.namespace+'Retirement_Age__c'}" value="{!v.Retiring}" onblur = "{!c.nextButton}"/>
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
-                                    	<span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "{!v.namespace+'Date_Of_Birth__c'}"  value = "{!v.birthDate}" disabled="true" onchange = "{!c.nextButton}" />
+                                    	<span class = "highlight">* </span>Date Of Birth<lightning:inputField aura:id = "birth" fieldName = "{!v.namespace+'Date_Of_Birth__c'}"   disabled="true" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-2">
                                     	<span class = "highlight">* </span>Desired Annual Income If You Were To Retire Today <lightning:inputField aura:id = "annualIncome" fieldName="{!v.namespace+'Desired_Annual_Income_For_Retirement__c'}" onchange = "{!c.nextButton}"/>

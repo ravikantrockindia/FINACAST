@@ -66,3 +66,9 @@
     font-size: 12px;
     color: #333;
 }
+@media(max-width: 992px) {
+    .THIS.client_managed1 .canvasjs-chart-canvas {
+        left: 15%;
+        width: 70%;
+    }
+}

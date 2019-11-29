@@ -17,6 +17,16 @@
 .THIS .btn1:hover {
     color: #fff;
 }
+.THIS .btn2 {
+    background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3;
+}
+.THIS .btn2:hover {
+   background-color: #fff;
+    color: #4e75a3;
+    border: 1px solid #4e75a3; 
+}
 .THIS container.slds-template__container{
     background-color: white;
 }
@@ -100,18 +110,30 @@
     .THIS .slds-col1-cover {
         top: 78%;
     }
+    .THIS .slds-modal__content {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__footer {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__header  {
+        padding: 10px 25px;
+    } 
 }
 @media (max-width: 767px) {
  	.THIS .slds-modal__container {
         display: block;
-        width: auto;
-    } 
-    .THIS .slds-p-around_medium {
-        overflow-y: scroll;
-        height: 300px;
+        width: 90%;
+        max-width: 90%;
     }  
     .THIS .slds-col1-cover {
         top: 70%;
+    }
+    .THIS .slds-modal__content {
+        float: left;
+        width: 100%;
     }
 }
 @media (max-width: 576px) {
@@ -126,17 +148,5 @@
     }
     .THIS .slds-text-heading_medium {
         font-size: 1rem;
-    }
-}
-@media (max-height: 600px) {
-    .THIS .slds-p-around_medium {
-        height: 300px;
-        overflow-Y: scroll;
-    }
-}
-@media (max-height: 500px) {
-    .THIS .slds-p-around_medium {
-        height: 250px;
-        overflow-Y: scroll;
     }
 }

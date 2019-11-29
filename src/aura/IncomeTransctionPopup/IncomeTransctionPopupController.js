@@ -2,6 +2,18 @@
     closeModel: function(component, event, helper) {
         // Set isModalOpen attribute to false  
         component.set("v.closeModal", false);
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     },
     doInit: function(component, event, helper) {
         var namespace=component.get("v.namespace");
@@ -93,6 +105,8 @@
                 
         } 
         else if ( actionName == 'delete') {
+                var retVal = confirm("Are you sure you want to delete this income transaction?");
+                if( retVal == true ) { 
             var action2 = component.get("c.deleteTransaction");
             action2.setParams({
                 'transactionId' : event.getParam('row').Id
@@ -110,6 +124,11 @@
                   helper.helperMethod(component);   
             });     
             $A.enqueueAction(action2);
+                return true;
+                }
+                else{
+                return false;
+                }
         }
     },            
     createExpenseTransactionRecord : function(component, event, helper) {   

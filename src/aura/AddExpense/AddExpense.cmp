@@ -20,6 +20,8 @@
     <aura:attribute name="expRec" type="Budget__c"/>
     <aura:attribute name="editRecordExpense" type="boolean"/>
     <aura:attribute name="expRecName" type="String"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
     <div class="slds-align_absolute-center">
         <div class="slds-m-around_xx-large">
             <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
@@ -29,7 +31,7 @@
                             <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <div class="slds-grid slds-gutters" style="border: none;">                                        
+                        <div class="slds-grid slds-gutters res_add-income" style="border: none;">                                        
                             <div class="slds-col slds-size_1-of-12 slds-text-align--left">
                                 <img src="{!$Resource.expenses}" />
                             </div>

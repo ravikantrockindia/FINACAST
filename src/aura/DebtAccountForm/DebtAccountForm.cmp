@@ -32,20 +32,20 @@
         
         <div class="custom_card slds-gutters">
             <div class="slds-col slds-size_1-of-2">
-                {!$Label.c.Name}  <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="Name" aura:id="name" variant="label-hidden"/>
+                {!$Label.c.Name}  <span class = "highlight"  style="color: red"> * </span><lightning:inputField class="label-hidden" fieldName="Name" aura:id="name" variant="label-hidden"/>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                Current Debt Value <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__LoanAmount__c"  aura:id="loanamt" variant="label-hidden"/>
+                Current Debt Value <span class = "highlight"  style="color: red"> * </span><lightning:inputField class="label-hidden" fieldName="FinServ__LoanAmount__c"  aura:id="loanamt" variant="label-hidden"/>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                {!$Label.c.Primary_Owner} <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__PrimaryOwner__c" aura:id="owner" value="{!v.accountRecordId}" variant="label-hidden" disabled="true"/>
+                {!$Label.c.Primary_Owner} <span class = "highlight"  style="color: red"> * </span><lightning:inputField class="label-hidden" fieldName="FinServ__PrimaryOwner__c" aura:id="owner" value="{!v.accountRecordId}" variant="label-hidden" disabled="true"/>
             </div>
             <div class="slds-col slds-size_1-of-2">                
-                APR <span class = "highlight"  style="color: red">* </span><lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" variant="label-hidden" aura:id="apr"/>
+                APR <span class = "highlight"  style="color: red"> * </span><lightning:inputField class="label-hidden" fieldName="FinServ__APY__c" variant="label-hidden" aura:id="apr"/>
             </div>
             <div class="slds-col slds-size_1-of-1">
                 <div class="mb-10">
-                    Is it a fixed term loan with monthly installment?<span class = "highlight"  style="color: red">* </span> Yes <ui:inputRadio class="ml-10" name="FixTerm" value="{!v.isFixedTerm}" change="{!c.handleFixTerm}"/> No <ui:inputRadio class="ml-10" name="NonFixTerm" value="{!!v.isFixedTerm}" change="{!c.handleFixTerm}"/>
+                    Is it a fixed term loan with monthly installment?<span class = "highlight"  style="color: red"> * </span> &nbsp;&nbsp; Yes <ui:inputRadio class="ml-10" name="FixTerm" value="{!v.isFixedTerm}" change="{!c.handleFixTerm}"/> No <ui:inputRadio class="ml-10" name="NonFixTerm" value="{!!v.isFixedTerm}" change="{!c.handleFixTerm}"/>
                 </div>
             </div>
         </div>
@@ -53,12 +53,12 @@
         <aura:if isTrue="{!v.isFixedTerm}">
             <div class="custom_card slds-gutters">
                 <div class="slds-col slds-size_1-of-2">
-                    Payment Amount <span class = "highlight" style="color: red">* </span><lightning:inputField fieldName="FinServ__PaymentAmount__c" aura:id="pymamt" variant="label-hidden" ></lightning:inputField>
-                    <div class="mb-10">Do you get tax benefit from interest payment? Yes <ui:inputRadio class="ml-10" name="TaxBenefit" value="{!v.isTaxBenefit}" change="{!c.handleTaxBenefit}"/> No <ui:inputRadio class="ml-10" name="NoTaxBenefit" value="{!!v.isTaxBenefit}" change="{!c.handleTaxBenefit}"/></div>
+                    Payment Amount <span class = "highlight" style="color: red"> * </span><lightning:inputField fieldName="FinServ__PaymentAmount__c" aura:id="pymamt" variant="label-hidden" ></lightning:inputField>
+                    <div class="mb-10">Do you get tax benefit from interest payment? &nbsp;&nbsp; Yes <ui:inputRadio class="ml-10" name="TaxBenefit" value="{!v.isTaxBenefit}" change="{!c.handleTaxBenefit}"/> No <ui:inputRadio class="ml-10" name="NoTaxBenefit" value="{!!v.isTaxBenefit}" change="{!c.handleTaxBenefit}"/></div>
                     <lightning:inputField fieldName ="{!v.namespace+'Do_you_get_tax_benefit_from_interest_pay__c'}" value="{!v.isTaxBenefit}" class="slds-hide"/> 
                 </div>
                 <div class="slds-col slds-size_1-of-2"> 
-                    <span class = "highlight" style="color: red">* </span> Frequency<lightning:inputField fieldName="FinServ__PaymentFrequency__c"  variant="label-hidden" aura:id = "payfreq" ></lightning:inputField>
+                    Frequency <span class = "highlight" style="color: red"> * </span><lightning:inputField fieldName="FinServ__PaymentFrequency__c"  variant="label-hidden" aura:id = "payfreq" ></lightning:inputField>
                 </div>
             </div>
             <div style="clear: both"></div>

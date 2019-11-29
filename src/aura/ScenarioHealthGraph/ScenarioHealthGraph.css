@@ -104,23 +104,12 @@
     position: absolute;
     top: 125px;
     text-align: left;
-    /*width: calc(100% - 20px);*/
-    width: 100%;
+    width: calc(100% - 30px);
+    /*width: 100%;*/
 } 
 .THIS .chart-sticker ul li {
-    display: inline-block;
-    font-size: 11px;
-}
-.THIS .chart-sticker ul li:first-child {
-    margin-left: 0px;
-}
-.THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:60px;
-}
-.THIS .chart-sticker ul li:last-child {
-   /* margin-left:40px;*/
-    margin-left: 86px;
-    margin-top: -9px;
+    display: block;
+    text-align: center;
 }
 .THIS .chart-sticker h2 {
     font-size: 30px;
@@ -162,13 +151,14 @@
 }
 .THIS .health-features p .slds-icon {
     position: absolute;
-    top: 2px;
-    width: 20px;
-    left: 0;
+    top: 0px;
+    width: 14px;
+    left: 5px;
+    height: 14px;
 }
-.THIS .on-track .slds-icon {
+/*.THIS .on-track .slds-icon {
     left: 3px !important;
-}
+}*/
 .THIS .health-features h4 {
     font-size: 12px;
     color: #808080;

@@ -104,14 +104,33 @@
     height: 400px;
 } 
 .THIS .slds-box1 .slds-has-error {
-    position: relative;
-    z-index: 0;
     display:block;
 }
 .THIS .slds-box1 .slds-form-element__help {
     z-index: 1;
     position: absolute;
     bottom: -15px;
+}
+@media (max-width: 992px){
+    .THIS .slds-size_11-of-12.slds-p-top_medium {
+        padding-top: 10px;
+    }
+    .THIS .res_goal-form .slds-size_11-of-12 {
+        padding-left: 15px;
+        text-align: left;
+    }
+    .THIS .slds-modal__container {
+        width: 90%;
+        max-width: 90%;
+    }
+    .THIS .slds-modal__content {
+        float: left;
+        width: 100%;
+    }
+    .THIS .slds-modal__footer {
+        float: left;
+        width: 100%;
+    }
 }
 @media (max-width: 767px) {
 	.THIS .slds-box1 .slds-size_1-of-2 {
@@ -123,6 +142,8 @@
     }
     .THIS .slds-modal__content {
         height: 300px;
+        float: left;
+        width: 100%;
     }
 }
 @media (max-width: 576px) {

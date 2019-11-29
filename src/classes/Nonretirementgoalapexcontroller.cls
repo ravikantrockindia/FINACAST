@@ -85,13 +85,13 @@ else
 System.debug(remainingAmount);
 currAmt = remainingAmount;
 }*/
-                wrapper.currentAmt = Math.ceil(currAmt);
+                wrapper.currentAmt = Math.round(currAmt);
                 if(targetDate != null && targetAmt != null)
                 {
                     Date tarDate = Date.valueOf(targetDate);
                     Double tarAmt = Double.valueOf(targetAmt);
                     
-                    wrapper.emi = Math.ceil(getMonthlyContri(currAmt, interestRate, tarDate, tarAmt));
+                    wrapper.emi = Math.round(getMonthlyContri(accId, currAmt, tarDate, tarAmt));
                     
                 }
                 
@@ -124,30 +124,40 @@ currAmt = remainingAmount;
 * used in  getCurrentAmount
 * **/
     
-    public static Double getMonthlyContri(Double currAmt, Double interestRate, Date target, Double tAmt)
+    public static Double getMonthlyContri(String accId, Double currAmt, Date target, Double tAmt)
     {
         
         Integer months = date.today().monthsBetween(target);
+        System.debug('months'+months);
         Double installment = 0;
-        Double growth = ((Math.pow((1 + (interestRate/100)), (1/12)))- 1);
+         Double temp=1;
+        Double interestRate=[Select FinServ__APY__c from FinServ__FinancialAccount__c where Id=:accId LIMIT 1].FinServ__APY__c;
+        Double growth = ((Math.pow((1 + (interestRate/100)), (temp/12)))- 1);
+        System.debug(growth);
+        System.debug(tAmt);
+        System.debug(currAmt);
         try{
             If (tAmt > (currAmt * (Math.pow((1 + growth),months))))
             {
                 If (growth > 0)
                 {
+                    System.debug('hello');
                     installment = ((tAmt - currAmt * (Math.pow((1 + growth), months))) * growth) / ((Math.pow((1 + growth), months)) - 1);
                     
                 } 
                 Else {
                     installment = (tAmt - currAmt) / months;
-                    
+                                system.debug('insta'+ installment);
+
                 }
                 
             }
-            system.debug('insta'+ installment);
             if(installment < 0)
             {
                 installment = 0;
+            }
+            else{
+                installment += 1;
             }
              if(TEST.isRunningTest())
                 throw new NullPointerException();

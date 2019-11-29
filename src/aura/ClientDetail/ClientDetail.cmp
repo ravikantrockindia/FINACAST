@@ -1,13 +1,15 @@
 <aura:component  controller="ClientDetailApex"
-                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">   
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">   
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute type="id" name="recordId"/>
-     
+  <!--   <aura:handler name="init" value="{!v.recordId}" action="{!c.doInit}"/>-->
     <aura:attribute name="NameSpace" type="string" />
-    <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />
+        <lightning:workspaceAPI aura:id="workspace"/>
+
+  <!--  <aura:registerEvent name="changeclientevent" type="c:changeclientevent" />-->
     <div class="slds-theme_default">
-        <div class="slds-card__header Res_dash">
-            <div class="slds-grid slds-gutters">
+        <div class="slds-card__header ">
+            <div class="slds-grid slds-gutters Res_dash">
                 <div class="slds-col slds-size_3-of-12 ">
                     <c:FinancialBalanceSheet recordId="{!v.recordId}" namespace="{!v.NameSpace}"/>
                     <div class="client_managed client-profile">
@@ -23,11 +25,9 @@
                     <div class="slds-m-top_large slds-m-bottom_medium">
                         <div class="client_managed">
                             <div class=" slds-p-top_medium slds-p-bottom_medium">
-                                <div class="slds-scrollable_x" style="width: 100%;">
                                     <div class="slds-col slds-size_12-of-12">
                                         <h3 class="slds-m-top_none slds-m-bottom_medium" style="margin-bottom: 25px;">Cash Flow</h3>
                                         <c:FinancialCashFlowGraph recordId="{!v.recordId}"/>
-                                    </div>
                                 </div>
                                 <!--div class="slds-col slds-size_6-of-12 what-is">
                                 <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
@@ -42,12 +42,10 @@
                     <div class="slds-m-top_large slds-m-bottom_medium">
                         <div class="client_managed">
                             <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                                <div class="slds-scrollable_x" style="width: 100%;">
                                     <div class="slds-col slds-size_12-of-12">
                                         <h3 class="slds-m-top_none">Debt</h3>
                                         <c:DashboardDebtGraph recordId="{!v.recordId}"/>
                                     </div>
-                                </div>
                             </div>
                             
                         </div>                
@@ -56,12 +54,10 @@
                     <div class="slds-m-top_large slds-m-bottom_medium">
                         <div class="client_managed">
                             <div class="slds-grid slds-p-top_medium slds-p-bottom_medium">
-                                <div class="slds-scrollable_x" style="width: 100%;">
                                     <div class="slds-col slds-size_12-of-12">
                                         <h3 class="slds-m-top_none">Investment</h3>
                                        <c:DashboardInvestmentGraph recordId="{!v.recordId}"/>
-                                    </div>
-                                </div>
+                                                                   </div>
                                 <!--<div class="slds-col slds-size_6-of-12 what-is">
                                     <p class="month-date">Month to Date <lightning:icon iconName="utility:chevrondown" size="xx-small"/></p>
                                 </div>-->

@@ -3,7 +3,10 @@
         
         var limit = component.get("v.initialRows");
         console.log('ir'+limit);
+       // var FAccountID=component.get('v.Tid');
+         
         var action = component.get("c.getTotalRecords");
+        
         action.setParams({
             AccountId: component.get('v.Tid'),
             rowOffset : 0,
@@ -32,6 +35,7 @@
                 
             }
         });
+        
         var action3 = component.get("c.getFinanaceAccountOpenDate");
         action3.setParams({
             AccountId: component.get('v.Tid')
@@ -39,9 +43,9 @@
         action3.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
-                var tdate=component.get("v.todayDate");
+              //  var tdate=component.get("v.todayDate");
                 var date=response.getReturnValue();
-                if(date[0].FinServ__OpenDate__c!=null){
+             /*   if(date[0].FinServ__OpenDate__c!=null){
                     
                      var today = new Date(date[0].FinServ__OpenDate__c);
                      var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
@@ -50,7 +54,13 @@
                     
                 }else{
                     component.set("v.OpenDate",tdate);
+                }*/
+                if(date!=null){
+                    var today = new Date(date);
+                     var datestart = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()+1);
+                    component.set("v.OpenDate",datestart);
                 }
+                
                 
             }
             

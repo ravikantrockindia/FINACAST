@@ -44,8 +44,7 @@
                                  ]);
             
             var chart = new CanvasJS.Chart("chartContainer3.499", {
-                 height:200,
-                    width:614,
+                height:200,
                 colorSet: "greenShades",
                 animationEnabled: true,  
                 title:{
@@ -102,7 +101,7 @@
             var objMainArr=data.netWorthAnalysis;
             var   currentNetWorthYear = offset;      
             // currentNetWorthYear++;
-            debugger;
+          
             if(currentNetWorthYear == offset){
                 var TotalSavRes=(Math.floor(parseFloat(objSavingArr[currentNetWorthYear-offset])));
                 var TotalDebtRes=(Math.floor(parseFloat(objDebtArr[currentNetWorthYear-offset])));

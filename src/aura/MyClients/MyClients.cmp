@@ -55,8 +55,8 @@
  
     <div class="slds-box slds-theme_default clients_panel cBudget slds-show slds-m-top_small">
         
-        <div class="slds-page-header__row search_panel">
-            <div class="slds-size_1-of-12 slds-p-top_xx-small">
+        <div class="slds-page-header__row search_panel my-client_res1">
+            <div class="slds-size_1-of-12 slds-p-top_x-small">
                 <h3>My Clients</h3>
             </div>
             <div class="slds-size_7-of-12">

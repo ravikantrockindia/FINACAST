@@ -100,12 +100,12 @@
         </div>
         <lightning:tabset selectedTabId ="{!v.compareTabselected}">
             <lightning:tab label="Analysis"  id="AffordAnly">
-                <div class="slds-page-header__row">
+                <div class="slds-gutters slds-grid res_affordability">
                     <!--div class="show_more">
                        <lightning:button  label="Show more" aura:id="showmore" onclick="{!c.dispayMsg}" class="slds-show"/>
                         <lightning:button  label="Show less" aura:id="showless" onclick="{!c.hideMsg}" class="slds-hide"/>
                     </div-->
-                    <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_medium res_affordability-col-6">
                         <div class="client_managed">
                             <div class="slds-col slds-size_12-of-12 slds-p-left_small slds-p-top_medium slds-p-bottom_medium">
                                 <h3>Affordability Analysis</h3>
@@ -210,7 +210,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="slds-col slds-size_6-of-12 slds-p-left_small">
+                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_medium res_affordability-col-6">
                         <div class="client_managed">
                             <aura:if isTrue="{!v.istrue2}">
                                 <div class="slds-col slds-size_12-of-12 slds-p-left_small slds-p-top_medium slds-p-bottom_medium label-eliminator label-eliminator1">
@@ -585,13 +585,13 @@
             <lightning:tab label="Compare" id="compareTabOpen" >
                                         <!--Viewing Scenario section Start-->
                         <div class="view-scenario">
-                            <div class="slds-grid slds-gutter">
-                                <div class="slds-col slds-size_6-of-12 slds-p-right_small">
-                                    <div class="slds-grid slds-gutter">
-                                    	<div class="slds-col slds-size_3-of-12 slds-p-top_small">
+                            <div class="slds-grid slds-gutters res_affordability">
+                                <div class="slds-col slds-size_6-of-12 res_affordability-col-6-1 ">
+                                    <div class="slds-grid slds-gutters">
+                                    	<div class="slds-col slds-size_3-of-12 res_3 slds-p-top_small">
                                             <label>Viewing Scenario</label>
                                         </div>
-                                        <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-col slds-size_6-of-12 res_6">
                                             <div class="slds-form-element">
                                                 <div class="slds-form-element__control">
                                                    
@@ -608,12 +608,12 @@
                                         </div>
                                     </div>    	
                                 </div>
-                                <div class="slds-col slds-size_6-of-12 slds-p-left_small">
-                                    <div class="slds-grid slds-gutter">
-                                    	<div class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                <div class="slds-col slds-size_6-of-12 res_affordability-col-6-1 ">
+                                    <div class="slds-grid slds-gutters">
+                                    	<div class="slds-col slds-size_3-of-12 res_3 slds-p-top_small ">
                                             <label>Viewing Scenario</label>
                                         </div>
-                                        <div class="slds-col slds-size_6-of-12 ">
+                                        <div class="slds-col slds-size_6-of-12 res_6 ">
                                             <div class="slds-form-element">
                                                 <div class="slds-form-element__control">
                                                    <lightning:select name="select"  aura:id="mySelect" value="{!v.futureselectedValue}" >
@@ -630,20 +630,21 @@
                                 </div>
                             </div>
                         </div>
+                		<div style="clear:both;"></div>
                         <!--Viewing Scenario section End-->
-                        <div class="slds-grid slds-gutter slds-m-top_large ">
+                        <div class="slds-grid slds-gutters res_affordability slds-m-top_large ">
                             <c:HealthGraph currentselectedValue="{!v.currentselectedValue}"  Tabledata="{!v.Tabledata}" />
                             <c:FutureHealthGraph futureselectedValue="{!v.futureselectedValue}" Tabledata="{!v.Tabledata}"/>
                         </div>
-                        <div class="slds-grid slds-gutter slds-m-top_large">
+                        <div class="slds-grid slds-gutters res_affordability ">
                             <c:CurrentDebtGraph currentselectedValue="{!v.currentselectedValue}"  Tabledata="{!v.Tabledata}"/>
                             <c:FutureDebtGraph futureselectedValue="{!v.futureselectedValue}"   Tabledata="{!v.Tabledata}"/>
                         </div>
-                        <div class="slds-grid slds-gutter slds-m-top_large">
+                        <div class="slds-grid slds-gutters res_affordability">
                             <c:CurrentNetworthGraph currentselectedValue="{!v.currentselectedValue}"  Tabledata="{!v.Tabledata}"/>
                             <c:FutureNetworthGraph futureselectedValue="{!v.futureselectedValue}"  Tabledata="{!v.Tabledata}"/>
                         </div>
-                        <div class="slds-grid slds-gutter slds-m-top_large">
+                        <div class="slds-grid slds-gutters res_affordability ">
                             <c:CurrentGoalGraph currentselectedValue="{!v.currentselectedValue}"  Tabledata="{!v.Tabledata}"/>
                             <c:FutureGoalGraph futureselectedValue="{!v.futureselectedValue}"  Tabledata="{!v.Tabledata}"/>
                         </div>

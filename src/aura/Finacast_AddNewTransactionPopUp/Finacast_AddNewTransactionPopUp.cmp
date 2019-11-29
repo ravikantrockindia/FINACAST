@@ -1,6 +1,6 @@
 <aura:component controller="AccountTabReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
 	 
-    <ltng:require scripts="{!$Resource.CanvasJS}"/> 
+    <ltng:require scripts="{!$Resource.CanvasJS}" afterScriptsLoaded="{!c.doInit}"/> 
     <aura:handler name="init" value="this" action="{!c.doInit}"/>
     <aura:attribute name="name" type="String"/>
     <aura:attribute name="namespace" type="String" default=""/>

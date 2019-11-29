@@ -126,7 +126,7 @@
                 		<lightning:card class="chart2" >
                             <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-top_medium slds-p-bottom_medium slds-p-left_small">
-                    <div id="chartContainer3.2995" style="height: 200px; width: auto; margin-left: 0px; margin-top: 0px;"></div>
+                    <div id="chartContainer3.2995" style="height: 200px; width: 100% ; margin-left: 0px; margin-top: 0px;"></div>
                 </div>
             </div>
                     

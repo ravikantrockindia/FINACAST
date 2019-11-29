@@ -36,7 +36,6 @@
             subOption=component.find("sub-options").get("v.value");
         }
         
-        console.log(component.find("v.isDateRange"))
         action.setParams({
             ClientId: clientId,
             rowLimit:rowLimit,
@@ -56,13 +55,10 @@
             var status=response.getState();
             if(status=="SUCCESS"){
                 console.log(response.getReturnValue())
-                // component.set("v.totaldata", response.getReturnValue())
                 component.set("v.data",data.concat(response.getReturnValue().transactionList) )
-                // component.set("v.data", response.getReturnValue().transactionList)
                 component.set("v.rowOffSet",rowLimit+rowOffSet);
                 if(rowLimit+rowOffSet>=response.getReturnValue().totalRecords){
                     component.set("v.enableInfiniteLoading",false);
-                    
                     
                 }
                 else{
@@ -84,54 +80,17 @@
                 }
             }
             $A.util.removeClass(spinner, 'slds-show');
-            
             $A.util.addClass(spinner, 'slds-hide'); 
         });
         $A.enqueueAction(action);
         
     },
-    /* getmoreTransactions: function(component){
-        var action=component.get("c.retrieveTransactions");
-        var clientId=component.get("v.clientId")
-        var rows=component.get("v.rowLimit")
-        console.log(typeof rows)
-        action.setParams({
-            ClientId: clientId,
-            rowLimit: component.get("v.rowLimit"),
-            rowOffset: component.get("v.rowOffSet"),
-            isDays: component.get("v.isRecentDays"),
-            days: component.find("filterbydays").get("v.value"),
-            
-            isDateRange: component.find("v.isDateRange"),
-            startDate : new Date(component.find("startDate").get("v.value")),
-            endDate: new Date(component.find("endDate").get("v.value")),
-            type :component.find("filterbytype").get("v.value"),
-            
+    handleShowNotice : function(component,variant,header,message) {
+        component.find('notifLib').showToast({
+            "variant":variant,
+            "title":header,
+            "message": message,
+
         });
-        action.setCallback(component,function(response){
-            var status=response.getState();
-            if(status=="SUCCESS"){
-                console.log(response.getReturnValue())
-                // component.set("v.totaldata", response.getReturnValue())
-                component.set("v.totalRows",response.getReturnValue().totalRecord); 
-                component.set("v.data",data.concat( totalData.slice(offset,rowCount)))                
-                if(response.getReturnValue().totalRecords<=rows){
-                    component.set("v.enableInfiniteLoading",false);
-                    
-                    
-                }
-                else{
-                    component.set("v.enableInfiniteLoading",true);
-                    
-                    
-                }
-                
-            }
-            else{
-                
-            }
-        });
-        $A.enqueueAction(action);
-        
-    }*/
+    }
 })

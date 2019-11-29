@@ -1,12 +1,12 @@
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; font-weight: 700;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
-.THIS label { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a; font-weight: 700;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
+.THIS label { font-family: 'Open Sans', sans-serif; color: #1b253a;}
 .THIS select { font-family: 'Open Sans', sans-serif; background-color: #fdfdfd; border: 1px solid #bbb; border-radius: 0;}
 .THIS .btn1 {
     border-radius: 25px;
@@ -362,6 +362,19 @@
         font-size: 12px;
         padding: 5px 0;
         width: 100%;
+    }
+    .THIS .res_bud-months .slds-grid {
+        display: block;
+    }
+    .THIS .res_bud-months .slds-grid .slds-size_3-of-12 {
+        width: 50%;
+        float: left;
+    }
+    .THIS .bud-months {
+        width: 96%;
+    }
+    .THIS .slds-box {
+        width: 96%;
     }
 }
 @media (max-width: 768px) {

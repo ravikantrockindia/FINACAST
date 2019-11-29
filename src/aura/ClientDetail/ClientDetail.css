@@ -1,11 +1,11 @@
-.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px;}
-.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px;}
-.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;}
-.THIS h4 { font-family: 'Work Sans', sans-serif;}
-.THIS h5 { font-family: 'Work Sans', sans-serif;}
-.THIS h6 { font-family: 'Work Sans', sans-serif;}
-.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px;}
-.THIS span { font-family: 'Open Sans', sans-serif;}
+.THIS h1 { font-family: 'Work Sans', sans-serif; font-size: 25px; color: #1b253a;}
+.THIS h2 { font-family: 'Work Sans', sans-serif; font-size: 23px; color: #1b253a;}
+.THIS h3 { font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600; color: #1b253a;}
+.THIS h4 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h5 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS h6 { font-family: 'Work Sans', sans-serif; color: #1b253a;}
+.THIS p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #1b253a;}
+.THIS span { font-family: 'Open Sans', sans-serif; color: #1b253a;}
 .THIS .btn1 {
     border-radius: 25px;
     font-size: 12px;
@@ -13,6 +13,7 @@
     color: #fff;
     padding: 1px 5px;
     min-width: 120px;
+    display: inline-block;
 }
 .THIS .btn1:hover {
     color: #fff;
@@ -77,9 +78,10 @@
 }
 .THIS .health-features p .slds-icon {
     position: absolute;
-    top: 2px;
-    width: 20px;
-    left: 0;
+    top: 0px;
+    width: 16px;
+    left: 5px;
+    height: 16px;
 }
 .THIS .on-track .slds-icon {
     left: 3px !important;
@@ -187,6 +189,10 @@
 }
 .THIS .clients-details h5 b {
     font-weight: 600;
+    display:block;
+}
+.THIS .clients-details h5 b span {
+    display:block;
 }
 .THIS .canvasjs-chart-credit {
     display: none;
@@ -204,21 +210,13 @@
 }
 .THIS .chart-sticker {
     position: absolute;
-    top: 126px;
+    top: 114px;
     text-align: left;
     width: calc(100% - 20px);
 }
 .THIS .chart-sticker ul li {
-    display: inline-block;
-}
-.THIS .chart-sticker ul li:first-child {
-    margin-left:14%;
-}
-.THIS .chart-sticker ul li:nth-child(2) {
-    margin-left:15%;
-}
-.THIS .chart-sticker ul li:last-child {
-    margin-left:11%;
+    display: block;
+    text-align: center;
 }
 .THIS .chart-sticker h2 {
     font-size: 40px;
@@ -237,11 +235,14 @@
 }*/
 @media(max-width: 992px) {
     
-    .THIS .Res_dash .slds-grid {
+    .THIS .Res_dash {
         display: block;
     }
     .THIS .Res_dash .slds-size_3-of-12:first-child {
         width: 100%;
+    }
+    .THIS .Res_dash .client_managed .slds-grid {
+        display: block !important;
     }
     .THIS .Res_dash .slds-size_6-of-12 {
         float: left;
@@ -249,5 +250,23 @@
     .THIS .Res_dash .slds-size_9-of-12 {
         width: 100%;
         margin-top: 15px;
+    }
+    .THIS .flexipageBaseRecordHomeTemplateDesktop {
+        width: 100%;
+        min-width: 100%;
+    }
+    .THIS .slds-form-element__control{
+        padding-left: 0;
+    }
+    .THIS .chart-sticker {
+        top: 105px;
+    }
+}
+@media only screen and (max-width: 992px) {
+	.THIS.flexipageBaseRecordHomeTemplateDesktop {
+    	min-width: 100%;
+	}
+    .THIS .slds-template__container {
+        width: 95%;
     }
 }

@@ -119,6 +119,18 @@
                     $A.util.removeClass(spinner, "slds-show");
                     $A.util.addClass(spinner, "slds-hide");
                     helper.fetchTransactionList(component,event,helper); 
+                   var workspaceAPI = component.find("workspace");
+                   workspaceAPI.getFocusedTabInfo().then(function(response) {
+                   console.log(JSON.stringify(response))
+                   var focusedTabId = response.parentTabId;
+                   workspaceAPI.refreshTab({
+                   tabId: focusedTabId,
+                   includeAllSubtabs: true
+                   });
+                   })
+                   .catch(function(error) {
+                   console.log(error);
+                   });
                     }
                         else if (state === "ERROR") {
                             $A.util.removeClass(spinner, "slds-show");
@@ -134,7 +146,9 @@
                             }
                         }
                     });
-				  $A.get('e.force:refreshView').fire();
+                         
+				 //$A.get('e.force:refreshView').fire();
+                 
 			  $A.enqueueAction(action);  
             }
         }
@@ -155,14 +169,27 @@
             type: 'success',
             "message": "Transaction Has been Saved"           
         });
-        resultsToast.fire();   
+        resultsToast.fire();
         component.set("v.isAddNewTransaction",false);
         
         helper.fetchTransactionList(component,event,helper); 
+        
         var spinner = component.find("mySpinner");
        $A.util.removeClass(spinner, "slds-show");
        $A.util.addClass(spinner, "slds-hide");
-          $A.get('e.force:refreshView').fire();
+          //$A.get('e.force:refreshView').fire();
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });  
     },
     handleSubmit : function(component, event, helper)
     { 
@@ -219,7 +246,20 @@
         var spinner = component.find("mySpinner2");
         $A.util.removeClass(spinner, "slds-show");
         $A.util.addClass(spinner, "slds-hide");
-          $A.get('e.force:refreshView').fire();
+        
+        //  $A.get('e.force:refreshView').fire();
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });  
     },
     onSubmit:function(component, event, helper) { 
         var status1 = 0;
@@ -230,7 +270,7 @@
         //  var tdest = component.find("dest").get("v.value");
         var type = component.find("type").get("v.value");
         var tamt = component.find("amt").get("v.value");
-        var tname = component.find("name").get("v.value");
+        var tname = component.find("desc").get("v.value");
         
         var openDate=component.get("v.OpenDate");
         var toDate=component.get("v.todayDate");
@@ -241,14 +281,7 @@
             msg = "Please fill mandatory fields."
             helper.showAlertEmptyInvalidVal(component,msg);       
         }
-        else if(tdate>=toDate || tdate<=openDate) {
-            status1 = 0;
-            event.preventDefault();
-            msg = "Please enter Date between "+openDate+ " and "+toDate;
-            helper.showAlertEmptyInvalidVal(component,msg);
-          	return;
-             
-        }
+         
         else
         {
             status1 = 1;
@@ -280,6 +313,5 @@
                 event.getSource().set("v.isLoading", false); 
             });
         }
-
-     }
+   }
 })

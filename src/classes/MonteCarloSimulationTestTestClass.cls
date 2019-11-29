@@ -5,35 +5,35 @@ public class MonteCarloSimulationTestTestClass {
         Map<integer, double> returnedMap = new Map<Integer, Double>();
            returnedMap= MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Moderate', 4);
         //Integer MapSize = returnedMap.size();
-        //System.assertEquals(7, MapSize);
+         System.assert(true,!returnedMap.isEmpty());
     }
     
     @isTest static void testSimulatedConsevativeValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
          returnedMap=   MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Conservative', 4);
        // Integer MapSize = returnedMap.size();
-      //  System.assertEquals(7, MapSize);
+      	System.assert(true,!returnedMap.isEmpty());
     }
     
     @isTest static void testSimulatedBalancedValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
            returnedMap=  MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Balanced', 4);
         //Integer MapSize = returnedMap.size();
-       // System.assertEquals(7, MapSize);
+        System.assert(true,!returnedMap.isEmpty());
     }
     
     @isTest static void testSimulatedGrowthValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
             returnedMap= MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Growth', 4);
        // Integer MapSize = returnedMap.size();
-       // System.assertEquals(7, MapSize);   
+        System.assert(true,!returnedMap.isEmpty());
     }
     
     @isTest static void testSimulatedAggressiveValues() {
         Map<integer, double> returnedMap =  new Map<Integer, Double>();
            returnedMap=  MonteCarloSimulationTest.sample(1000, 50000, 500, '2021-01-01 00:00:00', 'Aggressive', 4);
        // Integer MapSize = returnedMap.size();
-      //  System.assertEquals(7, MapSize);
+       System.assert(true,!returnedMap.isEmpty());
     }
     
     @isTest static void testSimulatedVeryAggresiveValues() {

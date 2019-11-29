@@ -35,7 +35,8 @@
     <aura:attribute name="editRecordCash" type="boolean" default="False"/>
     <aura:attribute name="editRecInves" type="boolean" default="False"/>
     <aura:attribute name="editCreditRec" type="boolean" default="False"/>
-      
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
     <div class="client_managed client_managed-fbs slds-m-bottom_large">
         <div>
             <div class="slds-grid slds-p-top_small slds-p-bottom_small">

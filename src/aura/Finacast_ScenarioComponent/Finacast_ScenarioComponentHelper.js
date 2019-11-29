@@ -194,7 +194,15 @@
         });
         toastEvent.fire();  
     },
-    
+     onDoneScenarioButton2 : function(component, event, helper) {
+        component.set("v.manageScenarioStatus", false);
+        var ScenarioList=  component.get("v.scenario");
+            if($A.util.isUndefinedOrNull(ScenarioList)) {
+                $A.get('e.force:refreshView').fire();
+            }
+        this.showFieldsValue(component);
+      //  $A.get('e.force:refreshView').fire();
+    },
     sliderHelper:function(component,helper){   
     /*    var sliderIncome = new Slider('#incomeSlider001', {
             formatter: function(value) {

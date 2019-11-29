@@ -1,5 +1,6 @@
 ({
     doInit : function(component, event, helper) {
+        debugger;
         if(!component.get("v.budgetScreen")){
             var workspaceAPI = component.find("workspace");
             var namespace = component.get("v.namespace");
@@ -56,8 +57,11 @@
         }*/
     },
     createGoal:function(component, event, helper) {
+       
         component.set("v.addGoals" , false); 
         component.set("v.addGoals" , true);
+        
+        
     },
     onClickEditGoals : function(component,event,helper) {
         var clnt = component.get("v.cid")
@@ -180,9 +184,9 @@
             });
             
             action2.setCallback(this, function(response) {
-                var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+               /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
                 saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-                saveIncomeEvent.fire();
+                saveIncomeEvent.fire(); */
                 var resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
                     "title": "Delete Success!",
@@ -190,6 +194,18 @@
                     "message": "Record has been deleted successfully"           
                 });
                 resultsToast.fire();
+                var workspaceAPI = component.find("workspace1");
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log(JSON.stringify(response))
+                    var focusedTabId = response.parentTabId;
+                    workspaceAPI.refreshTab({
+                        tabId: focusedTabId,
+                        includeAllSubtabs: true
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
             });     
             $A.enqueueAction(action2);
             

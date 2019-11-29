@@ -181,8 +181,7 @@
                     dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i]});
                 }
                 var chart = new CanvasJS.Chart("chartContainer3.2995", {
-                     height:200,
-                    width:614,
+                    height:200,
                     animationEnabled: true,
                     title:{
                         //text: "Debt Forecast",
@@ -368,7 +367,7 @@
         
         component.set("v.longTermLoans", Math.round(longtermInterest));
         component.set("v.shortTermLoans", Math.round(shorttermInterest));
-        helper.debtAnalysis(component);
+       // helper.debtAnalysis(component);
     },
     
     debtAnalysis : function(component) {

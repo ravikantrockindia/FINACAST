@@ -5,8 +5,8 @@
         $A.util.removeClass(spinner, 'slds-hide');
         $A.util.addClass(spinner, 'slds-show');
         var workspaceAPI = component.find("workspace");
-                var tab=component.get("v.tabName")
-
+        var tab=component.get("v.tabName")
+        
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             var focusedTabId = response.tabId;
             workspaceAPI.setTabLabel({
@@ -24,105 +24,68 @@
             {label: 'Type', fieldName: 'FinServ__TransactionType__c', type: 'text', sortable: true} ];  
         component.set("v.columnList", columns);
         helper.getTransactions(component,event);
-      
-        /* var action=component.get("c.allTransactions");
-        var clientId=component.get("v.clientId")
-        var rows=component.get("v.rowLimit")
-        console.log(typeof rows)
-        action.setParams({
-            ClientId: clientId,
-            
-        });
-        action.setCallback(this,function(response){
-            var status=response.getState();
-            if(status=="SUCCESS"){
-                console.log(response.getReturnValue())
-                component.set("v.totaldata", response.getReturnValue())
-                component.set("v.totalRows",response.getReturnValue().length);  
-                if(response.getReturnValue().length<=rows){
-                    component.set("v.data", response.getReturnValue())
-                    component.set("v.enableInfiniteLoading",false);
-                    
-                    
-                }
-                else{
-                    component.set("v.enableInfiniteLoading",true);
-                    
-                    component.set("v.data", response.getReturnValue().slice(0,rows));
-                    
-                }
-            }
-            else{
-                
-            }
-        });
-        $A.enqueueAction(action);*/
         
     },
     updateColumnSorting: function (cmp, event, helper) {
         var spinner =cmp.find("spinner");
         $A.util.removeClass(spinner, 'slds-hide');
         $A.util.addClass(spinner, 'slds-show');       
-        
         setTimeout($A.getCallback(function() {
             var fieldName = event.getParam('fieldName');
             var sortDirection = event.getParam('sortDirection');
             cmp.set("v.sortedBy", fieldName);
             cmp.set("v.sortedDirection", sortDirection);
             helper.sortData(cmp, fieldName, sortDirection);
-            //  cmp.set('v.isLoading', false);
             $A.util.removeClass(spinner, 'slds-show');
-            
             $A.util.addClass(spinner, 'slds-hide'); 
         }), 0);
     },
     
     loadMoreData:function(component,event,helper){
         event.getSource().set("v.isLoading", true);
-        
         helper.getTransactions(component,event);
         
-        /*var rows=component.get("v.rowLimit")
-        var offset=component.get("v.rowOffSet")
-        var rowCount=component.get("v.totalRows")
-        var totalData=component.get("v.totaldata");
-        var data=component.get("v.data");
-        if(rows+offset>=rowCount){
-            component.set("v.data",data.concat( totalData.slice(offset,rowCount)));
-            component.set("v.enableInfiniteLoading",false);
-            
-        }
-        else{
-            component.set("v.data", data.concat( totalData.slice(offset,rows+offset)));
-            component.set("v.rowOffSet",offset+rows);
-            
-        }*/
     },
+    
     recentDays:function(component,event,helper){
         var changeValue = event.target.value;
+        component.set("v.enableSearch",false);
+        var moreoption=component.find('moreOptions');
+        $A.util.removeClass(moreoption,"slds-hide");
+        $A.util.addClass(moreoption,"slds-show");
         if(changeValue=='days'){
             
             component.set("v.isRecentDays", true);
             component.set("v.isDateRange",false);
             component.find("endDate").set("v.value","");
             component.find("startDate").set("v.value","");
+            component.find("filterbytype").set("v.value","");
+            component.find("options").set("v.value","");
+            var empty=new Array();
+            
+            component.set("v.subOptions",empty )
             var spinner =component.find("spinner");
             $A.util.removeClass(spinner, 'slds-hide');
             $A.util.addClass(spinner, 'slds-show');       
             component.set("v.rowOffSet",0);
             component.set("v.rowLimit",20);
             var value=component.find("filterbydays").get("v.value");
-            var empty=new Array();
             component.set("v.data",empty);
             
             helper.getTransactions(component);
-       
+            
             
         }
         else if(changeValue=='dateRange'){
             
             component.set("v.isRecentDays", false);
             component.find("filterbydays").set("v.value","")
+            component.find("filterbytype").set("v.value","");
+            component.find("options").set("v.value","");
+            var empty=new Array();
+            
+            component.set("v.subOptions",empty )
+            
             component.set("v.isDateRange",true)
             var spinner =component.find("spinner");
             $A.util.removeClass(spinner, 'slds-hide');
@@ -130,72 +93,80 @@
             component.set("v.rowOffSet",0);
             component.set("v.rowLimit",20);
             var value=component.find("filterbydays").get("v.value");
-            var empty=new Array();
             component.set("v.data",empty);
             
             helper.getTransactions(component);
-  
+            
         }
         
         console.log(component.get("v.isRecentDays"))
     },
+    
     filter:function(component,event,helper){
         var spinner =component.find("spinner");
         $A.util.removeClass(spinner, 'slds-hide');
         $A.util.addClass(spinner, 'slds-show');       
-        component.set("v.rowOffSet",0);
-        component.set("v.rowLimit",20);
-        var value=component.find("filterbydays").get("v.value");
-        var empty=new Array();
-        component.set("v.data",empty);
         
-        helper.getTransactions(component);
-
-        /* var action=component.get("c.transactionsfilterbydays");
-        var clientId=component.get("v.clientId")
-        var rows=component.get("v.rowLimit")
-        console.log(typeof rows)
-        action.setParams({
-            ClientId: clientId,
-            days : value
+        if(component.get("v.isRecentDays")){
+            var value= component.find("filterbydays").get("v.value")
+            if($A.util.isUndefinedOrNull(value) || value==""){
+                $A.util.removeClass(spinner, 'slds-show');
+                $A.util.addClass(spinner, 'slds-hide'); 
+                helper.handleShowNotice(component,"error","Error!","Please select an option from Recent Days");
+                return;
+            }
+            component.set("v.rowOffSet",0);
+            component.set("v.rowLimit",20);
+            var value=component.find("filterbydays").get("v.value");
+            var empty=new Array();
+            component.set("v.data",empty);
             
-        });
-        action.setCallback(this,function(response){
-            var status=response.getState();
-            if(status=="SUCCESS"){
-                console.log(response.getReturnValue())
-                component.set("v.totaldata", response.getReturnValue())
-                component.set("v.totalRows",response.getReturnValue().length);  
-                if(response.getReturnValue().length<=rows){
-                    component.set("v.data", response.getReturnValue())
-                    component.set("v.enableInfiniteLoading",false);
-                    
-                    
-                }
-                else{
-                    component.set("v.enableInfiniteLoading",true);
-                    
-                    component.set("v.data", response.getReturnValue().slice(0,rows));
-                    
-                }
-            }
-            else{
+            
+            
+        }
+        if(component.get("v.isDateRange")){
+            var start= component.find("startDate").get("v.value")
+            var end= component.find("endDate").get("v.value")
+            
+            if($A.util.isUndefinedOrNull(start) || start==""){
+                $A.util.removeClass(spinner, 'slds-show');
+                $A.util.addClass(spinner, 'slds-hide'); 
+                helper.handleShowNotice(component,"error","Error!","Please enter Start date ");
                 
+                return;
             }
-        });
-        $A.enqueueAction(action);*/
+            if($A.util.isUndefinedOrNull(end) || end==""){
+                $A.util.removeClass(spinner, 'slds-show');
+                $A.util.addClass(spinner, 'slds-hide'); 
+                helper.handleShowNotice(component,"error","Error!","Please enter End date");
+                
+                return;
+            }
+            if(start>end){
+                $A.util.removeClass(spinner, 'slds-show');
+                $A.util.addClass(spinner, 'slds-hide'); 
+                helper.handleShowNotice(component,"error","Error!","Looks like you have selected Start Date greater than End Date");
+                
+                return;
+            }
+            component.set("v.rowOffSet",0);
+            component.set("v.rowLimit",20);
+            var value=component.find("filterbydays").get("v.value");
+            var empty=new Array();
+            component.set("v.data",empty);
+            
+        }
+        helper.getTransactions(component);
         
     },
     handleRowAction: function (component, event) {
         var selectedRows = event.getParam('selectedRows');
         console.log(JSON.stringify(selectedRows))
-        // var rows=component.get("v.rowsToDelete");
         var rowIds=new Array();
         for(var i=0;i< selectedRows.length;i++){
             console.log(JSON.stringify(selectedRows[i]));
             rowIds.push(selectedRows[i].Id);
         }
-        // rows.push(selectedRow[0].Id);
         console.log(rowIds)
         if(rowIds.length>0){
             component.set("v.disabled",false);
@@ -205,7 +176,6 @@
             
         }
         component.set("v.rowsToDelete",rowIds);
-        // cmp.set('v.selectedRowsCount', selectedRows.length);
     },
     deleteTransaction:function(component,event,helper){
         var spinner =component.find("spinner");
@@ -226,119 +196,17 @@
                 component.set("v.rowOffSet",0);
                 component.set("v.rowLimit",20);
                 helper.getTransactions(component);
-               
+                
             }
             
         });
         $A.enqueueAction(action);
     },
-    dateSearch:function(component,event,helper){
-        var spinner =component.find("spinner");
-        $A.util.removeClass(spinner, 'slds-hide');
-        $A.util.addClass(spinner, 'slds-show');     
-        var empty=new Array();
-        component.set("v.data",empty);
-        component.set("v.rowOffSet",0);
-        component.set("v.rowLimit",20);
-        helper.getTransactions(component);
-
-        /*var action=component.get("c.transactionByDateRange");
-        var clientId=component.get("v.clientId")
-        var rows=component.get("v.rowLimit")
-        console.log(typeof rows)
-        debugger;
-        console.log(typeof component.find("startDate").get("v.value"))
-        console.log(new Date(component.find("endDate")))
-        action.setParams({
-            ClientId: clientId,
-            startDate : new Date(component.find("startDate").get("v.value")),
-            endDate: new Date(component.find("endDate").get("v.value"))
-            
-        });
-        action.setCallback(this,function(response){
-            var status=response.getState();
-            if(status=="SUCCESS"){
-                console.log(response.getReturnValue())
-                component.set("v.totaldata", response.getReturnValue())
-                component.set("v.totalRows",response.getReturnValue().length);  
-                if(response.getReturnValue().length<=rows){
-                    component.set("v.data", response.getReturnValue())
-                    component.set("v.enableInfiniteLoading",false);
-                    
-                    
-                }
-                else{
-                    component.set("v.enableInfiniteLoading",true);
-                    
-                    component.set("v.data", response.getReturnValue().slice(0,rows));
-                    
-                }
-            }
-            else{
-                
-            }
-        });
-        $A.enqueueAction(action);*/
-    },
     
-    filterByTransactionType:function(component,event, helper){
-        var spinner =component.find("spinner");
-        $A.util.removeClass(spinner, 'slds-hide');
-        $A.util.addClass(spinner, 'slds-show');        // We use the setTimeout method here to simulate the async
-        var empty=new Array();
-        component.set("v.data",empty);
-        component.set("v.rowOffSet",0);
-        component.set("v.rowLimit",20);
-        helper.getTransactions(component);
-
-        /* var action=component.get("c.transactionByType");
-        var clientId=component.get("v.clientId")
-        var rows=component.get("v.rowLimit")
-        console.log(typeof rows)
-        debugger;
-        console.log(typeof component.find("startDate").get("v.value"))
-        console.log(new Date(component.find("endDate")))
-        action.setParams({
-            ClientId: clientId,
-            type :component.find("filterbytype").get("v.value"),
-            
-        });
-        action.setCallback(this,function(response){
-            var status=response.getState();
-            if(status=="SUCCESS"){
-                console.log(response.getReturnValue())
-                component.set("v.totaldata", response.getReturnValue())
-                component.set("v.totalRows",response.getReturnValue().length);  
-                if(response.getReturnValue().length<=rows){
-                    component.set("v.data", response.getReturnValue())
-                    component.set("v.enableInfiniteLoading",false);
-                    
-                    
-                }
-                else{
-                    component.set("v.enableInfiniteLoading",true);
-                    
-                    component.set("v.data", response.getReturnValue().slice(0,rows));
-                    
-                }
-            }
-            else{
-                
-            }
-        });
-        $A.enqueueAction(action);*/
-    },
     filterWithOptions:function(component,event,helper){
-        var spinner =component.find("spinner");
-        $A.util.removeClass(spinner, 'slds-hide');
-        $A.util.addClass(spinner, 'slds-show');        // We use the setTimeout method here to simulate the async
-        var empty=new Array();
-        component.set("v.data",empty);
-        component.set("v.rowOffSet",0);
-        component.set("v.rowLimit",20);
-        var data=component.get("v.data");
-        var clientId=component.get("v.clientId")
         
+        
+        var clientId=component.get("v.clientId")
         var action=component.get("c.getSubOptions");
         
         console.log(component.find("v.isDateRange"))
@@ -350,16 +218,15 @@
         });
         action.setCallback(component,function(response){
             var status=response.getState();
+            
             if(status=="SUCCESS"){
                 console.log(response.getReturnValue())
-                // component.set("v.totaldata", response.getReturnValue())
                 component.set("v.subOptions",response.getReturnValue() )
                 if(component.get("v.subOptions").length>0){
+                    debugger;
                     component.find("sub-options").set("v.value","");
                 }               
-                        helper.getTransactions(component);
-
-                // component.set("v.data", response.getReturnValue().transactionList)
+                
                 
                 
             }
@@ -369,17 +236,6 @@
         });
         $A.enqueueAction(action);
         
-    },
-    filterWithSubOptions:function(component,event,helper){
-        var spinner =component.find("spinner");
-        $A.util.removeClass(spinner, 'slds-hide');
-        $A.util.addClass(spinner, 'slds-show');        // We use the setTimeout method here to simulate the async
-        var empty=new Array();
-        component.set("v.data",empty);
-        component.set("v.rowOffSet",0);
-        component.set("v.rowLimit",20);
-        helper.getTransactions(component);
-         
     },
     
 })

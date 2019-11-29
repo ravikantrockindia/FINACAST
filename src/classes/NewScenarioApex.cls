@@ -226,13 +226,27 @@ public class NewScenarioApex {
         return wrapper;  
     }//end init  
     
-    
-    
+//    
+    @auraEnabled
+    public static List<Scenario__c> recordsaveNewScenario(String clientId){
+        List<Scenario__c> ls=new List<Scenario__c>();
+        ls=[select Name from Scenario__c where Client_Id__c = :clientId];
+        system.debug('ls '+ls);
+        return ls;
+    }
+    @auraEnabled
+    public static List<Scenario_Savings__c > goalListScenario(id clientId){
+        List<Scenario_Savings__c > ls=new List<Scenario_Savings__c >();
+       // ls=[select Id, Name from Scenario_Savings__c where Client_Id__c = :clientId AND (Type__c='401K' OR Type__c='529 Account' OR Type__c='Cash' OR Type__c='CD' OR Type__c='Checking' OR Type__c='IRA' OR Type__c='Money Market' OR Type__c='Other' OR Type__c='Retail Brokerage' OR Type__c='Roth IRA'  OR Type__c='Savings')];                                                                                                                                                                                                                                  ];
+       ls=[select Id,Name from Scenario_Savings__c where Scenario__c = :clientId AND (Type__c='401K' OR Type__c='529 Account' OR Type__c='Cash' OR Type__c='CD' OR Type__c='Checking' OR Type__c='IRA' OR Type__c='Money Market' OR Type__c='Other' OR Type__c='Retail Brokerage' OR Type__c='Roth IRA'  OR Type__c='Savings')];
+        system.debug('ls '+ls);
+        return ls;
+    }
+//    
      @auraEnabled
    public static void saveNewScenario(String name, String clientId){
         try{
             Account clientAccount = [select name from Account where id = :clientId];
-            
             //create Scenario
             Scenario__c scene = new Scenario__c();
             scene.Name = name;
@@ -348,7 +362,7 @@ public class NewScenarioApex {
             list<Scenario_Debt__c> sceDebt = new list<Scenario_Debt__c>();
             	System.debug('loan'+loanList);
 			
-             Scenario_Debt__c loans = new Scenario_Debt__c();
+            Scenario_Debt__c loans = new Scenario_Debt__c();
             for(FinServ__FinancialAccount__c credit :loanList ){
                  loans = new Scenario_Debt__c();
                 System.debug(credit);
@@ -520,6 +534,7 @@ public class NewScenarioApex {
     }
     @AuraEnabled
     public static AmtContriWrapper getAmtContri (String accId, Decimal currentAmt, Date tarDate, Decimal tarAmt) {
+        system.debug('AcciD'+accId);
         AmtContriWrapper wrapper = new AmtContriWrapper();
         Double iRate = 0;
         try{
@@ -577,12 +592,17 @@ public class NewScenarioApex {
         return wrapper;
         
     }
+    
      @auraEnabled
     public static string deleteScenario(id ScenarioId) {
-        
+        String name;
         Scenario__c  ScenarioItem = [Select id,name from Scenario__c  where id =:ScenarioId];
-        delete ScenarioItem;
-        return ScenarioItem.name;
+        if (Schema.sObjectType.Scenario__c.isDeletable()) {
+            name=ScenarioItem.name;
+            delete ScenarioItem;
+            
+        }
+         return name;
     }
     //to monthlyContribution called from apex function getAmtContri 
     public static Decimal getMonthlyContribution(Decimal currentAmount, Decimal tarAmt, Date targetDate, Double  iRate ) {

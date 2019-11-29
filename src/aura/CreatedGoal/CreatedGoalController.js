@@ -1,12 +1,12 @@
 ({	
     doInit:function(component , event , helper){
-         var workspaceAPI = component.find("workspace");
+        /* var workspaceAPI = component.find("workspace1");
         workspaceAPI.getAllTabInfo().then(function(response) {
             //console.log(JSON.stringify(response));
        })
         .catch(function(error) {
             console.log(error);
-        });
+        });*/
         component.set("v.createModal1",true);
         
         component.set("v.addGoals",false);
@@ -29,16 +29,29 @@
         console.log('the cross is : '+ cmpTarget );
         $A.util.addClass(cmpTarget, 'hideDiv');
         component.set("v.isActive",false);
-        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+        
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+        /*var saveIncomeEvent = component.getEvent("saveIncomeEvent");
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         
-        saveIncomeEvent.fire();
+        saveIncomeEvent.fire();*/
     },
     
     close : function(component, event, helper) {
         
         
-        var cmpTarget = component.find('exampleModal1');
+      /*  var cmpTarget = component.find('exampleModal1');
         
         console.log('the cross is : '+ cmpTarget );
        $A.util.addClass(cmpTarget, 'hideDiv');
@@ -47,8 +60,21 @@
        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         
-       saveIncomeEvent.fire();
-          $A.get('e.force:refreshView').fire();
+       saveIncomeEvent.fire();*/
+         // $A.get('e.force:refreshView').fire();
+        
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
          
 
     },
@@ -66,17 +92,21 @@
             }
         });
         evt.fire();*/
-        var cmpTarget = component.find('exampleModal1');
+         debugger;
         
-        console.log('the cross is : '+ cmpTarget );
-        $A.util.addClass(cmpTarget, 'hideDiv');
-        component.set("v.isActive",false);
-          component.set("v.addGoals",true);
+       // component.set("v.addGoals",true);
         var saveIncomeEvent = component.getEvent("openModal");
         saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
         
-        saveIncomeEvent.fire();
-        debugger;
+       saveIncomeEvent.fire();
+       // var cmpTarget = component.find('exampleModal1');
+        
+      //  console.log('the cross is : '+ cmpTarget );
+        //$A.util.addClass(cmpTarget, 'hideDiv');
+          component.set("v.isActive",false);
+
+        
+     
         //  component.set("v.createModal",false);
         // component.destroy();
         /*var cmpTarget = component.find('exampleModal');

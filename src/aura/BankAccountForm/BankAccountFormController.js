@@ -50,7 +50,7 @@
                 component.set("v.investmentRec",investmentRec);
             });
             var cashId=component.get("v.financialAccount.Id");
-             
+            
             var action3 = component.get("c.ClientCashNameRecord");
             action3.setParams({
                 cashId : cashId
@@ -59,7 +59,7 @@
                 var state  = a.getState();
                 var  cashRecordName=a.getReturnValue();
                 component.set("v.cashRecordName",cashRecordName);
-                 
+                
             });
             $A.enqueueAction(action);
             $A.enqueueAction(action2);
@@ -79,7 +79,8 @@
             
             $A.util.addClass(spinner, "slds-show");
             helper.validateInput(component,event);
-           /* event.preventDefault();       // stop the form from submitting
+            
+            /* event.preventDefault();       // stop the form from submitting
             var fields = event.getParam('fields');
             fields.FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");
             component.find('form').submit(fields);*/
@@ -87,19 +88,38 @@
             console.log(e.message)
         }  
         
+        
+        
     },
     handleSuccess : function(component, event, helper) {
-        component.set("v.showInModal",false)
         var spinner = component.find("mySpinner");
-        
         $A.util.removeClass(spinner, "slds-show");
-        
         $A.util.addClass(spinner, "slds-hide");
         helper.showNotfication(component,"The record has been saved successfully.","success","Success!");    
-        
-        var event = component.getEvent("lightningEvent");
-        
-        event.fire();
+        var selectedAccountType=component.get("v.selectedAccountType");
+       // alert(selectedAccountType)
+        if(selectedAccountType==""){
+                    component.set("v.showInModal",false)
+
+            var event = component.getEvent("lightningEvent");
+            event.fire();
+            
+        }
+        else{
+            var workspaceAPI = component.find("workspace");
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                debugger;
+                console.log(JSON.stringify(response))
+                var focusedTabId = response.parentTabId;
+                workspaceAPI.refreshTab({
+                    tabId: focusedTabId,
+                    includeAllSubtabs: true
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
     },
     handleError: function(component,event,helper){
         
@@ -124,8 +144,8 @@
         $A.util.removeClass(spinner, "slds-hide");
         
         $A.util.addClass(spinner, "slds-show");
-       helper.validateInput(component,event); 
-       /* if(validate){
+        helper.validateInput(component,event); 
+        /* if(validate){
                event.preventDefault();       // stop the form from submitting
             var fields = event.getParam('fields');
             fields.FinacastOpeningBalance__c = component.find("currentBalance").get("v.value");

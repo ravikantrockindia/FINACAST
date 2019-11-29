@@ -42,6 +42,7 @@
       //  alert(records);
     },
     getmonthlybudget : function(component, event, helper) {
+        debugger;
        // console.log('SAY'+component.get('v.namespace'));
        // 
         //alert(event.getSource().get("v.value"));
@@ -234,6 +235,7 @@
         });
         action.setCallback(this, function(response) {
             var recordType = response.getReturnValue();
+            
             component.set("v.recordTypeId",recordType);
             component.set("v.addIncome",true);
             component.set("v.editRecordIncome",false);
@@ -344,7 +346,12 @@
     
     //----------------------Method to Add Goal records-----------------------------//
     createGoalRecord : function(component , event , helper){
+        debugger;
+               component.set("v.addGoals" , false);
+
         component.set("v.addGoals" , true);
+          
+       // component.set("v.addGoals" , true);
     },
     
     //----------------------Method to Edit Income records-----------------------------//
@@ -379,6 +386,7 @@
         component.set("v.editrecidLoan",event.getSource().get("v.value"));
         //-----------------LoanRecordEdit-----------------------------------------//
         component.set("v.editRecordLoan",true);
+        
     },
     //----------------------Method to Edit transaction records-----------------------------//
     onClickEditIncomeTransaction : function(component,event,helper) {
@@ -478,46 +486,103 @@
         });
         
         action2.setCallback(this, function(response) {   
-            
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+            var res=response.getReturnValue();
+            if(res==true){
+           /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
             saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            saveIncomeEvent.fire();
-            var resultsToast = $A.get("e.force:showToast");
-            resultsToast.setParams({
-                "title": "Delete Success!",
-                type: 'success',
-                "message": "Record has been deleted successfully"           
-
-            });
-            resultsToast.fire();  
-        });     
+            saveIncomeEvent.fire();*/
+                
+                 helper.showNotfication(component,'Record has been deleted successfully','success','Delete Success!');
+                var workspaceAPI = component.find("workspace");
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log(JSON.stringify(response))
+                    var focusedTabId = response.parentTabId;
+                    workspaceAPI.refreshTab({
+                        tabId: focusedTabId,
+                        includeAllSubtabs: true
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+            }
+            else if(res==false){
+                var action3 = component.get("c.ClientNameIncRecord");
+                action3.setParams({
+                    'incId' : event.getSource().get('v.value')
+                    
+                });
+                
+                action3.setCallback(this, function(response) {
+                    var res=response.getReturnValue();
+                    
+                    var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+                    saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+                    saveIncomeEvent.fire();  
+                    helper.showNotfication(component,'There are transaction associated with this '+ res +' account' ,'Error','Delete Error!');
+                });     
+                $A.enqueueAction(action3);
+             
+            } 
+        });
+            
         $A.enqueueAction(action2);   
             return true;
         }else{
             return false;
         }
     },
-    expenseClickDelete : function(component,event,helper) {  
+    expenseClickDelete : function(component,event,helper) { 
+         
       var retVal = confirm("Are you sure you want to delete the expense?");
         if( retVal == true ) {  
         var action2 = component.get("c.deleteIncome");
+           
         action2.setParams({
             'IncomeId' : event.getSource().get('v.value')
+             
         });
         
         action2.setCallback(this, function(response) {   
-            
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+            var res=response.getReturnValue();
+            if(res==true){
+           /* var saveIncomeEvent = component.getEvent("saveIncomeEvent");
             saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            saveIncomeEvent.fire();
-            var resultsToast = $A.get("e.force:showToast");
-            resultsToast.setParams({
-                "title": "Delete Success!",
-                type: 'success',
-                "message": "Record has been deleted successfully"           
-
-            });
-            resultsToast.fire();  
+            saveIncomeEvent.fire();*/
+                
+                helper.showNotfication(component,'Record has been deleted successfully','success','Delete Success!');
+                var workspaceAPI = component.find("workspace");
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log(JSON.stringify(response))
+                    var focusedTabId = response.parentTabId;
+                    workspaceAPI.refreshTab({
+                        tabId: focusedTabId,
+                        includeAllSubtabs: true
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+           
+            }
+            else if(res==false){
+                var action3 = component.get("c.ClientNameIncRecord");
+                action3.setParams({
+                    'incId' : event.getSource().get('v.value')
+                    
+                });
+                
+                action3.setCallback(this, function(response) {
+                    var res=response.getReturnValue();
+                    
+                    var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+                    saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+                    saveIncomeEvent.fire();  
+                    helper.showNotfication(component,'There are transaction associated with this '+ res +' account' ,'Error','Delete Error!');
+                });     
+                $A.enqueueAction(action3);
+             
+            }
         });     
         $A.enqueueAction(action2);   
             return true;
@@ -565,19 +630,46 @@
             'loanId' : event.getSource().get('v.value')
         });
         
-        action2.setCallback(this, function(response) {
-            var saveIncomeEvent = component.getEvent("saveIncomeEvent");
-            saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
-            saveIncomeEvent.fire();
-            var resultsToast = $A.get("e.force:showToast");
-            resultsToast.setParams({
-                "title": "Delete Success!",
-                type: 'success',
-                "message": "Record has been deleted successfully"           
-            });
-            resultsToast.fire();
-        });     
-        $A.enqueueAction(action2);
+            action2.setCallback(this, function(response) {
+                var res=response.getReturnValue();
+                if(res==true){
+                    var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+                    saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+                    saveIncomeEvent.fire();
+                    helper.showNotfication(component,'Record has been deleted successfully','success','Delete Success!');
+                    var workspaceAPI = component.find("workspace");
+                    workspaceAPI.getFocusedTabInfo().then(function(response) {
+                        console.log(JSON.stringify(response))
+                        var focusedTabId = response.parentTabId;
+                        workspaceAPI.refreshTab({
+                            tabId: focusedTabId,
+                            includeAllSubtabs: true
+                        });
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                    
+                }else{
+                    var action3 = component.get("c.ClientNameLoanRecord");
+                    action3.setParams({
+                        'loanId' : event.getSource().get('v.value')
+                    });
+                    
+                    action3.setCallback(this, function(response) {
+                        var res=response.getReturnValue();
+                         
+                        var saveIncomeEvent = component.getEvent("saveIncomeEvent");
+                        saveIncomeEvent.setParam("clientFromEvent", component.get("v.client"));
+                        saveIncomeEvent.fire();  
+                        helper.showNotfication(component,'There are transaction associated with this '+ res +' account' ,'Error','Delete Error!');
+                    });     
+                    $A.enqueueAction(action3);
+                    
+                    
+                }
+            });     
+            $A.enqueueAction(action2);
             return true;
         }else{
             return false;

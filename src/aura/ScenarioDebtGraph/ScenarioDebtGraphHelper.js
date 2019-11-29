@@ -166,8 +166,7 @@
                     dps.push({x: new Date(chartLabels[i], 0) , y: chartDataSet[i]});
                 }
                 var chart = new CanvasJS.Chart("chartContainer3.29959", {
-                    height: 300, //in pixels
-                width: 600,
+                   
                     animationEnabled: true,
                     title:{
                         //text: "Debt Forecast",

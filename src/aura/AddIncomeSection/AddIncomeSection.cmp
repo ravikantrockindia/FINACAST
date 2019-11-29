@@ -29,25 +29,25 @@
                             <div class=" " title="Opportunity Name">Index</div>
                         </th>-->
                                 <th class="" scope="col">
-                                    <span class = "highlight"  style="color: red">* </span>Income
+                                    Income <span class = "highlight"  style="color: red"> * </span>
                                 </th>
                                 <th class="" scope="col">
-                                    <span class = "highlight"  style="color: red">* </span>  Amount after tax per pay check($)
+                                    Amount after tax per pay check($) <span class = "highlight"  style="color: red"> * </span>  
                                 </th>
                                 <th class="" scope="col">
-                                    <span class = "highlight"  style="color: red">* </span>Frequency
+                                    Frequency <span class = "highlight"  style="color: red"> * </span>
                                 </th>
                                 <th class="" scope="col">
                                     Start Date
                                 </th>
                                 <th class="" scope="col">
-                                    <span class = "highlight"  style="color: red">* </span> End Date
+                                    End Date
                                 </th>
                                 <th class="" scope="col">
-                                    <span class = "highlight"  style="color: red">* </span>Yearly growth (%)
+                                    Yearly growth (%) <span class = "highlight"  style="color: red"> * </span>
                                 </th>
                                 <th class="" scope="col">
-                                    <span class = "highlight"  style="color: red">* </span>  Approximate total income tax rate (%)
+                                    Approximate total income tax rate (%) <span class = "highlight"  style="color: red"> * </span>
                                 </th>
                                 
                                 <th class="" scope="col">
@@ -84,7 +84,7 @@
                                         <lightning:input type="date" name="{!'row_'+index+'_startdate'}" disabled="{!i.disabled}"  value="{!i.income.startDate}" aura:id="startdate" variant="label-hidden"/>
                                     </td>
                                     <td class="dob">
-                                        <lightning:input type="date" disabled="{!i.disabled}"  name="{!'row_'+index+'_enddate'}" required="true" value="{!i.income.endDate}" messageWhenBadInput="End Date should be greater or equal to start date" messageWhenValueMissing="Complete this field" aura:id="enddate" variant="label-hidden" onblur="{!c.onblur}"/>
+                                        <lightning:input type="date" disabled="{!i.disabled}"  name="{!'row_'+index+'_enddate'}" value="{!i.income.endDate}" messageWhenBadInput="End Date should be greater or equal to start date" aura:id="enddate" variant="label-hidden" onblur="{!c.onblur}"/>
                                     </td>
                                     <td>
                                         <lightning:input value="{!i.income.growthRate}" type="number" required="true" disabled="{!i.disabled}" messageWhenValueMissing="Complete this field" step="0.01" formatter="percent-fixed" aura:id = "fields" min="0" messageWhenRangeUnderflow="Yearly growth cannot be less than 0" messageWhenStepMismatch="Enter value upto 2 decimal places" max="100" messageWhenRangeOverflow="Yearly growth cannot be more than 100"/>

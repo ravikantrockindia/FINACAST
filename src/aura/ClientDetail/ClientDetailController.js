@@ -1,6 +1,21 @@
 ({
-	doInit : function(component, event, helper) {    
-         var action=component.get('c.getNamespace');
+	doInit : function(component, event, helper) {  
+	 var workspaceAPI = component.find("workspace");
+            var namespace = component.get("v.namespace");
+            console.log('namespace value----'+ namespace);
+            var tab=component.get("v.tabName")
+            console.log('tab',tab)
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                var focusedTabId = response.tabId;
+                console.log('tab id',focusedTabId )
+                workspaceAPI.setTabLabel({
+                    label: 'Financial Summary'
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });    
+       /*  var action=component.get('c.getNamespace');
         console.log('id hello----------'+component.get('v.recordId'));
         action.setCallback(this, function(response) {
             var state = response.getState();
@@ -15,6 +30,6 @@
         eve.fire();
             }           
         });
-        $A.enqueueAction(action);
+        $A.enqueueAction(action);*/
 	}
 })

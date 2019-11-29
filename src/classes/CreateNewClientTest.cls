@@ -63,7 +63,9 @@ public class CreateNewClientTest {
         Id accountId=a.Id;
         Test.startTest();
         CreateNewClient.updateContact(a.Id, '3435454','ac@def.com','Male','2019-02-01');
+        List<Contact> c=[Select Id, FinServ__Gender__c, Email, Birthdate, AccountId, Phone from Contact where AccountId=:a.Id limit 1];
         Test.stopTest();
+        System.assertEquals(c[0].FinServ__Gender__c,'Male');
         
     }
     
@@ -73,9 +75,11 @@ public class CreateNewClientTest {
         Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
         
         Id accountId=a.Id;
+        List<Contact> con=new List<Contact>();
         Test.startTest();
-        CreateNewClient.getContact(a.Id);
+       con= CreateNewClient.getContact(a.Id);
         Test.stopTest();
+        system.assert(con.size()!=0);
         
     }
     
@@ -84,10 +88,20 @@ public class CreateNewClientTest {
         
         Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
         
+      
+        Budget b=new Budget();
+        b.primaryOwnerId=a.Id;
+        
+        CreateNewClient.wrapIncome l = new CreateNewClient.wrapIncome(b);
+        CreateNewClient.wrapIncome li = new CreateNewClient.wrapIncome(b,false); 
+        // CreateNewClient.wrapIncome l=new CreateNewClient.wrapIncome(a.Id);
         Id accountId=a.Id;
         Test.startTest();
-        CreateNewClient.addIncome(a.Id);
+        l= CreateNewClient.addIncome(a.Id);
+        li=CreateNewClient.addIncome(a.Id);
         Test.stopTest();
+        system.assert(l!=null);
+        system.assert(li!=null);
         
     }
     
@@ -95,12 +109,21 @@ public class CreateNewClientTest {
     static void addExpenseTest(){
         
         Account a=[Select Id, RecordTypeId from Account where Name='test' Limit 1];
+        //Budget bg=[select Id from Budget where Name='testi' and Client__c=:a.Id];
+        //
+        Budget b=new Budget();
+        b.primaryOwnerId=a.Id;
         
+        CreateNewClient.wrapExpense l = new CreateNewClient.wrapExpense(b);
+        CreateNewClient.wrapExpense li = new CreateNewClient.wrapExpense(b,false); 
         Id accountId=a.Id;
         Test.startTest();
-        CreateNewClient.addExpense(a.Id);
-        Test.stopTest();
+        l= CreateNewClient.addExpense(a.Id);
+        li= CreateNewClient.addExpense(a.Id);
         
+        Test.stopTest();
+        system.assert(l!=null);
+        system.assert(li!=null);
     }
     
     

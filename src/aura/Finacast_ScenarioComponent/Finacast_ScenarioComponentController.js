@@ -1,4 +1,4 @@
-({
+({	
     toggleSection : function(component, event, helper) {
         // dynamically get aura:id name from 'data-auraId' attribute
         var sectionAuraId = event.target.getAttribute("data-auraId");
@@ -18,6 +18,8 @@
         }
     ,
     onScenarioDeleteIcon: function(component, event, helper){
+        var retVal = confirm("Are you sure you want to delete this scenario?");
+        if( retVal == true ) { 
         var recordId = event.getSource().get('v.value');
         //alert(recordId);
          var action = component.get("c.deleteScenario");
@@ -39,7 +41,12 @@
              helper.helperMethod(component);
 			 $A.get('e.force:refreshView').fire();          
         });     
-        $A.enqueueAction(action);   
+        $A.enqueueAction(action);  
+            return true;
+        }
+        else{
+            return false;
+        }
        
     },
     doInit1:function(component,event,helper){   
@@ -371,7 +378,8 @@
             component.set("v.contribution","0");
         }
         if($A.util.isUndefinedOrNull(component.find("bankAccount").get("v.value")) != true || component.find("bankAccount").get("v.value") != "")
-        {
+        {	
+         
             var action = component.get("c.getAmtContri");
             action.setParams ({
                 accId : component.find("bankAccount").get("v.value"),
@@ -381,7 +389,8 @@
             });
             action.setCallback(this, function(response) {
                 console.log('resp',response.getReturnValue().currentAmt);
-                component.set("v.balance", response.getReturnValue().currentAmt)  
+                component.set("v.balance", response.getReturnValue().currentAmt) 
+                //component.set("v.balance",  component.find("currentAmount").get("v.value"));
                 component.set("v.contribution", response.getReturnValue().monthlyContri)
             });
             $A.enqueueAction(action);
@@ -543,7 +552,8 @@
     },
     
     onClickChangeScenario : function(component, event, helper) {
-       // alert(component.find('scenarioList').get("v.name"));
+         
+       // alert(component.find('scenarioList').get("v.value"));
         var s = component.find('scenarioList').get("v.value");
         
         component.set("v.scene", component.find('scenarioList').get("v.value"));
@@ -607,39 +617,111 @@
     
     //new method
     onNewScenarioSaveSuccess : function(component, event, helper) {
+        //debugger;
         console.log('Scenario Saving');
+   		var ispresent=false;
+        try{
         if(($A.util.isUndefinedOrNull(component.find("sceneName").get("v.value"))) != true && component.find("sceneName").get("v.value") !="" )
-        {
-            var action = component.get("c.saveNewScenario");
-            action.setParams({
-                name : component.find("sceneName").get("v.value"),
+        {	
+            //
+            
+            var action2 = component.get("c.recordsaveNewScenario");
+            action2.setParams({
                 clientId : component.get("v.cid"),
             });
-            
-            action.setCallback(this, function(response){ 
-                console.log('resonse after save: ' + JSON.stringify(response.getReturnValue()));
+            action2.setCallback(this, function(response){ 
                 var state = response.getState();
-                if(state == 'SUCCESS'){
-                    component.set("v.addScenarioButtonStatus", false);
-                    component.set("v.isAddScenarioActive", true);
-                    // component.set("v.selectedValue", component.find("sceneName").get("v.value"));
-                    component.set("v.scenario", response.getReturnValue());
-                    component.set("v.scene",component.get("v.scenario[0].Id"));
-                    helper.showFieldsValue(component);
-                      helper.helperMethod(component);
-                     var eve = $A.get("e.c:ShowGraph");
-        eve.setParams({"showgraph":true
-                     
-                      }); 
-        eve.fire();
+                var tempSceName=component.find("sceneName").get("v.value");
+                
+                var SceName=response.getReturnValue();
+                for (var i = 0; i < SceName.length; i++) { 
+                    
+                    if(tempSceName==SceName[i].Name){ 
+                        event.preventDefault();
+                        helper.showAlertValidation(component,'Scenario with same name already exist.Please try again with different scenario name!');
+                        ispresent=true;
+                        
+                        return;
+                        
+                    }
+                    
                 }
-                else{
-                    console.log('failed');
+                if(ispresent ==false) {
+                    var action = component.get("c.saveNewScenario");
+                    action.setParams({
+                        name : component.find("sceneName").get("v.value"),
+                        clientId : component.get("v.cid"),
+                    });
+                    
+                    action.setCallback(this, function(response){ 
+                        console.log('resonse after save: ' + JSON.stringify(response.getReturnValue()));
+                        var state = response.getState();
+                        if(state == 'SUCCESS'){
+                            component.set("v.addScenarioButtonStatus", false);
+                            component.set("v.isAddScenarioActive", true);
+                            // component.set("v.selectedValue", component.find("sceneName").get("v.value"));
+                            component.set("v.scenario", response.getReturnValue());
+                            component.set("v.scene",component.get("v.scenario[0].Id"));
+                            helper.showFieldsValue(component);
+                            helper.helperMethod(component);
+                            helper.onDoneScenarioButton2(component, event, helper);
+                            var eve = $A.get("e.c:ShowGraph");
+                            eve.setParams({"showgraph":true
+                                           
+                                          }); 
+                            eve.fire();
+                        }
+                        else{
+                            console.log('failed');
+                        }
+                    });
+                 
                 }
+                $A.enqueueAction(action);
             });
+            $A.enqueueAction(action2);
+        }
+        
+        
+        if(ispresent ){
             
-            $A.enqueueAction(action);
-        }   
+            return;
+        }else{
+            
+            
+        }
+        }
+        catch(e){console.log('failed ' + e);}
+        
+        
     },
+    recordloaded:function(component,event,helper){
+       // alert('scene'+component.get("v.scene"));
+        var action = component.get("c.goalListScenario");
+            action.setParams({
+                clientId : component.get("v.scene"),
+            });
+            action.setCallback(this, function(response){ 
+                var state = response.getState();
+              //  alert(response.getReturnValue());
+               	component.set("v.savingList",response.getReturnValue());
+                 
+            });
+           
+        // var namespace = component.get("v.namespace");
+        var recUi = event.getParam("recordUi");
+       
+  
+        var selectedAccount=component.get("v.selectedAccount");
+        var namespace = component.get("v.namespace");
+        var recUi = event.getParam("recordUi");
+        if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
+            component.set("v.selectedAccount",recUi.record.fields[namespace+"Associated_Account__c"].value);
+            //  console.log(recUi.record.fields["Associated_Account__c"].value)
+        }
+        console.log(component.get("v.selectedAccount"));
+        $A.enqueueAction(action);               
+    }
+    
     
 })

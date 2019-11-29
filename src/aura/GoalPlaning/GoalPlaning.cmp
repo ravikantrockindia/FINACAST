@@ -1,5 +1,6 @@
 <aura:component Controller="GoalPlaningController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <lightning:workspaceAPI aura:id="workspace"/>
+    <lightning:workspaceAPI aura:id="workspace1"/>
     <aura:attribute name="tabName" type="String" default=" Goals"/>
     <aura:attribute name="namespace" type="string"/>
     <aura:attribute name="cid" type="Id"/>
@@ -9,7 +10,7 @@
     <aura:attribute name="goalList" type="FinServ__FinancialGoal__c[]"/>
     <aura:attribute name="editrecidGoal" type="String"/>
     <aura:attribute name="month" type="String" default=""/>
-    
+
     <aura:attribute name="budgetScreen" type="Boolean" default="false"/>
     
     <aura:attribute name ="showModalGoal" type = "Boolean" default="false"/>
@@ -20,16 +21,16 @@
     <aura:handler name="openModal" event="c:SaveIncomeEvent" action="{!c.createGoal}"/>
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.doInit}"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/> 
-                <aura:if isTrue="{!!v.budgetScreen}">
+              <!--  <aura:if isTrue="{!!v.budgetScreen}">
 
-   <!-- <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
-    <br/>-->
-    </aura:if>
+    <c:tabStructureFinacast ccid="{!v.cid}" namespace="{!v.namespace}"></c:tabStructureFinacast>
+    <br/>
+    </aura:if>-->
     <div class="slds-theme_default">
         <div class="slds-card__header">
             <aura:if isTrue="{!!v.budgetScreen}">
                 
-                <div class="slds-grid slds-gutters">
+                <div class="slds-grid slds-gutters slds-p-bottom_x-small slds-p-top_xx-small">
                     <div class="slds-col slds-size_6-of-12">
                         <h3 class="slds-m-top_x-small">Your Active Goals</h3>
                     </div>
@@ -45,7 +46,7 @@
             <aura:if isTrue="{!not(empty(v.goalList))}">
             <aura:iteration items="{!v.goalList}" var="Gdetails">
                 <div class="slds-grid slds-gutters slds-p-bottom_medium">
-                    <div class="slds-col slds-size_12-of-12 slds-p-top_x-small slds-p-right_none slds-p-left_none">
+                    <div class="slds-col slds-size_12-of-12 slds-p-top_x-small">
                         <div class="client_managed active-goal">
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
@@ -119,7 +120,7 @@
                 </div>
             </aura:iteration>
                 <aura:set attribute="else">
-                    <h2><center>You have not created any goal in the system.</center></h2>
+                    <h2><center>You have not created any goals yet.</center></h2>
                 </aura:set>
             </aura:if>
             <aura:if isTrue="{!v.showModalGoal}">

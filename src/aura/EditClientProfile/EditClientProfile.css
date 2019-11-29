@@ -92,3 +92,26 @@
 .THIS .slds-media {
     height: 20px;
 }
+@media(max-width: 992px) {
+    .THIS .res_ba-modal .slds-grid {
+        display: flex;
+    }
+ 	.THIS .res_ba-modal .slds-size_1-of-2 {
+        float: left;
+    } 
+    .THIS .demographic-pic img {
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+    }
+    .THIS .res_ba-modal .slds-size_1-of-2 .slds-size_4-of-12 {
+        float: left;
+    } 
+    .THIS .res_ba-modal .slds-size_1-of-2 .slds-size_8-of-12 {
+        float: left;
+    } 
+    .THIS .demographic_select textarea {
+        height: 37px;
+    }
+}

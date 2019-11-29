@@ -1,7 +1,8 @@
 <aura:component controller="AddIncomeController" implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:isUrlAddressable,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >
     <aura:handler name="init" value="{!this}" action="{!c.getmonthlybudget}"/> 
     <aura:handler name="saveIncomeEvent" event="c:SaveIncomeEvent" action="{!c.getmonthlybudget}"/>
- 
+ 	
+    <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:registerEvent name="saveIncomeEvent" type="c:SaveIncomeEvent"/>   
     <aura:attribute name = "data" type = "Object"/>
     <aura:attribute name="cid" type="String"/>  
@@ -96,7 +97,8 @@
 
     <aura:attribute name = "selectedClient" type = "String" />
      <aura:handler  event="c:changeclientevent" action="{!c.getmonthlybudget}"/>
-    
+        <aura:handler name="openModal" event="c:SaveIncomeEvent" action="{!c.createGoalRecord}"/>
+
     <!-- Change Client Card -->
   <!--  <aura:if isTrue="{!not(v.isPortalUser)}">
         <lightning:card  title="">
@@ -124,7 +126,7 @@
     <br/>-->
     <div class="slds-box slds-theme_default" style="height:auto;" >
         <div class="slds-page-header__name-title bud-months">
-            <div class="slds-grid ">
+            <div class="slds-grid "  style="padding: 0 11px;">
                 <div class="slds-col slds-size_8-of-12 slds-p-top_x-small">
                     <h1>
                         <span class="slds-page-header__title slds-truncate" title="Income">Budget </span>
@@ -159,8 +161,8 @@
         <!--Roll up bar starts-->
         <div class="slds-align_absolute-center">
             
-            <div class="bud-months">    
-                <div class="slds-grid slds-gutters"> 
+            <div class="bud-months res_bud-months">    
+                <div class="slds-grid slds-gutters" style="padding: 0 11px;"> 
                     <div class="slds-col slds-size_3-of-12 slds-m-top_large slds-m-bottom_medium">
                         <div class="budget-featers total_investment">
                             <div class="slds-media__figure">
@@ -249,7 +251,7 @@
                                             <img src="{!$Resource. goals123}"/>
                                         </div>
                                     </div>
-                                    <p class="slds-page-header__name-meta">Saved :</p>
+                                    <p class="slds-page-header__name-meta">Saved : $0</p>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +287,7 @@
                 <div class="slds-section slds-is-open" >
                    
                     <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_12-of-12 slds-p-right_none slds-p-left_none">
+                        <div class="slds-col slds-size_12-of-12">
                             <div class="client_managed active-goal">
                                 <div class="slds-grid">
                                    <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
@@ -390,8 +392,8 @@
      <div class="slds-card__header">
                 <div class="slds-section slds-is-open" >
                    
-                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
-                        <div class="slds-col slds-size_12-of-12 slds-p-right_none slds-p-left_none">
+                    <div class="slds-grid slds-gutters ">
+                        <div class="slds-col slds-size_12-of-12">
                             <div class="client_managed active-goal">
                                 <div class="slds-grid">
                                    <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
@@ -500,8 +502,8 @@
      <div class="slds-card__header">
                 <div class="slds-section slds-is-open" >
                    
-                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
-                        <div class="slds-col slds-size_12-of-12 slds-p-right_none slds-p-left_none">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 ">
                             <div class="client_managed active-goal">
                                 <div class="slds-grid">
                                    <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">

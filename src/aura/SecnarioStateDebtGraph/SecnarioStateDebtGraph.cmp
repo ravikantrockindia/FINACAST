@@ -68,9 +68,9 @@
 
                      <div class="slds-grid slds-gutter ">
                 <div class="slds-col slds-size_12-of-12 slds-p-left_small">
-                    <p class="networth-msg"><i><b>Insight:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt">
-                        <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" />
-                            <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /><span>{!debt.message}.</span></div></div>
+                    <p class="networth-msg"><i><b>Insights:</b></i> <aura:iteration items="{!v.debtStatus}" var="debt">
+                         
+                            <div style="color:#2fbf9e"><lightning:icon iconName="utility:record" size="xx-small" /><span>{!debt.message}.</span></div>
                         </aura:iteration></p>
                 </div>
             </div>
