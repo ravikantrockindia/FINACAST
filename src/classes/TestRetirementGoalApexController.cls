@@ -17,8 +17,8 @@ public class TestRetirementGoalApexController {
         fAcc.Name = 'test financial account';
         fAcc.FinServ__PrimaryOwner__c = aId.Id;
         fAcc.FinServ__Balance__c = 500;
-        RecordType rType = [select id from RecordType where name = 'Bank Account'];
-        fAcc.RecordTypeId = rType.id;
+      //  RecordType rType = [select id from RecordType where name = 'Bank Account'];
+      //  fAcc.RecordTypeId = rType.id;
         insert fAcc;
         
         FinServ__FinancialGoal__c goal = new FinServ__FinancialGoal__c();
@@ -61,8 +61,8 @@ public class TestRetirementGoalApexController {
         RetirementGoalApexController.getAmountMonth(500, 3, 6,'10','60', birthDate);
         RetirementGoalApexController.getAmountMonth(500, 0, 0,'10','60', birthDate);  
         RetirementGoalApexController.getAmountMonth(500, 3, 3,'10','60', birthDate);
-        RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,current);
-        RetirementGoalApexController.getAmtAndContri(fAccId.id, '10','3', '100000', tDate,null);        
+        RetirementGoalApexController.getAmtAndContri(fGoal.Id,fAccId.id, '10','3', '100000', tDate,current);
+        RetirementGoalApexController.getAmtAndContri(fGoal.Id,fAccId.id, '10','3', '100000', tDate,null);        
  
         test.stopTest();
         System.assertEquals('1','1');

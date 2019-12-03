@@ -80,13 +80,13 @@ public class Nonretirementgoalapexcontrollertest {
         Test.startTest();
         Nonretirementgoalapexcontroller.dample(a.Id);
 Nonretirementgoalapexcontroller.getNonRetirementGoalRecord(fGoal2.Id)     ;   
-        Nonretirementgoalapexcontroller.getCurrentAmount(fAcc1.id ,targetDate, targetAmt,currentAmount );
-        Nonretirementgoalapexcontroller.getCurrentAmount(fAcc2.id ,tarDate, tarAmt,currAmount );
-        Nonretirementgoalapexcontroller.getCurrentAmount(fAcc2.id ,tarDate, tarAmt,'0');
-        Nonretirementgoalapexcontroller.getCurrentAmount(null ,tarDate, tarAmt,'0');
-        Nonretirementgoalapexcontroller.getCurrentAmount(fAcc2.id ,tarDate, '123','123' );
-                Nonretirementgoalapexcontroller.getCurrentAmount(fAcc2.id ,null, tarAmt,null );
-       
+        Nonretirementgoalapexcontroller.getCurrentAmount(fGoal2.Id,fAcc1.id  );
+        Nonretirementgoalapexcontroller.getCurrentAmount(fGoal2.Id,fAcc2.id  );
+        Nonretirementgoalapexcontroller.getCurrentAmount(fGoal2.Id,fAcc2.id );
+        Nonretirementgoalapexcontroller.getCurrentAmount(fGoal2.Id,null );
+        Nonretirementgoalapexcontroller.getCurrentAmount(fGoal2.Id,fAcc2.id );
+              Nonretirementgoalapexcontroller.getCurrentAmount(fGoal2.Id,fAcc2.id  );
+       Nonretirementgoalapexcontroller.getMonthlyContri( fAcc2.id, 1100, date.today(),1200);
         Test.stopTest(); 
         
         
