@@ -1,49 +1,26 @@
 ({
-    /* changeEntity : function(component, event, helper) {
-       
-        var action = component.get("c.dample");
-         var clientId=component.find("owner").get("v.value");
-        action.setParams({
-            clientId : clientId
-        });
-        action.setCallback(this, function(a){
-            var state = a.getState(); // get the response state
-            console.log(state);
-            if(state == 'SUCCESS') {
-                
-                component.set('v.accountList', a.getReturnValue());
-            }
-            console.log(component.get('v.accountList'));
-        });
-        $A.enqueueAction(action);
-    }, */
+    
     doInit : function(component , event , helper){
-        // component.set("v.createModal1",false);
         var namespace = component.get("v.namespace");
         var clientId=component.find("owner").get("v.value");
         var clientId=component.get("v.client");
-         component.find("Id_spinner").set("v.class" , 'slds-show');
+        component.find("Id_spinner").set("v.class" , 'slds-show');
         
         component.find("owner").set("v.value",clientId);
         var getName = component.get("v.FinServ__PrimaryOwner__r.Name");
         
-        if(!($A.util.isUndefinedOrNull(clientId) || clientId == ""))
-        {
-            
-            
-            
+        if(!($A.util.isUndefinedOrNull(clientId) || clientId == "")){
             var action = component.get("c.dample");
             action.setParams({
                 clientId : clientId
             });
             
             action.setCallback(this, function(a) {
-                 component.find("Id_spinner").set("v.class" , 'slds-hide');
                 var state  = a.getState();
-                
                 var goals=a.getReturnValue();
-                
                 component.set("v.accountList",goals);
+                component.find("Id_spinner").set("v.class" , 'slds-hide');
+                
             }); 
             $A.enqueueAction(action); 
             
@@ -56,12 +33,11 @@
         {
             var namespace = component.get("v.namespace");
             var recUi = event.getParam("recordUi");
-            component.set("v.currentBal", recUi.record.fields[namespace+"Start_Value__c"].value)
+            //component.set("v.currentBal", recUi.record.fields[namespace+"Start_Value__c"].value)
             var selectedAccount=component.get("v.selectedAccount");
             console.log(selectedAccount);
             if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
                 component.set("v.selectedAccount",recUi.record.fields[namespace+"Associated_Account__c"].value);
-                //  console.log(recUi.record.fields["Associated_Account__c"].value)
             }
             console.log(component.get("v.selectedAccount"));
             var targetValue= component.find("amount").get("v.value");
@@ -76,15 +52,11 @@
     getCurrentAmt : function(component, event, helper)
     {	
         
-        var currentAmt = component.find("strtvalue").get("v.value"); 
         
-        var amt = component.find("amount").get("v.value"); 
-        var tDate = component.find("tarDate").get("v.value"); 
-        // var associated = component.find("associateAcc").get("v.value");
         var associated=component.get("v.selectedAccount");
         
         if($A.util.isUndefinedOrNull(associated)||associated==""){
-            // debugger;
+            
             component.find("strtvalue").set("v.fieldName",namespace+"Start_Value__c");
             component.find("strtvalue").set("v.value",null);
             
@@ -93,23 +65,18 @@
         var action = component.get("c.getCurrentAmount");
         action.setParams
         ({
+            "goalId":component.get("v.goalId"),
             "accId": associated,
-            "targetDate" : tDate,
-            "targetAmt" : amt,
-            "currentAmount" : currentAmt
+            
         });
         
         action.setCallback(this, function(response) {
-            var namespace = component.get("v.namespace");
             
-            component.find("strtvalue").set("v.fieldName",namespace+"Start_Value__c");
-            component.find("strtvalue").set("v.value",response.getReturnValue().currentAmt);
+            component.find("strtvalue").set("v.value",response.getReturnValue());
             
-            component.set("v.currentBal", response.getReturnValue().currentAmt);
             
-            component.set("v.actualbalance", response.getReturnValue().currentAmt);
-            component.set("v.contribution",response.getReturnValue().emi); 
-            component.set("v.actualEmi",response.getReturnValue().emi);
+            component.set("v.actualbalance", response.getReturnValue());
+            
             
         });
         
@@ -121,17 +88,17 @@
         
         helper.hideExampleModal(component);
         var workspaceAPI = component.find("workspace");
-                workspaceAPI.getFocusedTabInfo().then(function(response) {
-                    console.log(JSON.stringify(response))
-                    var focusedTabId = response.parentTabId;
-                    workspaceAPI.refreshTab({
-                        tabId: focusedTabId,
-                        includeAllSubtabs: true
-                    });
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
+        workspaceAPI.getFocusedTabInfo().then(function(response) {
+            console.log(JSON.stringify(response))
+            var focusedTabId = response.parentTabId;
+            workspaceAPI.refreshTab({
+                tabId: focusedTabId,
+                includeAllSubtabs: true
+            });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     },
     
     getChangeMonthlyConti : function(component, event, helper)
@@ -181,10 +148,12 @@
             status3 = 0;
             msg = "Invalid Current Amount";
             var namespace = component.get("v.namespace");
-            component.set("v.currentBal", component.get("v.actualbalance"));
-            component.find("strtvalue").set("v.fieldName",namespace+"Required_Monthly_Saving__c");
+            // component.set("v.currentBal", component.get("v.actualbalance"));
+            // component.find("strtvalue").set("v.fieldName",namespace+"Required_Monthly_Saving__c");
             component.find("strtvalue").set("v.value",component.get("v.actualbalance"));
             helper.currentAmtError(component, event, helper, msg);
+            event.preventDefault();
+            
         }
         else
         {
@@ -201,18 +170,18 @@
             } 
             else
             {
-                var action = component.get("c.getCurrentAmount"); 
+                var action = component.get("c.getMonthlyContri"); 
                 action.setParams
                 ({
                     "accId": associated,
-                    "targetDate" : tDate,
-                    "targetAmt" : target,
-                    "currentAmount" : current.toString()
+                    "currAmt":current,
+                    "target" : tDate,
+                    "tAmt" : target
                 });
                 action.setCallback(this, function(response) {  
-                    console.log(response.getReturnValue().emi);
-                    component.set("v.contribution", response.getReturnValue().emi);
-                    component.set("v.actualEmi",response.getReturnValue().emi);
+                    console.log(response.getReturnValue());
+                    component.set("v.contribution", response.getReturnValue());
+                    component.set("v.actualEmi",response.getReturnValue());
                 });
                 $A.enqueueAction(action); 
             }
@@ -233,13 +202,13 @@
         component.set("v.viewGoalId",retId);
         // var icon=$A.get("$Resource.RetirementIcon");
         // component.set("v.icon",icon);
-                //helper.hideExampleModal(component);
-
-           // component.set("v.isActive",false);
-       // component.set("v.createModal1",false);
-        if(!component.get("v.editModal")){
-               var cmpTarget = component.find('exampleModal');
+        //helper.hideExampleModal(component);
         
+        // component.set("v.isActive",false);
+        // component.set("v.createModal1",false);
+        if(!component.get("v.editModal")){
+            var cmpTarget = component.find('exampleModal');
+            
             console.log('the cross is : '+ cmpTarget );
             $A.util.addClass(cmpTarget, 'hideDiv');
             component.set("v.createModal",true);
@@ -279,15 +248,15 @@
         var priowner = component.get("v.client.Id");
         //console.log('hey2:-'+priowner)
         var targetAmt = component.find("amount").get("v.value");
-       // console.log('hey3:-'+targetAmt)
+        // console.log('hey3:-'+targetAmt)
         var targetDate = component.find("tarDate").get("v.value");
         //console.log('hey4:-'+targetDate)
         var bankAcc = component.find("associateAcc").get("v.value");
-//console.log('hey5:-'+bankAcc)
+        //console.log('hey5:-'+bankAcc)
         var currAmt = component.find("strtvalue").get("v.value");
         //console.log('hey6:-'+currAmt)
         var goalPriority = component.find("priority").get("v.value");
-       // console.log('hey7:-'+goalPriority)
+        // console.log('hey7:-'+goalPriority)
         var contribution =  component.find("priority").get("v.value");
         //console.log('hey8:-'+contribution)
         
@@ -327,12 +296,14 @@
                 status2 = 1;
             }
             helper.showAlertEmptyInvalidVal(component,msg);
+            return;
             
         }
         
         if(status1 == 0 || status2 == 0 || status3 == 0)
         {
             event.preventDefault();
+            return;
         }
         event.preventDefault();
         var namespace = component.get("v.namespace");
@@ -343,35 +314,7 @@
         eventFields[namespace+"Associated_Account__c"]=component.get("v.selectedAccount");
         console.log("event",eventFields[namespace+"Associated_Account__c"])
         component.find("non-retirement").submit(eventFields);
-        var cmpTarget = component.find('exampleModal');
-        
-        //helper.hideExampleModal(component);
-        // component.set("v.createModal",true);
-        // component.set("v.createModal1",false);
-        /* var evt = $A.get("e.force:navigateToComponent");
-                evt.setParams({
-                    componentDef : "c:createModal",
-                    componentAttributes: {
-                        cid :component.get("v.client"),
-                        namespace:component.get("v.namespace"),
-                        icon:component.get("v.icon")
-                         
-                    }
-                });
-                evt.fire();*/
-      /*  var workspaceAPI = component.find("workspace");
-        workspaceAPI.getFocusedTabInfo().then(function(response) {
-            console.log(JSON.stringify(response))
-            var focusedTabId = response.parentTabId;
-            workspaceAPI.refreshTab({
-                tabId: focusedTabId,
-                includeAllSubtabs: true
-            });
-        })
-        .catch(function(error) {
-            console.log(error);
-        });*/
-        
+        var cmpTarget = component.find('exampleModal'); 
         
     },
     

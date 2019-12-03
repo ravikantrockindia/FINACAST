@@ -90,7 +90,7 @@ public class RetirementGoalApexController {
     // RetirementGoalScreen 2 controller,  function : amtAndContri
     
     @auraEnabled
-    public static AmtAndContriWrapper getAmtAndContri(String accId, String tillRetirement, String interest, String targetAmt, String retireDate, String current)
+    public static AmtAndContriWrapper getAmtAndContri(String goalId,String accId, String tillRetirement, String interest, String targetAmt, String retireDate, String current)
     {
         Double interestRate = Double.valueOf(interest);
         Double currentAmount = 0;
@@ -102,14 +102,16 @@ public class RetirementGoalApexController {
             FinServ__FinancialAccount__c acc = [select FinServ__Balance__c,id from FinServ__FinancialAccount__c where id = :accId];
             Double bal = acc.FinServ__Balance__c;
             
-            list<FinServ__FinancialGoal__c> allAssocGoals = [select Associated_Account__c,Required_Monthly_Saving__c, Start_Date__c, Start_Value__c from FinServ__FinancialGoal__c where Associated_Account__c = :accId];
+            list<FinServ__FinancialGoal__c> allAssocGoals = [select Associated_Account__c,Required_Monthly_Saving__c, Start_Date__c, Start_Value__c,FinServ__TargetValue__c from FinServ__FinancialGoal__c where Associated_Account__c = :accId and Id!=:goalId];
             
             Double totalEstimated = 0;
             Decimal remainingAmount = 0;
-            Decimal growth=0;
+            Double temp=1;
+        Decimal growth = ((Decimal)(Math.pow((1 + (interestRate/ 100)), (temp/12))- 1)).setScale(5);
             for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
             {
-                totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
+                totalEstimated = totalEstimated + ((Decimal) Core_GoalUtility.curentgoalestimation2((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth,relgoal.Start_Value__c,relgoal.FinServ__TargetValue__c)).setScale(2, RoundingMode.HALF_UP); 
+                    //((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
             }
             remainingAmount = bal - totalEstimated;
             double curr = Math.ceil( remainingAmount);       

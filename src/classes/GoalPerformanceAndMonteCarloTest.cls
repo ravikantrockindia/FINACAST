@@ -25,7 +25,7 @@ public class GoalPerformanceAndMonteCarloTest {
         system.debug('typefin1'+savings1.RecordTypeId);
         
   
-        
+        List<FinServ__FinancialGoal__c>goals=new List<FinServ__FinancialGoal__c>();
         FinServ__FinancialGoal__c goals1 = new  FinServ__FinancialGoal__c();
         goals1.FinServ__PrimaryOwner__c = ac.Id;
         goals1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
@@ -37,7 +37,21 @@ public class GoalPerformanceAndMonteCarloTest {
         goals1.Goal_Priority__c = '1';
         goals1.Required_Monthly_Saving__c = 2000;
         goals1.Associated_Account__c = savings1.Id;
-        insert goals1;
+        goals.add(goals1);
+        goals1 = new  FinServ__FinancialGoal__c();
+                goals1.FinServ__PrimaryOwner__c = ac.Id;
+        goals1.RecordTypeId = FinacastUtility.getRecordTypeId('FinServ__FinancialGoal__c' , 'CarRecordType');
+        goals1.Name = 'Test Goal 1';
+        goals1.FinServ__TargetValue__c = 10000;
+        goals1.FinServ__TargetDate__c = Date.today()+900;
+        goals1.Start_Value__c = 2000;
+        goals1.Start_Date__c = Date.today().addMonths(-6);
+        goals1.Goal_Priority__c = '1';
+        goals1.Required_Monthly_Saving__c = 2000;
+        goals1.Associated_Account__c = savings1.Id;
+                goals.add(goals1);
+
+        insert goals;
         
         
        
@@ -46,7 +60,7 @@ public class GoalPerformanceAndMonteCarloTest {
     public static void getGoalsTest(){
         String clientId=[Select Id from Account where name='Test3' limit 1].Id;
        list<GoalPerformanceAndMonteCarlo.FinGoalWrapperClass> l= GoalPerformanceAndMonteCarlo.getGoals(clientId,false,'');
-        System.assertEquals(1, l.size());
+        System.assertEquals(2, l.size());
         
     }
     

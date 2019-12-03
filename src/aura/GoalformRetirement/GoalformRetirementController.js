@@ -388,6 +388,7 @@
         // console.log(associated[0]);
         action.setParams
         ({
+            "goalId": component.get("v.retirementGoalId"),
             "accId" : associated,
             tillRetirement : years,
             interest : interestRate,
@@ -561,62 +562,7 @@
             
         }
         
-        /*  else
-        {
-            var action = component.get("c.saveData");
-            action.setParams
-            ({ 
-                recordId:recordId,
-                owner : own,
-                name : n,
-                dob : birth,
-                years : retire.toString(),
-                inflationRate : rate,
-                retireAge : rAge.toString(),
-                income : retireIncome,
-                returnRate : rateInterest,
-                amount : amt.toString(),
-                associatedAccount : acc,
-                priority : pri.toString(),
-                sValue : start.toString(),
-                tDate : tar,
-                contribution : contri.toString(),
-                isTaxDeduction: isTaxDeduction.toString(),
-                taxPercentageContribution: taxcontri.toString(),
-                maxDeduction:maxDeduction,
-                isMonthly: ismonthly.toString()
-                
-                
-            });
-            action.setCallback(this, function(response) {
-                var state = response.getState();
-                console.log('state',state);
-                if (state == "SUCCESS") {
-                    component.set("v.saveStatus",true);
-                    var resp = response.getReturnValue();
-                    console.log(resp)
-                    helper.hideExampleModal(component);
-                    
-                }
-                
-                
-                
-            } );
-            $A.enqueueAction(action);   
-        }*/
-        /*var evt = $A.get("e.force:navigateToComponent");
-                evt.setParams({
-                    componentDef : "c:CreatedGoal",
-                    componentAttributes: {
-                        cid :component.get("v.client"),
-                        namespace:component.get("v.namespace"),
-                       // icon:component.get("v.icon")
-                        icon:$A.get("$Resource.RetirementIcon")
-                         
-                    }
-                });
-                evt.fire(); */
-        
+
     },
     handleError:function(component,event,helper){
         console.log("handle Error ");

@@ -1,14 +1,8 @@
 public class Nonretirementgoalapexcontroller {
         public static string namespace{get; set;}
 
-    public class getDataWrapper
-    {
-        @auraEnabled public Decimal currentAmt;
-        @auraEnabled public Decimal emi;
-    }
-    Nonretirementgoalapexcontroller(){
-        
-    }
+    
+
     
     @auraEnabled
     public static FinServ__FinancialGoal__c getNonRetirementGoalRecord(String goalsId){
@@ -28,132 +22,88 @@ public class Nonretirementgoalapexcontroller {
     }
     
     @auraEnabled
-    public static getDataWrapper getCurrentAmount(String accId, String targetDate, String targetAmt, String currentAmount)
+    public static Double getCurrentAmount(String goalId,String accId)
     {
         
-        System.debug(currentAmount);
         Double interestRate = 0;
-        getDataWrapper wrapper = new getDataWrapper();
-        wrapper.currentAmt = 0;
-        //wrapper.targetMonth = 1;
-        Date now = Date.today();
-        
+        Double currAmt = 0;
+
         system.debug('gaccid'+accId );
         try{
             if(accId != null&& accId !='')
             {
                 FinServ__FinancialAccount__c acc = [select FinServ__Balance__c, FinServ__APY__c, id from FinServ__FinancialAccount__c where id = :accId];
-                system.debug('aa'+acc);
                 Double bal = acc.FinServ__Balance__c;
                 if(acc.FinServ__APY__c != null)
                 {
                     interestRate = acc.FinServ__APY__c;
                 }
-                if(acc.FinServ__APY__c != null)
-                {
-                    interestRate =  acc.FinServ__APY__c;
-                }
                 else 
                     interestRate = 0; 
                 
-                system.debug('interestRate '+interestRate);
-                list<FinServ__FinancialGoal__c> allAssocGoals = [select Associated_Account__c,Required_Monthly_Saving__c, Start_Date__c, Start_Value__c from FinServ__FinancialGoal__c where Associated_Account__c = :accId];
+                list<FinServ__FinancialGoal__c> allAssocGoals = [select Associated_Account__c,Required_Monthly_Saving__c, Start_Date__c, Start_Value__c,FinServ__TargetValue__c from FinServ__FinancialGoal__c where Associated_Account__c = :accId and Id!=:goalId];
                 
                 Double totalEstimated = 0;
                 Double remainingAmount = 0;
-                Decimal growth=0;                
+   			  Decimal growth=Core_GoalUtility.calculateGrowth(interestRate);       
                 for(FinServ__FinancialGoal__c relgoal : allAssocGoals )
                 {
-                    
-                    totalEstimated = totalEstimated + ((Decimal)FinacastGoalProgressApex.curentgoalestimation((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth)).setScale(2,RoundingMode.HALF_UP)+ relgoal.Start_Value__c;
-                    
+                    totalEstimated = totalEstimated +  ((Decimal) Core_GoalUtility.curentgoalestimation2((double)(relgoal.Required_Monthly_Saving__c), relgoal.Start_Date__c, date.today(),growth,relgoal.Start_Value__c,relgoal.FinServ__TargetValue__c)).setScale(2, RoundingMode.HALF_UP);                     
                 }
-                
                 remainingAmount = bal - totalEstimated;
                 if(remainingAmount < 0){
                     remainingAmount = 0;
                 }
-                
-                Double currAmt = 0;
                 currAmt = Double.valueOf(remainingAmount);
-                /* if(currentAmount != null)
-{
-currAmt = Double.valueOf(currentAmount);
-}
-else
-{ 
-System.debug(remainingAmount);
-currAmt = remainingAmount;
-}*/
-                wrapper.currentAmt = Math.round(currAmt);
-                if(targetDate != null && targetAmt != null)
-                {
+               /* if(targetDate != null && targetAmt != null){
                     Date tarDate = Date.valueOf(targetDate);
                     Double tarAmt = Double.valueOf(targetAmt);
-                    
                     wrapper.emi = Math.round(getMonthlyContri(accId, currAmt, tarDate, tarAmt));
-                    
                 }
-                
-                else
-                {
+                else{
                     wrapper.emi = 0; 
                 }
-                
-                
-                
             }
-            
-            else
-            {
-                System.debug('hello');
+            else{
                 wrapper.currentAmt = null;
-            }
+            }*/
              if(TEST.isRunningTest())
                 throw new NullPointerException();
+        }
         }
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
-        system.debug('aaaa'+ wrapper.currentAmt);
-        return wrapper;
+                return Math.round(currAmt);
         
     }
     
     /* get monthly contribution
 * used in  getCurrentAmount
 * **/
-    
+        @auraEnabled
+
     public static Double getMonthlyContri(String accId, Double currAmt, Date target, Double tAmt)
     {
         
         Integer months = date.today().monthsBetween(target);
         System.debug('months'+months);
         Double installment = 0;
-         Double temp=1;
+         //Double temp=1;
         Double interestRate=[Select FinServ__APY__c from FinServ__FinancialAccount__c where Id=:accId LIMIT 1].FinServ__APY__c;
-        Double growth = ((Math.pow((1 + (interestRate/100)), (temp/12)))- 1);
-        System.debug(growth);
-        System.debug(tAmt);
-        System.debug(currAmt);
+      //  Double growth = ((Math.pow((1 + (interestRate/100)), (temp/12)))- 1);
+      Double growth=Core_GoalUtility.calculateGrowth(interestRate);
         try{
-            If (tAmt > (currAmt * (Math.pow((1 + growth),months))))
-            {
-                If (growth > 0)
-                {
-                    System.debug('hello');
+            If (tAmt > (currAmt * (Math.pow((1 + growth),months)))){
+                If (growth > 0){
                     installment = ((tAmt - currAmt * (Math.pow((1 + growth), months))) * growth) / ((Math.pow((1 + growth), months)) - 1);
-                    
                 } 
                 Else {
                     installment = (tAmt - currAmt) / months;
-                                system.debug('insta'+ installment);
-
                 }
                 
             }
-            if(installment < 0)
-            {
+            if(installment < 0){
                 installment = 0;
             }
             else{
@@ -165,7 +115,7 @@ currAmt = remainingAmount;
         catch(Exception e){
             FinacastUtility.ExceptionHandle(e.getLineNumber(), e.getMessage(), e.getStackTraceString());
         }
-        return installment;
+        return Math.round(installment);
     }
     
     
