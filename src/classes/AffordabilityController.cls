@@ -27,18 +27,18 @@ public class AffordabilityController {
     
     @auraEnabled
     public static String ShowAffordabilityResult(String clientId,double taxDeduct,Boolean taxMonthly, double taxContribution,String name,double totalAmount, double downPayment, double installments, Date startDate, Date endDate, Boolean isTaxBenefit, Boolean isPaymentPlan, Integer rainyDayMonths ){
-        System.debug('clientId'+clientId); 
-        System.debug('taxDeduct'+taxDeduct);
-        System.debug('taxMonthly'+taxMonthly);
-        System.debug('taxContribution'+taxContribution);
-        System.debug('name'+name);
-        System.debug('totalAmount'+totalAmount);
-        System.debug('downPayment'+downPayment);
-        System.debug('installments'+installments);
-        System.debug('startDate'+startDate);
-        System.debug('endDate'+endDate);
-        System.debug('isTaxBenefit'+isTaxBenefit);
-         System.debug('isPaymentPlan'+isPaymentPlan);
+    //    System.debug('clientId'+clientId); 
+    //    System.debug('taxDeduct'+taxDeduct);
+    //    System.debug('taxMonthly'+taxMonthly);
+    //    System.debug('taxContribution'+taxContribution);
+   //     System.debug('name'+name);
+   //     System.debug('totalAmount'+totalAmount);
+   //     System.debug('downPayment'+downPayment);
+   //     System.debug('installments'+installments);
+   //     System.debug('startDate'+startDate);
+   //     System.debug('endDate'+endDate);
+   //     System.debug('isTaxBenefit'+isTaxBenefit);
+    //     System.debug('isPaymentPlan'+isPaymentPlan);
  //       System.debug('rainyDayMonths'+rainyDayMonth);
        // String clientId ='0014600001ePIu5AAG';
         Boolean showClientLookup = false;
@@ -382,7 +382,7 @@ public class AffordabilityController {
                 System.debug('Inside try');
                 setData = '{"key":"'+FSK+'","formParams":"[';
                 
-                incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Frequency__c,Tax_Rate__c from Budget__c where Primary_Owner__c =: clientId 
+                incmeList = [Select id, Name, Amount__c,Start_Date__c,End_Date__c,Yearly_growth__c,Frequency__c,Tax_Rate__c from Budget__c where Primary_Owner__c =: clientId 
                              and recordType.developerName = 'Income_Record_Type' ]; 
                 System.debug('client Id: '+ clientId);
                 System.debug('Income List: ' + incmeList);
@@ -584,9 +584,9 @@ public class AffordabilityController {
                         setData +='{';
                         setData +='\'id\':\''+flag+'\',';
                         setData +='\'type\':\'goals\',';
-                        Decimal getcurrentEstimation = ((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
+                       // Decimal getcurrentEstimation = ((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c;
                      //   System.debug('Goal Estimation'+((Decimal)curentgoalestimation((double)(goal.Required_Monthly_Saving__c), goal.Start_Date__c, Date.today())).setScale(2, RoundingMode.HALF_UP) + goal.Start_Value__c);
-                        setData +='\'currentamount\':\''+getcurrentEstimation+'\',';
+                        setData +='\'currentamount\':\''+goal.Start_Value__c+'\',';
                         setData +='\'name\':\''+goal.Name+'\',';
                         setData +='\'monthlycontribution\':'+goal.Required_Monthly_Saving__c+',';
                         setData +='\'startdate\':\''+goal.Start_Date__c.month()+'/'+goal.Start_Date__c.year()+'\',';
@@ -613,7 +613,7 @@ public class AffordabilityController {
                     }                   
                 } //end of if
                 
-                expList = [Select id, Name, Amount__c, Start_Date__c, End_Date__c,Does_contribution_bring_tax_benifit__c, Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c from Budget__c where Primary_Owner__c =: clientId 
+                expList = [Select id, Name, Amount__c, Start_Date__c, End_Date__c,Priority__c,Yearly_growth__c,Does_contribution_bring_tax_benifit__c, Does_tax_benifit_realize_really__c,May_yearly_tax_deduction_allowed__c,What_of_contribution_bring_tax_benifit__c from Budget__c where Primary_Owner__c =: clientId 
                            and recordType.developerName = 'Expense_Record_Type']; 
                 //set expenses here    
                // System.debug('Expense List: ' + expList);
@@ -642,7 +642,7 @@ public class AffordabilityController {
                         setData +='\'percentContribution\':'+e.What_of_contribution_bring_tax_benifit__c+',';
                         setData +='\'maxLimit\':'+e.May_yearly_tax_deduction_allowed__c+',';
                         setData +='\'expensepopupgrowthrate\':'+e.Yearly_growth__c+',';
-                        setData +='\'priority\':'+e.Priority__c+',';
+                        setData +='\'priority\':\''+e.Priority__c+'\',';
                         setData +='\'isMonthly\':'+e.Does_tax_benifit_realize_really__c+',';
                         setData +='},';
                         ++j;
