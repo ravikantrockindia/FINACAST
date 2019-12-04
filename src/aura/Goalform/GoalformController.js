@@ -241,11 +241,11 @@
         var status1 = 0;
         var status2 = 0;
         var status3 = 0;
-        
+        debugger;
         var msg = "";
         var n = component.find("owner").get("v.value");
         //console.log('hey1:-'+n)
-        var priowner = component.get("v.client.Id");
+        var priowner = component.get("v.client");
         //console.log('hey2:-'+priowner)
         var targetAmt = component.find("amount").get("v.value");
         // console.log('hey3:-'+targetAmt)
@@ -265,12 +265,11 @@
             $A.util.isUndefinedOrNull(targetAmt) || targetAmt == "" || $A.util.isUndefinedOrNull(targetDate) || targetDate =="" || 
             $A.util.isUndefinedOrNull(bankAcc) || bankAcc == "" || 
             (($A.util.isUndefinedOrNull(currAmt) || currAmt == "") /*&& currAmt != 0*/) ||
-            $A.util.isUndefinedOrNull(goalPriority) || goalPriority =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(contribution) || contribution == "")
-        {
+            $A.util.isUndefinedOrNull(goalPriority) || goalPriority =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(contribution) || contribution == ""){
             status3 = 0;
             event.preventDefault();
-            //msg = "Please fill mandatory fields."
-            //  helper.showAlertEmptyInvalidVal(component,msg);       
+            msg = "Please fill mandatory fields."
+             helper.showAlertEmptyInvalidVal(component,msg);       
         }
         else{
             status3 = 1;
@@ -296,7 +295,6 @@
                 status2 = 1;
             }
             helper.showAlertEmptyInvalidVal(component,msg);
-            return;
             
         }
         

@@ -139,20 +139,35 @@ public class GoalPerformanceAndMonteCarlo {
                     }
                     else{
                         FinancialAccountHistory__c fin=fahMap.get(NUM_TO_MONTH.get(date.today().addMonths(-i).month())+'-'+date.today().addMonths(-i).year());
-                        if(fin.APY__c != null)
-                        {
+                                                if(fin!=null){
+                                                    if(fin.APY__c != null){
                             interestRate =  fin.APY__c ;
                         }
                         else{
                             interestRate = 0;
                         }
-                        if(fin.Balance__c != null)
-                        {
+                        if(fin.Balance__c != null) {
                             balance =  fin.Balance__c ;
                         }
                         else{
                             balance = 0;
                         }
+                    }
+                        else{
+                           if(ffa.FinServ__APY__c != null){
+                                interestRate =  ffa.FinServ__APY__c;
+                            }
+                            else{
+                                interestRate = 0;
+                            }
+                            if(ffa.FinServ__Balance__c != null){
+                                balance =  ffa.FinServ__Balance__c;
+                            }
+                            else{
+                                balance = 0;
+                            }
+                        }  
+                        
                     }
                     Double growth=Core_GoalUtility.calculateGrowth(interestRate);
                     Core_GoalUtility.PerformanceValue p=Core_GoalUtility.calculateExpectedAndActual( f,balance, interestRate, ffa.Financial_Goals__r,  i*-1 );
@@ -161,7 +176,6 @@ public class GoalPerformanceAndMonteCarlo {
                         increasedate = Core_GoalUtility.extenddate((integer)p.actual, (double)(f.Required_Monthly_Saving__c), f.FinServ__TargetValue__c,growth);
                         if(p.expected>=p.actual){
                             goalTrack=true;
-                            p.actual=p.expected;
                             
                         }
                         else{
@@ -170,6 +184,10 @@ public class GoalPerformanceAndMonteCarlo {
                         actualValue=p.actual;
                         
                     }
+                     if(p.actual>p.expected){
+                            p.actual=p.expected;
+                            
+                        }
                     PerformanceValue pv=new PerformanceValue();
                     pv.actual=p.actual;
                     pv.expected=p.expected;
@@ -235,7 +253,6 @@ public class GoalPerformanceAndMonteCarlo {
                         increasedate = Core_GoalUtility.extenddate((integer)p.actual, (double)(f.Required_Monthly_Saving__c), f.FinServ__TargetValue__c,growth);
                         if(p.expected>=p.actual){
                             goalTrack=true;
-                            p.actual=p.expected;
                             
                         }
                         else{
@@ -243,6 +260,10 @@ public class GoalPerformanceAndMonteCarlo {
                         }
                         actualValue=p.actual;
                     }
+                     if(p.actual>p.expected){
+                            p.actual=p.expected;
+                            
+                        }
                     PerformanceValue pv=new PerformanceValue();
                     pv.actual=p.actual;
                     pv.expected=p.expected;

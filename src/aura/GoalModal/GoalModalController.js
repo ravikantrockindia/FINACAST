@@ -1,10 +1,10 @@
 ({
-	 doInit: function(component, event, helper) {
+	/* doInit: function(component, event, helper) {
        // alert(component.get("v.financialGoal.Id"))
        debugger;
         var cmpTarget = component.find('exampleModal');
         
-    },
+    },*/
    
     /*init : function(component , event,helper){
         
