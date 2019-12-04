@@ -181,13 +181,14 @@ public class GoalPerformanceAndMonteCarlo {
                         else{
                             goalStatus=p.actual-p.expected;
                         }
-                        actualValue=p.actual;
                         
                     }
                      if(p.actual>p.expected){
                             p.actual=p.expected;
                             
                         }
+                                            actualValue=p.actual;
+
                     PerformanceValue pv=new PerformanceValue();
                     pv.actual=p.actual;
                     pv.expected=p.expected;
@@ -258,12 +259,13 @@ public class GoalPerformanceAndMonteCarlo {
                         else{
                             goalStatus=p.actual-p.expected;
                         }
-                        actualValue=p.actual;
                     }
                      if(p.actual>p.expected){
                             p.actual=p.expected;
                             
                         }
+                                            actualValue=p.actual;
+
                     PerformanceValue pv=new PerformanceValue();
                     pv.actual=p.actual;
                     pv.expected=p.expected;
