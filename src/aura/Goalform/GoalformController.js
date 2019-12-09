@@ -242,12 +242,18 @@
         var status1 = 0;
         var status2 = 0;
         var status3 = 0;
-        
+        debugger;
         var msg = "";
         var n = component.find("owner").get("v.value");
+<<<<<<< HEAD
         console.log('hey1:-'+n)
         var priowner = component.get("v.client");
         console.log('hey2:-'+priowner)
+=======
+        //console.log('hey1:-'+n)
+        var priowner = component.get("v.client");
+        //console.log('hey2:-'+priowner)
+>>>>>>> 3bd57f49e3ad60d4ab0e3a350df16a3ab72e2f30
         var targetAmt = component.find("amount").get("v.value");
         console.log('hey3:-'+targetAmt)
         var targetDate = component.find("tarDate").get("v.value");
@@ -265,7 +271,11 @@
         if ($A.util.isUndefinedOrNull(n) || n == "" ||  
             $A.util.isUndefinedOrNull(targetAmt) || targetAmt == "" || $A.util.isUndefinedOrNull(targetDate) || targetDate =="" || 
             $A.util.isUndefinedOrNull(bankAcc) || bankAcc == "" || 
+<<<<<<< HEAD
             $A.util.isUndefinedOrNull(currAmt) || currAmt === "" ||
+=======
+            (($A.util.isUndefinedOrNull(currAmt) || currAmt == "") /*&& currAmt != 0*/) ||
+>>>>>>> 3bd57f49e3ad60d4ab0e3a350df16a3ab72e2f30
             $A.util.isUndefinedOrNull(goalPriority) || goalPriority =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(contribution) || contribution == ""){
             status3 = 0;
             event.preventDefault();

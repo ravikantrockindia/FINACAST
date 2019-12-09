@@ -1,7 +1,7 @@
 <aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" controller="GoalTypeSelectionController"><br/><br/><br/><br/> 
 	<aura:attribute name = "namespace" type = "String"/>
     <lightning:workspaceAPI aura:id="workspace"/>
- 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+ <!--	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
     <aura:attribute name="client" type="String"/>    
     <aura:attribute name="showModalwedding" type="Boolean" default="false" />
     <aura:attribute name="showModaleducation" type="Boolean" default="false" />

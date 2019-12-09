@@ -25,7 +25,7 @@
     
     showAlertEmptyInvalidVal : function(component,msg)
     {
-        console.log("inhelper");
+        console.log("inhelper"+msg);
        // component.set("v.errors", [{message:"Invalid field: " }]);
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
