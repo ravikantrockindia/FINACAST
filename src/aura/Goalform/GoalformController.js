@@ -34,6 +34,7 @@
             var namespace = component.get("v.namespace");
             var recUi = event.getParam("recordUi");
             //component.set("v.currentBal", recUi.record.fields[namespace+"Start_Value__c"].value)
+            component.set("v.actualEmi",recUi.record.fields[namespace+"Required_Monthly_Saving__c"].value)
             var selectedAccount=component.get("v.selectedAccount");
             console.log(selectedAccount);
             if($A.util.isUndefinedOrNull(selectedAccount)||selectedAccount=="" ||selectedAccount=="None"){
@@ -244,11 +245,11 @@
         
         var msg = "";
         var n = component.find("owner").get("v.value");
-        //console.log('hey1:-'+n)
-        var priowner = component.get("v.client.Id");
-        //console.log('hey2:-'+priowner)
+        console.log('hey1:-'+n)
+        var priowner = component.get("v.client");
+        console.log('hey2:-'+priowner)
         var targetAmt = component.find("amount").get("v.value");
-        // console.log('hey3:-'+targetAmt)
+        console.log('hey3:-'+targetAmt)
         var targetDate = component.find("tarDate").get("v.value");
         //console.log('hey4:-'+targetDate)
         var bankAcc = component.find("associateAcc").get("v.value");
@@ -264,13 +265,12 @@
         if ($A.util.isUndefinedOrNull(n) || n == "" ||  
             $A.util.isUndefinedOrNull(targetAmt) || targetAmt == "" || $A.util.isUndefinedOrNull(targetDate) || targetDate =="" || 
             $A.util.isUndefinedOrNull(bankAcc) || bankAcc == "" || 
-            (($A.util.isUndefinedOrNull(currAmt) || currAmt == "") /*&& currAmt != 0*/) ||
-            $A.util.isUndefinedOrNull(goalPriority) || goalPriority =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(contribution) || contribution == "")
-        {
+            $A.util.isUndefinedOrNull(currAmt) || currAmt === "" ||
+            $A.util.isUndefinedOrNull(goalPriority) || goalPriority =="" || $A.util.isUndefinedOrNull(priowner) || priowner == "" || $A.util.isUndefinedOrNull(contribution) || contribution == ""){
             status3 = 0;
             event.preventDefault();
-            //msg = "Please fill mandatory fields."
-            //  helper.showAlertEmptyInvalidVal(component,msg);       
+            msg = "Please fill mandatory fields."
+             helper.showAlertEmptyInvalidVal(component,msg);       
         }
         else{
             status3 = 1;
@@ -296,7 +296,6 @@
                 status2 = 1;
             }
             helper.showAlertEmptyInvalidVal(component,msg);
-            return;
             
         }
         
@@ -322,17 +321,14 @@
     {
         var msg = "Invalid Monthly Contribution";
         var status = 1;
-        if(event.getSource().get("v.value") < 0)
+        if(event.getSource().get("v.value") < 0 || event.getSource().get("v.value")=="")
         {
-            status = 0
             helper.currentAmtError(component, event, helper,msg);
             component.set("v.contribution", 0 );
         }
-        else
-        {
-            status = 1;
-        }
-        if(event.getSource().get("v.value") < component.get("v.actualEmi") && status == 1 )
+       
+
+        if(event.getSource().get("v.value") < component.get("v.actualEmi") )
         {
             if(event.getSource().get("v.value") ==  0 || event.getSource().get("v.value") == "") {
                 component.set("v.buttonDisplay",false);
@@ -351,7 +347,7 @@
                 component.set("v.newTarDate", newDate);
             }
         }
-        if(event.getSource().get("v.value") >= component.get("v.actualEmi") && status == 1 )
+        if(event.getSource().get("v.value") >= component.get("v.actualEmi") )
         { 
             component.set("v.buttonDisplay",false);
             component.set('v.setMsg','You will reach your goal on time');
@@ -361,6 +357,10 @@
     {   var namespace = component.get("v.namespace");
      component.find("goalContri").set("v.fieldName",namespace+"Required_Monthly_Saving__c");
      component.find("goalContri").set("v.value",  component.get("v.actualEmi"));
+             component.set('v.setMsg','You will reach your goal on time');  
+
+                 component.set("v.buttonDisplay",false);
+
     },
     
     handleTargetDate : function(component, event, helper)

@@ -553,7 +553,7 @@
         
         var msg = "Please fill mandatory fields"
         if ($A.util.isUndefinedOrNull(acc) || acc == "" || $A.util.isUndefinedOrNull(amt) || amt == "" || 
-            start == "" || $A.util.isUndefinedOrNull(start)|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
+            start === "" || $A.util.isUndefinedOrNull(start)|| $A.util.isUndefinedOrNull(contri) || contri == "" || $A.util.isUndefinedOrNull(pri) || pri == "" ||((isTaxDeduction) && ($A.util.isUndefinedOrNull(taxcontri) || taxcontri=="")) )
         {
             
             helper.currentAmtError(component, event, helper,msg);
